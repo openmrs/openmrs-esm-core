@@ -406,6 +406,23 @@ describe('getConfig', () => {
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/0.*foo-module.*baz.*must be an object/i));
   });
 
+  it('does not crash when null is passed as a freeform object config value', async () => {
+    Config.defineConfigSchema('object-null-module', {
+      objnu: {
+        _type: Type.Object,
+        _default: {},
+      },
+    });
+    const testConfig = {
+      'object-null-module': {
+        objnu: null,
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getConfig('object-null-module');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/.*object-null-module.*obj.*must be an object/i));
+  });
+
   it('supports freeform object elements validations', async () => {
     Config.defineConfigSchema('foo-module', {
       foo: {
@@ -513,6 +530,26 @@ describe('getConfig', () => {
     const config = await Config.getConfig('foo-module');
     expect(config.foo).toStrictEqual(['bar', 'baz', 'qux']);
     expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('supports type validation of array elements', async () => {
+    Config.defineConfigSchema('foo-module', {
+      foo: {
+        _type: Type.Array,
+        _default: ['bar'],
+        _elements: {
+          _type: Type.String,
+        },
+      },
+    });
+    const testConfig = {
+      'foo-module': {
+        foo: ['bar', 42],
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getConfig('foo-module');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/Invalid.*42.*foo-module.foo\[1\].*string/i));
   });
 
   it('supports validation of array elements', async () => {
@@ -648,6 +685,23 @@ describe('getConfig', () => {
     expect(result.bar[0].a.b).toBe(2);
   });
 
+  it('does not crash when null is passed as an array config value', async () => {
+    Config.defineConfigSchema('array-null-module', {
+      arnu: {
+        _type: Type.Array,
+        _default: [1, 2, 3],
+      },
+    });
+    const testConfig = {
+      'array-null-module': {
+        arnu: null,
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getConfig('array-null-module');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/.*array-null-module.*arnu.*must be an array/i));
+  });
+
   it('fills array element object elements with defaults', async () => {
     Config.defineConfigSchema('array-def', {
       foo: {
@@ -673,6 +727,104 @@ describe('getConfig', () => {
       { a: { b: 'anotherB', filler: 'defaultFiller' } },
     ]);
     expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('supports array element objects with their own simple arrays', async () => {
+    Config.defineConfigSchema('array-array-simple', {
+      foo: {
+        _default: [],
+        _type: Type.Array,
+        _elements: {
+          shishito: {
+            _type: Type.Array,
+          },
+        },
+      },
+    });
+
+    // Ensure sensible default behavior
+    const configDefault = await Config.getConfig('array-array-simple');
+    expect(configDefault.foo).toStrictEqual([]);
+    expect(console.error).not.toHaveBeenCalled();
+
+    // Ensure that the config is filled in correctly
+    const testConfig = {
+      'array-array-simple': {
+        foo: [{ shishito: [0] }, { shishito: [1, 2] }],
+      },
+    };
+    Config.provide(testConfig);
+    const config = await Config.getConfig('array-array-simple');
+    expect(config.foo).toStrictEqual([{ shishito: [0] }, { shishito: [1, 2] }]);
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('supports array element objects with their own arrays of objects', async () => {
+    Config.defineConfigSchema('array-array-def', {
+      tamago: {
+        _default: [],
+        _type: Type.Array,
+        _elements: {
+          yaki: {
+            _type: Type.Array,
+            _elements: {
+              negi: { _type: Type.String },
+              nasu: { _type: Type.String, _default: 'yum' },
+            },
+          },
+        },
+      },
+    });
+
+    // Ensure sensible default behavior
+    const configDefault = await Config.getConfig('array-array-def');
+    expect(configDefault.tamago).toStrictEqual([]);
+    expect(console.error).not.toHaveBeenCalled();
+
+    // Ensure that the config is filled in correctly
+    const testConfig = {
+      'array-array-def': {
+        tamago: [{ yaki: [{ negi: 'one' }] }, { yaki: [{ negi: 'two', nasu: 'no' }, { negi: 'three' }] }],
+      },
+    };
+    Config.provide(testConfig);
+    const config = await Config.getConfig('array-array-def');
+    expect(config.tamago).toStrictEqual([
+      { yaki: [{ negi: 'one', nasu: 'yum' }] },
+      {
+        yaki: [
+          { negi: 'two', nasu: 'no' },
+          { negi: 'three', nasu: 'yum' },
+        ],
+      },
+    ]);
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('validates structure of array element objects with their own arrays of objects', async () => {
+    Config.defineConfigSchema('array-array-valid', {
+      tamago: {
+        _default: [],
+        _type: Type.Array,
+        _elements: {
+          yaki: {
+            _type: Type.Array,
+            _elements: {
+              negi: { _type: Type.String },
+              nasu: { _type: Type.String, _default: 'yum' },
+            },
+          },
+        },
+      },
+    });
+    const testConfig = {
+      'array-array-valid': {
+        tamago: [{ yaki: { negi: 'one' } }],
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getConfig('array-array-valid');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/tamago\[0\].*yaki.*array/i));
   });
 });
 
@@ -956,8 +1108,13 @@ describe('extension config', () => {
     const moduleLevelConfig = { 'ext-mod': { bar: 'qux' } };
     updateConfigExtensionStore();
     Config.provide(moduleLevelConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt').config;
-    expect(result).toStrictEqual({ bar: 'qux', baz: 'bazzy' });
+    const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'qux',
+      baz: 'bazzy',
+      'Display conditions': { privileges: [] },
+      'Translation overrides': {},
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -974,8 +1131,13 @@ describe('extension config', () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt#id0').config;
-    expect(result).toStrictEqual({ bar: 'qux', baz: 'quiz' });
+    const result = getExtensionConfig('barSlot', 'fooExt#id0').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'qux',
+      baz: 'quiz',
+      'Display conditions': { privileges: [] },
+      'Translation overrides': {},
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -1002,8 +1164,12 @@ describe('extension config', () => {
     });
     const extensionAtBaseConfig = { fooExt: { qux: 'quxolotl' } };
     Config.provide(extensionAtBaseConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt').config;
-    expect(result).toStrictEqual({ qux: 'quxolotl' });
+    const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
+    expect(result).toStrictEqual({
+      qux: 'quxolotl',
+      'Display conditions': { privileges: [] },
+      'Translation overrides': {},
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -1023,8 +1189,12 @@ describe('extension config', () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt#id2').config;
-    expect(result).toStrictEqual({ qux: 'quxotic' });
+    const result = getExtensionConfig('barSlot', 'fooExt#id2').getState().config;
+    expect(result).toStrictEqual({
+      qux: 'quxotic',
+      'Display conditions': { privileges: [] },
+      'Translation overrides': {},
+    });
   });
 
   it('validates the extension configure config, with extension config schema', () => {
@@ -1089,11 +1259,13 @@ describe('translation overrides', () => {
     });
     Config.registerModuleWithConfigSystem('corge-module');
     const translationOverrides = await Config.getTranslationOverrides('corge-module');
-    expect(translationOverrides).toStrictEqual({
-      en: {
-        'foo.bar': 'baz',
+    expect(translationOverrides).toStrictEqual([
+      {
+        en: {
+          'foo.bar': 'baz',
+        },
       },
-    });
+    ]);
     Config.defineConfigSchema('corge-module', {
       corges: { _default: false, _type: Type.Boolean },
     });

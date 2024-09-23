@@ -76,7 +76,7 @@ export async function runBuild(args: BuildArgs) {
           checkImportmapJson(readFileSync(resolve(args.target, entry)).toString()),
       );
 
-      if (paths) {
+      if (paths.length > 0 && paths[0]) {
         importMap.value = importMap.value.replace(/importmap\.json/i, paths[0]);
       }
     }
@@ -99,7 +99,7 @@ export async function runBuild(args: BuildArgs) {
           checkRoutesJson(readFileSync(resolve(args.target, entry)).toString()),
       );
 
-      if (paths) {
+      if (paths.length > 0 && paths[0]) {
         routes.value = routes.value.replace(/routes\.registry\.json/i, paths[0]);
       }
     }

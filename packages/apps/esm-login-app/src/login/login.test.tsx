@@ -1,33 +1,24 @@
 import { useState } from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { refetchCurrentUser, useConfig, useSession } from '@openmrs/esm-framework';
+import { getSessionStore, refetchCurrentUser, useConfig, useSession } from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
 
+const mockGetSessionStore = getSessionStore as jest.Mock;
 const mockedLogin = refetchCurrentUser as jest.Mock;
 const mockedUseConfig = useConfig as jest.Mock;
 const mockedUseSession = useSession as jest.Mock;
 
-jest.mock('@openmrs/esm-framework', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-framework');
-
+mockedLogin.mockReturnValue(Promise.resolve());
+mockGetSessionStore.mockImplementation(() => {
   return {
-    ...originalModule,
-    clearCurrentUser: jest.fn(),
-    refetchCurrentUser: jest.fn().mockReturnValue(Promise.resolve()),
-    getSessionStore: jest.fn().mockImplementation(() => {
-      return {
-        getState: jest.fn().mockReturnValue({
-          session: {
-            authenticated: true,
-          },
-        }),
-      };
+    getState: jest.fn().mockReturnValue({
+      session: {
+        authenticated: true,
+      },
     }),
-    // mock only the happy path
-    interpolateUrl: jest.fn().mockImplementation((url: string) => url),
   };
 });
 

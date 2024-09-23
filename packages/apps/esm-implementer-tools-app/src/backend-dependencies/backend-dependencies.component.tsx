@@ -28,11 +28,11 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({ backendDepe
       },
       {
         key: 'installedVersion',
-        header: t('installedVersion', 'Installed Version'),
+        header: t('installedVersion', 'Installed version'),
       },
       {
         key: 'requiredVersion',
-        header: t('requiredVersion', 'Required Version'),
+        header: t('requiredVersion', 'Required version'),
       },
     ],
     [t],
@@ -70,7 +70,7 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({ backendDepe
                           ) : dep.type === 'version-mismatch' ? (
                             <span style={{ color: 'red' }}>{dep.installedVersion}</span>
                           ) : (
-                            <span style={{ color: 'green' }}>{dep.installedVersion}</span>
+                            <span>{dep.installedVersion}</span>
                           )}
                         </TableCell>
                         <TableCell>{dep.requiredVersion}</TableCell>

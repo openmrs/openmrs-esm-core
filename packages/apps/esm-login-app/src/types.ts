@@ -1,3 +1,5 @@
+import { type FHIRLocationResource } from '@openmrs/esm-api/src/types/location-resource';
+
 export interface LocationResponse {
   type: string;
   total: number;
@@ -10,7 +12,7 @@ export interface LocationResponse {
     url: string;
   }>;
   id: string;
-  entry: Array<LocationEntry>;
+  entry: Array<FHIRLocationResource>;
 }
 
 export interface LocationEntry {

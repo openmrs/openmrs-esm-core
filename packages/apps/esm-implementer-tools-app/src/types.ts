@@ -1,5 +1,5 @@
 import type { OpenmrsAppRoutes } from '@openmrs/esm-framework';
 
-export type FrontendModule = OpenmrsAppRoutes & {
+export interface FrontendModule extends OpenmrsAppRoutes {
   name: string;
-};
+}

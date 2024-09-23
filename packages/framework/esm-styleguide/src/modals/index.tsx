@@ -1,17 +1,25 @@
 /** @module @category UI */
-import { renderExtension } from '@openmrs/esm-extensions';
+import { mountRootParcel, type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { Parcel } from 'single-spa';
+import { getModalRegistration } from '@openmrs/esm-extensions';
+import { reportError } from '@openmrs/esm-error-handling';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 
 type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
+type ModalSize = 'xs' | 'sm' | 'md' | 'lg';
+
+interface ModalProps {
+  size?: ModalSize;
+  [key: string]: unknown;
+}
 
 interface ModalInstance {
   container?: HTMLElement;
   state: ModalInstanceState;
   onClose: () => void;
   parcel?: Parcel | null;
-  extensionId: string;
-  props: Record<string, any>;
+  modalName: string;
+  props: ModalProps;
 }
 
 interface ModalState {
@@ -19,7 +27,7 @@ interface ModalState {
   modalStack: Array<ModalInstance>;
 }
 
-const modalStore = createGlobalStore<ModalState>('globalModalState', {
+const modalStore = createGlobalStore<ModalState>('modalState', {
   modalContainer: null,
   modalStack: [],
 });
@@ -30,25 +38,61 @@ function htmlToElement(html: string) {
   return template.content.firstChild as ChildNode;
 }
 
-function createModalFrame() {
+function createModalFrame({ size }: { size: ModalSize }) {
+  const closeTextTranslated = getCoreTranslation('close', 'Close');
   const closeButton = htmlToElement(
-    `
-  <button
-    class="cds--modal-close"
-    type="button">
-    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1{fill:#000000;}.cls-2{fill:none;}</style></defs><title>close</title><polygon class="cls-1" points="24 9.4 22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4"/><rect class="cls-2" width="32" height="32"/></svg>
-  </button>`.trim(),
+    `<button class="cds--modal-close" aria-label="${closeTextTranslated}" title="${closeTextTranslated}" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" class="cds--modal-close__icon" xmlns="http://www.w3.org/2000/svg"><path d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"></path></svg></button>`.trim(),
   ) as HTMLButtonElement;
 
   closeButton.addEventListener('click', closeHighestInstance);
-  const outer = document.createElement('div');
-  outer.className = 'cds--modal-container';
-  const contentContainer = document.createElement('div');
+  const modalFrame = document.createElement('div');
+  modalFrame.className = `cds--modal-container cds--modal-container--${size}`;
+  // we also need to pass the aria label along to the modal container
+  modalFrame.setAttribute('role', 'dialog');
+  modalFrame.setAttribute('tabindex', '-1');
+  modalFrame.setAttribute('aria-modal', 'true');
+  modalFrame.append(closeButton);
 
-  outer.append(closeButton);
-  outer.append(contentContainer);
+  return modalFrame;
+}
 
-  return { outer, contentContainer };
+let parcelCount = 0;
+
+/**
+ * Mounts the named modal into the specified DOM element
+ */
+async function renderModalIntoDOM(
+  domElement: HTMLElement,
+  modalName: string,
+  additionalProps: Record<string, unknown> = {},
+): Promise<Parcel | null> {
+  const modalRegistration = getModalRegistration(modalName);
+  let parcel: Parcel | null = null;
+
+  if (domElement) {
+    if (!modalRegistration) {
+      throw Error(`No modal named '${modalName}' has been registered.`);
+    }
+
+    const { load } = modalRegistration;
+
+    const { default: result, ...lifecycle } = await load();
+    const id = parcelCount++;
+    parcel = mountRootParcel(
+      {
+        ...(result ?? lifecycle),
+        name: `${modalName}-${id}`,
+      },
+      {
+        ...additionalProps,
+        domElement,
+      },
+    );
+  } else {
+    reportError(`Failed to launch modal. Please notify your administrator. Modal name: ${modalName}`);
+  }
+
+  return parcel;
 }
 
 const original = window.getComputedStyle(document.body).overflow;
@@ -57,7 +101,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
   if (!modalContainer) return;
 
   if (modalStack.length) {
-    // spin up the container if it was hidden previously
+    // ensure the container is visible
     if (!modalContainer.style.visibility) {
       addEventListener('keydown', handleEscKey);
       document.body.style.overflow = 'hidden';
@@ -67,13 +111,13 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
     modalStack.forEach((instance, index) => {
       switch (instance.state) {
         case 'NEW': {
-          const { outer, contentContainer } = createModalFrame();
-          instance.container = outer;
-          renderExtension(contentContainer, '', '', instance.extensionId, undefined, instance.props).then((parcel) => {
+          const modalFrame = createModalFrame({ size: instance.props?.size ?? 'md' });
+          instance.container = modalFrame;
+          renderModalIntoDOM(modalFrame, instance.modalName, instance.props).then((parcel) => {
             instance.parcel = parcel;
             instance.state = 'MOUNTED';
-            modalContainer.prepend(outer);
-            outer.style.visibility = 'unset';
+            modalContainer.prepend(modalFrame);
+            modalFrame.style.visibility = 'unset';
           });
           break;
         }
@@ -104,16 +148,6 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
   }
 }
 
-export function renderModals(modalContainer: HTMLElement | null) {
-  if (modalContainer) {
-    modalStore.subscribe(handleModalStateUpdate);
-
-    modalStore.setState({
-      ...modalStore.getState(),
-      modalContainer,
-    });
-  }
-}
 function openInstance(instance: ModalInstance) {
   const state = modalStore.getState();
   const modalStack = [instance, ...state.modalStack];
@@ -151,13 +185,32 @@ function handleEscKey(e: KeyboardEvent) {
 }
 
 /**
- * Shows the provided extension component in a modal dialog.
- * @param extensionId The id of the extension to show.
- * @param props The optional props to provide to the extension.
- * @param onClose The optional notification to receive when the modal is closed.
+ * @internal
+ * Sets up the modals system. Should be called in the app shell during initialization.
+ */
+export function setupModals(modalContainer: HTMLElement | null) {
+  modalStore.subscribe(handleModalStateUpdate);
+
+  modalStore.setState({
+    ...modalStore.getState(),
+    modalContainer,
+  });
+}
+
+/**
+ * Shows a modal dialog.
+ *
+ * The modal must have been registered by name. This should be done in the `routes.json` file of the
+ * app that defines the modal. Note that both the `<ModalHeader>` and `<ModalBody>` should be at the
+ * top level of the modal component (wrapped in a React.Fragment), or else the content of the modal
+ * body might not vertical-scroll properly.
+ *
+ * @param modalName The name of the modal to show.
+ * @param props The optional props to provide to the modal.
+ * @param onClose The optional callback to call when the modal is closed.
  * @returns The dispose function to force closing the modal dialog.
  */
-export function showModal(extensionId: string, props: Record<string, any> = {}, onClose: () => void = () => {}) {
+export function showModal(modalName: string, props: ModalProps = {}, onClose: () => void = () => {}) {
   const close = () => {
     const state = modalStore.getState();
     const item = state.modalStack.find((m) => m.onClose === onClose);
@@ -167,16 +220,20 @@ export function showModal(extensionId: string, props: Record<string, any> = {}, 
     }
   };
 
-  openInstance({
-    state: 'NEW',
-    onClose,
-    extensionId,
-    props: {
-      extensionId,
-      close,
-      ...props,
-    },
-  });
+  const modalRegistration = getModalRegistration(modalName);
+  if (!modalRegistration) {
+    reportError(`Failed to launch modal. Please notify your administrator. Modal name: "${modalName}"`);
+  } else {
+    openInstance({
+      state: 'NEW',
+      onClose,
+      modalName,
+      props: {
+        close,
+        ...props,
+      },
+    });
+  }
 
   return close;
 }

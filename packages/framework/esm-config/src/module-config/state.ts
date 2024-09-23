@@ -1,6 +1,7 @@
 /** @module @category Config */
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
-import { omit } from 'ramda';
+import { shallowEqual } from '@openmrs/esm-utils';
+import { type StoreApi } from 'zustand';
 import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfigObject, ProvidedConfig } from '../types';
 
 /**
@@ -166,13 +167,66 @@ export function getExtensionsConfigStore() {
 }
 
 /** @internal */
-export function getExtensionConfig(slotName: string, extensionId: string) {
-  const extensionConfig = Object.assign(
-    {},
-    getExtensionConfigFromStore(getExtensionsConfigStore().getState(), slotName, extensionId),
-  );
-  extensionConfig.config = omit(['Display conditions', 'Translation overrides'], extensionConfig.config);
-  return extensionConfig;
+export function getExtensionConfig(
+  slotName: string,
+  extensionId: string,
+): StoreApi<Omit<ConfigStore, 'translationOverridesLoaded'>> {
+  if (
+    typeof slotName !== 'string' ||
+    typeof extensionId !== 'string' ||
+    slotName === '__proto__' ||
+    extensionId === '__proto__' ||
+    slotName === 'constructor' ||
+    extensionId === 'constructor' ||
+    slotName === 'prototype' ||
+    extensionId === 'prototype'
+  ) {
+    throw new Error('Attempted to call `getExtensionConfig()` with invalid argument');
+  }
+
+  const extensionConfigStore = getExtensionsConfigStore();
+  const selector = (configStore: ExtensionsConfigStore) => configStore.configs[slotName]?.[extensionId];
+
+  return {
+    getInitialState() {
+      return selector(extensionConfigStore.getInitialState());
+    },
+    getState() {
+      return selector(extensionConfigStore.getState()) ?? { loaded: false, config: null };
+    },
+    setState(
+      partial: ConfigStore | Partial<ConfigStore> | ((state: ConfigStore) => ConfigStore | Partial<ConfigStore>),
+      replace: boolean = false,
+    ) {
+      extensionConfigStore.setState((state) => {
+        if (!state.configs[slotName]) {
+          state.configs[slotName] = {};
+        }
+
+        const newState = typeof partial === 'function' ? partial(state.configs.slotName[extensionId]) : partial;
+        if (replace) {
+          state.configs[slotName][extensionId] = Object.assign({}, newState) as ConfigStore;
+        } else {
+          state.configs[slotName][extensionId] = Object.assign({}, state.configs[slotName][extensionId], newState);
+        }
+
+        return state;
+      });
+    },
+    subscribe(listener) {
+      return extensionConfigStore.subscribe((state, prevState) => {
+        const newState = selector(state);
+        const oldState = selector(prevState);
+
+        if (!shallowEqual(newState, oldState)) {
+          listener(newState, oldState);
+        }
+      });
+    },
+    destroy() {
+      /* this is a no-op */
+    },
+  };
 }
 
 /** @internal */

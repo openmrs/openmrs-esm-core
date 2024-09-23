@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
+  "ui": "stream",
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
@@ -10,10 +11,14 @@
       "outputs": ["dist/**"]
     },
     "document": {
+      "inputs": ["packages/framework/**/src/**/*.{ts,tsx}", "!packages/framework/**/src/**/*.test.{ts,tsx}"],
       "outputs": ["packages/framework/esm-framework/docs/**"]
     },
     "test": {},
-    "test:watch": {},
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
     "watch": {},
     "lint": {
       "dependsOn": ["^lint"]

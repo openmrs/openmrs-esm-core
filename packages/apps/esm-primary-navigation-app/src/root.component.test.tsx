@@ -2,6 +2,7 @@ import React from 'react';
 import { of } from 'rxjs';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useConfig, useConnectedExtensions, useSession } from '@openmrs/esm-framework';
 import { isDesktop } from './utils';
 import { mockUser } from '../__mocks__/mock-user';
 import { mockSession } from '../__mocks__/mock-session';
@@ -9,30 +10,17 @@ import Root from './root.component';
 
 const mockUserObservable = of(mockUser);
 const mockSessionObservable = of({ data: mockSession });
+const mockIsDesktop = jest.mocked(isDesktop);
 
-jest.mock('@openmrs/esm-framework', () => ({
-  openmrsFetch: jest.fn().mockResolvedValue({}),
-  useConnectedExtensions: jest.fn().mockReturnValue(['mock-extension']),
-  createErrorHandler: jest.fn(),
-  openmrsObservableFetch: jest.fn(),
-  getCurrentUser: jest.fn(() => mockUserObservable),
-  ExtensionSlot: jest.fn().mockImplementation(({ children }) => <>{children}</>),
-  useLayoutType: jest.fn(() => 'tablet'),
-  useConfig: jest.fn(() => ({
-    logo: { src: null, alt: null, name: 'Mock EMR' },
-  })),
-  useOnClickOutside: jest.fn(() => {
-    const { useRef } = require('react');
-    return useRef();
-  }),
-  useSession: jest.fn().mockReturnValue(mockSession),
-  refetchCurrentUser: jest.fn(),
-  subscribeConnectivity: jest.fn(),
-  navigate: jest.fn(),
-  ConfigurableLink: jest.fn(() => {
-    return <a href="#">Mock EMR</a>;
-  }),
-}));
+const mockedUseConfig = useConfig as jest.Mock;
+const mockedUseConnectedExtensions = useConnectedExtensions as jest.Mock;
+const mockedUseSession = useSession as jest.Mock;
+
+mockedUseConfig.mockReturnValue({
+  logo: { src: null, alt: null, name: 'Mock EMR', link: 'Mock EMR' },
+});
+mockedUseConnectedExtensions.mockReturnValue(['mock-extension']);
+mockedUseSession.mockReturnValue(mockSession);
 
 jest.mock('./root.resource', () => ({
   getSynchronizedCurrentUser: jest.fn(() => mockUserObservable),
@@ -68,7 +56,7 @@ describe('Root', () => {
 
   describe('when view is desktop', () => {
     beforeEach(() => {
-      (isDesktop as jest.Mock).mockImplementation(() => true);
+      mockIsDesktop.mockImplementation(() => true);
     });
 
     it('does not render side menu button if desktop', async () => {

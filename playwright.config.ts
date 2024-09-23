@@ -19,6 +19,7 @@ const config: PlaywrightTestConfig = {
     trace: 'retain-on-failure',
     storageState: 'e2e/storageState.json',
     video: 'retain-on-failure',
+    trace: 'retain-on-failure',
   },
   projects: [
     {

@@ -19,9 +19,11 @@
 
 • `Optional` **Display conditions**: [`DisplayConditionsConfigObject`](DisplayConditionsConfigObject.md)
 
+Options that control when this extension is displayed
+
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L30)
+[packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L31)
 
 ___
 
@@ -31,4 +33,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L31)
+[packages/framework/esm-config/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L32)

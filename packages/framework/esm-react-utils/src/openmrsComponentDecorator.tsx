@@ -17,8 +17,13 @@ const defaultSwrConfig = {
   errorRetryCount: 3,
   // default fetcher function
   fetcher: openmrsFetch,
-  // only revalidate once every 30 seconds
-  focusThrottleInterval: 30000,
+  // only revalidate once every 30 minutes
+  focusThrottleInterval: 1800000,
+  revalidateIfStale: true,
+  // disable automatic revalidations by default
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+  refreshInterval: 0,
 };
 
 export interface ComponentDecoratorOptions {
@@ -63,6 +68,7 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
           caughtErrorInfo: null,
           config: {
             moduleName: opts.moduleName,
+            featureName: opts.featureName,
             extension: props._extensionContext,
           },
         };
@@ -99,7 +105,14 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
                   {opts.disableTranslations ? (
                     <Comp {...this.props} />
                   ) : (
-                    <I18nextProvider i18n={window.i18next} defaultNS={opts.moduleName}>
+                    <I18nextProvider
+                      i18n={window.i18next}
+                      defaultNS={
+                        this.props._extensionContext
+                          ? `${opts.moduleName}___${this.props._extensionContext.extensionSlotName}___${this.props._extensionContext.extensionId}`
+                          : opts.moduleName
+                      }
+                    >
                       <Comp {...this.props} />
                     </I18nextProvider>
                   )}

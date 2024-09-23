@@ -119,6 +119,9 @@ yargs.command(
       .array('config-url')
       .default('config-url', [])
       .describe('config-url', 'The URL to a valid frontend configuration. Can be used multiple times.')
+      .array('config-file')
+      .default('config-file', [])
+      .describe('config-file', 'The path to a frontend configuration file. Can be used multiple times.')
       .array('sources')
       .default('sources', ['.'])
       .describe('sources', 'Runs the projects from the provided source directories. Can be used multiple times.')
@@ -140,6 +143,7 @@ yargs.command(
   async (args) =>
     runCommand('runDevelop', {
       configUrls: args['config-url'],
+      configFiles: args['config-file'],
       ...args,
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
@@ -212,6 +216,7 @@ yargs.command(
         describe:
           'The path to a frontend configuration file. Can be used multiple times. The file is copied directly into the build directory.',
         type: 'array',
+        coerce: (arg: Array<string>) => arg.map((p) => resolve(process.cwd(), p)),
       })
       .option('importmap', {
         default: undefined,
@@ -233,9 +238,9 @@ yargs.command(
       }),
   async (args) =>
     runCommand('runBuild', {
-      configUrls: args['config-url'],
-      configPaths: args['config-path'].map((p) => resolve(process.cwd(), p)),
       ...args,
+      configUrls: args['config-url'],
+      configPaths: args['config-path'],
     }),
 );
 
@@ -259,14 +264,22 @@ yargs.command(
       })
       .option('config', {
         default: ['spa-build-config.json'],
-        description: 'Path to a SPA build config JSON.',
+        description: 'Path to a SPA assemble config JSON.',
         type: 'array',
         coerce: (arg: Array<string>) => arg.map((p) => resolve(process.cwd(), p)),
       })
-      .option('hash-importmap', {
+      .option('config-file', {
+        default: [],
+        describe:
+          'Reference to a frontend configuration file. Can be used multiple times. Configurations are merged in the order specified into openmrs-config.json.',
+        type: 'array',
+        coerce: (arg: Array<string>) => arg.map((p) => resolve(process.cwd(), p)),
+      })
+      .option('hash-files', {
         default: false,
+        alias: ['hasn', 'hash-importmap'],
         description:
-          'Determines whether to include a content-specific hash for the generated importmap. This is useful if you want to be able to cache the importmap.',
+          'Determines whether to include a content-specific hash for the generated JSON files. This is useful if you want to be able to cache those files.',
         type: 'boolean',
       })
       .option('fresh', {
@@ -291,7 +304,7 @@ yargs.command(
           'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey.',
         type: 'string',
       }),
-  (args) => runCommand('runAssemble', args),
+  (args) => runCommand('runAssemble', { ...args, configFiles: args['config-file'] }),
 );
 
 yargs.command(
@@ -322,7 +335,7 @@ yargs.command(
 
 yargs
   .epilog(
-    'The SPA build config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` ' +
+    'The SPA assemble config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` ' +
       'commands. The keys used by `build` are:\n' +
       '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, and `supportOffline`;\n' +
       'each of which is equivalent to the corresponding command line argument (see `openmrs build --help`). ' +

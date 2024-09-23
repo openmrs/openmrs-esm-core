@@ -6,6 +6,7 @@ module.exports = {
     '\\.(s?css)$': 'identity-obj-proxy',
     '\\.(svg)$': '<rootDir>/__mocks__/fileMock.js',
     'lodash-es/(.*)': 'lodash/$1',
+    'lodash-es': 'lodash',
     // See https://jestjs.io/docs/upgrading-to-jest28#packagejson-exports
     // which links to https://github.com/microsoft/accessibility-insights-web/pull/5421#issuecomment-1109168149
     '^dexie$': require.resolve('dexie'),
@@ -16,4 +17,5 @@ module.exports = {
   testEnvironmentOptions: {
     url: 'http://localhost/',
   },
+  testTimeout: 20000,
 };

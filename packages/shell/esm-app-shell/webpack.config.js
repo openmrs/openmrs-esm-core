@@ -27,7 +27,7 @@ const openmrsProxyTarget = process.env.OMRS_PROXY_TARGET || 'https://dev3.openmr
 const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || 'OpenMRS';
 const openmrsFavicon = process.env.OMRS_FAVICON || `${openmrsPublicPath}/favicon.ico`;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || '';
-const openmrsOffline = process.env.OMRS_OFFLINE !== 'disable';
+const openmrsOffline = process.env.OMRS_OFFLINE === 'enable';
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsImportmapUrl = process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -206,6 +206,9 @@ module.exports = (env, argv = {}) => {
       ],
       static: ['src/assets'],
     },
+    watchOptions: {
+      ignored: ['.git', 'test-results'],
+    },
     mode,
     devtool: isProd ? 'hidden-nosources-source-map' : 'eval-source-map',
     module: {
@@ -260,6 +263,12 @@ module.exports = (env, argv = {}) => {
         },
       ],
     },
+    optimization: {
+      splitChunks: {
+        maxAsyncRequests: 3,
+        maxInitialRequests: 1,
+      },
+    },
     resolve: {
       mainFields: ['module', 'main'],
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.css', '.scss'],
@@ -269,6 +278,13 @@ module.exports = (env, argv = {}) => {
         https: false,
         zlib: false,
         url: false,
+      },
+      alias: {
+        'lodash.debounce': 'lodash-es/debounce',
+        'lodash.findlast': 'lodash-es/findLast',
+        'lodash.isequal': 'lodash-es/isEqual',
+        'lodash.omit': 'lodash-es/omit',
+        'lodash.throttle': 'lodash-es/throttle',
       },
     },
     plugins: [
@@ -329,13 +345,16 @@ module.exports = (env, argv = {}) => {
             }
           }
 
+          const eager = depName === 'dayjs';
+
           if (depName === 'swr') {
             // SWR is annoying with Module Federation
             // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
             obj['swr/'] = {
               requiredVersion: version,
+              strictVersion: false,
               singleton: true,
-              eager: true,
+              eager: false,
               import: 'swr/',
               shareKey: 'swr/',
               shareScope: 'default',
@@ -344,8 +363,9 @@ module.exports = (env, argv = {}) => {
           } else {
             obj[depName] = {
               requiredVersion: version ?? false,
+              strictVersion: false,
               singleton: true,
-              eager: true,
+              eager: eager,
               import: depName,
               shareKey: depName,
               shareScope: 'default',
@@ -357,6 +377,7 @@ module.exports = (env, argv = {}) => {
       isProd &&
         new MiniCssExtractPlugin({
           filename: 'openmrs.[contenthash].css',
+          ignoreOrder: true,
         }),
       new DefinePlugin({
         'process.env.BUILD_VERSION': JSON.stringify(`${version}-${timestamp}`),

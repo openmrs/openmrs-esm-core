@@ -1,8 +1,8 @@
 {
   "cancel": "Annuler",
-  "change": "Changer",
-  "changeLanguage": "Changer de langue",
-  "changingLanguage": "Changing language",
+  "change": "Modifier",
+  "changeLanguage": "Modifier la langue",
+  "changingLanguage": "Modification de la langue",
   "notifications": "Notifications",
-  "userMenuTooltip": "User"
+  "userMenuTooltip": "Mon Compte"
 }

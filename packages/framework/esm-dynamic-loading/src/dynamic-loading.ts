@@ -2,6 +2,7 @@
 'use strict';
 // hack to make the types defined in esm-globals available here
 import { dispatchToastShown, type ImportMap } from '@openmrs/esm-globals';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 
 /**
  * @internal
@@ -144,9 +145,15 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
       if (isOverridden) {
         dispatchToastShown({
           kind: 'error',
-          title: 'Error loading script',
-          description: `Failed to load overridden script from ${url}. Click below to reset all overrides.`,
-          actionButtonLabel: 'Reload',
+          title: getCoreTranslation('scriptLoadingFailed', 'Error: Script failed to load'),
+          description: getCoreTranslation(
+            'scriptLoadingError',
+            'Failed to load overridden script from {{- url}}. Please check that the bundled script is available at the expected URL. Click the button below to reset all import map overrides.',
+            {
+              url,
+            },
+          ),
+          actionButtonLabel: getCoreTranslation('resetOverrides', 'Reset overrides'),
           onActionButtonClick() {
             window.importMapOverrides.resetOverrides();
             window.location.reload();
@@ -274,5 +281,3 @@ function loadScript(
     }
   }
 }
-
-function closureScope() {}

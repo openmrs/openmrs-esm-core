@@ -1,0 +1,17 @@
+.helpMenuButton {
+  z-index: 7900;
+  background-color: white;
+  height: 2.5rem !important;
+  width: 2.5rem !important;
+  bottom: 1rem;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 0.25rem;
+  border: none;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 2rem;
+}

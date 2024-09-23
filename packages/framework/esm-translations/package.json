@@ -1,13 +1,13 @@
 {
   "name": "@openmrs/esm-translations",
-  "version": "5.4.0",
+  "version": "5.8.1",
   "license": "MPL-2.0",
   "description": "O3 Framework module for translation support",
   "browser": "dist/openmrs-esm-translations.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --color",
     "build": "webpack --mode=production",
     "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
@@ -38,7 +38,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "i18next-parser": "^8.12.0"
+    "i18next-parser": "^8.13.0"
   },
   "dependencies": {
     "i18next": "21.10.0"

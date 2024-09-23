@@ -4,8 +4,8 @@ import unset from 'lodash-es/unset';
 import cloneDeep from 'lodash-es/cloneDeep';
 import styles from './editable-value.styles.scss';
 import { Button } from '@carbon/react';
-import { Edit, Reset } from '@carbon/react/icons';
 import type { ConfigValue, Validator, Type, Config } from '@openmrs/esm-framework/src/internal';
+import { EditIcon, ResetIcon } from '@openmrs/esm-framework';
 import { clearConfigErrors, temporaryConfigStore } from '@openmrs/esm-framework/src/internal';
 import type { CustomValueType } from './value-editor';
 import { ValueEditor } from './value-editor';
@@ -111,12 +111,12 @@ export default function EditableValue({ path, element, customType }: EditableVal
               iconDescription={t('editValueButtonText', 'Edit')}
               onClick={() => setEditing(true)}
               ref={activeConfigRef}
-              renderIcon={(props) => <Edit size={16} {...props} />}
+              renderIcon={(props) => <EditIcon size={16} {...props} />}
               hasIconOnly
             />
             {element._source == 'temporary config' ? (
               <Button
-                renderIcon={(props) => <Reset size={16} {...props} />}
+                renderIcon={(props) => <ResetIcon size={16} {...props} />}
                 size="sm"
                 kind="ghost"
                 iconDescription={t('resetToDefaultValueButtonText', 'Reset to default')}

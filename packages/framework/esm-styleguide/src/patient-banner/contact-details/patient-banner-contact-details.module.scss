@@ -3,34 +3,15 @@
 @use '@carbon/styles/scss/type';
 @import '~@openmrs/esm-styleguide/src/vars';
 
-.contactDetails {
+.contactDetails,
+.deceased {
   color: $text-02;
   width: 100%;
-  border-top: 1px solid $ui-03;
 }
 
 .heading {
   @include type.type-style('heading-compact-01');
   color: $text-02;
-}
-
-.deceased {
-  .contactDetails,
-  .heading,
-  .row,
-  .row > .col {
-    color: $ui-02;
-    background-color: colors.$gray-80;
-  }
-
-  .menu {
-    fill: colors.$blue-40;
-  }
-
-  &:focus,
-  &:hover {
-    background-color: colors.$gray-90;
-  }
 }
 
 .row {

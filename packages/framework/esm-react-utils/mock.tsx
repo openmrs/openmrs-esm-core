@@ -1,10 +1,19 @@
 import React from 'react';
 import { openmrsFetch } from '@openmrs/esm-api/mock';
 import { configSchema } from '@openmrs/esm-config/mock';
-import { getExtensionStore, getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
+import { getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
-import { usePagination as realUsePagination } from './src/index';
-export { ConfigurableLink, isDesktop, useStore, useStoreWithActions, createUseStore } from './src/index';
+import {
+  isDesktop as realIsDesktop,
+  usePagination as realUsePagination,
+  useOpenmrsPagination as realUseOpenmrsrPagination,
+  useOpenmrsInfinite as realUseOpenmrsInfinite,
+  useOpenmrsFetchAll as realUseOpenmrsFetchAll,
+  useFhirPagination as realUseFhirPagination,
+  useFhirInfinite as realUseFhirInfinite,
+  useFhirFetchAll as realUseFhirFetchAll,
+} from './src/index';
+export { ConfigurableLink, useStore, useStoreWithActions, createUseStore } from './src/index';
 import * as utils from '@openmrs/esm-utils';
 
 export const ComponentContext = React.createContext(null);
@@ -19,7 +28,12 @@ export const useAttachments = jest.fn(() => ({
   isValidating: true,
 }));
 
-export const useConfig = jest.fn().mockImplementation(() => utils.getDefaultsFromConfigSchema(configSchema));
+export const useConfig = jest.fn().mockImplementation((options?: { externalModuleName?: string }) => {
+  if (options?.externalModuleName) {
+    console.warn(`Mock useConfig called with externalModuleName: ${options.externalModuleName}`);
+  }
+  return utils.getDefaultsFromConfigSchema(configSchema);
+});
 
 export const useCurrentPatient = jest.fn(() => []);
 
@@ -37,6 +51,8 @@ export const useSession = jest.fn(() => ({
 
 export const useLayoutType = jest.fn(() => 'desktop');
 
+export const useRenderableExtensions = jest.fn(() => []);
+
 export const useAssignedExtensions = jest.fn(() => []);
 
 export const useExtensionSlotMeta = jest.fn(() => ({}));
@@ -49,7 +65,7 @@ export const UserHasAccess = jest.fn().mockImplementation((props: any) => {
 
 export const useExtensionInternalStore = createGlobalStore('extensionInternal', getExtensionInternalStore());
 
-export const useExtensionStore = getExtensionStore();
+export const useExtensionStore = jest.fn();
 
 export const ExtensionSlot = jest.fn().mockImplementation(({ children }) => <>{children}</>);
 
@@ -58,6 +74,13 @@ export const Extension = jest.fn().mockImplementation((props: any) => <slot />);
 export const useFeatureFlag = jest.fn().mockReturnValue(true);
 
 export const usePagination = jest.fn(realUsePagination);
+
+export const useOpenmrsPagination = jest.fn(realUseOpenmrsrPagination);
+export const useOpenmrsInfinite = jest.fn(realUseOpenmrsInfinite);
+export const useOpenmrsFetchAll = jest.fn(realUseOpenmrsFetchAll);
+export const useFhirPagination = jest.fn(realUseFhirPagination);
+export const useFhirInfinite = jest.fn(realUseFhirInfinite);
+export const useFhirFetchAll = jest.fn(realUseFhirFetchAll);
 
 export const useVisit = jest.fn().mockReturnValue({
   error: null,
@@ -92,3 +115,29 @@ export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
 export const useOnClickOutside = jest.fn();
+
+export const useBodyScrollLock = jest.fn();
+
+export const isDesktop = jest.fn().mockImplementation(realIsDesktop);
+
+export const useLocations = jest.fn().mockReturnValue([]);
+
+export const toOmrsIsoString = jest.fn().mockImplementation((date: Date) => date.toISOString());
+
+export const toDateObjectStrict = jest.fn().mockImplementation((date: string) => new Date(date));
+
+export const getLocale = jest.fn().mockReturnValue('en');
+
+export const useAppContext = jest.fn();
+
+export const useAssignedExtensionIds = jest.fn();
+
+export const useConnectivity = jest.fn();
+
+export const useDefineAppContext = jest.fn();
+
+export const useExtensionSlot = jest.fn();
+
+export const useForceUpdate = jest.fn();
+
+export const usePrimaryIdentifierResource = jest.fn();

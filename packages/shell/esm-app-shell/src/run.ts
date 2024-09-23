@@ -1,5 +1,4 @@
 import { start, triggerAppChange } from 'single-spa';
-import { type OpenmrsAppRoutes, restBaseUrl } from '@openmrs/esm-framework/src/internal';
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -23,23 +22,26 @@ import {
   messageOmrsServiceWorker,
   subscribeConnectivity,
   getCurrentUser,
-  renderModals,
+  setupModals,
   dispatchPrecacheStaticDependencies,
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
   openmrsFetch,
   interpolateUrl,
   type OpenmrsRoutes,
-  getCurrentImportMap,
-  importDynamic,
   canAccessStorage,
   localStorageRoutesPrefix,
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
   setupHistory,
+  registerApp,
+  finishRegisteringAllApps,
+  tryRegisterExtension,
+  type OpenmrsAppRoutes,
+  restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
-import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
 import { setupI18n } from './locale';
+import { registerOptionalDependencyHandler } from './optionaldeps';
 import { appName, getCoreExtensions } from './ui';
 
 // @internal
@@ -169,6 +171,10 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
  * Invoked when the connectivity is changed.
  */
 function connectivityChanged() {
+  if (!window.offlineEnabled) {
+    return;
+  }
+
   const online = navigator.onLine;
   // NB We do not wait for this to be done; it is simply scheduled
   triggerAppChange();
@@ -189,15 +195,6 @@ function runShell() {
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
     .then(() => start());
-}
-
-async function preloadScripts() {
-  const [, importMap] = await Promise.all([window[REGISTRATION_PROMISES], getCurrentImportMap()]);
-
-  window.installedModules.map(async ([module]) => {
-    // we simply swallow the error here since this is only a preload
-    importDynamic(module, undefined, { importMap }).catch();
-  });
 }
 
 function handleInitFailure(e: Error) {
@@ -286,7 +283,7 @@ function showSnackbars() {
 }
 
 function showModals() {
-  renderModals(document.querySelector('.omrs-modals-container'));
+  setupModals(document.querySelector('.omrs-modals-container'));
 }
 
 function showLoadingSpinner() {
@@ -392,7 +389,8 @@ function setupOfflineCssClasses() {
   });
 }
 
-export function run(configUrls: Array<string>, offline: boolean) {
+export function run(configUrls: Array<string>) {
+  const offlineEnabled = window.offlineEnabled;
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
@@ -413,12 +411,12 @@ export function run(configUrls: Array<string>, offline: boolean) {
 
   return setupApps()
     .then(finishRegisteringAllApps)
-    .then(offline ? setupOfflineCssClasses : undefined)
-    .then(offline ? registerOfflineHandlers : undefined)
+    .then(offlineEnabled ? setupOfflineCssClasses : undefined)
+    .then(offlineEnabled ? registerOfflineHandlers : undefined)
     .then(provideConfigs)
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(offline ? setupOffline : undefined)
-    .then(preloadScripts);
+    .then(offlineEnabled ? setupOffline : undefined)
+    .then(registerOptionalDependencyHandler);
 }

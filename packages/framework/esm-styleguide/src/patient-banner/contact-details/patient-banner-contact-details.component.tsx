@@ -1,14 +1,14 @@
 /** @module @category UI */
 import React, { useMemo } from 'react';
+import classNames from 'classnames';
 import { InlineLoading } from '@carbon/react';
 import { type CoreTranslationKey, getCoreTranslation } from '@openmrs/esm-translations';
 import { ConfigurableLink, usePatient } from '@openmrs/esm-react-utils';
 import { parseDate } from '@openmrs/esm-utils';
-import { useRelationships } from './useRelationships';
 import { usePatientContactAttributes } from './usePatientAttributes';
 import { usePatientListsForPatient } from './usePatientListsForPatient';
+import { useRelationships } from './useRelationships';
 import styles from './patient-banner-contact-details.module.scss';
-import classNames from 'classnames';
 
 interface ContactDetailsProps {
   patientId: string;
@@ -43,15 +43,15 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
             }
             return <li>--</li>;
           })()}
-          <li style={{ marginTop: '1rem' }}>
-            <ConfigurableLink to={`${window.spaBase}/home/patient-lists`}>
-              {cohorts.length > 3
-                ? getCoreTranslation('seeMoreLists', 'See {{count}} more lists', {
-                    count: cohorts?.length - 3,
-                  })
-                : ''}
-            </ConfigurableLink>
-          </li>
+          {cohorts.length > 3 && (
+            <li className={styles.link}>
+              <ConfigurableLink to={`${window.spaBase}/home/patient-lists`}>
+                {getCoreTranslation('seeMoreLists', 'See {{count}} more lists', {
+                  count: cohorts?.length - 3,
+                })}
+              </ConfigurableLink>
+            </li>
+          )}
         </ul>
       )}
     </>
@@ -59,36 +59,38 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
 };
 
 const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
-  const { isLoading, patient } = usePatient(patientId);
+  const { patient, isLoading } = usePatient(patientId);
   const address = patient?.address?.find((a) => a.use === 'home');
-  const getAddressKey = (url) => url.split('#')[1];
+  const getAddressKey = (url: string) => url.split('#')[1];
 
-  return isLoading ? (
-    <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />
-  ) : (
+  if (isLoading) {
+    return <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />;
+  }
+
+  return (
     <>
       <p className={styles.heading}>{getCoreTranslation('address', 'Address')}</p>
       <ul>
         {address ? (
-          <React.Fragment>
-            {Object.entries(address)
-              .filter(([key]) => !['use', 'id'].includes(key))
-              .map(([key, value]) =>
-                key === 'extension' ? (
-                  address?.extension?.[0]?.extension?.map((add, i) => {
-                    return (
-                      <li key={`address-${key}-${i}`}>
-                        {getCoreTranslation(getAddressKey(add.url), getAddressKey(add.url))}: {add.valueString}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <li key={`address-${key}`}>
-                    {getCoreTranslation(key as CoreTranslationKey, key)}: {value}
+          Object.entries(address)
+            .filter(([key]) => key !== 'id' && key !== 'use')
+            .map(([key, value]) =>
+              key === 'extension' ? (
+                address.extension?.[0]?.extension?.map((add, i) => (
+                  <li key={`address-${key}-${i}`}>
+                    {getCoreTranslation(
+                      getAddressKey(add.url) as CoreTranslationKey,
+                      getAddressKey(add.url) as CoreTranslationKey,
+                    )}
+                    : {add.valueString}
                   </li>
-                ),
-              )}
-          </React.Fragment>
+                ))
+              ) : (
+                <li key={`address-${key}`}>
+                  {getCoreTranslation(key as CoreTranslationKey, key)}: {value}
+                </li>
+              ),
+            )
         ) : (
           <li>--</li>
         )}
@@ -155,7 +157,11 @@ const Relationships: React.FC<{ patientId: string }> = ({ patientId }) => {
             <>
               {relationships.map((r) => (
                 <li key={r.uuid} className={styles.relationship}>
-                  <div>{r.display}</div>
+                  <div>
+                    <ConfigurableLink to={`${window.spaBase}/patient/${r.relativeUuid}/chart`}>
+                      {r.display}
+                    </ConfigurableLink>
+                  </div>
                   <div>{r.relationshipType}</div>
                   <div>
                     {`${r.relativeAge ? r.relativeAge : '--'} ${

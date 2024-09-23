@@ -1,3 +1,4 @@
+/** @module @category Extension */
 import React, { useRef, useMemo } from 'react';
 import type { ConnectedExtension } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
@@ -118,6 +119,7 @@ export function ExtensionSlot({
             key={extension.id}
             value={{
               moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
+              featureName: '', // featureName is not used by the receiving Extension
               extension: {
                 extensionId: extension.id,
                 extensionSlotName: name,

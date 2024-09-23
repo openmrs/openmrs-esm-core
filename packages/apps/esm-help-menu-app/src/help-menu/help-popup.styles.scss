@@ -1,0 +1,31 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.popup {
+  position: fixed;
+  flex: auto;
+  bottom: 2rem;
+  right: 3rem;
+  width: 11rem;
+  z-index: 8000;
+  background-color: $ui-02;
+  gap: spacing.$spacing-05;
+  padding: spacing.$spacing-02;
+  margin: spacing.$spacing-02;
+  box-shadow: 0 12px 24px 0 $ui-03;
+}
+
+.popup {
+  @include type.type-style('body-01');
+}
+
+.helpextension {
+  margin: spacing.$spacing-04;
+  padding: spacing.$spacing-01;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: spacing.$spacing-05;
+}

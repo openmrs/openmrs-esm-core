@@ -1,0 +1,28 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.pageHeader {
+  @include type.type-style('body-compact-02');
+  color: $text-02;
+  height: spacing.$spacing-12;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pageHeaderContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pageName {
+  @include type.type-style('heading-04');
+}
+
+.pageLabels {
+  p:first-of-type {
+    margin-bottom: 0.25rem;
+  }
+}

@@ -10,7 +10,7 @@
  * default from the `useConfig`/`getConfig` mock. This function is useful if you
  * need to override some of the default values.
  */
-export function getDefaultsFromConfigSchema(schema) {
+export function getDefaultsFromConfigSchema<T = Record<string, any>>(schema): T {
   let tmp = {};
   for (let k of Object.keys(schema)) {
     if (schema[k].hasOwnProperty('_default')) {
@@ -23,7 +23,7 @@ export function getDefaultsFromConfigSchema(schema) {
       tmp[k] = schema[k];
     }
   }
-  return tmp;
+  return tmp as T;
 }
 
 function isOrdinaryObject(x) {

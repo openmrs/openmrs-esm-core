@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { clearConfigErrors, temporaryConfigStore, useStore } from '@openmrs/esm-framework/src/internal';
 import { Button } from '@carbon/react';
+import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import AceEditor from 'react-ace';
-import style from './json-editor.scss';
-
-import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/theme-dracula';
+import { clearConfigErrors, temporaryConfigStore, useStore } from '@openmrs/esm-framework/src/internal';
+import styles from './json-editor.scss';
 
 export interface JsonEditorProps {
   /** A CSS value */
@@ -13,6 +14,7 @@ export interface JsonEditorProps {
 }
 
 export default function JsonEditor({ height }: JsonEditorProps) {
+  const { t } = useTranslation();
   const temporaryConfig = useStore(temporaryConfigStore);
   const [editorValue, setEditorValue] = useState('');
   const [error, setError] = useState('');
@@ -40,23 +42,27 @@ export default function JsonEditor({ height }: JsonEditorProps) {
   return (
     <div>
       <AceEditor
+        defaultValue={JSON.stringify(temporaryConfig.config, null, 2)}
+        fontSize="1rem"
+        height={`calc(${height} - 3rem)`}
         key={key}
         mode="json"
-        theme="github"
-        defaultValue={JSON.stringify(temporaryConfig.config, null, 2)}
+        onChange={(v) => setEditorValue(v)}
+        showGutter
+        showPrintMargin={false}
         tabSize={2}
-        fontSize="12pt"
+        theme="dracula"
         width="100vw"
-        height={`calc(${height} - 3rem)`}
-        onChange={(v) => {
-          setEditorValue(v);
-        }}
       />
-      <div className={style.toolbar}>
+      <div className={styles.toolbar}>
         <Button size="md" type="submit" onClick={updateTemporaryConfig}>
-          Update
+          {t('updateConfig', 'Update config')}
         </Button>
-        <div className={style.alert} style={{ backgroundColor: error ? '#d03030' : 'inherit' }}>
+        <div
+          className={classNames(styles.alert, {
+            [styles.errorBackground]: error,
+          })}
+        >
           {error}
         </div>
       </div>

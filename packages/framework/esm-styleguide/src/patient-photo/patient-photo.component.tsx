@@ -1,5 +1,5 @@
 /** @module @category UI */
-import React from 'react';
+import React, { useMemo } from 'react';
 import Avatar from 'react-avatar';
 import GeoPattern from 'geopattern';
 import { usePatientPhoto } from './usePatientPhoto';
@@ -17,7 +17,7 @@ export interface PatientPhotoProps {
  */
 export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoProps) {
   const { data: photo } = usePatientPhoto(patientUuid);
-  const patternUrl: string = GeoPattern.generate(patientUuid).toDataUri();
+  const pattern = useMemo(() => GeoPattern.generate(patientUuid), [patientUuid]);
 
   return (
     <Avatar
@@ -27,10 +27,14 @@ export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoPro
       src={photo?.imageSrc}
       size={size === 'small' ? '48' : '80'}
       textSizeRatio={size === 'small' ? 1 : 2}
-      style={{
-        backgroundImage: `url(${patternUrl})`,
-        backgroundRepeat: 'round',
-      }}
+      style={
+        !photo
+          ? {
+              backgroundImage: pattern.toDataUrl(),
+              backgroundRepeat: 'round',
+            }
+          : undefined
+      }
     />
   );
 }

@@ -1,8 +1,8 @@
 /** @module @category UI */
 import React, { type MouseEvent } from 'react';
 import { Button } from '@carbon/react';
-import { ChevronDown, ChevronUp } from '@carbon/react/icons';
 import { getCoreTranslation } from '@openmrs/esm-translations';
+import { ChevronDownIcon, ChevronUpIcon } from '../../public';
 
 export interface PatientBannerToggleContactDetailsButtonProps {
   /** Whether the contact details are currently being displayed */
@@ -21,10 +21,10 @@ export function PatientBannerToggleContactDetailsButton({
   return (
     <Button
       className={className}
-      kind="ghost"
-      renderIcon={showContactDetails ? ChevronUp : ChevronDown}
       iconDescription="Toggle contact details"
+      kind="ghost"
       onClick={toggleContactDetails}
+      renderIcon={showContactDetails ? ChevronUpIcon : ChevronDownIcon}
     >
       {showContactDetails
         ? getCoreTranslation('hideDetails', 'Hide details')

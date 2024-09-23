@@ -19,7 +19,8 @@
       "es2015.promise",
       "es2016.array.include",
       "es2018",
-      "esnext"
+      "es2020",
+      "es2022"
     ]
   },
   "include": ["src/**/*"]

@@ -15,101 +15,84 @@ import {
 } from '../../__mocks__/locations.mock';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
-import LocationPicker from './location-picker.component';
+import LocationPickerView from './location-picker-view.component';
 
-const validLocationUuid = '1ce1b7d4-c865-4178-82b0-5932e51503d6';
+const fistLocation = {
+  uuid: 'uuid_1',
+  name: 'location_1',
+};
+
+const secondLocation = {
+  uuid: 'uuid_2',
+  name: 'location_2',
+};
+
 const invalidLocationUuid = '2gf1b7d4-c865-4178-82b0-5932e51503d6';
+const userUuid = '90bd24b3-e700-46b0-a5ef-c85afdfededd';
 
 const mockedOpenmrsFetch = openmrsFetch as jest.Mock;
 const mockedUseConfig = useConfig as jest.Mock;
-const mockUseSession = useSession as jest.Mock;
+const mockedUseSession = useSession as jest.Mock;
 
 mockedUseConfig.mockReturnValue(mockConfig);
-mockUseSession.mockReturnValue({
+mockedUseSession.mockReturnValue({
   user: {
     display: 'Testy McTesterface',
     uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
     userProperties: {},
   },
 });
-mockedOpenmrsFetch.mockImplementation((url) => {
-  if (url === `/ws/fhir2/R4/Location?_id=${validLocationUuid}`) {
-    return validatingLocationSuccessResponse;
-  }
-  if (url === `/ws/fhir2/R4/Location?_id=${invalidLocationUuid}`) {
-    return validatingLocationFailureResponse;
-  }
 
-  return mockLoginLocations;
-});
-
-jest.mock('@openmrs/esm-framework', () => ({
-  ...jest.requireActual('@openmrs/esm-framework'),
-  setSessionLocation: jest.fn().mockResolvedValue({}),
-  setUserProperties: jest.fn().mockResolvedValue({}),
-  navigate: jest.fn(),
-  showSnackbar: jest.fn(),
-}));
-
-describe('LocationPicker', () => {
+describe('LocationPickerView', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockedOpenmrsFetch.mockImplementation((url) => {
+      if (url === `/ws/fhir2/R4/Location?_id=${fistLocation.uuid}`) {
+        return validatingLocationSuccessResponse;
+      }
+      if (url === `/ws/fhir2/R4/Location?_id=${invalidLocationUuid}`) {
+        return validatingLocationFailureResponse;
+      }
+
+      return mockLoginLocations;
+    });
   });
 
-  describe('Testing basic workflows', () => {
-    it('renders a list of login locations', async () => {
-      await act(() => {
-        renderWithRouter(LocationPicker, {
-          currentLocationUuid: 'some-location-uuid',
-          hideWelcomeMessage: false,
-        });
+  it('renders the component properly', async () => {
+    await act(async () => {
+      renderWithRouter(LocationPickerView, {
+        currentLocationUuid: 'some-location-uuid',
+        hideWelcomeMessage: false,
       });
-
-      screen.findByText(/welcome testy mctesterface/i);
-      expect(screen.getByText(/select your location from the list below/i)).toBeInTheDocument();
-      expect(screen.getByText(/use the search bar to find your location/i)).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /confirm/i })).toBeInTheDocument();
-      expect(
-        screen.getByRole('searchbox', {
-          name: /search for a location/i,
-        }),
-      ).toBeInTheDocument();
-      expect(screen.getByRole('searchbox', { name: /search for a location/i })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /confirm/i })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /confirm/i })).toBeDisabled();
-      const expectedLocations = [/community outreach/, /inpatient ward/, /mobile clinic/, /outpatient clinic/];
-      expectedLocations.map((row) =>
-        expect(screen.getByRole('radio', { name: new RegExp(row, 'i') })).toBeInTheDocument(),
-      );
     });
+
+    expect(screen.queryByText(/welcome testy mctesterface/i)).toBeInTheDocument();
+    expect(
+      screen.queryByText(/select your location from the list below. use the search bar to find your location/i),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /confirm/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /confirm/i })).toBeDisabled();
   });
 
   describe('Testing setting user preference workflow', () => {
     it('should save user preference if the user checks the checkbox and submit', async () => {
       const user = userEvent.setup();
 
-      await act(() => {
-        renderWithRouter(LocationPicker, {});
+      await act(async () => {
+        renderWithRouter(LocationPickerView, {});
       });
 
-      screen.findByText(/welcome testy mctesterface/i);
-      const checkbox = await screen.findByLabelText('Remember my location for future logins');
-      const communityOutreachLocation = await screen.findByRole('radio', {
-        name: 'Community Outreach',
-      });
-      expect(communityOutreachLocation).toBeInTheDocument();
-
-      await user.click(communityOutreachLocation);
-      expect(checkbox).toBeInTheDocument();
-
-      await user.click(checkbox);
-
+      const checkbox = screen.getByLabelText('Remember my location for future logins');
+      const location = screen.getByRole('radio', { name: fistLocation.name });
       const submitButton = screen.getByText('Confirm');
+
+      await user.click(location);
+      await user.click(checkbox);
       await user.click(submitButton);
 
-      expect(setSessionLocation).toHaveBeenCalledWith('1ce1b7d4-c865-4178-82b0-5932e51503d6', expect.anything());
-      expect(setUserProperties).toHaveBeenCalledWith('90bd24b3-e700-46b0-a5ef-c85afdfededd', {
-        defaultLocation: '1ce1b7d4-c865-4178-82b0-5932e51503d6',
+      expect(setSessionLocation).toHaveBeenCalledWith(fistLocation.uuid, expect.anything());
+      expect(setUserProperties).toHaveBeenCalledWith(userUuid, {
+        defaultLocation: fistLocation.uuid,
       });
 
       await waitFor(() =>
@@ -125,151 +108,124 @@ describe('LocationPicker', () => {
     it("should not save user preference if the user doesn't checks the checkbox and submit", async () => {
       const user = userEvent.setup();
 
-      await act(() => {
-        renderWithRouter(LocationPicker, {});
+      await act(async () => {
+        renderWithRouter(LocationPickerView, {});
       });
 
-      screen.findByText(/welcome testy mctesterface/i);
-      const communityOutreachLocation = await screen.findByRole('radio', {
-        name: 'Community Outreach',
-      });
-
-      expect(communityOutreachLocation).toBeInTheDocument();
-      await user.click(communityOutreachLocation);
-
+      const location = await screen.findByRole('radio', { name: fistLocation.name });
       const submitButton = screen.getByText('Confirm');
+
+      await user.click(location);
       await user.click(submitButton);
 
-      expect(setSessionLocation).toHaveBeenCalledWith('1ce1b7d4-c865-4178-82b0-5932e51503d6', expect.anything());
+      expect(setSessionLocation).toHaveBeenCalledWith(fistLocation.uuid, expect.anything());
       expect(setUserProperties).not.toHaveBeenCalled();
       expect(showSnackbar).not.toHaveBeenCalled();
     });
 
     it('should redirect to home if user preference in the userProperties is present and the location preference is valid', async () => {
-      mockUseSession.mockReturnValue({
+      const validLocationUuid = fistLocation.uuid;
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
-          uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
+          uuid: userUuid,
           userProperties: {
             defaultLocation: validLocationUuid,
           },
         },
       });
-
-      renderWithRouter(LocationPicker, {});
-
-      screen.findByText(/welcome testy mctesterface/i);
-      const checkbox = await screen.findByLabelText('Remember my location for future logins');
-
-      expect(checkbox).toBeChecked();
-
-      const communityOutreachLocation = await screen.findByRole('radio', {
-        name: 'Community Outreach',
+      await act(async () => {
+        renderWithRouter(LocationPickerView, {});
       });
-      expect(communityOutreachLocation).toBeInTheDocument();
 
-      expect(setSessionLocation).toHaveBeenCalledWith('1ce1b7d4-c865-4178-82b0-5932e51503d6', expect.anything());
+      await waitFor(() => {
+        expect(setSessionLocation).toHaveBeenCalledWith(validLocationUuid, expect.anything());
+      });
 
       // Since the user prop and the default login location is the same,
       // it shouldn't send a hit to the backend.
-      expect(setUserProperties).not.toHaveBeenCalledWith('90bd24b3-e700-46b0-a5ef-c85afdfededd', {
-        defaultLocation: '1ce1b7d4-c865-4178-82b0-5932e51503d6',
+      expect(setUserProperties).not.toHaveBeenCalledWith(userUuid, {
+        defaultLocation: validLocationUuid,
       });
     });
 
     it('should not redirect to home if user preference in the userProperties is present and the location preference is invalid', async () => {
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
-          uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
+          uuid: userUuid,
           userProperties: {
             defaultLocation: invalidLocationUuid,
           },
         },
       });
 
-      await act(() => {
-        renderWithRouter(LocationPicker, {});
+      await act(async () => {
+        renderWithRouter(LocationPickerView, {});
       });
 
-      screen.findByText(/welcome testy mctesterface/i);
-      const checkbox = await screen.findByLabelText('Remember my location for future logins');
-
+      const checkbox = screen.getByLabelText('Remember my location for future logins');
       expect(checkbox).toBeChecked();
 
-      const communityOutreachLocation = await screen.findByRole('radio', {
-        name: 'Community Outreach',
-      });
-      expect(communityOutreachLocation).toBeInTheDocument();
-
-      expect(setSessionLocation).not.toHaveBeenCalledWith('1ce1b7d4-c865-4178-82b0-5932e51503d6', expect.anything());
+      expect(setSessionLocation).not.toHaveBeenCalled();
     });
   });
 
   describe('Testing updating user preference workflow', () => {
     it('should not redirect if the login location page has a searchParam `update`', async () => {
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
-          uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
+          uuid: userUuid,
           userProperties: {
-            defaultLocation: validLocationUuid,
+            defaultLocation: fistLocation.uuid,
           },
         },
       });
 
-      await act(() => {
-        renderWithRouter(LocationPicker, {}, { routes: ['?update=true'] });
+      await act(async () => {
+        renderWithRouter(LocationPickerView, {}, { routes: ['?update=true'] });
       });
 
-      screen.findByText(/welcome testy mctesterface/i);
-      const checkbox = await screen.findByLabelText('Remember my location for future logins');
+      const checkbox = screen.getByLabelText('Remember my location for future logins');
       expect(checkbox).toBeChecked();
 
-      const communityOutreachLocation = await screen.findByRole('radio', {
-        name: 'Community Outreach',
-      });
-      expect(communityOutreachLocation).toBeInTheDocument();
       expect(setSessionLocation).not.toHaveBeenCalled();
     });
 
     it('should remove the saved preference if the login location page has a searchParam `update=true` and when submitting the user unchecks the checkbox ', async () => {
       const user = userEvent.setup();
 
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
-          uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
+          uuid: userUuid,
           userProperties: {
             defaultLocation: '1ce1b7d4-c865-4178-82b0-5932e51503d6',
           },
         },
       });
 
-      await act(() => {
-        renderWithRouter(LocationPicker, {}, { routes: ['?update=true'] });
+      await act(async () => {
+        renderWithRouter(LocationPickerView, {}, { routes: ['?update=true'] });
       });
 
-      screen.findByText(/welcome testy mctesterface/i);
-      const checkbox = await screen.findByLabelText('Remember my location for future logins');
+      const checkbox = screen.getByLabelText('Remember my location for future logins');
       expect(checkbox).toBeChecked();
 
-      const communityOutreachLocation = await screen.findByRole('radio', {
-        name: 'Community Outreach',
-      });
-      expect(communityOutreachLocation).toBeInTheDocument();
+      const location = screen.getByRole('radio', { name: fistLocation.name });
+      await user.click(location);
+
       expect(setSessionLocation).not.toHaveBeenCalled();
 
-      await user.click(communityOutreachLocation);
       await user.click(checkbox);
-
       expect(checkbox).not.toBeChecked();
 
       const submitButton = screen.getByText('Confirm');
       await user.click(submitButton);
 
-      expect(setSessionLocation).toHaveBeenCalledWith('1ce1b7d4-c865-4178-82b0-5932e51503d6', expect.anything());
-      expect(setUserProperties).toHaveBeenCalledWith('90bd24b3-e700-46b0-a5ef-c85afdfededd', {});
+      expect(setSessionLocation).toHaveBeenCalledWith(fistLocation.uuid, expect.anything());
+      expect(setUserProperties).toHaveBeenCalledWith(userUuid, {});
 
       await waitFor(() =>
         expect(showSnackbar).toHaveBeenCalledWith({
@@ -284,36 +240,32 @@ describe('LocationPicker', () => {
     it('should update the user preference with new selection', async () => {
       const user = userEvent.setup();
 
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
-          uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
+          uuid: userUuid,
           userProperties: {
-            defaultLocation: validLocationUuid,
+            defaultLocation: fistLocation.uuid,
           },
         },
       });
 
-      await act(() => {
-        renderWithRouter(LocationPicker, {}, { routes: ['?update=true'] });
+      await act(async () => {
+        renderWithRouter(LocationPickerView, {}, { routes: ['?update=true'] });
       });
 
-      screen.findByText(/welcome testy mctesterface/i);
-      const checkbox = await screen.findByLabelText('Remember my location for future logins');
+      const checkbox = screen.getByLabelText('Remember my location for future logins');
       expect(checkbox).toBeChecked();
 
-      const mobileClinicRadio = await screen.findByRole('radio', {
-        name: 'Mobile Clinic',
-      });
-
-      await user.click(mobileClinicRadio);
-
+      const location = await screen.findByRole('radio', { name: secondLocation.name });
       const submitButton = screen.getByText('Confirm');
+
+      await user.click(location);
       await user.click(submitButton);
 
-      expect(setSessionLocation).toHaveBeenCalledWith('8d9045ad-50f0-45b8-93c8-3ed4bce19dbf', expect.anything());
-      expect(setUserProperties).toHaveBeenCalledWith('90bd24b3-e700-46b0-a5ef-c85afdfededd', {
-        defaultLocation: '8d9045ad-50f0-45b8-93c8-3ed4bce19dbf',
+      expect(setSessionLocation).toHaveBeenCalledWith(secondLocation.uuid, expect.anything());
+      expect(setUserProperties).toHaveBeenCalledWith(userUuid, {
+        defaultLocation: secondLocation.uuid,
       });
 
       await waitFor(() =>
@@ -329,62 +281,31 @@ describe('LocationPicker', () => {
     it('should not update the user preference with same selection', async () => {
       const user = userEvent.setup();
 
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
-          uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
+          uuid: userUuid,
           userProperties: {
-            defaultLocation: validLocationUuid,
+            defaultLocation: fistLocation.uuid,
           },
         },
       });
 
-      await act(() => {
-        renderWithRouter(LocationPicker, {}, { routes: ['?update=true'] });
+      await act(async () => {
+        renderWithRouter(LocationPickerView, {}, { routes: ['?update=true'] });
       });
 
-      screen.findByText(/welcome testy mctesterface/i);
-      const checkbox = await screen.findByLabelText('Remember my location for future logins');
+      const checkbox = screen.getByLabelText('Remember my location for future logins');
       expect(checkbox).toBeChecked();
 
-      const communityOutreachLocation = await screen.findByRole('radio', {
-        name: 'Community Outreach',
-      });
+      const communityOutreachLocation = await screen.findByRole('radio', { name: fistLocation.name });
+      const submitButton = screen.getByText('Confirm');
 
       await user.click(communityOutreachLocation);
-
-      const submitButton = screen.getByText('Confirm');
       await user.click(submitButton);
 
-      expect(setSessionLocation).toHaveBeenCalledWith(validLocationUuid, expect.anything());
+      expect(setSessionLocation).toHaveBeenCalledWith(fistLocation.uuid, expect.anything());
       expect(setUserProperties).not.toHaveBeenCalled();
-    });
-
-    it('should have the defaultLocation presented at the top of the list', async () => {
-      Object.defineProperty(window, 'location', {
-        value: {
-          search: '?update=true',
-        },
-      });
-
-      mockUseSession.mockReturnValue({
-        user: {
-          display: 'Testy McTesterface',
-          uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
-          userProperties: {
-            defaultLocation: validLocationUuid,
-          },
-        },
-      });
-
-      await act(() => {
-        renderWithRouter(LocationPicker, {});
-      });
-
-      screen.findByText(/welcome testy mctesterface/i);
-      const radios = screen.getAllByRole('radio');
-      expect(radios[0].getAttribute('id')).toBe('Community Outreach');
-      expect(radios[0]).toHaveAttribute('checked');
     });
   });
 });

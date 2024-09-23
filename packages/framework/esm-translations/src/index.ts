@@ -1,6 +1,6 @@
 /** @module @category Translation */
 import { coreTranslations } from './translations';
-import _i18n, { i18n } from 'i18next';
+import _i18n, { i18n, type TOptions } from 'i18next';
 
 const i18n: typeof _i18n = (_i18n as unknown as { default: typeof _i18n }).default || _i18n;
 
@@ -26,7 +26,8 @@ i18n.on('initialized', function () {
  *
  * IMPORTANT: This function creates a hidden dependency on the module. Worse yet, it creates
  * a dependency specifically on that module's translation keys, which are often regarded as
- * "implementation details" and therefore may be volatile.
+ * "implementation details" and therefore may be volatile. Also note that this function DOES NOT
+ * load the module's translations if they have not already been loaded via `useTranslation`.
  * **This function should therefore be avoided when possible.**
  *
  * @param moduleName The module to get the translation from, e.g. '@openmrs/esm-login-app'
@@ -36,7 +37,12 @@ i18n.on('initialized', function () {
  *            for more information. `ns` and `defaultValue` are already set and may not be used.
  * @returns The translated text as a string
  */
-export function translateFrom(moduleName: string, key: string, fallback?: string, options?: object) {
+export function translateFrom(
+  moduleName: string,
+  key: string,
+  fallback?: string,
+  options?: Omit<TOptions, 'ns' | 'defaultValue'>,
+) {
   return i18n.t(key, {
     ns: moduleName,
     defaultValue: fallback,
@@ -57,7 +63,11 @@ export type CoreTranslationKey = keyof typeof coreTranslations;
  * @param options Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options
  *           for more information. `ns` and `defaultValue` are already set and may not be used.
  */
-export function getCoreTranslation(key: CoreTranslationKey, defaultText?: string, options?: object): string {
+export function getCoreTranslation(
+  key: CoreTranslationKey,
+  defaultText?: string,
+  options?: Omit<TOptions, 'ns' | 'defaultValue'>,
+): string {
   if (!coreTranslations[key]) {
     console.error(`O3 Core Translations does not provide key '${key}'. The key itself is being rendered as text.`);
     return key;

@@ -1,23 +1,35 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import useSwrInfinite from 'swr/infinite';
+import useSwrInfinite, { type SWRInfiniteResponse } from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
-import { type FetchResponse, fhirBaseUrl, openmrsFetch, useDebounce, showNotification } from '@openmrs/esm-framework';
+import {
+  fhirBaseUrl,
+  openmrsFetch,
+  refetchCurrentUser,
+  type FetchResponse,
+  type Session,
+  useDebounce,
+} from '@openmrs/esm-framework';
 import type { LocationEntry, LocationResponse } from './types';
 
+// "swr/infinite" doesn't export InfiniteKeyedMutator directly
+type InfiniteKeyedMutator<T> = SWRInfiniteResponse<T extends (infer I)[] ? I : T>['mutate'];
+
 interface LoginLocationData {
-  locations: Array<LocationEntry>;
-  isLoading: boolean;
-  totalResults: number;
+  error: Error;
   hasMore: boolean;
+  isLoading: boolean;
   loadingNewData: boolean;
+  locations: Array<LocationEntry>;
+  mutate: InfiniteKeyedMutator<FetchResponse<LocationResponse>[]>;
   setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[]>;
+  totalResults: number;
 }
 
 export function useLoginLocations(
-  useLoginLocationTag: boolean,
   count: number = 0,
   searchQuery: string = '',
+  useLoginLocationTag: boolean,
 ): LoginLocationData {
   const { t } = useTranslation();
   const debouncedSearchQuery = useDebounce(searchQuery);
@@ -66,19 +78,16 @@ export function useLoginLocations(
     return url + urlSearchParameters.toString();
   }
 
-  const { data, isLoading, isValidating, setSize, error } = useSwrInfinite<FetchResponse<LocationResponse>, Error>(
-    constructUrl,
-    openmrsFetch,
-  );
+  const { data, isLoading, isValidating, setSize, error, mutate } = useSwrInfinite<
+    FetchResponse<LocationResponse>,
+    Error
+  >(constructUrl, openmrsFetch);
 
-  if (error) {
-    showNotification({
-      title: t('errorLoadingLoginLocations', 'Error loading login locations'),
-      kind: 'error',
-      critical: true,
-      description: error?.message,
-    });
-  }
+  useEffect(() => {
+    if (error) {
+      console.error(error);
+    }
+  }, [error]);
 
   const memoizedLocations = useMemo(() => {
     return {
@@ -89,12 +98,28 @@ export function useLoginLocations(
       loadingNewData: isValidating,
       setPage: setSize,
       error,
+      mutate,
     };
-  }, [isLoading, data, isValidating, setSize]);
+  }, [isLoading, data, isValidating, setSize, error, mutate]);
 
   return memoizedLocations;
 }
 
+export async function performLogin(username: string, password: string): Promise<{ data: Session }> {
+  const abortController = new AbortController();
+  const token = window.btoa(`${username}:${password}`);
+  const url = `/ws/rest/v1/session`;
+
+  return openmrsFetch(url, {
+    headers: {
+      Authorization: `Basic ${token}`,
+    },
+    signal: abortController.signal,
+  }).then((res) => {
+    refetchCurrentUser();
+    return res;
+  });
+}
 export function useValidateLocationUuid(userPreferredLocationUuid: string) {
   const url = userPreferredLocationUuid ? `${fhirBaseUrl}/Location?_id=${userPreferredLocationUuid}` : null;
   const { data, error, isLoading } = useSwrImmutable<FetchResponse<LocationResponse>>(url, openmrsFetch, {

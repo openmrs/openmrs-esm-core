@@ -1,11 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Column, FlexGrid, Row, TextInput, Toggle } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, ChevronUp, Download, TrashCan } from '@carbon/react/icons';
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEmpty from 'lodash-es/isEmpty';
 import type { Config } from '@openmrs/esm-framework/src/internal';
 import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  DownloadIcon,
+  TrashCanIcon,
   clearConfigErrors,
   getExtensionInternalStore,
   implementerToolsConfigStore,
@@ -50,7 +53,7 @@ interface OpenOrCloseButtonProps {
 const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({ isConfigToolbarOpen, toggleIsToolbarOpen }) => (
   <Button
     hasIconOnly
-    renderIcon={isConfigToolbarOpen ? ChevronUp : ChevronDown}
+    renderIcon={isConfigToolbarOpen ? ChevronUpIcon : ChevronDownIcon}
     onClick={toggleIsToolbarOpen}
     kind="ghost"
     size="sm"
@@ -130,20 +133,21 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   id="extensionSearch"
                   labelText="Search configuration"
                   onChange={(e) => setFilterText(e.target.value)}
+                  autoComplete="off"
                 />
               </Column>
               <Column className={styles.toggleButtons}>
                 <Toggle
                   className={styles.toggle}
                   id="jsonModeSwitch"
-                  labelText={t('jsonEditor', 'JSON Editor')}
+                  labelText={t('jsonEditor', 'JSON editor')}
                   onToggle={toggleIsJsonModeEnabled}
                   toggled={isJsonModeEnabled}
                 />
                 <Toggle
                   className={styles.toggle}
                   id="uiEditorSwitch"
-                  labelText={t('uiEditor', 'UI Editor')}
+                  labelText={t('uiEditor', 'UI editor')}
                   toggled={isUIEditorEnabled}
                   onToggle={toggleIsUIEditorEnabled}
                 />
@@ -152,18 +156,18 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 <Button
                   kind="danger"
                   iconDescription="Clear local config"
-                  renderIcon={(props) => <TrashCan size={16} {...props} />}
+                  renderIcon={(props) => <TrashCanIcon size={16} {...props} />}
                   onClick={() => {
                     clearConfigErrors();
                     temporaryConfigStore.setState({ config: {} });
                   }}
                 >
-                  {t('clearConfig', 'Clear Local Config')}
+                  {t('clearConfig', 'Clear local config')}
                 </Button>
                 <Button
                   kind="secondary"
                   iconDescription="Download config"
-                  renderIcon={(props) => <Download size={16} {...props} />}
+                  renderIcon={(props) => <DownloadIcon size={16} {...props} />}
                   onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
                     if ((event.target as HTMLAnchorElement).id != 'downloadConfigBtn')
                       document.getElementById('downloadConfigBtn')?.click();
@@ -175,7 +179,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                     download="temporary_config.json"
                     href={window.URL.createObjectURL(tempConfigObjUrl)}
                   >
-                    {t('downloadConfig', 'Download Config')}
+                    {t('downloadConfig', 'Download config')}
                   </a>
                 </Button>
               </Column>

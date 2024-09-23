@@ -4,6 +4,7 @@ export interface StyleguideConfigObject {
   'Brand color #1': string;
   'Brand color #2': string;
   'Brand color #3': string;
+  implementationName: string;
   patientPhotoConceptUuid: string;
   preferredCalendar: {
     [key: string]: string;
@@ -22,6 +23,11 @@ export const esmStyleGuideSchema = {
   'Brand color #3': {
     _default: '#007d79',
     _type: Type.String,
+  },
+  implementationName: {
+    _type: Type.String,
+    _description: 'A name of the place (or authority) where all possible locations a user can choose are located.',
+    _default: 'Clinic',
   },
   patientPhotoConceptUuid: {
     _type: Type.ConceptUuid,

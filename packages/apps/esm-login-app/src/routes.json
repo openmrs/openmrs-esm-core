@@ -15,6 +15,12 @@
       "route": "logout",
       "online": true,
       "offline": true
+    },
+    {
+      "component": "root",
+      "route": "change-password",
+      "online": true,
+      "offline": true
     }
   ],
   "extensions": [
@@ -33,12 +39,25 @@
       "offline": true
     },
     {
+      "name": "password-changer",
+      "slot": "user-panel-slot",
+      "component": "changePasswordLink",
+      "online": true,
+      "offline": true
+    },
+    {
       "name": "location-changer",
       "slot": "user-panel-slot",
       "component": "changeLocationLink",
       "online": true,
       "offline": true,
       "order": 1
+    }
+  ],
+  "modals": [
+    {
+      "name": "change-password-modal",
+      "component": "changePasswordModal"
     }
   ]
 }

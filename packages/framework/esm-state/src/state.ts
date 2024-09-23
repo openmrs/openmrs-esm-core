@@ -51,6 +51,36 @@ export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T>
 }
 
 /**
+ * Registers an existing Zustand store.
+ *
+ * @param name A name by which the store can be looked up later.
+ *    Must be unique across the entire application.
+ * @param store The Zustand store to use for this.
+ * @returns The newly registered store.
+ */
+export function registerGlobalStore<T>(name: string, store: StoreApi<T>): StoreApi<T> {
+  const available = availableStores[name];
+
+  if (available) {
+    if (available.active) {
+      console.error('Cannot override an existing store. Make sure that stores are only created once.');
+    } else {
+      available.value = store;
+    }
+
+    available.active = true;
+    return available.value as StoreApi<T>;
+  } else {
+    availableStores[name] = {
+      value: store,
+      active: true,
+    };
+
+    return store;
+  }
+}
+
+/**
  * Returns the existing store named `name`,
  * or creates a new store named `name` if none exists.
  *
@@ -72,8 +102,6 @@ export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> 
 
   return available.value as StoreApi<T>;
 }
-
-export interface AppState {}
 
 export function subscribeTo<T, U>(store: StoreApi<T>, select: (state: T) => U, handle: (subState: U) => void) {
   let previous = select(store.getState());

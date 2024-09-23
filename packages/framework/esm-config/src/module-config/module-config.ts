@@ -4,11 +4,12 @@ import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, Extension
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
 import { validator } from '../validators/validator';
-import type { ConfigExtensionStore, ConfigInternalStore, ConfigStore } from './state';
+import { type ConfigExtensionStore, type ConfigInternalStore, type ConfigStore } from './state';
 import {
   configInternalStore,
   configExtensionStore,
   getConfigStore,
+  getExtensionConfig,
   getExtensionsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -136,6 +137,7 @@ function computeExtensionConfigs(
       configState,
       tempConfigState,
     );
+
     configs[extension.slotName] = {
       ...configs[extension.slotName],
       [extension.extensionId]: { config, loaded: true },
@@ -165,11 +167,11 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
   const enhancedSchema = mergeDeepRight(schema, implicitConfigSchema) as ConfigSchema;
 
-  const state = configInternalStore.getState();
-  configInternalStore.setState({
+  configInternalStore.setState((state) => ({
+    ...state,
     schemas: { ...state.schemas, [moduleName]: enhancedSchema },
     moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
-  });
+  }));
 }
 
 /**
@@ -239,10 +241,10 @@ export function defineExtensionConfigSchema(extensionName: string, schema: Confi
 }
 
 export function provide(config: Config, sourceName = 'provided') {
-  const state = configInternalStore.getState();
-  configInternalStore.setState({
+  configInternalStore.setState((state) => ({
+    ...state,
     providedConfigs: [...state.providedConfigs, { source: sourceName, config }],
-  });
+  }));
 }
 
 /**
@@ -270,19 +272,44 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
 }
 
 /** @internal */
-export function getTranslationOverrides(moduleName: string): Promise<Object> {
-  return new Promise<Object>((resolve) => {
-    const store = getConfigStore(moduleName);
-    function update(state: ConfigStore) {
-      if (state.translationOverridesLoaded && state.config) {
-        const translationOverrides = state.config['Translation overrides'] ?? {};
-        resolve(translationOverrides);
-        unsubscribe && unsubscribe();
+export function getTranslationOverrides(
+  moduleName: string,
+  slotName?: string,
+  extensionId?: string,
+): Promise<Array<Record<string, Record<string, string>>>> {
+  const promises = [
+    new Promise<Record<string, Record<string, string>>>((resolve) => {
+      const configStore = getConfigStore(moduleName);
+      function update(state: ReturnType<(typeof configStore)['getState']>) {
+        if (state.translationOverridesLoaded && state.config) {
+          const translationOverrides = state.config['Translation overrides'] ?? {};
+          resolve(translationOverrides);
+          unsubscribe && unsubscribe();
+        }
       }
-    }
-    update(store.getState());
-    const unsubscribe = store.subscribe(update);
-  });
+      update(configStore.getState());
+      const unsubscribe = configStore.subscribe(update);
+    }),
+  ];
+
+  if (slotName && extensionId) {
+    promises.push(
+      new Promise<Record<string, Record<string, string>>>((resolve) => {
+        const configStore = getExtensionConfig(slotName, extensionId);
+        function update(state: ReturnType<(typeof configStore)['getState']>) {
+          if (state.loaded && state.config) {
+            const translationOverrides = state.config['Translation overrides'] ?? {};
+            resolve(translationOverrides);
+            unsubscribe && unsubscribe();
+          }
+        }
+        update(configStore.getState());
+        const unsubscribe = configStore.subscribe(update);
+      }),
+    );
+  }
+
+  return Promise.all(promises);
 }
 
 /**
@@ -593,12 +620,11 @@ function validateBranchStructure(schemaPart: ConfigSchema, value: any, keyPath: 
   checkType(keyPath, schemaPart._type, value);
 
   if (isOrdinaryObject(value)) {
-    // structurally validate only if there's elements specified
-    // or there's no `_default` value (which would indicate a freeform object)
     if (schemaPart._type === Type.Object) {
-      validateDictionaryStructure(schemaPart, value, keyPath);
-    } else if (!schemaPart.hasOwnProperty('_default')) {
-      // recurse to validate nested object structure
+      // validate as freeform object
+      validateFreeformObjectStructure(schemaPart, value, keyPath);
+    } else if (!(schemaPart.hasOwnProperty('_default') || schemaPart.hasOwnProperty('_type'))) {
+      // validate as normal nested config
       validateStructure(schemaPart, value, keyPath);
     }
   } else {
@@ -608,16 +634,20 @@ function validateBranchStructure(schemaPart: ConfigSchema, value: any, keyPath: 
   }
 }
 
-function validateDictionaryStructure(dictionarySchema: ConfigSchema, config: ConfigObject, keyPath: string) {
-  if (dictionarySchema._elements) {
+function validateFreeformObjectStructure(freeformObjectSchema: ConfigSchema, config: ConfigObject, keyPath: string) {
+  if (freeformObjectSchema._elements) {
     for (const key of Object.keys(config)) {
       const value = config[key];
-      validateStructure(dictionarySchema._elements, value, `${keyPath}.${key}`);
+      validateStructure(freeformObjectSchema._elements, value, `${keyPath}.${key}`);
     }
   }
 }
 
 function validateArrayStructure(arraySchema: ConfigSchema, value: ConfigObject, keyPath: string) {
+  const validatedAsArray = checkType(keyPath, Type.Array, value);
+  if (!validatedAsArray) {
+    return;
+  }
   // if there is an array element object schema, verify that elements match it
   if (hasObjectSchema(arraySchema._elements)) {
     for (let i = 0; i < value.length; i++) {
@@ -661,6 +691,10 @@ function runAllValidatorsInConfigTree(schema: ConfigSchema, config: ConfigObject
   }
 }
 
+/**
+ * Run type validation for the value, logging any errors.
+ * @returns true if validation passes, false otherwise
+ */
 function checkType(keyPath: string, _type: Type | undefined, value: any) {
   if (_type) {
     const validator: Record<string, Function> = {
@@ -674,11 +708,17 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
       PersonAttributeTypeUuid: isUuid,
       PatientIdentifierTypeUuid: isUuid,
     };
-    runValidators(keyPath, [validator[_type]], value);
+    return runValidators(keyPath, [validator[_type]], value);
   }
+  return true;
 }
 
+/**
+ * Runs validators, logging errors.
+ * @returns true if all pass, false otherwise.
+ */
 function runValidators(keyPath: string, validators: Array<Function> | undefined, value: any) {
+  let returnValue = true;
   if (validators) {
     try {
       for (let validator of validators) {
@@ -690,12 +730,14 @@ function runValidators(keyPath: string, validators: Array<Function> | undefined,
               ? `Invalid configuration for ${keyPath}: ${validatorResult}`
               : `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`;
           logError(keyPath, message);
+          returnValue = false;
         }
       }
     } catch (e) {
       console.error(`Skipping invalid validator at "${keyPath}". Encountered error\n\t${e}`);
     }
   }
+  return returnValue;
 }
 
 // Recursively fill in the config with values from the schema.
@@ -715,9 +757,9 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
     // crashing completely, though it will produce unexpected behavior.
     // If this happens, there should be legible errors in the console from
     // the schema validator.
-    if (schemaPart && schemaPart.hasOwnProperty('_default')) {
+    if (schemaPart && (schemaPart.hasOwnProperty('_type') || schemaPart.hasOwnProperty('_default'))) {
       // We assume that schemaPart defines a config value, since it has
-      // a property `_default`.
+      // a property `_type` or `_default`.
       if (!config.hasOwnProperty(key)) {
         (config[key] as any) = schemaPart['_default'];
       }
@@ -736,11 +778,12 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
         }
       }
     } else if (isOrdinaryObject(schemaPart)) {
-      // Since schemaPart has no property "_default", if it's an ordinary object
+      // Since schemaPart has no property "_type", if it's an ordinary object
       // (unlike, importantly, the validators array), we assume it is a parent config property.
       // We recurse to config[key] and schema[key]. Default config[key] to {}.
-      const selectedConfigPart = config.hasOwnProperty(key) ? configPart : {};
+      const selectedConfigPart = configPart ?? {};
 
+      // There will have been a validation error already if configPart is not a plain object.
       if (isOrdinaryObject(selectedConfigPart)) {
         config[key] = setDefaults(schemaPart, selectedConfigPart);
       }

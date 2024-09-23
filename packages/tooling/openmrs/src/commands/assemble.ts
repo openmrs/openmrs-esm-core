@@ -7,6 +7,8 @@ import rimraf from 'rimraf';
 import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
+import semver from 'semver';
+import merge from 'lodash/merge';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 
@@ -17,7 +19,8 @@ export interface AssembleArgs {
   mode: string;
   config: Array<string>;
   registry?: string;
-  hashImportmap: boolean;
+  configFiles: Array<string>;
+  hashFiles: boolean;
   fresh: boolean;
   buildRoutes: boolean;
   manifest: boolean;
@@ -30,6 +33,7 @@ interface NpmSearchResult {
       version: string;
     };
   }>;
+  total: number;
 }
 
 interface AssembleConfig {
@@ -85,16 +89,16 @@ async function readConfig(
       }
 
       return results.configs.reduce((config, newConfig) => {
-        if (newConfig.frontendModules) {
-          config.frontendModules = { ...config.frontendModules, ...newConfig.frontendModules };
-        }
-
         // excludes are processed for each config in turn; this ensure that modules removed in one config can
         // be added back by providing another config override
         if (Array.isArray(newConfig.frontendModuleExcludes)) {
           newConfig.frontendModuleExcludes.forEach((exclude) => {
             typeof exclude === 'string' && config.frontendModules[exclude] && delete config.frontendModules[exclude];
           });
+        }
+
+        if (newConfig.frontendModules) {
+          config.frontendModules = { ...config.frontendModules, ...newConfig.frontendModules };
         }
         return config;
       });
@@ -103,16 +107,24 @@ async function readConfig(
       logInfo(`Loading available frontend modules ...`);
 
       const packages = await npmRegistryFetch
-        .json('/-/v1/search?text=keywords:openmrs&size=500', fetchOptions)
-        .then((res) => res as unknown as NpmSearchResult)
+        // see https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md#get-v1search for what these
+        // options mean; in essence, we search for anything with the keyword openmrs that has at least one
+        // stable version; quality is down-scored because that metric favours smaller apps over core
+        // community assets. Maintenance is boosted to de-score relatively unmaintained apps, as the framework
+        // still has a fair bit of churn
+        .json(
+          `/-/v1/search?text=app%20keywords:openmrs&not:unstable&quality=0.001&maintenance=3.0&size=250`,
+          fetchOptions,
+        )
         .then((res) =>
-          res.objects
+          (res as unknown as NpmSearchResult).objects
             .map((m) => ({
               name: m.package.name,
               version: m.package.version,
             }))
             .filter((m) => m.name.endsWith('-app')),
         );
+
       const questions: Array<Question> = [];
 
       for (const pckg of packages) {
@@ -125,14 +137,22 @@ async function readConfig(
           },
           {
             name: pckg.name,
-            askAnswered: true,
             message: `Version for "${pckg.name}"?`,
             default: pckg.version,
             type: 'string',
-            when(ans) {
-              return ans[pckg.name];
+            when: (ans) => ans[pckg.name],
+            validate: (input) => {
+              if (typeof input !== 'string') {
+                return `Expected a valid SemVer string, got ${typeof input}.`;
+              }
+
+              if (!semver.valid(input)) {
+                return `${input} does not appear to be a valid semver or version range. See https://semver.npmjs.com/#syntax-examples.`;
+              }
+
+              return true;
             },
-          } as Question,
+          },
         );
       }
 
@@ -157,16 +177,11 @@ async function readConfig(
 }
 
 async function downloadPackage(
-  cacheDir: string,
   esmName: string,
   esmVersion: string,
   baseDir: string,
   fetchOptions: npmRegistryFetch.Options,
 ): Promise<Buffer> {
-  if (!existsSync(cacheDir)) {
-    await mkdir(cacheDir, { recursive: true });
-  }
-
   if (esmVersion.startsWith('file:')) {
     const source = resolve(baseDir, esmVersion.substring(5));
     return readFile(source);
@@ -233,7 +248,6 @@ export async function runAssemble(args: AssembleArgs) {
   logInfo(`Assembling dependencies and building import map and routes registry...`);
 
   const { frontendModules = {}, publicUrl = '.' } = config;
-  const cacheDir = resolve(process.cwd(), '.cache');
 
   if (args.fresh && existsSync(args.target)) {
     await new Promise((resolve) => rimraf(args.target, resolve));
@@ -244,7 +258,7 @@ export async function runAssemble(args: AssembleArgs) {
   await Promise.all(
     Object.keys(frontendModules).map(async (esmName) => {
       const esmVersion = frontendModules[esmName];
-      const tgzBuffer = await downloadPackage(cacheDir, esmName, esmVersion, process.cwd(), npmConf);
+      const tgzBuffer = await downloadPackage(esmName, esmVersion, process.cwd(), npmConf);
 
       const baseDirName = `${esmName}`.replace(/^@/, '').replace(/\//, '-');
       const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, baseDirName));
@@ -253,7 +267,7 @@ export async function runAssemble(args: AssembleArgs) {
       const appRoutes = resolve(args.target, dirName, 'routes.json');
       if (existsSync(appRoutes)) {
         try {
-          routes[esmName] = JSON.parse((await readFile(appRoutes)).toString());
+          routes[esmName] = JSON.parse(await readFile(appRoutes, 'utf8'));
           routes[esmName]['version'] = version;
         } catch (e) {
           logWarn(`Error while processing routes for ${esmName} using ${appRoutes}: ${e}`);
@@ -274,16 +288,35 @@ export async function runAssemble(args: AssembleArgs) {
   );
 
   await writeFile(
-    resolve(args.target, `importmap${args.hashImportmap ? '.' + contentHash(importmap) : ''}.json`),
+    resolve(args.target, `importmap${args.hashFiles ? '.' + contentHash(importmap) : ''}.json`),
     JSON.stringify(importmap),
     'utf8',
   );
 
   if (args.buildRoutes) {
     await writeFile(
-      resolve(args.target, `routes.registry${args.hashImportmap ? '.' + contentHash(routes) : ''}.json`),
+      resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routes) : ''}.json`),
       JSON.stringify(routes),
       'utf-8',
+    );
+  }
+
+  if (args.configFiles && args.configFiles.length > 0) {
+    const assembledConfig = args.configFiles.reduce(async (merged, file) => {
+      try {
+        const config = JSON.parse((await readFile(file), 'utf8'));
+        return merge(merged, config);
+      } catch (e) {
+        logWarn(`Error while processing config file ${file}: ${e}`);
+      }
+
+      return merged;
+    }, {});
+
+    await writeFile(
+      resolve(args.target, `openmrs-config${args.hashFiles ? '.' + contentHash(assembledConfig) : ''}.json`),
+      JSON.stringify(assembledConfig),
+      'utf8',
     );
   }
 

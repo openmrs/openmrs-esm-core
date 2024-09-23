@@ -1,6 +1,6 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { resolve } from 'node:path';
+import { basename, resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { type ImportmapDeclaration, type RoutesDeclaration, logInfo, logWarn, removeTrailingSlash } from '../utils';
@@ -18,16 +18,32 @@ export interface DevelopArgs {
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
+  configFiles: Array<string>;
   addCookie: string;
   supportOffline: boolean;
 }
 
 export async function runDevelop(args: DevelopArgs) {
-  const { backend, host, port, open, importmap, routes, watchedRoutesPaths, configUrls, addCookie, supportOffline } =
-    args;
+  const {
+    backend,
+    host,
+    port,
+    open,
+    importmap,
+    routes,
+    watchedRoutesPaths,
+    configUrls,
+    configFiles,
+    addCookie,
+    supportOffline,
+  } = args;
   const apiUrl = removeTrailingSlash(args.apiUrl);
   const spaPath = removeTrailingSlash(args.spaPath);
   const app = express();
+
+  const localConfigUrlPrefix = '__local_config__';
+  const localConfigUrls = configFiles.map((path) => `${spaPath}/${localConfigUrlPrefix}/${basename(path)}`);
+
   const source = resolve(require.resolve('@openmrs/esm-app-shell/package.json'), '..', 'dist');
   const index = resolve(source, 'index.html');
   const indexContent = readFileSync(index, 'utf8')
@@ -40,21 +56,18 @@ export async function runDevelop(args: DevelopArgs) {
           spaPath: ${JSON.stringify(spaPath)},
           env: "development",
           offline: ${supportOffline},
-          configUrls: ${JSON.stringify(configUrls)},
+          configUrls: ${JSON.stringify([...configUrls, ...localConfigUrls])},
         });
     </script>
   `,
     )
     .replace(/href="\/openmrs\/spa/g, `href="${spaPath}`)
     .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`)
-    .replace(
-      /https:\/\/dev3\.openmrs\.org\/openmrs\/spa\/importmap\.json/g,
-      `http://${host}:${port}${spaPath}/importmap.json`,
-    );
+    .replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\/importmap\.json/g, `${spaPath}/importmap.json`);
 
   const sw = resolve(source, 'service-worker.js');
   // remove any full references to dev3.openmrs.org
-  const swContent = readFileSync(sw, 'utf-8').replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g, ``);
+  const swContent = readFileSync(sw, 'utf-8').replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g, `${spaPath}`);
 
   const pageUrl = `http://${host}:${port}${spaPath}`;
 
@@ -115,6 +128,13 @@ export async function runDevelop(args: DevelopArgs) {
       res.contentType('js').send(swContent);
     });
   }
+
+  configFiles.forEach((file, i) => {
+    const url = localConfigUrls[i];
+    app.get(url, (_, res) => {
+      res.contentType('application/json').send(readFileSync(resolve(process.cwd(), file)));
+    });
+  });
 
   // Route for custom `index.html` goes above static assets
   app.get(indexHtmlPathMatcher, (_, res) => res.contentType('text/html').send(indexContent));

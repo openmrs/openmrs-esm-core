@@ -26,6 +26,11 @@ declare global {
      */
     initializeSpa(config: SpaConfig): void;
     /**
+     * Indicates whether offline mode is enabled in this install or not.
+     * This is used to determine whether offline functionality is present or not.
+     */
+    offlineEnabled: boolean;
+    /**
      * Gets the API base path, e.g. /openmrs
      */
     openmrsBase: string;
@@ -40,7 +45,7 @@ declare global {
     /**
      * The build number of the app shell. Set when the app shell is built by webpack.
      */
-    spaVersion?: string;
+    spaVersion: string;
     /**
      * Gets a set of options from the import-map-overrides package.
      */
@@ -119,6 +124,10 @@ export type PageDefinition = {
    */
   component: string;
   /**
+   * If supplied, the page will only be rendered when this feature flag is enabled.
+   */
+  featureFlag?: string;
+  /**
    * Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
    */
   online?: boolean;
@@ -162,6 +171,7 @@ export type PageDefinition = {
 );
 
 /**
+ * @internal
  * A definition of a page after the app has been registered.
  */
 export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
@@ -232,25 +242,142 @@ export type ExtensionDefinition = {
 );
 
 /**
- * This interface describes the format of the routes provided by an app
+ * A definition of a modal as extracted from an app's routes.json
  */
+export type ModalDefinition = {
+  /**
+   * The name of this modal. This is used to launch the modal.
+   */
+  name: string;
+} & (
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component: string;
+      /**
+       * @internal
+       */
+      load?: never;
+    }
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component?: never;
+      /**
+       * @internal
+       */
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+    }
+);
+
+/* The possible states a workspace window can be opened in. */
+export type WorkspaceWindowState = 'maximized' | 'hidden' | 'normal';
+
+/**
+ * A definition of a workspace as extracted from an app's routes.json
+ */
+export type WorkspaceDefinition = {
+  /**
+   * The name of this workspace. This is used to launch the workspace.
+   */
+  name: string;
+  /**
+   * The title of the workspace. This will be looked up as a key in the translations of the module
+   * defining the workspace.
+   */
+  title: string;
+  /**
+   * The type of the workspace. Only one of each "type" of workspace is allowed to be open at a
+   * time. The default is "form". If the right sidebar is in use, then the type determines which
+   * right sidebar icon corresponds to the workspace.
+   */
+  type: string;
+  canHide?: boolean;
+  canMaximize?: boolean;
+  /**
+   * Controls the width of the workspace. The default is "narrow" and this should only be
+   * changed to "wider" if the workspace itself has internal navigation, like the form editor.
+   * The width "extra-wide" is for workspaces that contain their own sidebar.
+   */
+  width?: 'narrow' | 'wider' | 'extra-wide';
+  /**
+   * Controls whether the workspace has its own sidebar. If true, the sidebar will be displayed when the workspace is open.
+   */
+  hasOwnSidebar?: boolean;
+  /**
+   * Sidebars have icons that representing workspaces. The sidebar family is the name of the
+   * sidebar that should contain the icon for this workspace. This is generally only needed if
+   * `hasOwnSidebar` is true, in which case this is the name of that sidebar. If multiple
+   * workspaces have `hasOwnSidebar` set to true and the same family name, then the sidebar
+   * within the workspace area will have icons for each of those workspaces.
+   */
+  sidebarFamily?: string;
+  preferredWindowSize?: WorkspaceWindowState;
+} & (
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component: string;
+      /**
+       * @internal
+       */
+      load?: never;
+    }
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component?: never;
+      /**
+       * @internal
+       */
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+    }
+);
+
+/**
+ * A definition of a feature flag extracted from the routes.json
+ */
+export interface FeatureFlagDefinition {
+  /** A code-friendly name for the flag, which will be used to reference it in code */
+  flagName: string;
+  /** A human-friendly name which will be displayed in the Implementer Tools */
+  label: string;
+  /** An explanation of what the flag does, which will be displayed in the Implementer Tools */
+  description: string;
+}
+
+/** This interface describes the format of the routes provided by an app */
 export interface OpenmrsAppRoutes {
-  /**
-   * The version of this frontend module.
-   */
+  /** The version of this frontend module. */
   version?: string;
-  /**
-   * A list of backend modules necessary for this frontend module and the corresponding required versions.
-   */
+  /** A list of backend modules necessary for this frontend module and the corresponding required versions. */
   backendDependencies?: Record<string, string>;
-  /**
-   * An array of all pages supported by this frontend module. Pages are automatically mounted based on a route.
-   */
+  /** A list of backend modules that may enable optional functionality in this frontend module if available and the corresponding required versions. */
+  optionalBackendDependencies?: {
+    /** The name of the backend dependency and either the required version or an object describing the required version */
+    [key: string]:
+      | string
+      | {
+          /** The minimum version of this optional dependency that must be present. */
+          version: string;
+          /** The feature flag to enable if this backend dependency is present */
+          feature?: FeatureFlagDefinition;
+        };
+  };
+  /** An array of all pages supported by this frontend module. Pages are automatically mounted based on a route. */
   pages?: Array<PageDefinition>;
-  /**
-   * An array of all extensions supported by this frontend module. Extensions can be mounted in extension slots, either via declarations in this file or configuration.
-   */
+  /**  An array of all extensions supported by this frontend module. Extensions can be mounted in extension slots, either via declarations in this file or configuration. */
   extensions?: Array<ExtensionDefinition>;
+  /** An array of all feature flags for any beta-stage features this module provides. */
+  featureFlags?: Array<FeatureFlagDefinition>;
+  /** An array of all modals supported by this frontend module. Modals can be launched by name. */
+  modals?: Array<ModalDefinition>;
+  /** An array of all workspaces supported by this frontend module. Workspaces can be launched by name. */
+  workspaces?: Array<WorkspaceDefinition>;
 }
 
 /**
@@ -262,3 +389,8 @@ export type OpenmrsRoutes = Record<string, OpenmrsAppRoutes>;
 export interface ResourceLoader<T = any> {
   (): Promise<T>;
 }
+
+/*
+ * Supported values for FHIR HumanName.use as defined by https://hl7.org/fhir/R4/valueset-name-use.html
+ */
+export type NameUse = 'usual' | 'official' | 'temp' | 'nickname' | 'anonymous' | 'old' | 'maiden';

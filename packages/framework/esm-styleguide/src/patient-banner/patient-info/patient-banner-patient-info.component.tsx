@@ -1,10 +1,10 @@
 /** @module @category UI */
-import { getCoreTranslation } from '@openmrs/esm-translations';
-import { age, formatDate, parseDate } from '@openmrs/esm-utils';
-import { ExtensionSlot, useConfig } from '@openmrs/esm-react-utils';
 import React from 'react';
 import classNames from 'classnames';
 import { Tag } from '@carbon/react';
+import { age, formatDate, parseDate } from '@openmrs/esm-utils';
+import { getCoreTranslation } from '@openmrs/esm-translations';
+import { ExtensionSlot, useConfig, usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
 import styles from './patient-banner-patient-info.module.scss';
 
 export interface PatientBannerPatientInfoProps {
@@ -13,6 +13,7 @@ export interface PatientBannerPatientInfoProps {
 
 export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig();
+  const { primaryIdentifierCode } = usePrimaryIdentifierCode();
 
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0].family}`;
   const gender = patient?.gender && getGender(patient.gender);
@@ -35,18 +36,37 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
         </div>
       </div>
       <div className={styles.demographics}>
-        <span>{gender}</span> &middot; <span>{patient?.birthDate && age(patient.birthDate)}</span> &middot;{' '}
-        <span>{patient?.birthDate && formatDate(parseDate(patient.birthDate), { mode: 'wide', time: false })}</span>
+        <span>{gender}</span>
+        {patient.birthDate && (
+          <>
+            <span className={styles.separator}>&middot;</span>
+            <span>{age(patient.birthDate)}</span>
+            <span className={styles.separator}>&middot;</span>
+            <span>{formatDate(parseDate(patient.birthDate), { mode: 'wide', time: false })}</span>
+          </>
+        )}
       </div>
       <div className={styles.row}>
         <div className={styles.identifiers}>
           {filteredIdentifiers?.length
-            ? filteredIdentifiers.map(({ value, type }) => (
+            ? filteredIdentifiers.map(({ value, type }, index) => (
                 <span key={value} className={styles.identifierTag}>
-                  <Tag className={styles.tag} type="gray" title={type?.text}>
-                    {type?.text}
-                  </Tag>
-                  {value}
+                  <div>{index > 0 && <span className={styles.separator}>&middot;</span>}</div>
+                  {type?.coding?.[0]?.code === primaryIdentifierCode ? (
+                    <div className={styles.primaryIdentifier}>
+                      <Tag type="gray" title={type?.text}>
+                        {type?.text}:
+                      </Tag>
+                      <span>{value}</span>
+                    </div>
+                  ) : (
+                    <label htmlFor="identifier" className={styles.secondaryIdentifier}>
+                      <span className={styles.label}>{type?.text}: </span>
+                      <span id="identifier" className={styles.identifier}>
+                        {value}
+                      </span>
+                    </label>
+                  )}
                 </span>
               ))
             : ''}

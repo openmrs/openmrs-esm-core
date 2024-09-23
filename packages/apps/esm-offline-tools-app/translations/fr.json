@@ -1,5 +1,5 @@
 {
-  "emptyStateText": "There are no {{displayText}} to display",
+  "emptyStateText": "Il n'y a pas de {{texte}} à afficher",
   "home": "Accueil",
   "homeHeader": "Accueil hors ligne",
   "homeOverviewCardOfflineActionsFailedToUpload": "Échec du téléchargement",
@@ -53,10 +53,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Erreur inconnue.",
   "offlinePatientSyncDetailsHeader": "Détails des patients hors ligne",
   "offlineReady": "Prêt pour être hors ligne",
-  "offlineToolsAppMenuLink": "Outils hors ligne",
-  "offlineActionsSynchronizationNotificationTitle": "Téléversement",
-  "offlineActionsSynchronizationNotificationSynchronized": "La synchronisation des actions hors ligne est terminée.",
-  "offlineActionsSynchronizationNotificationCanceling": "Annulation...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} actions",
-  "offlineActionsSynchronizationNotificationCancelUpload": "Annuler le téléversement"
+  "offlineToolsAppMenuLink": "Outils hors ligne"
 }

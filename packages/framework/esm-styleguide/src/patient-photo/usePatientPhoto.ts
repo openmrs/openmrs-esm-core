@@ -1,3 +1,4 @@
+/** @module @category UI */
 import useSWR from 'swr';
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
 import { useConfig } from '@openmrs/esm-react-utils';
@@ -27,7 +28,10 @@ interface PhotoObs {
 }
 
 export function usePatientPhoto(patientUuid: string): UsePatientPhotoResult {
-  const { patientPhotoConceptUuid } = useConfig<StyleguideConfigObject>();
+  const { patientPhotoConceptUuid } = useConfig<StyleguideConfigObject>({
+    externalModuleName: '@openmrs/esm-styleguide',
+  });
+
   const url = patientPhotoConceptUuid
     ? `${restBaseUrl}/obs?patient=${patientUuid}&concept=${patientPhotoConceptUuid}&v=full`
     : null;

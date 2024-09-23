@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { Button, ContentSwitcher, Switch } from '@carbon/react';
-import { Close } from '@carbon/react/icons';
+import { ContentSwitcher, IconButton, Switch } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
+import { CloseIcon } from '@openmrs/esm-framework';
 import { Configuration } from '../configuration/configuration.component';
 import { FrontendModules } from '../frontend-modules/frontend-modules.component';
 import { BackendDependencies } from '../backend-dependencies/backend-dependencies.component';
@@ -52,22 +52,32 @@ export default function Popup({
             onChange={(switcherItem: SwitcherItem) => {
               setActiveTab(switcherItem.index);
             }}
+            size="lg"
           >
-            <Switch name="configuration-tab" text={t('configuration', 'Configuration')} />
-            <Switch name="frontend-modules-tab" text={t('frontendModules', 'Frontend Modules')} />
-            <Switch name="backend-modules-tab" text={t('backendModules', 'Backend Modules')} />
-            <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature Flags')} />
+            <Switch name="configuration-tab" text={t('configuration', 'Configuration')} className="darkThemeSwitch" />
+            <Switch
+              name="frontend-modules-tab"
+              text={t('frontendModules', 'Frontend modules')}
+              className="darkThemeSwitch"
+            />
+            <Switch
+              name="backend-modules-tab"
+              text={t('backendModules', 'Backend modules')}
+              className="darkThemeSwitch"
+            />
+            <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature flags')} className="darkThemeSwitch" />
           </ContentSwitcher>
         </div>
         <div>
-          <Button
+          <IconButton
+            align="left"
+            className={styles.closeButton}
             kind="secondary"
-            renderIcon={(props) => <Close size={16} {...props} />}
-            iconDescription="Close"
+            label={t('close', 'Close')}
             onClick={close}
-            hasIconOnly
-            size="sm"
-          />
+          >
+            <CloseIcon />
+          </IconButton>
         </div>
       </div>
       <div className={styles.content}>{tabContent}</div>

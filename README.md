@@ -1,4 +1,4 @@
-:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
+:wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
@@ -10,7 +10,7 @@ Below is the documentation for this repository.
 
 # OpenMRS Frontend Core
 
-This is a [monorepo](https://classic.yarnpkg.com/lang/en/docs/workspaces/) containing the core packages for the OpenMRS Frontend. These packages handle the "cross-cutting concerns" described in the [Domain Decomposition](https://wiki.openmrs.org/display/projects/MFE+Domain+Decomposition) document.
+This is a [monorepo](https://yarnpkg.com/advanced/lexicon#monorepo) containing the core packages for the OpenMRS Frontend. These packages handle cross-cutting concerns such as the configuration and extension systems, the core framework, global state management, the stlyeguide, and more.
 
 ## Available Packages
 
@@ -36,7 +36,7 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-react-utils](packages/framework/esm-react-utils): utilities for React components
 - [@openmrs/esm-state](packages/framework/esm-state): brings in state management
 - [@openmrs/esm-styleguide](packages/framework/esm-styleguide): styling and UI capabilities
-- [@openmrs/esm-translations](packages/apps/esm-translations): common translations and utilities
+- [@openmrs/esm-translations](packages/framework/esm-translations): common translations and utilities
 - [@openmrs/esm-utils](packages/framework/esm-utils): general utility and helper functions
 
 All libraries are aggregated in the `@openmrs/esm-framework` package:
@@ -104,28 +104,30 @@ yarn build
 
 ### Running tests
 
+#### Unit tests
+
 To run tests for all packages, run:
 
 ```bash
-yarn turbo test
+yarn turbo run test
 ```
 
 To run tests in `watch` mode, run:
 
 ```bash
-yarn turbo test:watch
+yarn turbo run test:watch
 ```
 
 To run tests for a specific package, pass the package name to the `--filter` flag. For example, to run tests for `esm-patient-conditions-app`, run:
 
 ```bash
-yarn turbo test --filter="esm-patient-conditions-app"
+yarn turbo run test --filter="esm-patient-conditions-app"
 ```
 
 To run a specific test file, run:
 
 ```bash
-yarn turbo test -- login
+yarn turbo run test -- login
 ```
 
 The above command will only run tests in the file or files that match the provided string.
@@ -133,33 +135,102 @@ The above command will only run tests in the file or files that match the provid
 You can also run the matching tests from above in watch mode by running:
 
 ```bash
-yarn turbo test:watch -- login.test
+yarn turbo run test:watch -- login.test
 ```
 
 To generate a `coverage` report, run:
 
 ```bash
-yarn turbo coverage
+yarn turbo run coverage
 ```
 
 By default, `turbo` will cache test runs. This means that re-running tests wihout changing any of the related files will return the cached logs from the last run. To bypass the cache, run tests with the `force` flag, as follows:
 
 ```bash
-yarn turbo test --force
+yarn turbo run test --force
 ```
+
+#### E2E tests
+
+To run E2E tests locally, follow these steps:
+
+##### Start the Development Server
+
+Begin by spinning up a development server for the frontend module that you want to test. Ensure the server is running before proceeding.
+
+##### Set Up Environment Variables
+
+Copy the example environment variables into a new .env file by running the following command:
+
+```bash
+cp example.env .env
+```
+
+##### Execute Tests
+
+Run the tests with the following command:
+
+```bash
+yarn test-e2e --ui --headed
+```
+
+Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3#End-to-end-testing-with-Playwright) to learn more about End-to-End tests.
 
 ### Linking the framework
 
-If you want to try out changes to a framework library, you will probably want to `yarn link` or `npm link` it into a frontend module.
-Note that even though frontend modules import from `@openmrs/esm-framework`, the package you need to link is the sub-library; for example, if you are trying to test changes in `packages/framework/esm-api`, you will need to link it:
+You probably want to try out your changes to a framework library in a frontend module. Unfortunately, getting
+a working development environment for this is very finicky. No one technique works for all frontend modules
+all the time.
+
+Note that even though frontend modules import from `@openmrs/esm-framework`, the package you need to link is the sub-library; for example, if you are trying to test changes in `packages/framework/esm-api`, you will need to link that sub-library.
+
+If you're unsure whether your version of a core package is running, add a `console.log` at the top level of a file you're working on.
+
+Here are the tools at your disposal for trying to get this to work:
+
+#### Yarn link
+
+This should be the first thing you try. To link the styleguide, for example, you would use
 
 ```sh
-yarn link path/to/openmrs-esm-core/packages/framework/esm-framework
-yarn link path/to/openmrs-esm-core/packages/framework/esm-api
+yarn link ../path/to/openmrs-esm-core/packages/framework/esm-styleguide
 ```
 
-This satisfies the build tooling, but we must do one more step to get the frontend
-to load these dependencies at runtime.
+This will add a line to the "resolutions" section of the `package.json` file which uses the `portal:` protocol.
+The other protocol is `link:`. If you need to make changes to the `esm-framework` package, you will need to link
+it in as well. However, this does not work as a portal created with the `yarn link` command. Rather you will
+want to manually add the line to the `resolutions` field in the `package.json` file:
+
+```json
+"resolutions": {
+  "@openmrs/esm-framework": "link:../path/to/openmrs-esm-core/packages/framework/esm-framework"
+}
+```
+
+#### Yalc
+
+Sometimes, the build tooling will simply not work with `yarn link`. In this case, you will need to use `yalc`.
+Install `yalc` on your computer with:
+
+```sh
+npm install -g yalc
+```
+
+Then, link the repository you are working on. For `esm-api`, for example, run
+
+```sh
+# In this repository
+cd packages/framework/esm-api
+yalc publish
+cd ../../../openmrs-esm-patient-chart  # for example
+yalc link @openmrs/esm-api
+```
+
+In order for patient-chart to receive further updates you make to esm-api, you will need to run `yalc push` in the esm-api directory and `yalc update` in the patient-chart directory.
+
+### Running with a local version of the core packages
+
+This satisfies the build tooling, but we must do one more step to get the frontend to load these dependencies at runtime.
 
 Here, there are two options:
 
@@ -170,6 +241,7 @@ dev server, you will need to link the tooling as well.
 
 `yarn link /path/to/esm-core/packages/tooling/openmrs`.
 
+You can try using `yalc` for this as well, if `yarn link` doesn't work. Or manually creating a `link:` resolution in `package.json`.
 In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
 Then run your patient chart dev server as usual, with `yarn start`.
 
@@ -179,9 +251,8 @@ In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient c
 
 #### Once it's working
 
-Please note that this will result in entries being added to the package.json file in the `resolutions` field. These changes must be undone before creating your PR, which you can do by running `yarn unlink --all` in the patient chart repo.
-
-Check your work by adding a `console.log` at the top level of a file you're working on in `esm-api`.
+Please note that any of these techniques will modify the `package.json` file. These changes must be undone before creating
+your PR. If you used `yarn link`, you can undo these changes by running `yarn unlink --all` in the patient chart repo.
 
 ### Version and release
 
@@ -213,7 +284,7 @@ The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title sh
 
 For documentation about our design patterns, please visit our design system documentation website.
 
-## Bumping Playwright Version
+## Bumping Playwright
 
-Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes. 
+Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes.
 Also, ensure you specify fixed (pinned) versions of Playwright in the package.json file to maintain consistency between the Playwright version used in the Docker image for Bamboo test execution and the version used in the codebase.

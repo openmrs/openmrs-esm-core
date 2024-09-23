@@ -2,7 +2,7 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import RedirectLogout from './redirect-logout.component';
 import {
-  Session,
+  type Session,
   clearCurrentUser,
   navigate,
   openmrsFetch,
@@ -18,15 +18,6 @@ import { mutate } from 'swr';
 jest.mock('swr', () => ({
   mutate: jest.fn(),
 }));
-
-jest.mock('@openmrs/esm-framework', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-framework');
-
-  return {
-    ...originalModule,
-    restBaseUrl: '/ws/rest/v1',
-  };
-});
 
 Object.defineProperty(document, 'documentElement', {
   value: {

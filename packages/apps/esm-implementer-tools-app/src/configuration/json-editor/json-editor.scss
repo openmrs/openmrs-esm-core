@@ -1,5 +1,16 @@
+@use '@carbon/colors';
+@use '@carbon/react/scss/theme';
+@use '@carbon/styles/scss/components/button';
+
 .toolbar {
   display: flex;
+  button {
+    background-color: button.$button-primary;
+    &:hover {
+      background-color: button.$button-primary-hover;
+    }
+  }
+  background-color: theme.$layer-accent;
 }
 
 .alert {
@@ -8,4 +19,8 @@
   align-items: center;
   width: 100%;
   padding-left: 2em;
+}
+
+.errorBackground {
+  background-color: colors.$red-60;
 }

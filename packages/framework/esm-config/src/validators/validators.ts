@@ -18,7 +18,7 @@ export const inRange = (min: number, max: number) => {
  * @param allowedTemplateParameters To be added to `openmrsBase` and `openmrsSpaBase`
  * @category Navigation
  */
-export const isUrlWithTemplateParameters = (allowedTemplateParameters: string[]) => {
+export const isUrlWithTemplateParameters = (allowedTemplateParameters: Array<string> | readonly string[]) => {
   const allowedParams = allowedTemplateParameters.concat(['openmrsBase', 'openmrsSpaBase']);
   return validator(
     (val) => {
@@ -55,7 +55,7 @@ export const isUrl = isUrlWithTemplateParameters([]);
  * Verifies that the value is one of the allowed options.
  * @param allowedValues The list of allowable values
  */
-export const oneOf = (allowedValues: Array<any>) => {
+export const oneOf = (allowedValues: Array<any> | readonly any[]) => {
   return validator(
     (val) => allowedValues.includes(val),
     `Must be one of the following: '${allowedValues.join("', '")}'.`,

@@ -10,19 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TURBO_API: 'http://127.0.0.1:9080'
-      TURBO_TOKEN: ${{ secrets.TURBO_SERVER_TOKEN }}
+      TURBO_TOKEN: 'turbo-token'
       TURBO_TEAM: ${{ github.repository_owner }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup a local cache server for Turborepo
+      - name: 🚀 Setup a local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
+          server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: Compute bundle size report
+      - name: 📊 Compute bundle size report
         uses: preactjs/compressed-size-action@v2
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"

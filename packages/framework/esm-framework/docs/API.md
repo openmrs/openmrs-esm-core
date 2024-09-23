@@ -32,8 +32,10 @@
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
+- [useAttachments](API.md#useattachments)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
+- [usePrimaryIdentifierCode](API.md#useprimaryidentifiercode)
 - [useSession](API.md#usesession)
 - [useVisit](API.md#usevisit)
 - [useVisitTypes](API.md#usevisittypes)
@@ -63,8 +65,20 @@
 - [oneOf](API.md#oneof)
 - [validator](API.md#validator)
 
+### Context Functions
+
+- [OpenmrsAppContext](API.md#openmrsappcontext)
+- [getContext](API.md#getcontext)
+- [registerContext](API.md#registercontext)
+- [subscribeToContext](API.md#subscribetocontext)
+- [unregisterContext](API.md#unregistercontext)
+- [updateContext](API.md#updatecontext)
+- [useAppContext](API.md#useappcontext)
+- [useDefineAppContext](API.md#usedefineappcontext)
+
 ### Date and Time Functions
 
+- [convertToLocaleCalendar](API.md#converttolocalecalendar)
 - [formatDate](API.md#formatdate)
 - [formatDatetime](API.md#formatdatetime)
 - [formatTime](API.md#formattime)
@@ -93,6 +107,7 @@
 
 ### Extension Functions
 
+- [ExtensionSlot](API.md#extensionslot)
 - [attach](API.md#attach)
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
@@ -106,6 +121,7 @@
 - [useConnectedExtensions](API.md#useconnectedextensions)
 - [useExtensionSlotMeta](API.md#useextensionslotmeta)
 - [useExtensionStore](API.md#useextensionstore)
+- [useRenderableExtensions](API.md#userenderableextensions)
 
 ### Feature Flags Functions
 
@@ -164,9 +180,19 @@
 
 ### Other Functions
 
-- [ExtensionSlot](API.md#extensionslot)
-- [useAttachments](API.md#useattachments)
-- [usePatientPhoto](API.md#usepatientphoto)
+- [WorkspaceContainer](API.md#workspacecontainer)
+- [compile](API.md#compile)
+- [evaluate](API.md#evaluate)
+- [evaluateAsBoolean](API.md#evaluateasboolean)
+- [evaluateAsBooleanAsync](API.md#evaluateasbooleanasync)
+- [evaluateAsNumber](API.md#evaluateasnumber)
+- [evaluateAsNumberAsync](API.md#evaluateasnumberasync)
+- [evaluateAsType](API.md#evaluateastype)
+- [evaluateAsTypeAsync](API.md#evaluateastypeasync)
+- [evaluateAsync](API.md#evaluateasync)
+- [isOnline](API.md#isonline)
+- [useFhirFetchAll](API.md#usefhirfetchall)
+- [useFhirInfinite](API.md#usefhirinfinite)
 
 ### Store Functions
 
@@ -190,6 +216,7 @@
 - [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
 - [PatientBannerToggleContactDetailsButton](API.md#patientbannertogglecontactdetailsbutton)
 - [PatientPhoto](API.md#patientphoto)
+- [getFhirServerPaginationHandlers](API.md#getfhirserverpaginationhandlers)
 - [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
@@ -203,23 +230,38 @@
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
+- [useFhirPagination](API.md#usefhirpagination)
 - [useLayoutType](API.md#uselayouttype)
 - [useOnClickOutside](API.md#useonclickoutside)
+- [useOpenmrsFetchAll](API.md#useopenmrsfetchall)
+- [useOpenmrsInfinite](API.md#useopenmrsinfinite)
+- [useOpenmrsPagination](API.md#useopenmrspagination)
 - [usePagination](API.md#usepagination)
+- [usePatientPhoto](API.md#usepatientphoto)
 
 ### Utility Functions
 
 - [age](API.md#age)
 - [canAccessStorage](API.md#canaccessstorage)
-- [daysIntoYear](API.md#daysintoyear)
+- [displayName](API.md#displayname)
+- [formatPatientName](API.md#formatpatientname)
+- [formattedName](API.md#formattedname)
 - [getDefaultsFromConfigSchema](API.md#getdefaultsfromconfigschema)
-- [isSameDay](API.md#issameday)
+- [getPatientName](API.md#getpatientname)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
+- [selectPreferredName](API.md#selectpreferredname)
 - [shallowEqual](API.md#shallowequal)
 - [useAbortController](API.md#useabortcontroller)
 - [useDebounce](API.md#usedebounce)
 - [useOpenmrsSWR](API.md#useopenmrsswr)
+
+### Workspace Functions
+
+- [closeWorkspace](API.md#closeworkspace)
+- [launchWorkspace](API.md#launchworkspace)
+- [navigateAndLaunchWorkspace](API.md#navigateandlaunchworkspace)
+- [useWorkspaces](API.md#useworkspaces)
 
 ## API Type Aliases
 
@@ -229,7 +271,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L7)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L6)
 
 ___
 
@@ -297,6 +339,38 @@ ___
 
 ___
 
+## Context Type Aliases
+
+### ContextCallback
+
+Ƭ **ContextCallback**<`T`\>: (`state`: `Readonly`<`T`\> \| ``null`` \| `undefined`) => `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` = {} |
+
+#### Type declaration
+
+▸ (`state`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `state` | `Readonly`<`T`\> \| ``null`` \| `undefined` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L89)
+
+___
+
 ## Date and Time Type Aliases
 
 ### DateInput
@@ -305,7 +379,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L19)
+[packages/framework/esm-utils/src/omrs-dates.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L26)
 
 ___
 
@@ -315,7 +389,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L133)
+[packages/framework/esm-utils/src/omrs-dates.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L140)
 
 ___
 
@@ -329,14 +403,39 @@ ___
 | :------ | :------ | :------ |
 | `calendar?` | `string` | The calendar to use when formatting this date. |
 | `day` | `boolean` | Whether to include the day number |
+| `locale?` | `string` | The locale to use when formatting this date |
 | `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
+| `month` | `boolean` | Whether to include the month number |
 | `noToday` | `boolean` | Disables the special handling of dates that are today. If false (the default), then dates that are today will be formatted as "Today" in the locale language. If true, then dates that are today will be formatted the same as all other dates. |
+| `numberingSystem?` | `string` | The unicode numbering system to use |
 | `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
 | `year` | `boolean` | Whether to include the year |
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:135](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L135)
+[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L142)
+
+___
+
+## Extension Type Aliases
+
+### ExtensionProps
+
+Ƭ **ExtensionProps**: { `state?`: `Record`<`string`, `any`\> ; `wrap?`: (`slot`: `ReactNode`, `extension`: [`ExtensionData`](interfaces/ExtensionData.md)) => ``null`` \| `ReactElement`<`any`, `any`\>  } & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`slot`: `React.ReactNode`, `extension?`: [`ExtensionData`](interfaces/ExtensionData.md)) => `React.ReactNode`  }
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L8)
+
+___
+
+### ExtensionSlotProps
+
+Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L24)
 
 ___
 
@@ -432,7 +531,31 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L38)
+[packages/framework/esm-config/src/types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L46)
+
+___
+
+### DateInputValue
+
+Ƭ **DateInputValue**: `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime` \| `DayjsConfigType`
+
+A type for any of the acceptable date formats
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L73)
+
+___
+
+### DefaultEvaluateReturnType
+
+Ƭ **DefaultEvaluateReturnType**: `string` \| `number` \| `boolean` \| `Date` \| ``null`` \| `undefined`
+
+The valid return types for `evaluate()` and `evaluateAsync()`
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L28)
 
 ___
 
@@ -444,27 +567,47 @@ A definition of an extension as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L172)
+[packages/framework/esm-globals/src/types.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L182)
 
 ___
 
-### ExtensionProps
+### IconProps
 
-Ƭ **ExtensionProps**: { `state?`: `Record`<`string`, `any`\> ; `wrap?`: (`slot`: `ReactNode`, `extension`: [`ExtensionData`](interfaces/ExtensionData.md)) => ``null`` \| `ReactElement`<`any`, `any`\>  } & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`slot`: `React.ReactNode`, `extension?`: [`ExtensionData`](interfaces/ExtensionData.md)) => `React.ReactNode`  }
+Ƭ **IconProps**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `className?` | `Argument` |
+| `fill?` | `string` |
+| `size?` | `number` |
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L7)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L6)
 
 ___
 
-### ExtensionSlotProps
+### ModalDefinition
 
-Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
+Ƭ **ModalDefinition**: { `name`: `string`  } & { `component`: `string`  } \| { `component?`: `never`  }
+
+A definition of a modal as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L23)
+[packages/framework/esm-globals/src/types.ts:247](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L247)
+
+___
+
+### NameUse
+
+Ƭ **NameUse**: ``"usual"`` \| ``"official"`` \| ``"temp"`` \| ``"nickname"`` \| ``"anonymous"`` \| ``"old"`` \| ``"maiden"``
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:396](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L396)
 
 ___
 
@@ -477,19 +620,36 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L260)
+[packages/framework/esm-globals/src/types.ts:387](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L387)
 
 ___
 
 ### PageDefinition
 
-Ƭ **PageDefinition**: { `component`: `string` ; `offline?`: `boolean` ; `online?`: `boolean` ; `order?`: `number`  } & { `route`: `string` \| `boolean` ; `routeRegex?`: `never`  } \| { `route?`: `never` ; `routeRegex`: `string`  }
+Ƭ **PageDefinition**: { `component`: `string` ; `featureFlag?`: `string` ; `offline?`: `boolean` ; `online?`: `boolean` ; `order?`: `number`  } & { `route`: `string` \| `boolean` ; `routeRegex?`: `never`  } \| { `route?`: `never` ; `routeRegex`: `string`  }
 
 A definition of a page extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L116)
+[packages/framework/esm-globals/src/types.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L121)
+
+___
+
+### PictogramProps
+
+Ƭ **PictogramProps**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `className?` | `Argument` |
+| `size?` | `number` |
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L5)
 
 ___
 
@@ -506,19 +666,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L60)
-
-___
-
-### RegisteredPageDefinition
-
-Ƭ **RegisteredPageDefinition**: `Omit`<[`PageDefinition`](API.md#pagedefinition), ``"order"``\> & `AppComponent` & { `order`: `number`  }
-
-A definition of a page after the app has been registered.
-
-#### Defined in
-
-[packages/framework/esm-globals/src/types.ts:167](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L167)
+[packages/framework/esm-config/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L68)
 
 ___
 
@@ -528,7 +676,41 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L71)
+[packages/framework/esm-globals/src/types.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L76)
+
+___
+
+### SvgIconProps
+
+Ƭ **SvgIconProps**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `icon` | `string` |
+| `iconProps` | [`IconProps`](API.md#iconprops) |
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:608](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L608)
+
+___
+
+### SvgPictogramProps
+
+Ƭ **SvgPictogramProps**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `pictogram` | `string` | the id of the pictogram |
+| `pictogramProps` | [`PictogramProps`](API.md#pictogramprops) | properties when using the pictogram |
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L10)
 
 ___
 
@@ -562,7 +744,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L67)
+[packages/framework/esm-config/src/types.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L75)
 
 ___
 
@@ -586,7 +768,45 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L65)
+[packages/framework/esm-config/src/types.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L73)
+
+___
+
+### VariablesMap
+
+Ƭ **VariablesMap**: `Object`
+
+An object containing the variable to use when evaluating this expression
+
+#### Index signature
+
+▪ [key: `string`]: `string` \| `number` \| `boolean` \| `Function` \| `RegExp` \| `object` \| ``null`` \| [`VariablesMap`](API.md#variablesmap) \| [`VariablesMap`](API.md#variablesmap)[]
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L23)
+
+___
+
+### WorkspaceDefinition
+
+Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `hasOwnSidebar?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `sidebarFamily?`: `string` ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``  } & { `component`: `string`  } \| { `component?`: `never`  }
+
+A definition of a workspace as extracted from an app's routes.json
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:281](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L281)
+
+___
+
+### WorkspaceWindowState
+
+Ƭ **WorkspaceWindowState**: ``"maximized"`` \| ``"hidden"`` \| ``"normal"``
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:276](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L276)
 
 ___
 
@@ -661,7 +881,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L47)
+[packages/framework/esm-translations/src/index.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L53)
 
 ___
 
@@ -694,6 +914,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLayoutType.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L4)
+
+___
+
+### PageHeaderProps
+
+Ƭ **PageHeaderProps**: `XOR`<[`PageHeaderWrapperProps`](interfaces/PageHeaderWrapperProps.md), [`PageHeaderContentProps`](interfaces/PageHeaderContentProps.md)\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L29)
 
 ___
 
@@ -794,7 +1024,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L11)
+[packages/framework/esm-api/src/openmrs-fetch.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L10)
 
 ___
 
@@ -806,7 +1036,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L100)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L103)
 
 ___
 
@@ -826,7 +1056,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L13)
+[packages/framework/esm-api/src/openmrs-fetch.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L11)
 
 ___
 
@@ -842,12 +1072,32 @@ ___
 | :------ | :------ |
 | `inRange` | (`min`: `number`, `max`: `number`) => [`Validator`](API.md#validator) |
 | `isUrl` | [`Validator`](API.md#validator) |
-| `isUrlWithTemplateParameters` | (`allowedTemplateParameters`: `string`[]) => [`Validator`](API.md#validator) |
-| `oneOf` | (`allowedValues`: `any`[]) => [`Validator`](API.md#validator) |
+| `isUrlWithTemplateParameters` | (`allowedTemplateParameters`: `string`[] \| readonly `string`[]) => [`Validator`](API.md#validator) |
+| `oneOf` | (`allowedValues`: `any`[] \| readonly `any`[]) => [`Validator`](API.md#validator) |
 
 #### Defined in
 
 [packages/framework/esm-config/src/validators/validators.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L65)
+
+___
+
+## Extension Variables
+
+### Extension
+
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](API.md#extensionprops)\>
+
+Represents the position in the DOM where each extension within
+an extension slot is rendered.
+
+Renders once for each extension attached to that extension slot.
+
+Usage of this component *must* have an ancestor `<ExtensionSlot>`,
+and *must* only be used once within that `<ExtensionSlot>`.
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L25)
 
 ___
 
@@ -895,6 +1145,310 @@ ___
 
 ## Other Variables
 
+### ActivityIcon
+
+• `Const` **ActivityIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L14)
+
+___
+
+### AddIcon
+
+• `Const` **AddIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L22)
+
+___
+
+### AllergiesIcon
+
+• `Const` **AllergiesIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\> = `WarningIcon`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:582](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L582)
+
+___
+
+### AppointmentsPictogram
+
+• `Const` **AppointmentsPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)
+
+___
+
+### ArrowDownIcon
+
+• `Const` **ArrowDownIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L30)
+
+___
+
+### ArrowLeftIcon
+
+• `Const` **ArrowLeftIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L38)
+
+___
+
+### ArrowRightIcon
+
+• `Const` **ArrowRightIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L46)
+
+___
+
+### ArrowUpIcon
+
+• `Const` **ArrowUpIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L54)
+
+___
+
+### AttachmentIcon
+
+• `Const` **AttachmentIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\> = `DocumentAttachmentIcon`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:587](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L587)
+
+___
+
+### BabyIcon
+
+• `Const` **BabyIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L62)
+
+___
+
+### CalendarHeatMapIcon
+
+• `Const` **CalendarHeatMapIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L70)
+
+___
+
+### CalendarIcon
+
+• `Const` **CalendarIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L78)
+
+___
+
+### CaretDownIcon
+
+• `Const` **CaretDownIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L86)
+
+___
+
+### CaretLeftIcon
+
+• `Const` **CaretLeftIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L94)
+
+___
+
+### CaretRightIcon
+
+• `Const` **CaretRightIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L102)
+
+___
+
+### CaretUpIcon
+
+• `Const` **CaretUpIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L110)
+
+___
+
+### ChartAverageIcon
+
+• `Const` **ChartAverageIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L118)
+
+___
+
+### ChemistryIcon
+
+• `Const` **ChemistryIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:126](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L126)
+
+___
+
+### ChevronDownIcon
+
+• `Const` **ChevronDownIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:134](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L134)
+
+___
+
+### ChevronLeftIcon
+
+• `Const` **ChevronLeftIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L142)
+
+___
+
+### ChevronRightIcon
+
+• `Const` **ChevronRightIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:150](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L150)
+
+___
+
+### ChevronUpIcon
+
+• `Const` **ChevronUpIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L158)
+
+___
+
+### CloseFilledIcon
+
+• `Const` **CloseFilledIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L166)
+
+___
+
+### CloseIcon
+
+• `Const` **CloseIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:182](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L182)
+
+___
+
+### CloseOutlineIcon
+
+• `Const` **CloseOutlineIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:174](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L174)
+
+___
+
+### ConditionsIcon
+
+• `Const` **ConditionsIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\> = `ListCheckedIcon`
+
+Conditions
+
+Note this is an alias for ListCheckedIcon
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:594](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L594)
+
+___
+
+### DocumentAttachmentIcon
+
+• `Const` **DocumentAttachmentIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:190](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L190)
+
+___
+
+### DocumentIcon
+
+• `Const` **DocumentIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:198](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L198)
+
+___
+
+### DownloadIcon
+
+• `Const` **DownloadIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:206](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L206)
+
+___
+
+### EditIcon
+
+• `Const` **EditIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:214](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L214)
+
+___
+
 ### ErrorState
 
 • `Const` **ErrorState**: `React.FC`<[`ErrorStateProps`](interfaces/ErrorStateProps.md)\>
@@ -905,31 +1459,577 @@ ___
 
 ___
 
-### Extension
+### EventScheduleIcon
 
-• `Const` **Extension**: `React.FC`<[`ExtensionProps`](API.md#extensionprops)\>
-
-Represents the position in the DOM where each extension within
-an extension slot is rendered.
-
-Renders once for each extension attached to that extension slot.
-
-Usage of this component *must* have an ancestor `<ExtensionSlot>`,
-and *must* only be used once within that `<ExtensionSlot>`.
+• `Const` **EventScheduleIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L24)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:222](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L222)
+
+___
+
+### EventsIcon
+
+• `Const` **EventsIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:230](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L230)
+
+___
+
+### GroupAccessIcon
+
+• `Const` **GroupAccessIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:246](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L246)
+
+___
+
+### GroupIcon
+
+• `Const` **GroupIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:238](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L238)
+
+___
+
+### HomePictogram
+
+• `Const` **HomePictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L36)
+
+___
+
+### HospitalBedIcon
+
+• `Const` **HospitalBedIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:254](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L254)
+
+___
+
+### Icon
+
+• `Const` **Icon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`SvgIconProps`](API.md#svgiconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+This is a utility type for custom icons that use the svg-sprite-loader to bundle custom icons
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:616](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L616)
+
+___
+
+### ImageMedicalIcon
+
+• `Const` **ImageMedicalIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L262)
+
+___
+
+### InventoryManagementIcon
+
+• `Const` **InventoryManagementIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L270)
+
+___
+
+### LaboratoryPictogram
+
+• `Const` **LaboratoryPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L60)
+
+___
+
+### ListCheckedIcon
+
+• `Const` **ListCheckedIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:278](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L278)
+
+___
+
+### LocationIcon
+
+• `Const` **LocationIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:286](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L286)
+
+___
+
+### LocationPicker
+
+• `Const` **LocationPicker**: `React.FC`<`LocationPickerProps`\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx#L15)
+
+___
+
+### MaximizeIcon
+
+• `Const` **MaximizeIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:294](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L294)
+
+___
+
+### MedicationIcon
+
+• `Const` **MedicationIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:302](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L302)
+
+___
+
+### MessageQueueIcon
+
+• `Const` **MessageQueueIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:310](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L310)
+
+___
+
+### MicroscopeIcon
+
+• `Const` **MicroscopeIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:318](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L318)
+
+___
+
+### MoneyIcon
+
+• `Const` **MoneyIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+Billing
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:327](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L327)
+
+___
+
+### MotherIcon
+
+• `Const` **MotherIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L335)
+
+___
+
+### MovementIcon
+
+• `Const` **MovementIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:343](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L343)
 
 ___
 
 ### OpenmrsDatePicker
 
-• `Const` **OpenmrsDatePicker**: `React.FC`<`OpenmrsDatePickerProps`\>
+• `Const` **OpenmrsDatePicker**: `ForwardRefExoticComponent`<[`OpenmrsDatePickerProps`](interfaces/OpenmrsDatePickerProps.md) & `RefAttributes`<`HTMLDivElement`\>\>
+
+A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L41)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:392](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L392)
+
+___
+
+### OverflowMenuHorizontalIcon
+
+• `Const` **OverflowMenuHorizontalIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:351](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L351)
+
+___
+
+### OverflowMenuVerticalIcon
+
+• `Const` **OverflowMenuVerticalIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:359](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L359)
+
+___
+
+### PasswordIcon
+
+• `Const` **PasswordIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:539](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L539)
+
+___
+
+### PatientListsPictogram
+
+• `Const` **PatientListsPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L42)
+
+___
+
+### PedestrianFamilyIcon
+
+• `Const` **PedestrianFamilyIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:367](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L367)
+
+___
+
+### PenIcon
+
+• `Const` **PenIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:375](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L375)
+
+___
+
+### Pictogram
+
+• `Const` **Pictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`SvgPictogramProps`](API.md#svgpictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+This is a utility type for custom pictograms
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L20)
+
+___
+
+### PrinterIcon
+
+• `Const` **PrinterIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L383)
+
+___
+
+### RadiologyIcon
+
+• `Const` **RadiologyIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\> = `ImageMedicalIcon`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:599](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L599)
+
+___
+
+### RegistrationPictogram
+
+• `Const` **RegistrationPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L66)
+
+___
+
+### RenewIcon
+
+• `Const` **RenewIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:391](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L391)
+
+___
+
+### ResetIcon
+
+• `Const` **ResetIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:399](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L399)
+
+___
+
+### SaveIcon
+
+• `Const` **SaveIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:415](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L415)
+
+___
+
+### SearchIcon
+
+• `Const` **SearchIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:423](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L423)
+
+___
+
+### ServiceQueuesPictogram
+
+• `Const` **ServiceQueuesPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L54)
+
+___
+
+### ShoppingCartAddItemIcon
+
+• `Const` **ShoppingCartAddItemIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\> = `ShoppingCartArrowDownIcon`
+
+Used as a button to add an item to the Order basket from a search
+
+Note this is an alias for ShoppingCartArrowDownIcon
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:606](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L606)
+
+___
+
+### ShoppingCartArrowDownIcon
+
+• `Const` **ShoppingCartArrowDownIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+Used as a button to add an item to the Order basket from a search
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:449](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L449)
+
+___
+
+### ShoppingCartIcon
+
+• `Const` **ShoppingCartIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+Order Basket, the UI to enter Orders for Medications, Referrals, Labs, Procedures and more
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:440](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L440)
+
+___
+
+### StickyNoteAddIcon
+
+• `Const` **StickyNoteAddIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+Used as action button to open ward in-patient note workspace
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:458](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L458)
+
+___
+
+### SwitcherIcon
+
+• `Const` **SwitcherIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:431](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L431)
+
+___
+
+### TableIcon
+
+• `Const` **TableIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:475](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L475)
+
+___
+
+### TableOfContentsIcon
+
+• `Const` **TableOfContentsIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+Used as a button to add an item to the Order basket from a search
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:467](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L467)
+
+___
+
+### TimeIcon
+
+• `Const` **TimeIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+Lab investigations
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:484](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L484)
+
+___
+
+### ToolsIcon
+
+• `Const` **ToolsIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:492](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L492)
+
+___
+
+### TranslateIcon
+
+• `Const` **TranslateIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:407](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L407)
+
+___
+
+### TrashCanIcon
+
+• `Const` **TrashCanIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:500](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L500)
+
+___
+
+### TreeViewAltIcon
+
+• `Const` **TreeViewAltIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:508](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L508)
+
+___
+
+### UserAvatarIcon
+
+• `Const` **UserAvatarIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+User of OpenMRS e.g. My Account
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:517](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L517)
+
+___
+
+### UserFollowIcon
+
+• `Const` **UserFollowIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:525](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L525)
+
+___
+
+### UserIcon
+
+• `Const` **UserIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:547](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L547)
+
+___
+
+### UserXrayIcon
+
+• `Const` **UserXrayIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:533](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L533)
+
+___
+
+### ViewIcon
+
+• `Const` **ViewIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:563](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L563)
+
+___
+
+### ViewOffIcon
+
+• `Const` **ViewOffIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:555](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L555)
+
+___
+
+### WarningIcon
+
+• `Const` **WarningIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:571](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L571)
 
 ___
 
@@ -954,11 +2054,67 @@ ___
 
 ### LeftNavMenu
 
-• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
 
 #### Defined in
 
 [packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
+
+___
+
+### PageHeader
+
+• `Const` **PageHeader**: `React.FC`<[`PageHeaderProps`](API.md#pageheaderprops)\>
+
+The page header is typically located at the top of a dashboard. It includes a pictogram on the left,
+the name of the dashboard or page, and the `implementationName` from the configuration, which is typically
+the name of the clinic or the authority that is using the implementation. It can also include interactive
+content on the right-hand side. It can be used in two ways:
+
+1. Alone, in order to render just the page header, with no content on the right side:
+
+**`example`**
+```tsx
+  <PageHeader title="My Dashboard" illustration={<Illustration />} />
+```
+
+2. Wrapped around the [PageHeaderContent](API.md#pageheadercontent) component, in order to render the page header on the left
+and some other content on the right side:
+
+**`example`**
+```tsx
+  <PageHeader>
+    <PageHeaderContent title="My Dashboard" illustration={<Illustration />} />
+    <Button>Click me</Button>
+  </PageHeader>
+```
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L57)
+
+___
+
+### PageHeaderContent
+
+• `Const` **PageHeaderContent**: `React.FC`<[`PageHeaderContentProps`](interfaces/PageHeaderContentProps.md)\>
+
+The PageHeaderContent component should be used inside the [PageHeader](API.md#pageheader) component. It is used if the page
+header should include some content on the right side, in addition to the pictogram and the name of the page.
+If only the page header is needed, without any additional content, the [PageHeader](API.md#pageheader) component can be used
+on its own, and the PageHeaderContent component is not needed.
+
+**`example`**
+```tsx
+  <PageHeader>
+    <PageHeaderContent title="My Dashboard" illustration={<Illustration />} />
+    <Button>Click me</Button>
+  </PageHeader>
+```
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L89)
 
 ___
 
@@ -973,6 +2129,18 @@ This provides a light background for form inputs on tablets, in accordance with 
 #### Defined in
 
 [packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L15)
+
+___
+
+## Workspace Variables
+
+### ActionMenuButton
+
+• `Const` **ActionMenuButton**: `React.FC`<[`ActionMenuButtonProps`](interfaces/ActionMenuButtonProps.md)\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L38)
 
 ## API Functions
 
@@ -1248,7 +2416,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L27)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L30)
 
 ___
 
@@ -1284,7 +2452,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L51)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L54)
 
 ___
 
@@ -1313,7 +2481,7 @@ makeUrl('/foo/bar');
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L25)
+[packages/framework/esm-api/src/openmrs-fetch.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L23)
 
 ___
 
@@ -1380,7 +2548,7 @@ free up memory and network resources and to prevent race conditions.
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L85)
+[packages/framework/esm-api/src/openmrs-fetch.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L83)
 
 ___
 
@@ -1431,7 +2599,7 @@ To cancel the network request, simply call `subscription.unsubscribe();`
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:265](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L265)
+[packages/framework/esm-api/src/openmrs-fetch.ts:263](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L263)
 
 ___
 
@@ -1485,7 +2653,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L73)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L76)
 
 ___
 
@@ -1506,7 +2674,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L31)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L34)
 
 ___
 
@@ -1631,7 +2799,36 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L84)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L87)
+
+___
+
+### useAttachments
+
+▸ **useAttachments**(`patientUuid`, `includeEncounterless`): `Object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+| `includeEncounterless` | `boolean` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`AttachmentResponse`](interfaces/AttachmentResponse.md)[] |
+| `error` | `any` |
+| `isLoading` | `boolean` |
+| `isValidating` | `boolean` |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`AttachmentResponse`](interfaces/AttachmentResponse.md)[]  }\>\> |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useAttachments.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L6)
 
 ___
 
@@ -1676,14 +2873,34 @@ a route listener is set up to update the patient whenever the route changes.
 
 | Name | Type |
 | :------ | :------ |
-| `error` | ``null`` \| `Error` |
+| `error` | `undefined` \| ``null`` \| `Error` |
 | `isLoading` | `boolean` |
-| `patient` | [`NullablePatient`](API.md#nullablepatient) |
+| `patient` | `undefined` \| [`NullablePatient`](API.md#nullablepatient) |
 | `patientUuid` | ``null`` \| `string` |
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L90)
+[packages/framework/esm-react-utils/src/usePatient.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L19)
+
+___
+
+### usePrimaryIdentifierCode
+
+▸ **usePrimaryIdentifierCode**(): `Object`
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `error` | `Error` \| `undefined` |
+| `isLoading` | `boolean` |
+| `primaryIdentifierCode` | `string` \| `undefined` |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts#L13)
 
 ___
 
@@ -1711,7 +2928,7 @@ ___
 
 ### useVisit
 
-▸ **useVisit**(`patientUuid`): [`VisitReturnType`](interfaces/VisitReturnType.md)
+▸ **useVisit**(`patientUuid`, `representation?`): [`VisitReturnType`](interfaces/VisitReturnType.md)
 
 This React hook returns visit information if the patient UUID is not null. There are
 potentially two relevant visits at a time: "active" and "current".
@@ -1731,9 +2948,10 @@ API call is in progress. `mutate` refreshes the data from both API calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `patientUuid` | `string` | Unique patient identifier `string` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `patientUuid` | `string` | `undefined` | Unique patient identifier `string` |
+| `representation` | `string` | `defaultVisitCustomRepresentation` | The custom representation of the visit |
 
 #### Returns
 
@@ -1741,7 +2959,7 @@ API call is in progress. `mutate` refreshes the data from both API calls.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L41)
+[packages/framework/esm-react-utils/src/useVisit.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L42)
 
 ___
 
@@ -1905,7 +3123,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L164)
+[packages/framework/esm-config/src/module-config/module-config.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L166)
 
 ___
 
@@ -1937,7 +3155,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:225](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L225)
+[packages/framework/esm-config/src/module-config/module-config.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L227)
 
 ___
 
@@ -1969,7 +3187,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:257](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L257)
+[packages/framework/esm-config/src/module-config/module-config.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L259)
 
 ___
 
@@ -1990,7 +3208,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
+[packages/framework/esm-config/src/module-config/module-config.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L243)
 
 ___
 
@@ -2084,7 +3302,7 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `allowedTemplateParameters` | `string`[] | To be added to `openmrsBase` and `openmrsSpaBase` |
+| `allowedTemplateParameters` | `string`[] \| readonly `string`[] | To be added to `openmrsBase` and `openmrsSpaBase` |
 
 #### Returns
 
@@ -2106,7 +3324,7 @@ Verifies that the value is one of the allowed options.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `allowedValues` | `any`[] | The list of allowable values |
+| `allowedValues` | `any`[] \| readonly `any`[] | The list of allowable values |
 
 #### Returns
 
@@ -2156,7 +3374,325 @@ A validator ready for use in a config schema
 
 ___
 
+## Context Functions
+
+### OpenmrsAppContext
+
+▸ **OpenmrsAppContext**<`T`\>(`__namedParameters`): ``null``
+
+OpenmrsAppContext is a simple React component meant to function similarly to React's Context,
+but built on top of the OpenmrsAppContext.
+
+**`example`**
+```ts
+   <OpenmrsAppContext namespace="something" value={{ key: "1234" }} />
+```
+
+**Notes on usage:** Unlike a proper React context where the value is limited to the subtree under the
+context component, the `OpenmrsAppContext` is inherently global in scope. That means that _all applications_
+will see the values that you set for the namespace if they load the value of the namespace.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`OpenmrsAppContextProps`](interfaces/OpenmrsAppContextProps.md)<`T`\> |
+
+#### Returns
+
+``null``
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/OpenmrsContext.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L24)
+
+___
+
+### getContext
+
+▸ **getContext**<`T`\>(`namespace`): `Readonly`<`T`\> \| ``null``
+
+Returns an _immutable_ version of the state of the namespace as it is currently
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends `Object` = {} | The type of the value stored in the namespace |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | The namespace to load properties from |
+
+#### Returns
+
+`Readonly`<`T`\> \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L54)
+
+___
+
+### registerContext
+
+▸ **registerContext**<`T`\>(`namespace`, `initialValue?`): `void`
+
+Used by callers to register a new namespace in the application context. Attempting to register
+an already-registered namespace will display a warning and make no modifications to the state.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `namespace` | `string` | `undefined` | the namespace to register |
+| `initialValue` | `T` | `nothing` | the initial value of the namespace |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L29)
+
+___
+
+### subscribeToContext
+
+▸ **subscribeToContext**<`T`\>(`namespace`, `callback`): () => `void`
+
+Subscribes to updates of a given namespace. Note that the returned object is immutable.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | the namespace to subscribe to |
+| `callback` | [`ContextCallback`](API.md#contextcallback)<`T`\> | a function invoked with the current context whenever |
+
+#### Returns
+
+`fn`
+
+A function to unsubscribe from the context
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L98)
+
+___
+
+### unregisterContext
+
+▸ **unregisterContext**(`namespace`): `void`
+
+Used by caller to unregister a namespace in the application context. Unregistering a namespace
+will remove the namespace and all associated data.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `namespace` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L45)
+
+___
+
+### updateContext
+
+▸ **updateContext**<`T`\>(`namespace`, `update`): `void`
+
+Updates a namespace in the global context. If the namespace does not exist, it is registered.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `namespace` | `string` |
+| `update` | (`state`: `T`) => `T` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L78)
+
+___
+
+### useAppContext
+
+▸ **useAppContext**<`T`\>(`namespace`): `Readonly`<`T`\> \| `undefined`
+
+This hook is used to access a namespace within the overall AppContext, so that a component can
+use any shared contextual values. A selector may be provided to further restrict the properties
+returned from the namespace.
+
+**`example`**
+```ts
+// load a full namespace
+const patientContext = useAppContext<PatientContext>('patient');
+```
+
+**`example`**
+```ts
+// loads part of a namespace
+const patientName = useAppContext<PatientContext, string | undefined>('patient', (state) => state.display);
+```
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends `Object` = {} | The type of the value stored in the namespace |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | The namespace to load properties from |
+
+#### Returns
+
+`Readonly`<`T`\> \| `undefined`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
+
+___
+
+### useDefineAppContext
+
+▸ **useDefineAppContext**<`T`\>(`namespace`, `value?`): (`update`: (`state`: `T`) => `T`) => `void`
+
+This hook is used to register a namespace in the AppContext. The component that registers the
+namespace is responsible for updating the value associated with the namespace. The namespace
+will be automatically removed when the component using this hook is unmounted.
+
+**`example`**
+```ts
+const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
+useDefineAppContext<PatientContext>('patient', patient ?? null);
+```
+
+**`example`**
+```ts
+const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
+const updatePatient = useDefineAppContext<PatientContext>('patient', patient ?? null);
+updatePatient((patient) => {
+ patient.name = 'Hector';
+ return patient;
+})
+```
+
+Note that the AppContext does not allow the storing of undefined values in a namespace. Use `null`
+instead.
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends `Object` | The type of the value of the namespace |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | The name of the namespace in the application context. Note that the namespace  must be unique among currently registered namespaces in the application context. |
+| `value?` | `T` | The value to associate with this namespace. Updating the value property will update   the namespace value. |
+
+#### Returns
+
+`fn`
+
+A function which can be used to update the state associated with the namespace
+
+▸ (`update`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `update` | (`state`: `T`) => `T` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
+
+___
+
 ## Date and Time Functions
+
+### convertToLocaleCalendar
+
+▸ **convertToLocaleCalendar**(`date`, `locale`): `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime`
+
+Converts a calendar date to the equivalent locale calendar date.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime` |
+| `locale` | `string` \| `Locale` |
+
+#### Returns
+
+`CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime`
+
+CalendarDate
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:404](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L404)
+
+___
 
 ### formatDate
 
@@ -2169,6 +3705,7 @@ Default options:
  - mode: "standard",
  - time: "for today",
  - day: true,
+ - month: true,
  - year: true
  - noToday: false
 
@@ -2192,7 +3729,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L261)
+[packages/framework/esm-utils/src/omrs-dates.ts:278](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L278)
 
 ___
 
@@ -2221,7 +3758,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:363](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L363)
+[packages/framework/esm-utils/src/omrs-dates.ts:381](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L381)
 
 ___
 
@@ -2244,7 +3781,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L347)
+[packages/framework/esm-utils/src/omrs-dates.ts:365](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L365)
 
 ___
 
@@ -2266,7 +3803,7 @@ Retrieves the default calendar for the specified locale if any.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:236](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L236)
+[packages/framework/esm-utils/src/omrs-dates.ts:252](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L252)
 
 ___
 
@@ -2284,7 +3821,7 @@ string
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:371](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L371)
+[packages/framework/esm-utils/src/omrs-dates.ts:389](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L389)
 
 ___
 
@@ -2307,7 +3844,7 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L27)
+[packages/framework/esm-utils/src/omrs-dates.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L34)
 
 ___
 
@@ -2327,7 +3864,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L56)
+[packages/framework/esm-utils/src/omrs-dates.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L63)
 
 ___
 
@@ -2350,7 +3887,7 @@ Uses `dayjs(dateString)`.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L129)
+[packages/framework/esm-utils/src/omrs-dates.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L136)
 
 ___
 
@@ -2369,7 +3906,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `locale` | `string` | - |
+| `locale` | `string` | the locale to register this calendar for |
 | `calendar` | `string` | the calendar to use for this registration |
 
 #### Returns
@@ -2378,7 +3915,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L227)
+[packages/framework/esm-utils/src/omrs-dates.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L243)
 
 ___
 
@@ -2401,7 +3938,7 @@ Otherwise returns null.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L64)
+[packages/framework/esm-utils/src/omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L71)
 
 ___
 
@@ -2425,7 +3962,7 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L121)
+[packages/framework/esm-utils/src/omrs-dates.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L128)
 
 ___
 
@@ -2448,7 +3985,7 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L105)
+[packages/framework/esm-utils/src/omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L112)
 
 ___
 
@@ -2471,7 +4008,7 @@ Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L75)
+[packages/framework/esm-utils/src/omrs-dates.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L82)
 
 ___
 
@@ -2494,7 +4031,7 @@ Formats the input as a time string using the format "HH:mm A".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L97)
+[packages/framework/esm-utils/src/omrs-dates.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L104)
 
 ___
 
@@ -2517,7 +4054,7 @@ Formats the input as a time string using the format "HH:mm".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L89)
+[packages/framework/esm-utils/src/omrs-dates.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L96)
 
 ___
 
@@ -2540,7 +4077,7 @@ Formats the input as a date string using the format "DD-MMM".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L113)
+[packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L120)
 
 ___
 
@@ -2578,7 +4115,7 @@ const { someComponent } = importDynamic("@openmrs/esm-template-app")
 
 #### Defined in
 
-[packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L36)
+[packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L37)
 
 ___
 
@@ -2632,6 +4169,55 @@ ___
 
 ## Extension Functions
 
+### ExtensionSlot
+
+▸ **ExtensionSlot**(`__namedParameters`): `Element`
+
+An [extension slot](https://o3-docs.openmrs.org/docs/extension-system).
+A place with a name. Extensions that get connected to that name
+will be rendered into this.
+
+**`example`**
+Passing a react node as children
+
+```tsx
+<ExtensionSlot name="Foo">
+  <div style={{ width: 10rem }}>
+    <Extension />
+  </div>
+</ExtensionSlot>
+```
+
+**`example`**
+Passing a function as children
+
+```tsx
+<ExtensionSlot name="Bar">
+  {(extension) => (
+    <h1>{extension.name}</h1>
+    <div style={{ color: extension.meta.color }}>
+      <Extension />
+    </div>
+  )}
+</ExtensionSlot>
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`ExtensionSlotProps`](API.md#extensionslotprops) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L81)
+
+___
+
 ### attach
 
 ▸ **attach**(`slotName`, `extensionId`): `void`
@@ -2662,7 +4248,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L142)
+[packages/framework/esm-extensions/src/extensions.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L144)
 
 ___
 
@@ -2685,7 +4271,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L175)
+[packages/framework/esm-extensions/src/extensions.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L177)
 
 ___
 
@@ -2707,7 +4293,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:199](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L199)
+[packages/framework/esm-extensions/src/extensions.ts:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L201)
 
 ___
 
@@ -2731,7 +4317,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:333](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L333)
+[packages/framework/esm-extensions/src/extensions.ts:353](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L353)
 
 ___
 
@@ -2758,7 +4344,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L259)
+[packages/framework/esm-extensions/src/extensions.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L261)
 
 ___
 
@@ -2790,7 +4376,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L90)
+[packages/framework/esm-extensions/src/extensions.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L92)
 
 ___
 
@@ -2982,6 +4568,49 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
+
+___
+
+### useRenderableExtensions
+
+▸ **useRenderableExtensions**(`name`): `React.FC`<`Pick`<[`ExtensionProps`](API.md#extensionprops), ``"state"``\>\>[]
+
+This is an advanced hook for use-cases where its useful to use the extension system,
+but not the `ExtensionSlot` component's rendering of extensions. Use of this hook
+should be avoided if possible.
+
+Functionally, this hook is very similar to the `ExtensionSlot` component, but whereas
+an `ExtensionSlot` renders a DOM tree of extensions bound to the slot, this hook simply
+returns the extensions as an array of React components that can be wired into a component
+however makes sense.
+
+**`example`**
+```ts
+const extensions = useRenderableExtensions('my-extension-slot');
+return (
+ <>
+   {extensions.map((Ext, index) => (
+     <React.Fragment key={index}>
+       <Ext state={{key: 'value'}} />
+     </React.Fragment>
+   ))}
+ </>
+)
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the extension slot |
+
+#### Returns
+
+`React.FC`<`Pick`<[`ExtensionProps`](API.md#extensionprops), ``"state"``\>\>[]
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useRenderableExtensions.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useRenderableExtensions.tsx#L31)
 
 ___
 
@@ -3963,7 +5592,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L19)
+[packages/framework/esm-globals/src/events.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L23)
 
 ___
 
@@ -4015,7 +5644,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L33)
+[packages/framework/esm-globals/src/events.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L37)
 
 ___
 
@@ -4098,50 +5727,59 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectivity.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L5)
+[packages/framework/esm-react-utils/src/useConnectivity.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L6)
 
 ___
 
 ## Other Functions
 
-### ExtensionSlot
+### WorkspaceContainer
 
-▸ **ExtensionSlot**(`__namedParameters`): `Element`
+▸ **WorkspaceContainer**(`__namedParameters`): `Element`
 
-An [extension slot](https://o3-docs.openmrs.org/docs/extension-system).
-A place with a name. Extensions that get connected to that name
-will be rendered into this.
+Use this component to render the [workspace window](https://zeroheight.com/23a080e38/p/483a22-workspace)
+in an app such as the patient chart, or a workspace overlay in an app such as the clinic dashboard.
+This allows workspaces to be opened on the page where this component is mounted. This component
+must not be mounted multiple times on the same page. If there are multiple apps on a page, only
+one of those apps should use this component—it "hosts" the workspaces.
 
-**`example`**
-Passing a react node as children
+Workspaces may be opened with the [launchWorkspace](API.md#launchworkspace) function from `@openmrs/esm-framework`
+(among other options).
 
-```tsx
-<ExtensionSlot name="Foo">
-  <div style={{ width: 10rem }}>
-    <Extension />
-  </div>
-</ExtensionSlot>
-```
+The `overlay` prop determines whether the workspace is rendered as an overlay or a window.
+When a workspace window is opened, the other content on the screen will be pushed to the left.
+When an overlay is opened, it will cover other content on the screen.
 
-**`example`**
-Passing a function as children
+The context key is a string that appears in the URL, which defines the pages on which workspaces
+are valid. If the URL changes in a way such that it no longer contains the context key, then
+all workspaces will be closed. This ensures that, for example, workspaces on the home page do
+not stay open when the user transitions to the patient dashboard; and also that workspaces do
+not stay open when the user navigates to a different patient. The context key must be a valid
+sub-path of the URL, with no initial or trailing slash. So if the URL is
+`https://example.com/patient/123/foo`, then `patient` and `patient/123` and `123/foo` are valid
+context keys, but `patient/12` and `pati` are not.
 
-```tsx
-<ExtensionSlot name="Bar">
-  {(extension) => (
-    <h1>{extension.name}</h1>
-    <div style={{ color: extension.meta.color }}>
-      <Extension />
-    </div>
-  )}
-</ExtensionSlot>
-```
+An extension slot is provided in the workspace header. Its name is derived from the `featureName` of
+the top-level component in which it is defined (feature names are generally provided in the lifecycle
+functions in an app's `index.ts` file). The slot is named `workspace-header-${featureName}-slot`.
+For the patient chart, this is `workspace-header-patient-chart-slot`.
+
+This component also provides the [Siderail and Bottom Nav](https://zeroheight.com/23a080e38/p/948cf1-siderail-and-bottom-nav/b/86907e).
+To use this, pass the `showSiderailAndBottomNav` prop. The Siderail is rendered on the right side of the screen
+on desktop, and the Bottom Nav is rendered at the bottom of the screen on tablet or mobile. The sidebar/bottom-nav
+menu provides an extension slot, to which buttons are attached as extensions. The slot
+derives its name from the `featureName` of the top-level component in which this `WorkspaceContainer`
+appears (feature names are generally provided in the lifecycle functions in an app's `index.ts` file).
+The slot is named `action-menu-${featureName}-items-slot`. For the patient chart, this is
+`action-menu-patient-chart-items-slot`.
+
+This component also provides everything needed for workspace notifications to be rendered.
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`ExtensionSlotProps`](API.md#extensionslotprops) |
+| `__namedParameters` | [`WorkspaceContainerProps`](interfaces/WorkspaceContainerProps.md) |
 
 #### Returns
 
@@ -4149,56 +5787,475 @@ Passing a function as children
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L80)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L68)
 
 ___
 
-### useAttachments
+### compile
 
-▸ **useAttachments**(`patientUuid`, `includeEncounterless`): `Object`
+▸ **compile**(`expression`): `jsep.Expression`
+
+`compile()` is a companion function for use with {@link evaluate()} and the various `evaluateAs*()` functions.
+It processes an expression string into the resulting AST that is executed by those functions. This is useful if
+you have an expression that will need to be evaluated mulitple times, potentially with different values, as the
+lexing and parsing steps can be skipped by using the AST object returned from this.
+
+The returned AST is intended to be opaque to client applications, but, of course, it is possible to manipulate
+the AST before passing it back to {@link evaluate()}, if desired. This might be useful if, for example, certain
+values are known to be constant.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` | The expression to be parsed |
+
+#### Returns
+
+`jsep.Expression`
+
+An executable AST representation of the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:319](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L319)
+
+___
+
+### evaluate
+
+▸ **evaluate**(`expression`, `variables?`): [`DefaultEvaluateReturnType`](API.md#defaultevaluatereturntype)
+
+`evaluate()` implements a relatively safe version of `eval()` that is limited to evaluating synchronous
+Javascript expressions. This allows us to safely add features that depend on user-supplied code without
+polluting the global namespace or needing to support `eval()` and the like.
+
+By default it supports any expression that evalutes to a string, number, boolean, Date, null, or undefined.
+Other values will result in an error.
+
+**`example`**
+```ts
+// shouldDisplayOptionalData will be false
+const shouldDisplayOptionalData = evaluate('!isEmpty(array)', {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+})
+```
+
+Since this only implements the expression lanaguage part of Javascript, there is no support for assigning
+values, creating functions, or creating objects, so the following will throw an error:
+
+**`example`**
+```ts
+evaluate('var a = 1; a');
+```
+
+In addition to string expressions, `evaluate()` can use an existing `jsep.Expression`, such as that returned
+from the `compile()` function. The goal here is to support cases where the same expression will be evaluated
+multiple times, possibly with different variables, e.g.,
+
+**`example`**
+```ts
+const expr = compile('isEmpty(array)');
+
+// then we use it like
+evaluate(expr, {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+
+evaluate(expr, {
+ array: ['value'],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+```
+
+This saves the overhead of parsing the expression everytime and simply allows us to evaluate it.
+
+The `variables` parameter should be used to supply any variables or functions that should be in-scope for
+the evaluation. A very limited number of global objects, like NaN and Infinity are always available, but
+any non-global values will need to be passed as a variable. Note that expressions do not have any access to
+the variables in the scope in which they were defined unless they are supplied here.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+[`DefaultEvaluateReturnType`](API.md#defaultevaluatereturntype)
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L93)
+
+___
+
+### evaluateAsBoolean
+
+▸ **evaluateAsBoolean**(`expression`, `variables?`): `Boolean`
+
+`evaluateAsBoolean()` is a variant of {@link evaluate()} which only supports boolean results. Useful
+if valid expression must return boolean values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`Boolean`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L176)
+
+___
+
+### evaluateAsBooleanAsync
+
+▸ **evaluateAsBooleanAsync**(`expression`, `variables?`): `Promise`<`Boolean`\>
+
+`evaluateAsBooleanAsync()` is a variant of {@link evaluateAsync()} which only supports boolean results. Useful
+if valid expression must return boolean values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`Promise`<`Boolean`\>
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:189](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L189)
+
+___
+
+### evaluateAsNumber
+
+▸ **evaluateAsNumber**(`expression`, `variables?`): `number`
+
+`evaluateAsNumber()` is a variant of {@link evaluate()} which only supports number results. Useful
+if valid expression must return numeric values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`number`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L202)
+
+___
+
+### evaluateAsNumberAsync
+
+▸ **evaluateAsNumberAsync**(`expression`, `variables?`): `number`
+
+`evaluateAsNumberAsync()` is a variant of {@link evaluateAsync()} which only supports number results. Useful
+if valid expression must return numeric values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`number`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L215)
+
+___
+
+### evaluateAsType
+
+▸ **evaluateAsType**<`T`\>(`expression`, `variables?`, `typePredicate`): `T`
+
+`evaluateAsType()` is a type-safe version of {@link evaluate()} which returns a result if the result
+passes a custom type predicate. The main use-case for this is to narrow the return types allowed based on
+context, e.g., if the expected result should be a number or boolean, you can supply a custom type-guard
+to ensure that only number or boolean results are returned.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+| `typePredicate` | (`result`: `unknown`) => result is T | A [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)  which asserts that the result value matches one of the expected results. |
+
+#### Returns
+
+`T`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L232)
+
+___
+
+### evaluateAsTypeAsync
+
+▸ **evaluateAsTypeAsync**<`T`\>(`expression`, `variables?`, `typePredicate`): `Promise`<`T`\>
+
+`evaluateAsTypeAsync()` is a type-safe version of {@link evaluateAsync()} which returns a result if the result
+passes a custom type predicate. The main use-case for this is to narrow the return types allowed based on
+context, e.g., if the expected result should be a number or boolean, you can supply a custom type-guard
+to ensure that only number or boolean results are returned.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+| `typePredicate` | (`result`: `unknown`) => result is T | A [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)  which asserts that the result value matches one of the expected results. |
+
+#### Returns
+
+`Promise`<`T`\>
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L273)
+
+___
+
+### evaluateAsync
+
+▸ **evaluateAsync**(`expression`, `variables?`): `Promise`<[`DefaultEvaluateReturnType`](API.md#defaultevaluatereturntype)\>
+
+`evaluateAsync()` implements a relatively safe version of `eval()` that can evaluate Javascript expressions
+that use Promises. This allows us to safely add features that depend on user-supplied code without
+polluting the global namespace or needing to support `eval()` and the like.
+
+By default it supports any expression that evalutes to a string, number, boolean, Date, null, or undefined.
+Other values will result in an error.
+
+**`example`**
+```ts
+// shouldDisplayOptionalData will be false
+const shouldDisplayOptionalData = await evaluateAsync('Promise.resolve(!isEmpty(array))', {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+})
+```
+
+Since this only implements the expression lanaguage part of Javascript, there is no support for assigning
+values, creating functions, or creating objects, so the following will throw an error:
+
+**`example`**
+```ts
+evaluateAsync('var a = 1; a');
+```
+
+In addition to string expressions, `evaluate()` can use an existing `jsep.Expression`, such as that returned
+from the `compile()` function. The goal here is to support cases where the same expression will be evaluated
+multiple times, possibly with different variables, e.g.,
+
+**`example`**
+```ts
+const expr = compile('Promise.resolve(isEmpty(array))');
+
+// then we use it like
+evaluateAsync(expr, {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+
+evaluateAsync(expr, {
+ array: ['value'],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+```
+
+This saves the overhead of parsing the expression everytime and simply allows us to evaluate it.
+
+The `variables` parameter should be used to supply any variables or functions that should be in-scope for
+the evaluation. A very limited number of global objects, like NaN and Infinity are always available, but
+any non-global values will need to be passed as a variable. Note that expressions do not have any access to
+the variables in the scope in which they were defined unless they are supplied here.
+
+**Note:** `evaluateAsync()` currently only supports Promise-based asynchronous flows and does not support
+the `await` keyword.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`Promise`<[`DefaultEvaluateReturnType`](API.md#defaultevaluatereturntype)\>
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L163)
+
+___
+
+### isOnline
+
+▸ **isOnline**(`online?`): `boolean`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `patientUuid` | `string` |
-| `includeEncounterless` | `boolean` |
+| `online?` | `boolean` |
 
 #### Returns
 
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `data` | [`AttachmentResponse`](interfaces/AttachmentResponse.md)[] |
-| `error` | `any` |
-| `isLoading` | `boolean` |
-| `isValidating` | `boolean` |
-| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`AttachmentResponse`](interfaces/AttachmentResponse.md)[]  }\>\> |
+`boolean`
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAttachments.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L5)
+[packages/framework/esm-utils/src/is-online.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/is-online.ts#L3)
 
 ___
 
-### usePatientPhoto
+### useFhirFetchAll
 
-▸ **usePatientPhoto**(`patientUuid`): [`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+▸ **useFhirFetchAll**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
 
-#### Parameters
+This hook handles fetching results from *all* pages of a paginated FHIR REST endpoint, making multiple requests
+as needed.
+This function is the FHIR counterpart of `useOpenmrsPagination`.
+
+**`see`** `useFhirPagination`
+
+**`see`** `useFhirInfinite`
+
+**`see`** `useOpenmrsFetchAll``
+
+#### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `patientUuid` | `string` |
+| `T` | extends `ResourceBase` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `any` | The URL of the paginated rest endpoint.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerFetchAllOptions`](interfaces/UseServerFetchAllOptions.md)<`Bundle`\> | The options object |
 
 #### Returns
 
-[`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+`UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
+
+a UseFhirInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L29)
+[packages/framework/esm-react-utils/src/useFhirFetchAll.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L19)
+
+___
+
+### useFhirInfinite
+
+▸ **useFhirInfinite**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
+
+Fhir REST endpoints that return a list of objects, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+
+This function is the FHIR counterpart of `useOpenmrsInfinite`.
+
+**`see`** `useFhirPagination`
+
+**`see`** `useFhirFetchAll`
+
+**`see`** `useOpenmrsInfinite`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ResourceBase` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerInfiniteOptions`](interfaces/UseServerInfiniteOptions.md)<`Bundle`\> | The options object |
+
+#### Returns
+
+`UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
+
+a UseServerInfiniteReturnObject object
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
 
 ___
 
@@ -4322,7 +6379,7 @@ The found or newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L61)
+[packages/framework/esm-state/src/state.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L91)
 
 ___
 
@@ -4357,7 +6414,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L78)
+[packages/framework/esm-state/src/state.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L106)
 
 ___
 
@@ -4506,9 +6563,9 @@ invalid key to this function will result in a type error.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientLists"`` \| ``"relationships"`` \| ``"seeMoreLists"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"address1"`` \| ``"address2"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
+| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"age"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactAdministratorIfIssuePersists"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientIdentifierSticker"`` \| ``"patientLists"`` \| ``"print"`` \| ``"printError"`` \| ``"printErrorExplainer"`` \| ``"printIdentifierSticker"`` \| ``"printing"`` \| ``"relationships"`` \| ``"resetOverrides"`` \| ``"scriptLoadingFailed"`` \| ``"scriptLoadingError"`` \| ``"seeMoreLists"`` \| ``"sex"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"hide"`` \| ``"maximize"`` \| ``"minimize"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"workspaceHeader"`` \| ``"address1"`` \| ``"address2"`` \| ``"address3"`` \| ``"address4"`` \| ``"address5"`` \| ``"address6"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
 | `defaultText?` | `string` | - |
-| `options?` | `object` | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
+| `options?` | `Omit`<`TOptions`<`StringMap`\>, ``"defaultValue"`` \| ``"ns"``\> | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
 
 #### Returns
 
@@ -4516,7 +6573,7 @@ invalid key to this function will result in a type error.
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L60)
+[packages/framework/esm-translations/src/index.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L66)
 
 ___
 
@@ -4535,7 +6592,8 @@ Translations within the current app should be accessed with the i18next API, usi
 
 IMPORTANT: This function creates a hidden dependency on the module. Worse yet, it creates
 a dependency specifically on that module's translation keys, which are often regarded as
-"implementation details" and therefore may be volatile.
+"implementation details" and therefore may be volatile. Also note that this function DOES NOT
+load the module's translations if they have not already been loaded via `useTranslation`.
 **This function should therefore be avoided when possible.**
 
 #### Parameters
@@ -4545,7 +6603,7 @@ a dependency specifically on that module's translation keys, which are often reg
 | `moduleName` | `string` | The module to get the translation from, e.g. '@openmrs/esm-login-app' |
 | `key` | `string` | The i18next translation key |
 | `fallback?` | `string` | Fallback text for if the lookup fails |
-| `options?` | `object` | Options object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options            for more information. `ns` and `defaultValue` are already set and may not be used. |
+| `options?` | `Omit`<`TOptions`<`StringMap`\>, ``"defaultValue"`` \| ``"ns"``\> | Options object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options            for more information. `ns` and `defaultValue` are already set and may not be used. |
 
 #### Returns
 
@@ -4555,7 +6613,7 @@ The translated text as a string
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L39)
+[packages/framework/esm-translations/src/index.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L40)
 
 ___
 
@@ -4617,7 +6675,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L177)
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:183](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L183)
 
 ___
 
@@ -4685,6 +6743,26 @@ a 48px avatar.
 
 ___
 
+### getFhirServerPaginationHandlers
+
+▸ **getFhirServerPaginationHandlers**<`T`\>(): `FhirServerPaginationHandlers`<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+`FhirServerPaginationHandlers`<`T`\>
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useFhirPagination.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L36)
+
+___
+
 ### isDesktop
 
 ▸ **isDesktop**(`layout`): `boolean`
@@ -4749,17 +6827,22 @@ ___
 
 ### showModal
 
-▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
+▸ **showModal**(`modalName`, `props?`, `onClose?`): () => `void`
 
-Shows the provided extension component in a modal dialog.
+Shows a modal dialog.
+
+The modal must have been registered by name. This should be done in the `routes.json` file of the
+app that defines the modal. Note that both the `<ModalHeader>` and `<ModalBody>` should be at the
+top level of the modal component (wrapped in a React.Fragment), or else the content of the modal
+body might not vertical-scroll properly.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `extensionId` | `string` | The id of the extension to show. |
-| `props` | `Record`<`string`, `any`\> | The optional props to provide to the extension. |
-| `onClose` | () => `void` | The optional notification to receive when the modal is closed. |
+| `modalName` | `string` | The name of the modal to show. |
+| `props` | `ModalProps` | The optional props to provide to the modal. |
+| `onClose` | () => `void` | The optional callback to call when the modal is closed. |
 
 #### Returns
 
@@ -4775,7 +6858,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:160](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L160)
+[packages/framework/esm-styleguide/src/modals/index.tsx:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L213)
 
 ___
 
@@ -4867,7 +6950,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L107)
+[packages/framework/esm-globals/src/events.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L111)
 
 ___
 
@@ -4893,7 +6976,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L100)
+[packages/framework/esm-globals/src/events.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L104)
 
 ___
 
@@ -4919,7 +7002,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L121)
+[packages/framework/esm-globals/src/events.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L125)
 
 ___
 
@@ -4945,7 +7028,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L114)
+[packages/framework/esm-globals/src/events.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L118)
 
 ___
 
@@ -4986,6 +7069,66 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useBodyScrollLock.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useBodyScrollLock.ts#L4)
+
+___
+
+### useFhirPagination
+
+▸ **useFhirPagination**<`T`\>(`url`, `pageSize`, `options?`): `Object`
+
+Fhir REST endpoints that return a list of objects, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+
+This function is the FHIR counterpart of `useOpenmrsPagination`.
+
+**`see`** `useOpenmrsPagination
+
+**`see`** `useFhirInfinite`
+
+**`see`** `useFhirFetchAll`
+
+**`see`** `usePagination` for pagination of client-side data`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ResourceBase` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint.            which will be overridden and manipulated by the `goTo*` callbacks |
+| `pageSize` | `number` | The number of results to return per page / fetch. |
+| `options` | [`UseServerPaginationOptions`](interfaces/UseServerPaginationOptions.md)<`Bundle`\> | The options object |
+
+#### Returns
+
+`Object`
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `currentPage` | `number` | - |
+| `currentPageSize` | `MutableRefObject`<`number`\> | - |
+| `data` | `undefined` \| `T`[] |  |
+| `error` | `any` | The error object thrown by the fetcher function. |
+| `goTo` | (`page`: `number`) => `void` | - |
+| `goToNext` | () => `void` | - |
+| `goToPrevious` | () => `void` | - |
+| `isLoading` | `boolean` | - |
+| `isValidating` | `boolean` | - |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<`Bundle`\>\> | - |
+| `paginated` | `boolean` |  |
+| `showNextButton` | `boolean` |  |
+| `showPreviousButton` | `boolean` |  |
+| `totalCount` | `number` |  |
+| `totalPages` | `number` | - |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useFhirPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L27)
 
 ___
 
@@ -5030,9 +7173,170 @@ ___
 
 ___
 
+### useOpenmrsFetchAll
+
+▸ **useOpenmrsFetchAll**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
+
+Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+This hook handles fetching results from *all* pages of a paginated OpenMRS REST endpoint, making multiple requests
+as needed.
+
+**`see`** `useOpenmrsPagination`
+
+**`see`** `useOpenmrsInfinite`
+
+**`see`** `useFhirFetchAll`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated OpenMRS REST endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerFetchAllOptions`](interfaces/UseServerFetchAllOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
+
+#### Returns
+
+`UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
+
+a UseOpenmrsInfiniteReturnObject object
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
+
+___
+
+### useOpenmrsInfinite
+
+▸ **useOpenmrsInfinite**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
+
+Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+The max number of results per request is configurable server-side
+with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
+
+This hook fetches data from a paginated rest endpoint, initially by fetching the first page of the results.
+It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
+provide infinite loading / scrolling of results. Unlike `useOpenmrsPagination`, this hook does not allow random access
+(and lazy-loading) of any arbitrary page; rather, it fetches pages sequentially starting form the initial page, and the next page
+is fetched by calling `loadMore`. See: https://swr.vercel.app/docs/pagination#useswrinfinite
+
+**`see`** `useOpenmrsPagination`
+
+**`see`** `useOpenmrsFetchAll`
+
+**`see`** `useFhirInfinite`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerInfiniteOptions`](interfaces/UseServerInfiniteOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
+
+#### Returns
+
+`UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
+
+a UseServerInfiniteReturnObject object
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L99)
+
+___
+
+### useOpenmrsPagination
+
+▸ **useOpenmrsPagination**<`T`\>(`url`, `pageSize`, `options?`): `Object`
+
+Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+The max number of results per request is configurable server-side
+with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
+
+For any UI that displays a paginated view of the full data set, we MUST handle the server-side pagination properly,
+or else the UI does not correctly display the full data set.
+This hook does that by providing callback functions for navigating to different pages of the results, and
+lazy-loads the data on each page as needed.
+
+Note that this hook is not suitable for use for situations that require client-side sorting or filtering
+of the data set. In that case, all data must be loaded onto client-side first.
+
+**`see`** `useOpenmrsInfinite`
+
+**`see`** `useOpenmrsFetchAll`
+
+**`see`** `usePagination` for pagination of client-side data`
+
+**`see`** `useFhirPagination``
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint. \            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,            which will be overridden and manipulated by the `goTo*` callbacks.            Similar to useSWR, this param can be null to disable fetching. |
+| `pageSize` | `number` | The number of results to return per page / fetch. Note that this value MUST NOT exceed            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000). |
+| `options` | [`UseServerPaginationOptions`](interfaces/UseServerPaginationOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
+
+#### Returns
+
+`Object`
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `currentPage` | `number` | - |
+| `currentPageSize` | `MutableRefObject`<`number`\> | - |
+| `data` | `undefined` \| `T`[] |  |
+| `error` | `any` | The error object thrown by the fetcher function. |
+| `goTo` | (`page`: `number`) => `void` | - |
+| `goToNext` | () => `void` | - |
+| `goToPrevious` | () => `void` | - |
+| `isLoading` | `boolean` | - |
+| `isValidating` | `boolean` | - |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<`OpenMRSPaginatedResponse`<`T`\>\>\> | - |
+| `paginated` | `boolean` |  |
+| `showNextButton` | `boolean` |  |
+| `showPreviousButton` | `boolean` |  |
+| `totalCount` | `number` |  |
+| `totalPages` | `number` | - |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L59)
+
+___
+
 ### usePagination
 
 ▸ **usePagination**<`T`\>(`data?`, `resultsPerPage?`): `Object`
+
+Use this hook to paginate data that already exists on the client side.
+Note that if the data is obtained from server-side, the caller must handle server-side pagination manually.
+
+**`see`** `useServerPagination` for hook that automatically manages server-side pagination.
+
+**`see`** `useServerInfinite` for hook to get all data loaded onto the client-side
 
 #### Type parameters
 
@@ -5065,7 +7369,27 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePagination.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L6)
+[packages/framework/esm-react-utils/src/usePagination.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L15)
+
+___
+
+### usePatientPhoto
+
+▸ **usePatientPhoto**(`patientUuid`): [`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+
+#### Returns
+
+[`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L30)
 
 ___
 
@@ -5073,25 +7397,29 @@ ___
 
 ### age
 
-▸ **age**(`dateString`): `string`
+▸ **age**(`birthDate`, `currentDate?`): `string` \| ``null``
 
-Gets a human readable and locale supported age represention of the provided date string.
+Gets a human readable and locale supported representation of a person's age, given their birthDate,
+The representation logic follows the guideline here:
+https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
+(See Tables 7 and 8)
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `dateString` | `string` | The stringified date. |
+| `birthDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | The birthDate. If birthDate is null, returns null. |
+| `currentDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | Optional. If provided, calculates the age of the person at the provided currentDate (instead of now). |
 
 #### Returns
 
-`string`
+`string` \| ``null``
 
 A human-readable string version of the age.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L36)
+[packages/framework/esm-utils/src/age-helpers.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L17)
 
 ___
 
@@ -5121,33 +7449,77 @@ True if the WebStorage API object is able to be accessed, false otherwise
 
 ___
 
-### daysIntoYear
+### displayName
 
-▸ **daysIntoYear**(`date`): `number`
+▸ **displayName**(`patient`): `string`
 
-Gets the number of days in the year of the given date.
+**`deprecated`** Use `getPatientName`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patient` | `Patient` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/patient-helpers.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L20)
+
+___
+
+### formatPatientName
+
+▸ **formatPatientName**(`name`): `string`
+
+Get a formatted display string for an FHIR name.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | `Date` | The date to compute the days within the year. |
+| `name` | `undefined` \| `HumanName` | The name to be formatted. |
 
 #### Returns
 
-`number`
+`string`
 
-The number of days.
+The formatted display name or an empty string if name is undefined.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L9)
+[packages/framework/esm-utils/src/patient-helpers.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L29)
+
+___
+
+### formattedName
+
+▸ **formattedName**(`name`): `string`
+
+**`deprecated`** Use `formatPatientName`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `undefined` \| `HumanName` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/patient-helpers.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L35)
 
 ___
 
 ### getDefaultsFromConfigSchema
 
-▸ **getDefaultsFromConfigSchema**(`schema`): `Object`
+▸ **getDefaultsFromConfigSchema**<`T`\>(`schema`): `T`
 
 Given a config schema, this returns an object like is returned by `useConfig`
 with all default values.
@@ -5158,6 +7530,12 @@ If all you need is the default values in your tests, these are returned by
 default from the `useConfig`/`getConfig` mock. This function is useful if you
 need to override some of the default values.
 
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `Record`<`string`, `any`\> |
+
 #### Parameters
 
 | Name | Type |
@@ -5166,7 +7544,7 @@ need to override some of the default values.
 
 #### Returns
 
-`Object`
+`T`
 
 #### Defined in
 
@@ -5174,28 +7552,30 @@ need to override some of the default values.
 
 ___
 
-### isSameDay
+### getPatientName
 
-▸ **isSameDay**(`firstDate`, `secondDate`): `boolean`
+▸ **getPatientName**(`patient`): `string`
 
-Checks if two dates are representing the same day.
+Gets the formatted display name for a patient.
+
+The display name will be taken from the patient's 'usual' name,
+or may fall back to the patient's 'official' name.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `firstDate` | `Date` | The first date. |
-| `secondDate` | `Date` | The second date. |
+| `patient` | `Patient` | The patient details in FHIR format. |
 
 #### Returns
 
-`boolean`
+`string`
 
-True if both are located on the same day.
+The patient's display name or an empty string if name is not present.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L25)
+[packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
 
 ___
 
@@ -5258,9 +7638,47 @@ The result of successfully executing `fn`.
 
 ___
 
+### selectPreferredName
+
+▸ **selectPreferredName**(`patient`, ...`preferredNames`): `fhir.HumanName` \| `undefined`
+
+Select the preferred name from the collection of names associated with a patient.
+
+Names may be specified with a usage such as 'usual', 'official', 'nickname', 'maiden', etc.
+A name with no usage specified is treated as the 'usual' name.
+
+The chosen name will be selected according to the priority order of `preferredNames`,
+
+**`example`**
+// normal use case; prefer usual name, fallback to official name
+displayNameByUsage(patient, 'usual', 'official')
+
+**`example`**
+// prefer usual name over nickname, fallback to official name
+displayNameByUsage(patient, 'usual', 'nickname', 'official')
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `patient` | `Patient` | The patient from whom a name will be selected. |
+| `...preferredNames` | [`NameUse`](API.md#nameuse)[] | Optional ordered sequence of preferred name usages; defaults to 'usual' if not specified. |
+
+#### Returns
+
+`fhir.HumanName` \| `undefined`
+
+the preferred name for the patient, or undefined if no acceptable name could be found.
+
+#### Defined in
+
+[packages/framework/esm-utils/src/patient-helpers.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L57)
+
+___
+
 ### shallowEqual
 
-▸ **shallowEqual**(`objA`, `objB`): `boolean`
+▸ **shallowEqual**(`a`, `b`): `boolean`
 
 Checks whether two objects are equal, using a shallow comparison, similar to React.
 
@@ -5271,8 +7689,8 @@ of these are equal (===) to each other.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `objA` | `unknown` | The first object to compare |
-| `objB` | `unknown` | The second object to compare |
+| `a` | `unknown` | The first value to compare |
+| `b` | `unknown` | The second value to compare |
 
 #### Returns
 
@@ -5374,7 +7792,7 @@ ___
 
 ### useOpenmrsSWR
 
-▸ **useOpenmrsSWR**<`DataType`, `ErrorType`\>(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `Partial`<`PublicConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>\>
+▸ **useOpenmrsSWR**<`DataType`, `ErrorType`\>(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>
 
 **`beta`**
 
@@ -5427,8 +7845,124 @@ function MyComponent() {
 
 #### Returns
 
-`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `Partial`<`PublicConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>\>
+`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L70)
+
+___
+
+## Workspace Functions
+
+### closeWorkspace
+
+▸ **closeWorkspace**(`name`, `options?`): `boolean`
+
+Function to close an opened workspace
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | Workspace registration name |
+| `options` | [`CloseWorkspaceOptions`](interfaces/CloseWorkspaceOptions.md) | Options to close workspace |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:304](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L304)
+
+___
+
+### launchWorkspace
+
+▸ **launchWorkspace**<`T`\>(`name`, `additionalProps?`): `void`
+
+This launches a workspace by its name. The workspace must have been registered.
+Workspaces should be registered in the `routes.json` file.
+
+For the workspace to appear, there must be either a `<WorkspaceOverlay />` or
+a `<WorkspaceWindow />` component rendered.
+
+The behavior of this function is as follows:
+
+- If no workspaces are open, or if no other workspaces with the same type are open,
+  it will be opened and focused.
+- If a workspace with the same name is already open, it will be displayed/focused,
+  if it was not already.
+- If a workspace is launched and a workspace which cannot be hidden is already open,
+ a confirmation modal will pop up warning about closing the currently open workspace.
+- If another workspace with the same type is open, the workspace will be brought to
+  the front and then a confirmation modal will pop up warning about closing the opened
+  workspace
+
+Note that this function just manipulates the workspace store. The UI logic is handled
+by the components that display workspaces.
+
+Additional props can be passed to the workspace component being launched. Passing a
+prop named `workspaceTitle` will override the title of the workspace.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `object` \| [`DefaultWorkspaceProps`](interfaces/DefaultWorkspaceProps.md) = [`DefaultWorkspaceProps`](interfaces/DefaultWorkspaceProps.md) & { `[key: string]`: `any`;  } |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the workspace to launch |
+| `additionalProps?` | `Omit`<`T`, keyof [`DefaultWorkspaceProps`](interfaces/DefaultWorkspaceProps.md)\> & { `workspaceTitle?`: `string`  } | Props to pass to the workspace component being launched. Passing          a prop named `workspaceTitle` will override the title of the workspace. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L177)
+
+___
+
+### navigateAndLaunchWorkspace
+
+▸ **navigateAndLaunchWorkspace**(`__namedParameters`): `void`
+
+Use this function to navigate to a new page and launch a workspace on that page.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `Object` |
+| `__namedParameters.additionalProps?` | `object` |
+| `__namedParameters.contextKey` | `string` |
+| `__namedParameters.targetUrl` | `string` |
+| `__namedParameters.workspaceName` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L262)
+
+___
+
+### useWorkspaces
+
+▸ **useWorkspaces**(): [`WorkspacesInfo`](interfaces/WorkspacesInfo.md)
+
+#### Returns
+
+[`WorkspacesInfo`](interfaces/WorkspacesInfo.md)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:418](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L418)

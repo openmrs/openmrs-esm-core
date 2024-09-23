@@ -2,17 +2,18 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { type To, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, InlineLoading, InlineNotification, PasswordInput, TextInput, Tile } from '@carbon/react';
-import { ArrowLeft, ArrowRight } from '@carbon/react/icons';
 import {
-  useConfig,
-  interpolateUrl,
-  useSession,
-  refetchCurrentUser,
-  useConnectivity,
-  navigate as openmrsNavigate,
+  ArrowLeftIcon,
+  ArrowRightIcon,
   getCoreTranslation,
+  navigate as openmrsNavigate,
+  refetchCurrentUser,
+  useConfig,
+  useConnectivity,
+  useSession,
 } from '@openmrs/esm-framework';
 import { type ConfigSchema } from '../config-schema';
+import Logo from '../logo.component';
 import styles from './login.scss';
 
 export interface LoginReferrer {
@@ -43,13 +44,13 @@ const Login: React.FC = () => {
     [rawNavigate, location.state],
   );
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
 
   const showUsername = location.pathname === '/login';
   const showPassword = !showPasswordOnSeparateScreen || location.pathname === '/login/confirm';
@@ -121,10 +122,12 @@ const Login: React.FC = () => {
           }
         } else {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
-
           setUsername('');
           setPassword('');
-          navigate('/login');
+
+          if (showPasswordOnSeparateScreen) {
+            navigate('/login');
+          }
         }
 
         return true;
@@ -137,7 +140,10 @@ const Login: React.FC = () => {
 
         setUsername('');
         setPassword('');
-        navigate('/login');
+
+        if (showPasswordOnSeparateScreen) {
+          navigate('/login');
+        }
       } finally {
         setIsLoggingIn(false);
       }
@@ -151,7 +157,7 @@ const Login: React.FC = () => {
   if (!loginProvider || loginProvider.type === 'basic') {
     return (
       <div className={styles.container}>
-        <Tile className={styles['login-card']}>
+        <Tile className={styles.loginCard}>
           {errorMessage && (
             <div className={styles.errorMessage}>
               <InlineNotification
@@ -163,24 +169,24 @@ const Login: React.FC = () => {
             </div>
           )}
           {showPasswordOnSeparateScreen && showPassword ? (
-            <div className={styles['back-button-div']}>
+            <div className={styles.backButtonDiv}>
               <Button
-                className={styles['back-button']}
-                iconDescription="Back to username"
+                className={styles.backButton}
+                iconDescription={t('backToUserNameIconLabel', 'Back to username')}
                 kind="ghost"
                 onClick={() => navigate('/login')}
-                renderIcon={(props) => <ArrowLeft size={24} style={{ marginRight: '0.5rem' }} {...props} />}
+                renderIcon={(props) => <ArrowLeftIcon {...props} size={24} />}
               >
                 <span>{t('back', 'Back')}</span>
               </Button>
             </div>
           ) : null}
-          <div className={styles['center']}>
-            <Logo />
+          <div className={styles.center}>
+            <Logo t={t} />
           </div>
           <form onSubmit={handleSubmit} ref={formRef}>
             {showUsername && (
-              <div className={styles['input-group']}>
+              <div className={styles.inputGroup}>
                 <TextInput
                   id="username"
                   type="text"
@@ -206,7 +212,7 @@ const Login: React.FC = () => {
                 {showPasswordOnSeparateScreen && (
                   <Button
                     className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                     type="submit"
                     iconDescription="Continue to login"
                     onClick={continueLogin}
@@ -218,17 +224,17 @@ const Login: React.FC = () => {
               </div>
             )}
             {showPassword && (
-              <div className={styles['input-group']}>
+              <div className={styles.inputGroup}>
                 <PasswordInput
                   id="password"
                   invalidText={t('validValueRequired', 'A valid value is required')}
                   labelText={t('password', 'Password')}
                   name="password"
-                  value={password}
                   onChange={changePassword}
                   ref={passwordInputRef}
                   required
-                  showPasswordLabel="Show password"
+                  showPasswordLabel={t('showPassword', 'Show password')}
+                  value={password}
                 />
                 {/* For password managers */}
                 {showPasswordOnSeparateScreen && (
@@ -245,7 +251,7 @@ const Login: React.FC = () => {
                 <Button
                   type="submit"
                   className={styles.continueButton}
-                  renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                  renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                   iconDescription="Log in"
                   disabled={!isLoginEnabled || isLoggingIn}
                 >
@@ -259,11 +265,11 @@ const Login: React.FC = () => {
             )}
           </form>
         </Tile>
-        <div className={styles['footer']}>
-          <p className={styles['powered-by-txt']}>{t('poweredBy', 'Powered by')}</p>
+        <div className={styles.footer}>
+          <p className={styles.poweredByTxt}>{t('poweredBy', 'Powered by')}</p>
           <div>
-            <svg role="img" className={styles['powered-by-logo']}>
-              <use xlinkHref="#omrs-logo-partial-mono"></use>
+            <svg role="img" className={styles.poweredByLogo}>
+              <use href="#omrs-logo-partial-mono"></use>
             </svg>
           </div>
         </div>
@@ -272,18 +278,6 @@ const Login: React.FC = () => {
   }
 
   return null;
-};
-
-const Logo = () => {
-  const { logo } = useConfig<ConfigSchema>();
-  return logo.src ? (
-    <img src={interpolateUrl(logo.src)} alt={logo.alt ?? 'OpenMRS Logo'} className={styles['logo-img']} />
-  ) : (
-    <svg role="img" className={styles['logo']}>
-      <title>OpenMRS logo</title>
-      <use xlinkHref="#omrs-logo-full-color"></use>
-    </svg>
-  );
 };
 
 export default Login;

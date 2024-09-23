@@ -1,0 +1,345 @@
+@use '@carbon/styles/scss/motion';
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/utilities/box-shadow';
+@use '@carbon/styles/scss/utilities/component-reset';
+@use '@carbon/styles/scss/utilities/focus-outline' as focus;
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.calendarGrid {
+  width: 17rem;
+
+  tr,
+  tr > th,
+  tr > td {
+    height: 2.428rem;
+    width: 2.428rem;
+  }
+
+  > thead > tr > th {
+    @include type.type-style('body-compact-01');
+    cursor: default;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  > tbody > tr > td {
+    @include type.type-style('body-compact-01');
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+
+    > div {
+      outline: unset;
+    }
+
+    &:hover:not(:has([aria-disabled], [data-selected])) {
+      background-color: theme.$layer-hover;
+    }
+
+    &:has([data-selected]) {
+      background-color: $color-blue-60-2;
+      color: $ui-background;
+    }
+
+    [aria-disabled] {
+      color: theme.$text-disabled;
+      cursor: default;
+    }
+  }
+}
+
+.dialog {
+  @include box-shadow.box-shadow;
+  background-color: theme.$layer-01;
+  overflow: hidden;
+  padding: spacing.$spacing-02 spacing.$spacing-02 spacing.$spacing-03 spacing.$spacing-02;
+}
+
+.flatButton {
+  @include component-reset.reset;
+  background-color: inherit;
+  display: inline-flex;
+
+  &:hover:not(:has([aria-disabled='true'])) {
+    background-color: theme.$layer-hover;
+  }
+
+  > svg {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+}
+
+[data-invalid] > .flatButton > svg {
+  --omrs-icon-fill: #{theme.$support-error};
+}
+
+.flatButtonMd {
+  height: spacing.$spacing-08;
+  width: spacing.$spacing-08;
+}
+
+.header {
+  margin-top: spacing.$spacing-03;
+  margin-bottom: spacing.$spacing-03;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.inputGroup {
+  align-items: center;
+  background-color: var(--cds-field);
+  border-block-end: 1px solid var(--cds-border-strong);
+  color: var(--cds-text-primary);
+  display: flex;
+  position: relative;
+
+  &:focus-within,
+  &.cds--focused {
+    @include focus.focus-outline('outline');
+  }
+
+  &[data-invalid] {
+    @include focus.focus-outline('invalid');
+    color: theme.$support-error;
+  }
+}
+
+.inputWrapper {
+  inline-size: 15rem;
+  padding-left: spacing.$spacing-04;
+
+  .inputSegment {
+    caret-color: var(--cds-text-primary);
+
+    &:focus {
+      outline: unset;
+    }
+
+    &[data-placeholder] {
+      color: theme.$text-disabled;
+    }
+  }
+
+  /*
+   * These next two style rules try to render the read-only parts of the date in the disabled color
+   * unless they ware surrounded by two filled-in entries.
+   */
+  [data-readonly]:has(+ [data-placeholder]) {
+    color: theme.$text-disabled;
+  }
+
+  [data-placeholder] + [data-readonly] {
+    color: theme.$text-disabled;
+  }
+}
+
+.inputWrapperMd {
+  block-size: spacing.$spacing-08;
+}
+
+.monthYear {
+  @include component-reset.reset;
+  @include type.type-style('heading-compact-01');
+
+  margin-top: spacing.$spacing-03;
+  margin-block-end: spacing.$spacing-01;
+  text-align: center;
+
+  > span {
+    margin-left: spacing.$spacing-02;
+    margin-right: spacing.$spacing-02;
+  }
+
+  div:has(input[inputmode='numeric']) {
+    display: inline;
+
+    > input[inputmode='numeric'] {
+      @include component-reset.reset;
+      @include type.type-style('heading-compact-01');
+      background-color: var(--cds-field);
+      inline-size: spacing.$spacing-08;
+      padding: spacing.$spacing-02;
+      padding-right: 0;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+      }
+
+      &:focus {
+        @include focus.focus-outline('border');
+      }
+
+      &[data-invalid] {
+        @include focus.focus-outline('invalid');
+      }
+
+      &[data-disabled],
+      &[data-disabled]:hover {
+        background-color: theme.$layer-01;
+        color: theme.$text-disabled;
+        pointer-events: none;
+      }
+
+      &[data-disabled] + div > button::after {
+        border-block-end-color: theme.$text-disabled;
+        border-block-start-color: theme.$text-disabled;
+      }
+
+      &[data-disabled] + div > button:hover {
+        opacity: 0;
+      }
+    }
+
+    div[role='group'] {
+      @include component-reset.reset;
+      display: inline;
+      position: relative;
+    }
+
+    &:hover button {
+      opacity: 1;
+    }
+
+    button {
+      @include component-reset.reset;
+      position: absolute;
+      padding: 0 spacing.$spacing-02 0 spacing.$spacing-01;
+      border: none;
+      block-size: 50%;
+      cursor: pointer;
+      inline-size: spacing.$spacing-04;
+      inset-inline-start: spacing.$spacing-08;
+      line-height: 50%;
+      opacity: 0;
+
+      &::after {
+        display: block;
+        border-inline-end: spacing.$spacing-02 solid transparent;
+        border-inline-start: spacing.$spacing-02 solid transparent;
+        content: '';
+        inset-block-start: 33%;
+      }
+
+      &:hover::after {
+        border-block-end-color: button.$button-primary;
+        border-block-start-color: button.$button-primary;
+      }
+
+      &:active::after {
+        border-block-end-color: theme.$border-interactive;
+        border-block-start-color: theme.$border-interactive;
+      }
+
+      &[slot='increment'] {
+        top: 0;
+        left: 0;
+      }
+
+      &[slot='decrement'] {
+        top: spacing.$spacing-04;
+        left: 0;
+      }
+    }
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.popover[data-entering] {
+  animation: fade-in-down motion.$duration-fast-02 motion.motion(entrance, productive);
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+:global([dir='rtl']) {
+  .inputWrapper {
+    padding-left: unset;
+    padding-right: spacing.$spacing-04;
+  }
+
+  .monthYear {
+    div:has(input[inputmode='numeric']) {
+      > input[inputmode='numeric'] {
+        padding-right: spacing.$spacing-02;
+      }
+    }
+
+    button {
+      &[slot='increment'] {
+        top: 0;
+        left: unset;
+        right: 0;
+      }
+
+      &[slot='decrement'] {
+        top: spacing.$spacing-04;
+        left: unset;
+        right: 0;
+      }
+    }
+  }
+}
+
+.invalidText {
+  color: theme.$text-error !important;
+  font-size: 0.75rem;
+  font-weight: 400 !important;
+  margin: spacing.$spacing-02 0 0;
+  overflow: hidden;
+}
+
+.today:not([data-selected]) {
+  position: relative;
+  color: $color-blue-60-2;
+  font-weight: 600;
+  font-size: var(--cds-body-compact-01-font-size, 0.875rem);
+  line-height: var(--cds-body-compact-01-line-height, 1.28572);
+  letter-spacing: var(--cds-body-compact-01-letter-spacing, 0.16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 2.5rem;
+  cursor: pointer;
+  inline-size: 2.5rem;
+
+  &::after {
+    position: absolute;
+    display: block;
+    block-size: 0.25rem;
+    content: '';
+    inline-size: 0.25rem;
+    inset-block-end: 0.4375rem;
+    inset-inline-start: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+
+  &[data-disabled]::after {
+    background-color: theme.$text-disabled;
+  }
+
+  &:not([data-disabled])::after {
+    background-color: var(--cds-link-primary, theme.$link-primary);
+  }
+}
