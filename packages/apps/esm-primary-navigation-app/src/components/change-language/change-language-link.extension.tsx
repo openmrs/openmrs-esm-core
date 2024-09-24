@@ -9,7 +9,6 @@ function ChangeLanguageLink() {
   const { t } = useTranslation();
   const session = useSession();
 
-  // const launchChangeLanguageModal = useCallback(() => showModal('change-language-modal'), []);
   const launchChangeLanguageModal = useCallback(() => {
     const dispose = showModal('change-language-modal', {
       closeModal: () => dispose(),
