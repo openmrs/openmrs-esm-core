@@ -9,7 +9,13 @@ export function ChangeLanguageLink() {
   const { t } = useTranslation();
   const session = useSession();
 
-  const launchChangeLanguageModal = useCallback(() => showModal('change-language-modal'), []);
+  // const launchChangeLanguageModal = useCallback(() => showModal('change-language-modal'), []);
+  const launchChangeLanguageModal = useCallback(() => {
+    const dispose = showModal('change-language-modal', {
+      closeModal: () => dispose(),
+      size: 'sm',
+    });
+  }, []);
 
   const languageNames = new Intl.DisplayNames([session?.locale], { type: 'language' });
 
