@@ -5,7 +5,7 @@ import { TranslateIcon, showModal, useSession } from '@openmrs/esm-framework';
 import styles from './change-language-link.scss';
 
 /** The user menu item that shows the current language and has a button to change the language */
-export function ChangeLanguageLink() {
+function ChangeLanguageLink() {
   const { t } = useTranslation();
   const session = useSession();
 
@@ -25,7 +25,7 @@ export function ChangeLanguageLink() {
         <TranslateIcon size={20} />
         <p>{languageNames.of(session?.locale)}</p>
       </div>
-      <Button kind="ghost" onClick={launchChangeLanguageModal}>
+      <Button kind="ghost" onClick={launchChangeLanguageModal} data-testid="change-language-button">
         {t('change', 'Change')}
       </Button>
     </SwitcherItem>
