@@ -24,7 +24,7 @@ function ChangeLanguageLink() {
         <TranslateIcon size={20} />
         <p>{languageNames.of(session?.locale)}</p>
       </div>
-      <Button kind="ghost" onClick={launchChangeLanguageModal}>
+      <Button kind="ghost" onClick={launchChangeLanguageModal} data-testid="change-language-button">
         {t('change', 'Change')}
       </Button>
     </SwitcherItem>
