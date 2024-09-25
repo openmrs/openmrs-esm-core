@@ -115,6 +115,14 @@ export const CaretUpIcon = memo(
 
 /**
  */
+export const CheckmarkFilledIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CheckmarkFilledIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-checkmark-filled" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const ChartAverageIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ChartAverageIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-chart-average" iconProps={props} />;
@@ -230,6 +238,14 @@ export const EventScheduleIcon = memo(
 export const EventsIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function EventsIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-events" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const InformationIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function InformationIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-information" iconProps={props} />;
   }),
 );
 
@@ -456,7 +472,7 @@ export const ShoppingCartArrowDownIcon = memo(
  * Used as action button to open ward in-patient note workspace
  */
 export const StickyNoteAddIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function ShoppingCartArrowDownIcon(props, ref) {
+  forwardRef<SVGSVGElement, IconProps>(function StickyNoteAddIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-sticky-note-add" iconProps={props} />;
   }),
 );
