@@ -3,6 +3,7 @@
   "backendModules": "وحدات الخلفية",
   "checkImplementerToolsMessage": "تحقق من علامة التبويب وحدات الخلفية في أدوات المنفذ لمزيد من التفاصيل",
   "clearConfig": "مسح التكوين المحلي",
+  "close": "Close",
   "configuration": "تكوين",
   "description": "وصف",
   "downloadConfig": "تحميل التكوين",
@@ -23,6 +24,7 @@
   "resetToDefaultValueButtonText": "إعادة تعيين إلى القيمة الافتراضية",
   "uiEditor": "محرر الواجهة",
   "unknownVersion": "غير معروف",
+  "updateConfig": "Update config",
   "value": "قيمة",
   "viewModules": "عرض الوحدات"
 }
