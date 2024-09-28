@@ -14,6 +14,7 @@ import primaryNavRootComponent from './root.component';
 import userPanelComponent from './components/user-panel-switcher-item/user-panel-switcher.component';
 import changeLanguageLinkComponent from './components/change-language/change-language-link.extension';
 import offlineBannerComponent from './components/offline-banner/offline-banner.component';
+import { NavGroup, navGroupConfigSchema } from './components/nav-group/nav-group.component';
 import genericLinkComponent, { genericLinkConfigSchema } from './components/generic-link/generic-link.component';
 
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
@@ -26,6 +27,7 @@ const options = {
 export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
   defineExtensionConfigSchema('link', genericLinkConfigSchema);
+  defineExtensionConfigSchema('global-nav-group', navGroupConfigSchema);
 
   setupOfflineSync(userPropertyChange, [], syncUserLanguagePreference);
 }
@@ -49,9 +51,9 @@ export const linkComponent = getSyncLifecycle(genericLinkComponent, {
   moduleName,
 });
 
+export const navGroup = getSyncLifecycle(NavGroup, options);
+
 export const changeLanguageModal = getAsyncLifecycle(
   () => import('./components/change-language/change-language.modal'),
   options,
 );
-
-export const globalNavGroup = getAsyncLifecycle(() => import('./components/nav-group/nav-group.component'), options);
