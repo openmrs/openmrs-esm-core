@@ -49,6 +49,12 @@
       "component": "linkComponent",
       "online": true,
       "offline": true
+    },
+    {
+      "name": "nav-group",
+      "component": "navGroup",
+      "online": true,
+      "offline": true
     }
   ],
   "modals": [
