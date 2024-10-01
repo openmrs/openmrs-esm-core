@@ -6,7 +6,7 @@ import locationPickerComponent from './location-picker/location-picker-view.comp
 import logoutButtonComponent from './logout/logout.extension';
 import rootComponent from './root.component';
 
-const moduleName = '@openmrs/esm-login-app';
+const moduleName = '@kenyaemr/esm-login-app';
 
 const options = {
   featureName: 'login',
