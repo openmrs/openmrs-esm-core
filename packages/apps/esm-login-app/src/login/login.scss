@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  background-image: url("./Kenyan-Nurse.png");
+  background-image: url('./Kenyan-Nurse.png');
   background-repeat: no-repeat;
   background-position: right;
   background-size: 35% 100%;
@@ -29,8 +29,7 @@
 
 .poweredByTxt {
   @extend .caption01;
-  text-align: center;
-  color: $color-gray-70;
+  padding-bottom: 0.5rem;
   color: $text-02;
 }
 
@@ -121,6 +120,11 @@
 
 .footer {
   margin-top: 6.75rem;
+  display: flex;
+  justify-content: center;
+  column-gap: 2rem;
+  width: 23rem;
+  align-items: center;
 }
 
 .loader {
@@ -133,4 +137,14 @@
   position: absolute;
   bottom: 100%;
   left: 0;
+}
+
+.divider {
+  height: 2rem;
+  outline: 0.5px solid $color-gray-30;
+}
+
+.card{
+  display: flex;
+  justify-content: flex-start;
 }
