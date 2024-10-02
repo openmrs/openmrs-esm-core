@@ -6,6 +6,7 @@ import {
   fhirBaseUrl,
   openmrsFetch,
   refetchCurrentUser,
+  restBaseUrl,
   type FetchResponse,
   type Session,
   useDebounce,
@@ -108,7 +109,7 @@ export function useLoginLocations(
 export async function performLogin(username: string, password: string): Promise<{ data: Session }> {
   const abortController = new AbortController();
   const token = window.btoa(`${username}:${password}`);
-  const url = `/ws/rest/v1/session`;
+  const url = `${restBaseUrl}/session`;
 
   return openmrsFetch(url, {
     headers: {
