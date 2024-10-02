@@ -42,7 +42,7 @@ describe('useOpenmrsFetchAll', () => {
   });
 
   it('should render all rows on if number of rows > pageSize with no partialData', async () => {
-    const expectedRowCount = 75;
+    const expectedRowCount = 150;
     const { result } = renderHook(() =>
       useOpenmrsFetchAll(`http://localhost/2`, {
         fetcher: (url) => getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
@@ -50,6 +50,6 @@ describe('useOpenmrsFetchAll', () => {
     );
     await waitFor(() => expect(result.current.isLoading).toBeFalsy());
     expect(result.current.totalCount).toEqual(expectedRowCount);
-    expect(result.current.data).toEqual(getIntArray(0, 75));
+    expect(result.current.data).toEqual(getIntArray(0, expectedRowCount));
   });
 });

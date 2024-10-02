@@ -1,4 +1,4 @@
-import { defineConfigSchema } from '@openmrs/esm-config';
+import { defineConfigSchema, defineExtensionConfigSchema } from '@openmrs/esm-config';
 import { setupLogo } from './logo';
 import { setupIcons } from './icons/icon-registration';
 import { setupBranding } from './brand';

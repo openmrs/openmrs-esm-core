@@ -1,11 +1,10 @@
 /** @module @category Workspace */
 import { useMemo, type ReactNode } from 'react';
-import _i18n from 'i18next';
 import { getWorkspaceRegistration, type WorkspaceRegistration } from '@openmrs/esm-extensions';
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
 import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
-import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { useStore } from '@openmrs/esm-react-utils';
 import type { StoreApi } from 'zustand/vanilla';
 
@@ -455,7 +454,7 @@ export function showWorkspacePrompts(
         title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
         body: getCoreTranslation(
           'unsavedChangesInOpenedWorkspace',
-          `You have unsaved changes in the opened workspace. Do you want to discard these changes?`,
+          `You may have unsaved changes in the opened workspace. Do you want to discard these changes?`,
         ),
         onConfirm: () => {
           onConfirmation?.();
@@ -475,7 +474,7 @@ export function showWorkspacePrompts(
         title: getCoreTranslation('closingAllWorkspacesPromptTitle', 'You have unsaved changes'),
         body: getCoreTranslation(
           'closingAllWorkspacesPromptBody',
-          'There are unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}',
+          'There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}',
           {
             workspaceNames: workspacesNotClosed.join(','),
           },
@@ -494,7 +493,7 @@ export function showWorkspacePrompts(
         title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
         body: getCoreTranslation(
           'unsavedChangesInWorkspace',
-          'There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
+          'There may be unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
           { workspaceName: workspaceTitle },
         ),
         onConfirm: () => {

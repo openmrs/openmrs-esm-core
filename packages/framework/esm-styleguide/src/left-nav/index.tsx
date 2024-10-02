@@ -2,7 +2,6 @@
 import React from 'react';
 import { ExtensionSlot, useStore } from '@openmrs/esm-react-utils';
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { SideNavProps } from '@carbon/react';
 import { SideNav } from '@carbon/react';
 import styles from './left-nav.module.scss';
 

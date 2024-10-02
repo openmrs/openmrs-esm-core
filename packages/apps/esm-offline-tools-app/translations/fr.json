@@ -32,7 +32,7 @@
   "offlinePatientsTableDeleteConfirmationModalConfirm": "Enlever les patients",
   "offlinePatientsTableDeleteConfirmationModalContent": "Êtes-vous sûr que de vouloir supprimer tous les patients sélectionnés de la liste hors ligne? Leurs graphiques ne seront plus disponibles en mode hors ligne et tout patient nouvellement enregistré sera supprimé pour toujours.",
   "offlinePatientsTableDeleteConfirmationModalTitle": "Enlever les patients hors ligne",
-  "offlinePatientsTableHeaderAge": "Age",
+  "offlinePatientsTableHeaderAge": "Âge",
   "offlinePatientsTableHeaderGender": "Genre",
   "offlinePatientsTableHeaderLastUpdated": "Dernière mise à jour",
   "offlinePatientsTableHeaderName": "Nom",

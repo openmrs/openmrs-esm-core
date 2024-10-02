@@ -20,6 +20,6 @@ export interface GenericLinkConfig {
 }
 
 export default function GenericLink() {
-  const config = useConfig() as GenericLinkConfig;
+  const config = useConfig<GenericLinkConfig>();
   return <ConfigurableLink to={config.target}>{config.title}</ConfigurableLink>;
 }

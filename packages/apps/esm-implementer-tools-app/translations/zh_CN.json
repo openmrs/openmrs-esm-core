@@ -3,6 +3,7 @@
   "backendModules": "后端模块",
   "checkImplementerToolsMessage": "请查看Implementer 工具中的Backend模块选项卡，以获取更多详细信息。",
   "clearConfig": "清除本地配置",
+  "close": "Close",
   "configuration": "配置",
   "description": "描述",
   "downloadConfig": "下载配置",
@@ -10,8 +11,8 @@
   "editValueButtonText": "编辑",
   "enabled": "启用",
   "extensions": "扩展",
-  "featureFlag": "功能标志",
-  "featureFlags": "功能标志",
+  "featureFlag": "Feature flag",
+  "featureFlags": "Feature flags",
   "frontendModules": "前端模块",
   "installedVersion": "已安装版本",
   "itemDescriptionSourceDefaultText": "当前值为默认值。",
@@ -23,6 +24,7 @@
   "resetToDefaultValueButtonText": "恢复为默认值",
   "uiEditor": "UI编辑器",
   "unknownVersion": "未知",
+  "updateConfig": "Update config",
   "value": "值",
   "viewModules": "查看模块"
 }
