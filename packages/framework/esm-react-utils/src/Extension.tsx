@@ -4,9 +4,9 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { type Parcel } from 'single-spa';
 import { ComponentContext } from '.';
 
-export interface ExtensionProps extends React.HTMLAttributes<HTMLDivElement> {
+export type ExtensionProps = React.HTMLAttributes<HTMLDivElement> & {
   state?: Record<string, unknown>;
-}
+};
 
 /**
  * Represents the position in the DOM where each extension within

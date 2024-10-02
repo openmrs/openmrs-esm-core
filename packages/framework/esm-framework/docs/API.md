@@ -419,6 +419,16 @@ ___
 
 ## Extension Type Aliases
 
+### ExtensionProps
+
+Ƭ **ExtensionProps**: `React.HTMLAttributes`<`HTMLDivElement`\> & { `state?`: `Record`<`string`, `unknown`\>  }
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L7)
+
+___
+
 ### ExtensionSlotProps
 
 Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`AssignedExtension`](interfaces/AssignedExtension.md), `state?`: `Record`<`string`, `unknown`\>) => `React.ReactNode`  }
@@ -1075,7 +1085,7 @@ ___
 
 ### Extension
 
-• `Const` **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](API.md#extensionprops)\>
 
 Represents the position in the DOM where each extension within
 an extension slot is rendered.
@@ -4556,7 +4566,7 @@ ___
 
 ### useRenderableExtensions
 
-▸ **useRenderableExtensions**(`name`): `React.FC`<`Pick`<[`ExtensionProps`](interfaces/ExtensionProps.md), ``"state"``\>\>[]
+▸ **useRenderableExtensions**(`name`): `React.FC`<`Pick`<[`ExtensionProps`](API.md#extensionprops), ``"state"``\>\>[]
 
 This is an advanced hook for use-cases where its useful to use the extension system,
 but not the `ExtensionSlot` component's rendering of extensions. Use of this hook
@@ -4589,7 +4599,7 @@ return (
 
 #### Returns
 
-`React.FC`<`Pick`<[`ExtensionProps`](interfaces/ExtensionProps.md), ``"state"``\>\>[]
+`React.FC`<`Pick`<[`ExtensionProps`](API.md#extensionprops), ``"state"``\>\>[]
 
 #### Defined in
 
