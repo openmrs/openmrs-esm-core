@@ -283,6 +283,30 @@ export const InventoryManagementIcon = memo(
 
 /**
  */
+export const InformationIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function InformationIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-information" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const InformationFilledIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function InformationFilledIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-information-filled" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const InformationSquareIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function InformationSquareIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-information-square" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const ListCheckedIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ListCheckedIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-list-checked" iconProps={props} />;

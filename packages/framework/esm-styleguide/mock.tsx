@@ -25,6 +25,8 @@ export const GroupIcon = () => <div>GroupIcon</div>;
 export const GroupAccessIcon = () => <div>GroupAccessIcon</div>;
 export const HospitalBedIcon = () => <div>HospitalBedIcon</div>;
 export const InformationIcon = () => <div>InformationIcon</div>;
+export const InformationFilledIcon = () => <div>InformationFilledIcon</div>;
+export const InformationSquareIcon = () => <div>InformationSquareIcon</div>;
 export const ImageMedicalIcon = () => <div>ImageMedicalIcon</div>;
 export const InventoryManagementIcon = () => <div>InventoryManagementIcon</div>;
 export const RadiologyIcon = () => <div>RadiologyIcon</div>;
