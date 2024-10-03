@@ -28,7 +28,6 @@ import download from './svgs/download.svg';
 import edit from './svgs/edit.svg';
 import eventSchedule from './svgs/event-schedule.svg';
 import events from './svgs/events.svg';
-import information from './svgs/information.svg';
 import group from './svgs/group.svg';
 import groupAccess from './svgs/group-access.svg';
 import hospitalBed from './svgs/hospital-bed.svg';
@@ -103,7 +102,6 @@ export function setupIcons() {
   addSvg('omrs-icon-edit', edit);
   addSvg('omrs-icon-event-schedule', eventSchedule);
   addSvg('omrs-icon-events', events);
-  addSvg('omrs-icon-information', information);
   addSvg('omrs-icon-group', group);
   addSvg('omrs-icon-group-access', groupAccess);
   addSvg('omrs-icon-hospital-bed', hospitalBed);

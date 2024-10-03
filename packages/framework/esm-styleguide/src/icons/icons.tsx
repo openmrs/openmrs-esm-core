@@ -243,14 +243,6 @@ export const EventsIcon = memo(
 
 /**
  */
-export const InformationIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function InformationIcon(props, ref) {
-    return <Icon ref={ref} icon="omrs-icon-information" iconProps={props} />;
-  }),
-);
-
-/**
- */
 export const GroupIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function GroupIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-group" iconProps={props} />;
