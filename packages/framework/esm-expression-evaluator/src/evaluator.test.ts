@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals';
 import { compile, evaluate, evaluateAsBoolean, evaluateAsNumber, evaluateAsType, evaluateAsync } from './evaluator';
 
 describe('OpenMRS Expression Evaluator', () => {

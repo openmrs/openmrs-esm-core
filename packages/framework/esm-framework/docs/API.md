@@ -190,6 +190,7 @@
 - [evaluateAsType](API.md#evaluateastype)
 - [evaluateAsTypeAsync](API.md#evaluateastypeasync)
 - [evaluateAsync](API.md#evaluateasync)
+- [extractVariableNames](API.md#extractvariablenames)
 - [isOnline](API.md#isonline)
 - [useFhirFetchAll](API.md#usefhirfetchall)
 - [useFhirInfinite](API.md#usefhirinfinite)
@@ -556,7 +557,7 @@ The valid return types for `evaluate()` and `evaluateAsync()`
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L28)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L31)
 
 ___
 
@@ -785,7 +786,7 @@ An object containing the variable to use when evaluating this expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L23)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L26)
 
 ___
 
@@ -5859,7 +5860,7 @@ An executable AST representation of the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:319](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L319)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:323](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L323)
 
 ___
 
@@ -5939,7 +5940,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L93)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L96)
 
 ___
 
@@ -5965,7 +5966,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L176)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:179](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L179)
 
 ___
 
@@ -5991,7 +5992,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:189](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L189)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L192)
 
 ___
 
@@ -6017,7 +6018,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L202)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L205)
 
 ___
 
@@ -6043,7 +6044,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L215)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:218](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L218)
 
 ___
 
@@ -6078,7 +6079,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L232)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L235)
 
 ___
 
@@ -6113,7 +6114,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L273)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:277](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L277)
 
 ___
 
@@ -6196,7 +6197,61 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L163)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L166)
+
+___
+
+### extractVariableNames
+
+▸ **extractVariableNames**(`expression`): `string`[]
+
+`extractVariableNames()` is a companion function for `evaluate()` and `evaluateAsync()` which extracts the
+names of all unbound identifiers used in the expression. The idea is to be able to extract all of the names
+of variables that will need to be supplied in order to correctly process the expression.
+
+**`example`**
+```ts
+// variables will be ['isEmpty', 'array']
+const variables = extractVariableNames('!isEmpty(array)')
+```
+
+An identifier is considered "unbound" if it is not a reference to the property of an object, is not defined
+as a parameter to an inline arrow function, and is not a global value. E.g.,
+
+**`example`**
+```ts
+// variables will be ['obj']
+const variables = extractVariableNames('obj.prop()')
+```
+
+**`example`**
+```ts
+// variables will be ['arr', 'needle']
+const variables = extractVariableNames('arr.filter(v => v === needle)')
+```
+
+**`example`**
+```ts
+// variables will be ['myVar']
+const  variables = extractVariableNames('new String(myVar)')
+
+Note that because this expression evaluator uses a restricted definition of "global" there are some Javascript
+globals that will be reported as a unbound expression. This is expected because the evaluator will still fail
+on these expressions.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expression` | `string` \| `Expression` |
+
+#### Returns
+
+`string`[]
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/extractor.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/extractor.ts#L43)
 
 ___
 
