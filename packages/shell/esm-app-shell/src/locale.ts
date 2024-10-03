@@ -82,7 +82,7 @@ export function setupI18n() {
 
               translations = merge(
                 translations,
-                overrides.filter((o) => language in o),
+                overrides.filter((o) => language in o).map((o) => o[language]),
               );
 
               callback(null, translations);
