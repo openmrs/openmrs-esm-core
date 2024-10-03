@@ -13,7 +13,7 @@ import caretLeft from './svgs/caret-left.svg';
 import caretRight from './svgs/caret-right.svg';
 import caretUp from './svgs/caret-up.svg';
 import chartAverage from './svgs/chart-average.svg';
-import checkmarkFilled from './svgs/list-checked.svg';
+import checkmarkFilled from './svgs/checkmark--filled.svg';
 import chemistry from './svgs/chemistry.svg';
 import chevronDown from './svgs/chevron-down.svg';
 import chevronLeft from './svgs/chevron-left.svg';
