@@ -2,6 +2,8 @@
 
 # Interface: ConnectedExtension
 
+**`deprecated`** replaced with AssignedExtension
+
 ## Table of contents
 
 ### Extension Properties
@@ -16,29 +18,39 @@
 
 ### config
 
-• **config**: ``null`` \| [`ConfigObject`](ConfigObject.md)
+• `Readonly` **config**: ``null`` \| `Readonly`<[`ConfigObject`](ConfigObject.md)\>
 
 The extension's config. Note that this will be `null` until the slot is mounted.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L90)
+[packages/framework/esm-extensions/src/store.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L91)
 
 ___
 
 ### id
 
-• **id**: `string`
+• `Readonly` **id**: `string`
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L85)
+[packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)
 
 ___
 
 ### meta
 
-• **meta**: [`ExtensionMeta`](ExtensionMeta.md)
+• `Readonly` **meta**: `Readonly`<[`ExtensionMeta`](ExtensionMeta.md)\>
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L89)
+
+___
+
+### moduleName
+
+• `Readonly` **moduleName**: `string`
 
 #### Defined in
 
@@ -46,20 +58,10 @@ ___
 
 ___
 
-### moduleName
+### name
 
-• **moduleName**: `string`
+• `Readonly` **name**: `string`
 
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L87)
-
-___
-
-### name
-
-• **name**: `string`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import styles from './help-popup.styles.scss';
+import React from 'react';
 import { ExtensionSlot } from '@openmrs/esm-framework';
+import styles from './help-popup.styles.scss';
 
 export default function HelpMenuPopup() {
   return (

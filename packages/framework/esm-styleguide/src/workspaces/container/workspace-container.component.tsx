@@ -5,7 +5,6 @@ import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import { ComponentContext, ExtensionSlot, isDesktop, useBodyScrollLock, useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { I18nextProvider, useTranslation } from 'react-i18next';
-
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
 import ActionMenu from './action-menu.component';

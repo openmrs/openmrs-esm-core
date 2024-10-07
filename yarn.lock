@@ -3369,9 +3369,11 @@ __metadata:
   resolution: "@openmrs/esm-state@workspace:packages/framework/esm-state"
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
+    "@openmrs/esm-utils": "workspace:*"
     zustand: "npm:^4.5.5"
   peerDependencies:
     "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-utils": 5.x
   languageName: unknown
   linkType: soft
 

@@ -17,7 +17,7 @@ function bindActions<T>(store: StoreApi<T>, actions: Actions<T>): BoundActions {
   const bound = {};
 
   for (let i in actions) {
-    bound[i] = function (...args) {
+    bound[i] = function (...args: Array<unknown>) {
       store.setState((state) => {
         let _args = [state, ...args];
         return actions[i](..._args);
@@ -28,13 +28,16 @@ function bindActions<T>(store: StoreApi<T>, actions: Actions<T>): BoundActions {
   return bound;
 }
 
-const defaultSelectFunction = (x) => x;
+const defaultSelectFunction =
+  <T, U>() =>
+  (x: T) =>
+    x as unknown as U;
 
 function useStore<T, U>(store: StoreApi<T>): T;
 function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U): U;
 function useStore<T, U>(store: StoreApi<T>, select: undefined, actions: Actions<T>): T & BoundActions;
 function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U, actions: Actions<T>): U & BoundActions;
-function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U = defaultSelectFunction, actions?: Actions<T>) {
+function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U = defaultSelectFunction(), actions?: Actions<T>) {
   const [state, setState] = useState<U>(() => select(store.getState()));
   useEffect(() => subscribeTo(store, select, setState), [store, select]);
 
@@ -50,7 +53,7 @@ function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U = defaultSel
  * @returns
  */
 function useStoreWithActions<T>(store: StoreApi<T>, actions: Actions<T>): T & BoundActions {
-  return useStore(store, defaultSelectFunction, actions);
+  return useStore(store, defaultSelectFunction<T, T>(), actions);
 }
 
 /**

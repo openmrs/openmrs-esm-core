@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { registerExtensionSlot } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
-import { useConnectedExtensions } from './useConnectedExtensions';
+import { useAssignedExtensions } from './useAssignedExtensions';
 
 /** @internal */
 export function useExtensionSlot(slotName: string) {
@@ -15,7 +15,7 @@ export function useExtensionSlot(slotName: string) {
     registerExtensionSlot(moduleName, slotName);
   }, []);
 
-  const extensions = useConnectedExtensions(slotName);
+  const extensions = useAssignedExtensions(slotName);
 
   return {
     extensions,

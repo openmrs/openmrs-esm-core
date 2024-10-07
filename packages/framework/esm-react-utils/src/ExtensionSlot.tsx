@@ -1,6 +1,6 @@
 /** @module @category Extension */
 import React, { useRef, useMemo } from 'react';
-import type { ConnectedExtension } from '@openmrs/esm-extensions';
+import { type AssignedExtension } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 import { Extension } from './Extension';
 import { useExtensionSlot } from './useExtensionSlot';
@@ -9,24 +9,24 @@ export interface ExtensionSlotBaseProps {
   name: string;
   /** @deprecated Use `name` */
   extensionSlotName?: string;
-  select?: (extensions: Array<ConnectedExtension>) => Array<ConnectedExtension>;
-  state?: Record<string, any>;
+  select?: (extensions: Array<AssignedExtension>) => Array<AssignedExtension>;
+  state?: Record<string, unknown>;
 }
 
 export interface OldExtensionSlotBaseProps {
   name?: string;
   /** @deprecated Use `name` */
   extensionSlotName: string;
-  select?: (extensions: Array<ConnectedExtension>) => Array<ConnectedExtension>;
-  state?: Record<string, any>;
+  select?: (extensions: Array<AssignedExtension>) => Array<AssignedExtension>;
+  state?: Record<string, unknown>;
 }
 
 export type ExtensionSlotProps = (OldExtensionSlotBaseProps | ExtensionSlotBaseProps) &
   Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
-    children?: React.ReactNode | ((extension: ConnectedExtension) => React.ReactNode);
+    children?: React.ReactNode | ((extension: AssignedExtension, state?: Record<string, unknown>) => React.ReactNode);
   };
 
-function defaultSelect(extensions: Array<ConnectedExtension>) {
+function defaultSelect(extensions: Array<AssignedExtension>) {
   return extensions;
 }
 
@@ -101,7 +101,7 @@ export function ExtensionSlot({
 
   const extensionsFromChildrenFunction = useMemo(() => {
     if (typeof children == 'function' && !React.isValidElement(children)) {
-      return extensionsToRender.map((extension) => children(extension));
+      return extensionsToRender.map((extension) => children(extension, state));
     }
   }, [children, extensionsToRender]);
 
@@ -114,7 +114,7 @@ export function ExtensionSlot({
       {...divProps}
     >
       {name &&
-        extensionsToRender.map((extension, i) => (
+        extensionsToRender?.map((extension, i) => (
           <ComponentContext.Provider
             key={extension.id}
             value={{
@@ -127,7 +127,7 @@ export function ExtensionSlot({
               },
             }}
           >
-            {extensionsFromChildrenFunction?.[i] ?? (typeof children != 'function' ? children : null) ?? (
+            {extensionsFromChildrenFunction?.[i] ?? (typeof children !== 'function' ? children : null) ?? (
               <Extension state={state} />
             )}
           </ComponentContext.Provider>

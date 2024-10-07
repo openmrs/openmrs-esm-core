@@ -4,6 +4,7 @@ module.exports = {
   },
   setupFilesAfterEnv: ['<rootDir>/src/setup-tests.js'],
   moduleNameMapper: {
+    '^lodash-es$': 'lodash',
     '^lodash-es/(.*)$': 'lodash/$1',
     '@openmrs/esm-error-handling': '<rootDir>/__mocks__/openmrs-esm-error-handling.mock.ts',
     '@openmrs/esm-state': '@openmrs/esm-state/mock',

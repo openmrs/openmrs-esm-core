@@ -18,6 +18,7 @@ export * from './useDebounce';
 export * from './useDefineAppContext';
 export * from './useExtensionSlotMeta';
 export * from './useExtensionStore';
+export * from './useExtensionSlotStore';
 export * from './useFeatureFlag';
 export * from './useLayoutType';
 export * from './useLocations';

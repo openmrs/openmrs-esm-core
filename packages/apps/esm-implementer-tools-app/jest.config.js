@@ -7,7 +7,8 @@ module.exports = {
   },
   setupFilesAfterEnv: ['<rootDir>/setup-tests.ts'],
   moduleNameMapper: {
-    'lodash-es': 'lodash',
+    '^lodash-es$': 'lodash',
+    '^lodash-es/(.*)$': 'lodash/$1',
     '\\.(s?css)$': 'identity-obj-proxy',
     '@openmrs/esm-framework': '@openmrs/esm-framework/mock.tsx',
     dexie: require.resolve('dexie'),

@@ -23,7 +23,7 @@ jest.mock('@openmrs/esm-api', () => {
   const original = jest.requireActual('@openmrs/esm-api');
   return {
     ...original,
-    getSessionStore: () => mockSessionStore,
+    sessionStore: mockSessionStore,
     refetchCurrentUser: jest.fn(),
   };
 });

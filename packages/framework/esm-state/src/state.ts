@@ -1,7 +1,8 @@
 /** @module @category Store */
+import type {} from '@openmrs/esm-globals';
+import { shallowEqual } from '@openmrs/esm-utils';
 import type { StoreApi } from 'zustand/vanilla';
 import { createStore } from 'zustand/vanilla';
-import type {} from '@openmrs/esm-globals';
 
 interface StoreEntity {
   value: StoreApi<unknown>;
@@ -31,7 +32,7 @@ export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T>
 
   if (available) {
     if (available.active) {
-      console.error('Cannot override an existing store. Make sure that stores are only created once.');
+      console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
     } else {
       available.value.setState(initialState, true);
     }
@@ -63,7 +64,7 @@ export function registerGlobalStore<T>(name: string, store: StoreApi<T>): StoreA
 
   if (available) {
     if (available.active) {
-      console.error('Cannot override an existing store. Make sure that stores are only created once.');
+      console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
     } else {
       available.value = store;
     }
@@ -103,15 +104,25 @@ export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> 
   return available.value as StoreApi<T>;
 }
 
-export function subscribeTo<T, U>(store: StoreApi<T>, select: (state: T) => U, handle: (subState: U) => void) {
-  let previous = select(store.getState());
+type SubscribeToArgs<T, U> = [StoreApi<T>, (state: T) => void] | [StoreApi<T>, (state: T) => U, (state: U) => void];
 
-  return store.subscribe((state) => {
-    const current = select(state);
+export function subscribeTo<T, U = T>(store: StoreApi<T>, handle: (state: T) => void): () => void;
+export function subscribeTo<T, U>(
+  store: StoreApi<T>,
+  select: (state: T) => U,
+  handle: (subState: U) => void,
+): () => void;
+export function subscribeTo<T, U>(...args: SubscribeToArgs<T, U>): () => void {
+  const [store, select, handle] = args;
+  const handler = typeof handle === 'undefined' ? (select as unknown as (state: U) => void) : handle;
+  const selector = typeof handle === 'undefined' ? (state: T) => state as unknown as U : (select as (state: T) => U);
 
-    if (current !== previous) {
-      previous = current;
-      handle(current);
+  handler(selector(store.getState()));
+  return store.subscribe((state, previous) => {
+    const current = selector(state);
+
+    if (!shallowEqual(previous, current)) {
+      handler(current);
     }
   });
 }
