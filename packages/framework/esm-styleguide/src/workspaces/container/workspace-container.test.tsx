@@ -22,8 +22,6 @@ jest.mock('react-i18next', () => ({
   useTranslation: jest.fn().mockImplementation(() => ({ t: (arg: string) => arg })),
 }));
 
-const mockedUseTranslation = jest.mocked(useTranslation);
-
 const mockedIsDesktop = isDesktop as unknown as jest.Mock;
 const mockedUseLayoutType = useLayoutType as jest.Mock;
 
