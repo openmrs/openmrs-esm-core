@@ -1,6 +1,6 @@
 import React from 'react';
-import Root from './root.component';
 import { render } from '@testing-library/react';
+import Root from './root.component';
 
 describe(`<Root />`, () => {
   it(`renders without dying`, () => {

@@ -122,21 +122,15 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
       disableTranslations: true,
     })(() => {
       const metas = useExtensionSlotMeta('Box');
-      const wrapItem = useCallback(
-        (slot: React.ReactNode, extension?: ExtensionData) => {
-          return (
-            <div>
-              <h1>{metas[getExtensionNameFromId(extension?.extensionId ?? '')].code}</h1>
-              {slot}
-            </div>
-          );
-        },
-        [metas],
-      );
       return (
         <div>
           <ExtensionSlot name="Box">
-            <Extension>{wrapItem}</Extension>
+            {(extension) => (
+              <div>
+                <h1>{metas[getExtensionNameFromId(extension?.id ?? '')].code}</h1>
+                <Extension />
+              </div>
+            )}
           </ExtensionSlot>
         </div>
       );
@@ -163,21 +157,15 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     })(() => {
       const [suffix, toggleSuffix] = useReducer((suffix) => (suffix == '!' ? '?' : '!'), '!');
       const metas = useExtensionSlotMeta('Box');
-      const wrapItem = useCallback(
-        (slot: React.ReactNode, extension?: ExtensionData) => {
-          return (
-            <div>
-              <h1>{metas[getExtensionNameFromId(extension?.extensionId ?? '')].code}</h1>
-              {slot}
-            </div>
-          );
-        },
-        [metas],
-      );
       return (
         <div>
           <ExtensionSlot name="Box">
-            <Extension state={{ suffix }}>{wrapItem}</Extension>
+            {(extension) => (
+              <div>
+                <h1>{metas[getExtensionNameFromId(extension?.id ?? '')].code}</h1>
+                <Extension state={{ suffix }} />
+              </div>
+            )}
           </ExtensionSlot>
           <button onClick={toggleSuffix}>Toggle suffix</button>
         </div>
@@ -209,7 +197,7 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
       return (
         <div>
           <ExtensionSlot name="Box">
-            {(extension: ConnectedExtension) => (
+            {(extension) => (
               <div data-testid={extension.name}>
                 <h2>{extension.meta.code}</h2>
                 <Extension />
@@ -224,33 +212,6 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     await waitFor(() => expect(screen.getByTestId('Urdu')).toBeInTheDocument());
     expect(within(screen.getByTestId('Urdu')).getByRole('heading')).toHaveTextContent('urd');
     expect(within(screen.getByTestId('Hindi')).getByRole('heading')).toHaveTextContent('hi');
-  });
-
-  test('Extension renders with child function', async () => {
-    registerSimpleExtension('Hindi', 'esm-languages-app', undefined, {
-      code: 'hi',
-    });
-    attach('Box', 'Hindi');
-    const App = openmrsComponentDecorator({
-      moduleName: 'esm-languages-app',
-      featureName: 'Languages',
-      disableTranslations: true,
-    })(() => {
-      return (
-        <div>
-          <ExtensionSlot name="Box">
-            {() => <Extension>{(slot) => <div data-testid="custom-wrapper">{slot}</div>}</Extension>}
-          </ExtensionSlot>
-        </div>
-      );
-    });
-
-    render(<App />);
-
-    await waitFor(() => expect(screen.getByTestId('custom-wrapper')).toBeInTheDocument());
-
-    // essentially: is the first child of custom-wrapper the extension?
-    expect(screen.getByTestId('custom-wrapper').children[0]).toHaveAttribute('data-extension-id', 'Hindi');
   });
 
   test('Extensions behind feature flags only render when their feature flag is enabled', async () => {

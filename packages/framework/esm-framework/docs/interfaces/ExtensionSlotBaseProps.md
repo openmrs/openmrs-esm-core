@@ -40,7 +40,7 @@ ___
 
 ### state
 
-• `Optional` **state**: `Record`<`string`, `any`\>
+• `Optional` **state**: `Record`<`string`, `unknown`\>
 
 #### Defined in
 
@@ -50,17 +50,17 @@ ___
 
 ### select
 
-▸ `Optional` **select**(`extensions`): [`ConnectedExtension`](ConnectedExtension.md)[]
+▸ `Optional` **select**(`extensions`): [`AssignedExtension`](AssignedExtension.md)[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `extensions` | [`ConnectedExtension`](ConnectedExtension.md)[] |
+| `extensions` | [`AssignedExtension`](AssignedExtension.md)[] |
 
 #### Returns
 
-[`ConnectedExtension`](ConnectedExtension.md)[]
+[`AssignedExtension`](AssignedExtension.md)[]
 
 #### Defined in
 

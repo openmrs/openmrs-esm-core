@@ -1,17 +1,12 @@
 /** @module @category Extension */
 import { renderExtension } from '@openmrs/esm-extensions';
-import React, { useCallback, useContext, useEffect, useRef, useState, type ReactElement } from 'react';
-import type { Parcel } from 'single-spa';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { type Parcel } from 'single-spa';
 import { ComponentContext } from '.';
-import type { ExtensionData } from './ComponentContext';
 
-export type ExtensionProps = {
-  state?: Record<string, any>;
-  /** @deprecated Pass a function as the child of `ExtensionSlot` instead. */
-  wrap?(slot: React.ReactNode, extension: ExtensionData): ReactElement<any, any> | null;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
-    children?: React.ReactNode | ((slot: React.ReactNode, extension?: ExtensionData) => React.ReactNode);
-  };
+export type ExtensionProps = React.HTMLAttributes<HTMLDivElement> & {
+  state?: Record<string, unknown>;
+};
 
 /**
  * Represents the position in the DOM where each extension within
@@ -22,23 +17,12 @@ export type ExtensionProps = {
  * Usage of this component *must* have an ancestor `<ExtensionSlot>`,
  * and *must* only be used once within that `<ExtensionSlot>`.
  */
-export const Extension: React.FC<ExtensionProps> = ({ state, children, wrap, ...divProps }) => {
+export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divProps }) => {
   const [domElement, setDomElement] = useState<HTMLDivElement>();
   const { extension } = useContext(ComponentContext);
   const parcel = useRef<Parcel | null>(null);
   const updatePromise = useRef<Promise<void>>(Promise.resolve());
   const rendering = useRef<boolean>(false);
-
-  useEffect(() => {
-    if (wrap) {
-      console.warn(
-        `'wrap' prop of Extension is being used ${
-          extension?.extensionId ? `by ${extension.extensionId} in ${extension.extensionSlotName}` : ''
-        }. This will be removed in a future release.`,
-      );
-    }
-    // we only warn when component mounts
-  }, []);
 
   const ref = useCallback(
     (node: HTMLDivElement) => {
@@ -123,13 +107,9 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, wrap, ...
   // The extension is rendered into the `<div>`. The `<div>` has relative
   // positioning in order to allow the UI Editor to absolutely position
   // elements within it.
-  const slot = (
-    <div ref={ref} data-extension-id={extension?.extensionId} style={{ position: 'relative' }} {...divProps} />
-  );
-
-  if (typeof children === 'function' && !React.isValidElement(children)) {
-    return <>{children(slot, extension)}</>;
-  }
-
-  return extension && wrap ? wrap(slot, extension) : slot;
+  return extension ? (
+    <div ref={ref} data-extension-id={extension?.extensionId} style={{ position: 'relative' }} {...divProps}>
+      {children}
+    </div>
+  ) : null;
 };

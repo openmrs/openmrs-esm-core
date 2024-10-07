@@ -1,13 +1,11 @@
 import { createGlobalStore } from '@openmrs/esm-state';
 import { attach, registerExtensionSlot } from './extensions';
 
-const mockSessionStore = createGlobalStore('mock-session-store', {
-  loaded: false,
-  session: null,
-});
-
 jest.mock('@openmrs/esm-api', () => ({
-  getSessionStore: jest.fn(() => mockSessionStore),
+  sessionStore: createGlobalStore('mock-session-store', {
+    loaded: false,
+    session: null,
+  }),
 }));
 
 describe('extensions system', () => {

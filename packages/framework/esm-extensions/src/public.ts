@@ -4,7 +4,6 @@ export {
   attach,
   detach,
   detachAll,
-  getConnectedExtensions,
   getAssignedExtensions,
   registerExtensionSlot,
 } from './extensions';

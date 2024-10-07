@@ -23,7 +23,7 @@
 
 ### featureFlag
 
-• `Optional` **featureFlag**: `string`
+• `Optional` `Readonly` **featureFlag**: `string`
 
 #### Defined in
 
@@ -33,7 +33,7 @@ ___
 
 ### meta
 
-• **meta**: [`ExtensionMeta`](ExtensionMeta.md)
+• `Readonly` **meta**: `Readonly`<[`ExtensionMeta`](ExtensionMeta.md)\>
 
 #### Defined in
 
@@ -43,7 +43,7 @@ ___
 
 ### moduleName
 
-• **moduleName**: `string`
+• `Readonly` **moduleName**: `string`
 
 #### Defined in
 
@@ -53,7 +53,7 @@ ___
 
 ### name
 
-• **name**: `string`
+• `Readonly` **name**: `string`
 
 #### Defined in
 
@@ -63,7 +63,7 @@ ___
 
 ### offline
 
-• `Optional` **offline**: `boolean`
+• `Optional` `Readonly` **offline**: `boolean`
 
 #### Defined in
 
@@ -73,7 +73,7 @@ ___
 
 ### online
 
-• `Optional` **online**: `boolean`
+• `Optional` `Readonly` **online**: `boolean`
 
 #### Defined in
 
@@ -83,7 +83,7 @@ ___
 
 ### order
 
-• `Optional` **order**: `number`
+• `Optional` `Readonly` **order**: `number`
 
 #### Defined in
 
@@ -93,7 +93,7 @@ ___
 
 ### privileges
 
-• `Optional` **privileges**: `string` \| `string`[]
+• `Optional` `Readonly` **privileges**: `string` \| `string`[]
 
 #### Defined in
 

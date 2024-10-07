@@ -8,10 +8,11 @@
  * - connected (computed from assigned using connectivity and online / offline)
  */
 
-import type { Session } from '@openmrs/esm-api';
-import { getSessionStore, userHasAccess } from '@openmrs/esm-api';
-import type { ExtensionsConfigStore, ExtensionSlotConfigObject, ExtensionSlotsConfigStore } from '@openmrs/esm-config';
+import { type Session, type SessionStore, sessionStore, userHasAccess } from '@openmrs/esm-api';
 import {
+  type ExtensionsConfigStore,
+  type ExtensionSlotConfigObject,
+  type ExtensionSlotsConfigStore,
   getExtensionConfigFromStore,
   getExtensionsConfigStore,
   getExtensionSlotConfig,
@@ -19,14 +20,18 @@ import {
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
 import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
-import { featureFlagsStore } from '@openmrs/esm-feature-flags';
+import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
+import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
-import isEqual from 'lodash-es/isEqual';
-import isUndefined from 'lodash-es/isUndefined';
-import type { ExtensionSlotState, AssignedExtension, ConnectedExtension } from '.';
-import { getExtensionInternalStore, checkStatusFor } from '.';
-import type { ExtensionRegistration, ExtensionSlotInfo, ExtensionInternalStore } from './store';
-import { getExtensionStore, updateInternalExtensionStore } from './store';
+import { isEqual } from 'lodash-es';
+import { type AssignedExtension, checkStatusFor, type ExtensionSlotState, getExtensionInternalStore } from '.';
+import {
+  type ExtensionRegistration,
+  type ExtensionSlotInfo,
+  type ExtensionInternalStore,
+  getExtensionStore,
+  updateInternalExtensionStore,
+} from './store';
 
 const extensionInternalStore = getExtensionInternalStore();
 const extensionStore = getExtensionStore();
@@ -38,8 +43,16 @@ function updateExtensionOutputStore(
   internalState: ExtensionInternalStore,
   extensionSlotConfigs: ExtensionSlotsConfigStore,
   extensionsConfigStore: ExtensionsConfigStore,
+  featureFlagStore: FeatureFlagsStore,
+  sessionStore: SessionStore,
 ) {
   const slots: Record<string, ExtensionSlotState> = {};
+
+  const isOnline = isOnlineFn();
+  const enabledFeatureFlags = Object.entries(featureFlagStore.flags)
+    .filter(([, { enabled }]) => enabled)
+    .map(([name]) => name);
+
   for (let [slotName, slot] of Object.entries(internalState.slots)) {
     const { config } = getExtensionSlotConfigFromStore(extensionSlotConfigs, slot.name);
     const assignedExtensions = getAssignedExtensionsFromSlotData(
@@ -47,25 +60,80 @@ function updateExtensionOutputStore(
       internalState,
       config,
       extensionsConfigStore,
+      enabledFeatureFlags,
+      isOnline,
+      sessionStore.session,
     );
     slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
   }
+
   if (!isEqual(extensionStore.getState().slots, slots)) {
     extensionStore.setState({ slots });
   }
 }
 
 extensionInternalStore.subscribe((internalStore) => {
-  updateExtensionOutputStore(internalStore, slotsConfigStore.getState(), extensionsConfigStore.getState());
+  updateExtensionOutputStore(
+    internalStore,
+    slotsConfigStore.getState(),
+    extensionsConfigStore.getState(),
+    featureFlagsStore.getState(),
+    sessionStore.getState(),
+  );
 });
 
 slotsConfigStore.subscribe((slotConfigs) => {
-  updateExtensionOutputStore(extensionInternalStore.getState(), slotConfigs, extensionsConfigStore.getState());
+  updateExtensionOutputStore(
+    extensionInternalStore.getState(),
+    slotConfigs,
+    extensionsConfigStore.getState(),
+    featureFlagsStore.getState(),
+    sessionStore.getState(),
+  );
 });
 
 extensionsConfigStore.subscribe((extensionConfigs) => {
-  updateExtensionOutputStore(extensionInternalStore.getState(), slotsConfigStore.getState(), extensionConfigs);
+  updateExtensionOutputStore(
+    extensionInternalStore.getState(),
+    slotsConfigStore.getState(),
+    extensionConfigs,
+    featureFlagsStore.getState(),
+    sessionStore.getState(),
+  );
 });
+
+featureFlagsStore.subscribe((featureFlagStore) => {
+  updateExtensionOutputStore(
+    extensionInternalStore.getState(),
+    slotsConfigStore.getState(),
+    extensionsConfigStore.getState(),
+    featureFlagStore,
+    sessionStore.getState(),
+  );
+});
+
+sessionStore.subscribe((session) => {
+  updateExtensionOutputStore(
+    extensionInternalStore.getState(),
+    slotsConfigStore.getState(),
+    extensionsConfigStore.getState(),
+    featureFlagsStore.getState(),
+    session,
+  );
+});
+
+function updateOutputStoreToCurrent() {
+  updateExtensionOutputStore(
+    extensionInternalStore.getState(),
+    slotsConfigStore.getState(),
+    extensionsConfigStore.getState(),
+    featureFlagsStore.getState(),
+    sessionStore.getState(),
+  );
+}
+
+updateOutputStoreToCurrent();
+subscribeConnectivityChanged(updateOutputStoreToCurrent);
 
 function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
   return {
@@ -248,43 +316,18 @@ function getOrder(
   }
 }
 
-/**
- * Filters a list of extensions according to whether they support the
- * current connectivity status.
- *
- * @param assignedExtensions The list of extensions to filter.
- * @param online Whether the app is currently online. If `null`, uses `navigator.onLine`.
- * @param enabledFeatureFlags The names of all enabled feature flags. If `null`, looks
- *    up the feature flags using the feature flags API.
- * @returns A list of extensions that should be rendered
- */
-export function getConnectedExtensions(
-  assignedExtensions: Array<AssignedExtension>,
-  online: boolean | null = null,
-  enabledFeatureFlags: Array<string> | null = null,
-): Array<ConnectedExtension> {
-  const isOnline = isOnlineFn(online ?? undefined);
-  const featureFlags =
-    enabledFeatureFlags ??
-    Object.entries(featureFlagsStore.getState().flags)
-      .filter(([, { enabled }]) => enabled)
-      .map(([name]) => name);
-
-  return assignedExtensions
-    .filter((e) => (window.offlineEnabled ? checkStatusFor(isOnline, e.online, e.offline) : true))
-    .filter((e) => e.featureFlag === undefined || featureFlags?.includes(e.featureFlag));
-}
-
 function getAssignedExtensionsFromSlotData(
   slotName: string,
   internalState: ExtensionInternalStore,
   config: ExtensionSlotConfigObject,
   extensionConfigStoreState: ExtensionsConfigStore,
+  enabledFeatureFlags: Array<string>,
+  isOnline: boolean,
+  session: Session | null,
 ): Array<AssignedExtension> {
   const attachedIds = internalState.slots[slotName].attachedIds;
   const assignedIds = calculateAssignedIds(config, attachedIds);
   const extensions: Array<AssignedExtension> = [];
-  let session: Session | undefined = undefined;
 
   for (let id of assignedIds) {
     const { config: extensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
@@ -298,10 +341,6 @@ function getAssignedExtensionsFromSlotData(
         requiredPrivileges &&
         (typeof requiredPrivileges === 'string' || (Array.isArray(requiredPrivileges) && requiredPrivileges.length > 0))
       ) {
-        if (isUndefined(session)) {
-          session = getSessionStore().getState().session ?? undefined;
-        }
-
         if (!session?.user) {
           continue;
         }
@@ -313,12 +352,8 @@ function getAssignedExtensionsFromSlotData(
 
       const displayConditionExpression = extensionConfig?.['Display conditions']?.expression ?? null;
       if (displayConditionExpression !== null) {
-        if (isUndefined(session)) {
-          session = getSessionStore().getState().session ?? undefined;
-        }
-
         try {
-          if (!evaluateAsBoolean(displayConditionExpression, { session: session ?? null })) {
+          if (!evaluateAsBoolean(displayConditionExpression, { session })) {
             continue;
           }
         } catch (e) {
@@ -326,6 +361,14 @@ function getAssignedExtensionsFromSlotData(
           // if the expression has an error, we do not display the extension
           continue;
         }
+      }
+
+      if (extension.featureFlag && !enabledFeatureFlags.includes(extension.featureFlag)) {
+        continue;
+      }
+
+      if (window.offlineEnabled && !checkStatusFor(isOnline, extension.online, extension.offline)) {
+        continue;
       }
 
       extensions.push({
@@ -354,7 +397,22 @@ export function getAssignedExtensions(slotName: string): Array<AssignedExtension
   const internalState = extensionInternalStore.getState();
   const { config: slotConfig } = getExtensionSlotConfig(slotName);
   const extensionStoreState = extensionsConfigStore.getState();
-  return getAssignedExtensionsFromSlotData(slotName, internalState, slotConfig, extensionStoreState);
+  const featureFlagState = featureFlagsStore.getState();
+  const sessionState = sessionStore.getState();
+  const isOnline = isOnlineFn();
+  const enabledFeatureFlags = Object.entries(featureFlagState.flags)
+    .filter(([, { enabled }]) => enabled)
+    .map(([name]) => name);
+
+  return getAssignedExtensionsFromSlotData(
+    slotName,
+    internalState,
+    slotConfig,
+    extensionStoreState,
+    enabledFeatureFlags,
+    isOnline,
+    sessionState.session,
+  );
 }
 
 function calculateAssignedIds(config: ExtensionSlotConfigObject, attachedIds: Array<string>) {
