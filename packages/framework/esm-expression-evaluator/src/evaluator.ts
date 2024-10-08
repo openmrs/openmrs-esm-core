@@ -468,7 +468,7 @@ function visitCallExpression(expression: jsep.CallExpression, context: Evaluatio
 
   if (!callee) {
     throw `No function named ${expression.callee} is defined in this context`;
-  } else if (!(callee instanceof Function)) {
+  } else if (!(typeof callee === 'function')) {
     throw `${expression.callee} is not a function`;
   }
 
