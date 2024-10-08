@@ -172,6 +172,12 @@ describe('OpenMRS Expression Evaluator', () => {
     ).resolves.toBe(2);
   });
 
+  it('Should support mock functions', () => {
+    expect(evaluate('api.getValue()', { api: { getValue: jest.fn().mockImplementation(() => 'value') } })).toBe(
+      'value',
+    );
+  });
+
   it('Should support real-world use-cases', () => {
     expect(
       evaluate('!isEmpty(array)', {
