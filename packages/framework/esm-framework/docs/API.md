@@ -6017,7 +6017,7 @@ ___
 
 ### evaluateAsNumberAsync
 
-▸ **evaluateAsNumberAsync**(`expression`, `variables?`): `number`
+▸ **evaluateAsNumberAsync**(`expression`, `variables?`): `Promise`<`number`\>
 
 `evaluateAsNumberAsync()` is a variant of {@link evaluateAsync()} which only supports number results. Useful
 if valid expression must return numeric values.
@@ -6031,7 +6031,7 @@ if valid expression must return numeric values.
 
 #### Returns
 
-`number`
+`Promise`<`number`\>
 
 The result of evaluating the expression
 

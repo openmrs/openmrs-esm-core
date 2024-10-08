@@ -7,5 +7,5 @@ import { useExtensionSlotStore } from './useExtensionSlotStore';
  */
 export function useAssignedExtensions(slotName: string) {
   const slotStore = useExtensionSlotStore(slotName);
-  return slotStore?.assignedExtensions;
+  return slotStore?.assignedExtensions ?? [];
 }
