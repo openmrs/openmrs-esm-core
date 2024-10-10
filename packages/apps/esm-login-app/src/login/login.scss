@@ -25,6 +25,7 @@
 
 .poweredByTxt {
   @extend .caption01;
+  margin-bottom: 1.5rem;
   text-align: center;
   color: $color-gray-70;
   color: $text-02;
@@ -50,9 +51,40 @@
   margin-left: 0.5rem;
 }
 
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.logosContainer {
+  margin-right: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  gap: 2rem; 
+}
+
+:global(.omrs-breakpoint-gt-phone) {
+  .footer {
+    padding: 2rem;
+  }
+  .poweredByLogo {
+    height: 3.5rem;
+    max-width: 9rem;
+  }
+}
+
 .poweredByLogo {
-  height: 2.5rem;
-  width: 6.5rem;
+  height: 3rem;
+  width: auto; 
+  max-width: 8rem;  
+  object-fit: contain;
+  display: block;
 }
 
 .loginCard {
@@ -116,7 +148,7 @@
 }
 
 .footer {
-  margin-top: 6.75rem;
+  margin-top: 3.0rem;
 }
 
 .loader {
