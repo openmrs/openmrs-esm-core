@@ -123,6 +123,14 @@ export const CheckmarkFilledIcon = memo(
 
 /**
  */
+export const CheckmarkOutlineIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CheckmarkOutlineIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-checkmark-outline" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const ChartAverageIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ChartAverageIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-chart-average" iconProps={props} />;
