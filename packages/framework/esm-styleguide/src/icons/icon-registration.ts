@@ -14,6 +14,7 @@ import caretRight from './svgs/caret-right.svg';
 import caretUp from './svgs/caret-up.svg';
 import chartAverage from './svgs/chart-average.svg';
 import checkmarkFilled from './svgs/checkmark--filled.svg';
+import checkmarkOutline from './svgs/checkmark--outline.svg';
 import chemistry from './svgs/chemistry.svg';
 import chevronDown from './svgs/chevron-down.svg';
 import chevronLeft from './svgs/chevron-left.svg';
@@ -91,6 +92,7 @@ export function setupIcons() {
   addSvg('omrs-icon-caret-up', caretUp);
   addSvg('omrs-icon-chart-average', chartAverage);
   addSvg('omrs-icon-checkmark-filled', checkmarkFilled);
+  addSvg('omrs-icon-checkmark-outline', checkmarkOutline);
   addSvg('omrs-icon-chemistry', chemistry);
   addSvg('omrs-icon-chevron-down', chevronDown);
   addSvg('omrs-icon-chevron-left', chevronLeft);

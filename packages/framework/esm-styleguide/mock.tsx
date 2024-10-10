@@ -8,6 +8,7 @@ export const ArrowRightIcon = () => <div>ArrowRightIcon</div>;
 export const ArrowUpIcon = () => <div>ArrowUpIcon</div>;
 export const BabyIcon = () => <div>BabyIcon</div>;
 export const CheckmarkFilledIcon = () => <div>CheckmarkFilledIcon</div>;
+export const CheckmarkOutlineIcon = () => <div>CheckmarkOutlineIcon</div>;
 export const ChartAverageIcon = () => <div>ChartAverageIcon</div>;
 export const ChemistryIcon = () => <div>ChemistryIcon</div>;
 export const ChevronDownIcon = () => <div>ChevronDownIcon</div>;
