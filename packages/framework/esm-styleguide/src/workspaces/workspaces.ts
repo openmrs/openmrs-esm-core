@@ -181,7 +181,7 @@ export function launchWorkspace<
   const workspace = getWorkspaceRegistration(name);
   const newWorkspace: OpenWorkspace = {
     ...workspace,
-    key: additionalProps?.key ?? workspace.name,
+    key: getWorkspaceKey(workspace,additionalProps),
     title: getWorkspaceTitle(workspace, additionalProps),
     closeWorkspace: (options: CloseWorkspaceOptions = {}) => closeWorkspace(name, options),
     closeWorkspaceWithSavedChanges: (options: CloseWorkspaceOptions) =>
@@ -236,7 +236,7 @@ export function launchWorkspace<
     if (openWorkspace.title === getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
       openWorkspace.title = getWorkspaceTitle(newWorkspace, newWorkspace.additionalProps);
     }
-    openWorkspace.additionalProps = newWorkspace.additionalProps;
+    openWorkspace.additionalProps = Object.assign({}, openWorkspace.additionalProps, newWorkspace.additionalProps);
     const restOfTheWorkspaces = openWorkspaces.filter((w) => w.name != name);
     updateStoreWithNewWorkspace(openWorkspaces[workspaceIndexInOpenWorkspaces], restOfTheWorkspaces);
   } else if (openedWorkspaceWithSameType) {
@@ -523,6 +523,9 @@ function getWorkspaceTitle(workspace: WorkspaceRegistration, additionalProps?: o
   return additionalProps?.['workspaceTitle'] ?? workspace.title;
 }
 
+function getWorkspaceKey(workspace:WorkspaceRegistration,additionalProps?:object){
+  return additionalProps?.['key'] ?? workspace.key ?? workspace.name;
+}
 export function resetWorkspaceStore() {
   getWorkspaceStore().setState(initialState);
 }

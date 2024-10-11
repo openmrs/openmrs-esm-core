@@ -41,7 +41,7 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
     [workspace, additionalPropsFromPage, workspaceFamilyState],
   );
   return lifecycle ? (
-    <Parcel key={workspace.key} config={lifecycle} mountParcel={mountRootParcel} {...props} />
+    <Parcel key={workspace.key || workspace.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
   ) : (
     <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading', 'Loading')} ...`} />
   );
