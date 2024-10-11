@@ -11,7 +11,6 @@ interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
   additionalPropsFromPage?: object;
 }
-
 export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: WorkspaceRendererProps) {
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
   const workspaceFamilyState = useWorkspaceFamilyStore(workspace.sidebarFamily);
@@ -41,9 +40,8 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
       },
     [workspace, additionalPropsFromPage, workspaceFamilyState],
   );
-
   return lifecycle ? (
-    <Parcel key={workspace.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
+    <Parcel key={workspace.key} config={lifecycle} mountParcel={mountRootParcel} {...props} />
   ) : (
     <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading', 'Loading')} ...`} />
   );

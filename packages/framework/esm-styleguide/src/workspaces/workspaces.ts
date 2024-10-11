@@ -176,11 +176,12 @@ function promptBeforeLaunchingWorkspace(
  */
 export function launchWorkspace<
   T extends DefaultWorkspaceProps | object = DefaultWorkspaceProps & { [key: string]: any },
->(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string }) {
+>(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string; key?: string }) {
   const store = getWorkspaceStore();
   const workspace = getWorkspaceRegistration(name);
   const newWorkspace: OpenWorkspace = {
     ...workspace,
+    key: additionalProps?.key ?? workspace.name,
     title: getWorkspaceTitle(workspace, additionalProps),
     closeWorkspace: (options: CloseWorkspaceOptions = {}) => closeWorkspace(name, options),
     closeWorkspaceWithSavedChanges: (options: CloseWorkspaceOptions) =>
@@ -209,7 +210,6 @@ export function launchWorkspace<
     store.setState((state) => {
       const openWorkspaces = [workspaceToBeAdded, ...(restOfTheWorkspaces ?? state.openWorkspaces)];
       let workspaceWindowState = getUpdatedWorkspaceWindowState(workspaceToBeAdded);
-
       return {
         ...state,
         openWorkspaces,
@@ -241,6 +241,7 @@ export function launchWorkspace<
     updateStoreWithNewWorkspace(openWorkspaces[workspaceIndexInOpenWorkspaces], restOfTheWorkspaces);
   } else if (openedWorkspaceWithSameType) {
     const restOfTheWorkspaces = store.getState().openWorkspaces.filter((w) => w.type != newWorkspace.type);
+
     updateStoreWithNewWorkspace(openedWorkspaceWithSameType, restOfTheWorkspaces);
     promptBeforeLaunchingWorkspace(openedWorkspaceWithSameType, {
       name,

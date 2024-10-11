@@ -9,6 +9,7 @@ import { translateFrom } from '@openmrs/esm-translations';
 export interface WorkspaceRegistration {
   name: string;
   title: string;
+  key?: string;
   titleNode?: ReactNode;
   type: string;
   canHide: boolean;
