@@ -69,7 +69,7 @@ export const configSchema = {
     },
   },
   footer: {
-    logos: {
+    additionalLogos: {
       _type: Type.Array,
       _elements: {
         _type: Type.Object,
@@ -88,7 +88,7 @@ export const configSchema = {
         }
       },
       _default: [],
-      _description: 'An array of logos to be displayed in the footer.',
+      _description: 'An array of logos to be displayed in the footer next to the OpenMRS logo.',
     }
   },
   showPasswordOnSeparateScreen: {
@@ -119,7 +119,7 @@ export interface ConfigSchema {
     src: string;
   };
   footer: {
-    logos: Array<{
+    additionalLogos: Array<{
       src: string;
       alt: string;
     }>;

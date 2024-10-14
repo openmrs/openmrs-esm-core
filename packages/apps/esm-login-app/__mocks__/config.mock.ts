@@ -20,12 +20,7 @@ export const mockConfig: ConfigSchema = {
     loginSuccess: '${openmrsSpaBase}/home',
   },
   footer: {
-    logos: [
-      {
-        src: '',
-        alt: '',
-      }
-    ],
+    additionalLogos: [],
   },
   showPasswordOnSeparateScreen: true,
 };

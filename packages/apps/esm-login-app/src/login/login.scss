@@ -25,7 +25,6 @@
 
 .poweredByTxt {
   @extend .caption01;
-  margin-bottom: 1.5rem;
   text-align: center;
   color: $color-gray-70;
   color: $text-02;
@@ -65,23 +64,12 @@
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 1.5rem;
   gap: 2rem; 
-}
-
-:global(.omrs-breakpoint-gt-phone) {
-  .footer {
-    padding: 2rem;
-  }
-  .poweredByLogo {
-    height: 3.5rem;
-    max-width: 9rem;
-  }
 }
 
 .poweredByLogo {
   height: 3rem;
-  width: auto; 
+  width: auto;
   max-width: 8rem;  
   object-fit: contain;
   display: block;
@@ -148,7 +136,7 @@
 }
 
 .footer {
-  margin-top: 3.0rem;
+  margin-top: 6.75rem;
 }
 
 .loader {
