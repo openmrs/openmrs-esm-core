@@ -65,6 +65,8 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 2rem; 
+  filter: grayscale(100%);
+  opacity: 1;
 }
 
 .poweredByLogo {
