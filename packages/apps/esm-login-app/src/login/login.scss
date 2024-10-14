@@ -50,9 +50,31 @@
   margin-left: 0.5rem;
 }
 
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.logosContainer {
+  margin-right: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem; 
+  filter: grayscale(100%);
+  opacity: 1;
+}
+
 .poweredByLogo {
-  height: 2.5rem;
-  width: 6.5rem;
+  height: 3rem;
+  width: auto;
+  max-width: 8rem;  
+  object-fit: contain;
+  display: block;
 }
 
 .loginCard {
