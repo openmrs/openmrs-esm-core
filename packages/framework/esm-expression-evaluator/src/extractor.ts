@@ -35,6 +35,7 @@ import { globalsAsync } from './globals';
  * ```ts
  * // variables will be ['myVar']
  * const  variables = extractVariableNames('new String(myVar)')
+ * ```
  *
  * Note that because this expression evaluator uses a restricted definition of "global" there are some Javascript
  * globals that will be reported as a unbound expression. This is expected because the evaluator will still fail
