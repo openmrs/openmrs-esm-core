@@ -1,16 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.scss';
-import { MenuItem } from '@carbon/react';
+import { ArrowUpRight } from '@carbon/react/icons'
+import { Link } from '@carbon/react';
 
 const Docs = () => {
   const { t } = useTranslation();
   return (
-    <MenuItem
+    <Link
       className={styles.helpButton}
-      label={t('documentation', 'Documentation')}
-      onClick={() => window.open('https://o3-docs.openmrs.org', '_blank')}
-    />
+      style={{ textDecoration: 'none' }}
+      href="https://o3-docs.openmrs.org"
+      rel="noopener noreferrer"
+      renderIcon={ArrowUpRight}
+      target="_blank"
+    >
+      {t('docs', 'Docs')}
+    </Link>
   );
 };
 

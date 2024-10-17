@@ -1,17 +1,23 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.scss';
-import { MenuItem } from '@carbon/react';
+import { ArrowUpRight } from '@carbon/react/icons'
+import { Link } from '@carbon/react';
 
 const ReleaseNotes = () => {
   const { t } = useTranslation();
 
   return (
-    <MenuItem
+    <Link
       className={styles.helpButton}
-      label={t('releaseNotes', 'Release notes')}
-      onClick={() => window.open('https://o3-docs.openmrs.org/docs/changelog', '_blank')}
-    />
+      style={{ textDecoration: 'none' }}
+      href="https://o3-docs.openmrs.org/docs/changelog"
+      rel="noopener noreferrer"
+      renderIcon={ArrowUpRight}
+      target="_blank"
+    >
+      {t('releaseNotes', 'Release notes')}
+    </Link>
   );
 };
 

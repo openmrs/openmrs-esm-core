@@ -3,8 +3,16 @@
 @import '~@openmrs/esm-styleguide/src/vars';
 
 .helpButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.5rem;
   color: black !important;
   &:focus {
     outline: none;
   }
+}
+
+.helpButton:hover {
+  background: #e8e8e8;
 }
