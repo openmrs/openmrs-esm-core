@@ -8,6 +8,7 @@
   "confirmPassword": "Confirm new password",
   "continue": "继续",
   "errorChangingPassword": "Error changing password",
+  "footerlogo": "Footer Logo",
   "invalidCredentials": "用户名或密码无效",
   "locationPreferenceRemoved": "登录地点偏好已移除",
   "locationPreferenceRemovedMessage": "您需要在每次登录时选择一个地点",
