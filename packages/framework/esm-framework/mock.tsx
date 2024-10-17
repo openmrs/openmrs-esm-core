@@ -75,6 +75,7 @@ export const CustomOverflowMenu = jest.fn(({ menuTitle, children }) => (
 export const PatientBannerActionsMenu = jest.fn(() => <div>Patient Banner Actions Menu</div>);
 export const PatientBannerContactDetails = jest.fn(() => <div>Patient Banner Contact Details</div>);
 export const PatientBannerPatientInfo = jest.fn(() => <div>Patient Banner Patient Info</div>);
+export const PatientBannerPatientIdentifier = jest.fn(() => <div>Patient Banner Patient Identifier</div>);
 export const PatientBannerToggleContactDetailsButton = jest.fn(() => (
   <div>Patient Banner Toggle Contact Details Button</div>
 ));
