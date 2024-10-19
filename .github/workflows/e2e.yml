@@ -10,7 +10,7 @@ on:
 
 env:
   TURBO_API: 'http://127.0.0.1:9080'
-  TURBO_TOKEN: ${{ secrets.TURBO_SERVER_TOKEN }}
+  TURBO_TOKEN: 'turbo-token'
   TURBO_TEAM: ${{ github.repository_owner }}
 
 jobs:
@@ -22,10 +22,10 @@ jobs:
       test-changes: ${{ steps.changes.outputs.test-sources }}
 
     steps:
-      - name: Checkout repo
+      - name: 📥 Checkout repo
         uses: actions/checkout@v4
 
-      - name: Check if any source code has changed
+      - name: 🔍 Check if any source code has changed
         id: changes
         uses: dorny/paths-filter@v3
         with:
@@ -53,59 +53,67 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Checkout repo
+      - name: 📥 Checkout repo
         uses: actions/checkout@v4
 
-      - name: Copy test environment variables
+      - name: 📄 Copy test environment variables
         run: cp example.env .env
 
-      - name: Setup node
+      - name: 🛠️ Setup node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Cache dependencies
-        id: cache
+      - name: 💾 Cache dependencies
+        id: cache-dependencies
         uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
-      - name: Setup local cache server for Turborepo
+      - name: 🚀 Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: Build apps
+      - name: 🏗️ Build apps
         run: yarn turbo run build --color --concurrency=5
 
-      - name: Run dev server
+      - name: 🖥️ Run dev server
         run: bash e2e/support/github/run-e2e-docker-env.sh
 
-      - name: Copy test environment variables
+      - name: 📄 Copy test environment variables
         run: cp example.env .env
 
-      - name: Install Playwright Browsers
+      - name: 💾 Cache Playwright Browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('e2e/**/*.ts') }}
+
+      - name: 🎭 Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
 
-      - name: Wait for the OpenMRS instance to start
+      - name: ⏳ Wait for the OpenMRS instance to start
         run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
 
-      - name: Run E2E tests
+      - name: 🧪 Run E2E tests
         run: yarn playwright test
 
-      - name: Upload Report
+      - name: 📤 Upload Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: report-esm-core
           path: playwright-report/
           retention-days: 30
-
 
   run-e2e-on-other-repos:
     needs: changes
@@ -119,63 +127,72 @@ jobs:
           - openmrs-esm-form-builder
 
     steps:
-      - name: Checkout esm-core repo
+      - name: 📥 Checkout esm-core repo
         uses: actions/checkout@v4
 
-      - name: Setup node
+      - name: 🛠️ Setup node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Cache dependencies
-        id: cache
+      - name: 💾 Cache dependencies
+        id: cache-dependencies
         uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Setup local cache server for Turborepo
+      - name: 📦 Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+
+      - name: 🚀 Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: Install dependencies
-        run: yarn install --immutable
-
-      - name: Build apps
+      - name: 🏗️ Build apps
         run: yarn turbo run build --color --concurrency=5
 
-      - name: Run dev server
+      - name: 🖥️ Run dev server
         run: bash e2e/support/github/run-e2e-docker-env.sh
 
-      - name: Checkout to the ${{ matrix.repo }} main branch
+      - name: 📥 Checkout to the ${{ matrix.repo }} main branch
         uses: actions/checkout@v4
         with:
           repository: openmrs/${{ matrix.repo }}
           ref: main
           path: e2e_repo
 
-      - name: Copy test environment variables
+      - name: 📄 Copy test environment variables
         run: cp example.env .env
         working-directory: e2e_repo
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: yarn install --immutable
         working-directory: e2e_repo
 
-      - name: Install Playwright Browsers
+      - name: 💾 Cache Playwright Browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('e2e_repo/**/*.ts') }}
+
+      - name: 🎭 Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
         working-directory: e2e_repo
 
-      - name: Wait for the OpenMRS instance to start
+      - name: ⏳ Wait for the OpenMRS instance to start
         run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
 
-      - name: Run E2E tests
+      - name: 🧪 Run E2E tests
         run: yarn playwright test
         working-directory: e2e_repo
 
-      - name: Upload Report
+      - name: 📤 Upload Report
         uses: actions/upload-artifact@v4
         if: always()
         with:

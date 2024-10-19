@@ -12,7 +12,7 @@ on:
 
 env:
   TURBO_API: 'http://127.0.0.1:9080'
-  TURBO_TOKEN: ${{ secrets.TURBO_SERVER_TOKEN }}
+  TURBO_TOKEN: 'turbo-token'
   TURBO_TEAM: ${{ github.repository_owner }}
 
 jobs:
@@ -23,33 +23,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
           node-version: "18"
 
-      - name: Cache dependencies
+      - name: 💾 Cache dependencies
         id: cache
         uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
-      - name: Setup local cache server for Turborepo
+      - name: 🚀 Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
+          server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: Run lint, tests and typecheck code
+      - name: 🔍 Run lint, tests and typecheck code
         run: yarn run verify
 
-      - name: Run build
+      - name: 🏗️ Run build
         run: yarn turbo run build --color --concurrency=5
 
   pre_release:
@@ -62,45 +62,45 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
           node-version: "18"
 
-      - name: Cache dependencies
+      - name: 💾 Cache dependencies
         id: cache
         uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
-      - name: Setup local cache server for Turborepo
+      - name: 🚀 Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
+          server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: Version
+      - name: 🏷️ Version
         # This command CANNOT be run in parallel
         run: yarn workspaces foreach --worktree --topological --exclude @openmrs/esm-core version "$(node -e "console.log(require('semver').inc(require('./package.json').version, 'patch'))")-pre.${{ github.run_number }}"
 
-      - name: Build
+      - name: 🏗️ Build
         run: yarn turbo run build --color --concurrency=5
 
       - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
 
-      - name: Pre-release
+      - name: 🚀 Pre-release
         run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:publish-next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
-      - name: Upload Artifacts
+      - name: 📤 Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: packages
@@ -115,27 +115,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
           node-version: "18"
 
-      - name: Cache dependencies
+      - name: 💾 Cache dependencies
         id: cache
         uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
-      - name: Build
+      - name: 🏗️ Build
         run: yarn turbo run build --color --concurrency=5
 
-      - name: Publish
+      - name: 🚀 Publish
         run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
@@ -150,7 +150,7 @@ jobs:
           (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
 
     steps:
-      - name: Trigger RefApp Build
+      - name: 🚀 Trigger RefApp Build
         uses: fjogeleit/http-request-action@v1
         continue-on-error: true
         with:

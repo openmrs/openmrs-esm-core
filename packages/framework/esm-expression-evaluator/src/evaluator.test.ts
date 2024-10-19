@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals';
 import { compile, evaluate, evaluateAsBoolean, evaluateAsNumber, evaluateAsType, evaluateAsync } from './evaluator';
 
 describe('OpenMRS Expression Evaluator', () => {
@@ -169,6 +170,12 @@ describe('OpenMRS Expression Evaluator', () => {
     await expect(
       evaluateAsync('resolve(a).then((a) => a + 1)', { a, resolve: Promise.resolve.bind(Promise) }),
     ).resolves.toBe(2);
+  });
+
+  it('Should support mock functions', () => {
+    expect(evaluate('api.getValue()', { api: { getValue: jest.fn().mockImplementation(() => 'value') } })).toBe(
+      'value',
+    );
   });
 
   it('Should support real-world use-cases', () => {

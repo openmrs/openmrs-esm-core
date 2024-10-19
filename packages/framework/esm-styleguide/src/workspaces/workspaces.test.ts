@@ -73,7 +73,7 @@ describe('workspace system', () => {
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch(/unsaved changes/i);
       expect(prompt.body).toMatch(
-        'There are unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
       expect(prompt.confirmText).toMatch(/Open anyway/i);
       prompt.onConfirm();
@@ -81,57 +81,6 @@ describe('workspace system', () => {
       const openedWorkspace = store.getState().openWorkspaces[0];
       expect(openedWorkspace.name).toBe('conditions');
       expect(openedWorkspace.name).not.toBe('Allergies');
-    });
-
-    it('should show a modal with custom cancel messages if set', () => {
-      const store = getWorkspaceStore();
-      registerWorkspace({
-        name: 'allergies',
-        title: 'Allergies',
-        load: jest.fn(),
-        moduleName: '@openmrs/foo',
-        cancelTitle: 'Warning',
-        cancelMessage: 'Warning message.',
-        cancelConfirmText: 'Ignore warning',
-      });
-      launchWorkspace('allergies', { foo: true });
-      expect(store.getState().openWorkspaces.length).toEqual(1);
-      const allergies = store.getState().openWorkspaces?.[0];
-      allergies.promptBeforeClosing(() => true);
-      registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), moduleName: '@openmrs/foo' });
-      launchWorkspace('conditions', { foo: true });
-      const prompt = store.getState().prompt as Prompt;
-      expect(prompt).toBeTruthy();
-      expect(prompt.title).toMatch('Warning');
-      expect(prompt.body).toMatch('Warning message.');
-      expect(prompt.confirmText).toMatch('Ignore warning');
-    });
-
-    it('should show a modal with cancel messages set by setCancelTitle, setCancelMessage, and setCancelConfirmText', () => {
-      const store = getWorkspaceStore();
-      registerWorkspace({
-        name: 'allergies',
-        title: 'Allergies',
-        load: jest.fn(),
-        moduleName: '@openmrs/foo',
-        cancelTitle: 'Warning',
-        cancelMessage: 'Warning message.',
-        cancelConfirmText: 'Ignore warning',
-      });
-      launchWorkspace('allergies', { foo: true });
-      expect(store.getState().openWorkspaces.length).toEqual(1);
-      const allergies = store.getState().openWorkspaces?.[0];
-      allergies.promptBeforeClosing(() => true);
-      allergies.setCancelTitle('Different warning');
-      allergies.setCancelMessage('Different warning message.');
-      allergies.setCancelConfirmText('Different ignore warning');
-      registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), moduleName: '@openmrs/foo' });
-      launchWorkspace('conditions', { foo: true });
-      const prompt = store.getState().prompt as Prompt;
-      expect(prompt).toBeTruthy();
-      expect(prompt.title).toMatch('Different warning');
-      expect(prompt.body).toMatch('Different warning message.');
-      expect(prompt.confirmText).toMatch('Different ignore warning');
     });
 
     it('should not show a modal and open the workspace when a workspace is already open and it can hide, both workspaces being of different type', () => {
@@ -200,7 +149,7 @@ describe('workspace system', () => {
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch(/unsaved changes/i);
       expect(prompt.body).toMatch(
-        'There are unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
       expect(prompt.confirmText).toMatch(/Open anyway/i);
       prompt.onConfirm();
@@ -295,7 +244,7 @@ describe('workspace system', () => {
       const prompt = store.getState().prompt as Prompt;
       expect(prompt).toBeTruthy();
       expect(prompt.body).toMatch(
-        'There are unsaved changes in Conditions. Please save them before opening another workspace.',
+        'There may be unsaved changes in Conditions. Please save them before opening another workspace.',
       );
       // Closing the conditions workspace because it cannot be hidden
       prompt.onConfirm();
@@ -305,7 +254,7 @@ describe('workspace system', () => {
       const prompt2 = store.getState().prompt as Prompt;
       expect(prompt2).toBeTruthy();
       expect(prompt2.body).toMatch(
-        'There are unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
       prompt2.onConfirm();
       expect(store.getState().openWorkspaces.length).toEqual(2);
@@ -482,7 +431,9 @@ describe('workspace system', () => {
     store.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: false });
     const prompt = store.getState().prompt as Prompt;
     expect(prompt.title).toMatch(/unsaved changes/i);
-    expect(prompt.body).toBe('You have unsaved changes in the opened workspace. Do you want to discard these changes?');
+    expect(prompt.body).toBe(
+      'You may have unsaved changes in the opened workspace. Do you want to discard these changes?',
+    );
     expect(prompt.confirmText).toBe('Discard');
     prompt.onConfirm();
     expect(store.getState().prompt).toBeNull();

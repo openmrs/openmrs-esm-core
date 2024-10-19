@@ -9,7 +9,6 @@ import { useConceptLookup, useGetConceptByUuid } from './interactive-editor/valu
 const mockUseConceptLookup = useConceptLookup as jest.Mock;
 const mockUseGetConceptByUuid = useGetConceptByUuid as jest.Mock;
 
-jest.mock('lodash-es/debounce', () => jest.fn((fn) => fn));
 jest.mock('./interactive-editor/value-editors/concept-search.resource', () => ({
   useConceptLookup: jest.fn().mockImplementation(() => ({
     concepts: [],

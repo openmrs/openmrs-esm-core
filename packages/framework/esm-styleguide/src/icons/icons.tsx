@@ -115,6 +115,22 @@ export const CaretUpIcon = memo(
 
 /**
  */
+export const CheckmarkFilledIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CheckmarkFilledIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-checkmark-filled" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const CheckmarkOutlineIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CheckmarkOutlineIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-checkmark-outline" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const ChartAverageIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ChartAverageIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-chart-average" iconProps={props} />;
@@ -270,6 +286,30 @@ export const ImageMedicalIcon = memo(
 export const InventoryManagementIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function InventoryManagementIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-inventory-management" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const InformationIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function InformationIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-information" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const InformationFilledIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function InformationFilledIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-information-filled" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const InformationSquareIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function InformationSquareIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-information-square" iconProps={props} />;
   }),
 );
 
@@ -456,7 +496,7 @@ export const ShoppingCartArrowDownIcon = memo(
  * Used as action button to open ward in-patient note workspace
  */
 export const StickyNoteAddIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function ShoppingCartArrowDownIcon(props, ref) {
+  forwardRef<SVGSVGElement, IconProps>(function StickyNoteAddIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-sticky-note-add" iconProps={props} />;
   }),
 );

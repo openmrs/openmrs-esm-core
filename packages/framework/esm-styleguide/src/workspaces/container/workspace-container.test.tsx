@@ -1,11 +1,10 @@
 /// <reference path="../../../setupTests.ts" />
 import React from 'react';
-import { screen, render, within, renderHook, act } from '@testing-library/react';
+import { act, screen, renderHook, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { registerWorkspace } from '@openmrs/esm-extensions';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { type DefaultWorkspaceProps, WorkspaceContainer, launchWorkspace, useWorkspaces } from '..';
-import { useTranslation } from 'react-i18next';
 
 jest.mock('./workspace-renderer.component.tsx', () => {
   return {
@@ -20,10 +19,8 @@ jest.mock('./workspace-renderer.component.tsx', () => {
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
-  useTranslation: jest.fn(),
+  useTranslation: jest.fn().mockImplementation(() => ({ t: (arg: string) => arg })),
 }));
-
-const mockedUseTranslation = jest.mocked(useTranslation);
 
 const mockedIsDesktop = isDesktop as unknown as jest.Mock;
 const mockedUseLayoutType = useLayoutType as jest.Mock;
@@ -38,22 +35,6 @@ interface ClinicalFormWorkspaceProps extends DefaultWorkspaceProps {
 
 describe('WorkspaceContainer in window mode', () => {
   beforeAll(() => {
-    // @ts-ignore
-    mockedUseTranslation.mockImplementation((namespace) => {
-      const getTranslations = () =>
-        namespace === '@openmrs/foo'
-          ? {
-              clinicalForm: 'Clinical Form',
-            }
-          : namespace === '@openmrs/bar'
-            ? { orderBasket: 'Order basket' }
-            : {};
-
-      return {
-        t: (key: string) => getTranslations()?.[key] ?? key,
-      };
-    });
-
     registerWorkspace({
       name: 'clinical-form',
       title: 'clinicalForm',
@@ -78,10 +59,10 @@ describe('WorkspaceContainer in window mode', () => {
     renderWorkspaceWindow();
     act(() => launchWorkspace('clinical-form'));
     let header = screen.getByRole('banner');
-    expect(within(header).getByText('Clinical Form')).toBeInTheDocument();
+    expect(within(header).getByText('clinicalForm')).toBeInTheDocument();
     act(() => launchWorkspace('order-basket'));
     header = screen.getByRole('banner');
-    expect(within(header).getByText('Order basket')).toBeInTheDocument();
+    expect(within(header).getByText('orderBasket')).toBeInTheDocument();
   });
 
   test('should override title via additional props and via setTitle', async () => {
@@ -161,7 +142,7 @@ describe('WorkspaceContainer in window mode', () => {
 
     act(() => launchWorkspace('clinical-form'));
     const header = screen.getByRole('banner');
-    expect(within(header).getByText('Clinical Form')).toBeInTheDocument();
+    expect(within(header).getByText('clinicalForm')).toBeInTheDocument();
     expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
 
     const maximizeButton = await screen.findByRole('button', { name: 'Maximize' });
@@ -219,8 +200,8 @@ describe('WorkspaceContainer in overlay mode', () => {
   it('opens with overridable title and closes', async () => {
     mockedUseLayoutType.mockReturnValue('small-desktop');
     const user = userEvent.setup();
-    act(() => launchWorkspace('patient-search', { workspaceTitle: 'Make an appointment' }));
     renderWorkspaceOverlay();
+    act(() => launchWorkspace('patient-search', { workspaceTitle: 'Make an appointment' }));
 
     expect(screen.queryByRole('complementary')).toBeInTheDocument();
     expectToBeVisible(screen.getByRole('complementary'));

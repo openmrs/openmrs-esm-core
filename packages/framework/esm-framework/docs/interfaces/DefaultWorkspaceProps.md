@@ -17,9 +17,6 @@ The default parameters received by all workspaces
 - [closeWorkspace](DefaultWorkspaceProps.md#closeworkspace)
 - [closeWorkspaceWithSavedChanges](DefaultWorkspaceProps.md#closeworkspacewithsavedchanges)
 - [promptBeforeClosing](DefaultWorkspaceProps.md#promptbeforeclosing)
-- [setCancelConfirmText](DefaultWorkspaceProps.md#setcancelconfirmtext)
-- [setCancelMessage](DefaultWorkspaceProps.md#setcancelmessage)
-- [setCancelTitle](DefaultWorkspaceProps.md#setcanceltitle)
 - [setTitle](DefaultWorkspaceProps.md#settitle)
 
 ## Methods
@@ -46,7 +43,7 @@ closed, given the user forcefully closes the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L47)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L46)
 
 ___
 
@@ -69,7 +66,7 @@ will directly close the workspace without any prompt
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L57)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L56)
 
 ___
 
@@ -92,71 +89,7 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L52)
-
-___
-
-### setCancelConfirmText
-
-▸ **setCancelConfirmText**(`cancelConfirmText`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `cancelConfirmText` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L82)
-
-___
-
-### setCancelMessage
-
-▸ **setCancelMessage**(`cancelMessage`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `cancelMessage` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L81)
-
-___
-
-### setCancelTitle
-
-▸ **setCancelTitle**(`cancelTitle`): `void`
-
-Use these to set the workspace cancel dialog title, message body, and confirm button text
-if it needs to be set dynamically
-(see html-forn-entry.workspace.tsx in esm-patient-forms for an example of this)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `cancelTitle` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L80)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L51)
 
 ___
 
@@ -184,4 +117,4 @@ title needs to be set dynamically.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L72)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L71)

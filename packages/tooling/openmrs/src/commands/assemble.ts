@@ -304,7 +304,7 @@ export async function runAssemble(args: AssembleArgs) {
   if (args.configFiles && args.configFiles.length > 0) {
     const assembledConfig = args.configFiles.reduce(async (merged, file) => {
       try {
-        const config = JSON.parse((await readFile(file), 'utf8'));
+        const config = JSON.parse(await readFile(file, 'utf8'));
         return merge(merged, config);
       } catch (e) {
         logWarn(`Error while processing config file ${file}: ${e}`);

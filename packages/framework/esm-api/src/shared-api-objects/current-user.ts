@@ -1,7 +1,7 @@
 /** @module @category API */
 import { reportError } from '@openmrs/esm-error-handling';
 import { createGlobalStore } from '@openmrs/esm-state';
-import isUndefined from 'lodash-es/isUndefined';
+import { isUndefined } from 'lodash-es';
 import { Observable } from 'rxjs';
 import { openmrsFetch, restBaseUrl, sessionEndpoint } from '../openmrs-fetch';
 import type { LoggedInUser, SessionLocation, Privilege, Role, Session, FetchResponse } from '../types';
@@ -18,7 +18,8 @@ export type UnloadedSessionStore = {
   session: null;
 };
 
-const sessionStore = createGlobalStore<SessionStore>('session', {
+/** @internal */
+export const sessionStore = createGlobalStore<SessionStore>('session', {
   loaded: false,
   session: null,
 });

@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[o:openmrs:p:openmrs-esm-core:r:esm-implementer-tools-app]
+[o:openmrs:p:openmrs3:r:esm-implementer-tools-app]
 file_filter            = packages/apps/esm-implementer-tools-app/translations/<lang>.json
 source_file            = packages/apps/esm-implementer-tools-app/translations/en.json
 source_lang            = en
@@ -9,7 +9,7 @@ type                   = KEYVALUEJSON
 replace_edited_strings = false
 keep_translations      = false
 
-[o:openmrs:p:openmrs-esm-core:r:esm-login-app]
+[o:openmrs:p:openmrs3:r:esm-login-app]
 file_filter            = packages/apps/esm-login-app/translations/<lang>.json
 source_file            = packages/apps/esm-login-app/translations/en.json
 source_lang            = en
@@ -17,7 +17,7 @@ type                   = KEYVALUEJSON
 replace_edited_strings = false
 keep_translations      = false
 
-[o:openmrs:p:openmrs-esm-core:r:esm-offline-tools-app]
+[o:openmrs:p:openmrs3:r:esm-offline-tools-app]
 file_filter            = packages/apps/esm-offline-tools-app/translations/<lang>.json
 source_file            = packages/apps/esm-offline-tools-app/translations/en.json
 source_lang            = en
@@ -25,7 +25,7 @@ type                   = KEYVALUEJSON
 replace_edited_strings = false
 keep_translations      = false
 
-[o:openmrs:p:openmrs-esm-core:r:esm-primary-navigation-app]
+[o:openmrs:p:openmrs3:r:esm-primary-navigation-app]
 file_filter            = packages/apps/esm-primary-navigation-app/translations/<lang>.json
 source_file            = packages/apps/esm-primary-navigation-app/translations/en.json
 source_lang            = en
@@ -33,7 +33,7 @@ type                   = KEYVALUEJSON
 replace_edited_strings = false
 keep_translations      = false
 
-[o:openmrs:p:openmrs-esm-core:r:esm-translations]
+[o:openmrs:p:openmrs3:r:esm-translations]
 file_filter            = packages/framework/esm-translations/translations/<lang>.json
 source_file            = packages/framework/esm-translations/translations/en.json
 source_lang            = en

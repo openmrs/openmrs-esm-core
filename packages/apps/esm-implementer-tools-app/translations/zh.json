@@ -3,6 +3,7 @@
   "backendModules": "后端模块",
   "checkImplementerToolsMessage": "请查看Implementer 工具中的Backend模块选项卡，以获取更多详细信息。",
   "clearConfig": "清除本地配置",
+  "close": "Close",
   "configuration": "配置",
   "description": "描述",
   "downloadConfig": "下载配置",
@@ -23,6 +24,7 @@
   "resetToDefaultValueButtonText": "恢复为默认值",
   "uiEditor": "UI编辑器",
   "unknownVersion": "未知",
+  "updateConfig": "Update config",
   "value": "值",
   "viewModules": "查看模块"
 }

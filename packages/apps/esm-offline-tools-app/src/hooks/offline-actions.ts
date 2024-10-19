@@ -1,11 +1,6 @@
-import type { SyncItem } from '@openmrs/esm-framework/src/internal';
-import {
-  fetchCurrentPatient,
-  getFullSynchronizationItems,
-  getSynchronizationItems,
-} from '@openmrs/esm-framework/src/internal';
 import uniq from 'lodash-es/uniq';
 import useSWR from 'swr';
+import { fetchCurrentPatient, getFullSynchronizationItems, type SyncItem } from '@openmrs/esm-framework/src/internal';
 
 export function usePendingSyncItems() {
   return useSWR('offlineActions/pending', () => getFullSynchronizationItems());

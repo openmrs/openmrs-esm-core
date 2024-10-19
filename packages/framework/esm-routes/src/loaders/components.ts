@@ -12,7 +12,7 @@ import {
   type WorkspaceDefinition,
 } from '@openmrs/esm-globals';
 import { getLoader } from './app';
-import { FeatureFlag, registerFeatureFlag } from '@openmrs/esm-feature-flags';
+import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
 
 /**
  * This function registers an extension definition with the framework and will
@@ -193,9 +193,6 @@ supported, so the workspace will not be loaded.`,
       canHide: workspace.canHide,
       canMaximize: workspace.canMaximize,
       width: workspace.width,
-      cancelTitle: workspace.cancelTitle,
-      cancelMessage: workspace.cancelMessage,
-      cancelConfirmText: workspace.cancelConfirmText,
       hasOwnSidebar: workspace.hasOwnSidebar,
       sidebarFamily: workspace.sidebarFamily,
       preferredWindowSize: workspace.preferredWindowSize,
@@ -207,7 +204,7 @@ supported, so the workspace will not be loaded.`,
  * This function registers a workspace definition with the framework so that it can be launched.
  *
  * @param appName The name of the app defining this workspace
- * @param workspace An object that describes the workspace, derived from `routes.json`
+ * @param featureFlag An object that describes the workspace, derived from `routes.json`
  */
 export function tryRegisterFeatureFlag(appName: string, featureFlag: FeatureFlagDefinition) {
   const name = featureFlag.flagName;

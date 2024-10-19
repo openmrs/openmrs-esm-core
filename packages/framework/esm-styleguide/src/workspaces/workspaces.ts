@@ -1,11 +1,10 @@
 /** @module @category Workspace */
 import { useMemo, type ReactNode } from 'react';
-import _i18n from 'i18next';
 import { getWorkspaceRegistration, type WorkspaceRegistration } from '@openmrs/esm-extensions';
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
 import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
-import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { useStore } from '@openmrs/esm-react-utils';
 import type { StoreApi } from 'zustand/vanilla';
 
@@ -70,16 +69,6 @@ export interface DefaultWorkspaceProps {
    *        elements can also be attached to the workspace header extension slots.
    */
   setTitle(title: string, titleNode?: ReactNode): void;
-
-  /**
-   * Use these to set the workspace cancel dialog title, message body, and confirm button text
-   * if it needs to be set dynamically
-   * (see html-forn-entry.workspace.tsx in esm-patient-forms for an example of this)
-   * @param cancelTitle
-   */
-  setCancelTitle(cancelTitle: string): void;
-  setCancelMessage(cancelMessage: string): void;
-  setCancelConfirmText(cancelConfirmText: string): void;
 }
 
 export interface WorkspaceWindowSize {
@@ -150,7 +139,7 @@ function promptBeforeLaunchingWorkspace(
   };
 
   if (!canCloseWorkspaceWithoutPrompting(workspace.name)) {
-    showWorkspacePrompts('closing-workspace-launching-new-workspace', proceed, workspace);
+    showWorkspacePrompts('closing-workspace-launching-new-workspace', proceed, workspace.title ?? workspace.name);
   } else {
     proceed();
   }
@@ -200,19 +189,13 @@ export function launchWorkspace<
     setTitle: (title: string, titleNode: ReactNode) => {
       newWorkspace.title = title;
       newWorkspace.titleNode = titleNode;
-      updateWorkspaceInStore(newWorkspace);
-    },
-    setCancelTitle: (cancelTitle: string) => {
-      newWorkspace.cancelTitle = cancelTitle;
-      updateWorkspaceInStore(newWorkspace);
-    },
-    setCancelMessage: (cancelMessage: string) => {
-      newWorkspace.cancelMessage = cancelMessage;
-      updateWorkspaceInStore(newWorkspace);
-    },
-    setCancelConfirmText: (cancelConfirmText: string) => {
-      newWorkspace.cancelConfirmText = cancelConfirmText;
-      updateWorkspaceInStore(newWorkspace);
+      store.setState((state) => {
+        const openWorkspaces = state.openWorkspaces.map((w) => (w.name === name ? newWorkspace : w));
+        return {
+          ...state,
+          openWorkspaces,
+        };
+      });
     },
     additionalProps: additionalProps ?? {},
   };
@@ -222,20 +205,10 @@ export function launchWorkspace<
     getWorkspaceFamilyStore(newWorkspace.sidebarFamily, additionalProps);
   }
 
-  function updateWorkspaceInStore(workspace: OpenWorkspace) {
-    store.setState((state) => {
-      const openWorkspaces = state.openWorkspaces.map((w) => (w.name === name ? workspace : w));
-      return {
-        ...state,
-        openWorkspaces,
-      };
-    });
-  }
-
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
     store.setState((state) => {
       const openWorkspaces = [workspaceToBeAdded, ...(restOfTheWorkspaces ?? state.openWorkspaces)];
-      let workspaceWindowState = getUpdatedWorkspaceWindowState(openWorkspaces[0]);
+      let workspaceWindowState = getUpdatedWorkspaceWindowState(workspaceToBeAdded);
 
       return {
         ...state,
@@ -260,8 +233,8 @@ export function launchWorkspace<
   } else if (isWorkspaceAlreadyOpen) {
     const openWorkspace = openWorkspaces[workspaceIndexInOpenWorkspaces];
     // Only update the title if it hasn't been set by `setTitle`
-    if (openWorkspace.title == getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
-      openWorkspace.title = getWorkspaceTitle(openWorkspace, newWorkspace.additionalProps);
+    if (openWorkspace.title === getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
+      openWorkspace.title = getWorkspaceTitle(newWorkspace, newWorkspace.additionalProps);
     }
     openWorkspace.additionalProps = newWorkspace.additionalProps;
     const restOfTheWorkspaces = openWorkspaces.filter((w) => w.name != name);
@@ -335,10 +308,10 @@ export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}
 function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOptions = {}): boolean {
   options = { ...defaultOptions, ...options };
   const store = getWorkspaceStore();
-  const state = store.getState();
-  const workspaceToBeClosed = state.openWorkspaces.find((w) => w.name === name);
 
   const updateStoreWithClosedWorkspace = () => {
+    const state = store.getState();
+    const workspaceToBeClosed = state.openWorkspaces.find((w) => w.name === name);
     const workspaceSidebarFamilyName = workspaceToBeClosed?.sidebarFamily;
     const newOpenWorkspaces = state.openWorkspaces.filter((w) => w.name != name);
     const workspaceFamilyStore = getWorkspaceFamilyStore(workspaceSidebarFamilyName);
@@ -366,7 +339,8 @@ function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOpt
   };
 
   if (!canCloseWorkspaceWithoutPrompting(name, options?.ignoreChanges)) {
-    showWorkspacePrompts('closing-workspace', updateStoreWithClosedWorkspace, workspaceToBeClosed);
+    const currentName = getWorkspaceRegistration(name).title ?? name;
+    showWorkspacePrompts('closing-workspace', updateStoreWithClosedWorkspace, currentName);
     return false;
   } else {
     updateStoreWithClosedWorkspace();
@@ -402,7 +376,7 @@ const initialState: WorkspaceStoreState = {
 export const workspaceStore = createGlobalStore('workspace', initialState);
 
 export function getWorkspaceStore() {
-  return getGlobalStore<WorkspaceStoreState>('workspace', initialState);
+  return workspaceStore;
 }
 
 export function updateWorkspaceWindowState(value: WorkspaceWindowState) {
@@ -469,7 +443,7 @@ type PromptType = 'closing-workspace' | 'closing-all-workspaces' | 'closing-work
 export function showWorkspacePrompts(
   promptType: PromptType,
   onConfirmation: () => void = () => {},
-  workspace?: OpenWorkspace,
+  workspaceTitle: string = '',
 ) {
   const store = getWorkspaceStore();
 
@@ -477,17 +451,15 @@ export function showWorkspacePrompts(
   switch (promptType) {
     case 'closing-workspace': {
       prompt = {
-        title: workspace?.cancelTitle ?? getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
-        body:
-          workspace?.cancelMessage ??
-          getCoreTranslation(
-            'unsavedChangesInOpenedWorkspace',
-            `You have unsaved changes in the opened workspace. Do you want to discard these changes?`,
-          ),
+        title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
+        body: getCoreTranslation(
+          'unsavedChangesInOpenedWorkspace',
+          `You may have unsaved changes in the opened workspace. Do you want to discard these changes?`,
+        ),
         onConfirm: () => {
           onConfirmation?.();
         },
-        confirmText: workspace?.cancelConfirmText ?? getCoreTranslation('discard', 'Discard'),
+        confirmText: getCoreTranslation('discard', 'Discard'),
       };
       break;
     }
@@ -498,7 +470,6 @@ export function showWorkspacePrompts(
         .openWorkspaces.filter(({ name }) => !canCloseWorkspaceWithoutPrompting(name))
         .map(({ title }, indx) => `${indx + 1}. ${title}`);
 
-      // note that, unlike the other two prompts, we don't (yet?) support overriding the prompt when there are multiple workspaces in play
       prompt = {
         title: getCoreTranslation('closingAllWorkspacesPromptTitle', 'You have unsaved changes'),
         body: getCoreTranslation(
@@ -519,14 +490,12 @@ export function showWorkspacePrompts(
     }
     case 'closing-workspace-launching-new-workspace': {
       prompt = {
-        title: workspace?.cancelTitle ?? getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
-        body:
-          workspace?.cancelMessage ??
-          getCoreTranslation(
-            'unsavedChangesInWorkspace',
-            'There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
-            { workspaceName: workspace?.title ?? workspace?.name },
-          ),
+        title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
+        body: getCoreTranslation(
+          'unsavedChangesInWorkspace',
+          'There may be unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
+          { workspaceName: workspaceTitle },
+        ),
         onConfirm: () => {
           store.setState((state) => ({
             ...state,
@@ -534,7 +503,7 @@ export function showWorkspacePrompts(
           }));
           onConfirmation?.();
         },
-        confirmText: workspace?.cancelConfirmText ?? getCoreTranslation('openAnyway', 'Open anyway'),
+        confirmText: getCoreTranslation('openAnyway', 'Open anyway'),
       };
       break;
     }

@@ -1,4 +1,4 @@
-:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
+:wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
@@ -10,7 +10,7 @@ Below is the documentation for this repository.
 
 # OpenMRS Frontend Core
 
-This is a [monorepo](https://classic.yarnpkg.com/lang/en/docs/workspaces/) containing the core packages for the OpenMRS Frontend. These packages handle the "cross-cutting concerns" described in the [Domain Decomposition](https://wiki.openmrs.org/display/projects/MFE+Domain+Decomposition) document.
+This is a [monorepo](https://yarnpkg.com/advanced/lexicon#monorepo) containing the core packages for the OpenMRS Frontend. These packages handle cross-cutting concerns such as the configuration and extension systems, the core framework, global state management, the stlyeguide, and more.
 
 ## Available Packages
 
@@ -165,6 +165,7 @@ Copy the example environment variables into a new .env file by running the follo
 ```bash
 cp example.env .env
 ```
+
 ##### Execute Tests
 
 Run the tests with the following command:
@@ -250,9 +251,8 @@ In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient c
 
 #### Once it's working
 
-Please note that any of these techniques will modify the `package.json` file. These changes must be undone before creating 
+Please note that any of these techniques will modify the `package.json` file. These changes must be undone before creating
 your PR. If you used `yarn link`, you can undo these changes by running `yarn unlink --all` in the patient chart repo.
-
 
 ### Version and release
 
@@ -284,7 +284,7 @@ The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title sh
 
 For documentation about our design patterns, please visit our design system documentation website.
 
-## Bumping Playwright Version
+## Bumping Playwright
 
-Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes. 
+Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes.
 Also, ensure you specify fixed (pinned) versions of Playwright in the package.json file to maintain consistency between the Playwright version used in the Docker image for Bamboo test execution and the version used in the codebase.

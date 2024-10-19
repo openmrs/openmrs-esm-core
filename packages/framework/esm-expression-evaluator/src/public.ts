@@ -11,3 +11,4 @@ export {
   type VariablesMap,
   type DefaultEvaluateReturnType,
 } from './evaluator';
+export { extractVariableNames } from './extractor';

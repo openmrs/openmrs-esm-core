@@ -6,6 +6,7 @@ import jsepNumbers from '@jsep-plugin/numbers';
 import jsepRegex from '@jsep-plugin/regex';
 import jsepTernary from '@jsep-plugin/ternary';
 import jsepTemplate, { type TemplateElement, type TemplateLiteral } from '@jsep-plugin/template';
+import { globals, globalsAsync } from './globals';
 
 jsep.plugins.register(jsepArrow);
 jsep.plugins.register(jsepNew);
@@ -18,6 +19,8 @@ jsep.plugins.register(jsepTemplate);
 // 7 is jsep's internal for "relational operators"
 jsep.addBinaryOp('in', 7);
 jsep.addBinaryOp('??', 1);
+
+export { jsep };
 
 /** An object containing the variable to use when evaluating this expression */
 export type VariablesMap = {
@@ -213,7 +216,7 @@ export function evaluateAsNumber(expression: string | jsep.Expression, variables
  * @returns The result of evaluating the expression
  */
 export function evaluateAsNumberAsync(expression: string | jsep.Expression, variables: VariablesMap = {}) {
-  return evaluateAsType(expression, variables, numberTypePredicate);
+  return evaluateAsTypeAsync(expression, variables, numberTypePredicate);
 }
 
 /**
@@ -244,6 +247,7 @@ export function evaluateAsType<T>(
 
   const context = createSynchronousContext(variables);
   const result = visitExpression(typeof expression === 'string' ? jsep(expression) : expression, context);
+
   if (typePredicate(result)) {
     return result;
   } else {
@@ -464,7 +468,7 @@ function visitCallExpression(expression: jsep.CallExpression, context: Evaluatio
 
   if (!callee) {
     throw `No function named ${expression.callee} is defined in this context`;
-  } else if (!(callee instanceof Function)) {
+  } else if (!(typeof callee === 'function')) {
     throw `${expression.callee} is not a function`;
   }
 
@@ -718,38 +722,3 @@ function isValidVariableType(val: unknown): val is VariablesMap['a'] {
 
   return false;
 }
-
-const globals = {
-  Array,
-  Boolean,
-  Symbol,
-  Infinity,
-  NaN,
-  Math,
-  Number,
-  BigInt,
-  String,
-  RegExp,
-  JSON,
-  isFinite,
-  isNaN,
-  parseFloat,
-  parseInt,
-  decodeURI,
-  encodeURI,
-  encodeURIComponent,
-  Object: {
-    __proto__: undefined,
-    assign: Object.assign.bind(null),
-    fromEntries: Object.fromEntries.bind(null),
-    hasOwn: Object.hasOwn.bind(null),
-    keys: Object.keys.bind(null),
-    is: Object.is.bind(null),
-    values: Object.values.bind(null),
-  },
-};
-
-const globalsAsync = {
-  ...globals,
-  Promise,
-};

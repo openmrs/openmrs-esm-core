@@ -1,6 +1,6 @@
 /** @module @category API */
 import { Observable } from 'rxjs';
-import isPlainObject from 'lodash-es/isPlainObject';
+import { isPlainObject } from 'lodash-es';
 import { getConfig } from '@openmrs/esm-config';
 import { navigate } from '@openmrs/esm-navigation';
 import { clearHistory } from '@openmrs/esm-navigation/src/index';

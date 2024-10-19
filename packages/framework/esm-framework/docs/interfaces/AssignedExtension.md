@@ -19,7 +19,7 @@
 
 ### config
 
-• **config**: ``null`` \| [`ConfigObject`](ConfigObject.md)
+• `Readonly` **config**: ``null`` \| `Readonly`<[`ConfigObject`](ConfigObject.md)\>
 
 The extension's config. Note that this will be `null` until the slot is mounted.
 
@@ -31,7 +31,7 @@ ___
 
 ### featureFlag
 
-• `Optional` **featureFlag**: `string`
+• `Optional` `Readonly` **featureFlag**: `string`
 
 #### Defined in
 
@@ -41,7 +41,7 @@ ___
 
 ### id
 
-• **id**: `string`
+• `Readonly` **id**: `string`
 
 #### Defined in
 
@@ -51,7 +51,7 @@ ___
 
 ### meta
 
-• **meta**: [`ExtensionMeta`](ExtensionMeta.md)
+• `Readonly` **meta**: `Readonly`<[`ExtensionMeta`](ExtensionMeta.md)\>
 
 #### Defined in
 
@@ -61,7 +61,7 @@ ___
 
 ### moduleName
 
-• **moduleName**: `string`
+• `Readonly` **moduleName**: `string`
 
 #### Defined in
 
@@ -71,7 +71,7 @@ ___
 
 ### name
 
-• **name**: `string`
+• `Readonly` **name**: `string`
 
 #### Defined in
 
@@ -81,7 +81,7 @@ ___
 
 ### offline
 
-• `Optional` **offline**: `boolean` \| `object`
+• `Optional` `Readonly` **offline**: `boolean` \| `object`
 
 #### Defined in
 
@@ -91,7 +91,7 @@ ___
 
 ### online
 
-• `Optional` **online**: `boolean` \| `object`
+• `Optional` `Readonly` **online**: `boolean` \| `object`
 
 #### Defined in
 

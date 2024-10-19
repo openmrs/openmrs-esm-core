@@ -62,3 +62,9 @@ export const LaboratoryPictogram = memo(
     return <Pictogram ref={ref} pictogram="omrs-pict-laboratory" pictogramProps={props} />;
   }),
 );
+
+export const RegistrationPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function RegistrationPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-registration" pictogramProps={props} />;
+  }),
+);
