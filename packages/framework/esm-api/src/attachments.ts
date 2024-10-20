@@ -23,7 +23,7 @@ export async function createAttachment(patientUuid: string, fileToUpload: Upload
   formData.append('patient', patientUuid);
 
   if (fileToUpload.file) {
-    formData.append('file', fileToUpload.file);
+    formData.append('file', fileToUpload.file, fileToUpload.fileName);
   } else {
     formData.append('file', new File([''], fileToUpload.fileName), fileToUpload.fileName);
     formData.append('base64Content', fileToUpload.base64Content);
