@@ -60,7 +60,7 @@
     "swc-loader": "^0.2.6",
     "systemjs-webpack-interop": "^2.3.7",
     "timezone-mock": "^1.2.2",
-    "turbo": "^2.0.6",
+    "turbo": "^2.2.3",
     "typedoc": "^0.22.18",
     "typedoc-plugin-file-tags": "^1.0.1",
     "typedoc-plugin-markdown": "3.11.14",
