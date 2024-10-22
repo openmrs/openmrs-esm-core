@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.scss';
-import { ArrowUpRight } from '@carbon/react/icons';
+import { ArrowUpRight } from '@carbon/react/icons'
 import { Link } from '@carbon/react';
 
 const ContactUs = () => {
@@ -9,6 +9,7 @@ const ContactUs = () => {
   return (
     <Link
       className={styles.helpButton}
+      style={{ textDecoration: 'none' }}
       href="https://talk.openmrs.org"
       rel="noopener noreferrer"
       renderIcon={ArrowUpRight}

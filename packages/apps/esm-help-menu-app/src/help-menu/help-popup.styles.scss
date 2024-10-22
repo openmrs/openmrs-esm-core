@@ -7,7 +7,7 @@
   flex: auto;
   bottom: 2rem;
   right: 3rem;
-  width: 11rem;
+  width: 12rem;
   z-index: 8000;
   background-color: $ui-02;
   gap: spacing.$spacing-05;
@@ -22,10 +22,8 @@
 
 .helpextension {
   margin: spacing.$spacing-04;
-  padding: spacing.$spacing-01;
   cursor: pointer;
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: spacing.$spacing-05;
 }
