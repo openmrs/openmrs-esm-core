@@ -496,7 +496,7 @@ ___
 
 ### aria-current
 
-• `Optional` **aria-current**: `boolean` \| ``"true"`` \| ``"false"`` \| ``"page"`` \| ``"step"`` \| ``"location"`` \| ``"date"`` \| ``"time"``
+• `Optional` **aria-current**: `boolean` \| ``"location"`` \| ``"true"`` \| ``"false"`` \| ``"page"`` \| ``"step"`` \| ``"date"`` \| ``"time"``
 
 Indicates the element that represents the current item within a container or set of related elements.
 

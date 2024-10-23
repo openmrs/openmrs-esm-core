@@ -13,7 +13,7 @@ export interface NewVisitPayload {
   }>;
 }
 
-export type UpdateVisitPayload = NewVisitPayload & {};
+export type UpdateVisitPayload = Partial<NewVisitPayload> & {};
 
 export interface Visit {
   uuid: string;

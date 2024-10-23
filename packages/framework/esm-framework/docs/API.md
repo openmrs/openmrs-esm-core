@@ -718,7 +718,7 @@ ___
 
 ### UpdateVisitPayload
 
-Ƭ **UpdateVisitPayload**: [`NewVisitPayload`](interfaces/NewVisitPayload.md) & {}
+Ƭ **UpdateVisitPayload**: `Partial`<[`NewVisitPayload`](interfaces/NewVisitPayload.md)\> & {}
 
 #### Defined in
 
@@ -1016,7 +1016,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L9)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L25)
 
 ___
 
@@ -1038,7 +1038,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L103)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L110)
 
 ___
 
@@ -2468,7 +2468,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L30)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L47)
 
 ___
 
@@ -2488,7 +2488,7 @@ ___
 
 ### getVisitsForPatient
 
-▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
+▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
 
 #### Parameters
 
@@ -2500,11 +2500,11 @@ ___
 
 #### Returns
 
-`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L54)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L71)
 
 ___
 
@@ -2690,7 +2690,7 @@ ___
 
 ### saveVisit
 
-▸ **saveVisit**(`payload`, `abortController`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+▸ **saveVisit**(`payload`, `abortController`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`Visit`](interfaces/Visit.md)\>\>
 
 #### Parameters
 
@@ -2701,11 +2701,11 @@ ___
 
 #### Returns
 
-`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`Visit`](interfaces/Visit.md)\>\>
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L76)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L87)
 
 ___
 
@@ -2726,7 +2726,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L34)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L51)
 
 ___
 
@@ -2835,23 +2835,23 @@ ___
 
 ### updateVisit
 
-▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Observable`<`any`\>
+▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `uuid` | `string` |
-| `payload` | [`NewVisitPayload`](interfaces/NewVisitPayload.md) |
+| `payload` | `Partial`<[`NewVisitPayload`](interfaces/NewVisitPayload.md)\> |
 | `abortController` | `AbortController` |
 
 #### Returns
 
-`Observable`<`any`\>
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L87)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L98)
 
 ___
 
