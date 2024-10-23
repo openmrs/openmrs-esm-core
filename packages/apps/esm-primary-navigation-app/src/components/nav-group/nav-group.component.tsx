@@ -14,6 +14,7 @@ export const navGroupConfigSchema = {
   slotName: {
     _type: Type.String,
     _description: 'The name of the slot to create, which links can be added to.',
+    _default: '',
   },
   isExpanded: {
     _type: Type.Boolean,
