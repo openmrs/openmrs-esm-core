@@ -43,6 +43,7 @@ export default function HelpMenu() {
         className={classNames(styles.helpMenuButton)}
       >
         <Help size={24} />
+        {!helpMenuOpen && <span className={styles.helpLabel}>Help</span>} {/* Label is hidden when menu is open */}
       </button>
       {helpMenuOpen && (
         <div id="help-menu-popup" ref={popupRef} className={styles.helpMenuPopup}>
