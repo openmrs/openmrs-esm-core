@@ -8,6 +8,7 @@
   "confirmPassword": "Confirmar nueva contraseña",
   "continue": "Continuar",
   "errorChangingPassword": "Error cambiando la contraseña",
+  "footerlogo": "Footer Logo",
   "invalidCredentials": "Nombre de usuario o contraseña inválidos",
   "locationPreferenceRemoved": "Login location preference removed",
   "locationPreferenceRemovedMessage": "Necesitarás seleccionar una ubicación en cada inicio de sesión",
