@@ -3,6 +3,9 @@
   "change": "Change",
   "changeLanguage": "Change language",
   "changingLanguage": "Changing language",
+  "clearSearch": "Clear",
   "notifications": "Notifications",
+  "searchApp": "Search App",
+  "searchForModule": "Search for module",
   "userMenuTooltip": "My Account"
 }
