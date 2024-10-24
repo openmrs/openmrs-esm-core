@@ -22,6 +22,11 @@ export enum VisitStatus {
   ONGOING = 'ongoing',
 }
 
+export interface VisitStoreState {
+  patientUuid: string | null;
+  manuallySetVisitUuid: string | null;
+}
+
 export const defaultVisitCustomRepresentation =
   'custom:(uuid,display,voided,indication,startDatetime,stopDatetime,' +
   'encounters:(uuid,display,encounterDatetime,' +
@@ -33,11 +38,6 @@ export const defaultVisitCustomRepresentation =
   'visitType:(uuid,name,display),' +
   'attributes:(uuid,display,attributeType:(name,datatypeClassname,uuid),value),' +
   'location:(uuid,name,display))';
-
-export interface VisitStoreState {
-  patientUuid: string | null;
-  manuallySetVisitUuid: string | null;
-}
 
 const initialState = getVisitLocalStorage() || {
   patientUuid: null,
@@ -68,22 +68,6 @@ function getVisitLocalStorage(): VisitStoreState | null {
   }
 }
 
-export function getVisitsForPatient(
-  patientUuid: string,
-  abortController: AbortController,
-  v?: string,
-): Promise<FetchResponse<{ results: Array<Visit> }>> {
-  const custom = v ?? defaultVisitCustomRepresentation;
-
-  return openmrsFetch(`${restBaseUrl}/visit?patient=${patientUuid}&v=${custom}`, {
-    signal: abortController.signal,
-    method: 'GET',
-    headers: {
-      'Content-type': 'application/json',
-    },
-  });
-}
-
 export function saveVisit(payload: NewVisitPayload, abortController: AbortController): Promise<FetchResponse<Visit>> {
   return openmrsFetch(`${restBaseUrl}/visit`, {
     signal: abortController.signal,
@@ -103,6 +87,25 @@ export function updateVisit(uuid: string, payload: UpdateVisitPayload, abortCont
       'Content-type': 'application/json',
     },
     body: payload,
+  });
+}
+
+/**
+ * @deprecated Use the `useVisit` hook instead.
+ */
+export function getVisitsForPatient(
+  patientUuid: string,
+  abortController: AbortController,
+  v?: string,
+): Promise<FetchResponse<{ results: Array<Visit> }>> {
+  const custom = v ?? defaultVisitCustomRepresentation;
+
+  return openmrsFetch(`${restBaseUrl}/visit?patient=${patientUuid}&v=${custom}`, {
+    signal: abortController.signal,
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+    },
   });
 }
 
