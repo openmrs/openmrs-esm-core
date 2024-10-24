@@ -16,11 +16,9 @@
 
 - [canHide](OpenWorkspace.md#canhide)
 - [canMaximize](OpenWorkspace.md#canmaximize)
-- [hasOwnSidebar](OpenWorkspace.md#hasownsidebar)
 - [moduleName](OpenWorkspace.md#modulename)
 - [name](OpenWorkspace.md#name)
 - [preferredWindowSize](OpenWorkspace.md#preferredwindowsize)
-- [sidebarFamily](OpenWorkspace.md#sidebarfamily)
 - [title](OpenWorkspace.md#title)
 - [titleNode](OpenWorkspace.md#titlenode)
 - [type](OpenWorkspace.md#type)
@@ -29,6 +27,7 @@
 ### Workspace Properties
 
 - [additionalProps](OpenWorkspace.md#additionalprops)
+- [workspaceContainerName](OpenWorkspace.md#workspacecontainername)
 
 ### Methods
 
@@ -68,20 +67,6 @@ ___
 
 ___
 
-### hasOwnSidebar
-
-• **hasOwnSidebar**: `boolean`
-
-#### Inherited from
-
-[WorkspaceRegistration](WorkspaceRegistration.md).[hasOwnSidebar](WorkspaceRegistration.md#hasownsidebar)
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
-
-___
-
 ### moduleName
 
 • **moduleName**: `string`
@@ -92,7 +77,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L21)
+[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
 
 ___
 
@@ -120,21 +105,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
-
-___
-
-### sidebarFamily
-
-• **sidebarFamily**: `string`
-
-#### Inherited from
-
-[WorkspaceRegistration](WorkspaceRegistration.md).[sidebarFamily](WorkspaceRegistration.md#sidebarfamily)
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
 
 ___
 
@@ -203,6 +174,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L106)
+
+___
+
+### workspaceContainerName
+
+• `Optional` **workspaceContainerName**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L107)
 
 ## Methods
 
@@ -277,7 +258,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
+[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
 
 ___
 

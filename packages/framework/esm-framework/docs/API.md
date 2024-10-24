@@ -8048,13 +8048,13 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:304](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L304)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L311)
 
 ___
 
 ### launchWorkspace
 
-▸ **launchWorkspace**<`T`\>(`name`, `additionalProps?`): `void`
+▸ **launchWorkspace**<`T`\>(`name`, `additionalProps?`, `workspaceContainerName?`): `void`
 
 This launches a workspace by its name. The workspace must have been registered.
 Workspaces should be registered in the `routes.json` file.
@@ -8092,6 +8092,7 @@ prop named `workspaceTitle` will override the title of the workspace.
 | :------ | :------ | :------ |
 | `name` | `string` | The name of the workspace to launch |
 | `additionalProps?` | `Omit`<`T`, keyof [`DefaultWorkspaceProps`](interfaces/DefaultWorkspaceProps.md)\> & { `workspaceTitle?`: `string`  } | Props to pass to the workspace component being launched. Passing          a prop named `workspaceTitle` will override the title of the workspace. |
+| `workspaceContainerName?` | `string` | - |
 
 #### Returns
 
@@ -8099,7 +8100,7 @@ prop named `workspaceTitle` will override the title of the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L177)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L178)
 
 ___
 
@@ -8125,13 +8126,19 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L262)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L269)
 
 ___
 
 ### useWorkspaces
 
-▸ **useWorkspaces**(): [`WorkspacesInfo`](interfaces/WorkspacesInfo.md)
+▸ **useWorkspaces**(`containerName?`): [`WorkspacesInfo`](interfaces/WorkspacesInfo.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `containerName?` | `string` |
 
 #### Returns
 
@@ -8139,4 +8146,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:418](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L418)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:425](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L425)
