@@ -193,8 +193,6 @@ supported, so the workspace will not be loaded.`,
       canHide: workspace.canHide,
       canMaximize: workspace.canMaximize,
       width: workspace.width,
-      hasOwnSidebar: workspace.hasOwnSidebar,
-      sidebarFamily: workspace.sidebarFamily,
       preferredWindowSize: workspace.preferredWindowSize,
     });
   }

@@ -12,7 +12,7 @@ import type { StoreApi } from 'zustand/vanilla';
  *
  * @param {string} sidebarFamilyName The sidebarFamilyName of the workspace used when registering the workspace in the module's routes.json file.
  */
-export function useWorkspaceFamilyStore(sidebarFamilyName: string) {
+export function useWorkspaceFamilyStore(sidebarFamilyName?: string) {
   const [storeState, setStoreState] = useState<object>({});
   const [currentSidebarFamilyName, setCurrentSidebarFamilyName] = useState(sidebarFamilyName);
 

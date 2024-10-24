@@ -14,6 +14,7 @@ import styles from './workspace.module.scss';
 
 export interface WorkspaceContainerProps {
   contextKey: string;
+  containerName?: string;
   overlay?: boolean;
   showSiderailAndBottomNav?: boolean;
   additionalWorkspaceProps?: object;
@@ -67,17 +68,22 @@ export interface WorkspaceContainerProps {
  */
 export function WorkspaceContainer({
   contextKey,
+  containerName,
   overlay,
   showSiderailAndBottomNav,
   additionalWorkspaceProps,
   actionMenuProps,
 }: WorkspaceContainerProps) {
   const layout = useLayoutType();
-  const { workspaces, workspaceWindowState } = useWorkspaces();
+  const { workspaces, workspaceWindowState } = useWorkspaces(containerName);
   const activeWorkspace = workspaces[0];
   const isHidden = workspaceWindowState === 'hidden' || activeWorkspace == null;
   const isMaximized = workspaceWindowState === 'maximized';
   const width = activeWorkspace?.width ?? (overlay ? 'wider' : 'narrow');
+  const showActionMenu = useMemo(
+    () => showSiderailAndBottomNav || (containerName && !isHidden),
+    [containerName, isHidden, showSiderailAndBottomNav],
+  );
 
   useBodyScrollLock(!isHidden && !isDesktop(layout));
 
@@ -120,7 +126,13 @@ export function WorkspaceContainer({
         </aside>
         <WorkspaceNotification contextKey={contextKey} />
       </div>
-      {showSiderailAndBottomNav && <ActionMenu actionMenuProps={actionMenuProps} />}
+      {showActionMenu && (
+        <ActionMenu
+          name={containerName}
+          isWithinWorkspace={!showSiderailAndBottomNav}
+          actionMenuProps={actionMenuProps}
+        />
+      )}
     </>
   );
 }
@@ -148,7 +160,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
   const {
     canHide = false,
     canMaximize = false,
-    hasOwnSidebar = false,
+    workspaceContainerName = '',
     closeWorkspace,
   } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
 
@@ -171,7 +183,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot
-              name={`workspace-header-family-${workspaceInstance.sidebarFamily}-slot`}
+              name={`workspace-header-family-${workspaceInstance.workspaceContainerName}-slot`}
               state={workspaceProps}
             />
             <ExtensionSlot name={`workspace-header-type-${workspaceInstance.type}-slot`} state={workspaceProps} />
@@ -234,7 +246,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
         </Header>
         <div
           className={classNames(styles.workspaceContent, {
-            [styles.marginWorkspaceContent]: hasOwnSidebar,
+            [styles.marginWorkspaceContent]: Boolean(workspaceContainerName),
           })}
         >
           <WorkspaceRenderer
@@ -243,7 +255,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             additionalPropsFromPage={additionalWorkspaceProps}
           />
         </div>
-        {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />}
+        {/* {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />} */}
       </>
     )
   );

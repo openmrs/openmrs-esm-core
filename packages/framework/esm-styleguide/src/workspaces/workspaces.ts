@@ -104,6 +104,7 @@ export interface WorkspaceStoreState {
 
 export interface OpenWorkspace extends WorkspaceRegistration, DefaultWorkspaceProps {
   additionalProps: object;
+  workspaceContainerName?: string;
 }
 
 /**
@@ -122,7 +123,7 @@ export function canCloseWorkspaceWithoutPrompting(name: string, ignoreChanges: b
 
 function promptBeforeLaunchingWorkspace(
   workspace: OpenWorkspace,
-  newWorkspaceDetails: { name: string; additionalProps?: object },
+  newWorkspaceDetails: { name: string; additionalProps?: object; workspaceContainerName?: string },
 ) {
   const { name, additionalProps } = newWorkspaceDetails;
   const newWorkspaceRegistration = getWorkspaceRegistration(name);
@@ -134,7 +135,7 @@ function promptBeforeLaunchingWorkspace(
       // might resolve, but we need to check all the cases before launching the form.
       onWorkspaceClose: () => launchWorkspace(name, additionalProps),
       // If the new workspace is of the same sidebar family, then we don't need to clear the workspace family store.
-      clearWorkspaceFamilyStore: newWorkspaceRegistration.sidebarFamily !== workspace.sidebarFamily,
+      clearWorkspaceFamilyStore: newWorkspaceDetails?.workspaceContainerName !== workspace.workspaceContainerName,
     });
   };
 
@@ -176,7 +177,11 @@ function promptBeforeLaunchingWorkspace(
  */
 export function launchWorkspace<
   T extends DefaultWorkspaceProps | object = DefaultWorkspaceProps & { [key: string]: any },
->(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string }) {
+>(
+  name: string,
+  additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string },
+  workspaceContainerName?: string,
+) {
   const store = getWorkspaceStore();
   const workspace = getWorkspaceRegistration(name);
   const newWorkspace: OpenWorkspace = {
@@ -197,12 +202,13 @@ export function launchWorkspace<
         };
       });
     },
+    workspaceContainerName,
     additionalProps: additionalProps ?? {},
   };
 
-  if (newWorkspace.sidebarFamily) {
+  if (workspaceContainerName) {
     // initialize workspace family store
-    getWorkspaceFamilyStore(newWorkspace.sidebarFamily, additionalProps);
+    getWorkspaceFamilyStore(workspaceContainerName, additionalProps);
   }
 
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
@@ -229,6 +235,7 @@ export function launchWorkspace<
     promptBeforeLaunchingWorkspace(openWorkspaces[0], {
       name,
       additionalProps,
+      workspaceContainerName,
     });
   } else if (isWorkspaceAlreadyOpen) {
     const openWorkspace = openWorkspaces[workspaceIndexInOpenWorkspaces];
@@ -312,13 +319,13 @@ function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOpt
   const updateStoreWithClosedWorkspace = () => {
     const state = store.getState();
     const workspaceToBeClosed = state.openWorkspaces.find((w) => w.name === name);
-    const workspaceSidebarFamilyName = workspaceToBeClosed?.sidebarFamily;
+    const workspaceSidebarFamilyName = workspaceToBeClosed?.workspaceContainerName;
     const newOpenWorkspaces = state.openWorkspaces.filter((w) => w.name != name);
     const workspaceFamilyStore = getWorkspaceFamilyStore(workspaceSidebarFamilyName);
     if (
       options.clearWorkspaceFamilyStore &&
       workspaceFamilyStore &&
-      !newOpenWorkspaces.some((w) => w.sidebarFamily === workspaceSidebarFamilyName)
+      !newOpenWorkspaces.some((w) => w.workspaceContainerName === workspaceSidebarFamilyName)
     ) {
       // Clearing the workspace family store if there are no more workspaces with the same sidebar family name and the new workspace is not of the same sidebar family, which is handled in the `launchWorkspace` function.
       workspaceFamilyStore.setState({}, true);
@@ -415,18 +422,24 @@ export interface WorkspacesInfo {
   workspaces: Array<OpenWorkspace>;
 }
 
-export function useWorkspaces(): WorkspacesInfo {
-  const { workspaceWindowState, openWorkspaces, prompt } = useStore(workspaceStore);
+export function useWorkspaces(containerName?: string): WorkspacesInfo {
+  const { workspaceWindowState, openWorkspaces: allOpenWorkspaces, prompt } = useStore(workspaceStore);
+  const openWorkspaces = useMemo(
+    () =>
+      allOpenWorkspaces.filter((w) =>
+        containerName ? w.workspaceContainerName === containerName : !w.workspaceContainerName,
+      ),
+    [allOpenWorkspaces],
+  );
 
-  const memoisedResults = useMemo(
-    () => ({
+  const memoisedResults = useMemo(() => {
+    return {
       active: openWorkspaces.length > 0,
       prompt,
       workspaceWindowState,
       workspaces: openWorkspaces,
-    }),
-    [openWorkspaces, workspaceWindowState, prompt],
-  );
+    };
+  }, [openWorkspaces, workspaceWindowState, prompt]);
 
   return memoisedResults;
 }
