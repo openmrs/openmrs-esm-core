@@ -506,8 +506,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily: 'ward-patient-sidebar',
       });
       launchWorkspace('ward-patient-workspace', {
         foo: true,
@@ -528,8 +526,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily,
       });
       registerWorkspace({
         name: 'transfer-patient-workspace',
@@ -537,8 +533,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily,
       });
       const workspaceStore = getWorkspaceStore();
       launchWorkspace('ward-patient-workspace', {
@@ -562,8 +556,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily: 'ward-patient-sidebar',
       });
       registerWorkspace({
         name: 'transfer-patient-workspace',
@@ -571,8 +563,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily: 'another-sidebar-family',
       });
       const workspaceStore = getWorkspaceStore();
       launchWorkspace('ward-patient-workspace', {
@@ -597,8 +587,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily: 'ward-patient-sidebar',
         canHide: true,
       });
       registerWorkspace({
@@ -607,8 +595,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily: 'another-sidebar-family',
       });
       const workspaceStore = getWorkspaceStore();
       launchWorkspace('ward-patient-workspace', {
@@ -632,8 +618,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily: 'ward-patient-sidebar',
         canHide: true,
       });
       registerWorkspace({
@@ -642,8 +626,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily: 'ward-patient-sidebar',
       });
       const workspaceStore = getWorkspaceStore();
       launchWorkspace('ward-patient-workspace', {
@@ -666,8 +648,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        // hasOwnSidebar: true,
-        // sidebarFamily: 'ward-patient-sidebar',
       });
       launchWorkspace('ward-patient-workspace', {
         foo: true,
