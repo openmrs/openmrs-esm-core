@@ -100,6 +100,7 @@ export interface WorkspaceStoreState {
   openWorkspaces: Array<OpenWorkspace>;
   prompt: Prompt | null;
   workspaceWindowState: WorkspaceWindowState;
+  currentContainerName?: string;
 }
 
 export interface OpenWorkspace extends WorkspaceRegistration, DefaultWorkspaceProps {
@@ -183,6 +184,14 @@ export function launchWorkspace<
   workspaceContainerName?: string,
 ) {
   const store = getWorkspaceStore();
+
+  if (workspaceContainerName) {
+    store.setState((prev) => ({
+      ...prev,
+      currentContainerName: workspaceContainerName,
+    }));
+  }
+
   const workspace = getWorkspaceRegistration(name);
   const newWorkspace: OpenWorkspace = {
     ...workspace,
@@ -202,7 +211,7 @@ export function launchWorkspace<
         };
       });
     },
-    workspaceContainerName,
+    workspaceContainerName: workspaceContainerName || store.getState().currentContainerName,
     additionalProps: additionalProps ?? {},
   };
 
@@ -378,6 +387,7 @@ const initialState: WorkspaceStoreState = {
   openWorkspaces: [],
   prompt: null,
   workspaceWindowState: 'normal',
+  currentContainerName: '',
 };
 
 export const workspaceStore = createGlobalStore('workspace', initialState);
