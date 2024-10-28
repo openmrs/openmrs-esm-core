@@ -42,7 +42,7 @@ export function setupI18n() {
             import(/* webpackMode: "lazy" */ `@openmrs/esm-translations/translations/${language}.json`),
             getTranslationOverrides(namespace),
           ])
-            .then(([json, overrides]) => {
+            .then(([json, [overrides]]) => {
               let translations = json?.default ?? {};
 
               if (language in overrides) {
@@ -80,10 +80,7 @@ export function setupI18n() {
                 }
               }
 
-              translations = merge(
-                translations,
-                overrides.filter((o) => language in o).map((o) => o[language]),
-              );
+              translations = merge(translations, ...overrides.filter((o) => language in o).map((o) => o[language]));
 
               callback(null, translations);
             })
