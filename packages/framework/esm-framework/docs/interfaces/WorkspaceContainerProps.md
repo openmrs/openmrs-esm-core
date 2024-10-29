@@ -6,12 +6,23 @@
 
 ### Properties
 
+- [actionMenuProps](WorkspaceContainerProps.md#actionmenuprops)
 - [additionalWorkspaceProps](WorkspaceContainerProps.md#additionalworkspaceprops)
 - [contextKey](WorkspaceContainerProps.md#contextkey)
 - [overlay](WorkspaceContainerProps.md#overlay)
 - [showSiderailAndBottomNav](WorkspaceContainerProps.md#showsiderailandbottomnav)
 
 ## Properties
+
+### actionMenuProps
+
+• `Optional` **actionMenuProps**: `Record`<`string`, `unknown`\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L20)
+
+___
 
 ### additionalWorkspaceProps
 
