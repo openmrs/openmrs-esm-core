@@ -7,9 +7,10 @@ import styles from './action-menu.module.scss';
 export interface ActionMenuProps {
   isWithinWorkspace?: boolean;
   name?: string;
+  actionMenuProps?: Record<string, unknown>;
 }
 
-export function ActionMenu({ isWithinWorkspace, name }: ActionMenuProps) {
+export function ActionMenu({ isWithinWorkspace, name, actionMenuProps = {} }: ActionMenuProps) {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);
   const { featureName } = useContext(ComponentContext);
@@ -37,7 +38,7 @@ export function ActionMenu({ isWithinWorkspace, name }: ActionMenuProps) {
       })}
     >
       <div className={styles.container}>
-        <ExtensionSlot className={styles.chartExtensions} name={extensionSlotName} />
+        <ExtensionSlot className={styles.chartExtensions} name={extensionSlotName} state={actionMenuProps} />
       </div>
     </aside>
   );

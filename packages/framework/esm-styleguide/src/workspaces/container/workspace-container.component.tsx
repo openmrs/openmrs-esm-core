@@ -17,6 +17,7 @@ export interface WorkspaceContainerProps {
   overlay?: boolean;
   showSiderailAndBottomNav?: boolean;
   additionalWorkspaceProps?: object;
+  actionMenuProps?: Record<string, unknown>;
 }
 
 /**
@@ -69,6 +70,7 @@ export function WorkspaceContainer({
   overlay,
   showSiderailAndBottomNav,
   additionalWorkspaceProps,
+  actionMenuProps,
 }: WorkspaceContainerProps) {
   const layout = useLayoutType();
   const { workspaces, workspaceWindowState } = useWorkspaces();
@@ -118,7 +120,7 @@ export function WorkspaceContainer({
         </aside>
         <WorkspaceNotification contextKey={contextKey} />
       </div>
-      {showSiderailAndBottomNav && <ActionMenu />}
+      {showSiderailAndBottomNav && <ActionMenu actionMenuProps={actionMenuProps} />}
     </>
   );
 }
