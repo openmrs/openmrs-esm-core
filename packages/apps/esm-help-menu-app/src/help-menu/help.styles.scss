@@ -22,4 +22,23 @@
     background-color: colors.$gray-20;
     cursor: pointer;
   }
+
+  &:hover .helpLabel {
+    display: block;
+  }
+}
+
+.helpLabel {
+  display: none;
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  background-color: colors.$gray-100;
+  color: white;
+  padding: layout.$spacing-01 layout.$spacing-02;
+  border-radius: layout.$spacing-01;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
 }
