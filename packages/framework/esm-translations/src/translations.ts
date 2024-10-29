@@ -11,6 +11,7 @@ const addressFields = {
   cityVillage: 'City',
   country: 'Country',
   countyDistrict: 'District',
+  district: 'District',
   postalCode: 'Postal code',
   state: 'State',
   stateProvince: 'State',
