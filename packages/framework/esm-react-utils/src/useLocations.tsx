@@ -16,7 +16,7 @@ export function useLocations(tagUuidOrName: string | null = null, query: string 
       },
     );
     return () => locationSub.unsubscribe();
-  }, [query]);
+  }, [tagUuidOrName, query]);
 
   return locations;
 }
