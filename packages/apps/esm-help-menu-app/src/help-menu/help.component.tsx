@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { Help } from '@carbon/react/icons';
+import { useSession } from '@openmrs/esm-framework'
 import HelpMenuPopup from './help-popup.component';
 import styles from './help.styles.scss';
 
 export default function HelpMenu() {
+  const { user } = useSession();
   const [helpMenuOpen, setHelpMenuOpen] = useState(false);
   const helpMenuButtonRef = useRef(null);
   const popupRef = useRef(null);
@@ -35,15 +37,17 @@ export default function HelpMenu() {
 
   return (
     <>
-      <button
-        aria-expanded={helpMenuOpen}
-        aria-controls="help-menu-popup"
-        onClick={toggleHelpMenu}
-        ref={helpMenuButtonRef}
-        className={classNames(styles.helpMenuButton)}
-      >
-        <Help size={24} />
-      </button>
+      {user && (
+        <button
+          aria-expanded={helpMenuOpen}
+          aria-controls="help-menu-popup"
+          onClick={toggleHelpMenu}
+          ref={helpMenuButtonRef}
+          className={classNames(styles.helpMenuButton)}
+        >
+          <Help size={24} />
+        </button>
+      )}
       {helpMenuOpen && (
         <div id="help-menu-popup" ref={popupRef} className={styles.helpMenuPopup}>
           <HelpMenuPopup />
