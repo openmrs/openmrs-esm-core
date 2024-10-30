@@ -11,8 +11,16 @@ export function toLocationObject(openmrsRestForm: any): Location {
   };
 }
 
-export function getLocations(tagUuidOrName: string | null = null): Observable<Array<Location>> {
-  const url = `${restBaseUrl}/location` + (tagUuidOrName ? '?tag=' + tagUuidOrName : '');
+export function getLocations(
+  tagUuidOrName: string | null = null,
+  query: string | null = null,
+): Observable<Array<Location>> {
+  const url =
+    `${restBaseUrl}/location` +
+    (tagUuidOrName || query ? '?' : '') +
+    (tagUuidOrName ? 'tag=' + tagUuidOrName : '') +
+    (tagUuidOrName && query ? '&' : '') +
+    (query ? 'q=' + query : '');
   return openmrsObservableFetch<any>(url)
     .pipe(
       map((results) => {

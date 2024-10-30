@@ -3,11 +3,11 @@ import type { Location } from '@openmrs/esm-api';
 import { getLocations } from '@openmrs/esm-api';
 import { useState, useEffect } from 'react';
 
-export function useLocations(tagUuidOrName: string | null = null) {
+export function useLocations(tagUuidOrName: string | null = null, query: string | null = null): Array<Location> {
   const [locations, setLocations] = useState<Array<Location>>([]);
 
   useEffect(() => {
-    const locationSub = getLocations(tagUuidOrName).subscribe(
+    const locationSub = getLocations(tagUuidOrName, query).subscribe(
       (locations) => {
         setLocations(locations);
       },
@@ -16,7 +16,7 @@ export function useLocations(tagUuidOrName: string | null = null) {
       },
     );
     return () => locationSub.unsubscribe();
-  }, []);
+  }, [query]);
 
   return locations;
 }
