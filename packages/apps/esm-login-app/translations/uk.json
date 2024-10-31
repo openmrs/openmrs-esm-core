@@ -8,6 +8,7 @@
   "confirmPassword": "Confirm new password",
   "continue": "Continue",
   "errorChangingPassword": "Error changing password",
+  "footerlogo": "Footer Logo",
   "invalidCredentials": "Invalid username or password",
   "locationPreferenceRemoved": "Login location preference removed",
   "locationPreferenceRemovedMessage": "You will need to select a location on each login",

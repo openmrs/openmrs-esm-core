@@ -8,6 +8,7 @@
   "confirmPassword": "Xác nhận mật khẩu mới",
   "continue": "Tiếp tục",
   "errorChangingPassword": "Lỗi khi thay đổi mật khẩu",
+  "footerlogo": "Logo chân trang",
   "invalidCredentials": "Sai tên đăng nhập hoặc mật khẩu",
   "locationPreferenceRemoved": "Đã xóa thông tin đăng nhập tùy chọn",
   "locationPreferenceRemovedMessage": "Bạn sẽ cần phải chọn một vị trí trên mỗi lần đăng nhập",
