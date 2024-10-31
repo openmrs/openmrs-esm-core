@@ -8,6 +8,7 @@
   "confirmPassword": "Confirmer la modification du mot de passe",
   "continue": "Continuer",
   "errorChangingPassword": "Erreur lors de la modification du mot de passe",
+  "footerlogo": "Footer Logo",
   "invalidCredentials": "Nom d'utilisateur ou mot de passe invalide",
   "locationPreferenceRemoved": "Emplacement favori de connexion supprimé",
   "locationPreferenceRemovedMessage": "Vous devrez choisir un emplacement à chaque connexion",
