@@ -192,6 +192,7 @@
 - [evaluateAsync](API.md#evaluateasync)
 - [extractVariableNames](API.md#extractvariablenames)
 - [isOnline](API.md#isonline)
+- [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
 - [useFhirFetchAll](API.md#usefhirfetchall)
 - [useFhirInfinite](API.md#usefhirinfinite)
 
@@ -6281,6 +6282,44 @@ ___
 
 ___
 
+### openmrsComponentDecorator
+
+▸ **openmrsComponentDecorator**<`T`\>(`userOpts`): (`Comp`: `ComponentType`<`T`\>) => `ComponentType`<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `userOpts` | `ComponentDecoratorOptions` |
+
+#### Returns
+
+`fn`
+
+▸ (`Comp`): `ComponentType`<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Comp` | `ComponentType`<`T`\> |
+
+##### Returns
+
+`ComponentType`<`T`\>
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L46)
+
+___
+
 ### useFhirFetchAll
 
 ▸ **useFhirFetchAll**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
@@ -6699,7 +6738,7 @@ invalid key to this function will result in a type error.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"age"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactAdministratorIfIssuePersists"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientIdentifierSticker"`` \| ``"patientLists"`` \| ``"print"`` \| ``"printError"`` \| ``"printErrorExplainer"`` \| ``"printIdentifierSticker"`` \| ``"printing"`` \| ``"relationships"`` \| ``"resetOverrides"`` \| ``"scriptLoadingFailed"`` \| ``"scriptLoadingError"`` \| ``"seeMoreLists"`` \| ``"sex"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"hide"`` \| ``"maximize"`` \| ``"minimize"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"workspaceHeader"`` \| ``"address1"`` \| ``"address2"`` \| ``"address3"`` \| ``"address4"`` \| ``"address5"`` \| ``"address6"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
+| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"age"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactAdministratorIfIssuePersists"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientIdentifierSticker"`` \| ``"patientLists"`` \| ``"print"`` \| ``"printError"`` \| ``"printErrorExplainer"`` \| ``"printIdentifierSticker"`` \| ``"printing"`` \| ``"relationships"`` \| ``"resetOverrides"`` \| ``"scriptLoadingFailed"`` \| ``"scriptLoadingError"`` \| ``"seeMoreLists"`` \| ``"sex"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"hide"`` \| ``"maximize"`` \| ``"minimize"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"workspaceHeader"`` \| ``"address1"`` \| ``"address2"`` \| ``"address3"`` \| ``"address4"`` \| ``"address5"`` \| ``"address6"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"district"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
 | `defaultText?` | `string` | - |
 | `options?` | `Omit`<`TOptions`<`StringMap`\>, ``"defaultValue"`` \| ``"ns"``\> | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
 
