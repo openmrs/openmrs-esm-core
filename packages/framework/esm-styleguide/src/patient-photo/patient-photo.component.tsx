@@ -1,40 +1,64 @@
 /** @module @category UI */
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Avatar from 'react-avatar';
 import GeoPattern from 'geopattern';
+import { SkeletonIcon } from '@carbon/react';
+import { useTranslation } from 'react-i18next';
 import { usePatientPhoto } from './usePatientPhoto';
+import PlaceholderIcon from './placeholder-icon.component';
+import styles from './patient-photo.module.scss';
 
 export interface PatientPhotoProps {
   patientName: string;
   patientUuid: string;
+  // TODO: Remove this prop
   size?: 'small' | undefined;
 }
 
 /**
- * A component which displays the patient photo. If there is no photo, it will display
- * a generated avatar. The default size is 80px. Set the size prop to 'small' to display
- * a 48px avatar.
+ * A component which displays the patient photo https://zeroheight.com/23a080e38/p/6663f3-patient-header. If there is no photo, it will display a generated avatar. The default size is 56px.
  */
 export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoProps) {
-  const { data: photo } = usePatientPhoto(patientUuid);
+  const { data: photo, isLoading } = usePatientPhoto(patientUuid);
+  const [validImageSrc, setValidImageSrc] = useState<string | null>(null);
   const pattern = useMemo(() => GeoPattern.generate(patientUuid), [patientUuid]);
+
+  useEffect(() => {
+    if (photo?.imageSrc) {
+      const img = new Image();
+      img.onload = () => setValidImageSrc(photo.imageSrc);
+      img.onerror = () => setValidImageSrc(null);
+      img.src = photo.imageSrc;
+    }
+  }, [photo?.imageSrc]);
+
+  const altText = patientName.trim() ? `${patientName}'s avatar` : `Patient avatar for ID ${patientUuid}`;
+
+  if (isLoading) {
+    return <SkeletonIcon className={styles.skeleton} role="progressbar" />;
+  }
+
+  if (photo?.imageSrc && !validImageSrc) {
+    return <PlaceholderIcon />;
+  }
 
   return (
     <Avatar
-      alt={`${patientName ? `${patientName}'s avatar` : 'Patient avatar'}`}
+      alt={altText}
       color="rgba(0,0,0,0)"
+      maxInitials={3}
       name={patientName}
-      src={photo?.imageSrc}
-      size={size === 'small' ? '48' : '80'}
-      textSizeRatio={size === 'small' ? 1 : 2}
+      size="56"
+      src={validImageSrc ?? undefined}
       style={
-        !photo
+        !validImageSrc
           ? {
               backgroundImage: pattern.toDataUrl(),
               backgroundRepeat: 'round',
             }
           : undefined
       }
+      textSizeRatio={2}
     />
   );
 }

@@ -26,9 +26,7 @@ export function PatientBannerToggleContactDetailsButton({
       onClick={toggleContactDetails}
       renderIcon={showContactDetails ? ChevronUpIcon : ChevronDownIcon}
     >
-      {showContactDetails
-        ? getCoreTranslation('hideDetails', 'Hide details')
-        : getCoreTranslation('showDetails', 'Show details')}
+      {showContactDetails ? getCoreTranslation('showLess', 'Show less') : getCoreTranslation('showMore', 'Show more')}
     </Button>
   );
 }

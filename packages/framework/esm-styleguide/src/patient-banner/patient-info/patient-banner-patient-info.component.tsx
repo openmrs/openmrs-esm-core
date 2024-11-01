@@ -1,9 +1,10 @@
 /** @module @category UI */
+import React from 'react';
+import classNames from 'classnames';
 import { ExtensionSlot } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { age, formatDate, parseDate } from '@openmrs/esm-utils';
-import classNames from 'classnames';
-import React from 'react';
+import { FemaleIcon, MaleIcon, OtherIcon, UnknownIcon } from './gender-icons.component';
 import PatientBannerPatientIdentifier from './patient-banner-patient-identifiers.component';
 import styles from './patient-banner-patient-info.module.scss';
 
@@ -11,8 +12,41 @@ export interface PatientBannerPatientInfoProps {
   patient: fhir.Patient;
 }
 
+interface GenderIconProps {
+  gender: string;
+}
+
+const GenderIcon = ({ gender }: GenderIconProps) => {
+  const GENDER_ICONS = {
+    Female: FemaleIcon,
+    Male: MaleIcon,
+    Other: OtherIcon,
+    Unknown: UnknownIcon,
+  } as const;
+
+  const IconComponent = GENDER_ICONS[gender as keyof typeof GENDER_ICONS];
+
+  if (!IconComponent) {
+    return null;
+  }
+
+  return <IconComponent />;
+};
+
+const getGender = (gender: string): string => {
+  const genderTranslations = {
+    male: 'male',
+    female: 'female',
+    other: 'other',
+    unknown: 'unknown',
+  } as const;
+
+  const key = gender.toLowerCase() as keyof typeof genderTranslations;
+  return getCoreTranslation(genderTranslations[key], gender);
+};
+
 export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
-  const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0].family}`;
+  const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0]?.family}`;
   const gender = patient?.gender && getGender(patient.gender);
 
   return (
@@ -20,42 +54,33 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
       <div className={classNames(styles.row, styles.patientNameRow)}>
         <div className={styles.flexRow}>
           <span className={styles.patientName}>{name}</span>
+
+          {gender && (
+            <div className={styles.gender}>
+              <GenderIcon gender={gender} />
+              <span>{gender}</span>
+            </div>
+          )}
+
           <ExtensionSlot
             name="patient-banner-tags-slot"
             state={{ patientUuid: patient.id, patient }}
             className={styles.flexRow}
+            style={{ margin: '0 0.5rem' }}
           />
         </div>
       </div>
       <div className={styles.demographics}>
-        <span>{gender}</span>
         {patient.birthDate && (
           <>
-            <span className={styles.separator}>&middot;</span>
             <span>{age(patient.birthDate)}</span>
-            <span className={styles.separator}>&middot;</span>
-            <span>{formatDate(parseDate(patient.birthDate), { mode: 'wide', time: false })}</span>
+            <span>&middot;</span>
+            <span>{formatDate(parseDate(patient.birthDate), { time: false })}</span>
+            <span>&middot;</span>
           </>
         )}
-      </div>
-      <div className={styles.row}>
         <PatientBannerPatientIdentifier identifier={patient.identifier} showIdentifierLabel={true} />
       </div>
     </div>
   );
 }
-
-const getGender = (gender: string): string => {
-  switch (gender) {
-    case 'male':
-      return getCoreTranslation('male', 'Male');
-    case 'female':
-      return getCoreTranslation('female', 'Female');
-    case 'other':
-      return getCoreTranslation('other', 'Other');
-    case 'unknown':
-      return getCoreTranslation('unknown', 'Unknown');
-    default:
-      return gender;
-  }
-};
