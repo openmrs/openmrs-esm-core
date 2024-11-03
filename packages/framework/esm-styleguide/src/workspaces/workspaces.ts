@@ -147,6 +147,19 @@ function promptBeforeLaunchingWorkspace(
   }
 }
 
+export function launchWorkspaceGroup(groupName: string, state: object) {
+  const store = getWorkspaceStore();
+  if (!store.getState().currentContainerName) {
+    store.setState((prev) => ({
+      ...prev,
+      currentContainerName: groupName,
+    }));
+    getWorkspaceFamilyStore(groupName, state);
+  } else {
+    // TODO:  Write code to close any independent workspace opened, or any other workspace group
+  }
+}
+
 /**
  * This launches a workspace by its name. The workspace must have been registered.
  * Workspaces should be registered in the `routes.json` file.
@@ -178,19 +191,8 @@ function promptBeforeLaunchingWorkspace(
  */
 export function launchWorkspace<
   T extends DefaultWorkspaceProps | object = DefaultWorkspaceProps & { [key: string]: any },
->(
-  name: string,
-  additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string },
-  workspaceContainerName?: string,
-) {
+>(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string }) {
   const store = getWorkspaceStore();
-
-  if (workspaceContainerName) {
-    store.setState((prev) => ({
-      ...prev,
-      currentContainerName: workspaceContainerName,
-    }));
-  }
 
   const workspace = getWorkspaceRegistration(name);
   const newWorkspace: OpenWorkspace = {
@@ -211,14 +213,9 @@ export function launchWorkspace<
         };
       });
     },
-    workspaceContainerName: workspaceContainerName || store.getState().currentContainerName,
+    workspaceContainerName: store.getState().currentContainerName,
     additionalProps: additionalProps ?? {},
   };
-
-  if (workspaceContainerName) {
-    // initialize workspace family store
-    getWorkspaceFamilyStore(workspaceContainerName, additionalProps);
-  }
 
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
     store.setState((state) => {
@@ -244,7 +241,6 @@ export function launchWorkspace<
     promptBeforeLaunchingWorkspace(openWorkspaces[0], {
       name,
       additionalProps,
-      workspaceContainerName,
     });
   } else if (isWorkspaceAlreadyOpen) {
     const openWorkspace = openWorkspaces[workspaceIndexInOpenWorkspaces];
@@ -430,26 +426,33 @@ export interface WorkspacesInfo {
   prompt: Prompt | null;
   workspaceWindowState: WorkspaceWindowState;
   workspaces: Array<OpenWorkspace>;
+  currentContainerName: string | undefined;
 }
 
-export function useWorkspaces(containerName?: string): WorkspacesInfo {
-  const { workspaceWindowState, openWorkspaces: allOpenWorkspaces, prompt } = useStore(workspaceStore);
+export function useWorkspaces(): WorkspacesInfo {
+  const {
+    workspaceWindowState,
+    openWorkspaces: allOpenWorkspaces,
+    prompt,
+    currentContainerName,
+  } = useStore(workspaceStore);
   const openWorkspaces = useMemo(
     () =>
       allOpenWorkspaces.filter((w) =>
-        containerName ? w.workspaceContainerName === containerName : !w.workspaceContainerName,
+        currentContainerName ? w.workspaceContainerName === currentContainerName : !w.workspaceContainerName,
       ),
     [allOpenWorkspaces],
   );
 
-  const memoisedResults = useMemo(() => {
+  const memoisedResults: WorkspacesInfo = useMemo(() => {
     return {
       active: openWorkspaces.length > 0,
       prompt,
       workspaceWindowState,
       workspaces: openWorkspaces,
+      currentContainerName,
     };
-  }, [openWorkspaces, workspaceWindowState, prompt]);
+  }, [openWorkspaces, workspaceWindowState, prompt, currentContainerName]);
 
   return memoisedResults;
 }

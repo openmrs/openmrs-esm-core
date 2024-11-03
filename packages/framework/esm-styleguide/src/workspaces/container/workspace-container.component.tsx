@@ -68,21 +68,20 @@ export interface WorkspaceContainerProps {
  */
 export function WorkspaceContainer({
   contextKey,
-  containerName,
   overlay,
   showSiderailAndBottomNav,
   additionalWorkspaceProps,
   actionMenuProps,
 }: WorkspaceContainerProps) {
   const layout = useLayoutType();
-  const { workspaces, workspaceWindowState } = useWorkspaces(containerName);
+  const { workspaces, workspaceWindowState, currentContainerName } = useWorkspaces();
   const activeWorkspace = workspaces[0];
   const isHidden = workspaceWindowState === 'hidden' || activeWorkspace == null;
   const isMaximized = workspaceWindowState === 'maximized';
   const width = activeWorkspace?.width ?? (overlay ? 'wider' : 'narrow');
   const showActionMenu = useMemo(
-    () => showSiderailAndBottomNav || (containerName && !isHidden),
-    [containerName, isHidden, showSiderailAndBottomNav],
+    () => showSiderailAndBottomNav || (currentContainerName && !isHidden),
+    [currentContainerName, isHidden, showSiderailAndBottomNav],
   );
 
   useBodyScrollLock(!isHidden && !isDesktop(layout));
@@ -128,7 +127,7 @@ export function WorkspaceContainer({
       </div>
       {showActionMenu && (
         <ActionMenu
-          name={containerName}
+          name={currentContainerName}
           isWithinWorkspace={!showSiderailAndBottomNav}
           actionMenuProps={actionMenuProps}
         />
