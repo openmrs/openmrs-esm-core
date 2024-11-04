@@ -63,10 +63,9 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
           )}
 
           <ExtensionSlot
+            className={styles.flexRow}
             name="patient-banner-tags-slot"
             state={{ patientUuid: patient.id, patient }}
-            className={styles.flexRow}
-            style={{ margin: '0 0.5rem' }}
           />
         </div>
       </div>
