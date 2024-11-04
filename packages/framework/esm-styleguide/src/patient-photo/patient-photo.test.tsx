@@ -74,13 +74,15 @@ describe('PatientPhoto', () => {
 
     render(<PatientPhoto patientUuid={patientUuid} patientName={patientName} />);
 
-    // Wait for the image to "load"
-    await screen.findByAltText(`${patientName}'s avatar`);
+    const altText = 'Profile photo unavailable - grey placeholder image';
 
-    const avatarImage = screen.getByRole('img', { name: `${patientName}'s avatar` });
+    // Wait for the image to "load"
+    await screen.findByAltText(altText);
+
+    const avatarImage = screen.getByRole('img', { name: altText });
     expect(avatarImage).toBeInTheDocument();
     expect(avatarImage).toHaveAttribute('src', 'valid-image.jpg');
-    expect(avatarImage).toHaveAttribute('alt', `${patientName}'s avatar`);
+    expect(avatarImage).toHaveAttribute('alt', altText);
 
     // Restore the original Image constructor
     window.Image = originalImage;

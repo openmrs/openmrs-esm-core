@@ -19,6 +19,7 @@ export interface PatientPhotoProps {
  * A component which displays the patient photo https://zeroheight.com/23a080e38/p/6663f3-patient-header. If there is no photo, it will display a generated avatar. The default size is 56px.
  */
 export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoProps) {
+  const { t } = useTranslation();
   const { data: photo, isLoading } = usePatientPhoto(patientUuid);
   const [validImageSrc, setValidImageSrc] = useState<string | null>(null);
   const pattern = useMemo(() => GeoPattern.generate(patientUuid), [patientUuid]);
@@ -32,7 +33,7 @@ export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoPro
     }
   }, [photo?.imageSrc]);
 
-  const altText = patientName.trim() ? `${patientName}'s avatar` : `Patient avatar for ID ${patientUuid}`;
+  const altText = t('avatarAltText', 'Profile photo unavailable - grey placeholder image');
 
   if (isLoading) {
     return <SkeletonIcon className={styles.skeleton} role="progressbar" />;
