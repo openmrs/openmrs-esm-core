@@ -1,7 +1,7 @@
 @use '@carbon/colors';
 @use '@carbon/layout';
 @use '@carbon/type';
-@use '~@openmrs/esm-styleguide/src/vars' as *;
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .container {
   border-top: 1px solid $ui-03;
@@ -66,6 +66,10 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+}
+
+.tagsSlot {
+  @extend .flexRow;
   margin: 0 layout.$spacing-03;
 }
 

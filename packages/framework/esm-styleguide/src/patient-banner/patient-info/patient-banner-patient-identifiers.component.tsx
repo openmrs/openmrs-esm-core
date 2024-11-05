@@ -1,6 +1,6 @@
 /** @module @category UI */
 import React from 'react';
-import { Tag } from '@carbon/react';
+import { FormLabel, Tag } from '@carbon/react';
 import { useConfig, usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
 import { type StyleguideConfigObject } from '../../config-schema';
 import styles from './patient-banner-patient-info.module.scss';
@@ -21,7 +21,7 @@ function PrimaryIdentifier({ showIdentifierLabel, type, value }: IdentifierProps
     <div className={styles.primaryIdentifier}>
       {showIdentifierLabel && (
         <Tag className={styles.tag} type="gray" title={type?.text}>
-          <span className={styles.label}>{type?.text}: </span>
+          {type?.text && <span className={styles.label}>{type.text}: </span>}
           <span className={styles.value}>{value}</span>
         </Tag>
       )}
@@ -31,12 +31,10 @@ function PrimaryIdentifier({ showIdentifierLabel, type, value }: IdentifierProps
 
 function SecondaryIdentifier({ showIdentifierLabel, type, value }: IdentifierProps) {
   return (
-    <label htmlFor="identifier" className={styles.secondaryIdentifier}>
+    <FormLabel className={styles.secondaryIdentifier} id={`patient-banner-identifier-${value}`}>
       {showIdentifierLabel && <span className={styles.label}>{type?.text}: </span>}
-      <span id="identifier" className={styles.value}>
-        {value}
-      </span>
-    </label>
+      <span className={styles.value}>{value}</span>
+    </FormLabel>
   );
 }
 
@@ -57,15 +55,13 @@ export function PatientBannerPatientIdentifier({
     <div className={styles.identifiers}>
       {filteredIdentifiers?.length
         ? filteredIdentifiers.map(({ value, type }, index) => (
-            <div key={value}>
-              <div key={value} className={styles.identifierTag}>
-                {index > 0 && <span className={styles.separator}>&middot;</span>}
-                {type?.coding?.[0]?.code === primaryIdentifierCode ? (
-                  <PrimaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
-                ) : (
-                  <SecondaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
-                )}
-              </div>
+            <div className={styles.identifierTag} key={value}>
+              {index > 0 && <span className={styles.separator}>&middot;</span>}
+              {type?.coding?.[0]?.code === primaryIdentifierCode ? (
+                <PrimaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
+              ) : (
+                <SecondaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
+              )}
             </div>
           ))
         : ''}

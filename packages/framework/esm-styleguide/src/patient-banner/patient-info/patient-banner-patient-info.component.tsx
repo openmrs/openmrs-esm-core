@@ -1,5 +1,5 @@
 /** @module @category UI */
-import React from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { ExtensionSlot } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
@@ -12,19 +12,21 @@ export interface PatientBannerPatientInfoProps {
   patient: fhir.Patient;
 }
 
+type Gender = 'female' | 'male' | 'other' | 'unknown';
+
 interface GenderIconProps {
-  gender: string;
+  gender: keyof typeof GENDER_ICONS;
 }
 
-const GenderIcon = ({ gender }: GenderIconProps) => {
-  const GENDER_ICONS = {
-    Female: FemaleIcon,
-    Male: MaleIcon,
-    Other: OtherIcon,
-    Unknown: UnknownIcon,
-  } as const;
+const GENDER_ICONS = {
+  Female: FemaleIcon,
+  Male: MaleIcon,
+  Other: OtherIcon,
+  Unknown: UnknownIcon,
+} as const;
 
-  const IconComponent = GENDER_ICONS[gender as keyof typeof GENDER_ICONS];
+const GenderIcon = ({ gender }: GenderIconProps) => {
+  const IconComponent = GENDER_ICONS[gender];
 
   if (!IconComponent) {
     return null;
@@ -34,20 +36,15 @@ const GenderIcon = ({ gender }: GenderIconProps) => {
 };
 
 const getGender = (gender: string): string => {
-  const genderTranslations = {
-    male: 'male',
-    female: 'female',
-    other: 'other',
-    unknown: 'unknown',
-  } as const;
-
-  const key = gender.toLowerCase() as keyof typeof genderTranslations;
-  return getCoreTranslation(genderTranslations[key], gender);
+  const key = gender.toLowerCase() as Gender;
+  return getCoreTranslation(key, gender);
 };
 
 export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0]?.family}`;
   const gender = patient?.gender && getGender(patient.gender);
+
+  const extensionState = useMemo(() => ({ patientUuid: patient.id, patient }), [patient.id, patient]);
 
   return (
     <div className={styles.patientInfo}>
@@ -57,16 +54,12 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
 
           {gender && (
             <div className={styles.gender}>
-              <GenderIcon gender={gender} />
+              <GenderIcon gender={gender as keyof typeof GENDER_ICONS} />
               <span>{gender}</span>
             </div>
           )}
 
-          <ExtensionSlot
-            className={styles.flexRow}
-            name="patient-banner-tags-slot"
-            state={{ patientUuid: patient.id, patient }}
-          />
+          <ExtensionSlot className={styles.tagsSlot} name="patient-banner-tags-slot" state={extensionState} />
         </div>
       </div>
       <div className={styles.demographics}>
