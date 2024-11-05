@@ -48,6 +48,7 @@ export const PenIcon = () => <div>PenIcon</div>;
 export const PrinterIcon = () => <div>PrinterIcon</div>;
 export const RenewIcon = () => <div>RenewIcon</div>;
 export const ReportIcon = () => <div>ReportIcon</div>;
+export const SyringeIcon = () => <div>SyringeIcon</div>;
 export const ResetIcon = () => <div>ResetIcon</div>;
 export const PasswordIcon = () => <div>PasswordIcon</div>;
 export const SaveIcon = () => <div>SaveIcon</div>;
