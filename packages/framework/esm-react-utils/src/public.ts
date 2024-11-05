@@ -4,6 +4,7 @@ export * from './Extension';
 export * from './ExtensionSlot';
 export * from './UserHasAccess';
 export * from './getLifecycle';
+export { openmrsComponentDecorator } from './openmrsComponentDecorator';
 export * from './OpenmrsContext';
 export * from './useAbortController';
 export * from './useAppContext';
