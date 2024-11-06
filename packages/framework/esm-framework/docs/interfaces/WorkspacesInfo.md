@@ -7,6 +7,7 @@
 ### Workspace Properties
 
 - [active](WorkspacesInfo.md#active)
+- [currentGroupName](WorkspacesInfo.md#currentgroupname)
 - [prompt](WorkspacesInfo.md#prompt)
 - [workspaceWindowState](WorkspacesInfo.md#workspacewindowstate)
 - [workspaces](WorkspacesInfo.md#workspaces)
@@ -20,6 +21,16 @@
 #### Defined in
 
 [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:429](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L429)
+
+___
+
+### currentGroupName
+
+• `Optional` **currentGroupName**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:433](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L433)
 
 ___
 

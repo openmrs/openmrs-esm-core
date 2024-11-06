@@ -262,6 +262,7 @@
 
 - [closeWorkspace](API.md#closeworkspace)
 - [launchWorkspace](API.md#launchworkspace)
+- [launchWorkspaceGroup](API.md#launchworkspacegroup)
 - [navigateAndLaunchWorkspace](API.md#navigateandlaunchworkspace)
 - [useWorkspaces](API.md#useworkspaces)
 
@@ -8048,13 +8049,13 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L320)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:315](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L315)
 
 ___
 
 ### launchWorkspace
 
-▸ **launchWorkspace**<`T`\>(`name`, `additionalProps?`, `workspaceContainerName?`): `void`
+▸ **launchWorkspace**<`T`\>(`name`, `additionalProps?`): `void`
 
 This launches a workspace by its name. The workspace must have been registered.
 Workspaces should be registered in the `routes.json` file.
@@ -8092,7 +8093,6 @@ prop named `workspaceTitle` will override the title of the workspace.
 | :------ | :------ | :------ |
 | `name` | `string` | The name of the workspace to launch |
 | `additionalProps?` | `Omit`<`T`, keyof [`DefaultWorkspaceProps`](interfaces/DefaultWorkspaceProps.md)\> & { `workspaceTitle?`: `string`  } | Props to pass to the workspace component being launched. Passing          a prop named `workspaceTitle` will override the title of the workspace. |
-| `workspaceContainerName?` | `string` | - |
 
 #### Returns
 
@@ -8100,7 +8100,28 @@ prop named `workspaceTitle` will override the title of the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:179](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L179)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L192)
+
+___
+
+### launchWorkspaceGroup
+
+▸ **launchWorkspaceGroup**(`groupName`, `state`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `groupName` | `string` |
+| `state` | `object` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L125)
 
 ___
 
@@ -8126,19 +8147,13 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:278](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L278)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L273)
 
 ___
 
 ### useWorkspaces
 
-▸ **useWorkspaces**(`containerName?`): [`WorkspacesInfo`](interfaces/WorkspacesInfo.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `containerName?` | `string` |
+▸ **useWorkspaces**(): [`WorkspacesInfo`](interfaces/WorkspacesInfo.md)
 
 #### Returns
 
@@ -8146,4 +8161,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:435](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L435)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:436](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L436)
