@@ -61,6 +61,7 @@ import shoppingCart from './svgs/shopping-cart.svg';
 import shoppingCartArrowDown from './svgs/shopping-cart--arrow-down.svg';
 import stickyNoteAdd from './svgs/sticky-note-add.svg';
 import switcher from './svgs/switcher.svg';
+import syringe from './svgs/syringe.svg';
 import tableOfContents from './svgs/table-of-contents.svg';
 import table from './svgs/table.svg';
 import time from './svgs/time.svg';
@@ -140,7 +141,7 @@ export function setupIcons() {
   addSvg('omrs-icon-shopping-cart--arrow-down', shoppingCartArrowDown);
   addSvg('omrs-icon-sticky-note-add', stickyNoteAdd);
   addSvg('omrs-icon-switcher', switcher);
-  addSvg('omrs-icon-switcher', switcher);
+  addSvg('omrs-icon-syringe', syringe);
   addSvg('omrs-icon-table-of-contents', tableOfContents);
   addSvg('omrs-icon-table', table);
   addSvg('omrs-icon-time', time);

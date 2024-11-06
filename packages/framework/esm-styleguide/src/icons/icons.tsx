@@ -622,6 +622,14 @@ export const ReportIcon = memo(
   }),
 );
 
+/**
+ */
+export const SyringeIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function SyringeIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-syringe" iconProps={props} />;
+  }),
+);
+
 // Icon aliases that are a little more aligned to specific use-cases
 // should all resolve to a defined React icon
 
