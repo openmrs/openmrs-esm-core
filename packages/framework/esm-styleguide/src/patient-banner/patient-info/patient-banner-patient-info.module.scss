@@ -39,6 +39,9 @@
 }
 
 .patientInfo {
+  display: flex;
+  flex-direction: column;
+  padding: layout.$spacing-05 0 layout.$spacing-05 0;
   width: 100%;
 }
 
@@ -48,6 +51,8 @@
   display: flex;
   align-items: center;
   column-gap: layout.$spacing-02;
+  margin-top: layout.$spacing-02;
+  flex-wrap: wrap;
 }
 
 .row {
@@ -55,11 +60,6 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  margin-top: layout.$spacing-02;
-}
-
-.patientNameRow {
-  margin-top: 0.875rem;
 }
 
 .flexRow {
@@ -117,7 +117,7 @@
 }
 
 .separator {
-  margin: 0 layout.$spacing-02;
+  margin: layout.$spacing-01;
 }
 
 .tag {

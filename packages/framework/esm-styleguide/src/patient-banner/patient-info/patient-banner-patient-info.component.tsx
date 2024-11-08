@@ -66,9 +66,9 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
         {patient.birthDate && (
           <>
             <span>{age(patient.birthDate)}</span>
-            <span>&middot;</span>
+            <span className={styles.separator}>&middot;</span>
             <span>{formatDate(parseDate(patient.birthDate), { time: false })}</span>
-            <span>&middot;</span>
+            <span className={styles.separator}>&middot;</span>
           </>
         )}
         <PatientBannerPatientIdentifier identifier={patient.identifier} showIdentifierLabel={true} />

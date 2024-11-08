@@ -18,14 +18,14 @@ interface PatientBannerPatientIdentifierProps {
 
 function PrimaryIdentifier({ showIdentifierLabel, type, value }: IdentifierProps) {
   return (
-    <div className={styles.primaryIdentifier}>
+    <span className={styles.primaryIdentifier}>
       {showIdentifierLabel && (
         <Tag className={styles.tag} type="gray" title={type?.text}>
           {type?.text && <span className={styles.label}>{type.text}: </span>}
           <span className={styles.value}>{value}</span>
         </Tag>
       )}
-    </div>
+    </span>
   );
 }
 
@@ -52,20 +52,22 @@ export function PatientBannerPatientIdentifier({
     }) ?? [];
 
   return (
-    <div className={styles.identifiers}>
+    <>
       {filteredIdentifiers?.length
         ? filteredIdentifiers.map(({ value, type }, index) => (
-            <div className={styles.identifierTag} key={value}>
-              {index > 0 && <span className={styles.separator}>&middot;</span>}
-              {type?.coding?.[0]?.code === primaryIdentifierCode ? (
-                <PrimaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
-              ) : (
-                <SecondaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
-              )}
-            </div>
+            <React.Fragment key={value}>
+              <span className={styles.identifierTag}>
+                {type?.coding?.[0]?.code === primaryIdentifierCode ? (
+                  <PrimaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
+                ) : (
+                  <SecondaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
+                )}
+              </span>
+              {index < filteredIdentifiers.length - 1 && <span className={styles.separator}>&middot;</span>}
+            </React.Fragment>
           ))
         : ''}
-    </div>
+    </>
   );
 }
 
