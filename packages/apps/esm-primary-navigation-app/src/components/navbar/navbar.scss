@@ -1,15 +1,15 @@
-@use '@carbon/styles/scss/spacing';
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .topNavActionsSlot {
   display: flex;
   align-items: center;
-}
 
-.topNavActionsSlot a {
-  color: white;
-  text-decoration: none;
-  margin: 0 0.75rem;
+  > a {
+    color: white;
+    text-decoration: none;
+    margin: 0 layout.$spacing-04;
+  }
 }
 
 .headerGlobalBarButton {
@@ -25,12 +25,12 @@
 }
 
 .headerMenuButton {
-  height: spacing.$spacing-09;
-  width: spacing.$spacing-09;
-  padding: spacing.$spacing-04;
-  margin-right: spacing.$spacing-02;
+  height: layout.$spacing-09;
+  width: layout.$spacing-09;
+  padding: layout.$spacing-04;
+  margin-right: layout.$spacing-02;
 }
 
 .spacedLogo {
-  margin-left: 1rem;
+  margin-left: layout.$spacing-05;
 }
