@@ -1,10 +1,11 @@
 @use '@carbon/colors';
-@use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .container {
-  border-top: 0.063rem solid $ui-03;
-  border-bottom: 0.063rem solid $ui-03;
+  border-top: 1px solid $ui-03;
+  border-bottom: 1px solid $ui-03;
   background-color: $ui-01;
 }
 
@@ -18,12 +19,14 @@
 
 .patientName {
   @include type.type-style('heading-03');
-  margin-right: 0.25rem;
+  color: colors.$gray-100;
+  font-weight: 600;
+  margin-right: layout.$spacing-02;
 }
 
 .patientAvatar {
-  width: 5rem;
-  height: 5rem;
+  width: 3.5rem;
+  height: 3.5rem;
   margin: 1rem;
   border-radius: 1px;
 }
@@ -31,18 +34,25 @@
 .patientAvatarButton {
   cursor: pointer;
   border: none;
-  padding: 0px;
+  padding: 0;
   background: none;
 }
 
 .patientInfo {
+  display: flex;
+  flex-direction: column;
+  padding: layout.$spacing-05 0 layout.$spacing-05 0;
   width: 100%;
 }
 
 .demographics {
   @include type.type-style('body-compact-02');
   color: $text-02;
-  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  column-gap: layout.$spacing-02;
+  margin-top: layout.$spacing-02;
+  flex-wrap: wrap;
 }
 
 .row {
@@ -50,11 +60,6 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  margin-top: 0.25rem;
-}
-
-.patientNameRow {
-  margin-top: 0.875rem;
 }
 
 .flexRow {
@@ -63,11 +68,17 @@
   align-items: center;
 }
 
+.tagsSlot {
+  @extend .flexRow;
+  margin: 0 layout.$spacing-03;
+}
+
 .identifiers {
   @include type.type-style('body-compact-02');
   color: colors.$gray-70;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .identifierTag {
@@ -75,33 +86,46 @@
   align-items: center;
 }
 
-.separator {
-  margin: 0 0.5rem;
+.primaryIdentifier,
+.secondaryIdentifier {
+  @include type.type-style('body-compact-02');
+  display: flex;
+  align-items: center;
+  gap: layout.$spacing-02;
 }
 
 .primaryIdentifier {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
+  color: colors.$gray-100;
+
+  .value {
+    font-weight: bold;
+  }
 }
 
 .secondaryIdentifier {
-  display: flex;
-
-  .label {
-    @include type.type-style('label-01');
-    margin: 0.25rem 0.25rem 0.25rem 0rem;
-    align-self: auto;
-  }
-
   .identifier {
     @include type.type-style('body-compact-02');
     align-self: baseline;
   }
 }
 
+.gender {
+  display: flex;
+  align-items: center;
+  color: colors.$gray-70;
+  gap: layout.$spacing-01;
+}
+
+.separator {
+  margin: layout.$spacing-01;
+}
+
+.tag {
+  font-size: inherit !important;
+}
+
 .tooltipPadding {
-  padding: 0.25rem;
+  padding: layout.$spacing-02;
 }
 
 .tooltipSmallText {
@@ -117,15 +141,15 @@
 html[dir='rtl'] {
   .demographics {
     display: flex;
-    gap: 0.25rem;
+    gap: layout.$spacing-02;
   }
 
   .tag {
-    margin: 0.25rem 0rem 0.25rem 0.25rem;
+    margin: layout.$spacing-02 0 layout.$spacing-02 layout.$spacing-02;
   }
 
   .patientName {
     margin-right: unset;
-    margin-left: 0.25rem;
+    margin-left: layout.$spacing-02;
   }
 }

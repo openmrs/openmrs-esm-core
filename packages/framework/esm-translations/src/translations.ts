@@ -50,7 +50,6 @@ export const coreTranslations = {
   errorCopy:
     'Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.',
   female: 'Female',
-  hideDetails: 'Hide details',
   loading: 'Loading',
   male: 'Male',
   other: 'Other',
@@ -68,6 +67,7 @@ export const coreTranslations = {
     'Failed to load overridden script from {{url}}. Please check that the bundled script is available at the expected URL. Click the button below to reset all import map overrides.',
   seeMoreLists: 'See {{count}} more lists',
   sex: 'Sex',
-  showDetails: 'Show details',
+  showLess: 'Show less',
+  showMore: 'Show more',
   unknown: 'Unknown',
 };
