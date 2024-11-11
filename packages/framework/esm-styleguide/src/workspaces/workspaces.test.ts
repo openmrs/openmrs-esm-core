@@ -488,8 +488,7 @@ describe('workspace system', () => {
         moduleName: '@openmrs/esm-ward-app',
         workspaceGroups: ['ward-patient-sidebar'],
       });
-      launchWorkspaceGroup({
-        groupName: 'ward-patient-sidebar',
+      launchWorkspaceGroup('ward-patient-sidebar', {
         state: {},
         onWorkspaceGroupLaunch: () => {
           launchWorkspace('ward-patient-workspace');
@@ -516,8 +515,7 @@ describe('workspace system', () => {
         moduleName: '@openmrs/esm-ward-app',
         workspaceGroups: ['ward-patient-sidebar'],
       });
-      launchWorkspaceGroup({
-        groupName: 'ward-patient-sidebar',
+      launchWorkspaceGroup('ward-patient-sidebar', {
         state: {
           foo: true,
         },
@@ -551,8 +549,7 @@ describe('workspace system', () => {
         moduleName: '@openmrs/esm-ward-app',
         workspaceGroups: [sidebarFamily],
       });
-      launchWorkspaceGroup({
-        groupName: sidebarFamily,
+      launchWorkspaceGroup(sidebarFamily, {
         state: {
           foo: true,
         },
@@ -592,8 +589,7 @@ describe('workspace system', () => {
         workspaceGroups: ['another-sidebar-family'],
       });
       const workspaceStore = getWorkspaceStore();
-      launchWorkspaceGroup({
-        groupName: 'ward-patient-sidebar',
+      launchWorkspaceGroup('ward-patient-sidebar', {
         state: {
           foo: true,
         },
@@ -605,8 +601,7 @@ describe('workspace system', () => {
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(wardPatientFamilyStore).toBeTruthy();
       expect(wardPatientFamilyStore?.getState()?.['foo']).toBe(true);
-      launchWorkspaceGroup({
-        groupName: 'another-sidebar-family',
+      launchWorkspaceGroup('another-sidebar-family', {
         state: {
           bar: false,
         },
@@ -672,8 +667,7 @@ describe('workspace system', () => {
         workspaceGroups: ['ward-patient-sidebar'],
       });
       const workspaceStore = getWorkspaceStore();
-      launchWorkspaceGroup({
-        groupName: 'ward-patient-sidebar',
+      launchWorkspaceGroup('ward-patient-sidebar', {
         state: {
           foo: true,
         },
@@ -700,8 +694,7 @@ describe('workspace system', () => {
         moduleName: '@openmrs/esm-ward-app',
         workspaceGroups: ['ward-patient-sidebar'],
       });
-      launchWorkspaceGroup({
-        groupName: 'ward-patient-sidebar',
+      launchWorkspaceGroup('ward-patient-sidebar', {
         state: { foo: true },
         onWorkspaceGroupLaunch: () => {
           launchWorkspace('ward-patient-workspace');

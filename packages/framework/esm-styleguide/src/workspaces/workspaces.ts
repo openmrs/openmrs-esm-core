@@ -158,24 +158,23 @@ function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: Function) {
 }
 
 interface LaunchWorkspaceGroupArg {
-  groupName: string;
   state: object;
   onWorkspaceGroupLaunch?: Function;
   workspaceGroupCleanup?: Function;
 }
 
-export function launchWorkspaceGroup(args: LaunchWorkspaceGroupArg) {
-  const { groupName, state, onWorkspaceGroupLaunch, workspaceGroupCleanup } = args;
+export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGroupArg) {
+  const { state, onWorkspaceGroupLaunch, workspaceGroupCleanup } = args;
   const store = getWorkspaceStore();
   if (store.getState().openWorkspaces.length) {
     const workspaceGroup = store.getState().workspaceGroup;
     if (workspaceGroup) {
       closeWorkspaceGroup(workspaceGroup?.name, () => {
-        launchWorkspaceGroup(args);
+        launchWorkspaceGroup(groupName, args);
       });
     } else {
       closeAllWorkspaces(() => {
-        launchWorkspaceGroup(args);
+        launchWorkspaceGroup(groupName, args);
       });
     }
   } else {
