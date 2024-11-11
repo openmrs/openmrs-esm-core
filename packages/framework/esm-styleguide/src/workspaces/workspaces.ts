@@ -258,6 +258,7 @@ export function launchWorkspace<
     });
     return;
   }
+  const currentGroupName = store.getState().workspaceGroup?.name;
   const newWorkspace: OpenWorkspace = {
     ...workspace,
     title: getWorkspaceTitle(workspace, additionalProps),
@@ -276,10 +277,13 @@ export function launchWorkspace<
         };
       });
     },
-    currentWorkspaceGroup: store.getState().workspaceGroup?.name,
+    currentWorkspaceGroup: currentGroupName,
     additionalProps: additionalProps ?? {},
   };
 
+  if (currentGroupName) {
+    getWorkspaceFamilyStore(currentGroupName, additionalProps);
+  }
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
     store.setState((state) => {
       const openWorkspaces = [workspaceToBeAdded, ...(restOfTheWorkspaces ?? state.openWorkspaces)];

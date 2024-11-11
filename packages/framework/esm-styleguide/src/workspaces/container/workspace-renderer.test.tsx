@@ -58,7 +58,6 @@ describe('WorkspaceRenderer', () => {
       setTitle: mockedSetTitle,
       foo: 'true',
       bar: 'true',
-      workspaceFamilyState: {},
     });
   });
 });

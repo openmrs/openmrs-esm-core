@@ -39,7 +39,7 @@ export interface RegisterWorkspaceOptions {
   preferredWindowSize?: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
-  workspaceGroups: Array<string>;
+  workspaceGroups?: Array<string>;
 }
 
 /**
@@ -58,6 +58,7 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
         canHide: workspace.canHide ?? false,
         canMaximize: workspace.canMaximize ?? false,
         width: workspace.width ?? 'narrow',
+        workspaceGroups: workspace.workspaceGroups ?? [],
       },
     },
   }));
