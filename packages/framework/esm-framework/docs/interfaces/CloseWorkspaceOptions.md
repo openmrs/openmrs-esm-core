@@ -19,13 +19,15 @@
 
 • `Optional` **closeWorkspaceGroup**: `boolean`
 
-Controls whether the workspace family store will be cleared when this workspace is closed. Defaults to true except when opening a new workspace of the same family.
+Controls whether the workspace group should be closed and store to be
+cleared when this workspace is closed.
+Defaults to true except when opening a new workspace of the same family.
 
 **`default`** true
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L31)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L33)
 
 ___
 

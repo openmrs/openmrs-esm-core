@@ -610,7 +610,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:397](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L397)
+[packages/framework/esm-globals/src/types.ts:392](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L392)
 
 ___
 
@@ -623,7 +623,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:388](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L388)
+[packages/framework/esm-globals/src/types.ts:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L383)
 
 ___
 
@@ -793,7 +793,7 @@ ___
 
 ### WorkspaceDefinition
 
-Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `hasOwnSidebar?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `sidebarFamily?`: `string` ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"`` ; `workspaceGroups`: `string`[]  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"`` ; `workspaceGroups`: `string`[]  } & { `component`: `string`  } \| { `component?`: `never`  }
 
 A definition of a workspace as extracted from an app's routes.json
 
@@ -5855,7 +5855,7 @@ This component also provides everything needed for workspace notifications to be
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L69)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L68)
 
 ___
 
@@ -8049,7 +8049,7 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L383)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:416](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L416)
 
 ___
 
@@ -8100,7 +8100,7 @@ prop named `workspaceTitle` will override the title of the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:247](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L247)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:280](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L280)
 
 ___
 
@@ -8108,12 +8108,22 @@ ___
 
 ▸ **launchWorkspaceGroup**(`groupName`, `args`): `void`
 
+Launches a workspace group with the specified name and configuration.
+If there are any open workspaces, it will first close them before launching the new workspace group.
+
+**`example`**
+launchWorkspaceGroup("myGroup", {
+  state: initialState,
+  onWorkspaceGroupLaunch: () => console.log("Workspace group launched"),
+  workspaceGroupCleanup: () => console.log("Cleaning up workspace group")
+});
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `groupName` | `string` |
-| `args` | `LaunchWorkspaceGroupArg` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `groupName` | `string` | The name of the workspace group to launch |
+| `args` | `LaunchWorkspaceGroupArg` | Configuration object for launching the workspace group |
 
 #### Returns
 
@@ -8121,7 +8131,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L166)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:199](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L199)
 
 ___
 
@@ -8147,7 +8157,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:340](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L340)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:373](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L373)
 
 ___
 
@@ -8161,4 +8171,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:499](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L499)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:528](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L528)
