@@ -74,7 +74,8 @@ export function WorkspaceContainer({
   actionMenuProps,
 }: WorkspaceContainerProps) {
   const layout = useLayoutType();
-  const { workspaces, workspaceWindowState, currentGroupName } = useWorkspaces();
+  const { workspaces, workspaceWindowState, workspaceGroup } = useWorkspaces();
+  const currentGroupName = workspaceGroup?.name;
   const activeWorkspace = workspaces[0];
   const isHidden = workspaceWindowState === 'hidden' || activeWorkspace == null;
   const isMaximized = workspaceWindowState === 'maximized';
@@ -144,7 +145,8 @@ interface WorkspaceProps {
 function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
   const { t } = useTranslation();
   const layout = useLayoutType();
-  const { workspaceWindowState, currentGroupName } = useWorkspaces();
+  const { workspaceWindowState, workspaceGroup } = useWorkspaces();
+  const currentGroupName = workspaceGroup?.name;
   const isMaximized = workspaceWindowState === 'maximized';
 
   // We use the feature name of the app containing the workspace in order to set the extension
@@ -159,7 +161,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
   const {
     canHide = false,
     canMaximize = false,
-    workspaceContainerName = '',
+    currentWorkspaceGroup = '',
     closeWorkspace,
   } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
 
@@ -182,7 +184,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot
-              name={`workspace-header-family-${workspaceInstance.workspaceContainerName}-slot`}
+              name={`workspace-header-family-${workspaceInstance.currentWorkspaceGroup}-slot`}
               state={workspaceProps}
             />
             <ExtensionSlot name={`workspace-header-type-${workspaceInstance.type}-slot`} state={workspaceProps} />
@@ -245,7 +247,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
         </Header>
         <div
           className={classNames(styles.workspaceContent, {
-            [styles.marginWorkspaceContent]: Boolean(workspaceContainerName),
+            [styles.marginWorkspaceContent]: Boolean(currentWorkspaceGroup),
           })}
         >
           <WorkspaceRenderer

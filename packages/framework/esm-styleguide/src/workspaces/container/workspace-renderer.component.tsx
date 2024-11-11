@@ -14,7 +14,7 @@ interface WorkspaceRendererProps {
 
 export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: WorkspaceRendererProps) {
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
-  const workspaceFamilyState = useWorkspaceFamilyStore(workspace.workspaceContainerName);
+  const workspaceFamilyState = useWorkspaceFamilyStore(workspace.currentWorkspaceGroup);
 
   useEffect(() => {
     let active = true;

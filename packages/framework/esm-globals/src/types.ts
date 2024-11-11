@@ -315,6 +315,7 @@ export type WorkspaceDefinition = {
    */
   sidebarFamily?: string;
   preferredWindowSize?: WorkspaceWindowState;
+  workspaceGroups: Array<string>;
 } & (
   | {
       /**

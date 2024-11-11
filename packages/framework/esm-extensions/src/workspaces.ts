@@ -17,6 +17,7 @@ export interface WorkspaceRegistration {
   preferredWindowSize: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
+  workspaceGroups?: Array<string>;
 }
 
 interface WorkspaceRegistrationStore {
@@ -38,6 +39,7 @@ export interface RegisterWorkspaceOptions {
   preferredWindowSize?: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
+  workspaceGroups: Array<string>;
 }
 
 /**
@@ -91,6 +93,7 @@ export function getWorkspaceRegistration(name: string): WorkspaceRegistration {
         canHide: workspaceExtension.meta?.canHide ?? false,
         canMaximize: workspaceExtension.meta?.canMaximize ?? false,
         width: workspaceExtension.meta?.width ?? 'narrow',
+        workspaceGroups: workspaceExtension?.meta?.workspaceGroups ?? [],
       };
     } else {
       throw new Error(`No workspace named '${name}' has been registered.`);

@@ -23,9 +23,6 @@ export interface CloseWorkspaceOptions {
    * @returns void
    */
   onWorkspaceClose?: () => void;
-}
-
-interface CloseWorkspaceInternalOptions extends CloseWorkspaceOptions {
   /**
    * Controls whether the workspace family store will be cleared when this workspace is closed. Defaults to true except when opening a new workspace of the same family.
    *
@@ -33,6 +30,8 @@ interface CloseWorkspaceInternalOptions extends CloseWorkspaceOptions {
    */
   closeWorkspaceGroup?: boolean;
 }
+
+interface CloseWorkspaceInternalOptions extends CloseWorkspaceOptions {}
 
 /** The default parameters received by all workspaces */
 export interface DefaultWorkspaceProps {
@@ -100,12 +99,15 @@ export interface WorkspaceStoreState {
   openWorkspaces: Array<OpenWorkspace>;
   prompt: Prompt | null;
   workspaceWindowState: WorkspaceWindowState;
-  currentGroupName?: string;
+  workspaceGroup?: {
+    name: string;
+    cleanup?: Function;
+  };
 }
 
 export interface OpenWorkspace extends WorkspaceRegistration, DefaultWorkspaceProps {
   additionalProps: object;
-  workspaceContainerName?: string;
+  currentWorkspaceGroup?: string;
 }
 
 /**
@@ -122,16 +124,70 @@ export function canCloseWorkspaceWithoutPrompting(name: string, ignoreChanges: b
   return !promptBeforeFn || !promptBeforeFn();
 }
 
-export function launchWorkspaceGroup(groupName: string, state: object) {
+function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: Function) {
   const store = getWorkspaceStore();
-  if (!store.getState().currentGroupName) {
+  const currentWorkspaceGroup = store.getState()?.workspaceGroup;
+  const currentGroupName = store.getState()?.workspaceGroup?.name;
+  if (!currentGroupName || groupName !== currentGroupName) {
+    return;
+  }
+  const filter: (workspace: OpenWorkspace) => boolean = currentGroupName
+    ? (workspace) => workspace.currentWorkspaceGroup === currentGroupName
+    : () => true;
+
+  closeAllWorkspaces(() => {
+    // Clearing the workspace family store if there are no more workspaces with the same sidebar family name and the new workspace is not of the same sidebar family, which is handled in the `launchWorkspace` function.
+    const workspaceFamilyStore = getWorkspaceFamilyStore(groupName);
+    if (workspaceFamilyStore) {
+      workspaceFamilyStore.setState({}, true);
+      const unsubscribe = workspaceFamilyStore.subscribe(() => {});
+      unsubscribe?.();
+    }
+    if (currentWorkspaceGroup && typeof currentWorkspaceGroup?.cleanup === 'function') {
+      currentWorkspaceGroup?.cleanup?.();
+    }
+
     store.setState((prev) => ({
       ...prev,
-      currentGroupName: groupName,
+      workspaceGroup: undefined,
+    }));
+    if (onWorkspaceCloseup && typeof onWorkspaceCloseup === 'function') {
+      onWorkspaceCloseup?.();
+    }
+  }, filter);
+}
+
+interface LaunchWorkspaceGroupArg {
+  groupName: string;
+  state: object;
+  onWorkspaceGroupLaunch?: Function;
+  workspaceGroupCleanup?: Function;
+}
+
+export function launchWorkspaceGroup(args: LaunchWorkspaceGroupArg) {
+  const { groupName, state, onWorkspaceGroupLaunch, workspaceGroupCleanup } = args;
+  const store = getWorkspaceStore();
+  if (store.getState().openWorkspaces.length) {
+    const workspaceGroup = store.getState().workspaceGroup;
+    if (workspaceGroup) {
+      closeWorkspaceGroup(workspaceGroup?.name, () => {
+        launchWorkspaceGroup(args);
+      });
+    } else {
+      closeAllWorkspaces(() => {
+        launchWorkspaceGroup(args);
+      });
+    }
+  } else {
+    store.setState((prev) => ({
+      ...prev,
+      workspaceGroup: {
+        name: groupName,
+        cleanup: workspaceGroupCleanup,
+      },
     }));
     getWorkspaceFamilyStore(groupName, state);
-  } else {
-    // TODO:  Write code to close any independent workspace opened, or any other workspace group
+    onWorkspaceGroupLaunch?.();
   }
 }
 
@@ -143,7 +199,7 @@ function promptBeforeLaunchingWorkspace(
   const newWorkspaceRegistration = getWorkspaceRegistration(name);
 
   const proceed = () => {
-    closeWorkspaceInternal(workspace.name, {
+    closeWorkspace(workspace.name, {
       ignoreChanges: true,
       // Calling the launchWorkspace again, since one of the `if` case
       // might resolve, but we need to check all the cases before launching the form.
@@ -193,8 +249,15 @@ export function launchWorkspace<
   T extends DefaultWorkspaceProps | object = DefaultWorkspaceProps & { [key: string]: any },
 >(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string }) {
   const store = getWorkspaceStore();
-
   const workspace = getWorkspaceRegistration(name);
+  const currentWorkspaceGroup = store.getState().workspaceGroup;
+
+  if (currentWorkspaceGroup && !workspace.workspaceGroups?.includes(currentWorkspaceGroup?.name)) {
+    closeWorkspaceGroup(currentWorkspaceGroup?.name, () => {
+      launchWorkspace(name, additionalProps);
+    });
+    return;
+  }
   const newWorkspace: OpenWorkspace = {
     ...workspace,
     title: getWorkspaceTitle(workspace, additionalProps),
@@ -213,6 +276,7 @@ export function launchWorkspace<
         };
       });
     },
+    currentWorkspaceGroup: store.getState().workspaceGroup?.name,
     additionalProps: additionalProps ?? {},
   };
 
@@ -305,6 +369,7 @@ export function cancelPrompt() {
 const defaultOptions: CloseWorkspaceOptions = {
   ignoreChanges: false,
   onWorkspaceClose: () => {},
+  closeWorkspaceGroup: true,
 };
 
 /**
@@ -312,11 +377,7 @@ const defaultOptions: CloseWorkspaceOptions = {
  * @param name Workspace registration name
  * @param options Options to close workspace
  */
-export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}) {
-  return closeWorkspaceInternal(name, { ...options, closeWorkspaceGroup: true });
-}
-
-function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOptions = {}): boolean {
+export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}): boolean {
   options = { ...defaultOptions, ...options };
   const store = getWorkspaceStore();
 
@@ -324,32 +385,25 @@ function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOpt
     const state = store.getState();
     const workspaceToBeClosed = state.openWorkspaces.find((w) => w.name === name);
     const newOpenWorkspaces = state.openWorkspaces.filter((w) => w.name != name);
-    const workspaceGroupName = store.getState().currentGroupName;
-    let currentGroupName = state.currentGroupName;
+
+    const workspaceGroupName = store.getState().workspaceGroup?.name;
+
     if (
       workspaceGroupName &&
       options.closeWorkspaceGroup
       // !newOpenWorkspaces.some((w) => w.workspaceContainerName === workspaceSidebarFamilyName)
     ) {
-      currentGroupName = undefined;
-      // Clearing the workspace family store if there are no more workspaces with the same sidebar family name and the new workspace is not of the same sidebar family, which is handled in the `launchWorkspace` function.
-      const workspaceFamilyStore = getWorkspaceFamilyStore(workspaceGroupName);
-      if (workspaceFamilyStore) {
-        workspaceFamilyStore.setState({}, true);
-        const unsubscribe = workspaceFamilyStore.subscribe(() => {});
-        unsubscribe?.();
-      }
+      closeWorkspaceGroup(workspaceGroupName);
     }
 
     // ensure closed workspace will not prompt
     promptBeforeClosing(name, () => false);
-    store.setState({
-      ...state,
-      currentGroupName,
+    store.setState((prev) => ({
+      ...prev,
       prompt: null,
       openWorkspaces: newOpenWorkspaces,
       workspaceWindowState: getUpdatedWorkspaceWindowState(newOpenWorkspaces?.[0]),
-    });
+    }));
 
     options?.onWorkspaceClose?.();
   };
@@ -387,7 +441,7 @@ const initialState: WorkspaceStoreState = {
   openWorkspaces: [],
   prompt: null,
   workspaceWindowState: 'normal',
-  currentGroupName: undefined,
+  workspaceGroup: undefined,
 };
 
 export const workspaceStore = createGlobalStore('workspace', initialState);
@@ -405,13 +459,19 @@ export function updateWorkspaceWindowState(value: WorkspaceWindowState) {
 function getUpdatedWorkspaceWindowState(workspaceAtTop: OpenWorkspace) {
   return workspaceAtTop?.preferredWindowSize ?? 'normal';
 }
-export function closeAllWorkspaces(onClosingWorkspaces: () => void = () => {}) {
+export function closeAllWorkspaces(
+  onClosingWorkspaces: () => void = () => {},
+  filter: (workspace: OpenWorkspace) => boolean = () => true,
+) {
   const store = getWorkspaceStore();
 
-  const canCloseAllWorkspaces = store.getState().openWorkspaces.every(({ name }) => {
-    const canCloseWorkspace = canCloseWorkspaceWithoutPrompting(name);
-    return canCloseWorkspace;
-  });
+  const canCloseAllWorkspaces = store
+    .getState()
+    .openWorkspaces.filter(filter)
+    .every(({ name }) => {
+      const canCloseWorkspace = canCloseWorkspaceWithoutPrompting(name);
+      return canCloseWorkspace;
+    });
 
   const updateWorkspaceStore = () => {
     resetWorkspaceStore();
@@ -430,21 +490,20 @@ export interface WorkspacesInfo {
   prompt: Prompt | null;
   workspaceWindowState: WorkspaceWindowState;
   workspaces: Array<OpenWorkspace>;
-  currentGroupName?: string;
+  workspaceGroup?: WorkspaceStoreState['workspaceGroup'];
 }
 
 export function useWorkspaces(): WorkspacesInfo {
-  const { workspaceWindowState, openWorkspaces, prompt, currentGroupName } = useStore(workspaceStore);
+  const { workspaceWindowState, openWorkspaces, prompt, workspaceGroup } = useStore(workspaceStore);
   const memoisedResults: WorkspacesInfo = useMemo(() => {
     return {
       active: openWorkspaces.length > 0,
       prompt,
       workspaceWindowState,
       workspaces: openWorkspaces,
-      currentGroupName,
+      workspaceGroup,
     };
-  }, [openWorkspaces, workspaceWindowState, prompt, currentGroupName]);
-
+  }, [openWorkspaces, workspaceWindowState, prompt, workspaceGroup]);
   return memoisedResults;
 }
 
