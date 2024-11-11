@@ -8049,7 +8049,7 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:384](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L384)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L383)
 
 ___
 
@@ -8100,18 +8100,19 @@ prop named `workspaceTitle` will override the title of the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:248](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L248)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:247](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L247)
 
 ___
 
 ### launchWorkspaceGroup
 
-▸ **launchWorkspaceGroup**(`args`): `void`
+▸ **launchWorkspaceGroup**(`groupName`, `args`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `groupName` | `string` |
 | `args` | `LaunchWorkspaceGroupArg` |
 
 #### Returns
@@ -8120,7 +8121,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:167](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L167)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L166)
 
 ___
 
@@ -8146,7 +8147,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:341](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L341)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:340](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L340)
 
 ___
 
@@ -8160,4 +8161,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:500](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L500)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:499](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L499)

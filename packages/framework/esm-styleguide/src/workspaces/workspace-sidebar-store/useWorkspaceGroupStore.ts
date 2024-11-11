@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { getWorkspaceFamilyStore } from '../workspaces';
-import type { StoreApi } from 'zustand/vanilla';
+import { useEffect, useState } from 'react';
+import { getWorkspaceGroupStore } from '../workspaces';
 
 /**
  * This hook is used to interact with the store of a workspace family.
@@ -12,18 +11,18 @@ import type { StoreApi } from 'zustand/vanilla';
  *
  * @param {string} sidebarFamilyName The sidebarFamilyName of the workspace used when registering the workspace in the module's routes.json file.
  */
-export function useWorkspaceFamilyStore(sidebarFamilyName?: string) {
+export function useWorkspaceGroupStore(workspaceGroupName?: string) {
   const [storeState, setStoreState] = useState<object>({});
-  const [currentSidebarFamilyName, setCurrentSidebarFamilyName] = useState(sidebarFamilyName);
+  const [currentWorkspaceGroupName, setCurrentWorkspaceGroupName] = useState(workspaceGroupName);
 
   useEffect(() => {
-    if (currentSidebarFamilyName !== sidebarFamilyName) {
-      setCurrentSidebarFamilyName(sidebarFamilyName);
+    if (currentWorkspaceGroupName !== workspaceGroupName) {
+      setCurrentWorkspaceGroupName(workspaceGroupName);
     }
-  }, [sidebarFamilyName]);
+  }, [workspaceGroupName]);
 
   useEffect(() => {
-    const store = getWorkspaceFamilyStore(currentSidebarFamilyName);
+    const store = getWorkspaceGroupStore(currentWorkspaceGroupName);
     let unsubscribe: () => void;
     if (store) {
       setStoreState(store.getState());
@@ -34,7 +33,7 @@ export function useWorkspaceFamilyStore(sidebarFamilyName?: string) {
         unsubscribe?.();
       }
     };
-  }, [currentSidebarFamilyName]);
+  }, [currentWorkspaceGroupName]);
 
   return storeState;
 }

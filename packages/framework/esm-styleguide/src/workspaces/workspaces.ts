@@ -24,14 +24,14 @@ export interface CloseWorkspaceOptions {
    */
   onWorkspaceClose?: () => void;
   /**
-   * Controls whether the workspace family store will be cleared when this workspace is closed. Defaults to true except when opening a new workspace of the same family.
+   * Controls whether the workspace group should be closed and store to be
+   * cleared when this workspace is closed.
+   * Defaults to true except when opening a new workspace of the same family.
    *
    * @default true
    */
   closeWorkspaceGroup?: boolean;
 }
-
-interface CloseWorkspaceInternalOptions extends CloseWorkspaceOptions {}
 
 /** The default parameters received by all workspaces */
 export interface DefaultWorkspaceProps {
@@ -124,6 +124,22 @@ export function canCloseWorkspaceWithoutPrompting(name: string, ignoreChanges: b
   return !promptBeforeFn || !promptBeforeFn();
 }
 
+/**
+ * Closes a workspace group and performs cleanup operations.
+ *
+ * @param groupName - The name of the workspace group to close
+ * @param onWorkspaceCloseup - Optional callback function to execute after closing the workspace group
+ * @returns void, or exits early if the current workspace group name doesn't match the provided group name
+ *
+ * @remarks
+ * This function performs the following operations:
+ * - Validates if the provided group name matches the current workspace group
+ * - Closes all workspaces associated with the group
+ * - Clears the workspace group store state
+ * - Executes cleanup function if defined in the workspace group
+ * - Updates the main workspace store to remove the workspace group
+ * - Calls the optional closeup callback if provided
+ */
 function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: Function) {
   const store = getWorkspaceStore();
   const currentWorkspaceGroup = store.getState()?.workspaceGroup;
@@ -136,8 +152,8 @@ function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: Function) {
     : () => true;
 
   closeAllWorkspaces(() => {
-    // Clearing the workspace family store if there are no more workspaces with the same sidebar family name and the new workspace is not of the same sidebar family, which is handled in the `launchWorkspace` function.
-    const workspaceFamilyStore = getWorkspaceFamilyStore(groupName);
+    // Clearing the workspace group and respective store if the new workspace is not part of the current group, which is handled in the `launchWorkspace` function.
+    const workspaceFamilyStore = getWorkspaceGroupStore(groupName);
     if (workspaceFamilyStore) {
       workspaceFamilyStore.setState({}, true);
       const unsubscribe = workspaceFamilyStore.subscribe(() => {});
@@ -163,6 +179,23 @@ interface LaunchWorkspaceGroupArg {
   workspaceGroupCleanup?: Function;
 }
 
+/**
+ * Launches a workspace group with the specified name and configuration.
+ * If there are any open workspaces, it will first close them before launching the new workspace group.
+ *
+ * @param groupName - The name of the workspace group to launch
+ * @param args - Configuration object for launching the workspace group
+ * @param args.state - The initial state for the workspace group
+ * @param args.onWorkspaceGroupLaunch - Optional callback function to be executed after the workspace group is launched
+ * @param args.workspaceGroupCleanup - Optional cleanup function to be executed when the workspace group is closed
+ *
+ * @example
+ * launchWorkspaceGroup("myGroup", {
+ *   state: initialState,
+ *   onWorkspaceGroupLaunch: () => console.log("Workspace group launched"),
+ *   workspaceGroupCleanup: () => console.log("Cleaning up workspace group")
+ * });
+ */
 export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGroupArg) {
   const { state, onWorkspaceGroupLaunch, workspaceGroupCleanup } = args;
   const store = getWorkspaceStore();
@@ -185,14 +218,14 @@ export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGro
         cleanup: workspaceGroupCleanup,
       },
     }));
-    getWorkspaceFamilyStore(groupName, state);
+    getWorkspaceGroupStore(groupName, state);
     onWorkspaceGroupLaunch?.();
   }
 }
 
 function promptBeforeLaunchingWorkspace(
   workspace: OpenWorkspace,
-  newWorkspaceDetails: { name: string; additionalProps?: object; workspaceContainerName?: string },
+  newWorkspaceDetails: { name: string; additionalProps?: object },
 ) {
   const { name, additionalProps } = newWorkspaceDetails;
   const newWorkspaceRegistration = getWorkspaceRegistration(name);
@@ -281,7 +314,7 @@ export function launchWorkspace<
   };
 
   if (currentGroupName) {
-    getWorkspaceFamilyStore(currentGroupName, additionalProps);
+    getWorkspaceGroupStore(currentGroupName, additionalProps);
   }
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
     store.setState((state) => {
@@ -391,11 +424,7 @@ export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}
 
     const workspaceGroupName = store.getState().workspaceGroup?.name;
 
-    if (
-      workspaceGroupName &&
-      options.closeWorkspaceGroup
-      // !newOpenWorkspaces.some((w) => w.workspaceContainerName === workspaceSidebarFamilyName)
-    ) {
+    if (workspaceGroupName && options.closeWorkspaceGroup) {
       closeWorkspaceGroup(workspaceGroupName);
     }
 
@@ -606,23 +635,23 @@ export function resetWorkspaceStore() {
 }
 
 /**
- * The workspace family store is a store that is specific to the workspace sidebar family.
+ * The workspace group store is a store that is specific to the workspace group.
  * If the workspace has its own sidebar, the store will be created.
- * This store can be used to store data that is specific to the workspace sidebar family.
- * The store will be same for all the workspaces with same sidebar family name.
+ * This store can be used to store data that is specific to the workspace group.
+ * The store will be same for all the workspaces with same group name.
  *
- * For workspaces with no sidebarFamilyName or sidebarFamilyName as 'default', the store will be undefined.
+ * For workspaces launched without a group, the store will be undefined.
  *
- * The store will be cleared when all the workspaces with the store's sidebarFamilyName are closed.
+ * The store will be cleared when all the workspaces with the store's group name are closed.
  */
-export function getWorkspaceFamilyStore(
-  sidebarFamilyName: string | undefined,
+export function getWorkspaceGroupStore(
+  workspaceGroupName: string | undefined,
   additionalProps: object = {},
 ): StoreApi<object> | undefined {
-  if (!sidebarFamilyName || sidebarFamilyName === 'default') {
+  if (!workspaceGroupName || workspaceGroupName === 'default') {
     return undefined;
   }
-  const store = getGlobalStore<object>(sidebarFamilyName, {});
+  const store = getGlobalStore<object>(workspaceGroupName, {});
   if (additionalProps) {
     store.setState((prev) => ({
       ...prev,

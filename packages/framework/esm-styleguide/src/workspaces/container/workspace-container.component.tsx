@@ -14,7 +14,6 @@ import styles from './workspace.module.scss';
 
 export interface WorkspaceContainerProps {
   contextKey: string;
-  containerName?: string;
   overlay?: boolean;
   showSiderailAndBottomNav?: boolean;
   additionalWorkspaceProps?: object;
@@ -256,7 +255,6 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             additionalPropsFromPage={additionalWorkspaceProps}
           />
         </div>
-        {/* {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />} */}
       </>
     )
   );

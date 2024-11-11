@@ -302,19 +302,14 @@ export type WorkspaceDefinition = {
    * The width "extra-wide" is for workspaces that contain their own sidebar.
    */
   width?: 'narrow' | 'wider' | 'extra-wide';
-  /**
-   * Controls whether the workspace has its own sidebar. If true, the sidebar will be displayed when the workspace is open.
-   */
-  hasOwnSidebar?: boolean;
-  /**
-   * Sidebars have icons that representing workspaces. The sidebar family is the name of the
-   * sidebar that should contain the icon for this workspace. This is generally only needed if
-   * `hasOwnSidebar` is true, in which case this is the name of that sidebar. If multiple
-   * workspaces have `hasOwnSidebar` set to true and the same family name, then the sidebar
-   * within the workspace area will have icons for each of those workspaces.
-   */
-  sidebarFamily?: string;
   preferredWindowSize?: WorkspaceWindowState;
+  /**
+   * Workspaces can open either individually or in a group of workspaces. The workspace groups
+   * will define the groups in which a workspace can be opened.
+   *
+   * In case the currently opened workspace is not present in the workspaceGroups of a workspace,
+   * the current group will close and then the workspace will be launched.
+   */
   workspaceGroups: Array<string>;
 } & (
   | {
