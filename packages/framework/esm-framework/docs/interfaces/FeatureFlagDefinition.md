@@ -22,7 +22,7 @@ An explanation of what the flag does, which will be displayed in the Implementer
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:350](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L350)
+[packages/framework/esm-globals/src/types.ts:351](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L351)
 
 ___
 
@@ -34,7 +34,7 @@ A code-friendly name for the flag, which will be used to reference it in code
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:346](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L346)
+[packages/framework/esm-globals/src/types.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L347)
 
 ___
 
@@ -46,4 +46,4 @@ A human-friendly name which will be displayed in the Implementer Tools
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L348)
+[packages/framework/esm-globals/src/types.ts:349](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L349)

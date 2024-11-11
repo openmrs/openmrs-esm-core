@@ -7,8 +7,8 @@
 ### Workspace Properties
 
 - [active](WorkspacesInfo.md#active)
-- [currentGroupName](WorkspacesInfo.md#currentgroupname)
 - [prompt](WorkspacesInfo.md#prompt)
+- [workspaceGroup](WorkspacesInfo.md#workspacegroup)
 - [workspaceWindowState](WorkspacesInfo.md#workspacewindowstate)
 - [workspaces](WorkspacesInfo.md#workspaces)
 
@@ -20,17 +20,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:429](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L429)
-
-___
-
-### currentGroupName
-
-• `Optional` **currentGroupName**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:433](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L433)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:489](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L489)
 
 ___
 
@@ -40,7 +30,24 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:430](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L430)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:490](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L490)
+
+___
+
+### workspaceGroup
+
+• `Optional` **workspaceGroup**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `cleanup?` | `Function` |
+| `name` | `string` |
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:493](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L493)
 
 ___
 
@@ -50,7 +57,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:431](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L431)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:491](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L491)
 
 ___
 
@@ -60,4 +67,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:432](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L432)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:492](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L492)

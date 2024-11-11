@@ -23,6 +23,7 @@ See [WorkspaceDefinition](../API.md#workspacedefinition) for more information ab
 - [titleNode](WorkspaceRegistration.md#titlenode)
 - [type](WorkspaceRegistration.md#type)
 - [width](WorkspaceRegistration.md#width)
+- [workspaceGroups](WorkspaceRegistration.md#workspacegroups)
 
 ### Methods
 
@@ -117,6 +118,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/workspaces.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L16)
+
+___
+
+### workspaceGroups
+
+• `Optional` **workspaceGroups**: `string`[]
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 ## Methods
 

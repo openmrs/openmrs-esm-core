@@ -23,11 +23,12 @@
 - [titleNode](OpenWorkspace.md#titlenode)
 - [type](OpenWorkspace.md#type)
 - [width](OpenWorkspace.md#width)
+- [workspaceGroups](OpenWorkspace.md#workspacegroups)
 
 ### Workspace Properties
 
 - [additionalProps](OpenWorkspace.md#additionalprops)
-- [workspaceContainerName](OpenWorkspace.md#workspacecontainername)
+- [currentWorkspaceGroup](OpenWorkspace.md#currentworkspacegroup)
 
 ### Methods
 
@@ -165,6 +166,20 @@ ___
 
 ___
 
+### workspaceGroups
+
+• `Optional` **workspaceGroups**: `string`[]
+
+#### Inherited from
+
+[WorkspaceRegistration](WorkspaceRegistration.md).[workspaceGroups](WorkspaceRegistration.md#workspacegroups)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
+
+___
+
 ## Workspace Properties
 
 ### additionalProps
@@ -173,17 +188,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L107)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L109)
 
 ___
 
-### workspaceContainerName
+### currentWorkspaceGroup
 
-• `Optional` **workspaceContainerName**: `string`
+• `Optional` **currentWorkspaceGroup**: `string`
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L108)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L110)
 
 ## Methods
 
@@ -213,7 +228,7 @@ closed, given the user forcefully closes the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L46)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L45)
 
 ___
 
@@ -240,7 +255,7 @@ will directly close the workspace without any prompt
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L56)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L55)
 
 ___
 
@@ -285,7 +300,7 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L51)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L50)
 
 ___
 
@@ -317,4 +332,4 @@ title needs to be set dynamically.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L71)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L70)
