@@ -15,13 +15,17 @@ export function getLocations(
   tagUuidOrName: string | null = null,
   query: string | null = null,
 ): Observable<Array<Location>> {
-  const url =
-    `${restBaseUrl}/location` +
-    (tagUuidOrName || query ? '?' : '') +
-    (tagUuidOrName ? 'tag=' + tagUuidOrName : '') +
-    (tagUuidOrName && query ? '&' : '') +
-    (query ? 'q=' + query : '');
-  return openmrsObservableFetch<any>(url)
+  const params = new URLSearchParams();
+  if (tagUuidOrName) {
+    params.set('tag', tagUuidOrName);
+  }
+  if (query) {
+    params.set('q', query);
+  }
+  const queryString = params.toString();
+  const url = `${restBaseUrl}/location${queryString ? '?' + queryString : ''}`;
+
+  return openmrsObservableFetch<{ results: Array<Location> }>(url)
     .pipe(
       map((results) => {
         const locations: Array<Location> = results.data.results.map(toLocationObject);
