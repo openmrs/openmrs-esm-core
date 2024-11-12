@@ -56,7 +56,10 @@ function setupOptionalDependencies() {
         (response.data.results ?? []).forEach((backendModule) => {
           if (optionalDependencyFlags.has(backendModule.uuid)) {
             const optionalDependency = optionalDependencyFlags.get(backendModule.uuid);
-            if (optionalDependency && satisfies(backendModule.version, optionalDependency.version)) {
+            if (
+              optionalDependency &&
+              satisfies(backendModule.version, optionalDependency.version, { includePrerelease: true })
+            ) {
               registerFeatureFlag(
                 optionalDependency.feature.flagName,
                 optionalDependency.feature.label,
