@@ -11,9 +11,21 @@ export function toLocationObject(openmrsRestForm: any): Location {
   };
 }
 
-export function getLocations(tagUuidOrName: string | null = null): Observable<Array<Location>> {
-  const url = `${restBaseUrl}/location` + (tagUuidOrName ? '?tag=' + tagUuidOrName : '');
-  return openmrsObservableFetch<any>(url)
+export function getLocations(
+  tagUuidOrName: string | null = null,
+  query: string | null = null,
+): Observable<Array<Location>> {
+  const params = new URLSearchParams();
+  if (tagUuidOrName) {
+    params.set('tag', tagUuidOrName);
+  }
+  if (query) {
+    params.set('q', query);
+  }
+  const queryString = params.toString();
+  const url = `${restBaseUrl}/location${queryString ? '?' + queryString : ''}`;
+
+  return openmrsObservableFetch<{ results: Array<Location> }>(url)
     .pipe(
       map((results) => {
         const locations: Array<Location> = results.data.results.map(toLocationObject);
