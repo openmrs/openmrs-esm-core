@@ -98,7 +98,6 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('e2e/**/*.ts') }}
 
       - name: 🎭 Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
 
       - name: ⏳ Wait for the OpenMRS instance to start
