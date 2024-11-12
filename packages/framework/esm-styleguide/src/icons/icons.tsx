@@ -422,7 +422,7 @@ export const PenIcon = memo(
  */
 export const PrinterIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function PrinterIcon(props, ref) {
-    return <Icon ref={ref} icon="omrs-icon-pen" iconProps={props} />;
+    return <Icon ref={ref} icon="omrs-icon-print" iconProps={props} />;
   }),
 );
 
