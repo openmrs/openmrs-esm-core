@@ -29,6 +29,10 @@ import download from './svgs/download.svg';
 import edit from './svgs/edit.svg';
 import eventSchedule from './svgs/event-schedule.svg';
 import events from './svgs/events.svg';
+import genderFemale from './svgs/gender-female.svg';
+import genderMale from './svgs/gender-male.svg';
+import genderTransgender from './svgs/gender-transgender.svg';
+import genderUnknown from './svgs/gender-unknown.svg';
 import group from './svgs/group.svg';
 import groupAccess from './svgs/group-access.svg';
 import hospitalBed from './svgs/hospital-bed.svg';
@@ -109,6 +113,12 @@ export function setupIcons() {
   addSvg('omrs-icon-edit', edit);
   addSvg('omrs-icon-event-schedule', eventSchedule);
   addSvg('omrs-icon-events', events);
+
+  addSvg('omrs-icon-gender-female', genderFemale);
+  addSvg('omrs-icon-gender-male', genderMale);
+  addSvg('omrs-icon-gender-transgender', genderTransgender);
+  addSvg('omrs-icon-gender-unknown', genderUnknown);
+
   addSvg('omrs-icon-group', group);
   addSvg('omrs-icon-group-access', groupAccess);
   addSvg('omrs-icon-hospital-bed', hospitalBed);
