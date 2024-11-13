@@ -1,9 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, SwitcherItem } from '@carbon/react';
 import { LocationIcon, navigate, useSession } from '@openmrs/esm-framework';
-import { Button } from '@carbon/react';
 import styles from './change-location-link.scss';
-import { SwitcherItem } from '@carbon/react';
 
 const ChangeLocationLink: React.FC = () => {
   const { t } = useTranslation();

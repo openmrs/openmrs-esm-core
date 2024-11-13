@@ -44,6 +44,7 @@
     "cross-env": "7.0.3",
     "dotenv": "^16.0.3",
     "eslint": "^8.55.0",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "fake-indexeddb": "^4.0.2",
     "fork-ts-checker-webpack-plugin": "^7.2.13",

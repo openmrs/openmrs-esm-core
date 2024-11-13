@@ -5,8 +5,9 @@
   },
   "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react-hooks"],
+  "plugins": ["@typescript-eslint", "import", "react-hooks"],
   "rules": {
+    "import/no-duplicates": "error",
     "react-hooks/rules-of-hooks": "error",
     // Disabling these rules for now just to keep the diff small. I'll enable them in a future PR that fixes lint issues.
     "@typescript-eslint/ban-ts-comment": "off",
