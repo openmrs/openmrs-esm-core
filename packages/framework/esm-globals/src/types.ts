@@ -307,10 +307,10 @@ export type WorkspaceDefinition = {
    * Workspaces can open either individually or in a group of workspaces. The workspace groups
    * will define the groups in which a workspace can be opened.
    *
-   * In case the currently opened workspace is not present in the workspaceGroups of a workspace,
+   * In case the currently opened workspace is not present in the groups of a workspace,
    * the current group will close and then the workspace will be launched.
    */
-  workspaceGroups: Array<string>;
+  groups: Array<string>;
 } & (
   | {
       /**

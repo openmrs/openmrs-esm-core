@@ -26,7 +26,7 @@ export interface CloseWorkspaceOptions {
   /**
    * Controls whether the workspace group should be closed and store to be
    * cleared when this workspace is closed.
-   * Defaults to true except when opening a new workspace of the same family.
+   * Defaults to true except when opening a new workspace of the same group.
    *
    * @default true
    */
@@ -177,6 +177,10 @@ interface LaunchWorkspaceGroupArg {
   state: object;
   onWorkspaceGroupLaunch?: Function;
   workspaceGroupCleanup?: Function;
+  workspaceToLaunch?: {
+    name: string;
+    additionalProps?: object;
+  };
 }
 
 /**
@@ -197,7 +201,7 @@ interface LaunchWorkspaceGroupArg {
  * });
  */
 export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGroupArg) {
-  const { state, onWorkspaceGroupLaunch, workspaceGroupCleanup } = args;
+  const { state, onWorkspaceGroupLaunch, workspaceGroupCleanup, workspaceToLaunch } = args;
   const store = getWorkspaceStore();
   if (store.getState().openWorkspaces.length) {
     const workspaceGroup = store.getState().workspaceGroup;
@@ -220,6 +224,9 @@ export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGro
     }));
     getWorkspaceGroupStore(groupName, state);
     onWorkspaceGroupLaunch?.();
+    if (workspaceToLaunch) {
+      launchWorkspace(workspaceToLaunch?.name, workspaceToLaunch?.additionalProps ?? {});
+    }
   }
 }
 
@@ -284,7 +291,7 @@ export function launchWorkspace<
   const workspace = getWorkspaceRegistration(name);
   const currentWorkspaceGroup = store.getState().workspaceGroup;
 
-  if (currentWorkspaceGroup && !workspace.workspaceGroups?.includes(currentWorkspaceGroup?.name)) {
+  if (currentWorkspaceGroup && !workspace.groups?.includes(currentWorkspaceGroup?.name)) {
     closeWorkspaceGroup(currentWorkspaceGroup?.name, () => {
       launchWorkspace(name, additionalProps);
     });
