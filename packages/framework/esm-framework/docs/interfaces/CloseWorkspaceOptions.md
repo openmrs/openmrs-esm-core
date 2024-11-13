@@ -21,7 +21,7 @@
 
 Controls whether the workspace group should be closed and store to be
 cleared when this workspace is closed.
-Defaults to true except when opening a new workspace of the same family.
+Defaults to true except when opening a new workspace of the same group.
 
 **`default`** true
 
