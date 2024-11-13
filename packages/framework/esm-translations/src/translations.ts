@@ -62,6 +62,7 @@ export const coreTranslations = {
   printing: 'Printing',
   relationships: 'Relationships',
   resetOverrides: 'Reset overrides',
+  save: 'Save',
   scriptLoadingFailed: 'Error: Script failed to load',
   scriptLoadingError:
     'Failed to load overridden script from {{url}}. Please check that the bundled script is available at the expected URL. Click the button below to reset all import map overrides.',
