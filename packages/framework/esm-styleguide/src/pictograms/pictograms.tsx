@@ -15,7 +15,7 @@ export type SvgPictogramProps = {
 };
 
 /**
- * This is a utility type for custom pictograms
+ * This is a utility type for custom pictograms. Please maintain alphabetical order when adding new pictograms for readability.
  */
 export const Pictogram = memo(
   forwardRef<SVGSVGElement, SvgPictogramProps>(function Pictogram({ pictogram, pictogramProps }, ref) {
@@ -33,27 +33,21 @@ export const Pictogram = memo(
   }),
 );
 
-export const HomePictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function HomePictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-home" pictogramProps={props} />;
-  }),
-);
-
-export const PatientListsPictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function PatientListsPictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-patient-lists" pictogramProps={props} />;
-  }),
-);
-
 export const AppointmentsPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function AppointmentsPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-appointments" pictogramProps={props} />;
   }),
 );
 
-export const ServiceQueuesPictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function ServiceQueuesPictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-service-queues" pictogramProps={props} />;
+export const HomePictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function HomePictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-home" pictogramProps={props} />;
+  }),
+);
+
+export const InPatientPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function InPatientPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-in-patient" pictogramProps={props} />;
   }),
 );
 
@@ -63,8 +57,20 @@ export const LaboratoryPictogram = memo(
   }),
 );
 
+export const PatientListsPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function PatientListsPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-patient-lists" pictogramProps={props} />;
+  }),
+);
+
 export const RegistrationPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function RegistrationPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-registration" pictogramProps={props} />;
+  }),
+);
+
+export const ServiceQueuesPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function ServiceQueuesPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-service-queues" pictogramProps={props} />;
   }),
 );
