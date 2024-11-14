@@ -113,12 +113,10 @@ export function setupIcons() {
   addSvg('omrs-icon-edit', edit);
   addSvg('omrs-icon-event-schedule', eventSchedule);
   addSvg('omrs-icon-events', events);
-
   addSvg('omrs-icon-gender-female', genderFemale);
   addSvg('omrs-icon-gender-male', genderMale);
   addSvg('omrs-icon-gender-transgender', genderTransgender);
   addSvg('omrs-icon-gender-unknown', genderUnknown);
-
   addSvg('omrs-icon-group', group);
   addSvg('omrs-icon-group-access', groupAccess);
   addSvg('omrs-icon-hospital-bed', hospitalBed);
