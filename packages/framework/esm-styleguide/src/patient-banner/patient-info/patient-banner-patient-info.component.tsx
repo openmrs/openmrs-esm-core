@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { ExtensionSlot } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { age, formatDate, parseDate } from '@openmrs/esm-utils';
-import { FemaleIcon, MaleIcon, OtherIcon, UnknownIcon } from './gender-icons.component';
+import { GenderFemaleIcon, GenderMaleIcon, GenderOtherIcon, GenderUnknownIcon } from '../../icons';
 import PatientBannerPatientIdentifier from './patient-banner-patient-identifiers.component';
 import styles from './patient-banner-patient-info.module.scss';
 
@@ -19,10 +19,10 @@ interface GenderIconProps {
 }
 
 const GENDER_ICONS = {
-  Female: FemaleIcon,
-  Male: MaleIcon,
-  Other: OtherIcon,
-  Unknown: UnknownIcon,
+  Female: GenderFemaleIcon,
+  Male: GenderMaleIcon,
+  Other: GenderOtherIcon,
+  Unknown: GenderUnknownIcon,
 } as const;
 
 const GenderIcon = ({ gender }: GenderIconProps) => {
@@ -32,7 +32,7 @@ const GenderIcon = ({ gender }: GenderIconProps) => {
     return null;
   }
 
-  return <IconComponent />;
+  return <IconComponent fill="#525252" />;
 };
 
 const getGender = (gender: string): string => {
