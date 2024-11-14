@@ -265,9 +265,9 @@ export const GenderMaleIcon = memo(
 );
 /**
  */
-export const GenderTransgenderIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function GenderTransgenderIcon(props, ref) {
-    return <Icon ref={ref} icon="omrs-icon-gender-transgender" iconProps={props} />;
+export const GenderOtherIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function GenderOtherIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-gender-other" iconProps={props} />;
   }),
 );
 /**

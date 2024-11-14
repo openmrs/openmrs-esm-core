@@ -24,7 +24,7 @@ export const EventScheduleIcon = () => <div>EventScheduleIcon</div>;
 export const EventsIcon = () => <div>EventsIcon</div>;
 export const GenderFemaleIcon = () => <div>GenderFemaleIcon</div>;
 export const GenderMaleIcon = () => <div>GenderMaleIcon</div>;
-export const GenderTransgenderIcon = () => <div>GenderTransgenderIcon</div>;
+export const GenderOtherIcon = () => <div>GenderOtherIcon</div>;
 export const GenderUnknownIcon = () => <div>GenderUnknownIcon</div>;
 export const GroupIcon = () => <div>GroupIcon</div>;
 export const GroupAccessIcon = () => <div>GroupAccessIcon</div>;
