@@ -251,6 +251,35 @@ export const EventsIcon = memo(
 
 /**
  */
+export const GenderFemaleIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function GenderFemaleIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-gender-female" iconProps={props} />;
+  }),
+);
+/**
+ */
+export const GenderMaleIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function GenderMaleIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-gender-male" iconProps={props} />;
+  }),
+);
+/**
+ */
+export const GenderOtherIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function GenderOtherIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-gender-other" iconProps={props} />;
+  }),
+);
+/**
+ */
+export const GenderUnknownIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function GenderUnknownIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-gender-unknown" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const GroupIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function GroupIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-group" iconProps={props} />;
