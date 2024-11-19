@@ -14,7 +14,7 @@ interface WorkspaceRendererProps {
 
 export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: WorkspaceRendererProps) {
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
-  const workspaceFamilyState = useWorkspaceGroupStore(workspace.currentWorkspaceGroup);
+  const workspaceGroupState = useWorkspaceGroupStore(workspace.currentWorkspaceGroup);
 
   useEffect(() => {
     let active = true;
@@ -36,10 +36,10 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
         promptBeforeClosing: workspace.promptBeforeClosing,
         setTitle: workspace.setTitle,
         ...additionalPropsFromPage,
-        ...workspaceFamilyState,
+        ...workspaceGroupState,
         ...workspace.additionalProps,
       },
-    [workspace, additionalPropsFromPage, workspaceFamilyState],
+    [workspace, additionalPropsFromPage, workspaceGroupState],
   );
 
   return lifecycle ? (

@@ -20,10 +20,10 @@ describe('WorkspaceRenderer', () => {
     const mockedPromptBeforeClosing = jest.fn();
     const mockedSetTitle = jest.fn();
     const mockedLoadFn = jest.fn().mockImplementation(() => Promise.resolve({ default: 'file-content' }));
-    getWorkspaceGroupStore('test-sidebar-family')?.setState({
-      // Testing that the workspace family state should be overrided by additionalProps
+    getWorkspaceGroupStore('test-sidebar-store')?.setState({
+      // Testing that the workspace group state should be overrided by additionalProps
       foo: false,
-      workspaceFamilyState: {},
+      workspaceGroupStore: {},
     });
     render(
       <WorkspaceRenderer

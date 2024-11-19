@@ -183,7 +183,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot
-              name={`workspace-header-family-${workspaceInstance.currentWorkspaceGroup}-slot`}
+              name={`workspace-header-group-${workspaceInstance.currentWorkspaceGroup}-slot`}
               state={workspaceProps}
             />
             <ExtensionSlot name={`workspace-header-type-${workspaceInstance.type}-slot`} state={workspaceProps} />

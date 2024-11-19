@@ -153,10 +153,10 @@ function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: Function) {
 
   closeAllWorkspaces(() => {
     // Clearing the workspace group and respective store if the new workspace is not part of the current group, which is handled in the `launchWorkspace` function.
-    const workspaceFamilyStore = getWorkspaceGroupStore(groupName);
-    if (workspaceFamilyStore) {
-      workspaceFamilyStore.setState({}, true);
-      const unsubscribe = workspaceFamilyStore.subscribe(() => {});
+    const workspaceGroupStore = getWorkspaceGroupStore(groupName);
+    if (workspaceGroupStore) {
+      workspaceGroupStore.setState({}, true);
+      const unsubscribe = workspaceGroupStore.subscribe(() => {});
       unsubscribe?.();
     }
     if (currentWorkspaceGroup && typeof currentWorkspaceGroup?.cleanup === 'function') {
@@ -243,7 +243,7 @@ function promptBeforeLaunchingWorkspace(
       // Calling the launchWorkspace again, since one of the `if` case
       // might resolve, but we need to check all the cases before launching the form.
       onWorkspaceClose: () => launchWorkspace(name, additionalProps),
-      // If the new workspace is of the same sidebar family, then we don't need to clear the workspace family store.
+      // If the new workspace is of the same sidebar group, then we don't need to clear the workspace group store.
       closeWorkspaceGroup: false,
     });
   };
