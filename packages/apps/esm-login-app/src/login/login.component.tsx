@@ -21,7 +21,7 @@ export interface LoginReferrer {
 }
 
 const Login: React.FC = () => {
-  const { provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -38,7 +38,6 @@ const Login: React.FC = () => {
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
-
   useEffect(() => {
     if (!user) {
       if (loginProvider.type === 'oauth2') {
@@ -50,12 +49,14 @@ const Login: React.FC = () => {
   }, [username, navigate, location, user, loginProvider]);
 
   useEffect(() => {
-    if (showPasswordField) {
-      passwordInputRef.current?.focus(); 
-    } else {
-      usernameInputRef.current?.focus(); 
+    if (showPasswordOnSeparateScreen) {
+      if (showPasswordField) {
+        passwordInputRef.current?.focus(); 
+      } else {
+        usernameInputRef.current?.focus(); 
+      }
     }
-  }, [showPasswordField]);
+  }, [showPasswordField, showPasswordOnSeparateScreen]);
 
   const continueLogin = useCallback(() => {
     const usernameField = usernameInputRef.current;
@@ -74,6 +75,11 @@ const Login: React.FC = () => {
     async (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
       evt.stopPropagation();
+
+      if (showPasswordOnSeparateScreen && !showPasswordField) {
+        continueLogin();
+        return false;
+      }
 
       if (!password || !password.trim()) {
         passwordInputRef.current?.focus();
@@ -105,7 +111,9 @@ const Login: React.FC = () => {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
           setUsername('');
           setPassword('');
-          setShowPasswordField(false);
+          if (showPasswordOnSeparateScreen) {
+            setShowPasswordField(false);
+          }
         }
 
         return true;
@@ -117,12 +125,14 @@ const Login: React.FC = () => {
         }
         setUsername('');
         setPassword('');
-        setShowPasswordField(false);
+        if (showPasswordOnSeparateScreen) {
+          setShowPasswordField(false);
+        }
       } finally {
         setIsLoggingIn(false);
       }
     },
-    [username, password, navigate],
+    [username, password, navigate, showPasswordOnSeparateScreen],
   );
 
   return (
@@ -153,7 +163,46 @@ const Login: React.FC = () => {
               required
               autoFocus
             />
-            {showPasswordField ? (
+            {showPasswordOnSeparateScreen ? (
+              showPasswordField ? (
+                <>
+                  <PasswordInput
+                    id="password"
+                    labelText={t('password', 'Password')}
+                    name="password"
+                    onChange={changePassword}
+                    ref={passwordInputRef}
+                    required
+                    value={password}
+                    showPasswordLabel={t('showPassword', 'Show password')}
+                    invalidText={t('validValueRequired', 'A valid value is required')}
+                  />
+                  <Button
+                    type="submit"
+                    className={styles.continueButton}
+                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                    iconDescription="Log in"
+                    disabled={!isLoginEnabled || isLoggingIn}
+                  >
+                    {isLoggingIn ? (
+                      <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
+                    ) : (
+                      t('login', 'Log in')
+                    )}
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  className={styles.continueButton}
+                  renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                  iconDescription="Continue to password"
+                  onClick={continueLogin}
+                  disabled={!isLoginEnabled}
+                >
+                  {t('continue', 'Continue')}
+                </Button>
+              )
+            ) : (
               <>
                 <PasswordInput
                   id="password"
@@ -180,16 +229,6 @@ const Login: React.FC = () => {
                   )}
                 </Button>
               </>
-            ) : (
-              <Button
-                className={styles.continueButton}
-                renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                iconDescription="Continue to password"
-                onClick={continueLogin}
-                disabled={!isLoginEnabled}
-              >
-                {t('continue', 'Continue')}
-              </Button>
             )}
           </div>
         </form>
