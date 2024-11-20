@@ -3,7 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
-import { Button, Form, PasswordInput, InlineLoading, ModalBody, ModalFooter, ModalHeader, Stack } from '@carbon/react';
+import {
+  Button,
+  Form,
+  InlineLoading,
+  InlineNotification,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  PasswordInput,
+  Stack,
+} from '@carbon/react';
 import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
 import styles from './change-password-modal.scss';
@@ -15,18 +25,28 @@ interface ChangePasswordModalProps {
 const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
   const { t } = useTranslation();
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const oldPasswordValidation = z.string({
-    required_error: t('oldPasswordRequired', 'Old password is required'),
-  });
+  const oldPasswordValidation = z
+    .string({
+      required_error: t('oldPasswordRequired', 'Old password is required'),
+    })
+    .trim()
+    .min(1, t('oldPasswordRequired', 'Old password is required'));
 
-  const newPasswordValidation = z.string({
-    required_error: t('newPasswordRequired', 'New password is required'),
-  });
+  const newPasswordValidation = z
+    .string({
+      required_error: t('newPasswordRequired', 'New password is required'),
+    })
+    .trim()
+    .min(1, t('newPasswordRequired', 'New password is required'));
 
-  const passwordConfirmationValidation = z.string({
-    required_error: t('passwordConfirmationRequired', 'Password confirmation is required'),
-  });
+  const passwordConfirmationValidation = z
+    .string({
+      required_error: t('passwordConfirmationRequired', 'Password confirmation is required'),
+    })
+    .trim()
+    .min(1, t('passwordConfirmationRequired', 'Password confirmation is required'));
 
   const changePasswordFormSchema = z
     .object({
@@ -45,33 +65,37 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(changePasswordFormSchema),
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      passwordConfirmation: '',
+    },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof changePasswordFormSchema>> = useCallback((data) => {
-    setIsChangingPassword(true);
+  const onSubmit: SubmitHandler<z.infer<typeof changePasswordFormSchema>> = useCallback(
+    (data) => {
+      setIsChangingPassword(true);
+      const { oldPassword, newPassword } = data;
 
-    const { oldPassword, newPassword } = data;
+      changeUserPassword(oldPassword, newPassword)
+        .then(() => {
+          close();
 
-    changeUserPassword(oldPassword, newPassword)
-      .then(() => {
-        close();
-
-        showSnackbar({
-          title: t('passwordChangedSuccessfully', 'Password changed successfully'),
-          kind: 'success',
+          showSnackbar({
+            title: t('passwordChangedSuccessfully', 'Password changed successfully'),
+            kind: 'success',
+          });
+        })
+        .catch((error) => {
+          const errorMessage = error?.responseBody?.message ?? error?.message;
+          setErrorMessage(errorMessage);
+        })
+        .finally(() => {
+          setIsChangingPassword(false);
         });
-      })
-      .catch((error) => {
-        showSnackbar({
-          kind: 'error',
-          subtitle: error?.message,
-          title: t('errorChangingPassword', 'Error changing password'),
-        });
-      })
-      .finally(() => {
-        setIsChangingPassword(false);
-      });
-  }, []);
+    },
+    [close, t],
+  );
 
   const onError = () => setIsChangingPassword(false);
 
@@ -122,6 +146,14 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
               />
             )}
           />
+          {errorMessage && (
+            <InlineNotification
+              kind="error"
+              onClick={() => setErrorMessage('')}
+              subtitle={errorMessage}
+              title={t('errorChangingPassword', 'Error changing password')}
+            />
+          )}
         </Stack>
       </ModalBody>
       <ModalFooter>
@@ -130,7 +162,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
         </Button>
         <Button className={styles.submitButton} disabled={isChangingPassword} type="submit">
           {isChangingPassword ? (
-            <InlineLoading description={t('changingLanguage', 'Changing password') + '...'} />
+            <InlineLoading description={t('changingPassword', 'Changing password') + '...'} />
           ) : (
             <span>{t('change', 'Change')}</span>
           )}
