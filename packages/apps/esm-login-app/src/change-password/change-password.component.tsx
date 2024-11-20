@@ -44,29 +44,32 @@ const ChangePassword: React.FC = () => {
     resolver: zodResolver(changePasswordFormSchema),
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof changePasswordFormSchema>> = useCallback((data) => {
-    setIsChangingPassword(true);
+  const onSubmit: SubmitHandler<z.infer<typeof changePasswordFormSchema>> = useCallback(
+    (data) => {
+      setIsChangingPassword(true);
 
-    const { oldPassword, newPassword } = data;
+      const { oldPassword, newPassword } = data;
 
-    changeUserPassword(oldPassword, newPassword)
-      .then(() => {
-        showSnackbar({
-          title: t('passwordChangedSuccessfully', 'Password changed successfully'),
-          kind: 'success',
+      changeUserPassword(oldPassword, newPassword)
+        .then(() => {
+          showSnackbar({
+            title: t('passwordChangedSuccessfully', 'Password changed successfully'),
+            kind: 'success',
+          });
+        })
+        .catch((error) => {
+          showSnackbar({
+            kind: 'error',
+            subtitle: error?.message,
+            title: t('errorChangingPassword', 'Error changing password'),
+          });
+        })
+        .finally(() => {
+          setIsChangingPassword(false);
         });
-      })
-      .catch((error) => {
-        showSnackbar({
-          kind: 'error',
-          subtitle: error?.message,
-          title: t('errorChangingPassword', 'Error changing password'),
-        });
-      })
-      .finally(() => {
-        setIsChangingPassword(false);
-      });
-  }, []);
+    },
+    [t],
+  );
 
   const onError = useCallback(() => setIsChangingPassword(false), []);
 
@@ -121,7 +124,7 @@ const ChangePassword: React.FC = () => {
           />
           <Button className={styles.submitButton} disabled={isChangingPassword} type="submit">
             {isChangingPassword ? (
-              <InlineLoading description={t('changingLanguage', 'Changing password') + '...'} />
+              <InlineLoading description={t('changingPassword', 'Changing password') + '...'} />
             ) : (
               <span>{t('change', 'Change Password')}</span>
             )}
