@@ -40,7 +40,7 @@ const getGender = (gender: string): string => {
   return getCoreTranslation(key, gender);
 };
 
-function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
+export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0]?.family}`;
   const gender = patient?.gender && getGender(patient.gender);
 
@@ -76,5 +76,3 @@ function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
     </div>
   );
 }
-
-export default PatientBannerPatientInfo;

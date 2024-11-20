@@ -2,7 +2,7 @@ import React from 'react';
 import { type i18n } from 'i18next';
 import { screen, render } from '@testing-library/react';
 import { usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
-import PatientBannerPatientInfo from './patient-banner-patient-info.component';
+import { PatientBannerPatientInfo } from './patient-banner-patient-info.component';
 
 window.i18next = { language: 'en' } as i18n;
 const mockUsePrimaryIdentifierCode = jest.mocked(usePrimaryIdentifierCode);

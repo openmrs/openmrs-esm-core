@@ -36,7 +36,10 @@ function SecondaryIdentifier({ showIdentifierLabel, type, value }: IdentifiersPr
   );
 }
 
-function PatientBannerPatientIdentifiers({ identifiers, showIdentifierLabel }: PatientBannerPatientIdentifiersProps) {
+export function PatientBannerPatientIdentifiers({
+  identifiers,
+  showIdentifierLabel,
+}: PatientBannerPatientIdentifiersProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig<StyleguideConfigObject>();
   const { primaryIdentifierCode } = usePrimaryIdentifierCode();
 
