@@ -5,31 +5,29 @@ import { useConfig, usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
 import { type StyleguideConfigObject } from '../../config-schema';
 import styles from './patient-banner-patient-info.module.scss';
 
-interface IdentifierProps {
+interface IdentifiersProps {
   showIdentifierLabel: boolean;
   type: fhir.CodeableConcept | undefined;
   value: string | undefined;
 }
 
-interface PatientBannerPatientIdentifierProps {
-  identifier: fhir.Identifier[] | undefined;
+interface PatientBannerPatientIdentifiersProps {
+  identifiers: fhir.Identifier[] | undefined;
   showIdentifierLabel: boolean;
 }
 
-function PrimaryIdentifier({ showIdentifierLabel, type, value }: IdentifierProps) {
+function PrimaryIdentifier({ showIdentifierLabel, type, value }: IdentifiersProps) {
   return (
     <span className={styles.primaryIdentifier}>
-      {showIdentifierLabel && (
-        <Tag className={styles.tag} type="gray" title={type?.text}>
-          {type?.text && <span className={styles.label}>{type.text}: </span>}
-          <span className={styles.value}>{value}</span>
-        </Tag>
-      )}
+      <Tag className={styles.tag} type="gray">
+        {showIdentifierLabel && type?.text && <span className={styles.label}>{type.text}: </span>}
+        <span className={styles.value}>{value}</span>
+      </Tag>
     </span>
   );
 }
 
-function SecondaryIdentifier({ showIdentifierLabel, type, value }: IdentifierProps) {
+function SecondaryIdentifier({ showIdentifierLabel, type, value }: IdentifiersProps) {
   return (
     <FormLabel className={styles.secondaryIdentifier} id={`patient-banner-identifier-${value}`}>
       {showIdentifierLabel && <span className={styles.label}>{type?.text}: </span>}
@@ -38,15 +36,12 @@ function SecondaryIdentifier({ showIdentifierLabel, type, value }: IdentifierPro
   );
 }
 
-export function PatientBannerPatientIdentifier({
-  identifier,
-  showIdentifierLabel,
-}: PatientBannerPatientIdentifierProps) {
+function PatientBannerPatientIdentifiers({ identifiers, showIdentifierLabel }: PatientBannerPatientIdentifiersProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig<StyleguideConfigObject>();
   const { primaryIdentifierCode } = usePrimaryIdentifierCode();
 
   const filteredIdentifiers =
-    identifier?.filter((identifier) => {
+    identifiers?.filter((identifier) => {
       const code = identifier.type?.coding?.[0]?.code;
       return code && !excludePatientIdentifierCodeTypes?.uuids.includes(code);
     }) ?? [];
@@ -56,11 +51,11 @@ export function PatientBannerPatientIdentifier({
       {filteredIdentifiers?.length
         ? filteredIdentifiers.map(({ value, type }, index) => (
             <React.Fragment key={value}>
-              <span className={styles.identifierTag}>
+              <span className={styles.identifier}>
                 {type?.coding?.[0]?.code === primaryIdentifierCode ? (
-                  <PrimaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
+                  <PrimaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
                 ) : (
-                  <SecondaryIdentifier value={value} type={type} showIdentifierLabel={showIdentifierLabel} />
+                  <SecondaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
                 )}
               </span>
               {index < filteredIdentifiers.length - 1 && <span className={styles.separator}>&middot;</span>}
@@ -71,4 +66,4 @@ export function PatientBannerPatientIdentifier({
   );
 }
 
-export default PatientBannerPatientIdentifier;
+export default PatientBannerPatientIdentifiers;

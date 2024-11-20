@@ -214,8 +214,6 @@
 - [CustomOverflowMenu](API.md#customoverflowmenu)
 - [PatientBannerActionsMenu](API.md#patientbanneractionsmenu)
 - [PatientBannerContactDetails](API.md#patientbannercontactdetails)
-- [PatientBannerPatientIdentifier](API.md#patientbannerpatientidentifier)
-- [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
 - [PatientBannerToggleContactDetailsButton](API.md#patientbannertogglecontactdetailsbutton)
 - [PatientPhoto](API.md#patientphoto)
 - [getFhirServerPaginationHandlers](API.md#getfhirserverpaginationhandlers)
@@ -6884,46 +6882,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:183](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L183)
-
-___
-
-### PatientBannerPatientIdentifier
-
-▸ **PatientBannerPatientIdentifier**(`__namedParameters`): `Element`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | `PatientBannerPatientIdentifierProps` |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-identifiers.component.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-identifiers.component.tsx#L41)
-
-___
-
-### PatientBannerPatientInfo
-
-▸ **PatientBannerPatientInfo**(`__namedParameters`): `Element`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`PatientBannerPatientInfoProps`](interfaces/PatientBannerPatientInfoProps.md) |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L43)
 
 ___
 

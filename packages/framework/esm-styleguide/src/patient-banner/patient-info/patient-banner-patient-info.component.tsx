@@ -5,10 +5,10 @@ import { ExtensionSlot } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { age, formatDate, parseDate } from '@openmrs/esm-utils';
 import { GenderFemaleIcon, GenderMaleIcon, GenderOtherIcon, GenderUnknownIcon } from '../../icons';
-import PatientBannerPatientIdentifier from './patient-banner-patient-identifiers.component';
+import PatientBannerPatientIdentifiers from './patient-banner-patient-identifiers.component';
 import styles from './patient-banner-patient-info.module.scss';
 
-export interface PatientBannerPatientInfoProps {
+interface PatientBannerPatientInfoProps {
   patient: fhir.Patient;
 }
 
@@ -40,7 +40,7 @@ const getGender = (gender: string): string => {
   return getCoreTranslation(key, gender);
 };
 
-export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
+function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0]?.family}`;
   const gender = patient?.gender && getGender(patient.gender);
 
@@ -71,8 +71,10 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
             <span className={styles.separator}>&middot;</span>
           </>
         )}
-        <PatientBannerPatientIdentifier identifier={patient.identifier} showIdentifierLabel={true} />
+        <PatientBannerPatientIdentifiers identifiers={patient.identifier} showIdentifierLabel />
       </div>
     </div>
   );
 }
+
+export default PatientBannerPatientInfo;
