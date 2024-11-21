@@ -43,6 +43,7 @@
   "printing": "Đang in",
   "relationships": "Mối quan hệ",
   "resetOverrides": "Đặt lại ghi đè",
+  "save": "Save",
   "scriptLoadingError": "Không tải được tập lệnh ghi đè từ {{url}}. Vui lòng kiểm tra xem tập lệnh được đóng gói có khả dụng tại URL mong đợi hay không. Nhấp vào nút bên dưới để đặt lại tất cả các ghi đè bản đồ nhập.",
   "scriptLoadingFailed": "Lỗi: Không tải được tập lệnh",
   "seeMoreLists": "Xem thêm {{count}} danh sách",

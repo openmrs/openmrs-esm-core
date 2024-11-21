@@ -43,6 +43,7 @@
   "printing": "Printing",
   "relationships": "Relationships",
   "resetOverrides": "Reset overrides",
+  "save": "Save",
   "scriptLoadingError": "Failed to load overridden script from {{url}}. Please check that the bundled script is available at the expected URL. Click the button below to reset all import map overrides.",
   "scriptLoadingFailed": "Error: Script failed to load",
   "seeMoreLists": "See {{count}} more lists",

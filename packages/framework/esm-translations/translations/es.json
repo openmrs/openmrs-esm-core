@@ -43,6 +43,7 @@
   "printing": "Imprimiendo",
   "relationships": "Relaciones",
   "resetOverrides": "Restablecer reemplazos",
+  "save": "Save",
   "scriptLoadingError": "No se pudo cargar el script sobrescrito desde {{url}}. Por favor, verifique que el script empaquetado esté disponible en la URL esperada. Haga click en el botón de abajo para restablecer todos los reemplazos del mapa de importación.",
   "scriptLoadingFailed": "Error: No se pudo cargar el script",
   "seeMoreLists": "Ver {{count}} listas más",
