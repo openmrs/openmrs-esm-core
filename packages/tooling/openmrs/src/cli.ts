@@ -234,6 +234,11 @@ yargs.command(
         describe:
           "The locale to use as a default for this build of the app shell. Should be a value that's valid to use in an HTML lang attribute, e.g., en or en_GB.",
         type: 'string',
+      })
+      .option('env', {
+        default: 'production',
+        describe: 'The environment to build for. e.g., development, production.',
+        type: 'string',
       }),
   async (args) =>
     runCommand('runBuild', {
