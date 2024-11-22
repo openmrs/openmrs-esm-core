@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import React, { Component } from 'react';
+import { render, screen, waitFor} from '@testing-library/react';
 import { openmrsComponentDecorator } from './openmrsComponentDecorator';
 import { ComponentContext } from './ComponentContext';
 
@@ -35,6 +35,22 @@ describe('openmrs-component-decorator', () => {
     const DecoratedComp = openmrsComponentDecorator(opts)(CompWithConfig);
     render(<DecoratedComp />);
   });
+
+  it("rendering a unsafe component is strict mode should log error in console",()=>{
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const UnsafeDecoratedCompnent = openmrsComponentDecorator(opts)(UnsafeComponent);
+      render(<UnsafeDecoratedCompnent/>);
+      expect(consoleError.mock.calls[0][0]).toContain('Warning: Using UNSAFE_componentWillMount');
+      consoleError.mockRestore();
+  })
+
+  it("rendering an unsafe component without strict mode should not log an error in console",()=>{
+      const spy = jest.spyOn(console, "error");
+      const unsafeComponentOptions=Object.assign(opts,{strictMode:false})
+      const UnsafeDecoratedCompnent = openmrsComponentDecorator(unsafeComponentOptions)(UnsafeComponent);
+      render(<UnsafeDecoratedCompnent/>);
+      expect(spy).not.toHaveBeenCalled();
+  })
 });
 
 function CompThatWorks() {
@@ -49,3 +65,15 @@ function CompWithConfig() {
   const { moduleName } = React.useContext(ComponentContext);
   return <div>{moduleName}</div>;
 }
+
+
+class UnsafeComponent extends Component<any,any> {
+  
+  UNSAFE_componentWillMount() { 
+  
+  } 
+
+ render() { 
+   return <h1>This is Unsafe Component</h1>; 
+ } 
+};
