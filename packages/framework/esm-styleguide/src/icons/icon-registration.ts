@@ -55,6 +55,7 @@ import overflowMenuVertical from './svgs/overflow-menu--vertical.svg';
 import pedestrianFamily from './svgs/pedestrian-family.svg';
 import pen from './svgs/pen.svg';
 import printer from './svgs/printer.svg';
+import programs from './svgs/programs.svg';
 import renew from './svgs/renew.svg';
 import password from './svgs/password.svg';
 import report from './svgs/report.svg';
@@ -139,6 +140,7 @@ export function setupIcons() {
   addSvg('omrs-icon-pedestrian-family', pedestrianFamily);
   addSvg('omrs-icon-pen', pen);
   addSvg('omrs-icon-printer', printer);
+  addSvg('omrs-icon-programs', programs);
   addSvg('omrs-icon-renew', renew);
   addSvg('omrs-icon-password', password);
   addSvg('omrs-icon-report', report);

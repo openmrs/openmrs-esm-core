@@ -50,6 +50,7 @@ export const OverflowMenuVerticalIcon = () => <div>OverflowMenuVerticalIcon</div
 export const PedestrianFamilyIcon = () => <div>PedestrianFamilyIcon</div>;
 export const PenIcon = () => <div>PenIcon</div>;
 export const PrinterIcon = () => <div>PrinterIcon</div>;
+export const ProgramsIcon = () => <div>ProgramsIcon</div>;
 export const RenewIcon = () => <div>RenewIcon</div>;
 export const ReportIcon = () => <div>ReportIcon</div>;
 export const SyringeIcon = () => <div>SyringeIcon</div>;
