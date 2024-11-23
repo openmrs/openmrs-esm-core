@@ -36,7 +36,7 @@ describe('openmrs-component-decorator', () => {
     render(<DecoratedComp />);
   });
 
-  it("rendering a unsafe component is strict mode should log error in console",()=>{
+  it("rendering a unsafe component in strict mode should log error in console",()=>{
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
       const UnsafeDecoratedCompnent = openmrsComponentDecorator(opts)(UnsafeComponent);
       render(<UnsafeDecoratedCompnent/>);
