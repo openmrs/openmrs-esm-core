@@ -70,10 +70,9 @@ function CompWithConfig() {
 class UnsafeComponent extends Component<any,any> {
   
   UNSAFE_componentWillMount() { 
-  
-  } 
+   } 
 
  render() { 
    return <h1>This is Unsafe Component</h1>; 
  } 
-};
+}
