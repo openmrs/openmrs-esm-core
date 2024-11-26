@@ -27,7 +27,7 @@ A list of backend modules necessary for this frontend module and the correspondi
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:354](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L354)
+[packages/framework/esm-globals/src/types.ts:371](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L371)
 
 ___
 
@@ -39,7 +39,7 @@ An array of all extensions supported by this frontend module. Extensions can be 
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:370](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L370)
+[packages/framework/esm-globals/src/types.ts:387](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L387)
 
 ___
 
@@ -51,7 +51,7 @@ An array of all feature flags for any beta-stage features this module provides.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L372)
+[packages/framework/esm-globals/src/types.ts:389](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L389)
 
 ___
 
@@ -63,7 +63,7 @@ An array of all modals supported by this frontend module. Modals can be launched
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:374](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L374)
+[packages/framework/esm-globals/src/types.ts:391](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L391)
 
 ___
 
@@ -81,7 +81,7 @@ The name of the backend dependency and either the required version or an object 
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L356)
+[packages/framework/esm-globals/src/types.ts:373](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L373)
 
 ___
 
@@ -93,7 +93,7 @@ An array of all pages supported by this frontend module. Pages are automatically
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:368](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L368)
+[packages/framework/esm-globals/src/types.ts:385](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L385)
 
 ___
 
@@ -105,7 +105,7 @@ The version of this frontend module.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:352](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L352)
+[packages/framework/esm-globals/src/types.ts:369](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L369)
 
 ___
 
@@ -117,4 +117,4 @@ An array of all workspaces supported by this frontend module. Workspaces can be 
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:376](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L376)
+[packages/framework/esm-globals/src/types.ts:393](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L393)
