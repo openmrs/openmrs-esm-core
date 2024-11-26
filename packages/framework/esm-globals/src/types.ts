@@ -302,13 +302,30 @@ export type WorkspaceDefinition = {
    * The width "extra-wide" is for workspaces that contain their own sidebar.
    */
   width?: 'narrow' | 'wider' | 'extra-wide';
-  preferredWindowSize?: WorkspaceWindowState;
   /**
-   * Workspaces can open either individually or in a group of workspaces. The workspace groups
-   * will define the groups in which a workspace can be opened.
+   * Launches the workspace in the preferred size, it defaults to the 'narrow' width
+   */
+  preferredWindowSize?: WorkspaceWindowState;
+
+  /**
+   * Workspaces can open either independently or as part of a "workspace group". A
+   * "workspace group" groups related workspaces together, so that only one is visible
+   * at a time. For example,
    *
-   * In case the currently opened workspace is not present in the groups of a workspace,
-   * the current group will close and then the workspace will be launched.
+   * @example
+   *
+   * {
+   *  name: 'order-basket',
+   *  type: 'order',
+   *  groups: ['ward-patient']
+   * }
+   *
+   * This means that the 'order-basket' workspace can be opened independently, or only
+   * in the 'ward-patient'.
+   * If a workspace group is already open and a new workspace is launched, and the
+   * groups in the newly launched workspace do not include the currently open group’s
+   * name, the entire workspace group will close, and the new workspace will launch independently.
+   *
    */
   groups: Array<string>;
 } & (

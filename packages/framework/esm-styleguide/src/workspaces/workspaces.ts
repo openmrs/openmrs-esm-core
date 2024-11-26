@@ -140,10 +140,10 @@ export function canCloseWorkspaceWithoutPrompting(name: string, ignoreChanges: b
  * - Updates the main workspace store to remove the workspace group
  * - Calls the optional closeup callback if provided
  */
-function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: Function) {
+function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: () => void) {
   const store = getWorkspaceStore();
   const currentWorkspaceGroup = store.getState()?.workspaceGroup;
-  const currentGroupName = store.getState()?.workspaceGroup?.name;
+  const currentGroupName = currentWorkspaceGroup?.name;
   if (!currentGroupName || groupName !== currentGroupName) {
     return;
   }
@@ -157,18 +157,20 @@ function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: Function) {
     if (workspaceGroupStore) {
       workspaceGroupStore.setState({}, true);
       const unsubscribe = workspaceGroupStore.subscribe(() => {});
-      unsubscribe?.();
+      unsubscribe();
     }
-    if (currentWorkspaceGroup && typeof currentWorkspaceGroup?.cleanup === 'function') {
-      currentWorkspaceGroup?.cleanup?.();
+
+    if (typeof currentWorkspaceGroup?.cleanup === 'function') {
+      currentWorkspaceGroup.cleanup();
     }
 
     store.setState((prev) => ({
       ...prev,
       workspaceGroup: undefined,
     }));
-    if (onWorkspaceCloseup && typeof onWorkspaceCloseup === 'function') {
-      onWorkspaceCloseup?.();
+
+    if (typeof onWorkspaceCloseup === 'function') {
+      onWorkspaceCloseup();
     }
   }, filter);
 }
@@ -225,7 +227,7 @@ export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGro
     getWorkspaceGroupStore(groupName, state);
     onWorkspaceGroupLaunch?.();
     if (workspaceToLaunch) {
-      launchWorkspace(workspaceToLaunch?.name, workspaceToLaunch?.additionalProps ?? {});
+      launchWorkspace(workspaceToLaunch.name, workspaceToLaunch.additionalProps ?? {});
     }
   }
 }
@@ -292,7 +294,7 @@ export function launchWorkspace<
   const currentWorkspaceGroup = store.getState().workspaceGroup;
 
   if (currentWorkspaceGroup && !workspace.groups?.includes(currentWorkspaceGroup?.name)) {
-    closeWorkspaceGroup(currentWorkspaceGroup?.name, () => {
+    closeWorkspaceGroup(currentWorkspaceGroup.name, () => {
       launchWorkspace(name, additionalProps);
     });
     return;
@@ -508,8 +510,7 @@ export function closeAllWorkspaces(
     .getState()
     .openWorkspaces.filter(filter)
     .every(({ name }) => {
-      const canCloseWorkspace = canCloseWorkspaceWithoutPrompting(name);
-      return canCloseWorkspace;
+      return canCloseWorkspaceWithoutPrompting(name);
     });
 
   const updateWorkspaceStore = () => {
