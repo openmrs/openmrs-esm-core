@@ -1,4 +1,4 @@
-@use '@carbon/styles/scss/spacing';
+@use '@carbon/layout';
 @use '@carbon/colors';
 
 /* UI Shell Header */
@@ -192,12 +192,12 @@
 }
 
 .cds--data-table-header {
-  padding: spacing.$spacing-04;
+  padding: layout.$spacing-04;
   text-align: start;
 }
 
 .cds--data-table-header__title {
-  font-size: spacing.$spacing-05;
+  font-size: layout.$spacing-05;
   font-weight: 600;
   color: $text-02;
 }
@@ -272,7 +272,7 @@
     background-color: $openmrs-background-grey;
     left: -6.025rem;
     min-width: 12.5rem;
-    top: spacing.$spacing-09;
+    top: layout.$spacing-09;
   }
 }
 
@@ -299,19 +299,19 @@
 }
 
 .cds--data-table--xs .cds--overflow-menu {
-  height: spacing.$spacing-07;
+  height: layout.$spacing-07;
 }
 
 .cds--data-table--sm .cds--overflow-menu {
-  height: spacing.$spacing-08;
+  height: layout.$spacing-08;
 }
 
 .cds--data-table--sm .cds--overflow-menu--sm {
-  height: spacing.$spacing-07;
+  height: layout.$spacing-07;
 }
 
 .cds--data-table--xs .cds--overflow-menu {
-  max-height: spacing.$spacing-07;
+  max-height: layout.$spacing-07;
 }
 
 .cds--data-table-container {
@@ -319,13 +319,13 @@
 }
 
 .cds--data-table td.cds--table-column-menu {
-  width: spacing.$spacing-08;
+  width: layout.$spacing-08;
   vertical-align: top;
   padding-right: 0;
 }
 
 .cds--data-table--lg td.cds--table-column-menu {
-  width: spacing.$spacing-09;
+  width: layout.$spacing-09;
 }
 
 .cds--overflow-menu {
@@ -356,13 +356,13 @@
 
   &:after,
   &:last-child:after {
-    margin-inline: spacing.$spacing-03;
+    margin-inline: layout.$spacing-03;
   }
 }
 
 /* Preloader */
 .cds--inline-loading__animation {
-  margin-inline: spacing.$spacing-03;
+  margin-inline: layout.$spacing-03;
 }
 
 html[dir='rtl'] {
@@ -370,7 +370,7 @@ html[dir='rtl'] {
     & > a:first-child {
       & > div {
         margin-left: 0;
-        margin-right: spacing.$spacing-05;
+        margin-right: layout.$spacing-05;
       }
     }
   }
@@ -386,7 +386,7 @@ html[dir='rtl'] {
   .cds--btn--tertiary {
     padding: calc(0.875rem - 3px) 15px calc(0.875rem - 3px) 63px;
     svg {
-      left: spacing.$spacing-05;
+      left: layout.$spacing-05;
       right: unset;
       transform: scale(-1, 1);
     }
@@ -394,7 +394,7 @@ html[dir='rtl'] {
 
   .cds--btn--secondary {
     svg {
-      left: spacing.$spacing-05;
+      left: layout.$spacing-05;
       right: unset;
       transform: scale(-1, 1);
     }
@@ -402,7 +402,7 @@ html[dir='rtl'] {
 
   .cds--btn--ghost {
     svg {
-      margin-right: spacing.$spacing-03;
+      margin-right: layout.$spacing-03;
       margin-left: unset;
       transform: scale(-1, 1);
     }
@@ -417,7 +417,7 @@ html[dir='rtl'] {
   .cds--btn--primary {
     padding: calc(0.875rem - 3px) 15px calc(0.875rem - 3px) 63px;
     svg {
-      left: spacing.$spacing-05;
+      left: layout.$spacing-05;
       right: unset;
       transform: scale(-1, 1);
     }
@@ -438,7 +438,7 @@ html[dir='rtl'] {
 
   .cds--select__page-number {
     .cds--select-input {
-      padding: 0 spacing.$spacing-05 0 2.25rem;
+      padding: 0 layout.$spacing-05 0 2.25rem;
     }
   }
 
@@ -553,15 +553,15 @@ html[dir='rtl'] {
 
   .cds--date-picker-input__wrapper {
     svg {
-      left: spacing.$spacing-05;
+      left: layout.$spacing-05;
       right: unset;
     }
   }
 
   .cds--list-box__field {
-    padding: 0 spacing.$spacing-05 0 spacing.$spacing-09;
+    padding: 0 layout.$spacing-05 0 layout.$spacing-09;
     .cds--list-box__menu-icon {
-      left: spacing.$spacing-05;
+      left: layout.$spacing-05;
       right: unset;
       transform: scale(-1, 1);
     }
@@ -569,18 +569,18 @@ html[dir='rtl'] {
 
   .cds--select-input__wrapper {
     select {
-      padding: 0 spacing.$spacing-05 0 spacing.$spacing-09;
+      padding: 0 layout.$spacing-05 0 layout.$spacing-09;
     }
     svg {
       right: unset;
-      left: spacing.$spacing-05;
+      left: layout.$spacing-05;
     }
   }
 
   .cds--search-magnifier {
     svg {
       left: unset;
-      right: spacing.$spacing-05;
+      right: layout.$spacing-05;
     }
   }
 
@@ -593,7 +593,7 @@ html[dir='rtl'] {
     .cds--search-magnifier {
       svg {
         left: unset;
-        right: spacing.$spacing-03;
+        right: layout.$spacing-03;
       }
     }
   }
