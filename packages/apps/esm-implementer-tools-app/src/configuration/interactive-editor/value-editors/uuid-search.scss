@@ -1,36 +1,40 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@import '../../../implementer-tools.styles.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.bodyShort01 {
+  @include type.type-style('body-compact-01');
+}
 
 .activeUuid {
   @include type.type-style('body-compact-01');
   color: $ui-05;
-  margin-bottom: spacing.$spacing-03;
-  padding-bottom: spacing.$spacing-03;
+  margin-bottom: layout.$spacing-03;
+  padding-bottom: layout.$spacing-03;
   border-bottom: 1px solid $ui-03;
 }
 
 .autocomplete,
 .autocomplete > [role='combobox'] {
   position: relative;
-  width: 20em;
+  width: 20rem;
 }
 
 .listbox {
-  box-shadow: 0 0 spacing.$spacing-03;
+  box-shadow: 0 0 layout.$spacing-03;
 }
 
 .smallListCell {
-  padding: spacing.$spacing-03;
+  padding: layout.$spacing-03;
 }
 
 .loader {
-  margin: 1rem;
+  margin: layout.$spacing-05;
 }
 
 .emptyResults {
   @include type.type-style('body-compact-01');
   background-color: $ui-02;
   color: $text-02;
-  min-height: 1rem;
+  min-height: layout.$spacing-05;
 }
