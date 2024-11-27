@@ -1,7 +1,7 @@
 @use '@carbon/styles/scss/motion';
-@use '@carbon/styles/scss/spacing';
+@use '@carbon/layout';
 @use '@carbon/styles/scss/theme';
-@use '@carbon/styles/scss/type';
+@use '@carbon/type';
 @use '@carbon/styles/scss/components/button';
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
@@ -55,7 +55,7 @@
   @include box-shadow.box-shadow;
   background-color: theme.$layer-01;
   overflow: hidden;
-  padding: spacing.$spacing-02 spacing.$spacing-02 spacing.$spacing-03 spacing.$spacing-02;
+  padding: layout.$spacing-02 layout.$spacing-02 layout.$spacing-03 layout.$spacing-02;
 }
 
 .flatButton {
@@ -79,13 +79,13 @@
 }
 
 .flatButtonMd {
-  height: spacing.$spacing-08;
-  width: spacing.$spacing-08;
+  height: layout.$spacing-08;
+  width: layout.$spacing-08;
 }
 
 .header {
-  margin-top: spacing.$spacing-03;
-  margin-bottom: spacing.$spacing-03;
+  margin-top: layout.$spacing-03;
+  margin-bottom: layout.$spacing-03;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -112,7 +112,8 @@
 }
 
 .inputWrapper {
-  margin-left: spacing.$spacing-05;
+  inline-size: 15rem;
+  padding-left: layout.$spacing-05;
   min-width: spacing.$spacing-13;
   max-width: 15rem;
 
@@ -157,20 +158,20 @@
 }
 
 .inputWrapperMd {
-  block-size: spacing.$spacing-08;
+  block-size: layout.$spacing-08;
 }
 
 .monthYear {
   @include component-reset.reset;
   @include type.type-style('heading-compact-01');
 
-  margin-top: spacing.$spacing-03;
-  margin-block-end: spacing.$spacing-01;
+  margin-top: layout.$spacing-03;
+  margin-block-end: layout.$spacing-01;
   text-align: center;
 
   > span {
-    margin-left: spacing.$spacing-02;
-    margin-right: spacing.$spacing-02;
+    margin-left: layout.$spacing-02;
+    margin-right: layout.$spacing-02;
   }
 
   div:has(input[inputmode='numeric']) {
@@ -180,8 +181,8 @@
       @include component-reset.reset;
       @include type.type-style('heading-compact-01');
       background-color: var(--cds-field);
-      inline-size: spacing.$spacing-08;
-      padding: spacing.$spacing-02;
+      inline-size: layout.$spacing-08;
+      padding: layout.$spacing-02;
       padding-right: 0;
 
       &::-webkit-outer-spin-button,
@@ -228,19 +229,19 @@
     button {
       @include component-reset.reset;
       position: absolute;
-      padding: 0 spacing.$spacing-02 0 spacing.$spacing-01;
+      padding: 0 layout.$spacing-02 0 layout.$spacing-01;
       border: none;
       block-size: 50%;
       cursor: pointer;
-      inline-size: spacing.$spacing-04;
-      inset-inline-start: spacing.$spacing-08;
+      inline-size: layout.$spacing-04;
+      inset-inline-start: layout.$spacing-08;
       line-height: 50%;
       opacity: 0;
 
       &::after {
         display: block;
-        border-inline-end: spacing.$spacing-02 solid transparent;
-        border-inline-start: spacing.$spacing-02 solid transparent;
+        border-inline-end: layout.$spacing-02 solid transparent;
+        border-inline-start: layout.$spacing-02 solid transparent;
         content: '';
         inset-block-start: 33%;
       }
@@ -261,7 +262,7 @@
       }
 
       &[slot='decrement'] {
-        top: spacing.$spacing-04;
+        top: layout.$spacing-04;
         left: 0;
       }
     }
@@ -291,13 +292,13 @@
 :global([dir='rtl']) {
   .inputWrapper {
     padding-left: unset;
-    padding-right: spacing.$spacing-04;
+    padding-right: layout.$spacing-04;
   }
 
   .monthYear {
     div:has(input[inputmode='numeric']) {
       > input[inputmode='numeric'] {
-        padding-right: spacing.$spacing-02;
+        padding-right: layout.$spacing-02;
       }
     }
 
@@ -309,7 +310,7 @@
       }
 
       &[slot='decrement'] {
-        top: spacing.$spacing-04;
+        top: layout.$spacing-04;
         left: unset;
         right: 0;
       }
@@ -319,9 +320,9 @@
 
 .invalidText {
   color: theme.$text-error !important;
-  font-size: 0.75rem;
+  font-size: layout.$spacing-04;
   font-weight: 400 !important;
-  margin: spacing.$spacing-02 0 0;
+  margin: layout.$spacing-02 0 0;
   overflow: hidden;
 }
 
@@ -335,16 +336,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  block-size: 2.5rem;
+  block-size: layout.$spacing-08;
   cursor: pointer;
-  inline-size: 2.5rem;
+  inline-size: layout.$spacing-08;
 
   &::after {
     position: absolute;
     display: block;
-    block-size: 0.25rem;
+    block-size: layout.$spacing-02;
     content: '';
-    inline-size: 0.25rem;
+    inline-size: layout.$spacing-02;
     inset-block-end: 0.4375rem;
     inset-inline-start: 50%;
     -webkit-transform: translateX(-50%);

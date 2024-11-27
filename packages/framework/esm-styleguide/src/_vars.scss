@@ -1,3 +1,5 @@
+@use '@carbon/layout';
+
 $ui-01: #f4f4f4;
 $ui-02: #ffffff;
 $ui-03: #e0e0e0;
@@ -54,8 +56,8 @@ $brand-primary-100: #081a1c;
   --brand-01: #005d5d;
   --brand-02: #004144;
   --brand-03: #007d79;
-  --bottom-nav-height: 4rem;
-  --workspace-header-height: 3rem;
+  --bottom-nav-height: layout.$spacing-10;
+  --workspace-header-height: layout.$spacing-09;
   --tablet-workspace-window-height: calc(100vh - var(--omrs-navbar-height) - var(--bottom-nav-height));
   --desktop-workspace-window-height: calc(100vh - var(--omrs-navbar-height) - var(--workspace-header-height));
 }

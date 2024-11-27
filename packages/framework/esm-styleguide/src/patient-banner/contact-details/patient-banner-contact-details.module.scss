@@ -1,7 +1,7 @@
 @use '@carbon/colors';
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .contactDetails,
 .deceased {
@@ -26,7 +26,7 @@
 
 .row > .col {
   flex: 1;
-  padding: 1rem 1rem;
+  padding: layout.$spacing-05;
 
   &:nth-of-type(2n + 1) {
     border-right: 1px solid $ui-03;
@@ -34,7 +34,7 @@
 }
 
 .row li {
-  margin: 0.5rem 0;
+  margin: layout.$spacing-03 0;
 }
 
 .relationship {

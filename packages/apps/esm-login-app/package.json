@@ -38,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "~1.37.0",
+    "@carbon/react": "^1.76.0",
     "@hookform/resolvers": "^3.6.0",
     "lodash-es": "^4.17.21",
     "react-hook-form": "^7.52.2",

@@ -1,5 +1,7 @@
+@use '@carbon/layout';
+@use '@carbon/react/scss/themes';
 @use '@carbon/react/scss/theme';
-@import '../implementer-tools.styles.scss';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .popup {
   position: fixed;

@@ -1,5 +1,6 @@
-@use '@carbon/styles/scss/spacing';
-@import '../../implementer-tools.styles.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .secretButton {
   background: none;
@@ -10,7 +11,7 @@
 }
 
 .error {
-  margin-left: 1em;
+  margin-left: layout.$spacing-05;
   color: orange;
   font-size: 11pt;
 }
@@ -25,5 +26,5 @@
 }
 
 .editValueButton {
-  margin-left: spacing.$spacing-05;
+  margin-left: layout.$spacing-05;
 }

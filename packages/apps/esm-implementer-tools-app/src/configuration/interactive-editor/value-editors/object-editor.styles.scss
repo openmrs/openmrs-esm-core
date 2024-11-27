@@ -1,0 +1,13 @@
+@use '@carbon/layout';
+
+.objectEditor :global(.cds--structured-list-td) {
+  padding: layout.$spacing-02 layout.$spacing-07 layout.$spacing-02 layout.$spacing-05;
+}
+
+.objectEditor :global(.cds--structured-list) {
+  margin-bottom: layout.$spacing-02;
+}
+
+.buttonCell {
+  text-align: right;
+}
