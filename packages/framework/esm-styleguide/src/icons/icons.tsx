@@ -457,9 +457,25 @@ export const PrinterIcon = memo(
 
 /**
  */
+export const ProgramsIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ProgramsIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-programs" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const RenewIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function RenewIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-renew" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const ReportIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ReportIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-report" iconProps={props} />;
   }),
 );
 
@@ -527,6 +543,14 @@ export const ShoppingCartArrowDownIcon = memo(
 export const StickyNoteAddIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function StickyNoteAddIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-sticky-note-add" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const SyringeIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function SyringeIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-syringe" iconProps={props} />;
   }),
 );
 
@@ -640,22 +664,6 @@ export const ViewIcon = memo(
 export const WarningIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function WarningIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-warning" iconProps={props} />;
-  }),
-);
-
-/**
- */
-export const ReportIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function ReportIcon(props, ref) {
-    return <Icon ref={ref} icon="omrs-icon-report" iconProps={props} />;
-  }),
-);
-
-/**
- */
-export const SyringeIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function SyringeIcon(props, ref) {
-    return <Icon ref={ref} icon="omrs-icon-syringe" iconProps={props} />;
   }),
 );
 
