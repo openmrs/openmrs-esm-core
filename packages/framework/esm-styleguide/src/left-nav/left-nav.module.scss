@@ -1,9 +1,10 @@
-@use '@carbon/styles/scss/type';
-@import '../vars';
+@use '@carbon/type';
+@use '@carbon/layout';
+@use '../vars' as *;
 
 .leftNav {
   border-right: 1px solid $ui-03;
-  padding-top: 1rem;
+  padding-top: layout.$spacing-05;
 
   // Left nav menu item
   :global(.cds--side-nav__link) {
@@ -19,10 +20,10 @@
     // Active menu item
     &:global(.active-left-nav-link) {
       color: $ui-05;
-      border-left: 0.25rem solid var(--brand-01);
+      border-left: layout.$spacing-02 solid var(--brand-01);
       background-color: $ui-03;
       outline: none;
-      padding: 0 0.75rem;
+      padding: 0 layout.$spacing-04;
     }
   }
 }
@@ -30,13 +31,13 @@
 /* Desktop */
 :global(.omrs-breakpoint-gt-tablet) {
   :global(.cds--side-nav__link) {
-    height: 2rem;
+    height: layout.$spacing-07;
   }
 }
 
 /* Tablet */
 :global(.omrs-breakpoint-lt-desktop) {
   :global(.cds--side-nav__link) {
-    height: 3rem;
+    height: layout.$spacing-09;
   }
 }

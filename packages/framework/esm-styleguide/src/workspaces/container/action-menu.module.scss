@@ -1,8 +1,8 @@
-@use '@carbon/styles/scss/spacing';
+@use '@carbon/layout';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
-$icon-button-size: 2.5rem;
-$actionPanelOffset: 3rem;
+$icon-button-size: layout.$spacing-08;
+$actionPanelOffset: layout.$spacing-09;
 
 .sideRailHidden {
   display: none;
@@ -71,9 +71,9 @@ $actionPanelOffset: 3rem;
 
 .divider {
   background-color: $text-03;
-  margin: 0.75rem 0;
+  margin: layout.$spacing-04 0;
   height: 1px;
-  width: 2.5rem;
+  width: layout.$spacing-08;
 }
 
 // Overriding styles for RTL support
