@@ -1,7 +1,35 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.productiveHeading01 {
+  @include type.type-style('heading-compact-01');
+}
+
+.productiveHeading02 {
+  @include type.type-style('heading-compact-02');
+}
+
+.productiveHeading03 {
+  @include type.type-style('heading-03');
+}
+
+.productiveHeading04 {
+  @include type.type-style('heading-04');
+}
+
+.bodyShort01 {
+  @include type.type-style('body-compact-01');
+}
+
+.bodyLong01 {
+  @include type.type-style('body-compact-01');
+}
+
+.label01 {
+  @include type.type-style('label-01');
+  color: $text-02;
+}
 
 .tableContainer {
   background-color: transparent;
@@ -15,7 +43,7 @@
   .tableHeader {
     @include type.type-style('heading-compact-02');
     color: $text-02;
-    padding: spacing.$spacing-04 0 spacing.$spacing-04 spacing.$spacing-04;
+    padding: layout.$spacing-04 0 layout.$spacing-04 layout.$spacing-04;
     grid-row: 1;
     grid-column: 1 / span 4;
   }
@@ -44,7 +72,7 @@
 
   .tableHeader {
     grid-column: 1;
-    padding: spacing.$spacing-04 0 spacing.$spacing-02 spacing.$spacing-04;
+    padding: layout.$spacing-04 0 layout.$spacing-02 layout.$spacing-04;
   }
 
   .tableSearch {
