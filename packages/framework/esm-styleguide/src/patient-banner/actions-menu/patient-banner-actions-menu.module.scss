@@ -1,6 +1,7 @@
 @use '@carbon/colors';
-@use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .actionsButtonText {
   @include type.type-style('body-compact-01');
@@ -12,7 +13,7 @@ html[dir='rtl'] {
   .overflowMenuContainer {
     & > div {
       margin-left: unset;
-      margin-right: -1.5rem;
+      margin-right: -(layout.$spacing-06);
       & > div {
         left: unset;
         right: -6.025rem;

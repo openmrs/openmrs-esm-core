@@ -1,26 +1,29 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../../implementer-tools.styles.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.productiveHeading01 {
+  @include type.type-style('heading-compact-01');
+}
 
 .path {
   @include type.type-style('heading-02');
-  margin-bottom: spacing.$spacing-03;
+  margin-bottom: layout.$spacing-03;
 }
 
 .description {
   @include type.type-style('body-compact-01');
-  margin-bottom: spacing.$spacing-05;
+  margin-bottom: layout.$spacing-05;
 }
 
 .source {
   @include type.type-style('body-compact-01');
   font-style: italic;
-  margin-bottom: spacing.$spacing-03;
+  margin-bottom: layout.$spacing-03;
 }
 
 .value {
   font-family: monospace;
-  margin-top: spacing.$spacing-03;
-  margin-left: spacing.$spacing-03;
+  margin-top: layout.$spacing-03;
+  margin-left: layout.$spacing-03;
 }

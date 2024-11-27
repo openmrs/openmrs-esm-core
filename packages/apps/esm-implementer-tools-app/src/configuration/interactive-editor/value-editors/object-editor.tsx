@@ -4,7 +4,7 @@ import { ValueEditorField } from './value-editor-field';
 import type { ConfigValueDescriptor } from '../editable-value.component';
 import { Type } from '@openmrs/esm-framework';
 import cloneDeep from 'lodash-es/cloneDeep';
-import styles from './object-editor.styles.css';
+import styles from './object-editor.styles.scss';
 
 interface ObjectEditorProps {
   element: ConfigValueDescriptor;

@@ -1,5 +1,18 @@
-@use '@carbon/styles/scss/spacing';
-@import '../../root.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.bodyShort01 {
+  @include type.type-style('body-compact-01');
+}
+
+.headerPanel {
+  height: max-content;
+}
+
+.primaryNavContainer {
+  height: var(--omrs-topnav-height);
+}
 
 .languageOptionsContainer {
   display: flex;
@@ -9,14 +22,14 @@
 
 .languageRadioButton {
   display: flex;
-  height: spacing.$spacing-09;
+  height: layout.$spacing-09;
   align-items: center;
   @extend .bodyShort01;
 }
 
 .submitButton {
   :global(.cds--inline-loading) {
-    min-height: 1rem !important;
+    min-height: layout.$spacing-05 !important;
   }
 
   :global(.cds--inline-loading__text) {

@@ -1,8 +1,7 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@use '@carbon/react/scss/theme';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../implementer-tools.styles.scss';
+@use '@carbon/layout';
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/themes';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .tools {
   width: 100%;
@@ -15,7 +14,7 @@
 }
 
 .toolbar {
-  padding: spacing.$spacing-05 spacing.$spacing-05 0;
+  padding: layout.$spacing-05 layout.$spacing-05 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -24,14 +23,14 @@
 .row {
   display: flex;
   flex-flow: row wrap;
-  margin: 0 -1rem;
+  margin: 0 (-(layout.$spacing-05));
 
   :global(.cds--col) {
     max-width: 100%;
     flex-basis: 0;
     flex-grow: 1;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 layout.$spacing-05;
   }
 }
 
@@ -77,21 +76,21 @@
   width: 35%;
   background-color: theme.$background;
   color: theme.$text-secondary;
-  padding: spacing.$spacing-05 2em;
+  padding: layout.$spacing-05 layout.$spacing-07;
   font-size: 12pt;
   overflow-wrap: break-word;
   overflow-y: auto;
 }
 
 .configTreePane :global(.cds--text-input-wrapper) {
-  min-width: 8em;
+  min-width: 8rem;
 }
 
 .toggleToolbarButton {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding: 0.25rem;
+  padding: layout.$spacing-02;
 }
 
 .toggleButtons {
@@ -106,6 +105,6 @@
   justify-content: flex-end;
 
   > button {
-    margin: 0 1rem;
+    margin: 0 layout.$spacing-05;
   }
 }

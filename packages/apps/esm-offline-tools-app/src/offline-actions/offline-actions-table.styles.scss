@@ -1,5 +1,5 @@
-@use '@carbon/styles/scss/spacing';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .tableContainer {
   background-color: transparent;
@@ -9,7 +9,7 @@
   display: grid;
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr auto;
-  padding-top: spacing.$spacing-05;
+  padding-top: layout.$spacing-05;
 
   .tableSearch {
     grid-row: 2;

@@ -1,7 +1,6 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .widgetCard {
   background-color: $ui-background;
@@ -14,7 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: spacing.$spacing-04 0 spacing.$spacing-04 spacing.$spacing-05;
+  padding: layout.$spacing-04 0 layout.$spacing-04 layout.$spacing-05;
   background-color: $ui-background;
 
   h4 {
@@ -23,7 +22,7 @@
     &:after {
       content: '';
       display: block;
-      width: 2rem;
+      width: layout.$spacing-07;
       padding-top: 0.188rem;
       border-bottom: 0.375rem solid var(--brand-03);
     }
@@ -31,7 +30,7 @@
 }
 
 .desktopHeader {
-  height: 3rem;
+  height: layout.$spacing-09;
 
   h4 {
     @include type.type-style('heading-compact-02');

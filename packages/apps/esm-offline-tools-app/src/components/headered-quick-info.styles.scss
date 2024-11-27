@@ -1,1 +1,11 @@
-@import '../root.scss';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.productiveHeading04 {
+  @include type.type-style('heading-04');
+}
+
+.label01 {
+  @include type.type-style('label-01');
+  color: $text-02;
+}

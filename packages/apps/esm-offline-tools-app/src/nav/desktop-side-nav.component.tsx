@@ -1,6 +1,6 @@
-import { attach, detach, ExtensionSlot, isDesktop, useLayoutType } from '@openmrs/esm-framework';
-import { SideNav } from '@carbon/react';
 import React, { useEffect } from 'react';
+import { SideNav } from '@carbon/react';
+import { attach, detach, ExtensionSlot, isDesktop, useLayoutType } from '@openmrs/esm-framework';
 import styles from './desktop-side-nav.styles.scss';
 
 const DesktopSideNav: React.FC = () => {

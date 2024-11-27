@@ -1,8 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './home/home.component';
+import classNames from 'classnames';
 import DesktopSideNav from './nav/desktop-side-nav.component';
+import Home from './home/home.component';
 import OfflineToolsPage from './offline-tools-page/offline-tools-page.component';
 import styles from './root.styles.scss';
 
