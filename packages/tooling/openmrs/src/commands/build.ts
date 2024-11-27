@@ -21,6 +21,7 @@ export interface BuildArgs {
   configUrls: Array<string>;
   configPaths: Array<string>;
   buildConfig?: string;
+  env: string;
 }
 
 export type BuildConfig = Partial<{
@@ -33,6 +34,7 @@ export type BuildConfig = Partial<{
   importmap: string;
   routes: string;
   spaPath: string;
+  env: string;
 }>;
 
 function loadBuildConfig(buildConfigPath?: string): BuildConfig {
@@ -108,7 +110,7 @@ export async function runBuild(args: BuildArgs) {
   const config = loadWebpackConfig({
     importmap: importMap,
     routes,
-    env: 'production',
+    env: buildConfig.env || args.env,
     apiUrl: buildConfig.apiUrl || args.apiUrl,
     configUrls: configUrls,
     defaultLocale: args.defaultLocale || buildConfig.defaultLocale,
