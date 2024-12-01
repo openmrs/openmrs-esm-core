@@ -50,13 +50,13 @@ export function useServerFetchAll<T, R>(
   options: UseServerFetchAllOptions<R> = {},
 ): UseServerInfiniteReturnObject<T, R> {
   const response = useServerInfinite<T, R>(url, serverPaginationHandlers, options);
-  const { hasMore, error, data, loadMore, isLoading } = response;
+  const { hasMore, error, data, loadMore, isLoading, nextUri } = response;
 
   useEffect(() => {
     if (hasMore && !error) {
       loadMore();
     }
-  }, [hasMore, data]);
+  }, [hasMore, nextUri]);
 
   if (options.partialData) {
     return response;
