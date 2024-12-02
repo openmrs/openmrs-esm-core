@@ -70,6 +70,10 @@ export interface UseServerInfiniteReturnObject<T, R> {
    * from useSWRInfinite
    */
   isLoading: boolean;
+  /**
+   * from useSWRInfinite
+   */
+  nextUri: string | null;
 }
 
 /**
@@ -147,6 +151,7 @@ export function useServerInfinite<T, R>(
     totalCount,
     hasMore,
     loadMore,
+    nextUri,
     ...rest,
   };
 }
