@@ -63,6 +63,12 @@ export const PatientListsPictogram = memo(
   }),
 );
 
+export const PharmacyPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function PharmacyPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-pharmacy" pictogramProps={props} />;
+  }),
+);
+
 export const RegistrationPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function RegistrationPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-registration" pictogramProps={props} />;

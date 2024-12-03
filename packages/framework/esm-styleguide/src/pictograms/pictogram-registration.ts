@@ -5,6 +5,7 @@ import inPatient from './svgs/in-patient.svg';
 import laboratory from './svgs/Labs.svg';
 import patientLists from './svgs/Patient Management_Patients.svg';
 import patientRegistration from './svgs/registration.svg';
+import pharmacy from './svgs/pharmacy-1.svg';
 import serviceQueues from './svgs/service-queues.svg';
 
 export function setupPictograms() {
@@ -15,4 +16,5 @@ export function setupPictograms() {
   addSvg('omrs-pict-service-queues', serviceQueues);
   addSvg('omrs-pict-registration', patientRegistration);
   addSvg('omrs-pict-in-patient', inPatient);
+  addSvg('omrs-pict-pharmacy', pharmacy);
 }
