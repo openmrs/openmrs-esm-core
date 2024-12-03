@@ -1,6 +1,7 @@
 /** @category Icons */
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
 import classNames, { type Argument } from 'classnames';
+import { RenderIfValueIsTruthy } from '@openmrs/esm-react-utils';
 import style from './icons.module.scss';
 
 export type IconProps = {
@@ -697,6 +698,48 @@ export const RadiologyIcon = ImageMedicalIcon;
  * Note this is an alias for ShoppingCartArrowDownIcon
  */
 export const ShoppingCartAddItemIcon = ShoppingCartArrowDownIcon;
+
+/**
+ * This is a utility component that takes an `icon` and render it if the sprite for the icon
+ * is available. The goal is to make it easier to conditionally render configuration-specified icons.
+ *
+ * @example
+ * ```tsx
+ *   <MaybeIcon icon='omrs-icon-baby' className={styles.myIconStyles} />
+ * ```
+ */
+export const MaybeIcon = memo(
+  forwardRef<SVGSVGElement, { icon: string; fallback?: React.ReactNode } & IconProps>(function MaybeIcon(
+    { icon, fallback, ...iconProps },
+    ref,
+  ) {
+    const iconRef = useRef(document.getElementById(icon));
+
+    useEffect(() => {
+      const container = document.getElementById('omrs-svgs-container');
+      const callback: MutationCallback = (mutationList) => {
+        for (const mutation of mutationList) {
+          if (mutation.type === 'childList') {
+            iconRef.current = document.getElementById(icon);
+          }
+        }
+      };
+
+      const observer = new MutationObserver(callback);
+      if (container) {
+        observer.observe(container, { childList: true });
+      }
+
+      return () => observer.disconnect();
+    }, [icon]);
+
+    return (
+      <RenderIfValueIsTruthy value={iconRef.current} fallback={fallback}>
+        <Icon ref={ref} icon={icon} iconProps={iconProps} />
+      </RenderIfValueIsTruthy>
+    );
+  }),
+);
 
 export type SvgIconProps = {
   icon: string;

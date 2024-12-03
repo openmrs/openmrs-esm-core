@@ -6,6 +6,7 @@ export * from './UserHasAccess';
 export * from './getLifecycle';
 export * from './openmrsComponentDecorator';
 export * from './OpenmrsContext';
+export * from './RenderIfValueIsTruthy';
 export * from './useAbortController';
 export * from './useAppContext';
 export * from './useAssignedExtensions';
