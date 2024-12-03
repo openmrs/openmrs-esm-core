@@ -97,7 +97,7 @@ const HeaderItems: React.FC = () => {
           )}
           {showAppMenu && (
             <HeaderGlobalAction
-              aria-label="App Menu"
+              aria-label={t('AppMenuTooltip', 'App Menu')}
               aria-labelledby="App Menu"
               className={classNames({
                 [styles.headerGlobalBarButton]: isActivePanel('appMenu'),
