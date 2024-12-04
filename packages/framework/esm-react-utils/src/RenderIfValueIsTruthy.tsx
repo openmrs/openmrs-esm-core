@@ -19,5 +19,8 @@ export const RenderIfValueIsTruthy: React.FC<PropsWithChildren<{ value: unknown;
   value,
   fallback,
 }) => {
-  return Boolean(value) ? <>{children}</> : fallback ? <>{fallback}</> : null;
+  if (Boolean(value)) {
+    return <>{children}</>;
+  }
+  return fallback ? <>{fallback}</> : null;
 };

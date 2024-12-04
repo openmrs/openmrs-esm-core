@@ -700,7 +700,7 @@ export const RadiologyIcon = ImageMedicalIcon;
 export const ShoppingCartAddItemIcon = ShoppingCartArrowDownIcon;
 
 /**
- * This is a utility component that takes an `icon` and render it if the sprite for the icon
+ * This is a utility component that takes an `icon` and renders it if the sprite for the icon
  * is available. The goal is to make it easier to conditionally render configuration-specified icons.
  *
  * @example

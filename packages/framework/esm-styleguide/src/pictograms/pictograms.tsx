@@ -58,12 +58,12 @@ export const ServiceQueuesPictogram = memo(
 );
 
 /**
- * This is a utility component that takes an `icon` and render it if the sprite for the icon
- * is available. The goal is to make it easier to conditionally render configuration-specified icons.
+ * This is a utility component that takes an `pictogram` and render it if the sprite for the pictogram
+ * is available. The goal is to make it easier to conditionally render configuration-specified pictograms.
  *
  * @example
  * ```tsx
- *   <MaybeIcon icon='omrs-icon-baby' className={styles.myIconStyles} />
+ *   <MaybePictogram pictogram='omrs-icon-baby' className={styles.myPictogramStyles} />
  * ```
  */
 export const MaybePictogram = memo(
