@@ -1,5 +1,30 @@
-@use '@carbon/styles/scss/spacing';
-@import '../../root.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.productiveHeading01 {
+  @include type.type-style('heading-compact-01');
+}
+
+.productiveHeading02 {
+  @include type.type-style('heading-compact-02');
+}
+
+.bodyLong01 {
+  @include type.type-style('body-01');
+}
+
+.bodyShort01 {
+  @include type.type-style('body-compact-01');
+}
+
+.headerPanel {
+  height: max-content;
+}
+
+.primaryNavContainer {
+  height: var(--omrs-topnav-height);
+}
 
 .menuLink a {
   display: flex;
@@ -22,7 +47,7 @@
 }
 
 .launchIcon {
-  margin-left: spacing.$spacing-03;
+  margin-left: layout.$spacing-03;
 }
 
 .headerPanel {

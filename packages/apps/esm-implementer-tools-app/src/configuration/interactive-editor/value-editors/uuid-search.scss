@@ -1,12 +1,55 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@import '../../../implementer-tools.styles.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.productiveHeading01 {
+  @include type.type-style('heading-compact-01');
+}
+
+.productiveHeading02 {
+  @include type.type-style('heading-compact-02');
+}
+
+.bodyShort01 {
+  @include type.type-style('body-compact-01');
+}
+
+.toolStyles {
+  background-color: transparent;
+}
+
+// Chevron button - implementer-tools component
+.chevronImplementerToolsButton {
+  position: fixed;
+  bottom: 0;
+  left: calc(50vw - spacing.$spacing-05);
+  z-index: 9999;
+
+  div {
+    background-color: $ui-02;
+    width: spacing.$spacing-07;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+  }
+
+  div:hover {
+    padding: spacing.$spacing-03 0;
+  }
+}
+
+.darkTheme {
+  @include theme.theme(themes.$g90);
+}
 
 .activeUuid {
   @include type.type-style('body-compact-01');
   color: $ui-05;
-  margin-bottom: spacing.$spacing-03;
-  padding-bottom: spacing.$spacing-03;
+  margin-bottom: layout.$spacing-03;
+  padding-bottom: layout.$spacing-03;
   border-bottom: 1px solid $ui-03;
 }
 
@@ -17,11 +60,11 @@
 }
 
 .listbox {
-  box-shadow: 0 0 spacing.$spacing-03;
+  box-shadow: 0 0 layout.$spacing-03;
 }
 
 .smallListCell {
-  padding: spacing.$spacing-03;
+  padding: layout.$spacing-03;
 }
 
 .loader {
