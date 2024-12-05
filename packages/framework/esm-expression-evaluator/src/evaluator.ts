@@ -1,5 +1,5 @@
 /** @category Utility */
-import jsep from 'jsep';
+import jsep, { type Expression, type MemberExpression } from 'jsep';
 import jsepArrow, { type ArrowExpression } from '@jsep-plugin/arrow';
 import jsepNew, { type NewExpression } from '@jsep-plugin/new';
 import jsepNumbers from '@jsep-plugin/numbers';
@@ -467,9 +467,9 @@ function visitCallExpression(expression: jsep.CallExpression, context: Evaluatio
   let callee = visitExpression(expression.callee, context);
 
   if (!callee) {
-    throw `No function named ${expression.callee} is defined in this context`;
+    throw `No function named ${getCallTargetName(expression.callee)} is defined in this context`;
   } else if (!(typeof callee === 'function')) {
-    throw `${expression.callee} is not a function`;
+    throw `${getCallTargetName(expression.callee)} is not a function`;
   }
 
   return callee(...args);
@@ -721,4 +721,15 @@ function isValidVariableType(val: unknown): val is VariablesMap['a'] {
   }
 
   return false;
+}
+
+function getCallTargetName(expression: Expression) {
+  if (!expression) {
+    return null;
+  }
+  if (expression.type === 'MemberExpression') {
+    return (expression.property as MemberExpression)?.name;
+  }
+  // identifier expression
+  return expression.name;
 }
