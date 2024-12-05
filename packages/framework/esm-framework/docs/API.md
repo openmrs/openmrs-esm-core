@@ -695,7 +695,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:744](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L744)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:717](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L717)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1202,7 +1206,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:676](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L676)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:691](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L691)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1262,7 +1270,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:681](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L681)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:696](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L696)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1456,7 +1468,11 @@ Note this is an alias for ListCheckedIcon
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:688](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L688)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:703](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L703)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1570,13 +1586,27 @@ ___
 
 ___
 
+### GenericOrderTypeIcon
+
+• `Const` **GenericOrderTypeIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:283](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L283)
+
+___
+
 ### GroupAccessIcon
 
 • `Const` **GroupAccessIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:292](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L292)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:299](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L299)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1586,7 +1616,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:284](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L284)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:291](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L291)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1606,7 +1640,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:300](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L300)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:307](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L307)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1618,7 +1656,11 @@ This is a utility type for custom icons that use the svg-sprite-loader to bundle
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:752](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L752)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:725](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L725)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1628,7 +1670,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:308](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L308)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:315](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L315)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1648,7 +1694,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:332](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L332)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:339](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L339)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1658,7 +1708,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:324](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L324)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:331](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L331)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1668,7 +1722,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:340](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L340)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:347](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L347)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1678,7 +1736,21 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:316](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L316)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:323](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L323)
+
+___
+
+### LabOrderIcon
+
+• `Const` **LabOrderIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:355](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L355)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1698,7 +1770,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L348)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:363](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L363)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1708,7 +1784,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:356](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L356)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:371](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L371)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1728,6 +1808,7 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:364](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L364)
 
 ___
@@ -1765,6 +1846,9 @@ is available. The goal is to make it easier to conditionally render configuratio
 #### Defined in
 
 [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L69)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:379](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L379)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1774,7 +1858,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L372)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:387](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L387)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1784,7 +1872,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:380](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L380)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:395](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L395)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1794,7 +1886,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:388](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L388)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:403](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L403)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1806,7 +1902,11 @@ Billing
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:397](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L397)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:412](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L412)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1816,7 +1916,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:405](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L405)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:420](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L420)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1826,7 +1930,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:413](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L413)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:428](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L428)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1848,7 +1956,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:421](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L421)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:436](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L436)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1858,7 +1970,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:429](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L429)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:444](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L444)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1868,7 +1984,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:633](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L633)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:648](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L648)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1888,7 +2008,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:437](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L437)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:452](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L452)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1898,7 +2022,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:445](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L445)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:460](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L460)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1930,7 +2058,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:453](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L453)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:468](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L468)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1940,7 +2072,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:461](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L461)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:476](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L476)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1950,7 +2086,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:693](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L693)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:708](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L708)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -1995,7 +2135,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:469](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L469)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:484](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L484)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2005,7 +2149,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:477](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L477)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:492](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L492)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2015,7 +2163,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:485](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L485)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:500](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L500)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2025,7 +2177,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:501](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L501)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:516](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L516)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2035,7 +2191,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:509](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L509)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:524](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L524)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2059,7 +2219,11 @@ Note this is an alias for ShoppingCartArrowDownIcon
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:700](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L700)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:715](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L715)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2071,7 +2235,11 @@ Used as a button to add an item to the Order basket from a search
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:535](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L535)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:550](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L550)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2083,7 +2251,11 @@ Order Basket, the UI to enter Orders for Medications, Referrals, Labs, Procedure
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:526](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L526)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:541](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L541)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2095,7 +2267,11 @@ Used as action button to open ward in-patient note workspace
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:544](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L544)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:559](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L559)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2105,7 +2281,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:517](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L517)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:532](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L532)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2115,7 +2295,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:552](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L552)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:567](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L567)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2125,7 +2309,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:569](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L569)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:584](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L584)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2137,7 +2325,11 @@ Used as a button to add an item to the Order basket from a search
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:561](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L561)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:576](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L576)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2149,7 +2341,11 @@ Lab investigations
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:578](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L578)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:593](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L593)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2159,7 +2355,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:586](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L586)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:601](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L601)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2169,7 +2369,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:493](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L493)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:508](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L508)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2179,7 +2383,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:594](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L594)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:609](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L609)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2189,7 +2397,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:602](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L602)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:617](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L617)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2201,7 +2413,11 @@ User of OpenMRS e.g. My Account
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:611](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L611)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:626](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L626)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2211,7 +2427,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:619](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L619)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:634](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L634)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2221,7 +2441,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:641](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L641)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:656](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L656)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2231,7 +2455,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:627](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L627)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:642](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L642)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2241,7 +2469,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:657](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L657)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:672](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L672)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2251,7 +2483,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:649](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L649)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:664](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L664)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
@@ -2261,7 +2497,11 @@ ___
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/framework/esm-styleguide/src/icons/icons.tsx:665](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L665)
+=======
+[packages/framework/esm-styleguide/src/icons/icons.tsx:680](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L680)
+>>>>>>> 6eefaf48 (Update documentation)
 
 ___
 
