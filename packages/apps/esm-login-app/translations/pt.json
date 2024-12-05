@@ -20,7 +20,7 @@
   "login": "Entrar no Sistema",
   "Logout": "Sair do sistema",
   "newPassword": "Nova senha",
-  "newPasswordRequired": "Nova senha é obrigatório",
+  "newPasswordRequired": "Nova senha é obrigatória",
   "oldPassword": "Senha antiga",
   "oldPasswordRequired": "A senha antiga é obrigatória",
   "openmrsLogo": "Logotipo do OpenMRS",
