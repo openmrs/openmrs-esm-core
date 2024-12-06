@@ -1736,7 +1736,7 @@ ___
 
 • `Const` **MaybeIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<{ `fallback?`: `ReactNode` ; `icon`: `string`  } & [`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
 
-This is a utility component that takes an `icon` and render it if the sprite for the icon
+This is a utility component that takes an `icon` and renders it if the sprite for the icon
 is available. The goal is to make it easier to conditionally render configuration-specified icons.
 
 **`example`**
@@ -1754,12 +1754,12 @@ ___
 
 • `Const` **MaybePictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<{ `fallback?`: `ReactNode` ; `pictogram`: `string`  } & [`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
 
-This is a utility component that takes an `icon` and render it if the sprite for the icon
-is available. The goal is to make it easier to conditionally render configuration-specified icons.
+This is a utility component that takes an `pictogram` and render it if the sprite for the pictogram
+is available. The goal is to make it easier to conditionally render configuration-specified pictograms.
 
 **`example`**
 ```tsx
-  <MaybeIcon icon='omrs-icon-baby' className={styles.myIconStyles} />
+  <MaybePictogram pictogram='omrs-icon-baby' className={styles.myPictogramStyles} />
 ```
 
 #### Defined in
@@ -3391,7 +3391,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L227)
+[packages/framework/esm-config/src/module-config/module-config.ts:242](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L242)
 
 ___
 
@@ -3423,7 +3423,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L259)
+[packages/framework/esm-config/src/module-config/module-config.ts:275](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L275)
 
 ___
 
@@ -3444,7 +3444,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L243)
+[packages/framework/esm-config/src/module-config/module-config.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L259)
 
 ___
 

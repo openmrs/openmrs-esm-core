@@ -185,10 +185,25 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
  * @param moduleName
  */
 export function registerModuleWithConfigSystem(moduleName: string) {
-  const state = configInternalStore.getState();
-  configInternalStore.setState({
+  configInternalStore.setState((state) => ({
+    ...state,
     schemas: { ...state.schemas, [moduleName]: implicitConfigSchema },
-  });
+  }));
+}
+
+/**
+ * This alerts the configuration system that a module has been loaded.
+ *
+ * This should only be used in esm-app-shell.
+ *
+ * @internal
+ * @param moduleName
+ */
+export function registerModuleLoad(moduleName: string) {
+  configInternalStore.setState((state) => ({
+    ...state,
+    moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+  }));
 }
 
 /**
@@ -201,10 +216,10 @@ export function registerModuleWithConfigSystem(moduleName: string) {
  * @param namespace
  */
 export function registerTranslationNamespace(namespace: string) {
-  const state = configInternalStore.getState();
-  configInternalStore.setState({
+  configInternalStore.setState((state) => ({
+    ...state,
     schemas: { ...state.schemas, [namespace]: translationOverridesSchema },
-  });
+  }));
 }
 
 /**
@@ -235,9 +250,10 @@ export function defineExtensionConfigSchema(extensionName: string, schema: Confi
     );
   }
 
-  configInternalStore.setState({
+  configInternalStore.setState((state) => ({
+    ...state,
     schemas: { ...state.schemas, [extensionName]: enhancedSchema },
-  });
+  }));
 }
 
 export function provide(config: Config, sourceName = 'provided') {
