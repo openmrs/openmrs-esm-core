@@ -170,6 +170,7 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   configInternalStore.setState((state) => ({
     ...state,
     schemas: { ...state.schemas, [moduleName]: enhancedSchema },
+    moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
   }));
 }
 
