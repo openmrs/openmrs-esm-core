@@ -5,7 +5,7 @@ import { InlineLoading } from '@carbon/react';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import styles from './workspace.module.scss';
 import { type OpenWorkspace } from '../workspaces';
-import { useWorkspaceFamilyStore } from '../workspace-sidebar-store/useWorkspaceFamilyStore';
+import { useWorkspaceGroupStore } from '../workspace-sidebar-store/useWorkspaceGroupStore';
 
 interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
@@ -14,7 +14,7 @@ interface WorkspaceRendererProps {
 
 export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: WorkspaceRendererProps) {
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
-  const workspaceFamilyState = useWorkspaceFamilyStore(workspace.sidebarFamily);
+  const workspaceGroupState = useWorkspaceGroupStore(workspace.currentWorkspaceGroup);
 
   useEffect(() => {
     let active = true;
@@ -36,10 +36,10 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
         promptBeforeClosing: workspace.promptBeforeClosing,
         setTitle: workspace.setTitle,
         ...additionalPropsFromPage,
-        ...workspaceFamilyState,
+        ...workspaceGroupState,
         ...workspace.additionalProps,
       },
-    [workspace, additionalPropsFromPage, workspaceFamilyState],
+    [workspace, additionalPropsFromPage, workspaceGroupState],
   );
 
   return lifecycle ? (
