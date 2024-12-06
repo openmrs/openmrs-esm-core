@@ -1,4 +1,5 @@
 import React from 'react';
+import { Pictogram } from './src';
 
 export const ActivityIcon = () => <div>ActivityIcon</div>;
 export const AddIcon = () => <div>AddIcon</div>;
@@ -87,6 +88,8 @@ export const PatientListsPictogram = () => <div>PatientListsPictogram</div>;
 export const ServiceQueuesPictogram = () => <div>ServiceQueuesPictogramPictogram</div>;
 export const LabOrderIcon = () => <div>LabOrderIcon</div>;
 export const GenericOrderTypeIcon = () => <div>GenericOrderTypeIcon</div>;
+export const MaybeIcon = ({ icon }) => <div>{icon}</div>;
+export const MaybePictogram = ({ pictogram }) => <div>{pictogram}</div>;
 
 export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
 
