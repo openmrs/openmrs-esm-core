@@ -85,6 +85,8 @@ export const HomePictogram = () => <div>HomePictogram</div>;
 export const LaboratoryPictogram = () => <div>LaboratoryPictogramPictogram</div>;
 export const PatientListsPictogram = () => <div>PatientListsPictogram</div>;
 export const ServiceQueuesPictogram = () => <div>ServiceQueuesPictogramPictogram</div>;
+export const LabOrderIcon = () => <div>LabOrderIcon</div>;
+export const GenericOrderTypeIcon = () => <div>GenericOrderTypeIcon</div>;
 
 export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
 
