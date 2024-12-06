@@ -1,4 +1,5 @@
 import { importDynamic } from '@openmrs/esm-dynamic-loading';
+import { registerModuleLoad } from '@openmrs/esm-config';
 import { type LifeCycles } from 'single-spa';
 import { emptyLifecycle } from './helpers';
 
@@ -68,10 +69,16 @@ export async function initializeApp(appName: string, module?: Module) {
       if (Object.hasOwn(_module, 'startupApp')) {
         const startup = _module['startupApp'];
         if (typeof startup === 'function') {
-          return Promise.resolve(startup()).then(resolve).catch(reject);
+          return Promise.resolve(startup())
+            .then(() => {
+              registerModuleLoad(appName);
+              resolve(null);
+            })
+            .catch(reject);
         }
       }
 
+      registerModuleLoad(appName);
       resolve(null);
     }));
   } else {

@@ -14,6 +14,7 @@ import {
   defineConfigSchema,
   provide,
   Type,
+  registerModuleLoad,
   temporaryConfigStore,
   configInternalStore,
   getExtensionSlotsConfigStore,
@@ -46,6 +47,7 @@ describe('Interaction between configuration and extension systems', () => {
     attach('A slot', 'Fred');
     attach('A slot', 'Wilma');
     defineConfigSchema('esm-flintstone', {});
+    registerModuleLoad('esm-flintstone');
 
     provide({
       'esm-flintstone': {
@@ -87,6 +89,8 @@ describe('Interaction between configuration and extension systems', () => {
     defineConfigSchema('esm-flintstone', {
       town: { _type: Type.String, _default: 'Bedrock' },
     });
+    registerModuleLoad('esm-flintstone');
+
     attach('Flintstone slot', 'Pebbles');
     attach('Future slot', 'Pebbles');
     provide({
@@ -136,6 +140,8 @@ describe('Interaction between configuration and extension systems', () => {
     defineConfigSchema('esm-characters', {
       name: { _type: Type.String, _default: '(no-name)' },
     });
+    registerModuleLoad('esm-characters');
+
     attach('Flintstone slot', 'pet#Dino');
     attach('Flintstone slot', 'pet#BabyPuss');
     provide({
@@ -183,6 +189,7 @@ describe('Interaction between configuration and extension systems', () => {
     registerSimpleExtension('Pearl', 'esm-slaghoople');
     attach('A slot', 'Pearl');
     defineConfigSchema('esm-slaghoople', {});
+    registerModuleLoad('esm-flintstone');
 
     const App = openmrsComponentDecorator({
       moduleName: 'esm-slaghoople',
@@ -218,6 +225,7 @@ describe('Interaction between configuration and extension systems', () => {
     registerSimpleExtension('Mr. Slate', 'esm-flintstone', true);
     attach('A slot', 'Mr. Slate');
     defineConfigSchema('esm-flintstone', { tie: { _default: 'green' } });
+    registerModuleLoad('esm-flintstone');
 
     const App = openmrsComponentDecorator({
       moduleName: 'esm-quarry',
@@ -256,6 +264,8 @@ describe('Interaction between configuration and extension systems', () => {
     registerSimpleExtension('Bamm-Bamm', 'esm-flintstone', false);
     attach('A slot', 'Bamm-Bamm');
     defineConfigSchema('esm-flintstone', { clothes: { _default: 'leopard' } });
+    registerModuleLoad('esm-flintstone');
+
     function RootComponent() {
       const store = useExtensionStore();
       return (
@@ -329,6 +339,8 @@ describe('Interaction between configuration and extension systems', () => {
     attach('A slot', 'Wilma');
     defineConfigSchema('esm-bedrock', {});
     defineConfigSchema('esm-flintstones', {});
+    registerModuleLoad('esm-bedrock');
+    registerModuleLoad('esm-flintstones');
     provide({
       'esm-bedrock': {
         'Display conditions': {
@@ -389,6 +401,7 @@ describe('Interaction between configuration and extension systems', () => {
     registerSimpleExtension('Schmoo', 'esm-bedrock', true);
     attach('A slot', 'Schmoo');
     defineConfigSchema('esm-bedrock', {});
+    registerModuleLoad('esm-bedrock');
     provide({
       'esm-bedrock': {
         'Display conditions': {
@@ -448,6 +461,8 @@ describe('Interaction between configuration and extension systems', () => {
     attach('A slot', 'Wilma');
     defineConfigSchema('esm-bedrock', {});
     defineConfigSchema('esm-flintstones', {});
+    registerModuleLoad('esm-bedrock');
+    registerModuleLoad('esm-flintstones');
     provide({ 'esm-bedrock': {} });
     provide({ 'esm-flintstones': {} });
 
