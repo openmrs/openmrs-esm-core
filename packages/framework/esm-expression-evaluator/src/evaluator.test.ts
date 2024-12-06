@@ -6,7 +6,7 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('1 + 1')).toBe(2);
   });
 
-  it('Should support mulitplication', () => {
+  it('Should support multiplication', () => {
     expect(evaluate('1 * 2')).toBe(2);
   });
 
@@ -93,7 +93,7 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('a ? 1 : 2', { a: false })).toBe(2);
   });
 
-  it('Should support hexdecimal', () => {
+  it('Should support hexadecimal', () => {
     expect(evaluate('0xff')).toBe(255);
   });
 
@@ -154,7 +154,7 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate(exp)).toBe(2);
   });
 
-  it('Should not support variable assignement', () => {
+  it('Should not support variable assignment', () => {
     expect(() => evaluate('var a = 1; a')).toThrow();
   });
 
@@ -197,5 +197,32 @@ describe('OpenMRS Expression Evaluator', () => {
         },
       ),
     ).toBe(true);
+  });
+
+  it('Should throw an error with correct message for non-existent function', () => {
+    expect(() => {
+      evaluate('api.nonExistingFunction()', { api: {} });
+    }).toThrow('No function named nonExistingFunction is defined in this context');
+
+    // nested ref
+    expect(() => {
+      evaluate('objectWrapper.path.deepNested()', {
+        objectWrapper: {
+          path: {
+            deepNested: undefined,
+          },
+        },
+      });
+    }).toThrow('No function named deepNested is defined in this context');
+  });
+
+  it('Should throw an error with correct message for non-callable targets', () => {
+    expect(() => {
+      evaluate('objectWrapper.path()', {
+        objectWrapper: {
+          path: {},
+        },
+      });
+    }).toThrow('path is not a function');
   });
 });
