@@ -281,6 +281,14 @@ export const GenderUnknownIcon = memo(
 
 /**
  */
+export const GenericOrderTypeIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function GenericOrderTypeIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-generic-order-type" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const GroupIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function GroupIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-group" iconProps={props} />;
@@ -340,6 +348,14 @@ export const InformationFilledIcon = memo(
 export const InformationSquareIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function InformationSquareIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-information-square" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const LabOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function LabOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-lab-order" iconProps={props} />;
   }),
 );
 
