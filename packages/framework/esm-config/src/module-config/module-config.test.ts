@@ -51,6 +51,8 @@ describe('defineConfigSchema', () => {
       bar: true,
     };
     Config.defineConfigSchema('foo-module', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/foo-module.*bar/));
   });
 
@@ -59,6 +61,8 @@ describe('defineConfigSchema', () => {
       bar: { baz: 'bad bad bad' },
     };
     Config.defineConfigSchema('foo-module', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/foo-module.*bar\.baz/));
   });
 
@@ -66,8 +70,9 @@ describe('defineConfigSchema', () => {
     const schema = {
       bar: { _default: 0, _type: 'numeral' },
     };
-    //@ts-ignore
     Config.defineConfigSchema('foo-module', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/foo-module.*bar[\s\S]*Number.*numeral/i));
   });
 
@@ -85,6 +90,8 @@ describe('defineConfigSchema', () => {
       },
     };
     Config.defineConfigSchema('foo-module', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -106,6 +113,8 @@ describe('defineConfigSchema', () => {
       ],
     };
     Config.defineConfigSchema('foo-module', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     Config.provide({ 'foo-module': { foo: 'different' } });
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/The value of `foo` must start with the value of `fooStart`.*bar/),
@@ -116,8 +125,9 @@ describe('defineConfigSchema', () => {
     const schema = {
       bar: { _default: [], _validators: [false] },
     };
-    //@ts-ignore
     Config.defineConfigSchema('foo-module', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/foo-module.*has invalid validator.*bar[\s\S]*false.*/i),
     );
@@ -132,6 +142,8 @@ describe('defineConfigSchema', () => {
       },
     };
     Config.defineConfigSchema('mod-mod', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('mod-mod');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/mod-mod.*foo.*bar/));
   });
 
@@ -144,6 +156,8 @@ describe('defineConfigSchema', () => {
       },
     };
     Config.defineConfigSchema('mod-mod', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('mod-mod');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/mod-mod.*foo[\s\S]*elements.*Boolean/));
   });
 
@@ -152,6 +166,8 @@ describe('defineConfigSchema', () => {
       foo: { bar: { _description: 'lol idk' } },
     };
     Config.defineConfigSchema('mod-mod', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('mod-mod');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/mod-mod.*foo\.bar[\s\S]*default/));
   });
 
@@ -160,6 +176,8 @@ describe('defineConfigSchema', () => {
       foo: { bar: {} },
     };
     Config.defineConfigSchema('mod-mod', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('mod-mod');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/mod-mod.*foo\.bar[\s\S]*default/));
   });
 
@@ -174,6 +192,8 @@ describe('defineConfigSchema', () => {
       },
     };
     Config.defineConfigSchema('mod-mod', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('mod-mod');
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -186,6 +206,8 @@ describe('defineConfigSchema', () => {
     };
 
     Config.defineConfigSchema('mod-mod', schema);
+    // load to trigger validation
+    Config.registerModuleLoad('mod-mod');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/mod-mod.*\bDisplay conditions\b/));
   });
 });
@@ -201,6 +223,8 @@ describe('getConfig', () => {
 
   it('uses config values from the provided config file', async () => {
     Config.defineConfigSchema('foo-module', { foo: { _default: 'qux' } });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     type FooConfig = { foo: string };
     const testConfig = { 'foo-module': { foo: 'bar' } };
     Config.provide(testConfig);
@@ -215,12 +239,16 @@ describe('getConfig', () => {
         _default: 'qux',
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('testmod');
     const config = await Config.getConfig('testmod');
     expect(config.foo).toBe('qux');
   });
 
   it('logs an error if config values not defined in the schema', async () => {
     Config.defineConfigSchema('foo-module', { foo: { _default: 'qux' } });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     Config.provide({ 'foo-module': { bar: 'baz' } });
     await Config.getConfig('foo-module');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/Unknown.*key.*foo-module.*bar/));
@@ -230,6 +258,8 @@ describe('getConfig', () => {
     Config.defineConfigSchema('foo-module', {
       foo: { bar: { _default: 'qux' } },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     Config.provide({ 'foo-module': { foo: { doof: 'nope' } } });
     await Config.getConfig('foo-module');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/foo-module.*foo\.doof.*/));
@@ -245,6 +275,8 @@ describe('getConfig', () => {
       },
     };
     Config.defineConfigSchema('foo-module', fooSchema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const badConfig = {
       'foo-module': {
         bar: { a: { b: 5 } },
@@ -259,6 +291,8 @@ describe('getConfig', () => {
     await resetAll();
 
     Config.defineConfigSchema('foo-module', fooSchema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const goodConfig = { 'foo-module': { bar: { a: { b: 0 }, diff: 2 } } };
     Config.provide(goodConfig);
     const result = await Config.getConfig('foo-module');
@@ -294,6 +328,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: {
@@ -314,8 +350,11 @@ describe('getConfig', () => {
 
   it('works for multiple modules and multiple provides', async () => {
     Config.defineConfigSchema('foo-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('foo-module');
     Config.defineConfigSchema('bar-module', { bar: { _default: 'quinn' } });
+    Config.registerModuleLoad('bar-module');
     Config.defineConfigSchema('baz-module', { baz: { _default: 'quip' } });
+    Config.registerModuleLoad('baz-module');
     const barTestConfig = { 'bar-module': { bar: 'barrr' } };
     const bazTestConfig = { 'baz-module': { baz: 'bazzz' } };
     Config.provide(barTestConfig);
@@ -336,6 +375,8 @@ describe('getConfig', () => {
         _validators: [validator((val) => val.startsWith('thi'), "must start with 'thi'")],
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: 'bar',
@@ -353,6 +394,8 @@ describe('getConfig', () => {
         _validators: [validator((val) => val.startsWith('thi'), "must start with 'thi'")],
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     await Config.getConfig('foo-module');
     expect(console.error).not.toHaveBeenCalled();
   });
@@ -364,6 +407,8 @@ describe('getConfig', () => {
         _validators: [validator((val) => val.startsWith('thi'), "must start with 'thi'")],
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: 'this',
@@ -383,6 +428,8 @@ describe('getConfig', () => {
       },
     };
     Config.defineConfigSchema('foo-module', fooSchema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         baz: { what: 'ever', goes: 'here' },
@@ -396,6 +443,8 @@ describe('getConfig', () => {
     await resetAll();
 
     Config.defineConfigSchema('foo-module', fooSchema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const badConfig = {
       'foo-module': {
         baz: 0,
@@ -413,6 +462,8 @@ describe('getConfig', () => {
         _default: {},
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('object-null-module');
     const testConfig = {
       'object-null-module': {
         objnu: null,
@@ -433,6 +484,8 @@ describe('getConfig', () => {
         _default: {},
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: {
@@ -458,6 +511,8 @@ describe('getConfig', () => {
         _default: { kake: { gohan: 'ok' } },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('object-def');
     const config = await Config.getConfig('object-def');
     expect(config).toStrictEqual({
       furi: { kake: { gohan: 'ok' } },
@@ -477,6 +532,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('object-def');
     Config.provide({
       'object-def': {
         tamago: {
@@ -500,6 +557,8 @@ describe('getConfig', () => {
         _default: [1, 2, 3],
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: [0, 2, 4],
@@ -521,6 +580,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: ['bar', 'baz', 'qux'],
@@ -542,6 +603,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: ['bar', 42],
@@ -562,6 +625,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: [0, 1.5, 'bad'],
@@ -585,6 +650,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         bar: {
@@ -613,6 +680,8 @@ describe('getConfig', () => {
         },
       },
     };
+    // load to trigger validation
+    Config.registerModuleLoad('array-nest');
     Config.defineConfigSchema('array-nest', configSchema);
     const testConfig = {
       'array-nest': {
@@ -643,6 +712,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const testConfig = {
       'foo-module': {
         foo: [{ a: { b: 0.2 } }],
@@ -664,6 +735,8 @@ describe('getConfig', () => {
       },
     };
     Config.defineConfigSchema('foo-module', fooSchema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const badConfig = {
       'foo-module': {
         bar: [
@@ -679,6 +752,8 @@ describe('getConfig', () => {
     await resetAll();
 
     Config.defineConfigSchema('foo-module', fooSchema);
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     const goodConfig = { 'foo-module': { bar: [{ a: { b: 2 }, c: 3 }] } };
     Config.provide(goodConfig);
     const result = await Config.getConfig('foo-module');
@@ -692,6 +767,8 @@ describe('getConfig', () => {
         _default: [1, 2, 3],
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('array-null-module');
     const testConfig = {
       'array-null-module': {
         arnu: null,
@@ -715,6 +792,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('array-def');
     const testConfig = {
       'array-def': {
         foo: [{ a: { b: 'customB', filler: 'customFiller' } }, { a: { b: 'anotherB' } }],
@@ -741,6 +820,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('array-array-simple');
 
     // Ensure sensible default behavior
     const configDefault = await Config.getConfig('array-array-simple');
@@ -775,6 +856,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('array-array-def');
 
     // Ensure sensible default behavior
     const configDefault = await Config.getConfig('array-array-def');
@@ -817,6 +900,8 @@ describe('getConfig', () => {
         },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('array-array-valid');
     const testConfig = {
       'array-array-valid': {
         tamago: [{ yaki: { negi: 'one' } }],
@@ -847,6 +932,8 @@ describe('type validations', () => {
     Config.defineConfigSchema('foo-module', {
       foo: { _default: 'qux', _type: configType },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     Config.provide({ 'foo-module': { foo: badValue } });
     await Config.getConfig('foo-module');
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(new RegExp(`${badValue}.*foo-module.*foo`, 'i')));
@@ -913,7 +1000,9 @@ describe('implementer tools config', () => {
     Config.defineConfigSchema('foo-module', {
       foo: { _default: 'qux', _description: 'All the foo', _validators: [] },
     });
+    Config.registerModuleLoad('foo-module');
     Config.defineConfigSchema('bar-module', { bar: { _default: 'quinn' } });
+    Config.registerModuleLoad('bar-module');
     const testConfig = { 'bar-module': { bar: 'baz' } };
     Config.provide(testConfig, 'my config source');
     const devConfig = implementerToolsConfigStore.getState().config;
@@ -945,6 +1034,7 @@ describe('temporary config', () => {
 
   it('allows overriding the existing config', async () => {
     Config.defineConfigSchema('foo-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('foo-module');
     const testConfig = { 'foo-module': { foo: 'baz' } };
     Config.provide(testConfig);
     temporaryConfigStore.setState({ config: { 'foo-module': { foo: 3 } } });
@@ -962,6 +1052,7 @@ describe('temporary config', () => {
 
   it('can be gotten and cleared', async () => {
     Config.defineConfigSchema('foo-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('foo-module');
     temporaryConfigStore.setState({ config: { 'foo-module': { foo: 3 } } });
     expect(temporaryConfigStore.getState().config).toStrictEqual({
       'foo-module': { foo: 3 },
@@ -979,6 +1070,8 @@ describe('temporary config', () => {
         baz: { _default: 'also qux' },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     await Config.getConfig('foo-module');
     temporaryConfigStore.setState({
       config: { 'foo-module': { foo: { bar: 3 } } },
@@ -1033,6 +1126,8 @@ describe('extension slot config', () => {
     Config.defineConfigSchema('foo-module', {
       foo: { _default: 0 },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     Config.provide({
       'foo-module': {
         extensionSlots: { fooSlot: { remove: ['bar'] } },
@@ -1047,6 +1142,8 @@ describe('extension slot config', () => {
     Config.defineConfigSchema('foo-module', {
       foo: { _default: 0 },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     Config.provide({
       'foo-module': {
         extensionSlots: { fooSlot: { remove: ['bar'] } },
@@ -1061,6 +1158,8 @@ describe('extension slot config', () => {
     Config.defineConfigSchema('foo-module', {
       foo: { _default: 0 },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     Config.provide({
       'foo-module': {
         extensionSlots: { fooSlot: { remove: ['bar'] } },
@@ -1087,6 +1186,8 @@ describe('extension slot config', () => {
         extensionSlots: { fooSlot: { quitar: ['bar'] } },
       },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('foo-module');
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/foo-module.extensionSlots.fooSlot.*invalid.*quitar/),
     );
@@ -1100,6 +1201,8 @@ describe('extension config', () => {
       bar: { _default: 'barry' },
       baz: { _default: 'bazzy' },
     });
+    // load to trigger validation
+    Config.registerModuleLoad('ext-mod');
   });
 
   afterEach(resetAll);
@@ -1162,6 +1265,7 @@ describe('extension config', () => {
     Config.defineExtensionConfigSchema('fooExt', {
       qux: { _default: 'quxxy' },
     });
+    Config.registerModuleLoad('fooExt');
     const extensionAtBaseConfig = { fooExt: { qux: 'quxolotl' } };
     Config.provide(extensionAtBaseConfig);
     const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
@@ -1178,6 +1282,7 @@ describe('extension config', () => {
     Config.defineExtensionConfigSchema('fooExt', {
       qux: { _default: 'quxxy' },
     });
+    Config.registerModuleLoad('fooExt');
     const configureConfig = {
       fooExt: { qux: 'quxolotl' },
       'slot-mod': {
@@ -1202,6 +1307,7 @@ describe('extension config', () => {
     Config.defineExtensionConfigSchema('fooExt', {
       qux: { _default: 'quxxy' },
     });
+    Config.registerModuleLoad('fooExt');
     const configureConfig = {
       'slot-mod': {
         extensionSlots: {
@@ -1220,6 +1326,7 @@ describe('extension config', () => {
     Config.defineExtensionConfigSchema('fooExt', {
       qux: { _default: 'quxxy' },
     });
+    Config.registerModuleLoad('fooExt');
     const badConfigNoModuleConfigsForExtension = {
       fooExt: {
         bar: 'no good',
@@ -1234,6 +1341,7 @@ describe('extension config', () => {
     Config.defineExtensionConfigSchema('fooExt', {
       qux: { _default: 'quxxy' },
     });
+    Config.registerModuleLoad('fooExt');
     const badConfigNoExtensionConfigsForModule = {
       'ext-mod': {
         qux: 'also bad',
