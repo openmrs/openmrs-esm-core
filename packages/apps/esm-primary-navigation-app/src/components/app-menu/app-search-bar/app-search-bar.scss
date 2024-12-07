@@ -1,0 +1,13 @@
+@use '@carbon/styles/scss/colors';
+@use '@carbon/styles/scss/spacing';
+@import '~@openmrs/esm-styleguide/src/vars';
+.appSearchInput {
+  border: none;
+}
+
+.searchItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.5rem 0 0 0.5rem;
+}
