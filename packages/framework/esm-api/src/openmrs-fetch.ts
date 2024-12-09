@@ -292,7 +292,7 @@ export function openmrsObservableFetch<T>(url: string, fetchInit: FetchConfig = 
   });
 }
 
-export class OpenmrsFetchError extends Error {
+export class OpenmrsFetchError extends Error implements FetchError {
   constructor(url: string, response: Response, responseBody: ResponseBody | null, requestStacktrace: Error) {
     super();
     this.message = `Server responded with ${response.status} (${response.statusText}) for url ${url}. Check err.responseBody or network tab in dev tools for more info`;
@@ -322,4 +322,9 @@ interface FetchBody {
 
 export interface FetchResponseJson {
   [key: string]: any;
+}
+
+export interface FetchError {
+  response: Response;
+  responseBody: ResponseBody | null;
 }
