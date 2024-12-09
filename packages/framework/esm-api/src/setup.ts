@@ -33,6 +33,11 @@ export function setupApiModule() {
           "Changes how requests that fail authentication are handled. Try messing with this if redirects to the login page aren't working correctly.",
       },
     },
+    followRedirects: {
+      _type: Type.Boolean,
+      _default: true,
+      _description: 'Whether openmrsFetch should support redirects returned from the backend',
+    },
   });
 
   refetchCurrentUser();
