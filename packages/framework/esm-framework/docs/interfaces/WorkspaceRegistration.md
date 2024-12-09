@@ -16,11 +16,10 @@ See [WorkspaceDefinition](../API.md#workspacedefinition) for more information ab
 
 - [canHide](WorkspaceRegistration.md#canhide)
 - [canMaximize](WorkspaceRegistration.md#canmaximize)
-- [hasOwnSidebar](WorkspaceRegistration.md#hasownsidebar)
+- [groups](WorkspaceRegistration.md#groups)
 - [moduleName](WorkspaceRegistration.md#modulename)
 - [name](WorkspaceRegistration.md#name)
 - [preferredWindowSize](WorkspaceRegistration.md#preferredwindowsize)
-- [sidebarFamily](WorkspaceRegistration.md#sidebarfamily)
 - [title](WorkspaceRegistration.md#title)
 - [titleNode](WorkspaceRegistration.md#titlenode)
 - [type](WorkspaceRegistration.md#type)
@@ -52,13 +51,13 @@ ___
 
 ___
 
-### hasOwnSidebar
+### groups
 
-• **hasOwnSidebar**: `boolean`
+• `Optional` **groups**: `string`[]
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
+[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 ___
 
@@ -68,7 +67,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L21)
+[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
 
 ___
 
@@ -88,17 +87,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
-
-___
-
-### sidebarFamily
-
-• **sidebarFamily**: `string`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
 
 ___
 
@@ -152,4 +141,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
+[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)

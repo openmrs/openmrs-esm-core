@@ -73,11 +73,16 @@ export function WorkspaceContainer({
   actionMenuProps,
 }: WorkspaceContainerProps) {
   const layout = useLayoutType();
-  const { workspaces, workspaceWindowState } = useWorkspaces();
+  const { workspaces, workspaceWindowState, workspaceGroup } = useWorkspaces();
+  const currentGroupName = workspaceGroup?.name;
   const activeWorkspace = workspaces[0];
   const isHidden = workspaceWindowState === 'hidden' || activeWorkspace == null;
   const isMaximized = workspaceWindowState === 'maximized';
   const width = activeWorkspace?.width ?? (overlay ? 'wider' : 'narrow');
+  const showActionMenu = useMemo(
+    () => showSiderailAndBottomNav || (currentGroupName && !isHidden),
+    [currentGroupName, isHidden, showSiderailAndBottomNav],
+  );
 
   useBodyScrollLock(!isHidden && !isDesktop(layout));
 
@@ -120,7 +125,13 @@ export function WorkspaceContainer({
         </aside>
         <WorkspaceNotification contextKey={contextKey} />
       </div>
-      {showSiderailAndBottomNav && <ActionMenu actionMenuProps={actionMenuProps} />}
+      {showActionMenu && (
+        <ActionMenu
+          name={currentGroupName}
+          isWithinWorkspace={!showSiderailAndBottomNav}
+          actionMenuProps={actionMenuProps}
+        />
+      )}
     </>
   );
 }
@@ -133,7 +144,8 @@ interface WorkspaceProps {
 function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
   const { t } = useTranslation();
   const layout = useLayoutType();
-  const { workspaceWindowState } = useWorkspaces();
+  const { workspaceWindowState, workspaceGroup } = useWorkspaces();
+  const currentGroupName = workspaceGroup?.name;
   const isMaximized = workspaceWindowState === 'maximized';
 
   // We use the feature name of the app containing the workspace in order to set the extension
@@ -148,7 +160,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
   const {
     canHide = false,
     canMaximize = false,
-    hasOwnSidebar = false,
+    currentWorkspaceGroup = '',
     closeWorkspace,
   } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
 
@@ -171,7 +183,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot
-              name={`workspace-header-family-${workspaceInstance.sidebarFamily}-slot`}
+              name={`workspace-header-group-${workspaceInstance.currentWorkspaceGroup}-slot`}
               state={workspaceProps}
             />
             <ExtensionSlot name={`workspace-header-type-${workspaceInstance.type}-slot`} state={workspaceProps} />
@@ -197,7 +209,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
                     {isMaximized ? <Minimize /> : <Maximize />}
                   </HeaderGlobalAction>
                 )}
-                {canHide ? (
+                {canHide && !currentGroupName ? (
                   <HeaderGlobalAction
                     align="bottom-right"
                     aria-label={getCoreTranslation('hide', 'Hide')}
@@ -234,7 +246,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
         </Header>
         <div
           className={classNames(styles.workspaceContent, {
-            [styles.marginWorkspaceContent]: hasOwnSidebar,
+            [styles.marginWorkspaceContent]: Boolean(currentWorkspaceGroup),
           })}
         >
           <WorkspaceRenderer
@@ -243,7 +255,6 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             additionalPropsFromPage={additionalWorkspaceProps}
           />
         </div>
-        {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />}
       </>
     )
   );
