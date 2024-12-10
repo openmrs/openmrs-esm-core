@@ -42,6 +42,8 @@ export const coreTranslations = {
   age: 'Age',
   cancel: 'Cancel',
   change: 'Change',
+  // Default value for the implementationName config property
+  Clinic: 'Clinic',
   close: 'Close',
   confirm: 'Confirm',
   contactAdministratorIfIssuePersists: 'Contact your system administrator if the problem persists.',
