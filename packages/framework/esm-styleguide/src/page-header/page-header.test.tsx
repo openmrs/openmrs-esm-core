@@ -2,8 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { getConfig } from '@openmrs/esm-config';
 import { PageHeaderContent } from './page-header.component';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 
 const mockedGetConfig = jest.mocked(getConfig);
+const mockedGetCoreTranslation = jest.mocked(getCoreTranslation);
 
 jest.mock('@openmrs/esm-config', () => ({
   getConfig: jest.fn(),
@@ -22,6 +24,7 @@ describe('PageHeaderContent', () => {
   });
 
   it('renders implementation name when provided in config', async () => {
+    mockedGetCoreTranslation.mockReturnValueOnce('Test Clinic');
     mockedGetConfig.mockResolvedValue({ implementationName: 'Test Clinic' });
 
     render(<PageHeaderContent title="Test Title" illustration={mockIllustration} />);
