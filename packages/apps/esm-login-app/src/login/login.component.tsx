@@ -135,36 +135,75 @@ const Login: React.FC = () => {
     [username, password, navigate, showPasswordOnSeparateScreen],
   );
 
-  return (
-    <div className={styles.container}>
-      <Tile className={styles.loginCard}>
-        {errorMessage && (
-          <div className={styles.errorMessage}>
-            <InlineNotification
-              kind="error"
-              subtitle={t(errorMessage)}
-              title={getCoreTranslation('error')}
-              onClick={() => setErrorMessage('')}
-            />
+  if (!loginProvider || loginProvider.type === 'basic'){
+    return (
+      <div className={styles.container}>
+        <Tile className={styles.loginCard}>
+          {errorMessage && (
+            <div className={styles.errorMessage}>
+              <InlineNotification
+                kind="error"
+                subtitle={t(errorMessage)}
+                title={getCoreTranslation('error')}
+                onClick={() => setErrorMessage('')}
+              />
+            </div>
+          )}
+          <div className={styles.center}>
+            <Logo t={t} />
           </div>
-        )}
-        <div className={styles.center}>
-          <Logo t={t} />
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
-            <TextInput
-              id="username"
-              type="text"
-              labelText={t('username', 'Username')}
-              value={username}
-              onChange={changeUsername}
-              ref={usernameInputRef}
-              required
-              autoFocus
-            />
-            {showPasswordOnSeparateScreen ? (
-              showPasswordField ? (
+          <form onSubmit={handleSubmit}>
+            <div className={styles.inputGroup}>
+              <TextInput
+                id="username"
+                type="text"
+                labelText={t('username', 'Username')}
+                value={username}
+                onChange={changeUsername}
+                ref={usernameInputRef}
+                required
+                autoFocus
+              />
+              {showPasswordOnSeparateScreen ? (
+                showPasswordField ? (
+                  <>
+                    <PasswordInput
+                      id="password"
+                      labelText={t('password', 'Password')}
+                      name="password"
+                      onChange={changePassword}
+                      ref={passwordInputRef}
+                      required
+                      value={password}
+                      showPasswordLabel={t('showPassword', 'Show password')}
+                      invalidText={t('validValueRequired', 'A valid value is required')}
+                    />
+                    <Button
+                      type="submit"
+                      className={styles.continueButton}
+                      renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                      iconDescription="Log in"
+                      disabled={!isLoginEnabled || isLoggingIn}
+                    >
+                      {isLoggingIn ? (
+                        <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
+                      ) : (
+                        t('login', 'Log in')
+                      )}
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    className={styles.continueButton}
+                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                    iconDescription="Continue to password"
+                    onClick={continueLogin}
+                    disabled={!isLoginEnabled}
+                  >
+                    {t('continue', 'Continue')}
+                  </Button>
+                )
+              ) : (
                 <>
                   <PasswordInput
                     id="password"
@@ -191,51 +230,15 @@ const Login: React.FC = () => {
                     )}
                   </Button>
                 </>
-              ) : (
-                <Button
-                  className={styles.continueButton}
-                  renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                  iconDescription="Continue to password"
-                  onClick={continueLogin}
-                  disabled={!isLoginEnabled}
-                >
-                  {t('continue', 'Continue')}
-                </Button>
-              )
-            ) : (
-              <>
-                <PasswordInput
-                  id="password"
-                  labelText={t('password', 'Password')}
-                  name="password"
-                  onChange={changePassword}
-                  ref={passwordInputRef}
-                  required
-                  value={password}
-                  showPasswordLabel={t('showPassword', 'Show password')}
-                  invalidText={t('validValueRequired', 'A valid value is required')}
-                />
-                <Button
-                  type="submit"
-                  className={styles.continueButton}
-                  renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                  iconDescription="Log in"
-                  disabled={!isLoginEnabled || isLoggingIn}
-                >
-                  {isLoggingIn ? (
-                    <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
-                  ) : (
-                    t('login', 'Log in')
-                  )}
-                </Button>
-              </>
-            )}
-          </div>
-        </form>
-      </Tile>
-      <Footer />
-    </div>
-  );
+              )}
+            </div>
+          </form>
+        </Tile>
+        <Footer />
+      </div>
+    );
+  }
+    return null;
 };
 
 export default Login;
