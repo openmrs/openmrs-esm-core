@@ -14,11 +14,10 @@ export interface WorkspaceRegistration {
   canHide: boolean;
   canMaximize: boolean;
   width: 'narrow' | 'wider' | 'extra-wide';
-  hasOwnSidebar: boolean;
-  sidebarFamily: string;
   preferredWindowSize: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
+  groups?: Array<string>;
 }
 
 interface WorkspaceRegistrationStore {
@@ -37,11 +36,10 @@ export interface RegisterWorkspaceOptions {
   canHide?: boolean;
   canMaximize?: boolean;
   width?: 'narrow' | 'wider' | 'extra-wide';
-  hasOwnSidebar?: boolean;
-  sidebarFamily?: string;
   preferredWindowSize?: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
+  groups?: Array<string>;
 }
 
 /**
@@ -60,8 +58,7 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
         canHide: workspace.canHide ?? false,
         canMaximize: workspace.canMaximize ?? false,
         width: workspace.width ?? 'narrow',
-        hasOwnSidebar: workspace.hasOwnSidebar ?? false,
-        sidebarFamily: workspace.sidebarFamily ?? 'default',
+        groups: workspace.groups ?? [],
       },
     },
   }));
@@ -97,8 +94,7 @@ export function getWorkspaceRegistration(name: string): WorkspaceRegistration {
         canHide: workspaceExtension.meta?.canHide ?? false,
         canMaximize: workspaceExtension.meta?.canMaximize ?? false,
         width: workspaceExtension.meta?.width ?? 'narrow',
-        sidebarFamily: 'default',
-        hasOwnSidebar: false,
+        groups: workspaceExtension?.meta?.groups ?? [],
       };
     } else {
       throw new Error(`No workspace named '${name}' has been registered.`);

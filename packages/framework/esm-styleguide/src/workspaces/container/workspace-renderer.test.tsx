@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { WorkspaceRenderer } from './workspace-renderer.component';
-import { getWorkspaceFamilyStore, OpenWorkspace } from '../workspaces';
+import { getWorkspaceGroupStore } from '../workspaces';
 import Parcel from 'single-spa-react/parcel';
 
 const mockFn = jest.fn();
@@ -20,10 +20,10 @@ describe('WorkspaceRenderer', () => {
     const mockedPromptBeforeClosing = jest.fn();
     const mockedSetTitle = jest.fn();
     const mockedLoadFn = jest.fn().mockImplementation(() => Promise.resolve({ default: 'file-content' }));
-    getWorkspaceFamilyStore('test-sidebar-family')?.setState({
-      // Testing that the workspace family state should be overrided by additionalProps
+    getWorkspaceGroupStore('test-sidebar-store')?.setState({
+      // Testing that the workspace group state should be overrided by additionalProps
       foo: false,
-      workspaceFamilyState: {},
+      workspaceGroupStore: {},
     });
     render(
       <WorkspaceRenderer
@@ -39,7 +39,6 @@ describe('WorkspaceRenderer', () => {
           additionalProps: {
             foo: 'true',
           },
-          sidebarFamily: 'test-sidebar-family',
         }}
         additionalPropsFromPage={{ bar: 'true' }}
       />,
@@ -58,7 +57,6 @@ describe('WorkspaceRenderer', () => {
       setTitle: mockedSetTitle,
       foo: 'true',
       bar: 'true',
-      workspaceFamilyState: {},
     });
   });
 });

@@ -303,18 +303,31 @@ export type WorkspaceDefinition = {
    */
   width?: 'narrow' | 'wider' | 'extra-wide';
   /**
-   * Controls whether the workspace has its own sidebar. If true, the sidebar will be displayed when the workspace is open.
+   * Launches the workspace in the preferred size, it defaults to the 'narrow' width
    */
-  hasOwnSidebar?: boolean;
-  /**
-   * Sidebars have icons that representing workspaces. The sidebar family is the name of the
-   * sidebar that should contain the icon for this workspace. This is generally only needed if
-   * `hasOwnSidebar` is true, in which case this is the name of that sidebar. If multiple
-   * workspaces have `hasOwnSidebar` set to true and the same family name, then the sidebar
-   * within the workspace area will have icons for each of those workspaces.
-   */
-  sidebarFamily?: string;
   preferredWindowSize?: WorkspaceWindowState;
+
+  /**
+   * Workspaces can open either independently or as part of a "workspace group". A
+   * "workspace group" groups related workspaces together, so that only one is visible
+   * at a time. For example,
+   *
+   * @example
+   *
+   * {
+   *  name: 'order-basket',
+   *  type: 'order',
+   *  groups: ['ward-patient']
+   * }
+   *
+   * This means that the 'order-basket' workspace can be opened independently, or only
+   * in the 'ward-patient'.
+   * If a workspace group is already open and a new workspace is launched, and the
+   * groups in the newly launched workspace do not include the currently open group’s
+   * name, the entire workspace group will close, and the new workspace will launch independently.
+   *
+   */
+  groups: Array<string>;
 } & (
   | {
       /**

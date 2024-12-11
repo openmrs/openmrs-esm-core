@@ -6,6 +6,7 @@
 
 ### Workspace Properties
 
+- [closeWorkspaceGroup](CloseWorkspaceOptions.md#closeworkspacegroup)
 - [ignoreChanges](CloseWorkspaceOptions.md#ignorechanges)
 
 ### Workspace Methods
@@ -13,6 +14,22 @@
 - [onWorkspaceClose](CloseWorkspaceOptions.md#onworkspaceclose)
 
 ## Workspace Properties
+
+### closeWorkspaceGroup
+
+• `Optional` **closeWorkspaceGroup**: `boolean`
+
+Controls whether the workspace group should be closed and store to be
+cleared when this workspace is closed.
+Defaults to true except when opening a new workspace of the same group.
+
+**`default`** true
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L33)
+
+___
 
 ### ignoreChanges
 

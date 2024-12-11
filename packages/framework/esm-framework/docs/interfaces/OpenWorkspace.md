@@ -16,11 +16,10 @@
 
 - [canHide](OpenWorkspace.md#canhide)
 - [canMaximize](OpenWorkspace.md#canmaximize)
-- [hasOwnSidebar](OpenWorkspace.md#hasownsidebar)
+- [groups](OpenWorkspace.md#groups)
 - [moduleName](OpenWorkspace.md#modulename)
 - [name](OpenWorkspace.md#name)
 - [preferredWindowSize](OpenWorkspace.md#preferredwindowsize)
-- [sidebarFamily](OpenWorkspace.md#sidebarfamily)
 - [title](OpenWorkspace.md#title)
 - [titleNode](OpenWorkspace.md#titlenode)
 - [type](OpenWorkspace.md#type)
@@ -29,6 +28,7 @@
 ### Workspace Properties
 
 - [additionalProps](OpenWorkspace.md#additionalprops)
+- [currentWorkspaceGroup](OpenWorkspace.md#currentworkspacegroup)
 
 ### Methods
 
@@ -68,17 +68,17 @@ ___
 
 ___
 
-### hasOwnSidebar
+### groups
 
-• **hasOwnSidebar**: `boolean`
+• `Optional` **groups**: `string`[]
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[hasOwnSidebar](WorkspaceRegistration.md#hasownsidebar)
+[WorkspaceRegistration](WorkspaceRegistration.md).[groups](WorkspaceRegistration.md#groups)
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
+[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L21)
+[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
 
 ___
 
@@ -120,21 +120,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
-
-___
-
-### sidebarFamily
-
-• **sidebarFamily**: `string`
-
-#### Inherited from
-
-[WorkspaceRegistration](WorkspaceRegistration.md).[sidebarFamily](WorkspaceRegistration.md#sidebarfamily)
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
 
 ___
 
@@ -202,7 +188,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L106)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L109)
+
+___
+
+### currentWorkspaceGroup
+
+• `Optional` **currentWorkspaceGroup**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L110)
 
 ## Methods
 
@@ -232,7 +228,7 @@ closed, given the user forcefully closes the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L46)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L45)
 
 ___
 
@@ -259,7 +255,7 @@ will directly close the workspace without any prompt
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L56)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L55)
 
 ___
 
@@ -277,7 +273,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
+[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
 
 ___
 
@@ -304,7 +300,7 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L51)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L50)
 
 ___
 
@@ -336,4 +332,4 @@ title needs to be set dynamically.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L71)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L70)
