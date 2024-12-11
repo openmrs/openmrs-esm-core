@@ -1,5 +1,6 @@
 import React from 'react';
-import { interpolateUrl, useConfig } from '@openmrs/esm-framework';
+import { useConfig, ArrowRightIcon } from '@openmrs/esm-framework';
+import { Tile, Button } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { type ConfigSchema } from './config-schema';
 import styles from './login/login.scss';
@@ -11,11 +12,28 @@ const Footer: React.FC = () => {
 
   return (
     <div className={styles.footer}>
-      <p className={styles.poweredByTxt}>{t('poweredBy', 'Powered by')}</p>
+      <Tile className={styles.poweredByTile}>
+        <div className={styles.poweredByContainer}>
+          <span className={styles.poweredByText}>{t('builtWith', 'Built with')}</span>
+            <svg role="img" className={styles.poweredByLogo}>
+              <use href="#omrs-logo-full-color"></use>
+            </svg>
+          <span className={styles.poweredByText}>
+            {t('poweredBySubtext', 'An open-source medical record system and global community')}
+          </span>
+          <Button
+            className={styles.learnMore}
+            iconDescription={t('learnMore', 'Learn More')}
+            kind="ghost"
+            onClick={() => window.open('https://openmrs.org', '_blank')}
+            renderIcon={(props) => <ArrowRightIcon {...props} size={20} className={styles.arrowRightIcon}/>}
+          >
+            <span>{t('learnMore', 'Learn More')}</span>
+          </Button>
+        </div>
+      </Tile>
+
       <div className={styles.logosContainer}>
-        <svg role="img" className={styles.poweredByLogo}>
-          <use href="#omrs-logo-partial-mono"></use>
-        </svg>
         {logos.map((logo, index) => (
           <img
             key={index}
