@@ -8,6 +8,10 @@
 
   ↳ **`OpenmrsFetchError`**
 
+## Implements
+
+- [`FetchError`](../interfaces/FetchError.md)
+
 ## Table of contents
 
 ### API Constructors
@@ -61,6 +65,10 @@ Error.constructor
 
 • **response**: `Response`
 
+#### Implementation of
+
+[FetchError](../interfaces/FetchError.md).[response](../interfaces/FetchError.md#response)
+
 #### Defined in
 
 [packages/framework/esm-api/src/openmrs-fetch.ts:312](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L312)
@@ -70,6 +78,10 @@ ___
 ### responseBody
 
 • **responseBody**: ``null`` \| `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md)
+
+#### Implementation of
+
+[FetchError](../interfaces/FetchError.md).[responseBody](../interfaces/FetchError.md#responsebody)
 
 #### Defined in
 
