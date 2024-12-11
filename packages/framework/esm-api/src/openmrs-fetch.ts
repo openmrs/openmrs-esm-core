@@ -152,6 +152,14 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     const response = r as FetchResponse<T>;
     if (response.ok) {
       if (response.status === 204) {
+        const { followRedirects } = await getConfig('@openmrs/esm-api');
+        if (followRedirects && response.headers.has('location')) {
+          const location = response.headers.get('location');
+          if (location) {
+            navigate({ to: location });
+          }
+        }
+
         /* HTTP 204 - No Content
          * We should not try to download the empty response as json. Instead,
          * we return null since there is no response body.
