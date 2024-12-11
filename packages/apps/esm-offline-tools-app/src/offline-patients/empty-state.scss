@@ -1,16 +1,45 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.productiveHeading01 {
+  @include type.type-style('heading-compact-01');
+}
+
+.productiveHeading02 {
+  @include type.type-style('heading-compact-02');
+}
+
+.productiveHeading03 {
+  @include type.type-style('heading-03');
+}
+
+.productiveHeading04 {
+  @include type.type-style('heading-04');
+}
+
+.bodyShort01 {
+  @include type.type-style('body-compact-01');
+}
+
+.bodyLong01 {
+  @include type.type-style('body-compact-01');
+}
+
+.label01 {
+  @include type.type-style('label-01');
+  color: $text-02;
+}
 
 .action {
-  margin-bottom: spacing.$spacing-03;
+  margin-bottom: layout.$spacing-03;
 }
 
 .content {
   @include type.type-style('heading-compact-01');
   color: $text-02;
-  margin-top: spacing.$spacing-05;
-  margin-bottom: spacing.$spacing-03;
+  margin-top: layout.$spacing-05;
+  margin-bottom: layout.$spacing-03;
 }
 
 .desktopHeading {
@@ -31,7 +60,7 @@
 .tabletHeading {
   text-align: left;
   text-transform: capitalize;
-  margin-bottom: spacing.$spacing-05;
+  margin-bottom: layout.$spacing-05;
 
   h4:after {
     content: '';

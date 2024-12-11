@@ -1,5 +1,34 @@
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../root.scss';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.productiveHeading01 {
+  @include type.type-style('heading-compact-01');
+}
+
+.productiveHeading02 {
+  @include type.type-style('heading-compact-02');
+}
+
+.productiveHeading03 {
+  @include type.type-style('heading-03');
+}
+
+.productiveHeading04 {
+  @include type.type-style('heading-04');
+}
+
+.bodyShort01 {
+  @include type.type-style('body-compact-01');
+}
+
+.bodyLong01 {
+  @include type.type-style('body-compact-01');
+}
+
+.label01 {
+  @include type.type-style('label-01');
+  color: $text-02;
+}
 
 .link > div a:nth-child(1) {
   height: 3rem;
