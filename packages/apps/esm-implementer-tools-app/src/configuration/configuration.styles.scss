@@ -56,7 +56,7 @@
 }
 
 .toolbar {
-  padding: spacing.$spacing-05 spacing.$spacing-05 0;
+  padding: layout.$spacing-05 layout.$spacing-05 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -118,7 +118,7 @@
   width: 35%;
   background-color: theme.$background;
   color: theme.$text-secondary;
-  padding: spacing.$spacing-05 2em;
+  padding: layout.$spacing-05 2em;
   font-size: 12pt;
   overflow-wrap: break-word;
   overflow-y: auto;

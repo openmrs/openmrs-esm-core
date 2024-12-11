@@ -1,6 +1,6 @@
 @use '@carbon/colors';
-@use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .container {
   border-top: 0.063rem solid $ui-03;
