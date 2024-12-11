@@ -144,6 +144,7 @@ jobs:
       - name: 📦 Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn install --immutable
+        working-directory: e2e_repo
 
       - name: 🚀 Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
@@ -164,33 +165,41 @@ jobs:
           ref: main
           path: e2e_repo
 
-      - name: 📄 Copy test environment variables
+      - name: 📄 Copy test environment variables for ${{ matrix.repo }}
         run: cp example.env .env
         working-directory: e2e_repo
 
-      - name: 📦 Install dependencies
+      - name: 💾 Cache dependencies for ${{ matrix.repo }}
+        id: cache-other-repo-dependencies
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('e2e_repo/**/yarn.lock') }}
+
+      - name: 📦 Install dependencies for ${{ matrix.repo }}
+        if: steps.cache-other-repo-dependencies.outputs.cache-hit != 'true'
         run: yarn install --immutable
         working-directory: e2e_repo
 
-      - name: 💾 Cache Playwright Browsers
+      - name: 💾 Cache Playwright Browsers for ${{ matrix.repo }}
         id: playwright-cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('e2e_repo/**/yarn.lock') }}
 
-      - name: 🎭 Install Playwright Browsers
+      - name: 🎭 Install Playwright Browsers for ${{ matrix.repo }}
         run: yarn playwright install --with-deps
         working-directory: e2e_repo
 
       - name: ⏳ Wait for the OpenMRS instance to start
         run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
 
-      - name: 🧪 Run E2E tests
+      - name: 🧪 Run E2E tests for ${{ matrix.repo }}
         run: yarn playwright test
         working-directory: e2e_repo
 
-      - name: 📤 Upload Report
+      - name: 📤 Upload Report for ${{ matrix.repo }}
         uses: actions/upload-artifact@v4
         if: always()
         with:
