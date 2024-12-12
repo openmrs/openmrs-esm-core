@@ -926,7 +926,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L29)
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L30)
 
 ___
 
@@ -2344,7 +2344,7 @@ and some other content on the right side:
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L57)
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L58)
 
 ___
 
@@ -2367,7 +2367,7 @@ on its own, and the PageHeaderContent component is not needed.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L89)
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L90)
 
 ___
 
@@ -6902,7 +6902,7 @@ invalid key to this function will result in a type error.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"age"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactAdministratorIfIssuePersists"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"loading"`` \| ``"male"`` \| ``"patientIdentifierSticker"`` \| ``"patientLists"`` \| ``"print"`` \| ``"printError"`` \| ``"printErrorExplainer"`` \| ``"printIdentifierSticker"`` \| ``"printing"`` \| ``"relationships"`` \| ``"resetOverrides"`` \| ``"save"`` \| ``"scriptLoadingFailed"`` \| ``"scriptLoadingError"`` \| ``"seeMoreLists"`` \| ``"sex"`` \| ``"showLess"`` \| ``"showMore"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"hide"`` \| ``"maximize"`` \| ``"minimize"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"workspaceHeader"`` \| ``"address1"`` \| ``"address2"`` \| ``"address3"`` \| ``"address4"`` \| ``"address5"`` \| ``"address6"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"district"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
+| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"Clinic"`` \| ``"actions"`` \| ``"address"`` \| ``"age"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactAdministratorIfIssuePersists"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"loading"`` \| ``"male"`` \| ``"patientIdentifierSticker"`` \| ``"patientLists"`` \| ``"print"`` \| ``"printError"`` \| ``"printErrorExplainer"`` \| ``"printIdentifierSticker"`` \| ``"printing"`` \| ``"relationships"`` \| ``"resetOverrides"`` \| ``"save"`` \| ``"scriptLoadingFailed"`` \| ``"scriptLoadingError"`` \| ``"seeMoreLists"`` \| ``"sex"`` \| ``"showLess"`` \| ``"showMore"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"hide"`` \| ``"maximize"`` \| ``"minimize"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"workspaceHeader"`` \| ``"address1"`` \| ``"address2"`` \| ``"address3"`` \| ``"address4"`` \| ``"address5"`` \| ``"address6"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"district"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
 | `defaultText?` | `string` | - |
 | `options?` | `Omit`<`TOptions`<`StringMap`\>, ``"defaultValue"`` \| ``"ns"``\> | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
 
