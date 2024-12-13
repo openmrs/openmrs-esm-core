@@ -27,7 +27,6 @@ Object.defineProperty(document, 'documentElement', {
 
 describe('Testing Logout', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
     (useConnectivity as jest.Mock).mockReturnValue(true);
     (openmrsFetch as jest.Mock).mockResolvedValue({});
     (useSession as jest.Mock).mockReturnValue({

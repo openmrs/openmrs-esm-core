@@ -1,14 +1,24 @@
 {
   "env": {
-    "node": true,
-    "browser": true
+    "node": true
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:jest-dom/recommended"],
+  "overrides": [
+    {
+      "files": ["**/*.test.tsx"],
+      "extends": ["plugin:testing-library/react"]
+    },
+    {
+      "files": ["e2e/**/*.spec.ts"],
+      "extends": ["plugin:playwright/recommended"],
+      "rules": {
+        "testing-library/prefer-screen-queries": "off"
+      }
+    }
+  ],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "import", "react-hooks"],
   "rules": {
-    "import/no-duplicates": "error",
-    "react-hooks/rules-of-hooks": "error",
     // Disabling these rules for now just to keep the diff small. I'll enable them in a future PR that fixes lint issues.
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/ban-types": "off",
@@ -23,7 +33,7 @@
         "fixStyle": "inline-type-imports"
       }
     ],
-    "prefer-const": "off",
+    "import/no-duplicates": "error",
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "no-unsafe-optional-chaining": "off",
     "no-explicit-any": "off",
@@ -55,6 +65,8 @@
           }
         ]
       }
-    ]
+    ],
+    "prefer-const": "off",
+    "react-hooks/rules-of-hooks": "error"
   }
 }

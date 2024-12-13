@@ -68,7 +68,7 @@ describe('PatientBannerPatientIdentifiers', () => {
 
     render(<PatientBannerPatientIdentifiers identifiers={mockIdentifiers} showIdentifierLabel />);
 
-    expect(screen.queryByText(/openmrs id/i)).toBeInTheDocument();
+    expect(screen.getByText(/openmrs id/i)).toBeInTheDocument();
     expect(screen.queryByText(/national id/i)).not.toBeInTheDocument();
   });
 });

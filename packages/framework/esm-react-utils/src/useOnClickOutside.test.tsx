@@ -14,10 +14,10 @@ describe('useOnClickOutside', () => {
       const ref = useOnClickOutside<HTMLDivElement>(handler);
       return <div ref={ref}>{children}</div>;
     };
-    const ref = render(<Component />);
+    const view = render(<Component />);
 
     // act
-    await user.click(ref.container);
+    await user.click(view.container);
 
     // verify
     expect(handler).toHaveBeenCalledTimes(1);
@@ -52,11 +52,11 @@ describe('useOnClickOutside', () => {
       const ref = useOnClickOutside<HTMLDivElement>(handler);
       return <div ref={ref}>{children}</div>;
     };
-    const ref = render(<Component />);
+    const view = render(<Component />);
     const spy = jest.spyOn(window, 'removeEventListener');
 
     // act
-    ref.unmount();
+    view.unmount();
 
     // verify
     expect(spy).toHaveBeenCalledWith('mousedown', expect.any(Function));

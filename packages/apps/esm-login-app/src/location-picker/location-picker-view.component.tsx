@@ -12,9 +12,9 @@ import {
   getCoreTranslation,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
-import styles from './location-picker.scss';
 import { useDefaultLocation, useLocationCount } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
+import styles from './location-picker.scss';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;

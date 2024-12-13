@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, cleanup } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useLayoutType } from '@openmrs/esm-react-utils';
 import { Pen } from '@carbon/react/icons';
@@ -32,8 +32,6 @@ jest.mock('../workspaces', () => {
 });
 
 describe('ActionMenuButton', () => {
-  beforeEach(cleanup);
-
   it('should display tablet view', async () => {
     const user = userEvent.setup();
 

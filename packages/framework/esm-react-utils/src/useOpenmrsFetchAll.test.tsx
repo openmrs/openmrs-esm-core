@@ -1,4 +1,4 @@
-import { renderHook, cleanup, waitFor, act } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useOpenmrsFetchAll } from './useOpenmrsFetchAll';
 import { type OpenMRSPaginatedResponse } from './useOpenmrsPagination';
@@ -27,8 +27,6 @@ export async function getTestData(url: string, totalCount: number): Promise<Open
 }
 
 describe('useOpenmrsFetchAll', () => {
-  afterEach(cleanup);
-
   it('should render all rows on if number of rows < pageSize', async () => {
     const expectedRowCount = 17;
     const { result } = renderHook(() =>

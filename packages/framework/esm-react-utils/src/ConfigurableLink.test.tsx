@@ -22,8 +22,10 @@ describe(`ConfigurableLink`, () => {
       </ConfigurableLink>,
     );
     const link = screen.getByRole('link', { name: /spa home/i });
-    expect(link).toBeTruthy();
+    expect(link).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/no-node-access
     expect(link.closest('a')).toHaveClass('fancy-link');
+    // eslint-disable-next-line testing-library/no-node-access
     expect(link.closest('a')).toHaveAttribute('href', '/openmrs/spa/home');
   });
 

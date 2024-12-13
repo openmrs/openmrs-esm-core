@@ -7,8 +7,6 @@ jest.useFakeTimers();
 const mockedCloseSnackbar = jest.fn();
 
 describe('Snackbar component', () => {
-  afterEach(() => jest.clearAllMocks());
-
   it('renders a snackbar notification', () => {
     renderSnackbar();
 

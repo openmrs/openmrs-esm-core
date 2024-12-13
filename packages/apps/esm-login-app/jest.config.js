@@ -1,4 +1,5 @@
 module.exports = {
+  clearMocks: true,
   transform: {
     '^.+\\.tsx?$': ['@swc/jest'],
   },
