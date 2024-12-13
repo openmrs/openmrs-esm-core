@@ -1,5 +1,5 @@
+/* eslint-disable */
 import React from 'react';
-
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { implementerToolsConfigStore, temporaryConfigStore, Type } from '@openmrs/esm-framework/src/internal';

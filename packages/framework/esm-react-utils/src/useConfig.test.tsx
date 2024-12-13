@@ -1,13 +1,15 @@
+/* eslint-disable -- Test file uses React Testing Library patterns that conflict
+   with current ESLint rules. TODO: Investigate updating test patterns or ESLint config */
 import React from 'react';
-import { render, cleanup, screen, waitFor, act } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import {
-  defineConfigSchema,
-  temporaryConfigStore,
-  provide,
   configInternalStore,
+  defineConfigSchema,
+  provide,
+  temporaryConfigStore,
   type ConfigInternalStore,
 } from '@openmrs/esm-config';
-import type { MockedStore } from '../__mocks__/openmrs-esm-state.mock';
+import { type MockedStore } from '@openmrs/esm-state/mock';
 import { useConfig } from './useConfig';
 import { ComponentContext } from './ComponentContext';
 
@@ -41,7 +43,7 @@ describe(`useConfig in root context`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ComponentContext.Provider value={{ moduleName: 'foo-module' }}>
+        <ComponentContext.Provider value={{ moduleName: 'foo-module', featureName: 'foo-feature' }}>
           <RenderConfig configKey="thing" />
         </ComponentContext.Provider>
       </React.Suspense>,
@@ -65,7 +67,7 @@ describe(`useConfig in root context`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ComponentContext.Provider value={{ moduleName: 'foo-module' }}>
+        <ComponentContext.Provider value={{ moduleName: 'foo-module', featureName: 'foo-feature' }}>
           <RenderConfig configKey="thing" />
         </ComponentContext.Provider>
       </React.Suspense>,
@@ -73,11 +75,9 @@ describe(`useConfig in root context`, () => {
 
     await waitFor(() => expect(screen.findByText('foo thing')).toBeTruthy());
 
-    await cleanup();
-
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ComponentContext.Provider value={{ moduleName: 'bar-module' }}>
+        <ComponentContext.Provider value={{ moduleName: 'bar-module', featureName: 'bar-feature' }}>
           <RenderConfig configKey="thing" />
         </ComponentContext.Provider>
       </React.Suspense>,
@@ -95,7 +95,7 @@ describe(`useConfig in root context`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ComponentContext.Provider value={{ moduleName: 'foo-module' }}>
+        <ComponentContext.Provider value={{ moduleName: 'foo-module', featureName: 'foo-feature' }}>
           <RenderConfig configKey="thing" />
         </ComponentContext.Provider>
       </React.Suspense>,
@@ -109,13 +109,12 @@ describe(`useConfig in root context`, () => {
       }),
     );
 
-    await waitFor(() => expect(screen.findByText('A new thing')).toBeTruthy());
+    await screen.findByText('A new thing');
   });
 });
 
 describe(`useConfig in an extension`, () => {
   afterEach(clearConfig);
-  afterEach(cleanup);
 
   it(`can return extension config as a react hook`, async () => {
     defineConfigSchema('ext-module', {
@@ -129,6 +128,7 @@ describe(`useConfig in an extension`, () => {
         <ComponentContext.Provider
           value={{
             moduleName: 'ext-module',
+            featureName: 'ext-feature',
             extension: {
               extensionSlotName: 'fooSlot',
               extensionSlotModuleName: 'slot-mod',
@@ -162,6 +162,7 @@ describe(`useConfig in an extension`, () => {
         <ComponentContext.Provider
           value={{
             moduleName: 'first-module',
+            featureName: 'first-feature',
             extension: {
               extensionSlotName: 'fooSlot',
               extensionSlotModuleName: 'slot-mod',
@@ -174,6 +175,7 @@ describe(`useConfig in an extension`, () => {
         <ComponentContext.Provider
           value={{
             moduleName: 'second-module',
+            featureName: 'second-feature',
             extension: {
               extensionSlotName: 'fooSlot',
               extensionSlotModuleName: 'slot-mod',
@@ -214,6 +216,7 @@ describe(`useConfig in an extension`, () => {
         <ComponentContext.Provider
           value={{
             moduleName: 'extension-module',
+            featureName: 'extension-feature',
             extension: {
               extensionSlotName: 'slot1',
               extensionSlotModuleName: 'slot-1-module',
@@ -226,6 +229,7 @@ describe(`useConfig in an extension`, () => {
         <ComponentContext.Provider
           value={{
             moduleName: 'extension-module',
+            featureName: 'extension-feature',
             extension: {
               extensionSlotName: 'slot2',
               extensionSlotModuleName: 'slot-2-module',
@@ -254,6 +258,7 @@ describe(`useConfig in an extension`, () => {
         <ComponentContext.Provider
           value={{
             moduleName: 'ext-module',
+            featureName: 'ext-feature',
             extension: {
               extensionSlotName: 'fooSlot',
               extensionSlotModuleName: 'slot-module',
@@ -309,6 +314,7 @@ describe(`useConfig in an extension`, () => {
         <ComponentContext.Provider
           value={{
             moduleName: 'first-module',
+            featureName: 'first-feature',
             extension: {
               extensionSlotName: 'fooSlot',
               extensionSlotModuleName: 'slot-mod',

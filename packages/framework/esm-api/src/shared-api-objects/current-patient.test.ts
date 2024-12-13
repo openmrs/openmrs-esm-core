@@ -17,7 +17,6 @@ jest.mock('@openmrs/esm-offline', () => ({
 
 describe('fetchPatientData', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
     mockGetSynchronizationItems.mockResolvedValue([]);
   });
 

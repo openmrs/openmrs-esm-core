@@ -22,9 +22,9 @@ describe('CustomOverflowMenuComponent', () => {
     const triggerButton = screen.getByRole('button', { name: /menu/i });
 
     await user.click(triggerButton);
-    expect(triggerButton.getAttribute('aria-expanded')).toBe('true');
+    expect(triggerButton).toHaveAttribute('aria-expanded', 'true');
 
     await user.click(triggerButton);
-    expect(triggerButton.getAttribute('aria-expanded')).toBe('false');
+    expect(triggerButton).toHaveAttribute('aria-expanded', 'false');
   });
 });

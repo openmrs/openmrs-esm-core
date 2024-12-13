@@ -1,6 +1,6 @@
 import React from 'react';
 import { useConfig } from '@openmrs/esm-framework';
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Logo from './logo.component';
 
 const mockUseConfig = useConfig as jest.Mock;
@@ -11,8 +11,6 @@ jest.mock('@openmrs/esm-framework', () => ({
 }));
 
 describe('<Logo/>', () => {
-  afterEach(cleanup);
-
   it('should display OpenMRS logo', () => {
     const mockConfig = { logo: { src: null, alt: null, name: null } };
     mockUseConfig.mockReturnValue(mockConfig);

@@ -49,6 +49,7 @@ describe('PageHeaderContent', () => {
     );
 
     await screen.findByText(/test title/i);
+    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toHaveClass('custom-class');
   });
 

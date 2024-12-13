@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { type Person } from '@openmrs/esm-api';
@@ -71,7 +72,7 @@ describe('Interaction between configuration and extension systems', () => {
 
     render(<App />);
 
-    screen.findByText('Betty');
+    await screen.findByText('Betty');
     const slot = screen.getByTestId('slot');
     const extensions = slot.childNodes;
 
@@ -201,7 +202,7 @@ describe('Interaction between configuration and extension systems', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByText('Pearl')).toBeInTheDocument());
+    await screen.findByText('Pearl');
 
     act(() => {
       temporaryConfigStore.setState({
@@ -236,7 +237,7 @@ describe('Interaction between configuration and extension systems', () => {
     await act(async () => await promise);
 
     render(<App />);
-    await waitFor(() => expect(screen.getByText(/Mr. Slate/)).toBeInTheDocument());
+    await screen.findByText(/Mr. Slate/);
     expect(screen.getByTestId('slot')).toHaveTextContent(/green/);
 
     act(() => {
@@ -428,7 +429,7 @@ describe('Interaction between configuration and extension systems', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
+    await screen.findByTestId(/slot/);
     expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Schmoo');
   });
 

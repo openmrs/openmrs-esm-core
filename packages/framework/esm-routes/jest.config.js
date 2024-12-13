@@ -1,9 +1,10 @@
 module.exports = {
+  clearMocks: true,
   transform: {
-    "^.+\\.(m?j|t)sx?$": ["@swc/jest"],
+    '^.+\\.(m?j|t)sx?$': ['@swc/jest'],
   },
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: "http://localhost/",
+    url: 'http://localhost/',
   },
 };

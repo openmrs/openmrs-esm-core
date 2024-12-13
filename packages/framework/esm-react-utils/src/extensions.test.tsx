@@ -1,9 +1,11 @@
-import React, { useCallback, useReducer } from 'react';
+/* eslint-disable */
+import React, { useReducer } from 'react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
+import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 import {
   attach,
-  type ConnectedExtension,
   getExtensionNameFromId,
   registerExtension,
   updateInternalExtensionStore,
@@ -14,11 +16,8 @@ import {
   ExtensionSlot,
   openmrsComponentDecorator,
   useExtensionSlotMeta,
-  type ExtensionData,
   useRenderableExtensions,
 } from '.';
-import userEvent from '@testing-library/user-event';
-import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 
 // For some reason in the test context `isEqual` always returns true
 // when using the import substitution in jest.config.js. Here's a custom
@@ -30,16 +29,16 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   test('Extension receives state changes passed through (not using <Extension>)', async () => {
+    const user = userEvent.setup();
+
     function EnglishExtension({ suffix }) {
       return <div>English{suffix}</div>;
     }
+
     registerSimpleExtension('English', 'esm-languages-app', EnglishExtension);
     attach('Box', 'English');
+
     const App = openmrsComponentDecorator({
       moduleName: 'esm-languages-app',
       featureName: 'Languages',
@@ -53,20 +52,25 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
         </div>
       );
     });
+
     render(<App />);
 
-    await waitFor(() => expect(screen.getByText(/English/)).toBeInTheDocument());
+    expect(await screen.findByText(/English/)).toBeInTheDocument();
     expect(screen.getByText(/English/)).toHaveTextContent('English!');
-    userEvent.click(screen.getByText('Toggle suffix'));
-    await waitFor(() => expect(screen.getByText(/English/)).toHaveTextContent('English?'));
+    await user.click(screen.getByText('Toggle suffix'));
+    expect(screen.getByText(/English/)).toHaveTextContent('English?');
   });
 
   test('Extension receives state changes (using <Extension>)', async () => {
+    const user = userEvent.setup();
+
     function HaitianCreoleExtension({ suffix }) {
       return <div>Haitian Creole{suffix}</div>;
     }
+
     registerSimpleExtension('Haitian', 'esm-languages-app', HaitianCreoleExtension);
     attach('Box', 'Haitian');
+
     const App = openmrsComponentDecorator({
       moduleName: 'esm-languages-app',
       featureName: 'Languages',
@@ -84,21 +88,24 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
         </div>
       );
     });
+
     render(<App />);
 
-    await waitFor(() => expect(screen.getByText(/Haitian/)).toBeInTheDocument());
+    expect(await screen.findByText(/Haitian/)).toBeInTheDocument();
     expect(screen.getByText(/Haitian/)).toHaveTextContent('Haitian Creole!');
-    userEvent.click(screen.getByText('Toggle suffix'));
-    await waitFor(() => expect(screen.getByText(/Haitian/)).toHaveTextContent('Haitian Creole?'));
+    await user.click(screen.getByText('Toggle suffix'));
+    expect(screen.getByText(/Haitian/)).toHaveTextContent('Haitian Creole?');
   });
 
   test('ExtensionSlot throws error if both state and children provided', () => {
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     const App = () => (
       <ExtensionSlot name="Box" state={{ color: 'red' }}>
         <Extension />
       </ExtensionSlot>
     );
+
     expect(() => render(<App />)).toThrow();
     expect(consoleError).toHaveBeenNthCalledWith(
       1,
@@ -116,6 +123,7 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
       code: 'es',
     });
     attach('Box', 'Spanish');
+
     const App = openmrsComponentDecorator({
       moduleName: 'esm-languages-app',
       featureName: 'Languages',
@@ -135,21 +143,26 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
         </div>
       );
     });
+
     render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('heading')).toBeInTheDocument());
+    expect(await screen.findByRole('heading')).toBeInTheDocument();
     expect(screen.getByRole('heading')).toHaveTextContent('es');
-    await waitFor(() => expect(screen.getByText('Spanish')).toBeInTheDocument());
+    expect(screen.getByText('Spanish')).toBeInTheDocument();
   });
 
   test('Both meta and state can be used at the same time', async () => {
+    const user = userEvent.setup();
     function SwahiliExtension({ suffix }) {
       return <div>Swahili{suffix}</div>;
     }
+
     registerSimpleExtension('Swahili', 'esm-languages-app', SwahiliExtension, {
       code: 'sw',
     });
+
     attach('Box', 'Swahili');
+
     const App = openmrsComponentDecorator({
       moduleName: 'esm-languages-app',
       featureName: 'Languages',
@@ -171,12 +184,13 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
         </div>
       );
     });
+
     render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('heading')).toBeInTheDocument());
+    expect(await screen.findByRole('heading')).toBeInTheDocument();
     expect(screen.getByRole('heading')).toHaveTextContent('sw');
     await waitFor(() => expect(screen.getByText(/Swahili/)).toHaveTextContent('Swahili!'));
-    userEvent.click(screen.getByText('Toggle suffix'));
+    await user.click(screen.getByText('Toggle suffix'));
     await waitFor(() => expect(screen.getByText(/Swahili/)).toHaveTextContent('Swahili?'));
   });
 
@@ -187,8 +201,10 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     registerSimpleExtension('Hindi', 'esm-languages-app', undefined, {
       code: 'hi',
     });
+
     attach('Box', 'Urdu');
     attach('Box', 'Hindi');
+
     const App = openmrsComponentDecorator({
       moduleName: 'esm-languages-app',
       featureName: 'Languages',
@@ -207,9 +223,10 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
         </div>
       );
     });
+
     render(<App />);
 
-    await waitFor(() => expect(screen.getByTestId('Urdu')).toBeInTheDocument());
+    expect(await screen.findByTestId('Urdu')).toBeInTheDocument();
     expect(within(screen.getByTestId('Urdu')).getByRole('heading')).toHaveTextContent('urd');
     expect(within(screen.getByTestId('Hindi')).getByRole('heading')).toHaveTextContent('hi');
   });
@@ -219,18 +236,22 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     registerSimpleExtension('Turkish', 'esm-languages-app', undefined, undefined, 'turkic');
     registerSimpleExtension('Turkmeni', 'esm-languages-app', undefined, undefined, 'turkic');
     registerSimpleExtension('Kurmanji', 'esm-languages-app', undefined, undefined, 'kurdish');
+
     attach('Box', 'Arabic');
     attach('Box', 'Turkish');
     attach('Box', 'Turkmeni');
     attach('Box', 'Kurmanji');
+
     registerFeatureFlag('turkic', '', '');
     registerFeatureFlag('kurdish', '', '');
     setFeatureFlag('turkic', true);
+
     const App = openmrsComponentDecorator({
       moduleName: 'esm-languages-app',
       featureName: 'Languages',
       disableTranslations: true,
     })(() => <ExtensionSlot name="Box" />);
+
     render(<App />);
 
     await waitFor(() => expect(screen.getByText(/Turkmeni/)).toBeInTheDocument());
@@ -255,13 +276,13 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
       featureName: 'Languages',
       disableTranslations: true,
     })(() => {
-      const extensions = useRenderableExtensions('Box');
-      const Ext = extensions[0];
+      const utils = useRenderableExtensions('Box');
+      const Ext = utils[0];
       return <Ext state={{ suffix: ' hola' }} />;
     });
     render(<App />);
 
-    await waitFor(() => expect(screen.getByText('Spanish hola')).toBeInTheDocument());
+    expect(await screen.findByText('Spanish hola')).toBeInTheDocument();
   });
 });
 

@@ -1,11 +1,9 @@
 import '@testing-library/jest-dom';
-import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useOpenmrsInfinite } from './useOpenmrsInfinite';
 import { getIntArray, getTestData } from './useOpenmrsPagination.test';
 
 describe('useOpenmrsInfinite', () => {
-  afterEach(cleanup);
-
   it('should load all rows with 1 fetch if number of rows < pageSize', async () => {
     const pageSize = 20;
     const expectedRowCount = 17;

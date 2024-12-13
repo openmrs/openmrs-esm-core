@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render, screen, waitFor} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { openmrsComponentDecorator } from './openmrsComponentDecorator';
 import { ComponentContext } from './ComponentContext';
 
@@ -10,11 +10,11 @@ describe('openmrs-component-decorator', () => {
     moduleName: 'test',
   };
 
-  it('renders a component', () => {
+  it('renders a component', async () => {
     const DecoratedComp = openmrsComponentDecorator(opts)(CompThatWorks);
     render(<DecoratedComp />);
 
-    screen.findByText('The button');
+    expect(await screen.findByText('The button')).toBeInTheDocument();
   });
 
   it('catches any errors in the component tree and renders a ui explaining something bad happened', () => {
@@ -36,21 +36,21 @@ describe('openmrs-component-decorator', () => {
     render(<DecoratedComp />);
   });
 
-  it("rendering a unsafe component in strict mode should log error in console",()=>{
+  it('rendering a unsafe component in strict mode should log error in console', () => {
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
-      const UnsafeDecoratedCompnent = openmrsComponentDecorator(opts)(UnsafeComponent);
-      render(<UnsafeDecoratedCompnent/>);
-      expect(consoleError.mock.calls[0][0]).toContain('Warning: Using UNSAFE_componentWillMount');
-      consoleError.mockRestore();
-  })
+    const UnsafeDecoratedCompnent = openmrsComponentDecorator(opts)(UnsafeComponent);
+    render(<UnsafeDecoratedCompnent />);
+    expect(consoleError.mock.calls[0][0]).toContain('Warning: Using UNSAFE_componentWillMount');
+    consoleError.mockRestore();
+  });
 
-  it("rendering an unsafe component without strict mode should not log an error in console",()=>{
-      const spy = jest.spyOn(console, "error");
-      const unsafeComponentOptions=Object.assign(opts,{strictMode:false})
-      const UnsafeDecoratedCompnent = openmrsComponentDecorator(unsafeComponentOptions)(UnsafeComponent);
-      render(<UnsafeDecoratedCompnent/>);
-      expect(spy).not.toHaveBeenCalled();
-  })
+  it('rendering an unsafe component without strict mode should not log an error in console', () => {
+    const spy = jest.spyOn(console, 'error');
+    const unsafeComponentOptions = Object.assign(opts, { strictMode: false });
+    const UnsafeDecoratedCompnent = openmrsComponentDecorator(unsafeComponentOptions)(UnsafeComponent);
+    render(<UnsafeDecoratedCompnent />);
+    expect(spy).not.toHaveBeenCalled();
+  });
 });
 
 function CompThatWorks() {
@@ -66,13 +66,10 @@ function CompWithConfig() {
   return <div>{moduleName}</div>;
 }
 
+class UnsafeComponent extends Component<any, any> {
+  UNSAFE_componentWillMount() {}
 
-class UnsafeComponent extends Component<any,any> {
-  
-  UNSAFE_componentWillMount() { 
-   } 
-
- render() { 
-   return <h1>This is Unsafe Component</h1>; 
- } 
+  render() {
+    return <h1>This is Unsafe Component</h1>;
+  }
 }

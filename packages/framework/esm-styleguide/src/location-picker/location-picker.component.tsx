@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { InlineLoading, Search, RadioButton, RadioButtonGroup, RadioButtonSkeleton } from '@carbon/react';
-import styles from './location-picker.module.scss';
+import { InlineLoading, RadioButton, RadioButtonGroup, RadioButtonSkeleton, Search } from '@carbon/react';
 import { useLocationByUuid, useLocations } from './location-picker.resource';
+import styles from './location-picker.module.scss';
 
 interface LocationPickerProps {
   selectedLocationUuid?: string;
@@ -92,12 +92,12 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
             <div className={styles.locationResultsContainer}>
               {locations?.length > 0 ? (
                 <RadioButtonGroup
-                  valueSelected={selectedLocationUuid}
-                  orientation="vertical"
-                  name="Login locations"
+                  name="loginLocations"
                   onChange={(ev) => {
                     onChange(ev.toString());
                   }}
+                  orientation="vertical"
+                  valueSelected={selectedLocationUuid}
                 >
                   {locations.map((entry, i) => (
                     <RadioButton

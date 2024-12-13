@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -10,7 +11,6 @@ import {
 } from '../../__mocks__/locations.mock';
 import { mockConfig } from '../../__mocks__/config.mock';
 import { LocationPicker } from './location-picker.component';
-import { expect } from '@playwright/test';
 
 const validLocationUuid = '1ce1b7d4-c865-4178-82b0-5932e51503d6';
 const inpatientWardLocationUuid = 'ba685651-ed3b-4e63-9b35-78893060758a';
@@ -60,18 +60,18 @@ describe('LocationPicker', () => {
     });
 
     expect(
-      screen.queryByRole('searchbox', {
+      screen.getByRole('searchbox', {
         name: /search for a location/i,
       }),
     ).toBeInTheDocument();
-    expect(screen.queryByRole('searchbox', { name: /search for a location/i })).toBeInTheDocument();
+    expect(screen.getByRole('searchbox', { name: /search for a location/i })).toBeInTheDocument();
 
     const locations = screen.getAllByRole('radio');
     expect(locations.length).toBe(4);
     const expectedLocations = [/community outreach/, /inpatient ward/, /mobile clinic/, /outpatient clinic/];
 
     expectedLocations.forEach((row) =>
-      expect(screen.queryByRole('radio', { name: new RegExp(row, 'i') })).toBeInTheDocument(),
+      expect(screen.getByRole('radio', { name: new RegExp(row, 'i') })).toBeInTheDocument(),
     );
   });
 
@@ -94,7 +94,7 @@ describe('LocationPicker', () => {
       render(<LocationPicker selectedLocationUuid={inpatientWardLocationUuid} onChange={jest.fn()} />);
     });
     const inpatientWardOption = screen.getByRole('radio', { name: /inpatient ward/i });
-    expect(inpatientWardOption).toHaveProperty('checked', true);
+    expect(inpatientWardOption).toBeChecked();
   });
 
   it('loads the default location on top of the list', async () => {
@@ -109,7 +109,7 @@ describe('LocationPicker', () => {
     const expectedLocations = [/community outreach/, /inpatient ward/, /mobile clinic/, /outpatient clinic/];
 
     expectedLocations.forEach((location) =>
-      expect(screen.queryByRole('radio', { name: new RegExp(location, 'i') })).toBeInTheDocument(),
+      expect(screen.getByRole('radio', { name: new RegExp(location, 'i') })).toBeInTheDocument(),
     );
   });
 
@@ -132,7 +132,7 @@ describe('LocationPicker', () => {
     const searchInput = screen.getByRole('searchbox', { name: /search for a location/i });
     await user.type(searchInput, 'search_for_no_location');
 
-    expect(screen.queryByText(/no results to display/i)).toBeInTheDocument();
+    expect(screen.getByText(/no results to display/i)).toBeInTheDocument();
     const locations = screen.queryAllByRole('radio');
     expect(locations.length).toBe(0);
   });

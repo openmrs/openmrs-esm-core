@@ -78,14 +78,11 @@ describe('WorkspaceContainer in window mode', () => {
     );
     const header = screen.getByRole('banner');
     expect(within(header).getByText('COVID Admission')).toBeInTheDocument();
-    const workspaces = renderHook(() => useWorkspaces());
-    act(() => workspaces.result.current.workspaces[0].setTitle('COVID Discharge'));
+    const utils = renderHook(() => useWorkspaces());
+    act(() => utils.result.current.workspaces[0].setTitle('COVID Discharge'));
     expect(within(header).getByText('COVID Discharge')).toBeInTheDocument();
     act(() =>
-      workspaces.result.current.workspaces[0].setTitle(
-        'Space Ghost',
-        <div data-testid="patient-name">Space Ghost</div>,
-      ),
+      utils.result.current.workspaces[0].setTitle('Space Ghost', <div data-testid="patient-name">Space Ghost</div>),
     );
     expect(within(header).getByTestId('patient-name')).toBeInTheDocument();
   });
@@ -100,8 +97,8 @@ describe('WorkspaceContainer in window mode', () => {
     expect(within(header).getByText('COVID Admission')).toBeInTheDocument();
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Discharge' }));
     expect(within(header).getByText('COVID Discharge')).toBeInTheDocument();
-    const workspaces = renderHook(() => useWorkspaces());
-    act(() => workspaces.result.current.workspaces[0].setTitle('Fancy Special Title'));
+    const utils = renderHook(() => useWorkspaces());
+    act(() => utils.result.current.workspaces[0].setTitle('Fancy Special Title'));
     expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Admission Again' }));
     expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
@@ -109,13 +106,13 @@ describe('WorkspaceContainer in window mode', () => {
 
   test('should reopen hidden workspace window when user relaunches the same workspace window', async () => {
     const user = userEvent.setup();
-    const workspaces = renderHook(() => useWorkspaces());
+    const utils = renderHook(() => useWorkspaces());
     mockedIsDesktop.mockReturnValue(true);
-    expect(workspaces.result.current.workspaces.length).toBe(0);
+    expect(utils.result.current.workspaces.length).toBe(0);
     renderWorkspaceWindow();
 
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'POC Triage' }));
-    expect(workspaces.result.current.workspaces.length).toBe(1);
+    expect(utils.result.current.workspaces.length).toBe(1);
     const header = screen.getByRole('banner');
     expect(within(header).getByText('POC Triage')).toBeInTheDocument();
     expectToBeVisible(screen.getByRole('complementary'));
@@ -130,7 +127,7 @@ describe('WorkspaceContainer in window mode', () => {
     expectToBeVisible(await screen.findByRole('complementary'));
     expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenRelative');
     expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenFixed');
-    expect(workspaces.result.current.workspaces.length).toBe(1);
+    expect(utils.result.current.workspaces.length).toBe(1);
     input = screen.getByRole('textbox');
     expect(input).toHaveValue("what's good");
   });
@@ -143,14 +140,17 @@ describe('WorkspaceContainer in window mode', () => {
     act(() => launchWorkspace('clinical-form'));
     const header = screen.getByRole('banner');
     expect(within(header).getByText('clinicalForm')).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/no-node-access
     expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
 
     const maximizeButton = await screen.findByRole('button', { name: 'Maximize' });
     await user.click(maximizeButton);
+    // eslint-disable-next-line testing-library/no-node-access
     expect(screen.getByRole('complementary').firstChild).toHaveClass('maximizedWindow');
 
     const minimizeButton = await screen.findByRole('button', { name: 'Minimize' });
     await user.click(minimizeButton);
+    // eslint-disable-next-line testing-library/no-node-access
     expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
   });
 
@@ -203,13 +203,13 @@ describe('WorkspaceContainer in overlay mode', () => {
     renderWorkspaceOverlay();
     act(() => launchWorkspace('patient-search', { workspaceTitle: 'Make an appointment' }));
 
-    expect(screen.queryByRole('complementary')).toBeInTheDocument();
+    expect(screen.getByRole('complementary')).toBeInTheDocument();
     expectToBeVisible(screen.getByRole('complementary'));
     expect(screen.getByText('Make an appointment')).toBeInTheDocument();
 
     const closeButton = screen.getByRole('button', { name: 'Close' });
     await user.click(closeButton);
-    expect(screen.queryByRole('complementary')).toHaveClass('hiddenRelative');
+    expect(screen.getByRole('complementary')).toHaveClass('hiddenRelative');
   });
 });
 

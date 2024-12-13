@@ -1,10 +1,8 @@
-import { renderHook, cleanup } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import useAbortController from './useAbortController';
 
 describe('useAbortController', () => {
-  afterEach(cleanup);
-
   it('returns an AbortController', () => {
     const { result } = renderHook(() => useAbortController());
     expect(result.current).not.toBeNull();

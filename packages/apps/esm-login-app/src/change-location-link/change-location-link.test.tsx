@@ -1,8 +1,8 @@
 import React from 'react';
-import ChangeLocationLink from './change-location-link.extension';
-import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { navigate, useSession } from '@openmrs/esm-framework';
+import ChangeLocationLink from './change-location-link.extension';
 
 const navigateMock = navigate as jest.Mock;
 const useSessionMock = useSession as jest.Mock;
@@ -17,10 +17,11 @@ describe('<ChangeLocationLink/>', () => {
         display: 'Waffle House',
       },
     });
-    render(<ChangeLocationLink />);
   });
 
   it('should display the `Change location` link', async () => {
+    render(<ChangeLocationLink />);
+
     const user = userEvent.setup();
     const changeLocationButton = await screen.findByRole('button', {
       name: /Change/i,

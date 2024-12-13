@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
@@ -45,7 +46,6 @@ mockedUseSession.mockReturnValue({
 
 describe('LocationPickerView', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
     mockedOpenmrsFetch.mockImplementation((url) => {
       if (url === `/ws/fhir2/R4/Location?_id=${fistLocation.uuid}`) {
         return validatingLocationSuccessResponse;

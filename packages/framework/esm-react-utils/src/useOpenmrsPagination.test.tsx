@@ -1,4 +1,4 @@
-import { renderHook, cleanup, waitFor, act } from '@testing-library/react';
+import { renderHook, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useOpenmrsPagination, type OpenMRSPaginatedResponse } from './useOpenmrsPagination';
 
@@ -26,8 +26,6 @@ export async function getTestData(url: string, totalCount: number): Promise<Open
 }
 
 describe('useOpenmrsPagination', () => {
-  afterEach(cleanup);
-
   it('should not fetch anything if url is null', async () => {
     const { result } = renderHook(() =>
       useOpenmrsPagination(null as any, 50, {
