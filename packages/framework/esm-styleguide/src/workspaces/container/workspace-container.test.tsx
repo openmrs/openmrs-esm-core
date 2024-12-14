@@ -22,8 +22,8 @@ jest.mock('react-i18next', () => ({
   useTranslation: jest.fn().mockImplementation(() => ({ t: (arg: string) => arg })),
 }));
 
-const mockedIsDesktop = isDesktop as unknown as jest.Mock;
-const mockedUseLayoutType = useLayoutType as jest.Mock;
+const mockIsDesktop = jest.mocked(isDesktop);
+const mockUseLayoutType = jest.mocked(useLayoutType);
 
 window.history.pushState({}, 'Workspace Container', '/workspace-container');
 
@@ -55,32 +55,40 @@ describe('WorkspaceContainer in window mode', () => {
   });
 
   test('should translate the workspace title inside the workspace container', () => {
-    mockedIsDesktop.mockReturnValue(true);
+    mockIsDesktop.mockReturnValue(true);
     renderWorkspaceWindow();
     act(() => launchWorkspace('clinical-form'));
+
     let header = screen.getByRole('banner');
     expect(within(header).getByText('clinicalForm')).toBeInTheDocument();
+
     act(() => launchWorkspace('order-basket'));
+
     header = screen.getByRole('banner');
     expect(within(header).getByText('orderBasket')).toBeInTheDocument();
   });
 
   test('should override title via additional props and via setTitle', async () => {
-    mockedIsDesktop.mockReturnValue(true);
+    mockIsDesktop.mockReturnValue(true);
     renderWorkspaceWindow();
     // In this line we are also verifying that the type argument to `launchWorkspace`
     // behaves as expected, constraining the type of the `additionalProps` argument.
+
     act(() =>
       launchWorkspace<ClinicalFormWorkspaceProps>('clinical-form', {
         workspaceTitle: 'COVID Admission',
         patientUuid: '123',
       }),
     );
+
     const header = screen.getByRole('banner');
     expect(within(header).getByText('COVID Admission')).toBeInTheDocument();
+
     const utils = renderHook(() => useWorkspaces());
     act(() => utils.result.current.workspaces[0].setTitle('COVID Discharge'));
+
     expect(within(header).getByText('COVID Discharge')).toBeInTheDocument();
+
     act(() =>
       utils.result.current.workspaces[0].setTitle('Space Ghost', <div data-testid="patient-name">Space Ghost</div>),
     );
@@ -88,18 +96,24 @@ describe('WorkspaceContainer in window mode', () => {
   });
 
   test('re-launching workspace should update title, but only if setTitle was not used', async () => {
-    mockedIsDesktop.mockReturnValue(true);
+    mockIsDesktop.mockReturnValue(true);
     renderWorkspaceWindow();
+
     // In this line we are also testing that `launchWorkspace` allows arbitrary additional props
     // when no type argument is provided.
+
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Admission', foo: 'bar' }));
+
     const header = screen.getByRole('banner');
     expect(within(header).getByText('COVID Admission')).toBeInTheDocument();
+
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Discharge' }));
     expect(within(header).getByText('COVID Discharge')).toBeInTheDocument();
+
     const utils = renderHook(() => useWorkspaces());
     act(() => utils.result.current.workspaces[0].setTitle('Fancy Special Title'));
     expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
+
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Admission Again' }));
     expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
   });
@@ -107,15 +121,20 @@ describe('WorkspaceContainer in window mode', () => {
   test('should reopen hidden workspace window when user relaunches the same workspace window', async () => {
     const user = userEvent.setup();
     const utils = renderHook(() => useWorkspaces());
-    mockedIsDesktop.mockReturnValue(true);
+    mockIsDesktop.mockReturnValue(true);
+
     expect(utils.result.current.workspaces.length).toBe(0);
+
     renderWorkspaceWindow();
 
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'POC Triage' }));
+
     expect(utils.result.current.workspaces.length).toBe(1);
+
     const header = screen.getByRole('banner');
     expect(within(header).getByText('POC Triage')).toBeInTheDocument();
     expectToBeVisible(screen.getByRole('complementary'));
+
     let input = screen.getByRole('textbox');
     await user.type(input, "what's good");
 
@@ -124,6 +143,7 @@ describe('WorkspaceContainer in window mode', () => {
     expect(screen.queryByRole('complementary')).toHaveClass('hiddenRelative');
 
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'POC Triage' }));
+
     expectToBeVisible(await screen.findByRole('complementary'));
     expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenRelative');
     expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenFixed');
@@ -134,10 +154,11 @@ describe('WorkspaceContainer in window mode', () => {
 
   test('should toggle between maximized and normal screen size', async () => {
     const user = userEvent.setup();
-    mockedIsDesktop.mockReturnValue(true);
+    mockIsDesktop.mockReturnValue(true);
     renderWorkspaceWindow();
 
     act(() => launchWorkspace('clinical-form'));
+
     const header = screen.getByRole('banner');
     expect(within(header).getByText('clinicalForm')).toBeInTheDocument();
     // eslint-disable-next-line testing-library/no-node-access
@@ -160,19 +181,25 @@ describe('WorkspaceContainer in window mode', () => {
   // Try this again periodically to see if it starts working.
   xtest("shouldn't lose data when transitioning between workspaces", async () => {
     renderWorkspaceWindow();
+
     const user = userEvent.setup();
     act(() => launchWorkspace('clinical-form'));
+
     let container = screen.getByRole('complementary');
     expect(within(container).getByText('clinical-form')).toBeInTheDocument();
-    let input = screen.getByRole('textbox');
-    await user.type(input, 'howdy');
 
+    let input = screen.getByRole('textbox');
+
+    await user.type(input, 'howdy');
     await user.click(screen.getByRole('button', { name: 'Hide' }));
+
     act(() => launchWorkspace('order-basket'));
+
     container = screen.getByRole('complementary');
     expect(within(container).getByText('order-basket')).toBeInTheDocument();
 
     act(() => launchWorkspace('clinical-form'));
+
     expect(within(container).getByText('clinical-form')).toBeInTheDocument();
     input = screen.getByRole('textbox');
     expect(input).toHaveValue('howdy');
@@ -198,8 +225,9 @@ describe('WorkspaceContainer in overlay mode', () => {
   });
 
   it('opens with overridable title and closes', async () => {
-    mockedUseLayoutType.mockReturnValue('small-desktop');
+    mockUseLayoutType.mockReturnValue('small-desktop');
     const user = userEvent.setup();
+
     renderWorkspaceOverlay();
     act(() => launchWorkspace('patient-search', { workspaceTitle: 'Make an appointment' }));
 

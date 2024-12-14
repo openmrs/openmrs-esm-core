@@ -78,18 +78,18 @@ export const configSchema = {
             _type: Type.String,
             _required: true,
             _description: 'The source URL of the logo image',
-            _validations: [validators.isUrl]
+            _validations: [validators.isUrl],
           },
           alt: {
             _type: Type.String,
             _required: true,
-            _description: 'The alternative text for the logo image'
-          }
-        }
+            _description: 'The alternative text for the logo image',
+          },
+        },
       },
       _default: [],
       _description: 'An array of logos to be displayed in the footer next to the OpenMRS logo.',
-    }
+    },
   },
   showPasswordOnSeparateScreen: {
     _type: Type.Boolean,
@@ -100,16 +100,17 @@ export const configSchema = {
 };
 
 export interface ConfigSchema {
-  provider: {
-    loginUrl: string;
-    logoutUrl: string;
-    type: string;
-  };
   chooseLocation: {
     enabled: boolean;
     locationsPerRequest: number;
     numberToShow: number;
     useLoginLocationTag: boolean;
+  };
+  footer: {
+    additionalLogos: Array<{
+      alt: string;
+      src: string;
+    }>;
   };
   links: {
     loginSuccess: string;
@@ -118,11 +119,10 @@ export interface ConfigSchema {
     alt: string;
     src: string;
   };
-  footer: {
-    additionalLogos: Array<{
-      src: string;
-      alt: string;
-    }>;
+  provider: {
+    loginUrl: string;
+    logoutUrl: string;
+    type: string;
   };
   showPasswordOnSeparateScreen: boolean;
 }

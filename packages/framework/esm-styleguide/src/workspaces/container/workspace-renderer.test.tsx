@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { getWorkspaceGroupStore } from '../workspaces';
-import Parcel from 'single-spa-react/parcel';
 
 const mockFn = jest.fn();
 
@@ -15,11 +14,12 @@ jest.mock('single-spa-react/parcel', () =>
 
 describe('WorkspaceRenderer', () => {
   it('should render workspace', async () => {
-    const mockedCloseWorkspace = jest.fn();
-    const mockedCloseWorkspaceWithSavedChanges = jest.fn();
-    const mockedPromptBeforeClosing = jest.fn();
-    const mockedSetTitle = jest.fn();
-    const mockedLoadFn = jest.fn().mockImplementation(() => Promise.resolve({ default: 'file-content' }));
+    const mockCloseWorkspace = jest.fn();
+    const mockCloseWorkspaceWithSavedChanges = jest.fn();
+    const mockPromptBeforeClosing = jest.fn();
+    const mockSetTitle = jest.fn();
+    const mockLoadFn = jest.fn().mockImplementation(() => Promise.resolve({ default: 'file-content' }));
+
     getWorkspaceGroupStore('test-sidebar-store')?.setState({
       // Testing that the workspace group state should be overrided by additionalProps
       foo: false,
@@ -29,13 +29,13 @@ describe('WorkspaceRenderer', () => {
       <WorkspaceRenderer
         // @ts-ignore The workspace is of type OpenWorkspace and not all properties are required
         workspace={{
-          closeWorkspace: mockedCloseWorkspace,
+          closeWorkspace: mockCloseWorkspace,
           name: 'workspace-name',
-          load: mockedLoadFn,
+          load: mockLoadFn,
           title: 'Workspace title',
-          closeWorkspaceWithSavedChanges: mockedCloseWorkspaceWithSavedChanges,
-          promptBeforeClosing: mockedPromptBeforeClosing,
-          setTitle: mockedSetTitle,
+          closeWorkspaceWithSavedChanges: mockCloseWorkspaceWithSavedChanges,
+          promptBeforeClosing: mockPromptBeforeClosing,
+          setTitle: mockSetTitle,
           additionalProps: {
             foo: 'true',
           },
@@ -45,16 +45,17 @@ describe('WorkspaceRenderer', () => {
     );
 
     expect(screen.getByText('Loading ...')).toBeInTheDocument();
-    expect(mockedLoadFn).toHaveBeenCalled();
+    expect(mockLoadFn).toHaveBeenCalled();
+
     await screen.findByTestId('mocked-parcel');
 
     expect(mockFn).toHaveBeenCalledWith({
       config: 'file-content',
       mountParcel: undefined,
-      closeWorkspace: mockedCloseWorkspace,
-      closeWorkspaceWithSavedChanges: mockedCloseWorkspaceWithSavedChanges,
-      promptBeforeClosing: mockedPromptBeforeClosing,
-      setTitle: mockedSetTitle,
+      closeWorkspace: mockCloseWorkspace,
+      closeWorkspaceWithSavedChanges: mockCloseWorkspaceWithSavedChanges,
+      promptBeforeClosing: mockPromptBeforeClosing,
+      setTitle: mockSetTitle,
       foo: 'true',
       bar: 'true',
     });

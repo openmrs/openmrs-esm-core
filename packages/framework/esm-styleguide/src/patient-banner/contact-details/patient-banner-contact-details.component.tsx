@@ -30,7 +30,7 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
           {(() => {
             if (cohorts?.length > 0) {
               const sortedLists = cohorts.sort(
-                (a, b) => parseDate(a.startDate).getTime() - parseDate(b.startDate).getTime(),
+                (a, b) => parseDate(a?.startDate).getTime() - parseDate(b?.startDate).getTime(),
               );
               const slicedLists = sortedLists.slice(0, 3);
               return slicedLists?.map((cohort) => (

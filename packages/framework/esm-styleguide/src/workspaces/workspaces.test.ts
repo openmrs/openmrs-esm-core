@@ -1,3 +1,5 @@
+import { clearMockExtensionRegistry } from '@openmrs/esm-framework/mock';
+import { registerExtension, registerWorkspace } from '@openmrs/esm-extensions';
 import {
   type Prompt,
   cancelPrompt,
@@ -8,8 +10,6 @@ import {
   launchWorkspaceGroup,
   resetWorkspaceStore,
 } from './workspaces';
-import { registerExtension, registerWorkspace } from '@openmrs/esm-extensions';
-import { clearMockExtensionRegistry } from '@openmrs/esm-framework/mock';
 
 describe('workspace system', () => {
   beforeEach(() => {
@@ -20,12 +20,17 @@ describe('workspace system', () => {
   test('registering, launching, and closing a workspace', () => {
     const store = getWorkspaceStore();
     registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+
     launchWorkspace('allergies', { foo: true });
+
     expect(store.getState().openWorkspaces.length).toEqual(1);
+
     const allergies = store.getState().openWorkspaces[0];
     expect(allergies.name).toBe('allergies');
     expect(allergies.additionalProps['foo']).toBe(true);
+
     allergies.closeWorkspace();
+
     expect(store.getState().openWorkspaces.length).toEqual(0);
   });
 
@@ -33,8 +38,11 @@ describe('workspace system', () => {
     it('should launch a workspace', () => {
       const store = getWorkspaceStore();
       registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+
       launchWorkspace('allergies', { foo: true });
+
       expect(store.getState().openWorkspaces.length).toEqual(1);
+
       const allergies = store.getState().openWorkspaces[0];
       expect(allergies.name).toBe('allergies');
       expect(allergies.additionalProps['foo']).toBe(true);
@@ -42,6 +50,7 @@ describe('workspace system', () => {
 
     test('should update additionalProps when re-opening an already opened form with same name but with different props', () => {
       const store = getWorkspaceStore();
+
       registerWorkspace({ name: 'POC HIV Form', title: 'Clinical Form', load: jest.fn(), moduleName: '@openmrs/foo' });
       launchWorkspace('POC HIV Form', { workspaceTitle: 'POC HIV Form' });
 
@@ -64,12 +73,17 @@ describe('workspace system', () => {
     it('should show a modal when a workspace is already open (with changes) and it cannot hide', () => {
       const store = getWorkspaceStore();
       registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+
       launchWorkspace('allergies', { foo: true });
+
       expect(store.getState().openWorkspaces.length).toEqual(1);
+
       const allergies = store.getState().openWorkspaces?.[0];
       allergies.promptBeforeClosing(() => true);
+
       registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), moduleName: '@openmrs/foo' });
       launchWorkspace('conditions', { foo: true });
+
       const prompt = store.getState().prompt as Prompt;
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch(/unsaved changes/i);
@@ -77,8 +91,11 @@ describe('workspace system', () => {
         'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
       expect(prompt.confirmText).toMatch(/Open anyway/i);
+
       prompt.onConfirm();
+
       expect(store.getState().openWorkspaces.length).toEqual(1);
+
       const openedWorkspace = store.getState().openWorkspaces[0];
       expect(openedWorkspace.name).toBe('conditions');
       expect(openedWorkspace.name).not.toBe('Allergies');
@@ -94,8 +111,11 @@ describe('workspace system', () => {
         type: 'allergies-form',
         moduleName: '@openmrs/foo',
       });
+
       launchWorkspace('allergies', { foo: true });
+
       expect(store.getState().openWorkspaces.length).toEqual(1);
+
       registerWorkspace({
         name: 'conditions',
         title: 'Conditions',
@@ -104,7 +124,9 @@ describe('workspace system', () => {
         moduleName: '@openmrs/foo',
       });
       launchWorkspace('conditions', { foo: true });
+
       expect(store.getState().openWorkspaces.length).toEqual(2);
+
       const openedWorkspaces = store.getState().openWorkspaces;
       expect(openedWorkspaces[0].name).toBe('conditions');
       expect(openedWorkspaces[1].name).not.toBe('Allergies');
@@ -112,6 +134,7 @@ describe('workspace system', () => {
 
     it("should show a modal when launching a workspace with type matching the already opened workspace's type and should show the previous opened workspace in front when showing the modal", () => {
       const store = getWorkspaceStore();
+
       registerWorkspace({
         name: 'allergies',
         title: 'Allergies',
@@ -135,17 +158,23 @@ describe('workspace system', () => {
         type: 'form',
         moduleName: '@openmrs/foo',
       });
+
       launchWorkspace('allergies');
       launchWorkspace('conditions');
+
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('conditions');
       expect(store.getState().openWorkspaces[1].name).toBe('allergies');
+
       const allergies = store.getState().openWorkspaces[1];
       allergies.promptBeforeClosing(() => true);
+
       launchWorkspace('vitals');
+
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('allergies');
       expect(store.getState().openWorkspaces[1].name).toBe('conditions');
+
       const prompt = store.getState().prompt as Prompt;
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch(/unsaved changes/i);
@@ -153,7 +182,9 @@ describe('workspace system', () => {
         'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
       expect(prompt.confirmText).toMatch(/Open anyway/i);
+
       prompt.onConfirm();
+
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('vitals');
       expect(store.getState().openWorkspaces[1].name).toBe('conditions');
@@ -161,6 +192,7 @@ describe('workspace system', () => {
 
     it("should not show a modal when launching a workspace with type not matching with any already opened workspace's type", () => {
       const store = getWorkspaceStore();
+
       registerWorkspace({
         name: 'allergies',
         title: 'Allergies',
@@ -184,16 +216,21 @@ describe('workspace system', () => {
         type: 'vitals-form',
         moduleName: '@openmrs/foo',
       });
+
       launchWorkspace('allergies');
       launchWorkspace('conditions');
+
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('conditions');
       expect(store.getState().openWorkspaces[1].name).toBe('allergies');
+
       launchWorkspace('vitals');
+
       expect(store.getState().openWorkspaces.length).toEqual(3);
       expect(store.getState().openWorkspaces[0].name).toBe('vitals');
       expect(store.getState().openWorkspaces[1].name).toBe('conditions');
       expect(store.getState().openWorkspaces[2].name).toBe('allergies');
+
       const prompt = store.getState().prompt;
       expect(prompt).toBeFalsy();
     });
@@ -230,34 +267,45 @@ describe('workspace system', () => {
         type: 'form',
         moduleName: '@openmrs/foo',
       });
+
       launchWorkspace('allergies');
       launchWorkspace('attachments');
       launchWorkspace('conditions');
+
       expect(store.getState().openWorkspaces.length).toEqual(3);
       expect(store.getState().openWorkspaces.map((w) => w.name)).toEqual(['conditions', 'attachments', 'allergies']);
+
       const conditionsWorkspace = store.getState().openWorkspaces?.[0];
       const allergiesWorkspace = store.getState().openWorkspaces?.[2];
       conditionsWorkspace.promptBeforeClosing(() => true);
       allergiesWorkspace.promptBeforeClosing(() => true);
       launchWorkspace('vitals');
+
       expect(store.getState().openWorkspaces.length).toEqual(3);
       expect(store.getState().openWorkspaces[0].name).toBe('conditions');
+
       const prompt = store.getState().prompt as Prompt;
       expect(prompt).toBeTruthy();
       expect(prompt.body).toMatch(
         'There may be unsaved changes in Conditions. Please save them before opening another workspace.',
       );
       // Closing the conditions workspace because it cannot be hidden
+
       prompt.onConfirm();
+
       expect(store.getState().openWorkspaces.length).toEqual(2);
       // Bringing the `allergies` workspace in front because it matches the vitals workspace type
       expect(store.getState().openWorkspaces[0].name).toEqual('allergies');
+
       const prompt2 = store.getState().prompt as Prompt;
+
       expect(prompt2).toBeTruthy();
       expect(prompt2.body).toMatch(
         'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
+
       prompt2.onConfirm();
+
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('vitals');
       expect(store.getState().openWorkspaces[1].name).toBe('attachments');
@@ -290,19 +338,28 @@ describe('workspace system', () => {
         preferredWindowSize: 'maximized',
         moduleName: '@openmrs/foo',
       });
+
       launchWorkspace('allergies');
+
       expect(store.getState().openWorkspaces.length).toBe(1);
       expect(store.getState().workspaceWindowState).toBe('maximized');
+
       launchWorkspace('attachments');
+
       expect(store.getState().openWorkspaces.length).toBe(2);
       expect(store.getState().workspaceWindowState).toBe('normal');
+
       launchWorkspace('conditions');
+
       expect(store.getState().openWorkspaces.length).toBe(3);
       expect(store.getState().workspaceWindowState).toBe('maximized');
+
       store.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: true });
       expect(store.getState().workspaceWindowState).toBe('normal');
+
       store.getState().openWorkspaces[0].closeWorkspace();
       expect(store.getState().workspaceWindowState).toBe('maximized');
+
       store.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: true });
       expect(store.getState().workspaceWindowState).toBe('normal');
     });
@@ -334,50 +391,72 @@ describe('workspace system', () => {
       type: 'order',
       moduleName: '@openmrs/foo',
     });
+
     // Test opening the same workspace twice--should be a no-op
     launchWorkspace('conditions');
     launchWorkspace('conditions');
+
     expect(store.getState().openWorkspaces.length).toEqual(1);
+
     const conditionsWorkspace = store.getState().openWorkspaces[0];
     conditionsWorkspace.promptBeforeClosing(() => true);
+
     // Test opening a workspace of the same type--should require confirmation and then replace
     launchWorkspace('form-entry', { foo: true });
+
     expect(store.getState().openWorkspaces.length).toEqual(1);
     expect(store.getState().openWorkspaces[0].name).toBe('conditions');
+
     let prompt = store.getState().prompt as Prompt;
     expect(prompt.title).toMatch(/unsaved changes/i);
+
     prompt.onConfirm();
+
     expect(store.getState().prompt).toBeNull();
     expect(store.getState().openWorkspaces.length).toEqual(1);
     expect(store.getState().openWorkspaces[0].name).toBe('form-entry');
     expect(store.getState().openWorkspaces[0].additionalProps['foo']).toBe(true);
+
     // Test opening a workspace of a different type--should open directly
     launchWorkspace('order-meds');
+
     expect(store.getState().openWorkspaces.length).toEqual(2);
     expect(store.getState().openWorkspaces[0].name).toBe('order-meds');
     expect(store.getState().openWorkspaces[1].name).toBe('form-entry');
+
     const formEntryWorkspace = store.getState().openWorkspaces[1];
     formEntryWorkspace.promptBeforeClosing(() => true);
+
     // Test going through confirmation flow while order-meds is open
     // Changing the form workspace shouldn't destroy the order-meds workspace
     launchWorkspace('conditions');
+
     expect(store.getState().openWorkspaces.length).toEqual(2);
     expect(store.getState().openWorkspaces[0].name).toBe('form-entry');
     expect(store.getState().openWorkspaces[1].name).toBe('order-meds');
+
     prompt = store.getState().prompt as Prompt;
+
     expect(prompt.title).toMatch(/unsaved changes/i);
+
     cancelPrompt(); // should leave same workspaces intact
+
     expect(store.getState().openWorkspaces.length).toEqual(2);
     expect(store.getState().openWorkspaces[0].name).toBe('form-entry');
     expect(store.getState().openWorkspaces[1].name).toBe('order-meds');
     expect(store.getState().prompt).toBeNull();
+
     launchWorkspace('conditions');
+
     prompt = store.getState().prompt as Prompt;
     prompt.onConfirm();
+
     expect(store.getState().openWorkspaces.length).toEqual(2);
     expect(store.getState().openWorkspaces[0].name).toBe('conditions');
     expect(store.getState().openWorkspaces[1].name).toBe('order-meds');
+
     store.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: true });
+
     expect(store.getState().openWorkspaces.length).toEqual(1);
     expect(store.getState().openWorkspaces[0].name).toBe('order-meds');
   });
@@ -386,17 +465,27 @@ describe('workspace system', () => {
     const store = getWorkspaceStore();
     registerWorkspace({ name: 'hiv', title: 'HIV', load: jest.fn(), moduleName: '@openmrs/foo' });
     registerWorkspace({ name: 'diabetes', title: 'Diabetes', load: jest.fn(), moduleName: '@openmrs/foo' });
+
     launchWorkspace('hiv');
+
     store.getState().openWorkspaces[0].promptBeforeClosing(() => false);
+
     launchWorkspace('diabetes');
+
     expect(store.getState().prompt).toBeNull();
     expect(store.getState().openWorkspaces[0].name).toBe('diabetes');
+
     store.getState().openWorkspaces[0].promptBeforeClosing(() => true);
+
     launchWorkspace('hiv');
+
     expect(store.getState().openWorkspaces[0].name).toBe('diabetes');
+
     const prompt = store.getState().prompt as Prompt;
     expect(prompt.title).toMatch(/unsaved changes/i);
+
     prompt.onConfirm();
+
     expect(store.getState().openWorkspaces[0].name).toBe('hiv');
   });
 
@@ -409,8 +498,11 @@ describe('workspace system', () => {
       load: jest.fn(),
       meta: { title: 'Lab Results', screenSize: 'maximized' },
     });
+
     launchWorkspace('lab-results', { foo: true });
+
     expect(store.getState().openWorkspaces.length).toEqual(1);
+
     const workspace = store.getState().openWorkspaces[0];
     expect(workspace.name).toEqual('lab-results');
     expect(workspace.additionalProps['foo']).toBe(true);
@@ -421,22 +513,28 @@ describe('workspace system', () => {
 
   test('launching unregistered workspace throws an error', () => {
     const store = getWorkspaceStore();
+
     expect(() => launchWorkspace('test-results')).toThrow(/test-results.*registered/i);
   });
 
   test('respects promptBeforeClosing function before closing workspace, with unsaved changes', () => {
     const store = getWorkspaceStore();
     registerWorkspace({ name: 'hiv', title: 'HIV', load: jest.fn(), moduleName: '@openmrs/foo' });
+
     launchWorkspace('hiv');
+
     store.getState().openWorkspaces[0].promptBeforeClosing(() => true);
     store.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: false });
+
     const prompt = store.getState().prompt as Prompt;
     expect(prompt.title).toMatch(/unsaved changes/i);
     expect(prompt.body).toBe(
       'You may have unsaved changes in the opened workspace. Do you want to discard these changes?',
     );
     expect(prompt.confirmText).toBe('Discard');
+
     prompt.onConfirm();
+
     expect(store.getState().prompt).toBeNull();
     expect(store.getState().openWorkspaces.length).toBe(0);
   });
@@ -444,7 +542,9 @@ describe('workspace system', () => {
   describe('Testing `getWorkspaceGroupStore` function', () => {
     it('should return undefined if no workspace sidebar name is passed', () => {
       let workspaceGroupStore = getWorkspaceGroupStore(undefined);
+
       expect(workspaceGroupStore).toBeUndefined();
+
       workspaceGroupStore = getWorkspaceGroupStore('default');
       expect(workspaceGroupStore).toBeUndefined();
     });
@@ -453,6 +553,7 @@ describe('workspace system', () => {
       const workspaceGroupStore = getWorkspaceGroupStore('ward-patient-store', {
         foo: true,
       });
+
       expect(workspaceGroupStore).toBeTruthy();
       expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
     });
@@ -461,11 +562,14 @@ describe('workspace system', () => {
       let workspaceGroupStore = getWorkspaceGroupStore('ward-patient-store', {
         foo: true,
       });
+
       expect(workspaceGroupStore).toBeTruthy();
       expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
+
       workspaceGroupStore = getWorkspaceGroupStore('ward-patient-store', {
         bar: true,
       });
+
       expect(workspaceGroupStore).toBeTruthy();
       expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
       expect(workspaceGroupStore?.getState()?.['bar']).toBe(true);
@@ -488,17 +592,22 @@ describe('workspace system', () => {
         moduleName: '@openmrs/esm-ward-app',
         groups: ['ward-patient-store'],
       });
+
       launchWorkspaceGroup('ward-patient-store', {
         state: {},
         workspaceToLaunch: { name: 'ward-patient-workspace' },
       });
+
       const workspaceGroupStore = getWorkspaceGroupStore('ward-patient-store');
       const workspaceStore = getWorkspaceStore();
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(workspaceStore.getState().openWorkspaces[0].name).toBe('ward-patient-workspace');
       expect(workspaceGroupStore).toBeTruthy();
+
       workspaceStore.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: true });
+
       launchWorkspace('allergies');
+
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(workspaceStore.getState().openWorkspaces[0].name).toBe('allergies');
       expect(workspaceGroupStore?.getState()).toStrictEqual({});
@@ -519,10 +628,13 @@ describe('workspace system', () => {
         },
         workspaceToLaunch: { name: 'ward-patient-workspace' },
       });
+
       const workspaceGroupStore = getWorkspaceGroupStore('ward-patient-store');
       expect(workspaceGroupStore).toBeTruthy();
       expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
+
       closeWorkspace('ward-patient-workspace');
+
       expect(workspaceGroupStore?.getState()?.['foo']).toBeUndefined();
       expect(workspaceGroupStore?.getState()).toStrictEqual({});
     });
@@ -545,21 +657,26 @@ describe('workspace system', () => {
         moduleName: '@openmrs/esm-ward-app',
         groups: [workspaceGroup],
       });
+
       launchWorkspaceGroup(workspaceGroup, {
         state: {
           foo: true,
         },
         workspaceToLaunch: { name: 'ward-patient-workspace' },
       });
+
       const workspaceStore = getWorkspaceStore();
       const workspaceGroupStore = getWorkspaceGroupStore(workspaceGroup);
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(workspaceGroupStore).toBeTruthy();
       expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
+
       launchWorkspace('transfer-patient-workspace', {
         bar: false,
       });
+
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
+
       const transferPatientWorkspace = workspaceStore.getState().openWorkspaces[0];
       expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
       expect(workspaceGroupStore?.getState()?.['bar']).toBe(false);
@@ -582,6 +699,7 @@ describe('workspace system', () => {
         moduleName: '@openmrs/esm-ward-app',
         groups: ['another-sidebar-group'],
       });
+
       const workspaceStore = getWorkspaceStore();
       launchWorkspaceGroup('ward-patient-store', {
         state: {
@@ -589,17 +707,21 @@ describe('workspace system', () => {
         },
         workspaceToLaunch: { name: 'ward-patient-workspace' },
       });
+
       const wardPatientGroupStore = getWorkspaceGroupStore('ward-patient-store');
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(wardPatientGroupStore).toBeTruthy();
       expect(wardPatientGroupStore?.getState()?.['foo']).toBe(true);
+
       launchWorkspaceGroup('another-sidebar-group', {
         state: {
           bar: false,
         },
         workspaceToLaunch: { name: 'transfer-patient-workspace' },
       });
+
       expect(workspaceStore.getState().workspaceGroup?.name).toBe('another-sidebar-group');
+
       const anotherWorkspaceGroupStore = getWorkspaceGroupStore('another-sidebar-group');
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(anotherWorkspaceGroupStore?.getState()?.['bar']).toBe(false);
@@ -625,18 +747,23 @@ describe('workspace system', () => {
         moduleName: '@openmrs/esm-ward-app',
         groups: ['ward-patient-store'],
       });
+
       const workspaceStore = getWorkspaceStore();
+
       launchWorkspaceGroup('ward-patient-store', {
         state: {
           foo: true,
         },
         workspaceToLaunch: { name: 'ward-patient-workspace' },
       });
+
       const wardPatientGroupStore = getWorkspaceGroupStore('ward-patient-store');
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(wardPatientGroupStore).toBeTruthy();
       expect(wardPatientGroupStore?.getState()?.['foo']).toBe(true);
+
       launchWorkspace('transfer-patient-workspace', { bar: false });
+
       expect(workspaceStore.getState().openWorkspaces.length).toBe(2);
       expect(wardPatientGroupStore?.getState()?.['foo']).toBe(true);
       expect(wardPatientGroupStore?.getState()?.['bar']).toBe(false);
@@ -655,11 +782,15 @@ describe('workspace system', () => {
         state: { foo: true },
         workspaceToLaunch: { name: 'ward-patient-workspace' },
       });
+
       const workspaceGroupStore = getWorkspaceGroupStore('ward-patient-store');
+
       expect(workspaceGroupStore).toBeTruthy();
       expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
+
       // test that default options are interpolated when providing options to `closeWorkspace`
       closeWorkspace('ward-patient-workspace', { ignoreChanges: true });
+
       expect(workspaceGroupStore?.getState()?.['foo']).toBeUndefined();
       expect(workspaceGroupStore?.getState()).toStrictEqual({});
     });

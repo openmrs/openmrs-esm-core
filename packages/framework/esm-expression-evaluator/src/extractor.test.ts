@@ -2,46 +2,46 @@ import { describe, it, expect } from '@jest/globals';
 import { extractVariableNames } from './extractor';
 
 describe('OpenMRS Expression Extractor', () => {
-  it('Should return empty list for expression lacking variables', () => {
+  it('returns an empty list for expression lacking variables', () => {
     expect(extractVariableNames('1 + 1')).toEqual([]);
   });
 
-  it('Should support basic variables', () => {
+  it('supports basic variables', () => {
     expect(extractVariableNames('1 + a')).toEqual(['a']);
   });
 
-  it('Should extracting both variables from binary operators', () => {
+  it('extracts both variables from binary operators', () => {
     expect(extractVariableNames('a ?? b')).toEqual(['a', 'b']);
   });
 
-  it('Should support functions', () => {
+  it('supports functions', () => {
     expect(extractVariableNames('a(b)')).toEqual(['a', 'b']);
   });
 
-  it('Should support built-in functions', () => {
+  it('supports built-in functions', () => {
     expect(extractVariableNames('a.includes("v")')).toEqual(['a']);
     expect(extractVariableNames('"value".includes(a)')).toEqual(['a']);
     expect(extractVariableNames('(3.14159).toPrecision(a)')).toEqual(['a']);
   });
 
-  it('Should support string templates', () => {
+  it('supports string templates', () => {
     expect(extractVariableNames('`${a.b}`')).toEqual(['a']);
   });
 
-  it('Should support RegExp', () => {
+  it('supports RegExp', () => {
     expect(extractVariableNames('/.*/.test(a)')).toEqual(['a']);
   });
 
-  it('Should support global objects', () => {
+  it('supports global objects', () => {
     expect(extractVariableNames('Math.min(a, b, c)')).toEqual(['a', 'b', 'c']);
     expect(extractVariableNames('isNaN(a)')).toEqual(['a']);
   });
 
-  it('Should support arrow functions inside expressions', () => {
+  it('supports arrow functions inside expressions', () => {
     expect(extractVariableNames('[1, 2, 3].find(v => v === a)')).toEqual(['a']);
   });
 
-  it('Should support real-world use-cases', () => {
+  it('supports real-world use-cases', () => {
     expect(extractVariableNames('!isEmpty(array)')).toEqual(['isEmpty', 'array']);
 
     expect(

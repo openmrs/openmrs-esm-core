@@ -2,26 +2,26 @@ import { describe, it, expect } from '@jest/globals';
 import { compile, evaluate, evaluateAsBoolean, evaluateAsNumber, evaluateAsType, evaluateAsync } from './evaluator';
 
 describe('OpenMRS Expression Evaluator', () => {
-  it('Should evaluate a simple expression', () => {
+  it('should evaluate a simple expression', () => {
     expect(evaluate('1 + 1')).toBe(2);
   });
 
-  it('Should support multiplication', () => {
+  it('should support multiplication', () => {
     expect(evaluate('1 * 2')).toBe(2);
   });
 
-  it('Should support the not operator', () => {
+  it('should support the not operator', () => {
     expect(evaluate('!1')).toBe(false);
     expect(evaluate('!0')).toBe(true);
     expect(evaluate('!true')).toBe(false);
     expect(evaluate('!false')).toBe(true);
   });
 
-  it('Should support expressions in parentheses', () => {
+  it('should support expressions in parentheses', () => {
     expect(evaluate('(1, 2, 3)')).toBe(3);
   });
 
-  it('Should support order of operations', () => {
+  it('should support order of operations', () => {
     expect(evaluate('(1 + 2) * 3')).toBe(9);
     expect(evaluate('1 + 2 * 3')).toBe(7);
   });
@@ -34,26 +34,26 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('1 in [1, 2, 3]')).toBe(true);
   });
 
-  it('Should support basic variables', () => {
+  it('should support basic variables', () => {
     expect(evaluate('1 + a', { a: 3 })).toBe(4);
   });
 
-  it('Should support nullish coalescing', () => {
+  it('should support nullish coalescing', () => {
     expect(evaluate('a ?? b', { a: null, b: 3 })).toBe(3);
     expect(evaluate('a ?? b', { a: 3, b: null })).toBe(3);
   });
 
-  it('Should support functions', () => {
+  it('should support functions', () => {
     expect(evaluate('a(1)', { a: (i: number) => i + 1 })).toBe(2);
   });
 
-  it('Should support built-in functions', () => {
+  it('should support built-in functions', () => {
     expect(evaluate('a.includes("v")', { a: 'value' })).toBe(true);
     expect(evaluate('"value".includes("v")')).toBe(true);
     expect(evaluate('(3.14159).toPrecision(3)')).toBe('3.14');
   });
 
-  it('Should give a useful error message for properties on missing objects', () => {
+  it('should give a useful error message for properties on missing objects', () => {
     expect(() => evaluate('a.b')).toThrow('ReferenceError: a is not defined');
     expect(() => evaluate('a["b"]')).toThrow('ReferenceError: a is not defined');
     expect(() => evaluate('a.b.c', { a: {} })).toThrow("TypeError: cannot read properties of undefined (reading 'c')");
@@ -65,17 +65,17 @@ describe('OpenMRS Expression Evaluator', () => {
     );
   });
 
-  it('Should not support this', () => {
+  it('should not support this', () => {
     expect(() => evaluate('this')).toThrow(
       /Expression evaluator does not support expression of type 'ThisExpression'.*/i,
     );
   });
 
-  it('Should support property references', () => {
+  it('should support property references', () => {
     expect(evaluate('a.b.c', { a: { b: { c: 3 } } })).toBe(3);
   });
 
-  it('Should not support prototype references', () => {
+  it('should not support prototype references', () => {
     expect(() => evaluate('a.__proto__', { a: {} })).toThrow(/Cannot access the __proto__ property .*/i);
     expect(() => evaluate('a["__proto__"]', { a: {} })).toThrow(/Cannot access the __proto__ property .*/i);
     expect(() => evaluate('a[b]', { a: {}, b: '__proto__' })).toThrow(/Cannot access the __proto__ property .*/i);
@@ -88,36 +88,36 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(() => evaluate('a[b]', { a: {}, b: 'prototype' })).toThrow(/Cannot access the prototype property .*/i);
   });
 
-  it('Should support ternaries', () => {
+  it('should support ternaries', () => {
     expect(evaluate('a ? 1 : 2', { a: true })).toBe(1);
     expect(evaluate('a ? 1 : 2', { a: false })).toBe(2);
   });
 
-  it('Should support hexadecimal', () => {
+  it('should support hexadecimal', () => {
     expect(evaluate('0xff')).toBe(255);
   });
 
-  it('Should support string templates', () => {
+  it('should support string templates', () => {
     expect(evaluate('`${a.b}`', { a: { b: 'string' } })).toBe('string');
   });
 
-  it('Should support new Date()', () => {
+  it('should support new Date()', () => {
     expect(evaluate('new Date().getTime()')).toBeLessThanOrEqual(new Date().getTime());
   });
 
-  it('Should support RegExp', () => {
+  it('should support RegExp', () => {
     expect(evaluate('/.*/.test(a)', { a: 'a' })).toBe(true);
   });
 
-  it('Should support RegExp objects', () => {
+  it('should support RegExp objects', () => {
     expect(evaluate('new RegExp(".*").test(a)', { a: 'a' })).toBe(true);
   });
 
-  it('Should support arrow functions inside expressions', () => {
+  it('should support arrow functions inside expressions', () => {
     expect(evaluate('[1, 2, 3].find(v => v === 3)')).toBe(3);
   });
 
-  it('Should support globals', () => {
+  it('should support globals', () => {
     expect(evaluate('NaN')).toBeNaN();
     expect(evaluate('Infinity')).toBe(Infinity);
     expect(evaluate('Boolean(true)')).toBe(true);
@@ -127,7 +127,7 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('Number.isInteger(42)')).toBe(true);
   });
 
-  it('Should not support creating arbitrary objects', () => {
+  it('should not support creating arbitrary objects', () => {
     expect(() => evaluate('new object()')).toThrow(/Cannot instantiate object .*/i);
     class Fn {
       constructor() {}
@@ -135,12 +135,12 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(() => evaluate('new Fn()', { Fn })).toThrow(/Cannot instantiate object .*/i);
   });
 
-  it('Should not support invalid property references on supported objects', () => {
+  it('should not support invalid property references on supported objects', () => {
     expect(() => evaluate('new Date().__proto__')).toThrow(/Cannot access the __proto__ property .*/i);
     expect(() => evaluate('new Date().prototype')).toThrow(/Cannot access the prototype property .*/i);
   });
 
-  it('Should not return invalid types', () => {
+  it('should not return invalid types', () => {
     expect(() => evaluate('a', { a: {} })).toThrow(/.* did not produce a valid result/i);
     expect(() => evaluateAsBoolean('a', { a: 'value' })).toThrow(/.* did not produce a valid result/i);
     expect(() => evaluateAsNumber('a', { a: true })).toThrow(/.* did not produce a valid result/i);
@@ -149,16 +149,16 @@ describe('OpenMRS Expression Evaluator', () => {
     );
   });
 
-  it('Should support a compilation phase', () => {
+  it('should support a compilation phase', () => {
     const exp = compile('1 + 1');
     expect(evaluate(exp)).toBe(2);
   });
 
-  it('Should not support variable assignment', () => {
+  it('should not support variable assignment', () => {
     expect(() => evaluate('var a = 1; a')).toThrow();
   });
 
-  it('Should support asynchronous evaluation', async () => {
+  it('should support asynchronous evaluation', async () => {
     await expect(evaluateAsync('1 + 1')).resolves.toBe(2);
     let a = new Promise((resolve) => {
       setTimeout(() => resolve(1), 10);
@@ -172,13 +172,13 @@ describe('OpenMRS Expression Evaluator', () => {
     ).resolves.toBe(2);
   });
 
-  it('Should support mock functions', () => {
+  it('should support mock functions', () => {
     expect(evaluate('api.getValue()', { api: { getValue: jest.fn().mockImplementation(() => 'value') } })).toBe(
       'value',
     );
   });
 
-  it('Should support real-world use-cases', () => {
+  it('should support real-world use-cases', () => {
     expect(
       evaluate('!isEmpty(array)', {
         array: [],
@@ -199,7 +199,7 @@ describe('OpenMRS Expression Evaluator', () => {
     ).toBe(true);
   });
 
-  it('Should throw an error with correct message for non-existent function', () => {
+  it('should throw an error with correct message for non-existent function', () => {
     expect(() => {
       evaluate('api.nonExistingFunction()', { api: {} });
     }).toThrow('No function named nonExistingFunction is defined in this context');
@@ -216,7 +216,7 @@ describe('OpenMRS Expression Evaluator', () => {
     }).toThrow('No function named deepNested is defined in this context');
   });
 
-  it('Should throw an error with correct message for non-callable targets', () => {
+  it('should throw an error with correct message for non-callable targets', () => {
     expect(() => {
       evaluate('objectWrapper.path()', {
         objectWrapper: {

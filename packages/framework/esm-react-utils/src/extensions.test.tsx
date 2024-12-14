@@ -22,7 +22,7 @@ import {
 // For some reason in the test context `isEqual` always returns true
 // when using the import substitution in jest.config.js. Here's a custom
 // mock.
-jest.mock('lodash-es/isEqual', () => (a, b) => JSON.stringify(a) == JSON.stringify(b));
+jest.mock('lodash-es/isEqual', () => (a, b) => JSON.stringify(a) === JSON.stringify(b));
 
 describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   beforeEach(() => {

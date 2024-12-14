@@ -1,9 +1,14 @@
+import { jest, describe, it, expect } from '@jest/globals';
+import type { reportError as ReportErrorType } from './index';
+
 jest.mock('./index');
-const { reportError } = jest.requireActual('./index');
+
+const { reportError } = jest.requireActual('./index') as { reportError: typeof ReportErrorType };
 
 jest.useFakeTimers();
+
 describe('error handler', () => {
-  it('transfrom the input in valid error object if it is not already an error obejct', () => {
+  it('transforms non-Error inputs into valid Error objects', () => {
     expect(() => {
       reportError('error');
       jest.runAllTimers();

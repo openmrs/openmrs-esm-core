@@ -6,8 +6,8 @@ import ChangePasswordLink from './change-password-link.extension';
 
 const mockShowModal = jest.mocked(showModal);
 
-describe('<ChangePasswordLink/>', () => {
-  it('should display the `Change password` link', async () => {
+describe('ChangePasswordLink', () => {
+  it('should launch the change password modal', async () => {
     const user = userEvent.setup();
 
     render(<ChangePasswordLink />);

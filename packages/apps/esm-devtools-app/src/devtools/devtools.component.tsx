@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
+import { type AppProps } from 'single-spa';
 import { importMapOverridden } from './import-map.component';
 import DevToolsPopup from './devtools-popup.component';
 import styles from './devtools.styles.css';
 
-export default function Root(props) {
+export default function Root(props: AppProps) {
   return window.spaEnv === 'development' || Boolean(localStorage.getItem('openmrs:devtools')) ? (
     <DevTools {...props} />
   ) : null;
 }
 
-function DevTools() {
+function DevTools(props: AppProps) {
   const [devToolsOpen, setDevToolsOpen] = useState(false);
   const [isOverridden, setIsOverridden] = useState(importMapOverridden);
+
   return (
     <>
       <div

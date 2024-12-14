@@ -34,7 +34,7 @@ function clearConfig() {
 describe(`useConfig in root context`, () => {
   afterEach(clearConfig);
 
-  it(`can return config as a react hook`, async () => {
+  it('can return config as a react hook', async () => {
     defineConfigSchema('foo-module', {
       thing: {
         _default: 'The first thing',
@@ -52,7 +52,7 @@ describe(`useConfig in root context`, () => {
     await waitFor(() => expect(screen.findByText('The first thing')).toBeTruthy());
   });
 
-  it(`can handle multiple calls to useConfig from different modules`, async () => {
+  it('can handle multiple calls to useConfig from different modules', async () => {
     defineConfigSchema('foo-module', {
       thing: {
         _default: 'foo thing',
@@ -116,7 +116,7 @@ describe(`useConfig in root context`, () => {
 describe(`useConfig in an extension`, () => {
   afterEach(clearConfig);
 
-  it(`can return extension config as a react hook`, async () => {
+  it('can return extension config as a react hook', async () => {
     defineConfigSchema('ext-module', {
       thing: {
         _default: 'The basics',
@@ -144,7 +144,7 @@ describe(`useConfig in an extension`, () => {
     await waitFor(() => expect(screen.findByText('The basics')).toBeTruthy());
   });
 
-  it(`can handle multiple extensions`, async () => {
+  it('can handle multiple extensions', async () => {
     defineConfigSchema('first-module', {
       thing: {
         _default: 'first thing',

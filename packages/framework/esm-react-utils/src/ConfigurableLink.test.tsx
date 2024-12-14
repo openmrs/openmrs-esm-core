@@ -7,7 +7,7 @@ import { ConfigurableLink } from './ConfigurableLink';
 
 jest.mock('single-spa');
 
-const mockNavigate = navigate as jest.Mock;
+const mockNavigate = jest.mocked(navigate);
 
 describe(`ConfigurableLink`, () => {
   const path = '${openmrsSpaBase}/home';
@@ -15,7 +15,7 @@ describe(`ConfigurableLink`, () => {
     mockNavigate.mockClear();
   });
 
-  it(`interpolates the link`, async () => {
+  it('interpolates the link', async () => {
     render(
       <ConfigurableLink to={path} className="fancy-link">
         SPA Home
@@ -29,7 +29,7 @@ describe(`ConfigurableLink`, () => {
     expect(link.closest('a')).toHaveAttribute('href', '/openmrs/spa/home');
   });
 
-  it(`calls navigate on normal click but not special clicks`, async () => {
+  it('calls navigate on normal click but not special clicks', async () => {
     render(
       <ConfigurableLink to={path} className="fancy-link">
         SPA Home
@@ -44,7 +44,7 @@ describe(`ConfigurableLink`, () => {
     expect(navigate).toHaveBeenCalledWith({ to: path });
   });
 
-  it(`calls navigate on enter`, async () => {
+  it('calls navigate on enter', async () => {
     render(
       <ConfigurableLink to={path} className="fancy-link">
         SPA Home

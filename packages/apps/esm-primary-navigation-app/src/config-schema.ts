@@ -41,3 +41,13 @@ export const configSchema = {
     _description: 'The external links to be showcased in the app menu',
   },
 };
+
+export type ConfigSchema = {
+  logo: {
+    src: string | null;
+    alt: string;
+    name: string | null;
+    link: string | null;
+  };
+  externalRefLinks: { title: string; redirect: string }[];
+};

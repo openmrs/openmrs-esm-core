@@ -1,10 +1,10 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { Snackbar } from './snackbar.component';
-import userEvent from '@testing-library/user-event';
 
 jest.useFakeTimers();
-const mockedCloseSnackbar = jest.fn();
+
+const mockCloseSnackbar = jest.fn();
 
 describe('Snackbar component', () => {
   it('renders a snackbar notification', () => {
@@ -46,7 +46,7 @@ describe('Snackbar component', () => {
     expect(snackbar).toBeInTheDocument();
 
     act(() => jest.advanceTimersByTime(5000));
-    await waitFor(() => expect(mockedCloseSnackbar).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(mockCloseSnackbar).toHaveBeenCalledTimes(1));
   });
 
   it('renders an actionable variant of the snackbar if actionButtonLabel is provided', () => {
@@ -71,7 +71,7 @@ function renderSnackbar(overrides = {}) {
       autoClose: false,
       title: 'Order submitted',
     },
-    closeSnackbar: mockedCloseSnackbar,
+    closeSnackbar: mockCloseSnackbar,
   };
 
   render(<Snackbar {...testProps} {...overrides} />);

@@ -1,24 +1,29 @@
 import { useState } from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getSessionStore, refetchCurrentUser, useConfig, useSession } from '@openmrs/esm-framework';
+import { getSessionStore, refetchCurrentUser, type SessionStore, useConfig, useSession } from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
 
-const mockGetSessionStore = getSessionStore as jest.Mock;
-const mockedLogin = refetchCurrentUser as jest.Mock;
-const mockedUseConfig = useConfig as jest.Mock;
-const mockedUseSession = useSession as jest.Mock;
+const mockGetSessionStore = jest.mocked(getSessionStore);
+const mockLogin = jest.mocked(refetchCurrentUser);
+const mockUseConfig = jest.mocked(useConfig);
+const mockUseSession = jest.mocked(useSession);
 
-mockedLogin.mockReturnValue(Promise.resolve());
+mockLogin.mockResolvedValue({} as SessionStore);
 mockGetSessionStore.mockImplementation(() => {
   return {
     getState: jest.fn().mockReturnValue({
+      loaded: true,
       session: {
         authenticated: true,
       },
     }),
+    setState: jest.fn(),
+    getInitialState: jest.fn(),
+    subscribe: jest.fn(),
+    destroy: jest.fn(),
   };
 });
 
@@ -27,15 +32,15 @@ const loginLocations = [
   { uuid: '222', display: 'Mars' },
 ];
 
-mockedUseSession.mockReturnValue({ authenticated: false });
-mockedUseConfig.mockReturnValue(mockConfig);
+mockUseSession.mockReturnValue({ authenticated: false, sessionId: '123' });
+mockUseConfig.mockReturnValue(mockConfig);
 
 describe('Login', () => {
   it('renders the login form', () => {
     renderWithRouter(
       Login,
       {},
-      { 
+      {
         route: '/login',
       },
     );
@@ -51,7 +56,7 @@ describe('Login', () => {
       src: 'https://some-image-host.com/foo.png',
       alt: 'Custom logo',
     };
-    mockedUseConfig.mockReturnValue({
+    mockUseConfig.mockReturnValue({
       ...mockConfig,
       logo: customLogoConfig,
     });
@@ -88,7 +93,7 @@ describe('Login', () => {
   });
 
   it('makes an API request when you submit the form', async () => {
-    mockedLogin.mockReturnValue(Promise.resolve({ some: 'data' }));
+    mockLogin.mockResolvedValue({ some: 'data' } as unknown as SessionStore);
 
     renderWithRouter(
       Login,
@@ -99,7 +104,7 @@ describe('Login', () => {
     );
     const user = userEvent.setup();
 
-    mockedLogin.mockClear();
+    mockLogin.mockClear();
     await user.type(screen.getByRole('textbox', { name: /Username/i }), 'yoshi');
     await user.click(screen.getByRole('button', { name: /Continue/i }));
 
@@ -113,16 +118,16 @@ describe('Login', () => {
   // TODO: Complete the test
   it('sends the user to the location select page on login if there is more than one location', async () => {
     let refreshUser = (user: any) => {};
-    mockedLogin.mockImplementation(() => {
+    mockLogin.mockImplementation(() => {
       refreshUser({
         display: 'my name',
       });
-      return Promise.resolve({ data: { authenticated: true } });
+      return Promise.resolve({ data: { authenticated: true } } as unknown as SessionStore);
     });
-    mockedUseSession.mockImplementation(() => {
+    mockUseSession.mockImplementation(() => {
       const [user, setUser] = useState();
       refreshUser = setUser;
-      return { user, authenticated: !!user };
+      return { user, authenticated: !!user, sessionId: '123' };
     });
 
     renderWithRouter(
@@ -143,7 +148,7 @@ describe('Login', () => {
   });
 
   it('should render the both the username and password fields when the showPasswordOnSeparateScreen config is false', async () => {
-    mockedUseConfig.mockReturnValue({
+    mockUseConfig.mockReturnValue({
       ...mockConfig,
       showPasswordOnSeparateScreen: false,
     });
@@ -168,7 +173,7 @@ describe('Login', () => {
   });
 
   it('should not render the password field when the showPasswordOnSeparateScreen config is true (default)', async () => {
-    mockedUseConfig.mockReturnValue({
+    mockUseConfig.mockReturnValue({
       ...mockConfig,
     });
 
@@ -192,13 +197,13 @@ describe('Login', () => {
   });
 
   it('should be able to login when the showPasswordOnSeparateScreen config is false', async () => {
-    mockedLogin.mockReturnValue(Promise.resolve({ some: 'data' }));
-    mockedUseConfig.mockReturnValue({
+    mockLogin.mockResolvedValue({ some: 'data' } as unknown as SessionStore);
+    mockUseConfig.mockReturnValue({
       ...mockConfig,
       showPasswordOnSeparateScreen: false,
     });
     const user = userEvent.setup();
-    mockedLogin.mockClear();
+    mockLogin.mockClear();
 
     renderWithRouter(
       Login,
@@ -220,7 +225,7 @@ describe('Login', () => {
   });
 
   it('should focus the username input', async () => {
-    mockedUseConfig.mockReturnValue({
+    mockUseConfig.mockReturnValue({
       ...mockConfig,
     });
 
@@ -238,7 +243,7 @@ describe('Login', () => {
 
   it('should focus the password input in the password screen', async () => {
     const user = userEvent.setup();
-    mockedUseConfig.mockReturnValue({
+    mockUseConfig.mockReturnValue({
       ...mockConfig,
     });
 
@@ -261,7 +266,7 @@ describe('Login', () => {
   });
 
   it('should focus the username input when the showPasswordOnSeparateScreen config is false', async () => {
-    mockedUseConfig.mockReturnValue({
+    mockUseConfig.mockReturnValue({
       ...mockConfig,
       showPasswordOnSeparateScreen: false,
     });

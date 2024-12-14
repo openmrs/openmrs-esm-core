@@ -8,11 +8,11 @@ import { useRelationships } from './useRelationships';
 import { PatientBannerContactDetails } from './patient-banner-contact-details.component';
 import { renderWithSwr } from '../../test-utils';
 
-const mockedUsePatient = usePatient as jest.Mock;
-const mockedUsePatientAttributes = usePatientAttributes as jest.Mock;
-const mockedUsePatientContactAttributes = usePatientContactAttributes as jest.Mock;
-const mockUsePatientListsForPatient = usePatientListsForPatient as jest.Mock;
-const mockUseRelationships = useRelationships as jest.Mock;
+const mockUsePatient = jest.mocked(usePatient);
+const mockUsePatientAttributes = jest.mocked(usePatientAttributes);
+const mockUsePatientContactAttributes = jest.mocked(usePatientContactAttributes);
+const mockUsePatientListsForPatient = jest.mocked(usePatientListsForPatient);
+const mockUseRelationships = jest.mocked(useRelationships);
 
 const mockRelationships = [
   {
@@ -88,7 +88,7 @@ jest.mock('./useRelationships', () => ({
 
 describe('ContactDetails', () => {
   beforeEach(() => {
-    mockedUsePatient.mockReturnValue({
+    mockUsePatient.mockReturnValue({
       isLoading: false,
       patient: {
         address: [
@@ -103,8 +103,11 @@ describe('ContactDetails', () => {
         ],
         telecom: [{ system: 'Cellular', value: '+0123456789' }],
       },
+      patientUuid: '123e4567-e89b-12d3-a456-426614174000',
+      error: null,
     });
-    mockedUsePatientContactAttributes.mockReturnValue({
+
+    mockUsePatientContactAttributes.mockReturnValue({
       isLoading: false,
       contactAttributes: mockPersonAttributes,
     });
@@ -117,6 +120,8 @@ describe('ContactDetails', () => {
     mockUseRelationships.mockReturnValue({
       isLoading: false,
       data: mockRelationships,
+      error: undefined,
+      isValidating: false,
     });
   });
 
@@ -139,31 +144,40 @@ describe('ContactDetails', () => {
 
   it('patient related name should be a link', async () => {
     renderWithSwr(<PatientBannerContactDetails patientId={'some-uuid'} deceased={false} />);
-    const relationShip = screen.getByRole('link', { name: /Amanda Robinson/ });
-    expect(relationShip).toHaveAttribute('href', `/spa/patient/${mockRelationships[0].relativeUuid}/chart`);
+
+    const relationship = screen.getByRole('link', { name: /Amanda Robinson/ });
+    expect(relationship).toHaveAttribute('href', `/spa/patient/${mockRelationships[0].relativeUuid}/chart`);
   });
 
   it('renders an empty state view when contact details, relations, patient lists and addresses are not available', async () => {
-    mockedUsePatient.mockReturnValue({
+    mockUsePatient.mockReturnValue({
       isLoading: false,
-      address: [],
+      patient: undefined,
+      patientUuid: null,
+      error: null,
     });
-    mockedUsePatientAttributes.mockReturnValue({
+
+    mockUsePatientAttributes.mockReturnValue({
       isLoading: false,
       attributes: [],
       error: null,
     });
-    mockedUsePatientContactAttributes.mockReturnValue({
+
+    mockUsePatientContactAttributes.mockReturnValue({
       isLoading: false,
       contactAttributes: [],
     });
+
     mockUsePatientListsForPatient.mockReturnValue({
       isLoading: false,
       cohorts: [],
     });
+
     mockUseRelationships.mockReturnValue({
       isLoading: false,
       data: [],
+      error: undefined,
+      isValidating: false,
     });
 
     renderWithSwr(<PatientBannerContactDetails patientId={'some-uuid'} deceased={false} />);
