@@ -12,6 +12,7 @@
   "change": "ផ្លាស់ប្តូរ",
   "city": "City",
   "cityVillage": "City",
+  "Clinic": "Clinic",
   "close": "Close",
   "closeAllOpenedWorkspaces": "Discard changes in {{count}} workspaces",
   "closingAllWorkspacesPromptBody": "There are unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",

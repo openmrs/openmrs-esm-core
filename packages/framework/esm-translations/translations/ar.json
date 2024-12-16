@@ -12,6 +12,7 @@
   "change": "تغيير",
   "city": "المدينة",
   "cityVillage": "المدينة",
+  "Clinic": "Clinic",
   "close": "إغلاق",
   "closeAllOpenedWorkspaces": "تجاهل التغييرات في مساحات العمل {{count}}.",
   "closingAllWorkspacesPromptBody": "There are unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",

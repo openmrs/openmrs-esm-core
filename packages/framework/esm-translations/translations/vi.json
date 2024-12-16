@@ -12,6 +12,7 @@
   "change": "Thay đổi",
   "city": "Thành phố",
   "cityVillage": "Thành phố",
+  "Clinic": "Clinic",
   "close": "Đóng",
   "closeAllOpenedWorkspaces": "Hủy bỏ các thay đổi trong {{count}} không gian làm việc",
   "closingAllWorkspacesPromptBody": "Có những thay đổi chưa lưu trong các không gian làm việc sau. Bạn có muốn hủy bỏ những thay đổi trong các không gian làm việc sau không? {{workspaceNames}}",

@@ -12,6 +12,7 @@
   "change": "Alterar",
   "city": "Cidade",
   "cityVillage": "Cidade",
+  "Clinic": "Clinic",
   "close": "Fechar",
   "closeAllOpenedWorkspaces": "Descartar alterações em {{count}} espaços de trabalho",
   "closingAllWorkspacesPromptBody": "Existem alterações não gravadas nos seguintes espaços de trabalho. Deseja descartar alterações nos seguintes espaços de trabalho? {{workspaceNames}}",
