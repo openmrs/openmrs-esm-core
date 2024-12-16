@@ -35,12 +35,12 @@ describe('Login', () => {
     renderWithRouter(
       Login,
       {},
-      { 
+      {
         route: '/login',
       },
     );
 
-    screen.getByRole('img', { name: /OpenMRS logo/i });
+    expect(screen.getAllByRole('img', { name: /OpenMRS logo/i })).toHaveLength(2);
     expect(screen.queryByAltText(/^logo$/i)).not.toBeInTheDocument();
     screen.getByRole('textbox', { name: /Username/i });
     screen.getByRole('button', { name: /Continue/i });

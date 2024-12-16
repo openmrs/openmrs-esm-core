@@ -51,9 +51,9 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (showPasswordOnSeparateScreen) {
       if (showPasswordField) {
-        passwordInputRef.current?.focus(); 
+        passwordInputRef.current?.focus();
       } else {
-        usernameInputRef.current?.focus(); 
+        usernameInputRef.current?.focus();
       }
     }
   }, [showPasswordField, showPasswordOnSeparateScreen]);
@@ -135,7 +135,7 @@ const Login: React.FC = () => {
     [username, password, navigate, showPasswordOnSeparateScreen],
   );
 
-  if (!loginProvider || loginProvider.type === 'basic'){
+  if (!loginProvider || loginProvider.type === 'basic') {
     return (
       <div className={styles.container}>
         <Tile className={styles.loginCard}>
@@ -182,7 +182,7 @@ const Login: React.FC = () => {
                       type="submit"
                       className={styles.continueButton}
                       renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                      iconDescription="Log in"
+                      iconDescription={t('loginButtonIconDescription', 'Log in button')}
                       disabled={!isLoginEnabled || isLoggingIn}
                     >
                       {isLoggingIn ? (
@@ -238,7 +238,7 @@ const Login: React.FC = () => {
       </div>
     );
   }
-    return null;
+  return null;
 };
 
 export default Login;

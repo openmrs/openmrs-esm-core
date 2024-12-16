@@ -1,44 +1,54 @@
-import React from 'react';
-import { useConfig, ArrowRightIcon } from '@openmrs/esm-framework';
-import { Tile, Button } from '@carbon/react';
+import React, { useCallback } from 'react';
+import { Link, Tile } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
+import { useConfig, ArrowRightIcon } from '@openmrs/esm-framework';
 import { type ConfigSchema } from './config-schema';
-import styles from './login/login.scss';
+import styles from './footer.scss';
+
+interface Logo {
+  src: string;
+  alt?: string;
+}
 
 const Footer: React.FC = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
-  const logos = config.footer.additionalLogos || [];
+  const logos: Logo[] = config.footer.additionalLogos || [];
+
+  const handleImageLoadError = useCallback((error: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    console.error('Failed to load image', error);
+  }, []);
 
   return (
     <div className={styles.footer}>
       <Tile className={styles.poweredByTile}>
         <div className={styles.poweredByContainer}>
           <span className={styles.poweredByText}>{t('builtWith', 'Built with')}</span>
-            <svg role="img" className={styles.poweredByLogo}>
-              <use href="#omrs-logo-full-color"></use>
-            </svg>
+          <svg aria-label={t('openmrsLogo', 'OpenMRS Logo')} className={styles.poweredByLogo} role="img">
+            <use href="#omrs-logo-full-color"></use>
+          </svg>
           <span className={styles.poweredByText}>
             {t('poweredBySubtext', 'An open-source medical record system and global community')}
           </span>
-          <Button
-            className={styles.learnMore}
-            iconDescription={t('learnMore', 'Learn More')}
-            kind="ghost"
-            onClick={() => window.open('https://openmrs.org', '_blank')}
-            renderIcon={(props) => <ArrowRightIcon {...props} size={20} className={styles.arrowRightIcon}/>}
+          <Link
+            className={styles.learnMoreButton}
+            href="https://openmrs.org"
+            rel="noopener noreferrer"
+            renderIcon={() => <ArrowRightIcon size={16} aria-label="Arrow right icon" />}
+            target="_blank"
           >
-            <span>{t('learnMore', 'Learn More')}</span>
-          </Button>
+            {t('learnMore', 'Learn more')}
+          </Link>
         </div>
       </Tile>
 
       <div className={styles.logosContainer}>
-        {logos.map((logo, index) => (
+        {logos.map((logo) => (
           <img
-            key={index}
             alt={logo.alt ? t(logo.alt) : t('footerlogo', 'Footer Logo')}
             className={styles.poweredByLogo}
+            key={logo.src}
+            onError={handleImageLoadError}
             src={logo.src}
           />
         ))}
