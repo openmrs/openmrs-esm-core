@@ -35,14 +35,25 @@ const GenderIcon = ({ gender }: GenderIconProps) => {
   return <IconComponent fill="#525252" />;
 };
 
-const getGender = (gender: string): string => {
-  const key = gender.toLowerCase() as Gender;
-  return getCoreTranslation(key, gender);
+const GENDER_MAP = {
+  male: 'Male',
+  female: 'Female',
+  other: 'Other',
+  unknown: 'Unknown',
+} as const;
+
+const getGender = (gender: string) => {
+  const normalizedGender = gender.toLowerCase() as Gender;
+  const iconKey = GENDER_MAP[normalizedGender] ?? 'Unknown';
+  return {
+    displayText: getCoreTranslation(normalizedGender, gender),
+    iconKey,
+  };
 };
 
 export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0]?.family}`;
-  const gender = patient?.gender && getGender(patient.gender);
+  const genderInfo = patient?.gender && getGender(patient.gender);
 
   const extensionState = useMemo(() => ({ patientUuid: patient.id, patient }), [patient.id, patient]);
 
@@ -52,10 +63,10 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
         <div className={styles.flexRow}>
           <span className={styles.patientName}>{name}</span>
 
-          {gender && (
+          {genderInfo && (
             <div className={styles.gender}>
-              <GenderIcon gender={gender as keyof typeof GENDER_ICONS} />
-              <span>{gender}</span>
+              <GenderIcon gender={genderInfo.iconKey} />
+              <span>{genderInfo.displayText}</span>
             </div>
           )}
 

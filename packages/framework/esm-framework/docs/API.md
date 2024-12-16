@@ -7054,7 +7054,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L43)
+[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L54)
 
 ___
 
