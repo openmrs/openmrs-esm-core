@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-state",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "license": "MPL-2.0",
   "description": "Frontend stores & state management for OpenMRS",
   "browser": "dist/openmrs-esm-state.js",
@@ -41,8 +41,8 @@
     "zustand": "^4.5.5"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "5.x",
-    "@openmrs/esm-utils": "5.x"
+    "@openmrs/esm-globals": "6.x",
+    "@openmrs/esm-utils": "6.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",

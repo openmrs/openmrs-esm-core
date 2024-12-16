@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-globals",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "license": "MPL-2.0",
   "browser": "dist/openmrs-esm-globals.js",
   "main": "src/index.ts",
@@ -37,7 +37,7 @@
     "@types/fhir": "0.0.31"
   },
   "peerDependencies": {
-    "single-spa": "5.x"
+    "single-spa": "6.x"
   },
   "devDependencies": {
     "single-spa": "^6.0.1"

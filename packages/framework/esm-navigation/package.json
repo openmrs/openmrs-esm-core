@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-navigation",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "license": "MPL-2.0",
   "description": "OpenMRS library providing tools for breadcrumbs, navigation, and history.",
   "browser": "dist/openmrs-esm-navigation.js",
@@ -41,7 +41,7 @@
     "path-to-regexp": "6.1.0"
   },
   "peerDependencies": {
-    "@openmrs/esm-state": "5.x"
+    "@openmrs/esm-state": "6.x"
   },
   "devDependencies": {
     "@openmrs/esm-state": "workspace:*",

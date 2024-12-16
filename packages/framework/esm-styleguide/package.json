@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
@@ -49,12 +49,12 @@
     "react-avatar": "^5.0.3"
   },
   "peerDependencies": {
-    "@openmrs/esm-error-handling": "5.x",
-    "@openmrs/esm-extensions": "5.x",
-    "@openmrs/esm-navigation": "5.x",
-    "@openmrs/esm-react-utils": "5.x",
-    "@openmrs/esm-state": "5.x",
-    "@openmrs/esm-translations": "5.x",
+    "@openmrs/esm-error-handling": "6.x",
+    "@openmrs/esm-extensions": "6.x",
+    "@openmrs/esm-navigation": "6.x",
+    "@openmrs/esm-react-utils": "6.x",
+    "@openmrs/esm-state": "6.x",
+    "@openmrs/esm-translations": "6.x",
     "dayjs": "1.x",
     "i18next": "21.x",
     "react": "18.x",

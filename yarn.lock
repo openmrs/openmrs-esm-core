@@ -2869,10 +2869,10 @@ __metadata:
     rxjs: "npm:^6.5.3"
     webpack: "npm:^5.88.0"
   peerDependencies:
-    "@openmrs/esm-config": 5.x
-    "@openmrs/esm-error-handling": 5.x
-    "@openmrs/esm-navigation": 5.x
-    "@openmrs/esm-offline": 5.x
+    "@openmrs/esm-config": 6.x
+    "@openmrs/esm-error-handling": 6.x
+    "@openmrs/esm-navigation": 6.x
+    "@openmrs/esm-offline": 6.x
   languageName: unknown
   linkType: soft
 
@@ -2922,10 +2922,10 @@ __metadata:
     ramda: "npm:^0.26.1"
     single-spa: "npm:^6.0.1"
   peerDependencies:
-    "@openmrs/esm-globals": 5.x
-    "@openmrs/esm-state": 5.x
-    "@openmrs/esm-utils": 5.x
-    single-spa: 5.x
+    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-utils": 6.x
+    single-spa: 6.x
   languageName: unknown
   linkType: soft
 
@@ -2937,8 +2937,8 @@ __metadata:
     "@openmrs/esm-state": "workspace:*"
     immer: "npm:^10.0.4"
   peerDependencies:
-    "@openmrs/esm-globals": 5.x
-    "@openmrs/esm-state": 5.x
+    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-state": 6.x
   languageName: unknown
   linkType: soft
 
@@ -3022,8 +3022,8 @@ __metadata:
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
   peerDependencies:
-    "@openmrs/esm-globals": 5.x
-    "@openmrs/esm-translations": 5.x
+    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-translations": 6.x
   languageName: unknown
   linkType: soft
 
@@ -3033,7 +3033,7 @@ __metadata:
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
   peerDependencies:
-    "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-globals": 6.x
   languageName: unknown
   linkType: soft
 
@@ -3067,13 +3067,13 @@ __metadata:
     lodash-es: "npm:^4.17.21"
     single-spa: "npm:^6.0.1"
   peerDependencies:
-    "@openmrs/esm-api": 5.x
-    "@openmrs/esm-config": 5.x
-    "@openmrs/esm-expression-evaluator": 5.x
-    "@openmrs/esm-feature-flags": 5.x
-    "@openmrs/esm-state": 5.x
-    "@openmrs/esm-utils": 5.x
-    single-spa: 5.x
+    "@openmrs/esm-api": 6.x
+    "@openmrs/esm-config": 6.x
+    "@openmrs/esm-expression-evaluator": 6.x
+    "@openmrs/esm-feature-flags": 6.x
+    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-utils": 6.x
+    single-spa: 6.x
   languageName: unknown
   linkType: soft
 
@@ -3086,9 +3086,9 @@ __metadata:
     ramda: "npm:^0.26.1"
     single-spa: "npm:^6.0.1"
   peerDependencies:
-    "@openmrs/esm-globals": 5.x
-    "@openmrs/esm-state": 5.x
-    single-spa: 5.x
+    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-state": 6.x
+    single-spa: 6.x
   languageName: unknown
   linkType: soft
 
@@ -3126,7 +3126,7 @@ __metadata:
     react-dom: 18.x
     react-i18next: 11.x
     rxjs: 6.x
-    single-spa: 5.x
+    single-spa: 6.x
     swr: 2.x
   languageName: unknown
   linkType: soft
@@ -3138,7 +3138,7 @@ __metadata:
     "@types/fhir": "npm:0.0.31"
     single-spa: "npm:^6.0.1"
   peerDependencies:
-    single-spa: 5.x
+    single-spa: 6.x
   languageName: unknown
   linkType: soft
 
@@ -3230,7 +3230,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     path-to-regexp: "npm:6.1.0"
   peerDependencies:
-    "@openmrs/esm-state": 5.x
+    "@openmrs/esm-state": 6.x
   languageName: unknown
   linkType: soft
 
@@ -3277,9 +3277,9 @@ __metadata:
     uuid: "npm:^9.0.1"
     workbox-window: "npm:^6.1.5"
   peerDependencies:
-    "@openmrs/esm-api": 5.x
-    "@openmrs/esm-globals": 5.x
-    "@openmrs/esm-state": 5.x
+    "@openmrs/esm-api": 6.x
+    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-state": 6.x
     rxjs: 6.x
   languageName: unknown
   linkType: soft
@@ -3307,7 +3307,7 @@ __metadata:
     react-i18next: 11.x
     react-router-dom: 6.x
     rxjs: 6.x
-    single-spa: 5.x
+    single-spa: 6.x
   languageName: unknown
   linkType: soft
 
@@ -3335,15 +3335,15 @@ __metadata:
     swr: "npm:^2.2.5"
     webpack: "npm:^5.88.0"
   peerDependencies:
-    "@openmrs/esm-api": 5.x
-    "@openmrs/esm-config": 5.x
-    "@openmrs/esm-context": 5.x
-    "@openmrs/esm-error-handling": 5.x
-    "@openmrs/esm-extensions": 5.x
-    "@openmrs/esm-feature-flags": 5.x
-    "@openmrs/esm-globals": 5.x
-    "@openmrs/esm-navigation": 5.x
-    "@openmrs/esm-utils": 5.x
+    "@openmrs/esm-api": 6.x
+    "@openmrs/esm-config": 6.x
+    "@openmrs/esm-context": 6.x
+    "@openmrs/esm-error-handling": 6.x
+    "@openmrs/esm-extensions": 6.x
+    "@openmrs/esm-feature-flags": 6.x
+    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-navigation": 6.x
+    "@openmrs/esm-utils": 6.x
     dayjs: 1.x
     i18next: 21.x
     react: 18.x
@@ -3367,12 +3367,12 @@ __metadata:
     jest-fetch-mock: "npm:^3.0.3"
     single-spa: "npm:^6.0.1"
   peerDependencies:
-    "@openmrs/esm-config": 5.x
-    "@openmrs/esm-dynamic-loading": 5.x
-    "@openmrs/esm-extensions": 5.x
-    "@openmrs/esm-feature-flags": 5.x
-    "@openmrs/esm-globals": 5.x
-    "@openmrs/esm-utils": 5.x
+    "@openmrs/esm-config": 6.x
+    "@openmrs/esm-dynamic-loading": 6.x
+    "@openmrs/esm-extensions": 6.x
+    "@openmrs/esm-feature-flags": 6.x
+    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-utils": 6.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -3385,8 +3385,8 @@ __metadata:
     "@openmrs/esm-utils": "workspace:*"
     zustand: "npm:^4.5.5"
   peerDependencies:
-    "@openmrs/esm-globals": 5.x
-    "@openmrs/esm-utils": 5.x
+    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-utils": 6.x
   languageName: unknown
   linkType: soft
 
@@ -3422,12 +3422,12 @@ __metadata:
     svgo-loader: "npm:^4.0.0"
     webpack: "npm:^5.88.0"
   peerDependencies:
-    "@openmrs/esm-error-handling": 5.x
-    "@openmrs/esm-extensions": 5.x
-    "@openmrs/esm-navigation": 5.x
-    "@openmrs/esm-react-utils": 5.x
-    "@openmrs/esm-state": 5.x
-    "@openmrs/esm-translations": 5.x
+    "@openmrs/esm-error-handling": 6.x
+    "@openmrs/esm-extensions": 6.x
+    "@openmrs/esm-navigation": 6.x
+    "@openmrs/esm-react-utils": 6.x
+    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-translations": 6.x
     dayjs: 1.x
     i18next: 21.x
     react: 18.x
@@ -3460,7 +3460,7 @@ __metadata:
     rxjs: "npm:^6.5.3"
     semver: "npm:7.3.2"
   peerDependencies:
-    "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-globals": 6.x
     dayjs: 1.x
     i18next: 21.x
     rxjs: 6.x
