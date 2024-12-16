@@ -1,0 +1,58 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: layout.$spacing-05;
+  position: absolute;
+  bottom: 0;
+  flex-wrap: wrap;
+  gap: layout.$spacing-05;
+  width: 100%;
+}
+
+.poweredByTile {
+  display: flex;
+  text-align: left;
+  max-width: fit-content;
+  min-height: fit-content;
+  font-size: smaller;
+  background-color: colors.$white;
+  padding: layout.$spacing-03 layout.$spacing-05;
+  border: 1px solid colors.$gray-20;
+  border-radius: layout.$spacing-04;
+  flex-wrap: wrap;
+}
+
+.poweredByContainer {
+  display: flex;
+  height: layout.$spacing-06;
+  align-items: center;
+  gap: layout.$spacing-03;
+}
+
+.poweredByLogo {
+  height: layout.$spacing-07;
+  width: auto;
+  max-width: layout.$spacing-12;
+  border-collapse: collapse;
+  padding: 0;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+.poweredByLogo + .poweredByText {
+  margin-left: layout.$spacing-02;
+}
+
+.learnMoreButton {
+  display: flex;
+  align-items: center;
+
+  svg {
+    fill: colors.$blue-60;
+  }
+}
