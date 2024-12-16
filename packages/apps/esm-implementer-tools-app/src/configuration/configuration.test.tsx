@@ -6,8 +6,8 @@ import { implementerToolsConfigStore, temporaryConfigStore, Type } from '@openmr
 import { Configuration } from './configuration.component';
 import { useConceptLookup, useGetConceptByUuid } from './interactive-editor/value-editors/concept-search.resource';
 
-const mockUseConceptLookup = useConceptLookup as jest.Mock;
-const mockUseGetConceptByUuid = useGetConceptByUuid as jest.Mock;
+const mockUseConceptLookup = jest.mocked(useConceptLookup);
+const mockUseGetConceptByUuid = jest.mocked(useGetConceptByUuid);
 
 jest.mock('./interactive-editor/value-editors/concept-search.resource', () => ({
   useConceptLookup: jest.fn().mockImplementation(() => ({
@@ -144,14 +144,20 @@ describe('Configuration', () => {
     const user = userEvent.setup();
 
     mockUseConceptLookup.mockImplementation(() => ({
-      concepts: [{ uuid: '61523693-72e2-456d-8c64-8c5293febeb6', display: 'Fedora' }],
-      error: null,
+      concepts: [{ uuid: '61523693-72e2-456d-8c64-8c5293febeb6', display: 'Fedora', answers: [], mappings: [] }],
+      error: undefined,
       isSearchingConcepts: false,
     }));
 
     mockUseGetConceptByUuid.mockImplementation(() => ({
-      concept: { name: { display: 'Fedora' } },
-      error: null,
+      concept: {
+        name: { display: 'Fedora' },
+        display: 'Fedora',
+        answers: [],
+        mappings: [],
+        uuid: '61523693-72e2-456d-8c64-8c5293febeb6',
+      },
+      error: undefined,
       isLoadingConcept: false,
     }));
 

@@ -1,22 +1,22 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { navigate, useSession } from '@openmrs/esm-framework';
+import { navigate, type Session, useSession } from '@openmrs/esm-framework';
 import ChangeLocationLink from './change-location-link.extension';
 
-const navigateMock = navigate as jest.Mock;
-const useSessionMock = useSession as jest.Mock;
+const mockNavigate = jest.mocked(navigate);
+const mockUseSession = jest.mocked(useSession);
 
 delete window.location;
 window.location = new URL('https://dev3.openmrs.org/openmrs/spa/home') as unknown as Location;
 
-describe('<ChangeLocationLink/>', () => {
+describe('ChangeLocationLink', () => {
   beforeEach(() => {
-    useSessionMock.mockReturnValue({
+    mockUseSession.mockReturnValue({
       sessionLocation: {
         display: 'Waffle House',
       },
-    });
+    } as Session);
   });
 
   it('should display the `Change location` link', async () => {
@@ -29,7 +29,7 @@ describe('<ChangeLocationLink/>', () => {
 
     await user.click(changeLocationButton);
 
-    expect(navigateMock).toHaveBeenCalledWith({
+    expect(mockNavigate).toHaveBeenCalledWith({
       to: '${openmrsSpaBase}/login/location?returnToUrl=/openmrs/spa/home&update=true',
     });
   });

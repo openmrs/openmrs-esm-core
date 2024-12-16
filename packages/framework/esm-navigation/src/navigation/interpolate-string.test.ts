@@ -32,4 +32,29 @@ describe('interpolateString', () => {
     const result = interpolateString('test ok', { one: '1', two: '2' });
     expect(result).toBe('test ok');
   });
+
+  it('handles multiple occurrences of the same parameter', () => {
+    const result = interpolateString('${value} and ${value}', { value: 'test' });
+    expect(result).toBe('test and test');
+  });
+
+  it('handles empty string parameters', () => {
+    const result = interpolateString('prefix${param}suffix', { param: '' });
+    expect(result).toBe('prefixsuffix');
+  });
+
+  it('leaves unreplaced parameters in template string', () => {
+    const result = interpolateString('${exists} ${missing}', { exists: 'value' });
+    expect(result).toBe('value ${missing}');
+  });
+
+  it('removes double slashes at the start of URLs', () => {
+    const result = interpolateUrl('${openmrsBase}/${path}', { path: 'test' });
+    expect(result).toBe('/openmrs/test');
+  });
+
+  it('handles special characters in parameters', () => {
+    const result = interpolateString('${param}', { param: '${}' });
+    expect(result).toBe('${}');
+  });
 });

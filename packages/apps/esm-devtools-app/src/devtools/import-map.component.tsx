@@ -14,11 +14,7 @@ export default function ImportMap(props: ImportMapProps) {
     }
   }, [props]);
 
-  return (
-    <div className={styles.importMap}>
-      <ImportMapList ref={importMapListRef} />
-    </div>
-  );
+  return <div className={styles.importMap}>{<ImportMapList ref={importMapListRef} />}</div>;
 }
 
 export function importMapOverridden(): boolean {

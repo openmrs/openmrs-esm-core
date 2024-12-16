@@ -1,8 +1,7 @@
-import { openmrsFetch, openmrsObservableFetch } from './openmrs-fetch';
 import { isObservable } from 'rxjs';
-
 import { getConfig as mockGetConfig } from '@openmrs/esm-config';
 import { navigate as mockNavigate } from '@openmrs/esm-navigation';
+import { openmrsFetch, openmrsObservableFetch } from './openmrs-fetch';
 
 describe('openmrsFetch', () => {
   beforeEach(() => {
@@ -25,28 +24,28 @@ describe('openmrsFetch', () => {
   });
 
   it(`throws an error if you don't pass in a url string`, () => {
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => openmrsFetch()).toThrow(/first argument/);
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => openmrsFetch({})).toThrow(/first argument/);
   });
 
-  it(`throws an error if you pass in an invalid fetchInit object`, () => {
-    // @ts-ignore
+  it('throws an error if you pass in an invalid fetchInit object', () => {
+    // @ts-expect-error
     expect(() => openmrsFetch('/session', 'invalid second arg')).toThrow(/second argument/);
 
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => openmrsFetch('/session', 123)).toThrow(/second argument/);
   });
 
-  it(`throws an Error if there is no openmrsBase`, () => {
+  it('throws an Error if there is no openmrsBase', () => {
     // @ts-ignore
     delete window.openmrsBase;
 
     expect(() => openmrsFetch('/session')).toThrow(/openmrsBase/);
   });
 
-  it(`calls window.fetch with the correct arguments for a basic GET request`, () => {
+  it('calls window.fetch with the correct arguments for a basic GET request', () => {
     // @ts-ignore
     window.fetch.mockReturnValue(new Promise(() => {}));
     openmrsFetch('/ws/rest/v1/session');
@@ -58,7 +57,7 @@ describe('openmrsFetch', () => {
     });
   });
 
-  it(`calls window.fetch correctly for requests that have a request body`, () => {
+  it('calls window.fetch correctly for requests that have a request body', () => {
     // @ts-ignore
     window.fetch.mockReturnValue(new Promise(() => {}));
     const requestBody = { some: 'json' };
@@ -76,7 +75,7 @@ describe('openmrsFetch', () => {
     });
   });
 
-  it(`allows you to specify your own Accept request header`, () => {
+  it('allows you to specify your own Accept request header', () => {
     // @ts-ignore
     window.fetch.mockReturnValue(new Promise(() => {}));
     const requestBody = { some: 'json' };
@@ -93,7 +92,7 @@ describe('openmrsFetch', () => {
     });
   });
 
-  it(`allows you to specify no Accept request header to be sent`, () => {
+  it('allows you to specify no Accept request header to be sent', () => {
     // @ts-ignore
     window.fetch.mockReturnValue(new Promise(() => {}));
     openmrsFetch('/ws/rest/v1/session', {
@@ -109,7 +108,7 @@ describe('openmrsFetch', () => {
     });
   });
 
-  it(`returns a promise that resolves with a json object when the request succeeds`, () => {
+  it('returns a promise that resolves with a json object when the request succeeds', () => {
     // @ts-ignore
     window.fetch.mockReturnValue(
       Promise.resolve({
@@ -127,7 +126,7 @@ describe('openmrsFetch', () => {
     });
   });
 
-  it(`returns a promise that resolves with null when the request succeeds with HTTP 204`, () => {
+  it('returns a promise that resolves with null when the request succeeds with HTTP 204', () => {
     // @ts-ignore
     window.fetch.mockReturnValue(
       Promise.resolve({
@@ -143,7 +142,7 @@ describe('openmrsFetch', () => {
     });
   });
 
-  it(`gives you an amazing error when the server responds with a 500 that has json`, () => {
+  it('gives you an amazing error when the server responds with a 500 that has json', () => {
     // @ts-ignore
     window.fetch.mockReturnValue(
       Promise.resolve({
@@ -173,7 +172,7 @@ describe('openmrsFetch', () => {
       });
   });
 
-  it(`gives you an amazing error when the server responds with a 400 that doesn't have json`, () => {
+  it("gives you an amazing error when the server responds with a 400 that doesn't have json", () => {
     // @ts-ignore
     window.fetch.mockReturnValue(
       Promise.resolve({
@@ -198,7 +197,7 @@ describe('openmrsFetch', () => {
       });
   });
 
-  it(`navigates to spa login page when the server responds with a 401`, () => {
+  it('navigates to spa login page when the server responds with a 401', () => {
     (mockGetConfig as any).mockResolvedValueOnce({
       redirectAuthFailure: {
         enabled: true,
@@ -234,7 +233,7 @@ describe('openmrsObservableFetch', () => {
     window.fetch = jest.fn();
   });
 
-  it(`calls window.fetch with the correct arguments for a basic GET request`, (done) => {
+  it('calls window.fetch with the correct arguments for a basic GET request', (done) => {
     // @ts-ignore
     window.fetch.mockReturnValue(
       Promise.resolve({
@@ -266,7 +265,7 @@ describe('openmrsObservableFetch', () => {
     expect(window.fetch.mock.calls[0][1].headers.Accept).toEqual('application/json');
   });
 
-  it(`aborts the fetch request when subscription is unsubscribed`, () => {
+  it('aborts the fetch request when subscription is unsubscribed', () => {
     // @ts-ignore
     window.fetch.mockReturnValue(new Promise(() => {}));
 

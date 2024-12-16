@@ -8,6 +8,9 @@ import {
   setSessionLocation,
   setUserProperties,
   showSnackbar,
+  LoggedInUser,
+  Session,
+  FetchResponse,
 } from '@openmrs/esm-framework';
 import {
   mockLoginLocations,
@@ -31,30 +34,30 @@ const secondLocation = {
 const invalidLocationUuid = '2gf1b7d4-c865-4178-82b0-5932e51503d6';
 const userUuid = '90bd24b3-e700-46b0-a5ef-c85afdfededd';
 
-const mockedOpenmrsFetch = openmrsFetch as jest.Mock;
-const mockedUseConfig = useConfig as jest.Mock;
-const mockedUseSession = useSession as jest.Mock;
-
-mockedUseConfig.mockReturnValue(mockConfig);
-mockedUseSession.mockReturnValue({
-  user: {
-    display: 'Testy McTesterface',
-    uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
-    userProperties: {},
-  },
-});
+const mockOpenmrsFetch = jest.mocked(openmrsFetch);
+const mockUseConfig = jest.mocked(useConfig);
+const mockUseSession = jest.mocked(useSession);
 
 describe('LocationPickerView', () => {
   beforeEach(() => {
-    mockedOpenmrsFetch.mockImplementation((url) => {
+    mockUseConfig.mockReturnValue(mockConfig);
+
+    mockUseSession.mockReturnValue({
+      user: {
+        display: 'Testy McTesterface',
+        uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
+        userProperties: {},
+      } as LoggedInUser,
+    } as Session);
+
+    mockOpenmrsFetch.mockImplementation((url) => {
       if (url === `/ws/fhir2/R4/Location?_id=${fistLocation.uuid}`) {
-        return validatingLocationSuccessResponse;
+        return Promise.resolve(validatingLocationSuccessResponse as FetchResponse<unknown>);
       }
       if (url === `/ws/fhir2/R4/Location?_id=${invalidLocationUuid}`) {
-        return validatingLocationFailureResponse;
+        return Promise.resolve(validatingLocationFailureResponse as FetchResponse<unknown>);
       }
-
-      return mockLoginLocations;
+      return Promise.resolve(mockLoginLocations as FetchResponse<unknown>);
     });
   });
 
@@ -125,15 +128,16 @@ describe('LocationPickerView', () => {
 
     it('should redirect to home if user preference in the userProperties is present and the location preference is valid', async () => {
       const validLocationUuid = fistLocation.uuid;
-      mockedUseSession.mockReturnValue({
+      mockUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
           userProperties: {
             defaultLocation: validLocationUuid,
           },
-        },
-      });
+        } as LoggedInUser,
+      } as Session);
+
       await act(async () => {
         renderWithRouter(LocationPickerView, {});
       });
@@ -150,15 +154,15 @@ describe('LocationPickerView', () => {
     });
 
     it('should not redirect to home if user preference in the userProperties is present and the location preference is invalid', async () => {
-      mockedUseSession.mockReturnValue({
+      mockUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
           userProperties: {
             defaultLocation: invalidLocationUuid,
           },
-        },
-      });
+        } as LoggedInUser,
+      } as Session);
 
       await act(async () => {
         renderWithRouter(LocationPickerView, {});
@@ -173,15 +177,15 @@ describe('LocationPickerView', () => {
 
   describe('Testing updating user preference workflow', () => {
     it('should not redirect if the login location page has a searchParam `update`', async () => {
-      mockedUseSession.mockReturnValue({
+      mockUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
           userProperties: {
             defaultLocation: fistLocation.uuid,
           },
-        },
-      });
+        } as LoggedInUser,
+      } as Session);
 
       await act(async () => {
         renderWithRouter(LocationPickerView, {}, { routes: ['?update=true'] });
@@ -196,15 +200,15 @@ describe('LocationPickerView', () => {
     it('should remove the saved preference if the login location page has a searchParam `update=true` and when submitting the user unchecks the checkbox ', async () => {
       const user = userEvent.setup();
 
-      mockedUseSession.mockReturnValue({
+      mockUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
           userProperties: {
             defaultLocation: '1ce1b7d4-c865-4178-82b0-5932e51503d6',
           },
-        },
-      });
+        } as LoggedInUser,
+      } as Session);
 
       await act(async () => {
         renderWithRouter(LocationPickerView, {}, { routes: ['?update=true'] });
@@ -240,15 +244,15 @@ describe('LocationPickerView', () => {
     it('should update the user preference with new selection', async () => {
       const user = userEvent.setup();
 
-      mockedUseSession.mockReturnValue({
+      mockUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
           userProperties: {
             defaultLocation: fistLocation.uuid,
           },
-        },
-      });
+        } as LoggedInUser,
+      } as Session);
 
       await act(async () => {
         renderWithRouter(LocationPickerView, {}, { routes: ['?update=true'] });
@@ -281,15 +285,15 @@ describe('LocationPickerView', () => {
     it('should not update the user preference with same selection', async () => {
       const user = userEvent.setup();
 
-      mockedUseSession.mockReturnValue({
+      mockUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
           userProperties: {
             defaultLocation: fistLocation.uuid,
           },
-        },
-      });
+        } as LoggedInUser,
+      } as Session);
 
       await act(async () => {
         renderWithRouter(LocationPickerView, {}, { routes: ['?update=true'] });

@@ -1,15 +1,16 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useLayoutType } from '@openmrs/esm-react-utils';
 import { Pen } from '@carbon/react/icons';
+import { useLayoutType } from '@openmrs/esm-react-utils';
 import { ActionMenuButton } from './action-menu-button.component';
-import { useWorkspaces } from '../workspaces';
+import { type OpenWorkspace, useWorkspaces, type WorkspacesInfo } from '../workspaces';
 
-const mockedUseLayoutType = useLayoutType as jest.Mock;
+const mockUseLayoutType = jest.mocked(useLayoutType);
+const mockUseWorkspaces = jest.mocked(useWorkspaces);
 
 jest.mock('@carbon/react/icons', () => ({
-  ...(jest.requireActual('@carbon/react/icons') as jest.Mock),
+  ...jest.requireActual('@carbon/react/icons'),
   Pen: jest.fn(({ size }) => <div data-testid="pen-icon">size: {size}</div>),
 }));
 
@@ -35,12 +36,12 @@ describe('ActionMenuButton', () => {
   it('should display tablet view', async () => {
     const user = userEvent.setup();
 
-    (useWorkspaces as jest.Mock).mockReturnValue({
-      workspaces: [{ type: 'order' }],
+    mockUseWorkspaces.mockReturnValue({
+      workspaces: [{ type: 'order' } as unknown as OpenWorkspace],
       workspaceWindowState: 'normal',
-    });
+    } as unknown as WorkspacesInfo);
 
-    mockedUseLayoutType.mockReturnValue('tablet');
+    mockUseLayoutType.mockReturnValue('tablet');
 
     const handler = jest.fn();
 
@@ -59,19 +60,19 @@ describe('ActionMenuButton', () => {
 
     const button = screen.getByRole('button', { name: /Visit note/i });
     expect(button).toBeInTheDocument();
-    await user.click(button);
-    expect(handler).toBeCalled();
 
+    await user.click(button);
+    expect(handler).toHaveBeenCalled();
     expect(button).not.toHaveClass('active');
   });
 
   it('should have not active className if workspace is not active', async () => {
-    (useWorkspaces as jest.Mock).mockReturnValue({
-      workspaces: [{ type: 'order' }, { type: 'visit-note' }],
+    mockUseWorkspaces.mockReturnValue({
+      workspaces: [{ type: 'order' }, { type: 'visit-note' } as unknown as OpenWorkspace],
       workspaceWindowState: 'normal',
-    });
+    } as unknown as WorkspacesInfo);
 
-    mockedUseLayoutType.mockReturnValue('tablet');
+    mockUseLayoutType.mockReturnValue('tablet');
 
     const handler = jest.fn();
 
@@ -92,12 +93,12 @@ describe('ActionMenuButton', () => {
   });
 
   it('should have active className if workspace is active', async () => {
-    (useWorkspaces as jest.Mock).mockReturnValue({
-      workspaces: [{ type: 'visit-note' }, { type: 'order' }],
+    mockUseWorkspaces.mockReturnValue({
+      workspaces: [{ type: 'visit-note' }, { type: 'order' } as unknown as OpenWorkspace],
       workspaceWindowState: 'normal',
-    });
+    } as unknown as WorkspacesInfo);
 
-    mockedUseLayoutType.mockReturnValue('tablet');
+    mockUseLayoutType.mockReturnValue('tablet');
 
     const handler = jest.fn();
 
@@ -118,12 +119,12 @@ describe('ActionMenuButton', () => {
   });
 
   it('should not display active className if workspace is active but workspace window is hidden', async () => {
-    (useWorkspaces as jest.Mock).mockReturnValue({
-      workspaces: [{ type: 'visit-note' }, { type: 'order' }],
+    mockUseWorkspaces.mockReturnValue({
+      workspaces: [{ type: 'visit-note' }, { type: 'order' } as unknown as OpenWorkspace],
       workspaceWindowState: 'hidden',
-    });
+    } as unknown as WorkspacesInfo);
 
-    mockedUseLayoutType.mockReturnValue('tablet');
+    mockUseLayoutType.mockReturnValue('tablet');
 
     const handler = jest.fn();
 
@@ -146,12 +147,12 @@ describe('ActionMenuButton', () => {
   it('should display desktop view', async () => {
     const user = userEvent.setup();
 
-    (useWorkspaces as jest.Mock).mockReturnValue({
-      workspaces: [{ type: 'order' }],
+    mockUseWorkspaces.mockReturnValue({
+      workspaces: [{ type: 'order' } as unknown as OpenWorkspace],
       workspaceWindowState: 'normal',
-    });
+    } as unknown as WorkspacesInfo);
 
-    mockedUseLayoutType.mockReturnValue('small-desktop');
+    mockUseLayoutType.mockReturnValue('small-desktop');
 
     const handler = jest.fn();
 
@@ -171,18 +172,18 @@ describe('ActionMenuButton', () => {
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
     await user.click(button);
-    expect(handler).toBeCalled();
+    expect(handler).toHaveBeenCalled();
 
     expect(button).not.toHaveClass('active');
   });
 
   it('should display have active className if workspace is not active', async () => {
-    (useWorkspaces as jest.Mock).mockReturnValue({
-      workspaces: [{ type: 'order' }, { type: 'visit-note' }],
+    mockUseWorkspaces.mockReturnValue({
+      workspaces: [{ type: 'order' }, { type: 'visit-note' } as unknown as OpenWorkspace],
       workspaceWindowState: 'normal',
-    });
+    } as unknown as WorkspacesInfo);
 
-    mockedUseLayoutType.mockReturnValue('small-desktop');
+    mockUseLayoutType.mockReturnValue('small-desktop');
 
     const handler = jest.fn();
 
@@ -203,12 +204,12 @@ describe('ActionMenuButton', () => {
   });
 
   it('should display active className if workspace is active and workspace window is normal', async () => {
-    (useWorkspaces as jest.Mock).mockReturnValue({
-      workspaces: [{ type: 'visit-note' }, { type: 'order' }],
+    mockUseWorkspaces.mockReturnValue({
+      workspaces: [{ type: 'visit-note' }, { type: 'order' } as unknown as OpenWorkspace],
       workspaceWindowState: 'normal',
-    });
+    } as unknown as WorkspacesInfo);
 
-    mockedUseLayoutType.mockReturnValue('small-desktop');
+    mockUseLayoutType.mockReturnValue('small-desktop');
 
     const handler = jest.fn();
 
@@ -229,12 +230,12 @@ describe('ActionMenuButton', () => {
   });
 
   it('should not display active className if workspace is active but workspace window is hidden', async () => {
-    (useWorkspaces as jest.Mock).mockReturnValue({
-      workspaces: [{ type: 'visit-note' }, { type: 'order' }],
+    mockUseWorkspaces.mockReturnValue({
+      workspaces: [{ type: 'visit-note' }, { type: 'order' } as unknown as OpenWorkspace],
       workspaceWindowState: 'hidden',
-    });
+    } as unknown as WorkspacesInfo);
 
-    mockedUseLayoutType.mockReturnValue('small-desktop');
+    mockUseLayoutType.mockReturnValue('small-desktop');
 
     const handler = jest.fn();
 

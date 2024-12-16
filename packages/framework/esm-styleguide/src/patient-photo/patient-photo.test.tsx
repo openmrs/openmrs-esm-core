@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { PatientPhoto } from './patient-photo.component';
 import { usePatientPhoto } from './usePatientPhoto';
 
-const mockedUsePatientPhoto = jest.mocked(usePatientPhoto);
+const mockUsePatientPhoto = jest.mocked(usePatientPhoto);
 
 jest.mock('./usePatientPhoto', () => ({
   usePatientPhoto: jest.fn(),
@@ -20,7 +20,7 @@ const patientName = 'Freddy Mercury';
 
 describe('PatientPhoto', () => {
   it('renders a progressbar when the patient photo is loading', () => {
-    mockedUsePatientPhoto.mockReturnValue({
+    mockUsePatientPhoto.mockReturnValue({
       isLoading: true,
       data: null,
       error: undefined,
@@ -32,7 +32,7 @@ describe('PatientPhoto', () => {
   });
 
   it('renders a placeholder image if the patient photo fails to load', async () => {
-    mockedUsePatientPhoto.mockReturnValue({
+    mockUsePatientPhoto.mockReturnValue({
       isLoading: false,
       data: { imageSrc: 'invalid-url.jpg', dateTime: '2024-01-01' },
       error: undefined,
@@ -66,7 +66,7 @@ describe('PatientPhoto', () => {
     };
     window.Image = mockImage as any;
 
-    mockedUsePatientPhoto.mockReturnValue({
+    mockUsePatientPhoto.mockReturnValue({
       isLoading: false,
       data: { imageSrc: 'valid-image.jpg', dateTime: '2024-01-01' },
       error: undefined,

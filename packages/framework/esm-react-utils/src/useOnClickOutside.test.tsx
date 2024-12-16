@@ -5,7 +5,6 @@ import { useOnClickOutside } from './useOnClickOutside';
 
 describe('useOnClickOutside', () => {
   const handler: (e: Event) => void = jest.fn();
-  afterEach(() => (handler as jest.Mock).mockClear());
 
   it('should call the handler when clicking outside', async () => {
     const user = userEvent.setup();

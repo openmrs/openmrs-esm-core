@@ -506,6 +506,7 @@ async function registerSimpleExtension(
       </div>
     );
   };
+
   registerExtension({
     name,
     moduleName,

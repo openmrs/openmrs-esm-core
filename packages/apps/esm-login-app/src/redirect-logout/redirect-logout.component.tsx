@@ -1,36 +1,40 @@
-import type React from 'react';
 import { useEffect } from 'react';
 import { navigate, setUserLanguage, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
 import { clearHistory } from '@openmrs/esm-framework/src/internal';
+import { type ConfigSchema } from '../config-schema';
 import { performLogout } from './logout.resource';
 
-export interface RedirectLogoutProps {}
-
-const RedirectLogout: React.FC<RedirectLogoutProps> = () => {
-  const config = useConfig();
-  const session = useSession();
+const RedirectLogout: React.FC = () => {
+  const config = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
+  const session = useSession();
 
   useEffect(() => {
     clearHistory();
     if (!session.authenticated || !isLoginEnabled) {
       navigate({ to: '${openmrsSpaBase}/login' });
     } else {
-      performLogout().then(() => {
-        const defaultLang = document.documentElement.getAttribute('data-default-lang');
-        setUserLanguage({
-          locale: defaultLang,
-          authenticated: false,
-          sessionId: '',
+      performLogout()
+        .then(() => {
+          const defaultLanguage = document.documentElement.getAttribute('data-default-lang');
+
+          setUserLanguage({
+            locale: defaultLanguage,
+            authenticated: false,
+            sessionId: '',
+          });
+
+          if (config.provider.type === 'oauth2') {
+            navigate({ to: config.provider.logoutUrl });
+          } else {
+            navigate({ to: '${openmrsSpaBase}/login' });
+          }
+        })
+        .catch((error) => {
+          console.error('Logout failed:', error);
         });
-        if (config.provider.type === 'oauth2') {
-          navigate({ to: config.provider.logoutUrl });
-        } else {
-          navigate({ to: '${openmrsSpaBase}/login' });
-        }
-      });
     }
-  }, [isLoginEnabled, session, config]);
+  }, [config, isLoginEnabled, session]);
 
   return null;
 };

@@ -18,7 +18,7 @@ export function useRelationships(patientUuid: string) {
 
   return {
     data: data ? formattedRelationships : null,
-    isError: error,
+    error,
     isLoading,
     isValidating,
   };

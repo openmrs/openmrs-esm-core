@@ -2,7 +2,7 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { openmrsFetch, useConfig, useSession } from '@openmrs/esm-framework';
+import { useConfig, useSession, type LoggedInUser, type Session } from '@openmrs/esm-framework';
 import {
   inpatientWardResponse,
   locationResponseForNonExistingSearch,
@@ -16,18 +16,17 @@ const validLocationUuid = '1ce1b7d4-c865-4178-82b0-5932e51503d6';
 const inpatientWardLocationUuid = 'ba685651-ed3b-4e63-9b35-78893060758a';
 const outpatientClinicLocationUuid = '44c3efb0-2583-4c80-a79e-1f756a03c0a1';
 
-const mockedOpenmrsFetch = openmrsFetch as jest.Mock;
-const mockedUseConfig = useConfig as jest.Mock;
-const mockUseSession = useSession as jest.Mock;
+const mockUseConfig = jest.mocked(useConfig);
+const mockUseSession = jest.mocked(useSession);
 
-mockedUseConfig.mockReturnValue(mockConfig);
+mockUseConfig.mockReturnValue(mockConfig);
 mockUseSession.mockReturnValue({
   user: {
     display: 'Testy McTesterface',
     uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
     userProperties: {},
-  },
-});
+  } as LoggedInUser,
+} as Session);
 
 jest.mock('@openmrs/esm-framework', () => ({
   ...jest.requireActual('@openmrs/esm-framework'),
@@ -50,10 +49,6 @@ jest.mock('@openmrs/esm-framework', () => ({
 }));
 
 describe('LocationPicker', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('renders a list of login locations', async () => {
     await act(async () => {
       render(<LocationPicker selectedLocationUuid={inpatientWardLocationUuid} onChange={jest.fn()} />);
