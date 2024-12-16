@@ -74,4 +74,16 @@ describe('PatientBannerPatientInfo', () => {
     expect(screen.getByText(/national id/i)).toBeInTheDocument();
     expect(screen.getByText(/123456789/i)).toBeInTheDocument();
   });
+
+  it('renders the correct gender icon based on patient gender', () => {
+    render(<PatientBannerPatientInfo patient={mockPatient} />);
+
+    expect(screen.getByText('', { selector: 'use[href="#omrs-icon-gender-male"]' })).toBeInTheDocument();
+
+    const patientWithUnknownGender = { ...mockPatient, gender: 'unknown' };
+
+    render(<PatientBannerPatientInfo patient={patientWithUnknownGender} />);
+
+    expect(screen.getByText('', { selector: 'use[href="#omrs-icon-gender-unknown"]' })).toBeInTheDocument();
+  });
 });
