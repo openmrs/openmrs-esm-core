@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-api",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "license": "MPL-2.0",
   "description": "The javascript module for interacting with the OpenMRS API",
   "browser": "dist/openmrs-esm-api.js",
@@ -42,10 +42,10 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-config": "5.x",
-    "@openmrs/esm-error-handling": "5.x",
-    "@openmrs/esm-navigation": "5.x",
-    "@openmrs/esm-offline": "5.x"
+    "@openmrs/esm-config": "6.x",
+    "@openmrs/esm-error-handling": "6.x",
+    "@openmrs/esm-navigation": "6.x",
+    "@openmrs/esm-offline": "6.x"
   },
   "devDependencies": {
     "@openmrs/esm-config": "workspace:*",
