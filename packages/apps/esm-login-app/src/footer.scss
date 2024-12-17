@@ -12,12 +12,13 @@
   gap: layout.$spacing-05;
   width: 100%;
 }
+
 .logosContainer {
   display: flex;
-  max-height: 2rem;
+  max-height: layout.$spacing-07;
   justify-content: flex-end;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: layout.$spacing-03;
   filter: grayscale(100%);
   opacity: 80%;
 }
@@ -26,50 +27,41 @@
   .footer {
     flex-direction: row;
     justify-content: center;
-    padding: 1rem;
+    padding: layout.$spacing-05;
   }
 
   .poweredByTile {
-    padding: 1rem 0.5rem;
-    font-size: 0.8rem;
+    padding: layout.$spacing-05 layout.$spacing-03;
+    font-size: layout.$spacing-04;
     align-items: center;
     justify-content: center;
   }
 
   .logosContainer {
     justify-content: center;
-    gap: 0.75rem;
+    gap: layout.$spacing-04;
   }
-
 }
 
 @media only screen and (max-width: 480px) {
-  .login-card {
-    margin-top: 2.5%;
-    border: none;
-  }
   .footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem;
+    gap: layout.$spacing-03;
+    padding: layout.$spacing-05;
   }
 
   .poweredByTile {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 1.2rem 1rem;
-    font-size: 0.7rem;
+    padding: 1.25rem 1rem;
+    font-size: layout.$spacing-04;
     height: auto;
     max-width: 100%;
-    border-radius: 0.75rem;
+    border-radius: layout.$spacing-04;
   }
-}
-
-.footer {
-  margin-top: 6.75rem;
 }
 
 .poweredByTile {
