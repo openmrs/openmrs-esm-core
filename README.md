@@ -294,7 +294,7 @@ When releasing a new major version (e.g., moving from v6 to v7), you must:
 
 Example:
 
-```json
+```jsonc
 // Before (during v6)
 "peerDependencies": {
   "@openmrs/esm-config": "6.x",
