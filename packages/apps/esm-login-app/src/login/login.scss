@@ -50,16 +50,6 @@
   margin-left: 0.5rem;
 }
 
-.logosContainer {
-  display: flex;
-  max-height: 2rem;
-  justify-content: flex-end;
-  flex-direction: row;
-  gap: 0.5rem;
-  filter: grayscale(100%);
-  opacity: 80%;
-}
-
 .loginCard {
   border-radius: 0;
   border: 1px solid $ui-03;
@@ -78,56 +68,14 @@
 }
 
 @media only screen and (max-width: 1024px) {
-  .footer {
-    flex-direction: row;
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .poweredByTile {
-    padding: 1rem 0.5rem;
-    font-size: 0.8rem;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .logosContainer {
-    justify-content: center;
-    gap: 0.75rem;
-  }
-
   .container {
     height: 100vh;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  .login-card {
-    margin-top: 2.5%;
-    border: none;
-  }
-
   .container {
     height: 100vh;
-  }
-
-  .footer {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem;
-  }
-
-  .poweredByTile {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 1.2rem 1rem;
-    font-size: 0.7rem;
-    height: auto;
-    max-width: 100%;
-    border-radius: 0.75rem;
   }
 }
 
@@ -163,10 +111,6 @@
   position: absolute;
   bottom: 100%;
   left: 0;
-}
-
-.footer {
-  margin-top: 6.75rem;
 }
 
 .loader {
