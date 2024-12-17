@@ -10,7 +10,7 @@ Below is the documentation for this repository.
 
 # OpenMRS Frontend Core
 
-This is a [monorepo](https://yarnpkg.com/advanced/lexicon#monorepo) containing the core packages for the OpenMRS Frontend. These packages handle cross-cutting concerns such as the configuration and extension systems, the core framework, global state management, the stlyeguide, and more.
+This is a [monorepo](https://yarnpkg.com/advanced/lexicon#monorepo) containing the core packages for the OpenMRS Frontend. These packages handle cross-cutting concerns such as the configuration and extension systems, the core framework, global state management, the styleguide, and more.
 
 ## Available Packages
 
@@ -27,13 +27,17 @@ The following common libraries have been developed. They may also be used indepe
 
 - [@openmrs/esm-api](packages/framework/esm-api): helps make calls to the backend
 - [@openmrs/esm-config](packages/framework/esm-config): validation and storage of frontend configuration
+- [@openmrs/esm-context](packages/framework/esm-context): provides the AppContext for sharing contextual state across the app
+- [@openmrs/esm-dynamic-loading](packages/framework/esm-dynamic-loading): provides functionality for dynamically loading frontend modules using Webpack Module Federation dynamic remotes
 - [@openmrs/esm-error-handling](packages/framework/esm-error-handling): handling of errors
+- [@openmrs/esm-expression-evaluator](packages/framework/esm-expression-evaluator): provides functions that allow evaluation of user-defined expressions in a way safer than eval()
 - [@openmrs/esm-extensions](packages/framework/esm-extensions): implementation of a frontend component extension system
 - [@openmrs/esm-feature-flags](packages/framework/esm-feature-flags): hide features that are in progress
 - [@openmrs/esm-globals](packages/framework/esm-globals): useful global variables and types
 - [@openmrs/esm-navigation](packages/framework/esm-navigation): navigation utilities, breadcrumbs, and history
 - [@openmrs/esm-offline](packages/framework/esm-offline): provides offline functionality
 - [@openmrs/esm-react-utils](packages/framework/esm-react-utils): utilities for React components
+- [@openmrs/esm-routes](packages/framework/esm-routes): provides helper functions for working with `routes.json` files in O3
 - [@openmrs/esm-state](packages/framework/esm-state): brings in state management
 - [@openmrs/esm-styleguide](packages/framework/esm-styleguide): styling and UI capabilities
 - [@openmrs/esm-translations](packages/framework/esm-translations): common translations and utilities
@@ -48,6 +52,7 @@ All libraries are aggregated in the `@openmrs/esm-framework` package:
 A set of frontend modules provide the core technical functionality of the application.
 
 - [@openmrs/esm-devtools-app](packages/apps/esm-devtools-app)
+- [@openmrs/esm-help-menu-app](packages/apps/esm-help-menu-app)
 - [@openmrs/esm-implementer-tools-app](packages/apps/esm-implementer-tools-app)
 - [@openmrs/esm-login-app](packages/apps/esm-login-app)
 - [@openmrs/esm-primary-navigation-app](packages/apps/esm-primary-navigation-app)
@@ -144,7 +149,7 @@ To generate a `coverage` report, run:
 yarn turbo run coverage
 ```
 
-By default, `turbo` will cache test runs. This means that re-running tests wihout changing any of the related files will return the cached logs from the last run. To bypass the cache, run tests with the `force` flag, as follows:
+By default, `turbo` will cache test runs. This means that re-running tests without changing any of the related files will return the cached logs from the last run. To bypass the cache, run tests with the `force` flag, as follows:
 
 ```bash
 yarn turbo run test --force
@@ -279,6 +284,31 @@ Once the version bump commit is merged, go to GitHub and [draft a new release](h
 The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title should just be the version number (e.g., `3.2.1`). The creation of the GitHub release will cause GitHub Actions to publish the packages, completing the release process.
 
 > Don't run `npm publish`, `yarn publish`, or `lerna publish`. Use the above process.
+
+### Important Notes About Version Updates
+
+When releasing a new major version (e.g., moving from v6 to v7), you must:
+
+1. Update all peerDependencies that reference `@openmrs/` packages in every package that depends on them
+2. Change the version notation from the current major version to the new one (e.g., from `6.x` to `7.x`)
+
+Example:
+
+```jsonc
+// Before (during v6)
+"peerDependencies": {
+  "@openmrs/esm-config": "6.x",
+  "@openmrs/esm-utils": "6.x"
+}
+
+// After (for v7)
+"peerDependencies": {
+  "@openmrs/esm-config": "7.x",
+  "@openmrs/esm-utils": "7.x"
+}
+```
+
+This ensures that all packages use compatible versions and breaking changes are properly tracked.
 
 ## Design Patterns
 
