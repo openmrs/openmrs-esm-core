@@ -43,6 +43,7 @@ import {
 import { setupI18n } from './locale';
 import { registerOptionalDependencyHandler } from './optionaldeps';
 import { appName, getCoreExtensions } from './ui';
+import { setupCoreConfig } from './core-config';
 
 // @internal
 // used to track when the window.installedModules global is finalised
@@ -408,6 +409,7 @@ export function run(configUrls: Array<string>) {
   setupApiModule();
   setupHistory();
   registerCoreExtensions();
+  setupCoreConfig();
 
   return setupApps()
     .then(finishRegisteringAllApps)
