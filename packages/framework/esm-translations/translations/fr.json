@@ -12,7 +12,7 @@
   "change": "Modifier",
   "city": "Ville",
   "cityVillage": "Ville",
-  "Clinic": "Clinic",
+  "Clinic": "Clinique",
   "close": "Fermer",
   "closeAllOpenedWorkspaces": "Rejeter les modifications dans les {{count}} espaces de travail ",
   "closingAllWorkspacesPromptBody": "Il y a des modifications non enregistrées dans les espaces de travail suivants. Voulez-vous supprimer les modifications dans les espaces de travail suivants ? {{workspaceNames}}",
