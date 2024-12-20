@@ -26,6 +26,8 @@ export interface UseServerInfiniteOptions<R> {
   immutable?: boolean;
 
   swrInfiniteConfig?: SWRInfiniteConfiguration;
+
+  resultsPerPage?:number;
 }
 
 export interface UseServerInfiniteReturnObject<T, R> {
@@ -112,15 +114,15 @@ export function useServerInfinite<T, R>(
   serverPaginationHandlers: ServerPaginationHandlers<T, R>,
   options: UseServerInfiniteOptions<R> = {},
 ): UseServerInfiniteReturnObject<T, R> {
-  const { swrInfiniteConfig, immutable } = options;
+  const { swrInfiniteConfig, immutable,resultsPerPage=50 } = options;
   const { getNextUrl, getTotalCount, getData } = serverPaginationHandlers;
   const fetcher: (key: string) => Promise<FetchResponse<R>> = options.fetcher ?? openmrsFetch;
   const getKey = useCallback(
     (pageIndex: number, previousPageData: FetchResponse<R>): string | null => {
       if (pageIndex == 0) {
-        return url?.toString() ?? null;
+        return url?.toString().concat(`&limit=${resultsPerPage}`) ?? null;
       } else {
-        return serverPaginationHandlers.getNextUrl(previousPageData.data);
+        return serverPaginationHandlers.getNextUrl(previousPageData.data)+`&limit=${resultsPerPage}`;
       }
     },
     [url],
