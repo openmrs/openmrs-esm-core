@@ -91,6 +91,7 @@ export const ActionMenu = jest.fn(() => <div>Action Menu</div>);
 export const WorkspaceContainer = jest.fn(() => <div>Workspace Container</div>);
 export const closeWorkspace = jest.fn();
 export const launchWorkspace = jest.fn();
+export const launchWorkspaceGroup = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();
 
