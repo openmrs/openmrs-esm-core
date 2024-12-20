@@ -125,7 +125,7 @@ export function useServerInfinite<T, R>(
         return serverPaginationHandlers.getNextUrl(previousPageData.data)+`&limit=${resultsPerPage}`;
       }
     },
-    [url],
+    [url,resultsPerPage],
   );
 
   const { data, size, setSize, ...rest } = useSWRInfinite<FetchResponse<R>>(getKey, fetcher, {
