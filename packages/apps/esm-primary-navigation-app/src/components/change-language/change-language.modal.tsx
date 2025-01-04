@@ -12,7 +12,6 @@ import {
 import { useConnectivity, useSession } from '@openmrs/esm-framework';
 import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
 import styles from './change-language.scss';
-import { capitalize } from 'lodash-es';
 
 interface ChangeLanguageModalProps {
   close(): void;
@@ -52,6 +51,9 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
       ),
     [allowedLocales],
   );
+  const Capitalize = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   return (
     <>
@@ -70,7 +72,7 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
                 key={`locale-option-${locale}-${i}`}
                 id={`locale-option-${locale}-${i}`}
                 name={locale}
-                labelText={capitalize(languageNames[locale])}
+                labelText={Capitalize(languageNames[locale])}
                 value={locale}
               />
             ))}
