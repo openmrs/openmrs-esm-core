@@ -1,4 +1,5 @@
 @use '@carbon/colors';
+@use '@carbon/layout';
 @use '@carbon/type';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
@@ -12,7 +13,7 @@ html[dir='rtl'] {
   .overflowMenuContainer {
     & > div {
       margin-left: unset;
-      margin-right: -1.5rem;
+      margin-right: -(layout.$spacing-06);
       & > div {
         left: unset;
         right: -6.025rem;

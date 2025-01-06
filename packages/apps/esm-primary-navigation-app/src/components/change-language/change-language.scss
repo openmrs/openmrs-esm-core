@@ -2,18 +2,6 @@
 @use '@carbon/type';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
-.productiveHeading01 {
-  @include type.type-style('heading-compact-01');
-}
-
-.productiveHeading02 {
-  @include type.type-style('heading-compact-02');
-}
-
-.bodyLong01 {
-  @include type.type-style('body-01');
-}
-
 .bodyShort01 {
   @include type.type-style('body-compact-01');
 }
@@ -41,7 +29,7 @@
 
 .submitButton {
   :global(.cds--inline-loading) {
-    min-height: 1rem !important;
+    min-height: layout.$spacing-05 !important;
   }
 
   :global(.cds--inline-loading__text) {

@@ -4,17 +4,16 @@ import { Button, SwitcherItem } from '@carbon/react';
 import { navigate } from '@openmrs/esm-framework';
 import styles from './logout.scss';
 
-export interface LogoutProps {}
-
-const Logout: React.FC<LogoutProps> = () => {
+const Logout: React.FC = () => {
   const { t } = useTranslation();
-  const logout = useCallback(() => {
+
+  const handleLogout = useCallback(() => {
     navigate({ to: '${openmrsSpaBase}/logout' });
   }, []);
 
   return (
     <SwitcherItem aria-label={t('Logout', 'Logout')}>
-      <Button className={styles.logout} onClick={logout} kind="ghost">
+      <Button className={styles.logout} onClick={handleLogout} kind="ghost">
         {t('Logout', 'Logout')}
       </Button>
     </SwitcherItem>

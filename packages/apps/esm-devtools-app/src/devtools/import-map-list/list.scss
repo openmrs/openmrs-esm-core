@@ -25,7 +25,7 @@
 
 .imoTable {
   // 50vh is the container size - size of the header
-  max-height: calc(50vh - layout.$spacing-09 - 12px);
+  max-height: calc(50vh - layout.$spacing-09 - layout.$spacing-04);
 }
 
 .imoStatus {

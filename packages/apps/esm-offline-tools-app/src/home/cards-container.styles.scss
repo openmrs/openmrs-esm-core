@@ -1,42 +1,11 @@
 @use '@carbon/layout';
-@use '@carbon/type';
-@use '@openmrs/esm-styleguide/src/vars' as *;
-
-.productiveHeading01 {
-  @include type.type-style('heading-compact-01');
-}
-
-.productiveHeading02 {
-  @include type.type-style('heading-compact-02');
-}
-
-.productiveHeading03 {
-  @include type.type-style('heading-03');
-}
-
-.productiveHeading04 {
-  @include type.type-style('heading-04');
-}
-
-.bodyShort01 {
-  @include type.type-style('body-compact-01');
-}
-
-.bodyLong01 {
-  @include type.type-style('body-compact-01');
-}
-
-.label01 {
-  @include type.type-style('label-01');
-  color: $text-02;
-}
 
 .overviewCardContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: layout.$spacing-05;
   padding: layout.$spacing-05;
-  padding-top: 0rem;
+  padding-top: 0;
   background-color: #ededed;
 }
 

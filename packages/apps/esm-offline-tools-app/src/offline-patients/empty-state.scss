@@ -2,35 +2,6 @@
 @use '@carbon/type';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
-.productiveHeading01 {
-  @include type.type-style('heading-compact-01');
-}
-
-.productiveHeading02 {
-  @include type.type-style('heading-compact-02');
-}
-
-.productiveHeading03 {
-  @include type.type-style('heading-03');
-}
-
-.productiveHeading04 {
-  @include type.type-style('heading-04');
-}
-
-.bodyShort01 {
-  @include type.type-style('body-compact-01');
-}
-
-.bodyLong01 {
-  @include type.type-style('body-compact-01');
-}
-
-.label01 {
-  @include type.type-style('label-01');
-  color: $text-02;
-}
-
 .action {
   margin-bottom: layout.$spacing-03;
 }
@@ -65,7 +36,7 @@
   h4:after {
     content: '';
     display: block;
-    width: 2rem;
+    width: layout.$spacing-07;
     padding-top: 0.188rem;
     border-bottom: 0.375rem solid var(--brand-03);
   }
@@ -74,7 +45,7 @@
 .heading:after {
   content: '';
   display: block;
-  width: 2rem;
+  width: layout.$spacing-07;
   padding-top: 0.188rem;
   border-bottom: 0.375rem solid var(--brand-03);
 }

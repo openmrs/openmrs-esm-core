@@ -1,38 +1,14 @@
 @use '@openmrs/esm-styleguide/src/vars' as *;
-@use '@carbon/type';
-@use '@openmrs/esm-styleguide/src/vars' as *;
 
-.productiveHeading01 {
-  @include type.type-style('heading-compact-01');
-}
+.panelItemContainer {
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.productiveHeading02 {
-  @include type.type-style('heading-compact-02');
-}
-
-.bodyLong01 {
-  @include type.type-style('body-01');
-}
-
-.bodyShort01 {
-  @include type.type-style('body-compact-01');
-}
-
-.headerPanel {
-  height: max-content;
-}
-
-.primaryNavContainer {
-  height: var(--omrs-topnav-height);
-}
-
-.panelItemContainer a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.panelItemContainer div {
-  display: flex;
-  align-items: center;
+  div {
+    display: flex;
+    align-items: center;
+  }
 }

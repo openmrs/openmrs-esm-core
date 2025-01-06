@@ -303,7 +303,7 @@
 
 .invalidText {
   color: theme.$text-error !important;
-  font-size: 0.75rem;
+  font-size: layout.$spacing-04;
   font-weight: 400 !important;
   margin: layout.$spacing-02 0 0;
   overflow: hidden;
@@ -319,16 +319,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  block-size: 2.5rem;
+  block-size: layout.$spacing-08;
   cursor: pointer;
-  inline-size: 2.5rem;
+  inline-size: layout.$spacing-08;
 
   &::after {
     position: absolute;
     display: block;
-    block-size: 0.25rem;
+    block-size: layout.$spacing-02;
     content: '';
-    inline-size: 0.25rem;
+    inline-size: layout.$spacing-02;
     inset-block-end: 0.4375rem;
     inset-inline-start: 50%;
     -webkit-transform: translateX(-50%);

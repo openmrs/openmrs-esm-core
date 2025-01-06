@@ -5,15 +5,15 @@
 .popup {
   position: fixed;
   flex: auto;
-  bottom: 2rem;
-  right: 3rem;
+  bottom: layout.$spacing-07;
+  right: layout.$spacing-09;
   width: 11rem;
   z-index: 8000;
   background-color: $ui-02;
   gap: layout.$spacing-05;
   padding: layout.$spacing-02;
   margin: layout.$spacing-02;
-  box-shadow: 0 12px 24px 0 $ui-03;
+  box-shadow: 0 layout.$spacing-04 layout.$spacing-06 0 $ui-03;
 }
 
 .popup {

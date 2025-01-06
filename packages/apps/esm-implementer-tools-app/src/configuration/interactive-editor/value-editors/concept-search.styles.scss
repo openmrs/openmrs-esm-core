@@ -1,5 +1,5 @@
-@use '@carbon/type';
 @use '@carbon/layout';
+@use '@carbon/type';
 
 .activeConceptUuid {
   @include type.type-style('body-compact-01');
@@ -13,7 +13,7 @@
 .autocomplete > [role='combobox'] {
   display: flex;
   position: relative;
-  width: 20em;
+  width: 20rem;
 }
 
 .autocomplete [role='listbox'] {
@@ -26,10 +26,10 @@
 }
 
 .autocomplete li {
-  line-height: 0.75rem;
-  padding: 0.5em;
+  line-height: layout.$spacing-04;
+  padding: layout.$spacing-03;
   display: block;
-  border-bottom: 0.125rem solid #718096;
+  border-bottom: layout.$spacing-01 solid #718096;
   outline: 0;
   margin: 0;
   color: #000;

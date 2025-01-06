@@ -1,5 +1,5 @@
-@use '@carbon/layout';
 @use '@carbon/colors';
+@use '@carbon/layout';
 
 /* UI Shell Header */
 .cds--header {
@@ -55,9 +55,9 @@
 /* Content Switcher */
 .cds--content-switcher:not(.darkThemeSwitch) {
   & > :first-child {
-    border-bottom-left-radius: 0.25rem;
+    border-bottom-left-radius: layout.$spacing-02;
     border-right: unset !important;
-    border-top-left-radius: 0.25rem;
+    border-top-left-radius: layout.$spacing-02;
 
     [aria-selected='false'] {
       border-left: 0.0625rem solid colors.$blue-30 !important;
@@ -65,9 +65,9 @@
   }
 
   & > :last-child {
-    border-bottom-right-radius: 0.25rem;
+    border-bottom-right-radius: layout.$spacing-02;
     border-left: unset !important;
-    border-top-right-radius: 0.25rem;
+    border-top-right-radius: layout.$spacing-02;
 
     [aria-selected='false'] {
       border-right: 0.0625rem solid colors.$blue-30 !important;
@@ -376,7 +376,7 @@ html[dir='rtl'] {
   }
 
   .cds--header__name {
-    padding-inline: 1rem 2rem;
+    padding-inline: layout.$spacing-05 layout.$spacing-07;
   }
 
   .cds--header-panel--expanded {
@@ -429,7 +429,7 @@ html[dir='rtl'] {
 
   .cds--accordion__heading {
     & > svg {
-      margin: 2px 0 0 1rem;
+      margin: 2px 0 0 layout.$spacing-05;
     }
     p {
       text-align: right;
@@ -445,10 +445,10 @@ html[dir='rtl'] {
   /* RTL Content Switcher */
   .cds--content-switcher {
     & > :first-child {
-      border-bottom-right-radius: 0.25rem !important;
+      border-bottom-right-radius: layout.$spacing-02 !important;
       border-left: unset !important;
       border-right: unset !important;
-      border-top-right-radius: 0.25rem !important;
+      border-top-right-radius: layout.$spacing-02 !important;
 
       [aria-selected='false'] {
         border-right: 0.0625rem solid colors.$blue-30;
@@ -457,8 +457,8 @@ html[dir='rtl'] {
     }
 
     & > :last-child {
-      border-bottom-left-radius: 0.25rem !important;
-      border-top-left-radius: 0.25rem !important;
+      border-bottom-left-radius: layout.$spacing-02 !important;
+      border-top-left-radius: layout.$spacing-02 !important;
 
       [aria-selected='false'] {
         border-left: 0.0625rem solid colors.$blue-30;
@@ -518,15 +518,15 @@ html[dir='rtl'] {
   }
 
   .cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:first-child .cds--content-switcher-btn {
-    border-bottom-right-radius: 0.25rem !important;
-    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: layout.$spacing-02 !important;
+    border-top-right-radius: layout.$spacing-02 !important;
     border-top-left-radius: unset !important;
     border-bottom-left-radius: unset !important;
   }
 
   .cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:last-child .cds--content-switcher-btn {
-    border-bottom-left-radius: 0.25rem !important;
-    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: layout.$spacing-02 !important;
+    border-top-left-radius: layout.$spacing-02 !important;
     border-top-right-radius: unset !important;
     border-bottom-right-radius: unset !important;
   }
@@ -607,7 +607,7 @@ html[dir='rtl'] {
   }
 
   .active-left-nav-link {
-    border-right: 0.25rem solid var(--brand-01);
+    border-right: layout.$spacing-02 solid var(--brand-01);
     border-left: unset !important;
   }
 
@@ -639,11 +639,11 @@ html[dir='rtl'] {
         }
         .active {
           border-left: unset !important;
-          border-right: 0.5rem solid #009d9a;
+          border-right: layout.$spacing-03 solid #009d9a;
         }
         .enabled {
           border-left: unset !important;
-          border-right: 0.5rem solid #9ef0f0;
+          border-right: layout.$spacing-03 solid #9ef0f0;
         }
       }
     }
@@ -654,7 +654,7 @@ html[dir='rtl'] {
 
         & > h4 {
           padding-left: unset;
-          padding-inline-start: 1rem;
+          padding-inline-start: layout.$spacing-05;
         }
       }
     }
@@ -664,7 +664,7 @@ html[dir='rtl'] {
     }
 
     .cds--accordion__content {
-      padding-inline: 1rem;
+      padding-inline: layout.$spacing-05;
 
       .cds--text-input,
       .cds--text-area {

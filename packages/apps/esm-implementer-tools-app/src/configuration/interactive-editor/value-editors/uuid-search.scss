@@ -1,48 +1,9 @@
 @use '@carbon/layout';
 @use '@carbon/type';
-@use '@carbon/react/scss/themes';
-@use '@carbon/react/scss/theme';
 @use '@openmrs/esm-styleguide/src/vars' as *;
-
-.productiveHeading01 {
-  @include type.type-style('heading-compact-01');
-}
-
-.productiveHeading02 {
-  @include type.type-style('heading-compact-02');
-}
 
 .bodyShort01 {
   @include type.type-style('body-compact-01');
-}
-
-.toolStyles {
-  background-color: transparent;
-}
-
-// Chevron button - implementer-tools component
-.chevronImplementerToolsButton {
-  position: fixed;
-  bottom: 0;
-  left: calc(50vw - layout.$spacing-05);
-  z-index: 9999;
-
-  div {
-    background-color: $ui-02;
-    width: layout.$spacing-07;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
-  }
-
-  div:hover {
-    padding: layout.$spacing-03 0;
-  }
-}
-
-.darkTheme {
-  @include theme.theme(themes.$g90);
 }
 
 .activeUuid {
@@ -56,7 +17,7 @@
 .autocomplete,
 .autocomplete > [role='combobox'] {
   position: relative;
-  width: 20em;
+  width: 20rem;
 }
 
 .listbox {
@@ -68,12 +29,12 @@
 }
 
 .loader {
-  margin: 1rem;
+  margin: layout.$spacing-05;
 }
 
 .emptyResults {
   @include type.type-style('body-compact-01');
   background-color: $ui-02;
   color: $text-02;
-  min-height: 1rem;
+  min-height: layout.$spacing-05;
 }

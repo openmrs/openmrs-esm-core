@@ -1,10 +1,9 @@
-@use '@carbon/layout';
 @use '@carbon/colors';
+@use '@carbon/layout';
 @use '@carbon/type';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
-$actionPanelOffset: 3rem;
-
+$actionPanelOffset: layout.$spacing-09;
 $narrowWorkspaceWidth: 26.25rem;
 $widerWorkspaceWidth: 32.25rem;
 $extraWideWorkspaceWidth: 48.25rem;
