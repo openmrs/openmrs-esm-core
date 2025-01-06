@@ -34,10 +34,10 @@ describe(`Change Language Modal`, () => {
   it('should correctly displays all allowed locales', () => {
     render(<ChangeLanguageModal close={jest.fn()} />);
 
-    expect(screen.getByRole('radio', { name: /English/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /Français/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /Italiano/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /Português/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: /english/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: /français/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: /italiano/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: /português/i })).toBeInTheDocument();
   });
 
   it('should close the modal when the cancel button is clicked', async () => {
@@ -55,9 +55,9 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={jest.fn()} />);
 
-    expect(screen.getByRole('radio', { name: /Français/ })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /français/i })).toBeChecked();
 
-    await user.click(screen.getByRole('radio', { name: /English/i }));
+    await user.click(screen.getByRole('radio', { name: /english/i }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(mockPostUserPropertiesOnline).toHaveBeenCalledWith(
