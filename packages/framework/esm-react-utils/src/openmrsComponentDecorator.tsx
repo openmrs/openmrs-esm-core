@@ -1,6 +1,6 @@
 import React, { type ComponentType, type ErrorInfo, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { SWRConfig } from 'swr';
+import { SWRConfig, type SWRConfiguration } from 'swr';
 import type {} from '@openmrs/esm-globals';
 import { openmrsFetch } from '@openmrs/esm-api';
 import { ComponentContext, type ComponentConfig, type ExtensionData } from './ComponentContext';
@@ -31,7 +31,7 @@ export interface ComponentDecoratorOptions {
   featureName: string;
   disableTranslations?: boolean;
   strictMode?: boolean;
-  swrConfig?: Partial<typeof defaultSwrConfig>;
+  swrConfig?: Partial<Omit<SWRConfiguration, 'fetcher'>>;
 }
 
 export interface OpenmrsReactComponentProps {
@@ -53,7 +53,7 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
     throw new Error('Invalid options');
   }
 
-  const opts = { ...defaultOpts, ...userOpts };
+  const opts = Object.assign({}, defaultOpts, userOpts);
 
   return function decorateComponent(Comp: ComponentType<T>): ComponentType<T> {
     return class OpenmrsReactComponent extends React.Component<

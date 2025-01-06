@@ -351,6 +351,17 @@ export type WorkspaceDefinition = {
     }
 );
 
+export interface WorkspaceGroupDefinition {
+  /**
+   * Name of the workspace group. This is used to launch the workspace group
+   */
+  name: string;
+  /**
+   * List of workspace names which are part of the workspace group.
+   */
+  members?: Array<string>;
+}
+
 /**
  * A definition of a feature flag extracted from the routes.json
  */
@@ -391,6 +402,8 @@ export interface OpenmrsAppRoutes {
   modals?: Array<ModalDefinition>;
   /** An array of all workspaces supported by this frontend module. Workspaces can be launched by name. */
   workspaces?: Array<WorkspaceDefinition>;
+  /** An array of all workspace groups supported by this frontend module. */
+  workspaceGroups?: Array<WorkspaceGroupDefinition>;
 }
 
 /**

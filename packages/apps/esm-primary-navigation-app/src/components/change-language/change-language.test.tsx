@@ -55,7 +55,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={jest.fn()} />);
 
-    expect(screen.getByRole('radio', { name: /français/ })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /français/i })).toBeChecked();
 
     await user.click(screen.getByRole('radio', { name: /english/i }));
     await user.click(screen.getByRole('button', { name: /change/i }));

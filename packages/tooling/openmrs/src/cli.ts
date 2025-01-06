@@ -29,51 +29,79 @@ yargs.command(
   'Starts a new debugging session of the OpenMRS app shell. This uses Webpack as a debug server with proxy middleware.',
   (argv) =>
     argv
-      .number('port')
-      .default('port', 8080)
-      .describe('port', 'The port where the dev server should run.')
-      .number('host')
-      .default('host', 'localhost')
-      .describe('host', 'The host name or IP for the server to use.')
-      .string('backend')
-      .default('backend', 'https://dev3.openmrs.org/')
-      .describe('backend', 'The backend to proxy API requests to.')
-      .string('add-cookie')
-      .default('add-cookie', '')
-      .describe('add-cookie', 'Additional cookies to provide when proxying.')
-      .boolean('support-offline')
-      .describe('support-offline', 'Determines if a service worker should be installed for offline support.')
-      .default('support-offline', false)
-      .string('spa-path')
-      .default('spa-path', '/openmrs/spa/')
-      .describe('spa-path', 'The path of the application on the target server.')
-      .string('api-url')
-      .default('api-url', '/openmrs/')
-      .describe('api-url', 'The URL of the API. Can be a path if the API is on the same target server.')
-      .string('page-title')
-      .default('page-title', 'OpenMRS')
-      .describe('page-title', 'The title of the web app usually displayed in the browser tab.')
-      .array('config-url')
-      .default('config-url', [])
-      .describe('config-url', 'The URL to a valid frontend configuration. Can be used multiple times.')
-      .boolean('run-project')
-      .default('run-project', false)
-      .describe('run-project', 'Runs the project in the current directory fusing it with the specified import map.')
-      .array('sources')
-      .default('sources', ['.'])
-      .describe('sources', 'Runs the projects from the provided source directories. Can be used multiple times.')
-      .array('shared-dependencies')
-      .default('shared-dependencies', [])
-      .describe('shared-dependencies', 'The additional shared dependencies besides the ones from the app shell.')
-      .string('importmap')
-      .default('importmap', 'importmap.json')
-      .describe(
-        'importmap',
-        'The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object.',
-      )
-      .string('routes')
-      .default('routes', 'routes.registry.json')
-      .describe('routes', 'The routes.registry.json file to use.'),
+      .option('port', {
+        default: 8080,
+        describe: 'The port where the dev server should run.',
+        type: 'number',
+      })
+      .option('host', {
+        default: 'localhost',
+        describe: 'The host name or IP for the server to use.',
+        type: 'string',
+      })
+      .option('backend', {
+        default: 'https://dev3.openmrs.org',
+        describe: 'The backend to proxy API requests to.',
+        type: 'string',
+        coerce: (arg) => (arg.endsWith('/') ? arg.slice(0, -1) : arg),
+      })
+      .option('add-cookie', {
+        default: '',
+        describe: 'Additional cookies to provide when proxying.',
+        type: 'string',
+      })
+      .option('spa-path', {
+        default: '/openmrs/spa/',
+        describe: 'The path of the application on the target server.',
+        type: 'string',
+      })
+      .option('api-url', {
+        default: '/openmrs/',
+        describe: 'The URL of the API. Can be a path if the API is on the same target server.',
+        type: 'string',
+      })
+      .option('open', {
+        default: true,
+        describe: 'Immediately opens the SPA page URL in the browser.',
+        type: 'boolean',
+      })
+      .option('config-url', {
+        default: [],
+        describe: 'The URL to a valid frontend configuration. Can be used multiple times.',
+        type: 'array',
+      })
+      .option('config-file', {
+        default: [],
+        describe: 'The path to a frontend configuration file. Can be used multiple times.',
+        type: 'array',
+      })
+      .option('sources', {
+        default: ['.'],
+        describe: 'Runs the projects from the provided source directories. Can be used multiple times.',
+        type: 'array',
+      })
+      .option('shared-dependencies', {
+        default: [],
+        describe: 'The additional shared dependencies besides the ones from the app shell.',
+        type: 'array',
+      })
+      .option('importmap', {
+        default: 'importmap.json',
+        describe:
+          'The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object.',
+        type: 'string',
+      })
+      .option('routes', {
+        default: 'routes.registry.json',
+        describe:
+          'The routes.registry.json file to use. Can be a path to a valid routes registry to be taken literally, an URL, or a fixed JSON object.',
+        type: 'string',
+      })
+      .option('support-offline', {
+        default: false,
+        describe: 'Determines if a service worker should be installed for offline support.',
+        type: 'boolean',
+      }),
   async (args) =>
     runCommand('runDebug', {
       configUrls: args['config-url'],
@@ -81,11 +109,10 @@ yargs.command(
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
           await getImportmapAndRoutes(args.importmap, args.routes, args.port),
-          (args['run-project'] || (args.runProject as boolean)) && (await runProject(args.port, args.sources)),
+          await runProject(args.port, args.sources),
         ),
         args.backend,
-        args.host,
-        args.port,
+        args.spaPath,
       ),
     }),
 );
@@ -95,51 +122,79 @@ yargs.command(
   'Starts a new frontend module development session with the OpenMRS app shell.',
   (argv) =>
     argv
-      .number('port')
-      .default('port', 8080)
-      .describe('port', 'The port where the dev server should run.')
-      .number('host')
-      .default('host', 'localhost')
-      .describe('host', 'The host name or IP for the server to use.')
-      .string('backend')
-      .default('backend', 'https://dev3.openmrs.org/')
-      .describe('backend', 'The backend to proxy API requests to.')
-      .string('add-cookie')
-      .default('add-cookie', '')
-      .describe('add-cookie', 'Additional cookies to provide when proxying.')
-      .string('spa-path')
-      .default('spa-path', '/openmrs/spa/')
-      .describe('spa-path', 'The path of the application on the target server.')
-      .string('api-url')
-      .default('api-url', '/openmrs/')
-      .describe('api-url', 'The URL of the API. Can be a path if the API is on the same target server.')
-      .boolean('open')
-      .default('open', true)
-      .describe('open', 'Immediately opens the SPA page URL in the browser.')
-      .array('config-url')
-      .default('config-url', [])
-      .describe('config-url', 'The URL to a valid frontend configuration. Can be used multiple times.')
-      .array('config-file')
-      .default('config-file', [])
-      .describe('config-file', 'The path to a frontend configuration file. Can be used multiple times.')
-      .array('sources')
-      .default('sources', ['.'])
-      .describe('sources', 'Runs the projects from the provided source directories. Can be used multiple times.')
-      .array('shared-dependencies')
-      .default('shared-dependencies', [])
-      .describe('shared-dependencies', 'The additional shared dependencies besides the ones from the app shell.')
-      .string('importmap')
-      .default('importmap', 'importmap.json')
-      .describe(
-        'importmap',
-        'The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object.',
-      )
-      .string('routes')
-      .default('routes', 'routes.registry.json')
-      .describe('routes', 'The routes.registry.json file to use.')
-      .boolean('support-offline')
-      .default('support-offline', false)
-      .describe('support-offline', 'Determines if a service worker should be installed for offline support.'),
+      .option('port', {
+        default: 8080,
+        describe: 'The port where the dev server should run.',
+        type: 'number',
+      })
+      .option('host', {
+        default: 'localhost',
+        describe: 'The host name or IP for the server to use.',
+        type: 'string',
+      })
+      .option('backend', {
+        default: 'https://dev3.openmrs.org',
+        describe: 'The backend to proxy API requests to.',
+        type: 'string',
+        coerce: (arg) => (arg.endsWith('/') ? arg.slice(0, -1) : arg),
+      })
+      .option('add-cookie', {
+        default: '',
+        describe: 'Additional cookies to provide when proxying.',
+        type: 'string',
+      })
+      .option('spa-path', {
+        default: '/openmrs/spa/',
+        describe: 'The path of the application on the target server.',
+        type: 'string',
+      })
+      .option('api-url', {
+        default: '/openmrs/',
+        describe: 'The URL of the API. Can be a path if the API is on the same target server.',
+        type: 'string',
+      })
+      .option('open', {
+        default: true,
+        describe: 'Immediately opens the SPA page URL in the browser.',
+        type: 'boolean',
+      })
+      .option('config-url', {
+        default: [],
+        describe: 'The URL to a valid frontend configuration. Can be used multiple times.',
+        type: 'array',
+      })
+      .option('config-file', {
+        default: [],
+        describe: 'The path to a frontend configuration file. Can be used multiple times.',
+        type: 'array',
+      })
+      .option('sources', {
+        default: ['.'],
+        describe: 'Runs the projects from the provided source directories. Can be used multiple times.',
+        type: 'array',
+      })
+      .option('shared-dependencies', {
+        default: [],
+        describe: 'The additional shared dependencies besides the ones from the app shell.',
+        type: 'array',
+      })
+      .option('importmap', {
+        default: 'importmap.json',
+        describe:
+          'The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object.',
+        type: 'string',
+      })
+      .option('routes', {
+        default: 'routes.registry.json',
+        describe:
+          'The routes.registry.json file to use. Can be a path to a valid routes registry to be taken literally, an URL, or a fixed JSON object.',
+        type: 'string',
+      })
+      .option('support-offline', {
+        default: false,
+        describe: 'Determines if a service worker should be installed for offline support.',
+        type: 'boolean',
+      }),
   async (args) =>
     runCommand('runDevelop', {
       configUrls: args['config-url'],
@@ -148,13 +203,12 @@ yargs.command(
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
           await getImportmapAndRoutes(args.importmap, args.routes, args.port),
-          (args.sources[0] as string | boolean) !== false && (await runProject(args.port, args.sources)),
+          await runProject(args.port, args.sources),
           args.backend,
           args.spaPath,
         ),
         args.backend,
-        args.host,
-        args.port,
+        args.spaPath,
       ),
     }),
 );

@@ -1,6 +1,11 @@
 /** @module @category Workspace */
 import { useMemo, type ReactNode } from 'react';
-import { getWorkspaceRegistration, type WorkspaceRegistration } from '@openmrs/esm-extensions';
+import {
+  getWorkspaceGroupRegistration,
+  getWorkspaceRegistration,
+  WorkspaceGroupRegistration,
+  type WorkspaceRegistration,
+} from '@openmrs/esm-extensions';
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
 import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
@@ -101,6 +106,7 @@ export interface WorkspaceStoreState {
   workspaceWindowState: WorkspaceWindowState;
   workspaceGroup?: {
     name: string;
+    members: Array<string>;
     cleanup?: Function;
   };
 }
@@ -203,6 +209,7 @@ interface LaunchWorkspaceGroupArg {
  * });
  */
 export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGroupArg) {
+  const workspaceGroupRegistration = getWorkspaceGroupRegistration(groupName);
   const { state, onWorkspaceGroupLaunch, workspaceGroupCleanup, workspaceToLaunch } = args;
   const store = getWorkspaceStore();
   if (store.getState().openWorkspaces.length) {
@@ -221,6 +228,7 @@ export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGro
       ...prev,
       workspaceGroup: {
         name: groupName,
+        members: workspaceGroupRegistration.members,
         cleanup: workspaceGroupCleanup,
       },
     }));
@@ -293,7 +301,7 @@ export function launchWorkspace<
   const workspace = getWorkspaceRegistration(name);
   const currentWorkspaceGroup = store.getState().workspaceGroup;
 
-  if (currentWorkspaceGroup && !workspace.groups?.includes(currentWorkspaceGroup?.name)) {
+  if (currentWorkspaceGroup && !currentWorkspaceGroup.members?.includes(name)) {
     closeWorkspaceGroup(currentWorkspaceGroup.name, () => {
       launchWorkspace(name, additionalProps);
     });

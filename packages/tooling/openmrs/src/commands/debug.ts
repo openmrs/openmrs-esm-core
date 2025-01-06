@@ -6,7 +6,6 @@ export interface DebugArgs {
   host: string;
   backend: string;
   importmap: ImportmapDeclaration;
-  pageTitle: string;
   supportOffline?: boolean;
   spaPath: string;
   apiUrl: string;
