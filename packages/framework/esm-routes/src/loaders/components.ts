@@ -4,12 +4,14 @@ import {
   registerExtension,
   registerModal,
   registerWorkspace,
+  registerWorkspaceGroup,
 } from '@openmrs/esm-extensions';
 import {
   type FeatureFlagDefinition,
   type ExtensionDefinition,
   type ModalDefinition,
   type WorkspaceDefinition,
+  type WorkspaceGroupDefinition,
 } from '@openmrs/esm-globals';
 import { getLoader } from './app';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
@@ -194,9 +196,49 @@ supported, so the workspace will not be loaded.`,
       canMaximize: workspace.canMaximize,
       width: workspace.width,
       preferredWindowSize: workspace.preferredWindowSize,
-      groups: workspace.groups ?? [],
     });
   }
+}
+
+/**
+ * This function registers a workspace group definition with the framework so that it can be launched.
+ *
+ * @param appName The name of the app defining this workspace
+ * @param workspace An object that describes the workspace, derived from `routes.json`
+ */
+export function tryRegisterWorkspaceGroup(appName: string, workspaceGroup: WorkspaceGroupDefinition) {
+  const name = workspaceGroup.name;
+  if (!name) {
+    console.error(
+      `A workspace group definition in ${appName} is missing a name and thus cannot be registered.
+To fix this, ensure that you define the "name" field inside the workspace definition.`,
+      workspaceGroup,
+    );
+    return;
+  }
+
+  if (!workspaceGroup.members) {
+    console.error(
+      `The workspace ${name} from ${appName} is missing a 'members' entry and thus cannot be registered.
+To fix this, ensure that you define a 'members' field inside the workspace definition.`,
+      workspaceGroup,
+    );
+    return;
+  }
+
+  if (!workspaceGroup.members.length) {
+    console.error(
+      `The workspace ${name} from ${appName} has empty 'members' property and thus cannot be registered.
+To fix this, ensure that you define atleast one 'workspace name' part of the workspace group field inside the workspace group's 'member' definition.`,
+      workspaceGroup,
+    );
+    return;
+  }
+
+  registerWorkspaceGroup({
+    name,
+    members: workspaceGroup.members ?? [],
+  });
 }
 
 /**

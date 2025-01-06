@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { type LifeCycles } from 'single-spa';
-import { type WorkspaceWindowState } from '@openmrs/esm-globals';
+import { type WorkspaceGroupDefinition, type WorkspaceWindowState } from '@openmrs/esm-globals';
 import { type ExtensionRegistration, getExtensionRegistration } from '.';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { translateFrom } from '@openmrs/esm-translations';
@@ -17,8 +17,9 @@ export interface WorkspaceRegistration {
   preferredWindowSize: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
-  groups?: Array<string>;
 }
+
+export type WorkspaceGroupRegistration = WorkspaceGroupDefinition;
 
 interface WorkspaceRegistrationStore {
   workspaces: Record<string, WorkspaceRegistration>;
@@ -26,6 +27,14 @@ interface WorkspaceRegistrationStore {
 
 const workspaceRegistrationStore = createGlobalStore<WorkspaceRegistrationStore>('workspaceRegistrations', {
   workspaces: {},
+});
+
+interface WorkspaceGroupRegistrationStore {
+  workspaceGroups: Record<string, { name: string; members: Array<string> }>;
+}
+
+const workspaceGroupStore = createGlobalStore<WorkspaceGroupRegistrationStore>('workspaceGroups', {
+  workspaceGroups: {},
 });
 
 /** See [[WorkspaceDefinition]] for more information about these properties */
@@ -39,7 +48,6 @@ export interface RegisterWorkspaceOptions {
   preferredWindowSize?: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
-  groups?: Array<string>;
 }
 
 /**
@@ -58,7 +66,25 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
         canHide: workspace.canHide ?? false,
         canMaximize: workspace.canMaximize ?? false,
         width: workspace.width ?? 'narrow',
-        groups: workspace.groups ?? [],
+      },
+    },
+  }));
+}
+
+export type RegisterWorkspaceGroupOptions = WorkspaceGroupRegistration;
+
+/**
+ * Tells the workspace system about a workspace group. This is used by the app shell
+ * to register workspace groups defined in the `routes.json` file.
+ * @internal
+ */
+export function registerWorkspaceGroup(workspaceGroup: RegisterWorkspaceGroupOptions) {
+  workspaceGroupStore.setState((state) => ({
+    workspaceGroups: {
+      ...state.workspaceGroups,
+      [workspaceGroup.name]: {
+        name: workspaceGroup.name,
+        members: workspaceGroup.members ?? [],
       },
     },
   }));
@@ -94,11 +120,25 @@ export function getWorkspaceRegistration(name: string): WorkspaceRegistration {
         canHide: workspaceExtension.meta?.canHide ?? false,
         canMaximize: workspaceExtension.meta?.canMaximize ?? false,
         width: workspaceExtension.meta?.width ?? 'narrow',
-        groups: workspaceExtension?.meta?.groups ?? [],
       };
     } else {
       throw new Error(`No workspace named '${name}' has been registered.`);
     }
+  }
+}
+
+/**
+ * This provides the workspace group registration and is also compatibile with the
+ * old way of registering workspace groups (as extensions), but isn't recommended.
+ *
+ * @param name of the workspace
+ */
+export function getWorkspaceGroupRegistration(name: string): WorkspaceGroupRegistration {
+  const registeredWorkspaces = workspaceGroupStore.getState().workspaceGroups;
+  if (registeredWorkspaces[name]) {
+    return registeredWorkspaces[name];
+  } else {
+    throw new Error(`No workspace group named '${name}' has been registered.`);
   }
 }
 

@@ -1,6 +1,7 @@
 import { type ActivityFn, pathToActiveWhen, registerApplication } from 'single-spa';
 import { registerModuleWithConfigSystem } from '@openmrs/esm-config';
 import {
+  type WorkspaceGroupDefinition,
   type ExtensionDefinition,
   type FeatureFlagDefinition,
   type ModalDefinition,
@@ -12,7 +13,13 @@ import {
 import { getFeatureFlag } from '@openmrs/esm-feature-flags';
 import { routeRegex } from './helpers';
 import { getLoader } from './app';
-import { tryRegisterExtension, tryRegisterFeatureFlag, tryRegisterModal, tryRegisterWorkspace } from './components';
+import {
+  tryRegisterExtension,
+  tryRegisterFeatureFlag,
+  tryRegisterModal,
+  tryRegisterWorkspace,
+  tryRegisterWorkspaceGroup,
+} from './components';
 
 // this is the global holder of all pages registered in the app
 const pages: Array<RegisteredPageDefinition> = [];
@@ -93,6 +100,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];
     const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
+    const availableWorkspaceGroups: Array<WorkspaceGroupDefinition> = routes.workspaceGroups ?? [];
     const availableFeatureFlags: Array<FeatureFlagDefinition> = routes.featureFlags ?? [];
 
     routes.pages?.forEach((p) => {
@@ -149,6 +157,22 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         console.warn(
           `A workspace for ${appName} could not be registered as it does not appear to have the required properties`,
           workspace,
+        );
+      }
+    });
+
+    availableWorkspaceGroups.forEach((workspaceGroup) => {
+      if (
+        workspaceGroup &&
+        typeof workspaceGroup === 'object' &&
+        Object.hasOwn(workspaceGroup, 'name') &&
+        Object.hasOwn(workspaceGroup, 'members')
+      ) {
+        tryRegisterWorkspaceGroup(appName, workspaceGroup);
+      } else {
+        console.warn(
+          `A workspace group for ${appName} could not be registered as it does not appear to have the required properties`,
+          workspaceGroup,
         );
       }
     });
