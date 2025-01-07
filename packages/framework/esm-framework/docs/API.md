@@ -713,7 +713,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L102)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:126](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L126)
 
 ___
 
@@ -1643,13 +1643,23 @@ ___
 
 ___
 
+### ImagingOrderPictogram
+
+• `Const` **ImagingOrderPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L24)
+
+___
+
 ### InPatientPictogram
 
 • `Const` **InPatientPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L24)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L30)
 
 ___
 
@@ -1709,7 +1719,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L30)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L36)
 
 ___
 
@@ -1740,6 +1750,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx#L15)
+
+___
+
+### MaterialOrderPictogram
+
+• `Const` **MaterialOrderPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L42)
 
 ___
 
@@ -1785,7 +1805,7 @@ is available. The goal is to make it easier to conditionally render configuratio
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L69)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L93)
 
 ___
 
@@ -1899,7 +1919,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L36)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)
 
 ___
 
@@ -1929,7 +1949,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L42)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L54)
 
 ___
 
@@ -1941,7 +1961,7 @@ This is a utility type for custom pictograms. Please maintain alphabetical order
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L112)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:136](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L136)
 
 ___
 
@@ -1952,6 +1972,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:469](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L469)
+
+___
+
+### ProcedureOrderPictogram
+
+• `Const` **ProcedureOrderPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L60)
 
 ___
 
@@ -1975,13 +2005,23 @@ ___
 
 ___
 
+### ReferralOrderPictogram
+
+• `Const` **ReferralOrderPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L66)
+
+___
+
 ### RegistrationPictogram
 
 • `Const` **RegistrationPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L72)
 
 ___
 
@@ -2066,7 +2106,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L54)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L78)
 
 ___
 
