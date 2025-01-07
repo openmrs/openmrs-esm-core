@@ -376,8 +376,7 @@ export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> 
 export function proxyImportmapAndRoutes(
   importmapAndRoutes: ImportmapAndRoutesWithWatches,
   backend: string,
-  host: string,
-  port: number,
+  spaPath: string,
 ) {
   const { importMap: importMapDecl, routes: routesDecl, watchedRoutesPaths } = importmapAndRoutes;
   if (importMapDecl.type != 'inline') {
@@ -393,11 +392,14 @@ export function proxyImportmapAndRoutes(
     );
   }
 
+  const backendUrl = new URL(backend);
   const importmap = JSON.parse(importMapDecl.value);
+  const spaPathRegEx = new RegExp('^' + spaPath.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d'));
+
   Object.keys(importmap.imports).forEach((key) => {
-    const url = importmap.imports[key];
-    if (url.startsWith(backend)) {
-      importmap.imports[key] = url.replace(backend, '');
+    const url = new URL(importmap.imports[key], backendUrl);
+    if (url.protocol === backendUrl.protocol && url.host === backendUrl.host) {
+      importmap.imports[key] = `./${url.pathname.replace(spaPathRegEx, '')}${url.search}${url.hash}`;
     }
   });
   importMapDecl.value = JSON.stringify(importmap);
