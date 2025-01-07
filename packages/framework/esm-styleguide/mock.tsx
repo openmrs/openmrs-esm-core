@@ -91,6 +91,10 @@ export const HomePictogram = () => <span>HomePictogram</span>;
 export const LaboratoryPictogram = () => <span>LaboratoryPictogramPictogram</span>;
 export const PatientListsPictogram = () => <span>PatientListsPictogram</span>;
 export const ServiceQueuesPictogram = () => <span>ServiceQueuesPictogramPictogram</span>;
+export const ImagingOrderPictogram = () => <span>ImagingOrderPictogram</span>;
+export const MaterialOrderPictogram = () => <span>MaterialOrderPictogram</span>;
+export const ProcedureOrderPictogram = () => <span>ProcedureOrderPictogram</span>;
+export const ReferralOrderPictogram = () => <span>ReferralOrderPictogram</span>;
 
 // Misc stubs
 export const MaybeIcon = ({ icon }) => <span>{icon}</span>;
