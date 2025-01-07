@@ -226,8 +226,10 @@ export async function runProject(
 }
 
 /**
- * @param decl The initial import map declaration
- * @param additionalImports New imports to add
+ * @param importAndRoutes An ImportmapAndRoutes object that holds the current import map and routes registries
+ * @param additionalImportsAndRoutes An object containing any import map entries, routes, and watched route files to add to the setup
+ * @param backend The URL for the backend
+ * @param spaPath The spaPath for this instance
  * @returns The import map declaration with the new imports added in. If
  *   there are new imports to add, and if the original import map declaration
  *   had type "url", it is downloaded and resolved to one of type "inline".
@@ -366,12 +368,10 @@ export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> 
 }
 
 /**
- * @param decl An import map declaration of type "inline"
- * @param backend The backend which is being proxied by the dev server
- * @param host The dev server host
- * @param port The dev server port
- * @returns The same import map declaration but with all imports from
- *   `backend` changed to import from `http://${host}:${port}`.
+ * @param importmapAndRoutes An ImportmapAndRoutes object that holds the import map and routes registry
+ * @param backend The URL for the backend
+ * @param spaPath The spaPath for this instance
+ * @returns The same import map declaration but with all imports changed to the appropriate path
  */
 export function proxyImportmapAndRoutes(
   importmapAndRoutes: ImportmapAndRoutesWithWatches,
