@@ -17,6 +17,7 @@ export interface WorkspaceRegistration {
   preferredWindowSize: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
+  groups: Array<string>;
 }
 
 export type WorkspaceGroupRegistration = WorkspaceGroupDefinition;
@@ -48,6 +49,7 @@ export interface RegisterWorkspaceOptions {
   preferredWindowSize?: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
+  groups?: Array<string>;
 }
 
 /**
@@ -66,6 +68,7 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
         canHide: workspace.canHide ?? false,
         canMaximize: workspace.canMaximize ?? false,
         width: workspace.width ?? 'narrow',
+        groups: workspace.groups ?? [],
       },
     },
   }));
@@ -120,6 +123,7 @@ export function getWorkspaceRegistration(name: string): WorkspaceRegistration {
         canHide: workspaceExtension.meta?.canHide ?? false,
         canMaximize: workspaceExtension.meta?.canMaximize ?? false,
         width: workspaceExtension.meta?.width ?? 'narrow',
+        groups: workspaceExtension.meta?.groups,
       };
     } else {
       throw new Error(`No workspace named '${name}' has been registered.`);
@@ -150,4 +154,38 @@ function getTitleFromExtension(ext: ExtensionRegistration) {
     return translateFrom(ext.moduleName, title.key, title.default);
   }
   return ext.name;
+}
+
+function createNewWorkspaceGroupInfo(groupName: string): WorkspaceGroupRegistration {
+  return {
+    name: groupName,
+    members: [],
+  };
+}
+
+export function attachWorkspaceToGroup(workspaceName: string, groupName: string) {
+  workspaceGroupStore.setState((state) => {
+    const group = state.workspaceGroups[groupName];
+    if (group) {
+      return {
+        workspaceGroups: {
+          ...state.workspaceGroups,
+          [groupName]: {
+            ...group,
+            members: [...group.members, workspaceName],
+          },
+        },
+      };
+    } else {
+      return {
+        workspaceGroups: {
+          ...state.workspaceGroups,
+          [groupName]: {
+            ...createNewWorkspaceGroupInfo(groupName),
+            members: [workspaceName],
+          },
+        },
+      };
+    }
+  });
 }

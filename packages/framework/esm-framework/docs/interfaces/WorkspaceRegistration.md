@@ -16,6 +16,7 @@ See [WorkspaceDefinition](../API.md#workspacedefinition) for more information ab
 
 - [canHide](WorkspaceRegistration.md#canhide)
 - [canMaximize](WorkspaceRegistration.md#canmaximize)
+- [groups](WorkspaceRegistration.md#groups)
 - [moduleName](WorkspaceRegistration.md#modulename)
 - [name](WorkspaceRegistration.md#name)
 - [preferredWindowSize](WorkspaceRegistration.md#preferredwindowsize)
@@ -47,6 +48,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/workspaces.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L15)
+
+___
+
+### groups
+
+• **groups**: `string`[]
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 ___
 

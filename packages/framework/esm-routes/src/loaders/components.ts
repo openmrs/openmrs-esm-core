@@ -1,5 +1,6 @@
 import {
   attach,
+  attachWorkspaceToGroup,
   type ExtensionRegistration,
   registerExtension,
   registerModal,
@@ -196,7 +197,12 @@ supported, so the workspace will not be loaded.`,
       canMaximize: workspace.canMaximize,
       width: workspace.width,
       preferredWindowSize: workspace.preferredWindowSize,
+      groups: workspace.groups,
     });
+  }
+
+  for (const group of workspace.groups || []) {
+    attachWorkspaceToGroup(name, group);
   }
 }
 

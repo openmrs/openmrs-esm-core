@@ -16,6 +16,7 @@
 
 - [canHide](OpenWorkspace.md#canhide)
 - [canMaximize](OpenWorkspace.md#canmaximize)
+- [groups](OpenWorkspace.md#groups)
 - [moduleName](OpenWorkspace.md#modulename)
 - [name](OpenWorkspace.md#name)
 - [preferredWindowSize](OpenWorkspace.md#preferredwindowsize)
@@ -64,6 +65,20 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/workspaces.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L15)
+
+___
+
+### groups
+
+• **groups**: `string`[]
+
+#### Inherited from
+
+[WorkspaceRegistration](WorkspaceRegistration.md).[groups](WorkspaceRegistration.md#groups)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 ___
 
