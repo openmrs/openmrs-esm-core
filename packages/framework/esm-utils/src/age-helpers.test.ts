@@ -9,6 +9,7 @@ describe('Age Helper', () => {
   // https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
   // (Table 8)
   const now = dayjs('2024-07-30');
+  const test0 = now;
   const test1 = now.subtract(1, 'hour').subtract(30, 'minutes');
   const test2 = now.subtract(1, 'day').subtract(2, 'hours').subtract(5, 'minutes');
   const test3 = now.subtract(3, 'days').subtract(17, 'hours').subtract(30, 'minutes');
@@ -22,6 +23,7 @@ describe('Age Helper', () => {
   const test11 = now.subtract(18, 'year').subtract(39, 'day');
 
   it('should render durations correctly', () => {
+    expect(age(test0, now)).toBe('0 min');
     expect(age(test1, now)).toBe('90 min');
     expect(age(test2, now)).toBe('26 hr');
     expect(age(test3, now)).toBe('3 days');
