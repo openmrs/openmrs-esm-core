@@ -301,7 +301,7 @@ export function launchWorkspace<
   const workspace = getWorkspaceRegistration(name);
   const currentWorkspaceGroup = store.getState().workspaceGroup;
 
-  if (currentWorkspaceGroup && !currentWorkspaceGroup.members?.includes(currentWorkspaceGroup?.name)) {
+  if (currentWorkspaceGroup && !currentWorkspaceGroup.members?.includes(name)) {
     closeWorkspaceGroup(currentWorkspaceGroup.name, () => {
       launchWorkspace(name, additionalProps);
     });
