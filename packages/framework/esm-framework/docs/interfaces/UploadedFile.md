@@ -7,6 +7,7 @@
 ### Properties
 
 - [base64Content](UploadedFile.md#base64content)
+- [capturedFromWebcam](UploadedFile.md#capturedfromwebcam)
 - [file](UploadedFile.md#file)
 - [fileDescription](UploadedFile.md#filedescription)
 - [fileName](UploadedFile.md#filename)
@@ -22,6 +23,16 @@
 #### Defined in
 
 [packages/framework/esm-api/src/types/attachments-types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L3)
+
+___
+
+### capturedFromWebcam
+
+• `Optional` **capturedFromWebcam**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/attachments-types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L8)
 
 ___
 
