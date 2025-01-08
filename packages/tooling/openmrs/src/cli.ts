@@ -40,9 +40,10 @@ yargs.command(
         type: 'string',
       })
       .option('backend', {
-        default: 'https://dev3.openmrs.org/',
+        default: 'https://dev3.openmrs.org',
         describe: 'The backend to proxy API requests to.',
         type: 'string',
+        coerce: (arg) => (arg.endsWith('/') ? arg.slice(0, -1) : arg),
       })
       .option('add-cookie', {
         default: '',
@@ -132,9 +133,10 @@ yargs.command(
         type: 'string',
       })
       .option('backend', {
-        default: 'https://dev3.openmrs.org/',
+        default: 'https://dev3.openmrs.org',
         describe: 'The backend to proxy API requests to.',
         type: 'string',
+        coerce: (arg) => (arg.endsWith('/') ? arg.slice(0, -1) : arg),
       })
       .option('add-cookie', {
         default: '',
