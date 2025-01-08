@@ -20,7 +20,9 @@ export interface WorkspaceRegistration {
   groups: Array<string>;
 }
 
-export type WorkspaceGroupRegistration = WorkspaceGroupDefinition;
+export type WorkspaceGroupRegistration = WorkspaceGroupDefinition & {
+  members: Array<string>;
+};
 
 interface WorkspaceRegistrationStore {
   workspaces: Record<string, WorkspaceRegistration>;
@@ -74,20 +76,18 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
   }));
 }
 
-export type RegisterWorkspaceGroupOptions = WorkspaceGroupRegistration;
-
 /**
  * Tells the workspace system about a workspace group. This is used by the app shell
  * to register workspace groups defined in the `routes.json` file.
  * @internal
  */
-export function registerWorkspaceGroup(workspaceGroup: RegisterWorkspaceGroupOptions) {
+export function registerWorkspaceGroup(workspaceGroup: WorkspaceGroupRegistration) {
   workspaceGroupStore.setState((state) => ({
     workspaceGroups: {
       ...state.workspaceGroups,
       [workspaceGroup.name]: {
         name: workspaceGroup.name,
-        members: workspaceGroup.members ?? [],
+        members: workspaceGroup.members,
       },
     },
   }));
@@ -123,7 +123,7 @@ export function getWorkspaceRegistration(name: string): WorkspaceRegistration {
         canHide: workspaceExtension.meta?.canHide ?? false,
         canMaximize: workspaceExtension.meta?.canMaximize ?? false,
         width: workspaceExtension.meta?.width ?? 'narrow',
-        groups: workspaceExtension.meta?.groups,
+        groups: workspaceExtension.meta?.groups ?? [],
       };
     } else {
       throw new Error(`No workspace named '${name}' has been registered.`);

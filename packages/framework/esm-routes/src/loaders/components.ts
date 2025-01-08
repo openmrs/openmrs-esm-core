@@ -223,24 +223,6 @@ To fix this, ensure that you define the "name" field inside the workspace defini
     return;
   }
 
-  if (!workspaceGroup.members) {
-    console.error(
-      `The workspace ${name} from ${appName} is missing a 'members' entry and thus cannot be registered.
-To fix this, ensure that you define a 'members' field inside the workspace definition.`,
-      workspaceGroup,
-    );
-    return;
-  }
-
-  if (!workspaceGroup.members.length) {
-    console.error(
-      `The workspace ${name} from ${appName} has empty 'members' property and thus cannot be registered.
-To fix this, ensure that you define atleast one 'workspace name' part of the workspace group field inside the workspace group's 'member' definition.`,
-      workspaceGroup,
-    );
-    return;
-  }
-
   registerWorkspaceGroup({
     name,
     members: workspaceGroup.members ?? [],

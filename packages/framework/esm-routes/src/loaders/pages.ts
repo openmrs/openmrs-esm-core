@@ -162,12 +162,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     });
 
     availableWorkspaceGroups.forEach((workspaceGroup) => {
-      if (
-        workspaceGroup &&
-        typeof workspaceGroup === 'object' &&
-        Object.hasOwn(workspaceGroup, 'name') &&
-        Object.hasOwn(workspaceGroup, 'members')
-      ) {
+      if (workspaceGroup && typeof workspaceGroup === 'object' && Object.hasOwn(workspaceGroup, 'name')) {
         tryRegisterWorkspaceGroup(appName, workspaceGroup);
       } else {
         console.warn(

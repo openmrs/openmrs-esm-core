@@ -359,7 +359,7 @@ export interface WorkspaceGroupDefinition {
   /**
    * List of workspace names which are part of the workspace group.
    */
-  members: Array<string>;
+  members?: Array<string>;
 }
 
 /**

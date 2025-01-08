@@ -13,7 +13,7 @@
 
 ### members
 
-• **members**: `string`[]
+• `Optional` **members**: `string`[]
 
 List of workspace names which are part of the workspace group.
 
