@@ -21,12 +21,6 @@ export const HomePictogram = memo(
   }),
 );
 
-export const ImagingOrderPictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function ImagingOrderPictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-imaging-order" pictogramProps={props} />;
-  }),
-);
-
 export const InPatientPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function InPatientPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-in-patient" pictogramProps={props} />;
@@ -39,12 +33,6 @@ export const LaboratoryPictogram = memo(
   }),
 );
 
-export const MaterialOrderPictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function MaterialOrderPictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-material-order" pictogramProps={props} />;
-  }),
-);
-
 export const PatientListsPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function PatientListsPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-patient-lists" pictogramProps={props} />;
@@ -54,18 +42,6 @@ export const PatientListsPictogram = memo(
 export const PharmacyPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function PharmacyPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-pharmacy" pictogramProps={props} />;
-  }),
-);
-
-export const ProcedureOrderPictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function ProcedureOrderPictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-procedure-order" pictogramProps={props} />;
-  }),
-);
-
-export const ReferralOrderPictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function ReferralOrderPictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-referral-order" pictogramProps={props} />;
   }),
 );
 
