@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { capitalize } from 'lodash-es';
 import {
   Button,
   InlineLoading,
@@ -69,7 +70,7 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
                 key={`locale-option-${locale}-${i}`}
                 id={`locale-option-${locale}-${i}`}
                 name={locale}
-                labelText={languageNames[locale]}
+                labelText={capitalize(languageNames[locale])}
                 value={locale}
               />
             ))}
