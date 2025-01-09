@@ -319,6 +319,12 @@ export const ImageMedicalIcon = memo(
   }),
 );
 
+export const ImagingOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ImagingOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-pict-imaging-order" iconProps={props} />;
+  }),
+);
+
 /**
  */
 export const InventoryManagementIcon = memo(
@@ -372,6 +378,14 @@ export const ListCheckedIcon = memo(
 export const LocationIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function LocationIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-location" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const MaterialOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MaterialOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-pict-material-order" iconProps={props} />;
   }),
 );
 
@@ -474,9 +488,25 @@ export const PrinterIcon = memo(
 
 /**
  */
+export const ProcedureOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ProcedureOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-pict-procedure-order" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const ProgramsIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ProgramsIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-programs" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const ReferralOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ReferralOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-pict-referral-order" iconProps={props} />;
   }),
 );
 

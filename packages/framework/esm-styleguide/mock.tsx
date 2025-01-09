@@ -84,6 +84,10 @@ export const UserXrayIcon = () => <span>UserXrayIcon</span>;
 export const ViewIcon = () => <span>ViewIcon</span>;
 export const ViewOffIcon = () => <span>ViewOffIcon</span>;
 export const WarningIcon = () => <span>WarningIcon</span>;
+export const ImagingOrderIcon = () => <span>ImagingOrderIcon</span>;
+export const MaterialOrderIcon = () => <span>MaterialOrderIcon</span>;
+export const ProcedureOrderIcon = () => <span>ProcedureOrderIcon</span>;
+export const ReferralOrderIcon = () => <span>ReferralOrderIcon</span>;
 
 // Pictogram stubs
 export const AppointmentsPictogram = () => <span>AppointmentsPictogram</span>;
@@ -91,10 +95,6 @@ export const HomePictogram = () => <span>HomePictogram</span>;
 export const LaboratoryPictogram = () => <span>LaboratoryPictogramPictogram</span>;
 export const PatientListsPictogram = () => <span>PatientListsPictogram</span>;
 export const ServiceQueuesPictogram = () => <span>ServiceQueuesPictogramPictogram</span>;
-export const ImagingOrderPictogram = () => <span>ImagingOrderPictogram</span>;
-export const MaterialOrderPictogram = () => <span>MaterialOrderPictogram</span>;
-export const ProcedureOrderPictogram = () => <span>ProcedureOrderPictogram</span>;
-export const ReferralOrderPictogram = () => <span>ReferralOrderPictogram</span>;
 
 // Misc stubs
 export const MaybeIcon = ({ icon }) => <span>{icon}</span>;
