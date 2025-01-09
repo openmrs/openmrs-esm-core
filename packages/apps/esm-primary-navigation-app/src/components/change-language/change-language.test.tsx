@@ -73,7 +73,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={jest.fn()} />);
 
-    await user.click(screen.getByRole('radio', { name: /English/i }));
+    await user.click(screen.getByRole('radio', { name: /english/i }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(screen.getByText(/changing language.../i)).toBeInTheDocument();
@@ -85,7 +85,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={jest.fn()} />);
 
-    await user.click(screen.getByRole('radio', { name: /English/i }));
+    await user.click(screen.getByRole('radio', { name: /english/i }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(mockPostUserPropertiesOffline).toHaveBeenCalledWith(

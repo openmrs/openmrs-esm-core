@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { capitalize } from 'lodash-es';
 import {
   Button,
   InlineLoading,
@@ -12,7 +13,6 @@ import {
 import { useConnectivity, useSession } from '@openmrs/esm-framework';
 import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
 import styles from './change-language.scss';
-import { capitalize } from 'lodash-es';
 
 interface ChangeLanguageModalProps {
   close(): void;
