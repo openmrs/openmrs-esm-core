@@ -228,6 +228,14 @@ export const DownloadIcon = memo(
 
 /**
  */
+export const DrugOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function DrugOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-drug-order" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const EditIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function EditIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-edit" iconProps={props} />;
