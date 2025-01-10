@@ -25,6 +25,7 @@ import closeFilled from './svgs/close--filled.svg';
 import closeOutline from './svgs/close--outline.svg';
 import document from './svgs/document.svg';
 import documentAttachment from './svgs/document-attachment.svg';
+import drugOrder from './svgs/drug-order.svg';
 import download from './svgs/download.svg';
 import edit from './svgs/edit.svg';
 import eventSchedule from './svgs/event-schedule.svg';
@@ -117,6 +118,7 @@ export function setupIcons() {
   addSvg('omrs-icon-document', document);
   addSvg('omrs-icon-document-attachment', documentAttachment);
   addSvg('omrs-icon-download', download);
+  addSvg('omrs-icon-drug-order', drugOrder);
   addSvg('omrs-icon-edit', edit);
   addSvg('omrs-icon-event-schedule', eventSchedule);
   addSvg('omrs-icon-events', events);

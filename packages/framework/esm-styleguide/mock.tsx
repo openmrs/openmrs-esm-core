@@ -88,6 +88,7 @@ export const ImagingOrderIcon = () => <span>ImagingOrderIcon</span>;
 export const MaterialOrderIcon = () => <span>MaterialOrderIcon</span>;
 export const ProcedureOrderIcon = () => <span>ProcedureOrderIcon</span>;
 export const ReferralOrderIcon = () => <span>ReferralOrderIcon</span>;
+export const DrugOrderIcon = () => <span>DrugOrderIcon</span>;
 
 // Pictogram stubs
 export const AppointmentsPictogram = () => <span>AppointmentsPictogram</span>;
