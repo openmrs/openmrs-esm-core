@@ -1,5 +1,5 @@
 import { clearMockExtensionRegistry } from '@openmrs/esm-framework/mock';
-import { registerExtension, registerWorkspace } from '@openmrs/esm-extensions';
+import { registerExtension, registerWorkspace, registerWorkspaceGroup } from '@openmrs/esm-extensions';
 import {
   type Prompt,
   cancelPrompt,
@@ -555,7 +555,7 @@ describe('workspace system', () => {
       });
 
       expect(workspaceGroupStore).toBeTruthy();
-      expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
+      expect(workspaceGroupStore?.getState()['foo']).toBe(true);
     });
 
     it('should update the store state with new additionalProps if workspaces with same workspaceGroup name calls the function', () => {
@@ -564,15 +564,15 @@ describe('workspace system', () => {
       });
 
       expect(workspaceGroupStore).toBeTruthy();
-      expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
+      expect(workspaceGroupStore?.getState()['foo']).toBe(true);
 
       workspaceGroupStore = getWorkspaceGroupStore('ward-patient-store', {
         bar: true,
       });
 
       expect(workspaceGroupStore).toBeTruthy();
-      expect(workspaceGroupStore?.getState()?.['foo']).toBe(true);
-      expect(workspaceGroupStore?.getState()?.['bar']).toBe(true);
+      expect(workspaceGroupStore?.getState()['foo']).toBe(true);
+      expect(workspaceGroupStore?.getState()['bar']).toBe(true);
     });
   });
 
@@ -590,7 +590,11 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        groups: ['ward-patient-store'],
+      });
+
+      registerWorkspaceGroup({
+        name: 'ward-patient-store',
+        members: ['ward-patient-workspace'],
       });
 
       launchWorkspaceGroup('ward-patient-store', {
@@ -620,7 +624,10 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        groups: ['ward-patient-store'],
+      });
+      registerWorkspaceGroup({
+        name: 'ward-patient-store',
+        members: ['ward-patient-workspace'],
       });
       launchWorkspaceGroup('ward-patient-store', {
         state: {
@@ -647,7 +654,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        groups: [workspaceGroup],
       });
       registerWorkspace({
         name: 'transfer-patient-workspace',
@@ -655,7 +661,10 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
-        groups: [workspaceGroup],
+      });
+      registerWorkspaceGroup({
+        name: workspaceGroup,
+        members: ['ward-patient-workspace', 'transfer-patient-workspace'],
       });
 
       launchWorkspaceGroup(workspaceGroup, {
@@ -689,7 +698,6 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        groups: ['ward-patient-store'],
       });
       registerWorkspace({
         name: 'transfer-patient-workspace',
@@ -697,7 +705,16 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
-        groups: ['another-sidebar-group'],
+      });
+
+      registerWorkspaceGroup({
+        name: 'ward-patient-store',
+        members: ['ward-patient-workspace'],
+      });
+
+      registerWorkspaceGroup({
+        name: 'another-sidebar-group',
+        members: ['transfer-patient-workspace'],
       });
 
       const workspaceStore = getWorkspaceStore();
@@ -737,7 +754,6 @@ describe('workspace system', () => {
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
         canHide: true,
-        groups: ['ward-patient-store'],
       });
       registerWorkspace({
         name: 'transfer-patient-workspace',
@@ -745,7 +761,11 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
-        groups: ['ward-patient-store'],
+      });
+
+      registerWorkspaceGroup({
+        name: 'ward-patient-store',
+        members: ['ward-patient-workspace', 'transfer-patient-workspace'],
       });
 
       const workspaceStore = getWorkspaceStore();
@@ -776,7 +796,10 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
-        groups: ['ward-patient-store'],
+      });
+      registerWorkspaceGroup({
+        name: 'ward-patient-store',
+        members: ['ward-patient-workspace'],
       });
       launchWorkspaceGroup('ward-patient-store', {
         state: { foo: true },

@@ -53,7 +53,7 @@ ___
 
 ### groups
 
-• `Optional` **groups**: `string`[]
+• **groups**: `string`[]
 
 #### Defined in
 

@@ -27,7 +27,7 @@ Defaults to true except when opening a new workspace of the same group.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L33)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L38)
 
 ___
 
@@ -42,7 +42,7 @@ even if the `testFcn` passed to `promptBeforeClosing` returns `true`.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L18)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L23)
 
 ## Workspace Methods
 
@@ -62,4 +62,4 @@ void
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L25)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L30)
