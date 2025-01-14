@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { type Parcel } from 'single-spa';
 import { ComponentContext } from '.';
 
-export type ExtensionProps = React.HTMLAttributes<HTMLDivElement> & {
+export type ExtensionProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
   state?: Record<string, unknown>;
 };
 
@@ -17,7 +17,7 @@ export type ExtensionProps = React.HTMLAttributes<HTMLDivElement> & {
  * Usage of this component *must* have an ancestor `<ExtensionSlot>`,
  * and *must* only be used once within that `<ExtensionSlot>`.
  */
-export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divProps }) => {
+export const Extension: React.FC<ExtensionProps> = ({ state, ...divProps }) => {
   const { extension } = useContext(ComponentContext);
   const ref = useRef<HTMLDivElement | null>(null);
   const parcel = useRef<Parcel | null>(null);
@@ -34,6 +34,7 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divPro
       !rendering.current
     ) {
       rendering.current = true;
+
       renderExtension(
         ref.current,
         extension.extensionSlotName,
@@ -104,8 +105,6 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divPro
   // positioning in order to allow the UI Editor to absolutely position
   // elements within it.
   return extension ? (
-    <div ref={ref} data-extension-id={extension?.extensionId} style={{ position: 'relative' }} {...divProps}>
-      {children}
-    </div>
+    <div ref={ref} data-extension-id={extension?.extensionId} style={{ position: 'relative' }} {...divProps} />
   ) : null;
 };
