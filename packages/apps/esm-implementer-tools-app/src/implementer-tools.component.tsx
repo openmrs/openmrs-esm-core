@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { showToast, UserHasAccess, useStore } from '@openmrs/esm-framework';
 import { implementerToolsStore, showModuleDiagnostics, togglePopup } from './store';
-
-import { useBackendDependencies } from './backend-dependencies/useBackendDependencies';
 import { hasInvalidDependencies } from './backend-dependencies/openmrs-backend-dependencies';
-import { useTranslation } from 'react-i18next';
+import { useBackendDependencies } from './backend-dependencies/useBackendDependencies';
 import { useFrontendModules } from './hooks';
 import styles from './implementer-tools.styles.scss';
 

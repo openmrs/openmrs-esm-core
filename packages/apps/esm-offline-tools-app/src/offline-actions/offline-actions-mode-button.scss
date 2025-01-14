@@ -1,5 +1,5 @@
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .panelItemContainer a {
   display: flex;
@@ -13,7 +13,7 @@
   :global(.cds--toggle) {
     /* setting the width prevents the toggle from changing size when the text changes */
     width: 76px;
-    margin: 0 1rem;
+    margin: 0 layout.$spacing-05;
   }
 
   :global(.cds--toggle__text) {

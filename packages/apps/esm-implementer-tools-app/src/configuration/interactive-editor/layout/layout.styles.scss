@@ -1,15 +1,16 @@
+@use '@carbon/layout';
 @use '@carbon/react/scss/theme';
 
 .labelCell {
-  width: 12em;
+  width: 12rem;
 }
 
 .label {
-  scroll-margin-top: 6em;
+  scroll-margin-top: layout.$spacing-12;
 }
 
 .structuredList {
-  margin-bottom: 1em;
+  margin-bottom: layout.$spacing-05;
 }
 
 .structuredListRow {
@@ -20,5 +21,5 @@
 }
 
 .subtreeCell {
-  left: -6em;
+  left: -(layout.$spacing-12);
 }

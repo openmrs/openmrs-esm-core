@@ -1,6 +1,28 @@
-@use '@carbon/styles/scss/spacing';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.bodyLong01 {
+  @include type.type-style('body-01');
+}
+
+.productiveHeading03 {
+  @include type.type-style('heading-03');
+}
+
+.backButton {
+  height: layout.$spacing-09;
+  padding-left: 0;
+
+  svg {
+    margin-right: layout.$spacing-03;
+    order: 1;
+  }
+
+  span {
+    order: 2;
+  }
+}
 
 .locationPickerContainer {
   display: flex;
@@ -12,7 +34,7 @@
 }
 
 .paddedContainer {
-  padding: spacing.$spacing-06 spacing.$spacing-06 spacing.$spacing-05;
+  padding: layout.$spacing-06 layout.$spacing-06 layout.$spacing-05;
 }
 
 .locationCard {
@@ -31,15 +53,15 @@
 
 .welcomeMessage {
   @extend .bodyLong01;
-  margin-top: spacing.$spacing-03;
+  margin-top: layout.$spacing-03;
   color: $color-gray-70;
 }
 
 .footerContainer {
-  padding: spacing.$spacing-05 spacing.$spacing-06 spacing.$spacing-06;
+  padding: layout.$spacing-05 layout.$spacing-06 layout.$spacing-06;
 
   .savePreferenceCheckbox {
-    padding-bottom: spacing.$spacing-05 !important;
+    padding-bottom: layout.$spacing-05 !important;
   }
 
   .confirmButton {
@@ -48,18 +70,18 @@
 }
 
 .cancelButton {
-  margin-top: spacing.$spacing-02;
+  margin-top: layout.$spacing-02;
 }
 
 .loadingContainer {
-  margin-top: spacing.$spacing-06;
+  margin-top: layout.$spacing-06;
 }
 
 .emptyState {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: spacing.$spacing-06 auto 0rem;
+  margin: layout.$spacing-06 auto 0;
 }
 
 .loader {
@@ -67,6 +89,6 @@
 }
 
 .errorNotification {
-  margin-inline-start: -1.5rem;
-  margin-inline-end: -1.5rem;
+  margin-inline-start: -(layout.$spacing-06);
+  margin-inline-end: -(layout.$spacing-06);
 }

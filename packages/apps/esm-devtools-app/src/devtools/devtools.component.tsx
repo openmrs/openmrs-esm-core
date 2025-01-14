@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { type AppProps } from 'single-spa';
 import { importMapOverridden } from './import-map.component';
 import DevToolsPopup from './devtools-popup.component';
-import styles from './devtools.styles.css';
+import styles from './devtools.styles.scss';
 
 export default function Root(props: AppProps) {
   return window.spaEnv === 'development' || Boolean(localStorage.getItem('openmrs:devtools')) ? (

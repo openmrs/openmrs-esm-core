@@ -4,14 +4,14 @@
 .helpMenuButton {
   z-index: 7900;
   background-color: white;
-  height: 2.5rem !important;
-  width: 2.5rem !important;
+  height: layout.$spacing-08 !important;
+  width: layout.$spacing-08 !important;
   bottom: layout.$spacing-05;
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 0.25rem;
+  right: layout.$spacing-02;
   border: none;
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
