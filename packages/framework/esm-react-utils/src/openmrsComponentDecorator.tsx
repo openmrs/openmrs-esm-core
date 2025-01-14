@@ -120,7 +120,7 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
               </SWRConfig>
             </Suspense>
           );
-          
+
           if (!opts.strictMode || !React.StrictMode) {
             return content;
           } else {

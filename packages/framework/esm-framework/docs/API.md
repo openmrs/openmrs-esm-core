@@ -7397,7 +7397,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `name` | `any` |
+| `name` | `string` |
 
 #### Returns
 

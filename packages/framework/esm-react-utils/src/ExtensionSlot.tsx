@@ -94,14 +94,16 @@ export function ExtensionSlot({
   }
 
   const name = (extensionSlotName ?? legacyExtensionSlotName) as string;
-  const slotRef = useRef(null);
+  const slotRef = useRef<HTMLDivElement>(null);
   const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
 
   const extensionsToRender = useMemo(() => select(extensions), [select, extensions]);
 
   const extensionsFromChildrenFunction = useMemo(() => {
-    if (typeof children == 'function' && !React.isValidElement(children)) {
+    if (typeof children === 'function' && !React.isValidElement(children)) {
       return extensionsToRender.map((extension) => children(extension, state));
+    } else {
+      return [];
     }
   }, [children, extensionsToRender]);
 
@@ -127,7 +129,7 @@ export function ExtensionSlot({
               },
             }}
           >
-            {extensionsFromChildrenFunction?.[i] ?? (typeof children !== 'function' ? children : null) ?? (
+            {extensionsFromChildrenFunction[i] ?? (typeof children !== 'function' ? children : null) ?? (
               <Extension state={state} />
             )}
           </ComponentContext.Provider>

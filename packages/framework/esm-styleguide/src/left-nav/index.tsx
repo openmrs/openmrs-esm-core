@@ -19,8 +19,8 @@ export function setLeftNav({ name, basePath }) {
   leftNavStore.setState({ slotName: name, basePath });
 }
 
-export function unsetLeftNav(name) {
-  if (leftNavStore.getState().slotName == name) {
+export function unsetLeftNav(name: string) {
+  if (leftNavStore.getState().slotName === name) {
     leftNavStore.setState({ slotName: null });
   }
 }
@@ -33,8 +33,8 @@ export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>((prop
 
   return (
     <SideNav ref={ref} expanded aria-label="Left navigation" className={styles.leftNav} {...props}>
-      <ExtensionSlot name="global-nav-menu-slot" />
-      {slotName ? <ExtensionSlot name={slotName} state={{ basePath, currentPath }} /> : null}
+      <ExtensionSlot key="global-nav-menu-slot" name="global-nav-menu-slot" />
+      {slotName ? <ExtensionSlot key={slotName} name={slotName} state={{ basePath, currentPath }} /> : null}
     </SideNav>
   );
 });

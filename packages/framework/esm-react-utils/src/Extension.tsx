@@ -18,22 +18,15 @@ export type ExtensionProps = React.HTMLAttributes<HTMLDivElement> & {
  * and *must* only be used once within that `<ExtensionSlot>`.
  */
 export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divProps }) => {
-  const [domElement, setDomElement] = useState<HTMLDivElement>();
   const { extension } = useContext(ComponentContext);
+  const ref = useRef<HTMLDivElement | null>(null);
   const parcel = useRef<Parcel | null>(null);
   const updatePromise = useRef<Promise<void>>(Promise.resolve());
   const rendering = useRef<boolean>(false);
 
-  const ref = useCallback(
-    (node: HTMLDivElement) => {
-      setDomElement(node);
-    },
-    [setDomElement],
-  );
-
   useEffect(() => {
     if (
-      domElement != null &&
+      ref.current !== null &&
       extension?.extensionSlotName &&
       extension.extensionSlotModuleName &&
       extension.extensionSlotModuleName &&
@@ -42,16 +35,19 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divPro
     ) {
       rendering.current = true;
       renderExtension(
-        domElement,
+        ref.current,
         extension.extensionSlotName,
         extension.extensionSlotModuleName,
         extension.extensionId,
         undefined,
         state,
-      ).then((newParcel) => {
-        parcel.current = newParcel;
-        rendering.current = false;
-      });
+      )
+        .then((newParcel) => {
+          parcel.current = newParcel;
+        })
+        .finally(() => {
+          rendering.current = false;
+        });
 
       return () => {
         if (parcel && parcel.current) {
@@ -82,7 +78,7 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divPro
 
     // we intentionally do not re-run this hook if state gets updated
     // state updates are handled in the next useEffect hook
-  }, [extension?.extensionSlotName, extension?.extensionId, extension?.extensionSlotModuleName, domElement]);
+  }, [extension?.extensionSlotName, extension?.extensionId, extension?.extensionSlotModuleName, ref.current]);
 
   useEffect(() => {
     if (parcel.current && parcel.current.update && parcel.current.getStatus() !== 'UNMOUNTING') {
