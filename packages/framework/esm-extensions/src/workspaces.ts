@@ -82,15 +82,33 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
  * @internal
  */
 export function registerWorkspaceGroup(workspaceGroup: WorkspaceGroupRegistration) {
-  workspaceGroupStore.setState((state) => ({
-    workspaceGroups: {
-      ...state.workspaceGroups,
-      [workspaceGroup.name]: {
-        name: workspaceGroup.name,
-        members: workspaceGroup.members,
-      },
-    },
-  }));
+  workspaceGroupStore.setState((state) => {
+    const group = state.workspaceGroups[workspaceGroup.name];
+    if (group) {
+      // This condition occurs when a workspace with a `groups` property is registered before
+      // the corresponding workspace group. In such cases, the workspace group is registered
+      // by the `attachWorkspaceToGroup` function.
+      return {
+        workspaceGroups: {
+          ...state.workspaceGroups,
+          [workspaceGroup.name]: {
+            ...group,
+            members: Array.from(new Set([...group.members, ...workspaceGroup.members])),
+          },
+        },
+      };
+    } else {
+      return {
+        workspaceGroups: {
+          ...state.workspaceGroups,
+          [workspaceGroup.name]: {
+            name: workspaceGroup.name,
+            members: workspaceGroup.members,
+          },
+        },
+      };
+    }
+  });
 }
 
 const workspaceExtensionWarningsIssued = new Set();
@@ -154,38 +172,4 @@ function getTitleFromExtension(ext: ExtensionRegistration) {
     return translateFrom(ext.moduleName, title.key, title.default);
   }
   return ext.name;
-}
-
-function createNewWorkspaceGroupInfo(groupName: string): WorkspaceGroupRegistration {
-  return {
-    name: groupName,
-    members: [],
-  };
-}
-
-export function attachWorkspaceToGroup(workspaceName: string, groupName: string) {
-  workspaceGroupStore.setState((state) => {
-    const group = state.workspaceGroups[groupName];
-    if (group) {
-      return {
-        workspaceGroups: {
-          ...state.workspaceGroups,
-          [groupName]: {
-            ...group,
-            members: [...group.members, workspaceName],
-          },
-        },
-      };
-    } else {
-      return {
-        workspaceGroups: {
-          ...state.workspaceGroups,
-          [groupName]: {
-            ...createNewWorkspaceGroupInfo(groupName),
-            members: [workspaceName],
-          },
-        },
-      };
-    }
-  });
 }

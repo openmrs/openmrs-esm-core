@@ -1,6 +1,5 @@
 import {
   attach,
-  attachWorkspaceToGroup,
   type ExtensionRegistration,
   registerExtension,
   registerModal,
@@ -202,7 +201,10 @@ supported, so the workspace will not be loaded.`,
   }
 
   for (const group of workspace.groups || []) {
-    attachWorkspaceToGroup(name, group);
+    registerWorkspaceGroup({
+      name: group,
+      members: [name],
+    });
   }
 }
 
