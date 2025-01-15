@@ -85,9 +85,9 @@ export function registerWorkspaceGroup(workspaceGroup: WorkspaceGroupRegistratio
   workspaceGroupStore.setState((state) => {
     const group = state.workspaceGroups[workspaceGroup.name];
     if (group) {
-      // This condition arises when a workspace with `groups` property registers
-      // before the workspace group is registered, hence the workspace group is
-      // registered by the `attachWorkspaceToGroup` function.
+      // This condition occurs when a workspace with a `groups` property is registered before
+      // the corresponding workspace group. In such cases, the workspace group is registered
+      // by the `attachWorkspaceToGroup` function.
       return {
         workspaceGroups: {
           ...state.workspaceGroups,
@@ -182,28 +182,8 @@ function createNewWorkspaceGroupInfo(groupName: string): WorkspaceGroupRegistrat
 }
 
 export function attachWorkspaceToGroup(workspaceName: string, groupName: string) {
-  workspaceGroupStore.setState((state) => {
-    const group = state.workspaceGroups[groupName];
-    if (group) {
-      return {
-        workspaceGroups: {
-          ...state.workspaceGroups,
-          [groupName]: {
-            ...group,
-            members: [...group.members, workspaceName],
-          },
-        },
-      };
-    } else {
-      return {
-        workspaceGroups: {
-          ...state.workspaceGroups,
-          [groupName]: {
-            ...createNewWorkspaceGroupInfo(groupName),
-            members: [workspaceName],
-          },
-        },
-      };
-    }
+  registerWorkspaceGroup({
+    name: groupName,
+    members: [workspaceName],
   });
 }
