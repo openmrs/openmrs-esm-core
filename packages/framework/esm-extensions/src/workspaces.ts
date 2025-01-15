@@ -173,17 +173,3 @@ function getTitleFromExtension(ext: ExtensionRegistration) {
   }
   return ext.name;
 }
-
-function createNewWorkspaceGroupInfo(groupName: string): WorkspaceGroupRegistration {
-  return {
-    name: groupName,
-    members: [],
-  };
-}
-
-export function attachWorkspaceToGroup(workspaceName: string, groupName: string) {
-  registerWorkspaceGroup({
-    name: groupName,
-    members: [workspaceName],
-  });
-}
