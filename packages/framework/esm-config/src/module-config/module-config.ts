@@ -15,7 +15,6 @@ import {
   temporaryConfigStore,
   getExtensionSlotsConfigStore,
 } from './state';
-import type {} from '@openmrs/esm-globals';
 import { type TemporaryConfigStore } from '..';
 
 /**

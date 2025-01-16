@@ -232,10 +232,10 @@ To fix this, ensure that you define the "name" field inside the workspace defini
 }
 
 /**
- * This function registers a workspace definition with the framework so that it can be launched.
+ * This function registers a feature flag definition with the framework.
  *
- * @param appName The name of the app defining this workspace
- * @param featureFlag An object that describes the workspace, derived from `routes.json`
+ * @param appName The name of the app defining this feature flag
+ * @param featureFlag An object that describes the feature flag, derived from `routes.json`
  */
 export function tryRegisterFeatureFlag(appName: string, featureFlag: FeatureFlagDefinition) {
   const name = featureFlag.flagName;
