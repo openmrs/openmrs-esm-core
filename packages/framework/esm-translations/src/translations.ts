@@ -72,5 +72,6 @@ export const coreTranslations = {
   sex: 'Sex',
   showLess: 'Show less',
   showMore: 'Show more',
+  toggleDevTools: 'Toggle dev tools',
   unknown: 'Unknown',
 };

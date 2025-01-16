@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, Form, ModalHeader, ModalBody, ModalFooter, Stack, TextInput } from '@carbon/react';
 import { addRoutesOverride, removeRoutesOverride } from '@openmrs/esm-framework/src/internal';
-import { Button, Form, ModalHeader, ModalBody, ModalFooter, TextInput } from '@carbon/react';
 import type { Module } from './types';
-import styles from './import-map.scss';
 
 type ImportMapModalProps = ({ module: Module; isNew: false } | { module: never; isNew: true }) & { close: () => void };
 
@@ -30,6 +29,7 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close })
   const [moduleName, setModuleName] = useState<string | undefined>(module?.moduleName);
   const moduleNameRef = useRef<HTMLInputElement>();
   const inputRef = useRef<HTMLInputElement>();
+
   const handleSubmit = useCallback(
     async (evt: Event) => {
       evt.preventDefault();
@@ -94,22 +94,28 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close })
       />
       <Form onSubmit={handleSubmit}>
         <ModalBody>
-          {isNew && (
-            <TextInput
-              id="module-name"
-              ref={moduleNameRef}
-              onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-                evt.preventDefault();
-                setModuleName(evt.target.value);
-              }}
-              labelText={t('moduleName', 'Module Name')}
-            />
-          )}
-          {!isNew && (
-            <TextInput id="default-url" labelText={t('defaultUrl', 'Default URL')} value={module.defaultUrl} readOnly />
-          )}
-          <div className={styles.spacer} />
-          <TextInput id="override-url" ref={inputRef} labelText={t('overrideUrl', 'Override URL')} />
+          <Stack gap={5}>
+            {isNew && (
+              <TextInput
+                id="module-name"
+                ref={moduleNameRef}
+                onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+                  evt.preventDefault();
+                  setModuleName(evt.target.value);
+                }}
+                labelText={t('moduleName', 'Module Name')}
+              />
+            )}
+            {!isNew && (
+              <TextInput
+                id="default-url"
+                labelText={t('defaultUrl', 'Default URL')}
+                value={module.defaultUrl}
+                readOnly
+              />
+            )}
+            <TextInput id="override-url" ref={inputRef} labelText={t('overrideUrl', 'Override URL')} />
+          </Stack>
         </ModalBody>
         <ModalFooter>
           <Button kind="secondary" onClick={close}>

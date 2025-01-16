@@ -36,17 +36,3 @@
   display: flex;
   z-index: 1000;
 }
-
-.closeButton {
-  align-items: center;
-}
-
-.closeButton:focus {
-  /*
-    there's some 3rd party css that turns these off using !important, so the only way to override them is to also use important.
-    this is why you don't use !important -- it makes it hard for other people to override it when they need to :(
-  */
-  outline: solid !important;
-  outline-width: thin !important;
-  outline-color: #e5e5e6 !important;
-}
