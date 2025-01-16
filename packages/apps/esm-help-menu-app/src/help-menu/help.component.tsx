@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { IconButton } from '@carbon/react';
 import { Help } from '@carbon/react/icons';
-import { useSession } from '@openmrs/esm-framework'
+import { useSession } from '@openmrs/esm-framework';
 import HelpMenuPopup from './help-popup.component';
 import styles from './help.styles.scss';
 
 export default function HelpMenu() {
+  const { t } = useTranslation();
   const { user } = useSession();
   const [helpMenuOpen, setHelpMenuOpen] = useState(false);
   const helpMenuButtonRef = useRef(null);
@@ -38,15 +40,19 @@ export default function HelpMenu() {
   return (
     <>
       {user && (
-        <button
+        <IconButton
+          label={t('help', 'Help')}
+          align="left"
+          size="md"
           aria-expanded={helpMenuOpen}
           aria-controls="help-menu-popup"
           onClick={toggleHelpMenu}
           ref={helpMenuButtonRef}
-          className={classNames(styles.helpMenuButton)}
+          className={styles.helpMenuButton}
+          wrapperClasses={styles.popover}
         >
           <Help size={24} />
-        </button>
+        </IconButton>
       )}
       {helpMenuOpen && (
         <div id="help-menu-popup" ref={popupRef} className={styles.helpMenuPopup}>
