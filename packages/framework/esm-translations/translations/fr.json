@@ -1,5 +1,5 @@
 {
-  "actions": "Actes",
+  "actions": "Actions",
   "address": "Adresse",
   "address1": "Adresse ligne 1",
   "address2": "Adresse ligne 2",
@@ -44,7 +44,7 @@
   "printing": "Impression en cours",
   "relationships": "Relations",
   "resetOverrides": "Réinitialiser les modifications",
-  "save": "Sauvegarder",
+  "save": "Enregistrer",
   "scriptLoadingError": "Échec du chargement du script personnalisé à partir de {{url}}. Veuillez vérifier que le script d'origine est disponible à l'URL spécifiée. Cliquez sur le bouton ci-dessous pour réinitialiser toutes les substitutions provenant de la carte d'importation.",
   "scriptLoadingFailed": "Erreur : Le chargement du script a échoué",
   "seeMoreLists": "Voir {{count}} plus de listes",
