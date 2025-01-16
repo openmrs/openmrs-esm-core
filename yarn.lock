@@ -2898,7 +2898,7 @@ __metadata:
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
     semver: "npm:^7.3.4"
-    single-spa: "npm:^6.0.1"
+    single-spa: "npm:^6.0.3"
     swc-loader: "npm:^0.2.6"
     swr: "npm:^2.2.5"
     webpack: "npm:^5.88.0"
@@ -2920,7 +2920,7 @@ __metadata:
     "@openmrs/esm-utils": "workspace:*"
     "@types/ramda": "npm:^0.26.44"
     ramda: "npm:^0.26.1"
-    single-spa: "npm:^6.0.1"
+    single-spa: "npm:^6.0.3"
   peerDependencies:
     "@openmrs/esm-globals": 6.x
     "@openmrs/esm-state": 6.x
@@ -3065,7 +3065,7 @@ __metadata:
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     lodash-es: "npm:^4.17.21"
-    single-spa: "npm:^6.0.1"
+    single-spa: "npm:^6.0.3"
   peerDependencies:
     "@openmrs/esm-api": 6.x
     "@openmrs/esm-config": 6.x
@@ -3084,7 +3084,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     ramda: "npm:^0.26.1"
-    single-spa: "npm:^6.0.1"
+    single-spa: "npm:^6.0.3"
   peerDependencies:
     "@openmrs/esm-globals": 6.x
     "@openmrs/esm-state": 6.x
@@ -3136,7 +3136,7 @@ __metadata:
   resolution: "@openmrs/esm-globals@workspace:packages/framework/esm-globals"
   dependencies:
     "@types/fhir": "npm:0.0.31"
-    single-spa: "npm:^6.0.1"
+    single-spa: "npm:^6.0.3"
   peerDependencies:
     single-spa: 6.x
   languageName: unknown
@@ -3331,7 +3331,7 @@ __metadata:
     react-dom: "npm:^18.1.0"
     react-i18next: "npm:^11.18.6"
     rxjs: "npm:^6.5.3"
-    single-spa-react: "npm:^6.0.0"
+    single-spa-react: "npm:^6.0.2"
     swr: "npm:^2.2.5"
     webpack: "npm:^5.88.0"
   peerDependencies:
@@ -3365,7 +3365,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     jest-fetch-mock: "npm:^3.0.3"
-    single-spa: "npm:^6.0.1"
+    single-spa: "npm:^6.0.3"
   peerDependencies:
     "@openmrs/esm-config": 6.x
     "@openmrs/esm-dynamic-loading": 6.x
@@ -17671,9 +17671,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-react@npm:^6.0.0":
-  version: 6.0.1
-  resolution: "single-spa-react@npm:6.0.1"
+"single-spa-react@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "single-spa-react@npm:6.0.2"
   dependencies:
     browserslist-config-single-spa: "npm:^1.0.1"
   peerDependencies:
@@ -17685,14 +17685,14 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10/5c75581a0925f031248c184f09dd90200e7518a78642f050ddcc52ff1c59bfb84752a15dd4642511b5388061bf2c594872faeac3469e1f80e2d2c48f013ded8f
+  checksum: 10/4d2eedcf3b3e46963fbe6a7f1aae569ff0f5f69ea4baf0d7e38b591c51bd9c2814f62060da94490280e40a3e73be959d6dc5d5ca35fde3c56679fc567a62a568
   languageName: node
   linkType: hard
 
-"single-spa@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "single-spa@npm:6.0.1"
-  checksum: 10/6c192226c0c6d94dbb0d2576c6552ebb9ec01ecad69d069cac47ddd5aa3c2c90e1370765e2d0e36203120a2c48bb7e967e2d6d8a6f9ede4315fd4b9e11cd9e85
+"single-spa@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "single-spa@npm:6.0.3"
+  checksum: 10/bdb00c205cf849e0392d5b734869d7fe57d99a985c05f190e281f038d1cb3c052e0e06f9216893b74ca60cce3bd5ad03b02b2144981143b4008c171b3e5e34ca
   languageName: node
   linkType: hard
 
