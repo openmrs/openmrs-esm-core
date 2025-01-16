@@ -1,6 +1,6 @@
 /** @module @category Extension */
 import { renderExtension } from '@openmrs/esm-extensions';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { type Parcel } from 'single-spa';
 import { ComponentContext } from '.';
 
@@ -18,71 +18,57 @@ export type ExtensionProps = React.HTMLAttributes<HTMLDivElement> & {
  * and *must* only be used once within that `<ExtensionSlot>`.
  */
 export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divProps }) => {
-  const [domElement, setDomElement] = useState<HTMLDivElement>();
   const { extension } = useContext(ComponentContext);
   const parcel = useRef<Parcel | null>(null);
   const updatePromise = useRef<Promise<void>>(Promise.resolve());
-  const rendering = useRef<boolean>(false);
 
-  const ref = useCallback(
-    (node: HTMLDivElement) => {
-      setDomElement(node);
-    },
-    [setDomElement],
-  );
-
-  useEffect(() => {
+  const ref = useCallback((node: HTMLDivElement) => {
     if (
-      domElement != null &&
       extension?.extensionSlotName &&
       extension.extensionSlotModuleName &&
       extension.extensionSlotModuleName &&
-      !parcel.current &&
-      !rendering.current
+      !parcel.current
     ) {
-      rendering.current = true;
       renderExtension(
-        domElement,
+        node,
         extension.extensionSlotName,
         extension.extensionSlotModuleName,
         extension.extensionId,
         undefined,
         state,
-      ).then((newParcel) => {
+      ).then((newParcel: Parcel) => {
         parcel.current = newParcel;
-        rendering.current = false;
       });
+    }
+  }, []);
 
-      return () => {
-        if (parcel && parcel.current) {
-          const status = parcel.current.getStatus();
-          switch (status) {
-            case 'MOUNTING':
-              parcel.current.mountPromise.then(() => {
+  useEffect(() => {
+    return () => {
+      if (parcel && parcel.current) {
+        const status = parcel.current.getStatus();
+        switch (status) {
+          case 'MOUNTING':
+            parcel.current.mountPromise.then(() => {
+              if (parcel.current?.getStatus() === 'MOUNTED') {
+                parcel.current.unmount();
+              }
+            });
+            break;
+          case 'MOUNTED':
+            parcel.current.unmount();
+            break;
+          case 'UPDATING':
+            if (updatePromise.current) {
+              updatePromise.current.then(() => {
                 if (parcel.current?.getStatus() === 'MOUNTED') {
                   parcel.current.unmount();
                 }
               });
-              break;
-            case 'MOUNTED':
-              parcel.current.unmount();
-              break;
-            case 'UPDATING':
-              if (updatePromise.current) {
-                updatePromise.current.then(() => {
-                  if (parcel.current?.getStatus() === 'MOUNTED') {
-                    parcel.current.unmount();
-                  }
-                });
-              }
-          }
+            }
         }
-      };
-    }
-
-    // we intentionally do not re-run this hook if state gets updated
-    // state updates are handled in the next useEffect hook
-  }, [extension?.extensionSlotName, extension?.extensionId, extension?.extensionSlotModuleName, domElement]);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (parcel.current && parcel.current.update && parcel.current.getStatus() !== 'UNMOUNTING') {
@@ -108,8 +94,6 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divPro
   // positioning in order to allow the UI Editor to absolutely position
   // elements within it.
   return extension ? (
-    <div ref={ref} data-extension-id={extension?.extensionId} style={{ position: 'relative' }} {...divProps}>
-      {children}
-    </div>
+    <div ref={ref} data-extension-id={extension?.extensionId} style={{ position: 'relative' }} {...divProps} />
   ) : null;
 };
