@@ -84,6 +84,13 @@
 .identifier {
   display: flex;
   align-items: center;
+  &:not(:last-of-type) {
+    &::after {
+      content: '·';
+      margin: layout.$spacing-01;
+      margin-left: layout.$spacing-03;
+    }
+  }
 }
 
 .primaryIdentifier,

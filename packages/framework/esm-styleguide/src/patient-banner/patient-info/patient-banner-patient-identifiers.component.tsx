@@ -52,17 +52,14 @@ export function PatientBannerPatientIdentifiers({
   return (
     <>
       {filteredIdentifiers?.length
-        ? filteredIdentifiers.map(({ value, type }, index) => (
-            <React.Fragment key={value}>
-              <span className={styles.identifier}>
-                {type?.coding?.[0]?.code === primaryIdentifierCode ? (
-                  <PrimaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
-                ) : (
-                  <SecondaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
-                )}
-              </span>
-              {index < filteredIdentifiers.length - 1 && <span className={styles.separator}>&middot;</span>}
-            </React.Fragment>
+        ? filteredIdentifiers.map(({ value, type }) => (
+            <span className={styles.identifier} key={value}>
+              {type?.coding?.[0]?.code === primaryIdentifierCode ? (
+                <PrimaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
+              ) : (
+                <SecondaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
+              )}
+            </span>
           ))
         : ''}
     </>
