@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-feature-flags",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "license": "MPL-2.0",
   "description": "A feature flag system for the OpenMRS Single-Spa framework.",
   "browser": "dist/openmrs-esm-feature-flags.js",

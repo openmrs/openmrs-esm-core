@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-translations",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "license": "MPL-2.0",
   "description": "O3 Framework module for translation support",
   "browser": "dist/openmrs-esm-translations.js",
