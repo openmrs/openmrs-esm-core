@@ -53,6 +53,7 @@
   "showMore": "Afficher plus",
   "state": "État",
   "stateProvince": "État",
+  "toggleDevTools": "Toggle dev tools",
   "unknown": "Inconnu",
   "unsavedChangesInWorkspace": "Des modifications n'ont pas été enregistrées dans {{workspaceName}}. Veuillez les enregistrer avant d'ouvrir un autre espace de travail.",
   "unsavedChangesTitleText": "Modifications non enregistrés",

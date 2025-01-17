@@ -53,6 +53,7 @@
   "showMore": "Show more",
   "state": "Tiểu bang",
   "stateProvince": "State",
+  "toggleDevTools": "Toggle dev tools",
   "unknown": "Unknown",
   "unsavedChangesInWorkspace": "Có những thay đổi chưa được lưu trong {{workspaceName}}. Vui lòng lưu chúng trước khi mở không gian làm việc khác.",
   "unsavedChangesTitleText": "Những thay đổi chưa lưu",

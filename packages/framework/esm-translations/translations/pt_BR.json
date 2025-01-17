@@ -53,6 +53,7 @@
   "showMore": "Mostrar mais",
   "state": "Estado",
   "stateProvince": "Estado",
+  "toggleDevTools": "Toggle dev tools",
   "unknown": "Desconhecido",
   "unsavedChangesInWorkspace": "Há alterações não salvas em {{workspaceName}}. Salve-as antes de abrir outro espaço de trabalho.",
   "unsavedChangesTitleText": "Alterações não salvas",
