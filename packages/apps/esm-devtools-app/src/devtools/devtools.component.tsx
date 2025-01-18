@@ -5,7 +5,7 @@ import { type AppProps } from 'single-spa';
 import { getCoreTranslation } from '@openmrs/esm-framework';
 import { importMapOverridden } from './import-map.component';
 import DevToolsPopup from './devtools-popup.component';
-import styles from './devtools.styles.css';
+import styles from './devtools.styles.scss';
 
 const showDevTools = () => window.spaEnv === 'development' || Boolean(localStorage.getItem('openmrs:devtools'));
 
@@ -23,13 +23,18 @@ function DevTools(props: AppProps) {
   return (
     <>
       <IconButton
+        align="left"
         className={classNames(styles.devtoolsTriggerButton, {
           [styles.overridden]: isOverridden,
         })}
+        direction="left"
         kind="ghost"
         label={getCoreTranslation('toggleDevTools')}
         onClick={toggleDevTools}
         size="md"
+        tooltipAlignment="left"
+        tooltipPosition="top"
+        wrapperClasses={styles.popover}
       >
         {'{\u00B7\u00B7\u00B7}'}
       </IconButton>

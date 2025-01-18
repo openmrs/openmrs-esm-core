@@ -1,3 +1,4 @@
+@use '@carbon/layout';
 @import '~@openmrs/esm-styleguide/src/vars';
 
 .popup {
@@ -19,20 +20,20 @@
 
 .tabList {
   position: fixed;
-  height: 4rem;
+  height: layout.$spacing-10;
   width: 100%;
   z-index: 1000;
   background-color: black;
 }
 
 .tabPanels {
-  padding: 1.5rem;
+  padding: layout.$spacing-06;
 }
 
 .farRight {
   position: absolute;
-  right: 24px;
-  top: 16px;
+  right: layout.$spacing-04;
+  top: layout.$spacing-04;
   display: flex;
   z-index: 1000;
 }

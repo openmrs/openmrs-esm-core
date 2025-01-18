@@ -1,0 +1,28 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+
+.devtoolsTriggerButton {
+  z-index: 7900;
+  background: colors.$white;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  border-radius: layout.$spacing-02;
+  color: colors.$gray-100;
+
+  &:hover {
+    color: colors.$blue-60 !important;
+  }
+}
+
+.overridden {
+  background-color: colors.$red-30;
+  color: colors.$white;
+}
+
+.popover {
+  z-index: 7900;
+  bottom: layout.$spacing-11;
+  right: layout.$spacing-02;
+  position: fixed;
+}
