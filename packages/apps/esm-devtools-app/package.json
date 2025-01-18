@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-devtools-app",
-  "version": "6.0.3",
+  "version": "6.0.4",
   "license": "MPL-2.0",
   "description": "Dev tools for frontend devs using OpenMRS",
   "browser": "dist/openmrs-esm-devtools-app.js",
