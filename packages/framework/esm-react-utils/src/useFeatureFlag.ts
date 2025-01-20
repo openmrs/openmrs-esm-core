@@ -20,12 +20,11 @@ export function useFeatureFlag(flagName: string) {
   const { flags } = useStore(featureFlagsStore);
 
   useEffect(() => {
-    if (!flags[flagName]) {
-      console.error(
-        `useFeatureFlag: Attempted to get value of non-existent flag "${flagName}". Did you forget to call registerFeatureFlag?`,
-      );
+    if (flags[flagName] === undefined) {
+      console.warn(`useFeatureFlag: Flag "${flagName}" does not exist. Returning false.`);
     }
   }, [flags[flagName]]);
 
-  return flags[flagName]?.enabled;
+  // Return false if flag does not exist or if it's off
+  return flags[flagName]?.enabled ?? false;
 }
