@@ -116,20 +116,37 @@
   padding-left: spacing.$spacing-04;
 
   .inputSegment {
-    caret-color: var(--cds-text-primary);
+    caret-color: transparent;
 
     &:focus {
       outline: unset;
+      color: rgb(241, 231, 231);
+      font-size: larger;
+      background-color: rgb(98, 98, 231);
+    }
+
+    &::placeholder {
+      color: rgb(233, 224, 224);
+      font-size: larger;
+      background-color: transparent;
+    }
+
+    &:focus::placeholder {
+      background-color: rgb(98, 98, 231);
+      color: rgb(247, 238, 238);
+      font-size: larger;
+
+      // Set the background color of the placeholder text area to blue
     }
 
     &[data-placeholder] {
-      color: theme.$text-disabled;
+      color: theme.$text-disabled; // Placeholder text color when the placeholder is present
     }
   }
 
   /*
    * These next two style rules try to render the read-only parts of the date in the disabled color
-   * unless they ware surrounded by two filled-in entries.
+   * unless they are surrounded by two filled-in entries.
    */
   [data-readonly]:has(+ [data-placeholder]) {
     color: theme.$text-disabled;
