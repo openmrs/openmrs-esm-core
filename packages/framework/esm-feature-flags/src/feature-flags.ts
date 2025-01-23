@@ -24,6 +24,7 @@ featureFlagsStore.subscribe((state) => {
       JSON.stringify({ label: flag.label, description: flag.description }),
     );
   }
+  cleanupObsoleteFeatureFlags(state.flags);
 });
 
 function getFeatureFlagsFromLocalStorage() {
@@ -62,6 +63,22 @@ export function registerFeatureFlag(flagName: string, label: string, description
       },
     },
   }));
+  cleanupObsoleteFeatureFlags();
+}
+
+/**
+ * This function removes feature flags from local storage that no longer exist in the current state.
+ */
+function cleanupObsoleteFeatureFlags(currentFlags?: FeatureFlagsStore['flags']) {
+  const flags = currentFlags || featureFlagsStore.getState().flags;
+  const storedFlags = Object.keys(localStorage).filter((key) => key.startsWith('openmrs:feature-flag:'));
+  storedFlags.forEach((key) => {
+    const flagName = key.replace('openmrs:feature-flag:', '');
+    if (!flags[flagName]) {
+      localStorage.removeItem(key);
+      localStorage.removeItem(`openmrs:feature-flag-meta:${flagName}`);
+    }
+  });
 }
 
 /** Use this function to access the current value of the feature flag
