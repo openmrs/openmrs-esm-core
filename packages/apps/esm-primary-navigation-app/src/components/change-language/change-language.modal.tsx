@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { capitalize } from 'lodash-es';
+import capitalize from 'lodash-es/capitalize';
 import {
   Button,
   InlineLoading,

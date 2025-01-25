@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, SwitcherItem } from '@carbon/react';
-import { capitalize } from 'lodash-es';
+import capitalize from 'lodash-es/capitalize';
 import { TranslateIcon, showModal, useSession } from '@openmrs/esm-framework';
 import styles from './change-language-link.scss';
 
