@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import capitalize from 'lodash-es/capitalize';
 import {
   Button,
   InlineLoading,
@@ -10,6 +9,7 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from '@carbon/react';
+import capitalize from 'lodash-es/capitalize';
 import { useConnectivity, useSession } from '@openmrs/esm-framework';
 import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
 import styles from './change-language.scss';
