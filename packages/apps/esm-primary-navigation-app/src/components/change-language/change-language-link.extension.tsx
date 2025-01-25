@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, SwitcherItem } from '@carbon/react';
+import { capitalize } from 'lodash-es';
 import { TranslateIcon, showModal, useSession } from '@openmrs/esm-framework';
 import styles from './change-language-link.scss';
-import { capitalize } from 'lodash-es';
 
 /** The user menu item that shows the current language and has a button to change the language */
 function ChangeLanguageLink() {
