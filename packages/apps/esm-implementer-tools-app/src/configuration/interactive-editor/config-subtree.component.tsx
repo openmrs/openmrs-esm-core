@@ -1,8 +1,8 @@
 import React from 'react';
-import EditableValue from './editable-value.component';
+import { isEqual } from 'lodash-es';
 import { implementerToolsStore } from '../../store';
-import isEqual from 'lodash-es/isEqual';
 import { Subtree } from './layout/subtree.component';
+import EditableValue from './editable-value.component';
 
 export interface ConfigSubtreeProps {
   config: Record<string, any>;

@@ -1,8 +1,8 @@
-import { ExtensionSlot, useExtensionSlotMeta } from '@openmrs/esm-framework';
 import React from 'react';
+import { trimEnd } from 'lodash-es';
+import { useLocation, useParams } from 'react-router-dom';
+import { ExtensionSlot, useExtensionSlotMeta } from '@openmrs/esm-framework';
 import type { OfflineToolsPageConfig } from '../types';
-import trimEnd from 'lodash-es/trimEnd';
-import { useLocation, useMatch, useParams } from 'react-router-dom';
 
 export interface OfflineToolsPageParams {
   page: string;

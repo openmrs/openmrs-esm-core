@@ -5,7 +5,6 @@ module.exports = {
   },
   transformIgnorePatterns: [],
   moduleNameMapper: {
-    'lodash-es/(.*)': 'lodash/$1',
     'lodash-es': 'lodash',
     '@openmrs/esm-framework': '@openmrs/esm-framework/mock.tsx',
     '\\.(s?css)$': 'identity-obj-proxy',
