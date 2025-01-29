@@ -9,7 +9,7 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from '@carbon/react';
-import capitalize from 'lodash-es/capitalize';
+import { capitalize } from 'lodash-es';
 import { useConnectivity, useSession } from '@openmrs/esm-framework';
 import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
 import styles from './change-language.scss';
