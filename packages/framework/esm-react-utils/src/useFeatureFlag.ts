@@ -19,12 +19,6 @@ import { featureFlagsStore } from '@openmrs/esm-feature-flags';
 export function useFeatureFlag(flagName: string) {
   const { flags } = useStore(featureFlagsStore);
 
-  useEffect(() => {
-    if (flags[flagName] === undefined) {
-      console.warn(`useFeatureFlag: Flag "${flagName}" does not exist. Returning false.`);
-    }
-  }, [flags[flagName]]);
-
   // Return false if flag does not exist or if it's off
   return flags[flagName]?.enabled ?? false;
 }
