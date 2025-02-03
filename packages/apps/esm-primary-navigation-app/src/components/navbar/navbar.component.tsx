@@ -13,6 +13,7 @@ import {
   CloseIcon,
   UserAvatarIcon,
   SwitcherIcon,
+  useLeftNavStore,
 } from '@openmrs/esm-framework';
 import { isDesktop } from '../../utils';
 import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
@@ -28,7 +29,8 @@ const HeaderItems: React.FC = () => {
   const config = useConfig();
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const layout = useLayoutType();
-  const navMenuItems = useAssignedExtensions('patient-chart-dashboard-slot').map((e) => e.id);
+  const { slotName } = useLeftNavStore();
+  const navMenuItems = useAssignedExtensions(slotName);
   const appMenuItems = useAssignedExtensions('app-menu-slot');
   const userMenuItems = useAssignedExtensions('user-panel-slot');
   const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
@@ -115,7 +117,7 @@ const HeaderItems: React.FC = () => {
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
-        {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
+        <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />
         {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel('appMenu')} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
         {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel('userMenu')} />}

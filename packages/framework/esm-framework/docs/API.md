@@ -230,6 +230,7 @@
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useFhirPagination](API.md#usefhirpagination)
 - [useLayoutType](API.md#uselayouttype)
+- [useLeftNavStore](API.md#useleftnavstore)
 - [useOnClickOutside](API.md#useonclickoutside)
 - [useOpenmrsFetchAll](API.md#useopenmrsfetchall)
 - [useOpenmrsInfinite](API.md#useopenmrsinfinite)
@@ -2363,9 +2364,15 @@ ___
 
 • `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
 
+This component renders the left nav in desktop mode. It's also used to render the same
+nav when the hamburger menu is clicked on in tablet mode. See side-menu-panel.component.tsx
+
+Use of this component by anything other than <SideMenuPanel> (where isChildOfHeader == false)
+is deprecated; it simply renders nothing.
+
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L40)
 
 ___
 
@@ -7467,6 +7474,20 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
+
+___
+
+### useLeftNavStore
+
+▸ **useLeftNavStore**(): `LeftNavStore`
+
+#### Returns
+
+`LeftNavStore`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L28)
 
 ___
 
