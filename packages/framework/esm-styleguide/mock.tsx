@@ -38,7 +38,6 @@ export const GroupIcon = () => <span>GroupIcon</span>;
 export const HospitalBedIcon = () => <span>HospitalBedIcon</span>;
 export const Icon = () => <span>Icon</span>;
 export const ImageMedicalIcon = () => <span>ImageMedicalIcon</span>;
-export const ImagingOrderIcon = () => <span>ImagingOrderIcon</span>;
 export const InformationFilledIcon = () => <span>InformationFilledIcon</span>;
 export const InformationIcon = () => <span>InformationIcon</span>;
 export const InformationSquareIcon = () => <span>InformationSquareIcon</span>;

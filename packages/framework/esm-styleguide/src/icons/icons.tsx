@@ -327,12 +327,6 @@ export const ImageMedicalIcon = memo(
   }),
 );
 
-export const ImagingOrderIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function ImagingOrderIcon(props, ref) {
-    return <Icon ref={ref} icon="omrs-pict-imaging-order" iconProps={props} />;
-  }),
-);
-
 /**
  */
 export const InventoryManagementIcon = memo(
@@ -677,6 +671,9 @@ export const UserFollowIcon = memo(
 );
 
 /**
+ * UserXray Icon
+ *
+ * `UserXrayIcon` is also used for imaging orders
  */
 export const UserXrayIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function UserXrayIcon(props, ref) {

@@ -39,7 +39,6 @@ import group from './svgs/group.svg';
 import groupAccess from './svgs/group-access.svg';
 import hospitalBed from './svgs/hospital-bed.svg';
 import imageMedical from './svgs/image-medical.svg';
-import imagingOrder from './svgs/imaging-order.svg';
 import information from './svgs/information.svg';
 import informationFilled from './svgs/information--filled.svg';
 import informationSquare from './svgs/information--square.svg';
@@ -131,7 +130,6 @@ export function setupIcons() {
   addSvg('omrs-icon-group-access', groupAccess);
   addSvg('omrs-icon-hospital-bed', hospitalBed);
   addSvg('omrs-icon-image-medical', imageMedical);
-  addSvg('omrs-pict-imaging-order', imagingOrder);
   addSvg('omrs-icon-information', information);
   addSvg('omrs-icon-information-filled', informationFilled);
   addSvg('omrs-icon-information-square', informationSquare);
@@ -175,6 +173,7 @@ export function setupIcons() {
   addSvg('omrs-icon-tree-view--alt', treeViewAlt);
   addSvg('omrs-icon-user-avatar', userAvatar);
   addSvg('omrs-icon-user-follow', userFollow);
+  // userXray is also used for imaging orders
   addSvg('omrs-icon-user-xray', userXray);
   addSvg('omrs-icon-user', user);
   addSvg('omrs-icon-view-off', viewOff);
