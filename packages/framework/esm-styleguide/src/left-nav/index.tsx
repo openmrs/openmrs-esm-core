@@ -8,15 +8,28 @@ import styles from './left-nav.module.scss';
 interface LeftNavStore {
   slotName: string | null;
   basePath: string;
+  mode: 'normal' | 'collapsed';
 }
 
 const leftNavStore = createGlobalStore<LeftNavStore>('left-nav', {
   slotName: null,
   basePath: window.spaBase,
+  mode: 'normal',
 });
 
-export function setLeftNav({ name, basePath }) {
-  leftNavStore.setState({ slotName: name, basePath });
+interface SetLeftNavParams {
+  name: string;
+  basePath: string;
+
+  /**
+   * In normal mode, the left nav is shown in desktop mode, and collapse into hamburger menu button in tablet mode
+   * In collapsed mode, the left nav is always collapsed, regardless of desktop / tablet mode
+   */
+  mode?: 'normal' | 'collapsed';
+}
+
+export function setLeftNav({ name, basePath, mode }: SetLeftNavParams) {
+  leftNavStore.setState({ slotName: name, basePath, mode: mode ?? 'normal' });
 }
 
 export function unsetLeftNav(name) {

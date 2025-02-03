@@ -29,7 +29,7 @@ mockUseConfig.mockReturnValue({
 });
 mockUseAssignedExtensions.mockReturnValue(['mock-extension'] as unknown as AssignedExtension[]);
 mockUseSession.mockReturnValue(mockSession as unknown as Session);
-mockUseLeftNavStore.mockReturnValue({ slotName: '', basePath: '' });
+mockUseLeftNavStore.mockReturnValue({ slotName: '', basePath: '', mode: 'normal' });
 
 jest.mock('./root.resource', () => ({
   getSynchronizedCurrentUser: jest.fn(() => mockUserObservable),

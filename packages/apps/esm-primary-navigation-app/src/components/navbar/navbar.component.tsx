@@ -29,7 +29,7 @@ const HeaderItems: React.FC = () => {
   const config = useConfig();
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const layout = useLayoutType();
-  const { slotName } = useLeftNavStore();
+  const { slotName, mode } = useLeftNavStore();
   const navMenuItems = useAssignedExtensions(slotName);
   const appMenuItems = useAssignedExtensions('app-menu-slot');
   const userMenuItems = useAssignedExtensions('user-panel-slot');
@@ -46,7 +46,10 @@ const HeaderItems: React.FC = () => {
     [],
   );
 
-  const showHamburger = useMemo(() => !isDesktop(layout) && navMenuItems.length > 0, [navMenuItems.length, layout]);
+  const showHamburger = useMemo(
+    () => (!isDesktop(layout) || mode == 'collapsed') && navMenuItems.length > 0,
+    [navMenuItems.length, layout, mode],
+  );
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
   const showUserMenu = useMemo(() => userMenuItems.length > 0, [userMenuItems.length]);
   return (
