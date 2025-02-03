@@ -9,6 +9,7 @@
   :global(.cds--side-nav__link) {
     color: $text-02;
     @include type.type-style('heading-compact-01');
+    padding: 0 1rem;
 
     &:focus,
     &:hover {
@@ -21,7 +22,6 @@
       border-left: 0.25rem solid var(--brand-01);
       background-color: $ui-03;
       outline: none;
-      padding: 0 0.75rem;
     }
   }
 }
