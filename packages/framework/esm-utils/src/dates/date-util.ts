@@ -2,7 +2,6 @@
  * @module
  * @category Date and Time
  */
-import type { i18n } from 'i18next';
 import {
   type CalendarDateTime,
   type ZonedDateTime,
@@ -10,19 +9,18 @@ import {
   toCalendar,
   type CalendarDate,
 } from '@internationalized/date';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import isToday from 'dayjs/plugin/isToday';
 import { getLocale } from '@openmrs/esm-utils';
+import { attempt } from 'any-date-parser';
+import dayjs from 'dayjs';
+import isToday from 'dayjs/plugin/isToday';
+import objectSupport from 'dayjs/plugin/objectSupport';
+import utc from 'dayjs/plugin/utc';
+import type { i18n } from 'i18next';
+import { omit } from 'lodash-es';
 
-dayjs.extend(utc);
 dayjs.extend(isToday);
-
-declare global {
-  interface Window {
-    i18next: i18n;
-  }
-}
+dayjs.extend(utc);
+dayjs.extend(objectSupport);
 
 export type DateInput = string | number | Date;
 
@@ -98,53 +96,6 @@ export function parseDate(dateString: string) {
   return dayjs(dateString).toDate();
 }
 
-export type FormatDateMode = 'standard' | 'wide';
-
-export type FormatDateOptions = {
-  /**
-   * The calendar to use when formatting this date.
-   */
-  calendar?: string;
-  /**
-   * The locale to use when formatting this date
-   */
-  locale?: string;
-  /**
-   * - `standard`: "03 Feb 2022"
-   * - `wide`:     "03 — Feb — 2022"
-   */
-  mode: FormatDateMode;
-  /**
-   * Whether the time should be included in the output always (`true`),
-   * never (`false`), or only when the input date is today (`for today`).
-   */
-  time: true | false | 'for today';
-  /** Whether to include the day number */
-  day: boolean;
-  /** Whether to include the month number */
-  month: boolean;
-  /** Whether to include the year */
-  year: boolean;
-  /** The unicode numbering system to use */
-  numberingSystem?: string;
-  /**
-   * Disables the special handling of dates that are today. If false
-   * (the default), then dates that are today will be formatted as "Today"
-   * in the locale language. If true, then dates that are today will be
-   * formatted the same as all other dates.
-   */
-  noToday: boolean;
-};
-
-const defaultOptions: FormatDateOptions = {
-  mode: 'standard',
-  time: 'for today',
-  day: true,
-  month: true,
-  year: true,
-  noToday: false,
-};
-
 /**
  * Internal cache for per-locale calendars
  */
@@ -212,6 +163,114 @@ export function getDefaultCalendar(locale: Intl.Locale | string | undefined) {
   const locale_ = locale ?? getLocale();
 
   return registeredLocaleCalendars.getCalendar(locale_ instanceof Intl.Locale ? locale_ : new Intl.Locale(locale_));
+}
+
+export type FormatDateMode = 'standard' | 'wide';
+
+export type FormatDateOptions = {
+  /**
+   * The calendar to use when formatting this date.
+   */
+  calendar?: string;
+  /**
+   * The locale to use when formatting this date
+   */
+  locale?: string;
+  /**
+   * - `standard`: "03 Feb 2022"
+   * - `wide`:     "03 — Feb — 2022"
+   */
+  mode: FormatDateMode;
+  /**
+   * Whether the time should be included in the output always (`true`),
+   * never (`false`), or only when the input date is today (`for today`).
+   */
+  time: true | false | 'for today';
+  /** Whether to include the day number */
+  day: boolean;
+  /** Whether to include the month number */
+  month: boolean;
+  /** Whether to include the year */
+  year: boolean;
+  /** The unicode numbering system to use */
+  numberingSystem?: string;
+  /**
+   * Disables the special handling of dates that are today. If false
+   * (the default), then dates that are today will be formatted as "Today"
+   * in the locale language. If true, then dates that are today will be
+   * formatted the same as all other dates.
+   */
+  noToday: boolean;
+};
+
+const defaultOptions: FormatDateOptions = {
+  mode: 'standard',
+  time: 'for today',
+  day: true,
+  month: true,
+  year: true,
+  noToday: false,
+};
+
+/**
+ * Formats the string representing a date, including partial representations of dates, eaccording to the current
+ * locale and the given options.
+ *
+ * Default options:
+ *  - mode: "standard",
+ *  - time: "for today",
+ *  - day: true,
+ *  - month: true,
+ *  - year: true
+ *  - noToday: false
+ *
+ * If the date is today then "Today" is produced (in the locale language).
+ * This behavior can be disabled with `noToday: true`.
+ *
+ * When time is included, it is appended with a comma and a space. This
+ * agrees with the output of `Date.prototype.toLocaleString` for *most*
+ * locales.
+ */
+// TODO: Shouldn't throw on null input
+export function formatPartialDate(dateString: string, options: Partial<FormatDateOptions> = {}) {
+  const locale = getLocale();
+  let parsed: ReturnType<typeof attempt> & { date?: number } = attempt(dateString, locale);
+
+  if (parsed.invalid) {
+    console.warn(`Could not parse invalid date '${dateString}'`);
+    return null;
+  }
+
+  // hack here but any date interprets 2000-01, etc. as yyyy-dd rather than yyyy-mm
+  if (parsed.day && !parsed.month) {
+    parsed = Object.assign({}, omit(parsed, 'day'), { month: parsed.day });
+  }
+
+  // dayjs' object support uses 0-based months, whereas any-date-parser uses 1-based months
+  if (parsed.month) {
+    parsed.month -= 1;
+  }
+
+  // in dayjs day is day of week; in any-date-parser, its day of month, so we need to convert them
+  if (parsed.day) {
+    parsed = Object.assign({}, omit(parsed, 'day'), { date: parsed.day });
+  }
+
+  const date = dayjs().set(parsed).toDate();
+
+  if (!parsed.year) {
+    options.year = false;
+  }
+
+  if (!parsed.month) {
+    options.month = false;
+  }
+
+  if (!parsed.date) {
+    options.day = false;
+  }
+
+  return formatDate(date, options);
 }
 
 /**
