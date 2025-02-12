@@ -213,7 +213,7 @@ const defaultOptions: FormatDateOptions = {
 };
 
 /**
- * Formats the string representing a date, including partial representations of dates, eaccording to the current
+ * Formats the string representing a date, including partial representations of dates, according to the current
  * locale and the given options.
  *
  * Default options:
