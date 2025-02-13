@@ -1,3 +1,5 @@
+@use '@carbon/layout';
+
 .slotOverlay {
   position: absolute;
   top: 0;
@@ -17,7 +19,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  padding: 0.5em 0.5em 0.5em 0.5em;
+  padding: layout.$spacing-03;
   z-index: 99999;
 }
 
@@ -47,7 +49,7 @@
   width: auto;
   background-color: rgb(255, 255, 255, 0.85);
   text-align: center;
-  padding: 0.5em 0.5em 0.5em 0.5em;
+  padding: layout.$spacing-03;
   border: 1px solid rgba(43, 43, 185, 0.4);
 
   position: absolute;
