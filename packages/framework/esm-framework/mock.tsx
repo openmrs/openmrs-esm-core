@@ -2,7 +2,6 @@ import React from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
-export { OpenmrsDatePicker } from './src';
 
 window.i18next = { ...window.i18next, language: 'en' };
 

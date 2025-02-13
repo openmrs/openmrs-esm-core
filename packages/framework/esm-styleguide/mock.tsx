@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React from 'react';
 
 /* Please keep these stubs in alphabetical order for readability */
@@ -126,3 +127,20 @@ export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
     </div>
   );
 });
+
+export const OpenmrsDatePicker = ({ id, labelText, value, onChange }) => {
+  return (
+    <>
+      <label htmlFor={id}>{labelText}</label>
+      <input
+        aria-label={labelText.toString()}
+        id={id}
+        onChange={(evt) => {
+          onChange(dayjs(evt.target.value).toDate());
+        }}
+        type="text"
+        value={value ? dayjs(value).format('DD/MM/YYYY') : undefined}
+      />
+    </>
+  );
+};
