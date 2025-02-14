@@ -2,16 +2,20 @@ import React, {
   type CSSProperties,
   type ForwardedRef,
   type HTMLAttributes,
+  type MouseEvent,
   type PropsWithChildren,
   type ReactElement,
   type ReactNode,
+  createContext,
   cloneElement,
   forwardRef,
-  useMemo,
+  memo,
   useContext,
   useCallback,
+  useId,
+  useMemo,
   useRef,
-  createContext,
+  useState,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
 import {
@@ -65,6 +69,7 @@ import {
   useContextProps,
 } from 'react-aria-components';
 import dayjs, { type ConfigType as DayjsConfigType } from 'dayjs';
+import { useOnClickOutside } from '@openmrs/esm-react-utils';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
 import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon, WarningIcon } from '../icons';
 import styles from './datepicker.module.scss';
@@ -173,13 +178,13 @@ function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
   );
 }
 
-const MonthYear = forwardRef<HTMLSpanElement, PropsWithChildren<HTMLAttributes<HTMLSpanElement>>>(
+const MonthYear = /*#__PURE__*/ forwardRef<HTMLSpanElement, PropsWithChildren<HTMLAttributes<HTMLSpanElement>>>(
   function MonthYear(props, ref) {
     const { className } = props;
     const calendarState = useContext(CalendarStateContext);
     const rangeCalendarState = useContext(RangeCalendarStateContext);
 
-    const state = calendarState ?? rangeCalendarState;
+    const state = (calendarState ?? rangeCalendarState)!;
 
     const intlLocale = useIntlLocale();
     const tz = getLocalTimeZone();
@@ -228,57 +233,71 @@ const MonthYear = forwardRef<HTMLSpanElement, PropsWithChildren<HTMLAttributes<H
   },
 );
 
-const DatePickerIcon = forwardRef<SVGSVGElement>(function DatePickerIcon(props, ref) {
-  const state = useContext(DatePickerStateContext);
+const DatePickerIcon = /*#__PURE__*/ forwardRef<SVGSVGElement>(function DatePickerIcon(props, ref) {
+  const state = useContext(DatePickerStateContext)!;
 
-  return state.isInvalid ? <WarningIcon ref={ref} size={16} /> : <CalendarIcon ref={ref} size={16} />;
-});
-
-// The main reason for this component is to allow us to click inside the date field and trigger the popover
-const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function DatePickerInput(props, ref) {
-  const [dateFieldProps, fieldRef] = useContextProps({ slot: props.slot }, ref, DateFieldContext);
-  const { locale } = useLocale();
-  const state = useDateFieldState({
-    ...dateFieldProps,
-    locale,
-    createCalendar,
-  });
-  const datePickerState = useContext(DatePickerStateContext);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { fieldProps, inputProps } = useDateField({ ...dateFieldProps, inputRef }, state, fieldRef);
-
-  return (
-    <Provider
-      values={[
-        [DateFieldStateContext, state],
-        [InputContext, { ...inputProps, ref: inputRef }],
-        [GroupContext, { ...fieldProps, ref: fieldRef, isInvalid: state.isInvalid }],
-      ]}
-    >
-      <Group
-        {...props}
-        ref={ref}
-        slot={props.slot || undefined}
-        className={props.className}
-        isInvalid={state.isInvalid}
-        onClick={() => datePickerState.setOpen(!datePickerState.isOpen)}
-      >
-        {state.segments.map((segment, i) => cloneElement(props.children(segment), { key: i }))}
-      </Group>
-      <Input />
-    </Provider>
+  return state.isInvalid ? (
+    <WarningIcon ref={ref} size={16} {...props} />
+  ) : (
+    <CalendarIcon ref={ref} size={16} {...props} />
   );
 });
 
+interface OpenmrsDateInputProps {
+  id?: string;
+  onClick: () => void;
+}
+
+// The main reason for this component is to allow us to click inside the date field and trigger the popover
+const DatePickerInput = /*#__PURE__*/ forwardRef<HTMLDivElement, DateInputProps & OpenmrsDateInputProps>(
+  function DatePickerInput(props, ref) {
+    const [dateFieldProps, fieldRef] = useContextProps({ slot: props.slot }, ref, DateFieldContext);
+    const { locale } = useLocale();
+    const state = useDateFieldState({
+      ...dateFieldProps,
+      locale,
+      createCalendar,
+    });
+
+    const inputRef = useRef<HTMLInputElement>(null);
+    const { fieldProps, inputProps } = useDateField({ ...dateFieldProps, inputRef }, state, fieldRef);
+
+    return (
+      <Provider
+        values={[
+          [DateFieldStateContext, state],
+          [InputContext, { ...inputProps, ref: inputRef }],
+          [GroupContext, { ...fieldProps, ref: fieldRef, isInvalid: state.isInvalid }],
+        ]}
+      >
+        <Group
+          {...props}
+          id={props.id}
+          ref={ref}
+          slot={props.slot || undefined}
+          className={props.className}
+          isInvalid={state.isInvalid}
+          onClick={props.onClick}
+        >
+          {state.segments.map((segment, i) => cloneElement(props.children(segment), { key: i }))}
+        </Group>
+        <Input />
+      </Provider>
+    );
+  },
+);
+
 interface RenderPropsHookOptions<T> extends DOMProps, AriaLabelingProps {
+  /** The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state. */
+  className?: string | ((values: T & { defaultClassName: string | undefined }) => string);
+  /** The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state. */
+  style?: CSSProperties | ((values: T & { defaultStyle: CSSProperties }) => CSSProperties | undefined);
+  /** The children of the component. A function may be provided to alter the children based on component state. */
   children?: ReactNode | ((values: T & { defaultChildren: ReactNode | undefined }) => ReactNode);
   values: T;
   defaultChildren?: ReactNode;
   defaultClassName?: string;
   defaultStyle?: CSSProperties;
-  className?: string | ((values: T & { defaultClassName: string | undefined }) => string);
-  style?: CSSProperties | ((values: T & { defaultStyle: CSSProperties }) => CSSProperties);
 }
 
 function useRenderProps<T>(props: RenderPropsHookOptions<T>) {
@@ -326,11 +345,11 @@ function useRenderProps<T>(props: RenderPropsHookOptions<T>) {
   }, [className, style, children, defaultClassName, defaultChildren, defaultStyle, values]);
 }
 
-const DateSegment = forwardRef(function DateSegment(
+const DateSegment = /*#__PURE__*/ forwardRef(function DateSegment(
   { segment, ...otherProps }: DateSegmentProps,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
-  const state = useContext(DateFieldStateContext);
+  const state = useContext(DateFieldStateContext)!;
   const domRef = useObjectRef(ref);
   const { segmentProps } = useDateSegment(segment, state, domRef);
   const { focusProps, isFocused, isFocusVisible } = useFocusRing();
@@ -352,8 +371,12 @@ const DateSegment = forwardRef(function DateSegment(
     defaultChildren: segment.text,
   });
 
+  const onClick = useCallback((event: MouseEvent) => {
+    event.stopPropagation();
+  }, []);
+
   return (
-    <div
+    <span
       {...mergeProps(
         filterDOMProps(otherProps as unknown as Parameters<typeof filterDOMProps>[0]),
         segmentProps,
@@ -362,6 +385,7 @@ const DateSegment = forwardRef(function DateSegment(
       )}
       {...renderProps}
       ref={domRef}
+      style={segmentProps.style}
       data-placeholder={segment.isPlaceholder || undefined}
       data-invalid={state.isInvalid || undefined}
       data-readonly={!segment.isEditable || undefined}
@@ -370,17 +394,30 @@ const DateSegment = forwardRef(function DateSegment(
       data-hovered={isHovered || undefined}
       data-focused={isFocused || undefined}
       data-focus-visible={isFocusVisible || undefined}
-      onClick={(event) => event.stopPropagation()}
+      onClick={onClick}
     />
   );
 });
-function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'>) {
+
+interface OpenmrsDatePickerLabelProps {
+  labelText: OpenmrsDatePickerProps['labelText'];
+  htmlFor: string;
+}
+
+const DatePickerLabel = /*#__PURE__*/ memo(function DatePickerLabel({
+  labelText,
+  htmlFor,
+}: OpenmrsDatePickerLabelProps) {
   if (labelText === null || typeof labelText === 'undefined' || typeof labelText === 'boolean') {
     return null;
   }
 
-  return <Label className="cds--label">{labelText}</Label>;
-}
+  return (
+    <Label className="cds--label" htmlFor={htmlFor}>
+      {labelText}
+    </Label>
+  );
+});
 
 const OpenmrsIntlLocaleContext = createContext<Intl.Locale | null>(null);
 
@@ -389,7 +426,7 @@ const useIntlLocale = () => useContext(OpenmrsIntlLocaleContext)!;
 /**
  * A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
  */
-export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerProps>(
+export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, OpenmrsDatePickerProps>(
   function OpenmrsDatePicker(props, ref) {
     const {
       className,
@@ -409,6 +446,8 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       value: rawValue,
       ...datePickerProps
     } = Object.assign({}, defaultProps, props);
+
+    const id = useId();
 
     const locale = useMemo(() => {
       let locale = getLocale();
@@ -434,6 +473,13 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, calendar), [rawMinDate]);
     const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
     const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
+
+    const [isPopoverOpen, setPopoverOpen] = useState(false);
+    const togglePopover = useCallback(() => {
+      setPopoverOpen(!isPopoverOpen);
+    }, [isPopoverOpen]);
+
+    const boundaryRef = useOnClickOutside<HTMLDivElement>(() => setPopoverOpen(false));
 
     const onChange = useMemo(() => {
       if (onChangeRaw && rawOnChange) {
@@ -462,14 +508,16 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
               {...datePickerProps}
               onChange={onChange}
             >
-              <div className="cds--date-picker-container">
-                <DatePickerLabel labelText={labelText ?? label} />
+              <div className="cds--date-picker-container" ref={boundaryRef}>
+                {(labelText ?? label) && <DatePickerLabel labelText={labelText ?? label} htmlFor={id} />}
                 <Group className={styles.inputGroup}>
                   <DatePickerInput
+                    id={id}
                     ref={ref}
                     className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
                       [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
                     })}
+                    onClick={togglePopover}
                   >
                     {(segment) => {
                       return segment.type !== 'era' ? (
@@ -479,13 +527,19 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                       );
                     }}
                   </DatePickerInput>
-                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
+                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)} onPress={togglePopover}>
                     <DatePickerIcon />
                   </Button>
                 </Group>
                 {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
               </div>
-              <Popover className={styles.popover} placement="bottom" offset={1}>
+              <Popover
+                className={styles.popover}
+                placement="bottom"
+                offset={1}
+                isNonModal={true}
+                isOpen={isPopoverOpen}
+              >
                 <Dialog className={styles.dialog}>
                   <Calendar className={classNames('cds--date-picker__calendar')}>
                     <header className={styles.header}>
@@ -500,6 +554,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                     <CalendarGrid className={styles.calendarGrid}>
                       {(date) => (
                         <CalendarCell
+                          key={date.toString()}
                           className={classNames('cds--date-picker__day', {
                             [styles.today]: today_.compare(date) === 0,
                           })}

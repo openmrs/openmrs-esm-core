@@ -546,7 +546,7 @@ A type for any of the acceptable date formats
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L73)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L78)
 
 ___
 
@@ -1859,7 +1859,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:392](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L392)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:429](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L429)
 
 ___
 
