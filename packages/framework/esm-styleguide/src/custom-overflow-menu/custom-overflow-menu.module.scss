@@ -4,6 +4,10 @@
 .container {
   width: auto;
   height: auto;
+
+  :global(.cds--overflow-menu__trigger) {
+    min-height: 3rem;
+  }
 }
 
 .menu {
