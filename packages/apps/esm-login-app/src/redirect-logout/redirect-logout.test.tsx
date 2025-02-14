@@ -72,19 +72,14 @@ describe('RedirectLogout', () => {
     expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
   });
 
-  it('should redirect to `provider.logoutUrl` if the configured provider is `oauth2`', async () => {
+  it('should not redirect if the configured provider is `oauth2`', async () => {
     mockUseConfig.mockReturnValue({
       provider: {
         type: 'oauth2',
-        logoutUrl: '/oauth/logout',
       },
     });
 
     render(<RedirectLogout />);
-
-    expect(mockOpenmrsFetch).toHaveBeenCalledWith(`${restBaseUrl}/session`, {
-      method: 'DELETE',
-    });
 
     await waitFor(() => expect(mutate).toHaveBeenCalled());
 
@@ -95,7 +90,7 @@ describe('RedirectLogout', () => {
       authenticated: false,
       sessionId: '',
     });
-    expect(mockNavigate).toHaveBeenCalledWith({ to: '/oauth/logout' });
+    expect(mockNavigate).toHaveBeenCalledTimes(0);
   });
 
   it('should redirect to login if the session is already unauthenticated', async () => {
@@ -153,15 +148,29 @@ describe('RedirectLogout', () => {
 
     mockUseConfig.mockReturnValue({
       provider: {
-        type: 'oauth2',
-        logoutUrl: '/new/logout/url',
+        type: 'testProvider',
       },
     });
 
     rerender(<RedirectLogout />);
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith({ to: '/new/logout/url' });
+      expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
     });
+  });
+
+  it('should not redirect to login if user is not authenticated the provider is oauth2', async () => {
+    mockUseSession.mockReturnValue({
+      authenticated: false,
+    } as Session);
+    mockUseConfig.mockReturnValue({
+      provider: {
+        type: 'oauth2',
+      },
+    });
+
+    render(<RedirectLogout />);
+
+    expect(mockNavigate).toHaveBeenCalledTimes(0);
   });
 });
