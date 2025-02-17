@@ -80,5 +80,5 @@
     "@carbon/icons-react": "11.37.0",
     "minipass": "3.3.5"
   },
-  "packageManager": "yarn@4.4.0"
+  "packageManager": "yarn@4.6.0"
 }
