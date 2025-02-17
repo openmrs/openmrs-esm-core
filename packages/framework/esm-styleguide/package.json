@@ -38,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/charts": "^1.12.0",
+    "@carbon/charts": "^1.22.17",
     "@carbon/react": "^1.76.0",
     "@internationalized/date": "^3.5.5",
     "core-js-pure": "^3.36.0",
