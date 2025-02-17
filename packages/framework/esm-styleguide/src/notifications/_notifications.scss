@@ -1,8 +1,10 @@
+@use '@carbon/layout';
+
 .omrs-inline-notifications-container {
   z-index: 100000;
   position: fixed;
   width: 100%;
-  bottom: 2rem;
+  bottom: layout.$spacing-07;
   display: flex;
   flex-direction: column;
   align-items: center;

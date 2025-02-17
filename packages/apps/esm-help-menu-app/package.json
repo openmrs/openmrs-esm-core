@@ -53,7 +53,7 @@
     "webpack": "^5.88.0"
   },
   "dependencies": {
-    "@carbon/react": "1.37.0",
+    "@carbon/react": "^1.76.0",
     "fuzzy": "^0.1.3"
   }
 }
