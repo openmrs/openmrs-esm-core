@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useContext, useMemo } from 'react';
+import React, { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
@@ -147,6 +147,17 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
   const { workspaceWindowState, workspaceGroup } = useWorkspaces();
   const currentGroupName = workspaceGroup?.name;
   const isMaximized = workspaceWindowState === 'maximized';
+
+  // Translate the workspace title
+  // The workspace title is a translation key whose translation resides in the workspace module.
+  // Since the workspace module is not loaded at the time of workspace registration, we need to translate it here
+  // when the workspace is actually rendered and the workspace module along with its translations are loaded.
+  useEffect(() => {
+    const translatedTitle = t(workspaceInstance.title);
+    if (translatedTitle !== workspaceInstance.title) {
+      workspaceInstance.setTitle(translatedTitle);
+    }
+  }, [workspaceInstance.title, t, workspaceInstance.setTitle]);
 
   // We use the feature name of the app containing the workspace in order to set the extension
   // slot name. We can't use contextKey for this because we don't want the slot name to be
