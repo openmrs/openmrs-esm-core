@@ -88,7 +88,7 @@ describe('workspace system', () => {
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch(/unsaved changes/i);
       expect(prompt.body).toMatch(
-        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in "Allergies". Please save them before opening another workspace.',
       );
       expect(prompt.confirmText).toMatch(/Open anyway/i);
 
@@ -179,7 +179,7 @@ describe('workspace system', () => {
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch(/unsaved changes/i);
       expect(prompt.body).toMatch(
-        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in "Allergies". Please save them before opening another workspace.',
       );
       expect(prompt.confirmText).toMatch(/Open anyway/i);
 
@@ -287,7 +287,7 @@ describe('workspace system', () => {
       const prompt = store.getState().prompt as Prompt;
       expect(prompt).toBeTruthy();
       expect(prompt.body).toMatch(
-        'There may be unsaved changes in Conditions. Please save them before opening another workspace.',
+        'There may be unsaved changes in "Conditions". Please save them before opening another workspace.',
       );
       // Closing the conditions workspace because it cannot be hidden
 
@@ -301,7 +301,7 @@ describe('workspace system', () => {
 
       expect(prompt2).toBeTruthy();
       expect(prompt2.body).toMatch(
-        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in "Allergies". Please save them before opening another workspace.',
       );
 
       prompt2.onConfirm();
