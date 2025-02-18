@@ -9,7 +9,7 @@ import {
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
 import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
-import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { useStore } from '@openmrs/esm-react-utils';
 import type { StoreApi } from 'zustand/vanilla';
 
@@ -246,7 +246,6 @@ function promptBeforeLaunchingWorkspace(
 ) {
   const { name, additionalProps } = newWorkspaceDetails;
   const newWorkspaceRegistration = getWorkspaceRegistration(name);
-  const workspaceModuleName = workspace.moduleName;
 
   const proceed = () => {
     closeWorkspace(workspace.name, {
@@ -260,12 +259,7 @@ function promptBeforeLaunchingWorkspace(
   };
 
   if (!canCloseWorkspaceWithoutPrompting(workspace.name)) {
-    showWorkspacePrompts(
-      'closing-workspace-launching-new-workspace',
-      proceed,
-      workspace.title ?? workspace.name,
-      workspaceModuleName,
-    );
+    showWorkspacePrompts('closing-workspace-launching-new-workspace', proceed, workspace.title ?? workspace.name);
   } else {
     proceed();
   }
@@ -574,7 +568,6 @@ export function showWorkspacePrompts(
   promptType: PromptType,
   onConfirmation: () => void = () => {},
   workspaceTitle: string = '',
-  workspaceModuleName: string = ' ',
 ) {
   const store = getWorkspaceStore();
 
@@ -625,7 +618,7 @@ export function showWorkspacePrompts(
         body: getCoreTranslation(
           'unsavedChangesInWorkspace',
           'There may be unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
-          { workspaceName: translateFrom(workspaceModuleName, workspaceTitle) },
+          { workspaceName: workspaceTitle },
         ),
         onConfirm: () => {
           store.setState((state) => ({
