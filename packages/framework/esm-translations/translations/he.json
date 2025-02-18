@@ -55,7 +55,7 @@
   "stateProvince": "State",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Unknown",
-  "unsavedChangesInWorkspace": "There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.",
+  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "Unsaved changes",
   "workspaceHeader": "Workspace header"
 }

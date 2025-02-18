@@ -55,7 +55,7 @@
   "stateProvince": "الولاية",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "غير معروف",
-  "unsavedChangesInWorkspace": "There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.",
+  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "التغييرات غير المحفوظة",
   "workspaceHeader": "رأس مساحة العمل"
 }
