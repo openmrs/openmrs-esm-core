@@ -1,15 +1,15 @@
 import React, { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
+import { I18nextProvider, useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import { ComponentContext, ExtensionSlot, isDesktop, useBodyScrollLock, useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { I18nextProvider, useTranslation } from 'react-i18next';
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
-import ActionMenu from './action-menu.component';
 import { type OpenWorkspace, updateWorkspaceWindowState, useWorkspaces } from '../workspaces';
 import { WorkspaceRenderer } from './workspace-renderer.component';
+import ActionMenu from './action-menu.component';
 import styles from './workspace.module.scss';
 
 export interface WorkspaceContainerProps {
@@ -112,7 +112,7 @@ export function WorkspaceContainer({
             {workspaces.map((workspace, i) => (
               <div
                 key={`workspace-container-${workspace ? workspace.name : `empty-${i}`}`}
-                className={classNames({ [styles.hiddenExtraWorkspace]: i !== 0 }, styles.workspaceInnerContainer)}
+                className={classNames(styles.workspaceInnerContainer, { [styles.hiddenExtraWorkspace]: i !== 0 })}
               >
                 <Suspense fallback={null}>
                   <I18nextProvider i18n={window.i18next} defaultNS={workspace.moduleName}>
