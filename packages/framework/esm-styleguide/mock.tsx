@@ -130,3 +130,5 @@ export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
     </div>
   );
 });
+
+export const useLeftNavStore = jest.fn();
