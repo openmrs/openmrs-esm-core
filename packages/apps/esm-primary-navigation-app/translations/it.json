@@ -1,9 +1,9 @@
 {
-  "AppMenuTooltip": "App Menu",
-  "cancel": "Cancel",
-  "change": "Change",
-  "changeLanguage": "Change language",
-  "changingLanguage": "Changing language",
-  "notifications": "Notifications",
-  "userMenuTooltip": "My Account"
+  "AppMenuTooltip": "Menu App",
+  "cancel": "Annulla",
+  "change": "Cambia",
+  "changeLanguage": "Cambia lingua",
+  "changingLanguage": "Cambio lingua in corso",
+  "notifications": "Notifiche",
+  "userMenuTooltip": "Il mio account"
 }
