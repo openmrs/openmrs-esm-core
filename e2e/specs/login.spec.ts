@@ -7,6 +7,7 @@ test.use({ storageState: { cookies: [], origins: [] } });
 test('Login as Admin user', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const userPanel = page.locator('[data-extension-slot-name="user-panel-slot"]');
+  const topNav = page.getByRole('banner', { name: 'OpenMRS' });
 
   await test.step('When I navigate to the login page', async () => {
     await loginPage.goto();
@@ -35,16 +36,16 @@ test('Login as Admin user', async ({ page }) => {
     await expect(page).toHaveURL(`${process.env.E2E_BASE_URL}/spa/home`);
   });
 
+  await test.step('And I should see the location picker in top nav', async () => {
+    await expect(topNav.getByText(/outpatient clinic/i)).toBeVisible();
+  });
+
   await test.step('When I click on the my account button', async () => {
     await page.getByRole('button', { name: /My Account/i }).click();
   });
 
   await test.step('Then I should see the user details', async () => {
     await expect(userPanel.getByText(/super user/i)).toBeVisible();
-  });
-
-  await test.step('And I should see the location details', async () => {
-    await expect(userPanel.getByText(/outpatient clinic/i)).toBeVisible();
   });
 
   await test.step('And I should see the logout button', async () => {

@@ -1,7 +1,7 @@
+import { HeaderGlobalAction } from '@carbon/react';
+import { LocationIcon, navigate, useSession } from '@openmrs/esm-framework';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, SwitcherItem } from '@carbon/react';
-import { LocationIcon, navigate, useSession } from '@openmrs/esm-framework';
 import styles from './change-location-link.scss';
 
 const ChangeLocationLink: React.FC = () => {
@@ -18,15 +18,14 @@ const ChangeLocationLink: React.FC = () => {
   };
 
   return (
-    <SwitcherItem aria-label="Change Location" className={styles.panelItemContainer}>
-      <div>
-        <LocationIcon size={20} />
-        <p>{currentLocation}</p>
-      </div>
-      <Button kind="ghost" onClick={changeLocation}>
-        {t('change', 'Change')}
-      </Button>
-    </SwitcherItem>
+    <HeaderGlobalAction
+      aria-label={t('changeLocation', 'Change location')}
+      className={styles.changeLocationButton}
+      onClick={changeLocation}
+    >
+      <LocationIcon size={16} />
+      <span className={styles.currentLocationText}>{currentLocation}</span>
+    </HeaderGlobalAction>
   );
 };
 

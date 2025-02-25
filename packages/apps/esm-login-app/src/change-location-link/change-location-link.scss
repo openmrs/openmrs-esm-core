@@ -1,3 +1,4 @@
+@use '@carbon/layout';
 @import '~@openmrs/esm-styleguide/src/vars';
 @import '../root.scss';
 
@@ -10,4 +11,16 @@
 .panelItemContainer div {
   display: flex;
   align-items: center;
+}
+
+.changeLocationButton {
+  width: fit-content;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  padding: layout.$spacing-04 !important; // this gets unset in rtl language without !important
+}
+
+.currentLocationText {
+  padding-inline-start: layout.$spacing-03;
 }

@@ -28,9 +28,16 @@
   height: layout.$spacing-09;
   width: layout.$spacing-09;
   padding: layout.$spacing-04;
-  margin-right: layout.$spacing-02;
+  margin-inline-end: layout.$spacing-02;
 }
 
 .spacedLogo {
-  margin-left: layout.$spacing-05;
+  margin-inline-start: layout.$spacing-05;
+}
+
+.divider {
+  width: 1px;
+  height: layout.$spacing-06;
+  background-color: rgba(244, 244, 244, 0.4);
+  margin-inline-start: layout.$spacing-04;
 }

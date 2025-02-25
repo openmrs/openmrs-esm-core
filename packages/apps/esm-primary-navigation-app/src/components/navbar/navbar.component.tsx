@@ -67,7 +67,8 @@ const HeaderItems: React.FC = () => {
             <Logo />
           </div>
         </ConfigurableLink>
-        <ExtensionSlot className={styles.dividerOverride} name="top-nav-info-slot" />
+        <div className={styles.divider} />
+        <ExtensionSlot name="top-nav-info-slot" />
         <HeaderGlobalBar className={styles.headerGlobalBar}>
           <ExtensionSlot name="top-nav-actions-slot" className={styles.topNavActionsSlot} />
           <ExtensionSlot
