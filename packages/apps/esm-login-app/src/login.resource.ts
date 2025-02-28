@@ -135,7 +135,7 @@ export function useValidateLocationUuid(userPreferredLocationUuid: string) {
 
   const results = useMemo(
     () => ({
-      isLocationValid: data?.ok,
+      isLocationValid: data?.ok && data?.data.total > 0,
       defaultLocation: data?.data?.entry ?? [],
       error,
       isLoading,
