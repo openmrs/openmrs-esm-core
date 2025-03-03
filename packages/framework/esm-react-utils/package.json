@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-react-utils",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "license": "MPL-2.0",
   "description": "React utilities for OpenMRS.",
   "browser": "dist/openmrs-esm-react-utils.js",
