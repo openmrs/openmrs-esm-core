@@ -39,6 +39,12 @@ const Login: React.FC = () => {
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    if (user) {
+      navigate('/home');
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
     if (!user) {
       if (loginProvider.type === 'oauth2') {
         openmrsNavigate({ to: loginProvider.loginUrl });
