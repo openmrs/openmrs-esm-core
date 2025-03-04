@@ -58,7 +58,7 @@ function PopupHandler() {
 
 export default function ImplementerTools() {
   return (
-    <UserHasAccess privilege="coreapps.systemAdministration">
+    <UserHasAccess privilege="O3 Implementer Tools">
       <PopupHandler />
     </UserHasAccess>
   );

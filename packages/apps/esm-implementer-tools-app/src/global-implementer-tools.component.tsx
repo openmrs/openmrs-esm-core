@@ -7,7 +7,7 @@ const GlobalImplementerToolsButton: React.FC = () => {
   const { isOpen } = useStore(implementerToolsStore);
 
   return (
-    <UserHasAccess privilege="coreapps.systemAdministration">
+    <UserHasAccess privilege="O3 Implementer Tools">
       <div className={styles.chevronImplementerToolsButton} data-testid="globalImplementerToolsButton">
         <div onClick={togglePopup} role="button" tabIndex={0}>
           {isOpen ? <ChevronDownIcon size={16} /> : <ChevronUpIcon size={16} />}

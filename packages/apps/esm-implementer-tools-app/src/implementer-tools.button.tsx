@@ -10,7 +10,7 @@ const ImplementerToolsButton: React.FC = () => {
   const { isOpen } = useStore(implementerToolsStore);
 
   return (
-    <UserHasAccess privilege="coreapps.systemAdministration">
+    <UserHasAccess privilege="O3 Implementer Tools">
       <HeaderGlobalAction
         aria-label={t('implementerTools', 'Implementer Tools')}
         aria-labelledby="Implementer Tools"
