@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Portal } from './portal';
-import styles from './styles.css';
+import styles from './styles.scss';
+
+interface ContentProps {
+  extensionId: string;
+}
 
 export interface ExtensionOverlayProps {
   extensionName: string;
@@ -27,7 +31,7 @@ export function ExtensionOverlay({ extensionName, slotModuleName, slotName, domE
   ) : null;
 }
 
-function Content({ extensionId }) {
+function Content({ extensionId }: ContentProps) {
   return (
     <button className={styles.extensionOverlay}>
       <span className={styles.extensionTooltip}>{extensionId}</span>
