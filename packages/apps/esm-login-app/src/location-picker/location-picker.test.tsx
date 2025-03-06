@@ -3,6 +3,7 @@ import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   openmrsFetch,
+  useConfig,
   useSession,
   setSessionLocation,
   setUserProperties,
@@ -16,6 +17,7 @@ import {
   validatingLocationFailureResponse,
   validatingLocationSuccessResponse,
 } from '../../__mocks__/locations.mock';
+import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import LocationPickerView from './location-picker-view.component';
 
@@ -33,10 +35,13 @@ const invalidLocationUuid = '2gf1b7d4-c865-4178-82b0-5932e51503d6';
 const userUuid = '90bd24b3-e700-46b0-a5ef-c85afdfededd';
 
 const mockOpenmrsFetch = jest.mocked(openmrsFetch);
+const mockUseConfig = jest.mocked(useConfig);
 const mockUseSession = jest.mocked(useSession);
 
 describe('LocationPickerView', () => {
   beforeEach(() => {
+    mockUseConfig.mockReturnValue(mockConfig);
+
     mockUseSession.mockReturnValue({
       user: {
         display: 'Testy McTesterface',
