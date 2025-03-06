@@ -76,6 +76,25 @@
 - [useAppContext](API.md#useappcontext)
 - [useDefineAppContext](API.md#usedefineappcontext)
 
+### Date and Time Functions
+
+- [convertToLocaleCalendar](API.md#converttolocalecalendar)
+- [formatDate](API.md#formatdate)
+- [formatDatetime](API.md#formatdatetime)
+- [formatTime](API.md#formattime)
+- [getDefaultCalendar](API.md#getdefaultcalendar)
+- [isOmrsDateStrict](API.md#isomrsdatestrict)
+- [isOmrsDateToday](API.md#isomrsdatetoday)
+- [parseDate](API.md#parsedate)
+- [registerDefaultCalendar](API.md#registerdefaultcalendar)
+- [toDateObjectStrict](API.md#todateobjectstrict)
+- [toOmrsDateFormat](API.md#toomrsdateformat)
+- [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
+- [toOmrsIsoString](API.md#toomrsisostring)
+- [toOmrsTimeString](API.md#toomrstimestring)
+- [toOmrsTimeString24](API.md#toomrstimestring24)
+- [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
+
 ### Dynamic Loading Functions
 
 - [importDynamic](API.md#importdynamic)
@@ -355,6 +374,52 @@ ___
 
 ___
 
+## Date and Time Type Aliases
+
+### DateInput
+
+Ƭ **DateInput**: `string` \| `number` \| `Date`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L27)
+
+___
+
+### FormatDateMode
+
+Ƭ **FormatDateMode**: ``"standard"`` \| ``"wide"``
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:141](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L141)
+
+___
+
+### FormatDateOptions
+
+Ƭ **FormatDateOptions**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `calendar?` | `string` | The calendar to use when formatting this date. |
+| `day` | `boolean` | Whether to include the day number |
+| `locale?` | `string` | The locale to use when formatting this date |
+| `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
+| `month` | `boolean` | Whether to include the month number |
+| `noToday` | `boolean` | Disables the special handling of dates that are today. If false (the default), then dates that are today will be formatted as "Today" in the locale language. If true, then dates that are today will be formatted the same as all other dates. |
+| `numberingSystem?` | `string` | The unicode numbering system to use |
+| `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
+| `year` | `boolean` | Whether to include the year |
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L143)
+
+___
+
 ## Extension Type Aliases
 
 ### ExtensionProps
@@ -481,7 +546,7 @@ A type for any of the acceptable date formats
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L79)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L80)
 
 ___
 
@@ -1814,7 +1879,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:430](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L430)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:431](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L431)
 
 ___
 
@@ -3900,6 +3965,402 @@ A function which can be used to update the state associated with the namespace
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
+
+___
+
+## Date and Time Functions
+
+### convertToLocaleCalendar
+
+▸ **convertToLocaleCalendar**(`date`, `locale`): `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime`
+
+Converts a calendar date to the equivalent locale calendar date.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime` |
+| `locale` | `string` \| `Locale` |
+
+#### Returns
+
+`CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime`
+
+CalendarDate
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:390](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L390)
+
+___
+
+### formatDate
+
+▸ **formatDate**(`date`, `options?`): `string`
+
+Formats the input date according to the current locale and the
+given options.
+
+Default options:
+ - mode: "standard",
+ - time: "for today",
+ - day: true,
+ - month: true,
+ - year: true
+ - noToday: false
+
+If the date is today then "Today" is produced (in the locale language).
+This behavior can be disabled with `noToday: true`.
+
+When time is included, it is appended with a comma and a space. This
+agrees with the output of `Date.prototype.toLocaleString` for *most*
+locales.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `Date` |
+| `options?` | `Partial`<[`FormatDateOptions`](API.md#formatdateoptions)\> |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:279](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L279)
+
+___
+
+### formatDatetime
+
+▸ **formatDatetime**(`date`, `options?`): `string`
+
+Formats the input into a string showing the date and time, according
+to the current locale. The `mode` parameter is as described for
+`formatDate`.
+
+This is created by concatenating the results of `formatDate`
+and `formatTime` with a comma and space. This agrees with the
+output of `Date.prototype.toLocaleString` for *most* locales.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `Date` |
+| `options?` | `Partial`<`Omit`<[`FormatDateOptions`](API.md#formatdateoptions), ``"time"``\>\> |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:382](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L382)
+
+___
+
+### formatTime
+
+▸ **formatTime**(`date`): `string`
+
+Formats the input as a time, according to the current locale.
+12-hour or 24-hour clock depends on locale.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `Date` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:366](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L366)
+
+___
+
+### getDefaultCalendar
+
+▸ **getDefaultCalendar**(`locale`): `undefined` \| `string`
+
+Retrieves the default calendar for the specified locale if any.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `locale` | `undefined` \| `string` \| `Locale` | the locale to look-up |
+
+#### Returns
+
+`undefined` \| `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:253](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L253)
+
+___
+
+### isOmrsDateStrict
+
+▸ **isOmrsDateStrict**(`omrsPayloadString`): `boolean`
+
+This function checks whether a date string is the OpenMRS ISO format.
+The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `omrsPayloadString` | `string` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L35)
+
+___
+
+### isOmrsDateToday
+
+▸ **isOmrsDateToday**(`date`): `boolean`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) | Checks if the provided date is today. |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L64)
+
+___
+
+### parseDate
+
+▸ **parseDate**(`dateString`): `Date`
+
+Utility function to parse an arbitrary string into a date.
+Uses `dayjs(dateString)`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dateString` | `string` |
+
+#### Returns
+
+`Date`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L137)
+
+___
+
+### registerDefaultCalendar
+
+▸ **registerDefaultCalendar**(`locale`, `calendar`): `void`
+
+Provides the name of the calendar to associate, as a default, with the given base locale.
+
+**`example`**
+```
+registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the 'en' locale to Buddhist.
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `locale` | `string` | the locale to register this calendar for |
+| `calendar` | `string` | the calendar to use for this registration |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L244)
+
+___
+
+### toDateObjectStrict
+
+▸ **toDateObjectStrict**(`omrsDateString`): `Date` \| ``null``
+
+Converts the object to a date object if it is an OpenMRS ISO date time string.
+Otherwise returns null.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `omrsDateString` | `string` |
+
+#### Returns
+
+`Date` \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L72)
+
+___
+
+### toOmrsDateFormat
+
+▸ **toOmrsDateFormat**(`date`, `format?`): `string`
+
+**`deprecated`** use `formatDate(date)`
+Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `format` | `string` | `'YYYY-MMM-DD'` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L129)
+
+___
+
+### toOmrsDayDateFormat
+
+▸ **toOmrsDayDateFormat**(`date`): `string`
+
+**`deprecated`** use `formatDate(date, "wide")`
+Formats the input as a date string using the format "DD - MMM - YYYY".
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L113)
+
+___
+
+### toOmrsIsoString
+
+▸ **toOmrsIsoString**(`date`, `toUTC?`): `string`
+
+Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `toUTC` | `boolean` | `false` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L83)
+
+___
+
+### toOmrsTimeString
+
+▸ **toOmrsTimeString**(`date`): `string`
+
+**`deprecated`** use `formatTime`
+Formats the input as a time string using the format "HH:mm A".
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L105)
+
+___
+
+### toOmrsTimeString24
+
+▸ **toOmrsTimeString24**(`date`): `string`
+
+**`deprecated`** use `formatTime`
+Formats the input as a time string using the format "HH:mm".
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L97)
+
+___
+
+### toOmrsYearlessDateFormat
+
+▸ **toOmrsYearlessDateFormat**(`date`): `string`
+
+**`deprecated`** use `formatDate(date, "no year")`
+Formats the input as a date string using the format "DD-MMM".
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L121)
 
 ___
 

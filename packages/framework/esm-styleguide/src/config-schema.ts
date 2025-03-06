@@ -51,7 +51,7 @@ export const esmStyleGuideSchema = {
   preferredDateLocale: {
     _type: Type.Object,
     _description:
-      "Keys should be locale codes, and values should be the preferred locale for formatting dates. For example, {'en': 'en-US'}.",
+      "Allows setting the locale used for date formatting for any browser locale. Does not affect time formatting. Keys should be locale codes, and values should be the preferred locale for formatting dates. For example, {'en': 'en-US', 'fr-CA': 'en-CA'}.",
     _default: {
       en: 'en-GB',
     },
