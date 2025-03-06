@@ -126,7 +126,7 @@ $extraWideWorkspaceWidth: 48.25rem;
     width: $widerWorkspaceWidth;
 
     .workspaceFixedContainer {
-      width: $widerWorkspaceWidth;
+      width: $narrowWorkspaceWidth;
     }
 
     &.hiddenRelative {
