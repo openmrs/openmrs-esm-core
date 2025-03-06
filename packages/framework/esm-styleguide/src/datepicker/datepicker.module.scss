@@ -120,10 +120,15 @@
 
     &:focus {
       outline: unset;
+      background-color: theme.$layer-selected-hover;
     }
 
     &[data-placeholder] {
       color: theme.$text-disabled;
+    }
+
+    &[data-focused='true'] {
+      animation: cursor-blink 1s step-end infinite;
     }
   }
 
@@ -137,6 +142,16 @@
 
   [data-placeholder] + [data-readonly] {
     color: theme.$text-disabled;
+  }
+
+  @keyframes cursor-blink {
+    from,
+    to {
+      border-right: 1px solid transparent;
+    }
+    50% {
+      border-right: 1px solid currentColor;
+    }
   }
 }
 
