@@ -9,34 +9,10 @@ import {
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
 import type { i18n } from 'i18next';
-import { getConfigStore } from '@openmrs/esm-config';
-import { type StyleguideConfigObject } from '../config-schema';
 
 window.i18next = { language: 'en' } as i18n;
 
-jest.mock('@openmrs/esm-config', () => ({
-  getConfigStore: jest.fn(),
-}));
-
-const mockGetConfigStore = jest.mocked(getConfigStore);
-
-function setMockConfig(config: Partial<StyleguideConfigObject>) {
-  mockGetConfigStore.mockReturnValue({
-    getState: () => ({
-      config,
-    }),
-  } as any);
-}
-
 describe('Openmrs Dates', () => {
-  beforeEach(() => {
-    setMockConfig({
-      preferredDateLocale: {
-        en: 'en-GB',
-      },
-    });
-  });
-
   it('converts js Date object to omrs date string version', () => {
     let date = dayjs('2018-03-19T00:05:03.999+0300', 'YYYY-MM-DDTHH:mm:ss.SSSZZ').toDate();
     expect(toOmrsIsoString(date, true)).toEqual('2018-03-18T21:05:03.999+0000');

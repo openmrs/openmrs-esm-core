@@ -91,46 +91,6 @@ export function toOmrsIsoString(date: DateInput, toUTC = false): string {
 }
 
 /**
- * @deprecated use `formatTime`
- * Formats the input as a time string using the format "HH:mm".
- */
-export function toOmrsTimeString24(date: DateInput) {
-  return dayjs(date).format('HH:mm');
-}
-
-/**
- * @deprecated use `formatTime`
- * Formats the input as a time string using the format "HH:mm A".
- */
-export function toOmrsTimeString(date: DateInput) {
-  return dayjs.utc(date).format('HH:mm A');
-}
-
-/**
- * @deprecated use `formatDate(date, "wide")`
- * Formats the input as a date string using the format "DD - MMM - YYYY".
- */
-export function toOmrsDayDateFormat(date: DateInput) {
-  return toOmrsDateFormat(date, 'DD - MMM - YYYY');
-}
-
-/**
- * @deprecated use `formatDate(date, "no year")`
- * Formats the input as a date string using the format "DD-MMM".
- */
-export function toOmrsYearlessDateFormat(date: DateInput) {
-  return toOmrsDateFormat(date, 'DD-MMM');
-}
-
-/**
- * @deprecated use `formatDate(date)`
- * Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
- */
-export function toOmrsDateFormat(date: DateInput, format = 'YYYY-MMM-DD') {
-  return dayjs(date).format(format);
-}
-
-/**
  * Utility function to parse an arbitrary string into a date.
  * Uses `dayjs(dateString)`.
  */

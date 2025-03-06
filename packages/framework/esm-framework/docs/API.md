@@ -88,12 +88,7 @@
 - [parseDate](API.md#parsedate)
 - [registerDefaultCalendar](API.md#registerdefaultcalendar)
 - [toDateObjectStrict](API.md#todateobjectstrict)
-- [toOmrsDateFormat](API.md#toomrsdateformat)
-- [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
 - [toOmrsIsoString](API.md#toomrsisostring)
-- [toOmrsTimeString](API.md#toomrstimestring)
-- [toOmrsTimeString24](API.md#toomrstimestring24)
-- [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 
 ### Dynamic Loading Functions
 
@@ -392,7 +387,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:141](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L141)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L101)
 
 ___
 
@@ -416,7 +411,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L143)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L103)
 
 ___
 
@@ -3991,7 +3986,7 @@ CalendarDate
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:390](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L390)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:350](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L350)
 
 ___
 
@@ -4030,7 +4025,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:279](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L279)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:239](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L239)
 
 ___
 
@@ -4059,7 +4054,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:382](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L382)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:342](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L342)
 
 ___
 
@@ -4082,7 +4077,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:366](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L366)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:326](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L326)
 
 ___
 
@@ -4104,7 +4099,7 @@ Retrieves the default calendar for the specified locale if any.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:253](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L253)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L213)
 
 ___
 
@@ -4170,7 +4165,7 @@ Uses `dayjs(dateString)`.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L137)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L97)
 
 ___
 
@@ -4198,7 +4193,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L244)
+[packages/framework/esm-styleguide/src/date-util/date-util.ts:204](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L204)
 
 ___
 
@@ -4225,53 +4220,6 @@ Otherwise returns null.
 
 ___
 
-### toOmrsDateFormat
-
-▸ **toOmrsDateFormat**(`date`, `format?`): `string`
-
-**`deprecated`** use `formatDate(date)`
-Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
-
-#### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
-| `format` | `string` | `'YYYY-MMM-DD'` |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L129)
-
-___
-
-### toOmrsDayDateFormat
-
-▸ **toOmrsDayDateFormat**(`date`): `string`
-
-**`deprecated`** use `formatDate(date, "wide")`
-Formats the input as a date string using the format "DD - MMM - YYYY".
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L113)
-
-___
-
 ### toOmrsIsoString
 
 ▸ **toOmrsIsoString**(`date`, `toUTC?`): `string`
@@ -4292,75 +4240,6 @@ Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 #### Defined in
 
 [packages/framework/esm-styleguide/src/date-util/date-util.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L83)
-
-___
-
-### toOmrsTimeString
-
-▸ **toOmrsTimeString**(`date`): `string`
-
-**`deprecated`** use `formatTime`
-Formats the input as a time string using the format "HH:mm A".
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L105)
-
-___
-
-### toOmrsTimeString24
-
-▸ **toOmrsTimeString24**(`date`): `string`
-
-**`deprecated`** use `formatTime`
-Formats the input as a time string using the format "HH:mm".
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L97)
-
-___
-
-### toOmrsYearlessDateFormat
-
-▸ **toOmrsYearlessDateFormat**(`date`): `string`
-
-**`deprecated`** use `formatDate(date, "no year")`
-Formats the input as a date string using the format "DD-MMM".
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/date-util/date-util.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/date-util/date-util.ts#L121)
 
 ___
 
