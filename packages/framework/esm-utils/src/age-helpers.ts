@@ -1,9 +1,8 @@
 /** @module @category Utility */
 import dayjs from 'dayjs';
-import { getLocale } from './omrs-dates';
 import { DurationFormat } from '@formatjs/intl-durationformat';
 import { type DurationFormatOptions, type DurationInput } from '@formatjs/intl-durationformat/src/types';
-
+import { getLocale } from './get-locale';
 /**
  * Gets a human readable and locale supported representation of a person's age, given their birthDate,
  * The representation logic follows the guideline here:

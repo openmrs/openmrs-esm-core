@@ -15,6 +15,7 @@ export * from './modals';
 export * from './workspaces';
 export * from './left-nav';
 export * from './error-state';
+export * from './date-util';
 export * from './datepicker';
 export * from './responsive-wrapper';
 export * from './patient-banner';

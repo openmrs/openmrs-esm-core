@@ -97,10 +97,6 @@ export const useWorkspaces = jest.fn();
 /* esm-utils */
 export {
   getDefaultsFromConfigSchema,
-  parseDate,
-  formatDate,
-  formatDatetime,
-  formatTime,
   getPatientName,
   formatPatientName,
   selectPreferredName,

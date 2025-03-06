@@ -1,5 +1,7 @@
 import React from 'react';
 
+export { parseDate, formatDate, formatDatetime, formatTime } from './src/index';
+
 /* Please keep these stubs in alphabetical order for readability */
 
 // Icon stubs

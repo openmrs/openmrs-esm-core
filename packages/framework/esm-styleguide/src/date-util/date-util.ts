@@ -389,11 +389,6 @@ export function formatDatetime(date: Date, options?: Partial<Omit<FormatDateOpti
 export function getLocale() {
   let language = window.i18next.language;
   language = language.replace('_', '-'); // just in case
-  // hack for `ht` until https://unicode-org.atlassian.net/browse/CLDR-14956 is fixed
-  if (language === 'ht') {
-    language = 'fr-HT';
-  }
-
   return language;
 }
 
