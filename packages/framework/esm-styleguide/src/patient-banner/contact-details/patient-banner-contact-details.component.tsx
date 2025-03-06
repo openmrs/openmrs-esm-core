@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { InlineLoading } from '@carbon/react';
 import { type CoreTranslationKey, getCoreTranslation } from '@openmrs/esm-translations';
 import { ConfigurableLink, usePatient } from '@openmrs/esm-react-utils';
-import { parseDate } from '@openmrs/esm-utils';
+import { parseDate } from '@openmrs/esm-styleguide';
 import { usePatientContactAttributes } from './usePatientAttributes';
 import { usePatientListsForPatient } from './usePatientListsForPatient';
 import { useRelationships } from './useRelationships';

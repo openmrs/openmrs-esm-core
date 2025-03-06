@@ -13,6 +13,7 @@ import {
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
+import { getLocale } from '@openmrs/esm-utils';
 
 dayjs.extend(utc);
 dayjs.extend(isToday);
@@ -380,16 +381,6 @@ export function formatTime(date: Date) {
  */
 export function formatDatetime(date: Date, options?: Partial<Omit<FormatDateOptions, 'time'>>) {
   return formatDate(date, { ...options, time: true });
-}
-
-/**
- * Returns the current locale of the application.
- * @returns string
- */
-export function getLocale() {
-  let language = window.i18next.language;
-  language = language.replace('_', '-'); // just in case
-  return language;
 }
 
 /**

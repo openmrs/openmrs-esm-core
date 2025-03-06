@@ -1,4 +1,5 @@
 export * from './age-helpers';
+export * from './get-locale';
 export * from './is-online';
 export * from './patient-helpers';
 export * from './shallowEqual';

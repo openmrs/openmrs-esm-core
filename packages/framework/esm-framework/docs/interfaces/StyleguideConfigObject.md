@@ -12,7 +12,7 @@
 - [excludePatientIdentifierCodeTypes](StyleguideConfigObject.md#excludepatientidentifiercodetypes)
 - [implementationName](StyleguideConfigObject.md#implementationname)
 - [patientPhotoConceptUuid](StyleguideConfigObject.md#patientphotoconceptuuid)
-- [preferredCalendar](StyleguideConfigObject.md#preferredcalendar)
+- [preferredDateLocale](StyleguideConfigObject.md#preferreddatelocale)
 
 ## Properties
 
@@ -82,9 +82,9 @@ ___
 
 ___
 
-### preferredCalendar
+### preferredDateLocale
 
-• **preferredCalendar**: `Object`
+• **preferredDateLocale**: `Object`
 
 #### Index signature
 

@@ -9,7 +9,7 @@ export interface StyleguideConfigObject {
   };
   implementationName: string;
   patientPhotoConceptUuid: string;
-  preferredCalendar: {
+  preferredDateLocale: {
     [key: string]: string;
   };
 }
@@ -48,37 +48,15 @@ export const esmStyleGuideSchema = {
     _description:
       "Used to look up the patient photo, which is stored as an attachment obs. Set to `null` in order to disable the feature and use only generated avatars. To remove the avatars entirely, use extension configuration's `remove` feature.",
   },
-  preferredCalendar: {
+  preferredDateLocale: {
     _type: Type.Object,
     _description:
-      "Keys should be locale codes, and values should be the preferred calendar for that locale. For example, {'am': 'ethiopic'}.",
+      "Keys should be locale codes, and values should be the preferred locale for formatting dates. For example, {'en': 'en-US'}.",
     _default: {
-      am: 'ethiopic',
+      en: 'en-GB',
     },
     _elements: {
-      _validators: [
-        validators.oneOf([
-          'buddhist',
-          'chinese',
-          'coptic',
-          'dangi',
-          'ethioaa',
-          'ethiopic',
-          'gregory',
-          'hebrew',
-          'indian',
-          'islamic',
-          'islamic-umalqura',
-          'islamic-tbla',
-          'islamic-civil',
-          'islamic-rgsa',
-          'iso8601',
-          'japanese',
-          'persian',
-          'roc',
-          'islamicc',
-        ]),
-      ],
+      _type: Type.String,
     },
   },
 };
