@@ -13,7 +13,6 @@ export { type SnackbarDescriptor, type SnackbarType, type SnackbarMeta } from '.
 export * from './left-nav';
 export * from './error-state';
 export * from './datepicker';
-export * from './date-util';
 export * from './responsive-wrapper';
 export * from './patient-banner';
 export * from './patient-photo';

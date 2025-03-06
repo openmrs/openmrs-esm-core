@@ -21,5 +21,5 @@
       "esnext"
     ]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "../esm-utils/src/dates"]
 }

@@ -70,8 +70,7 @@ import {
 } from 'react-aria-components';
 import dayjs, { type ConfigType as DayjsConfigType } from 'dayjs';
 import { useConfig, useOnClickOutside } from '@openmrs/esm-react-utils';
-import { getLocale } from '@openmrs/esm-utils';
-import { formatDate, getDefaultCalendar } from '@openmrs/esm-styleguide';
+import { getLocale, formatDate, getDefaultCalendar } from '@openmrs/esm-utils';
 import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon, WarningIcon } from '../icons';
 import styles from './datepicker.module.scss';
 import { type StyleguideConfigObject } from '../config-schema';
