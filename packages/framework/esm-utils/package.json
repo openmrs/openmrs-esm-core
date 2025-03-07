@@ -40,8 +40,10 @@
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
+    "@types/lodash-es": "^4.17.12",
     "@types/semver": "^7.3.4",
     "dayjs": "^1.10.4",
+    "jest": "^29.7.0",
     "rxjs": "^6.5.3"
   },
   "peerDependencies": {
@@ -51,8 +53,10 @@
     "rxjs": "6.x"
   },
   "dependencies": {
-    "@formatjs/intl-durationformat": "^0.2.4",
-    "@internationalized/date": "^3.7.0",
+    "@formatjs/intl-durationformat": "^0.7.3",
+    "@internationalized/date": "^3.5.5",
+    "any-date-parser": "^2.0.3",
+    "lodash-es": "^4.17.21",
     "semver": "7.3.2"
   }
 }
