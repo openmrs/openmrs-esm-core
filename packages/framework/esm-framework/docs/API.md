@@ -33,6 +33,7 @@
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
 - [useAttachments](API.md#useattachments)
+- [useEmrConfiguration](API.md#useemrconfiguration)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [usePrimaryIdentifierCode](API.md#useprimaryidentifiercode)
@@ -3124,6 +3125,35 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useAttachments.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L6)
+
+___
+
+### useEmrConfiguration
+
+▸ **useEmrConfiguration**(): `Object`
+
+React hook for fetching and managing OpenMRS EMR configuration
+
+#### Returns
+
+`Object`
+
+Object containing:
+  - emrConfiguration: EmrApiConfigurationResponse | undefined - The EMR configuration data
+  - isLoadingEmrConfiguration: boolean - Loading state indicator
+  - mutateEmrConfiguration: Function - SWR's mutate function for manual revalidation
+  - errorFetchingEmrConfiguration: Error | undefined - Error object if request fails
+
+| Name | Type |
+| :------ | :------ |
+| `emrConfiguration` | `undefined` \| `EmrApiConfigurationResponse` |
+| `errorFetchingEmrConfiguration` | `undefined` \| `Error` |
+| `isLoadingEmrConfiguration` | `boolean` |
+| `mutateEmrConfiguration` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<`EmrApiConfigurationResponse`\>\> |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:151](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L151)
 
 ___
 
