@@ -8,6 +8,7 @@ import {
   useSession,
   type AssignedExtension,
   type Session,
+  useLeftNavStore,
 } from '@openmrs/esm-framework';
 import { isDesktop } from './utils';
 import { mockUser } from '../__mocks__/mock-user';
@@ -21,12 +22,14 @@ const mockIsDesktop = jest.mocked(isDesktop);
 const mockUseConfig = jest.mocked(useConfig);
 const mockUseAssignedExtensions = jest.mocked(useAssignedExtensions);
 const mockUseSession = jest.mocked(useSession);
+const mockUseLeftNavStore = jest.mocked(useLeftNavStore);
 
 mockUseConfig.mockReturnValue({
   logo: { src: null, alt: null, name: 'Mock EMR', link: 'Mock EMR' },
 });
 mockUseAssignedExtensions.mockReturnValue(['mock-extension'] as unknown as AssignedExtension[]);
 mockUseSession.mockReturnValue(mockSession as unknown as Session);
+mockUseLeftNavStore.mockReturnValue({ slotName: '', basePath: '', mode: 'normal' });
 
 jest.mock('./root.resource', () => ({
   getSynchronizedCurrentUser: jest.fn(() => mockUserObservable),
