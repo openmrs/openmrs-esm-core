@@ -12,6 +12,7 @@
 - [excludePatientIdentifierCodeTypes](StyleguideConfigObject.md#excludepatientidentifiercodetypes)
 - [implementationName](StyleguideConfigObject.md#implementationname)
 - [patientPhotoConceptUuid](StyleguideConfigObject.md#patientphotoconceptuuid)
+- [preferredCalendar](StyleguideConfigObject.md#preferredcalendar)
 - [preferredDateLocale](StyleguideConfigObject.md#preferreddatelocale)
 
 ## Properties
@@ -82,6 +83,20 @@ ___
 
 ___
 
+### preferredCalendar
+
+• **preferredCalendar**: `Object`
+
+#### Index signature
+
+▪ [key: `string`]: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L12)
+
+___
+
 ### preferredDateLocale
 
 • **preferredDateLocale**: `Object`
@@ -92,4 +107,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L12)
+[packages/framework/esm-styleguide/src/config-schema.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L15)
