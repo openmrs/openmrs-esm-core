@@ -12,6 +12,9 @@ export interface StyleguideConfigObject {
   preferredCalendar: {
     [key: string]: string;
   };
+  preferredDateLocale: {
+    [key: string]: string;
+  };
 }
 
 export const esmStyleGuideSchema = {
@@ -79,6 +82,17 @@ export const esmStyleGuideSchema = {
           'islamicc',
         ]),
       ],
+    },
+  },
+  preferredDateLocale: {
+    _type: Type.Object,
+    _description:
+      "Allows setting the locale used for date formatting for any browser locale. Does not affect time formatting. Keys should be locale codes, and values should be the preferred locale for formatting dates. For example, {'en': 'en-US', 'fr-CA': 'en-CA'}.",
+    _default: {
+      en: 'en-GB',
+    },
+    _elements: {
+      _type: Type.String,
     },
   },
 };
