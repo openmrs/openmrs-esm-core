@@ -144,3 +144,10 @@ export const useForceUpdate = jest.fn();
 export const usePrimaryIdentifierResource = jest.fn();
 
 export const usePrimaryIdentifierCode = jest.fn();
+
+export const useEmrConfiguration = jest.fn().mockReturnValue({
+  emrConfiguration: undefined,
+  isLoadingEmrConfiguration: false,
+  mutateEmrConfiguration: jest.fn(),
+  errorFetchingEmrConfiguration: undefined,
+});
