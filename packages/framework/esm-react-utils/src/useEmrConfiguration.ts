@@ -9,80 +9,87 @@ interface LocationTag extends OpenmrsResource {
 
 type DispositionType = 'ADMIT' | 'TRANSFER' | 'DISCHARGE';
 
-// Add other properties as needed. Maintain alphabetical order. Keep in lockstep with the customRepresentation below.
+/**
+ * Add other properties as needed. Maintain alphabetical order. Keep in lockstep with the customRepresentation below.
+ *
+ * For all available configuration constants and global property keys, see:
+ * @see https://github.com/openmrs/openmrs-module-emrapi/blob/master/api/src/main/java/org/openmrs/module/emrapi/EmrApiConstants.java
+ */
 interface EmrApiConfigurationResponse {
-  admissionDecisionConcept: OpenmrsResource;
-  admissionEncounterType: OpenmrsResource;
-  admissionForm: OpenmrsResource;
-  atFacilityVisitType: OpenmrsResource;
-  bedAssignmentEncounterType: OpenmrsResource;
-  cancelADTRequestEncounterType: OpenmrsResource;
-  checkInClerkEncounterRole: OpenmrsResource;
-  checkInEncounterType: OpenmrsResource;
-  clinicianEncounterRole: OpenmrsResource;
-  conceptSourcesForDiagnosisSearch: OpenmrsResource;
-  consultEncounterType: OpenmrsResource;
-  consultFreeTextCommentsConcept: OpenmrsResource;
-  denyAdmissionConcept: OpenmrsResource;
-  diagnosisMetadata: OpenmrsResource;
-  diagnosisSets: OpenmrsResource;
-  dischargeForm: OpenmrsResource;
-  dispositionDescriptor: {
-    admissionLocationConcept: OpenmrsResource;
-    dateOfDeathConcept: OpenmrsResource;
-    dispositionConcept: OpenmrsResource;
-    dispositionSetConcept: OpenmrsResource;
-    internalTransferLocationConcept: OpenmrsResource;
+  admissionDecisionConcept?: OpenmrsResource;
+  admissionEncounterType?: OpenmrsResource;
+  admissionForm?: OpenmrsResource;
+  atFacilityVisitType?: OpenmrsResource;
+  bedAssignmentEncounterType?: OpenmrsResource;
+  cancelADTRequestEncounterType?: OpenmrsResource;
+  checkInClerkEncounterRole?: OpenmrsResource;
+  checkInEncounterType?: OpenmrsResource;
+  clinicianEncounterRole?: OpenmrsResource;
+  conceptSourcesForDiagnosisSearch?: OpenmrsResource;
+  consultEncounterType?: OpenmrsResource;
+  consultFreeTextCommentsConcept?: OpenmrsResource;
+  denyAdmissionConcept?: OpenmrsResource;
+  diagnosisMetadata?: OpenmrsResource;
+  diagnosisSets?: OpenmrsResource;
+  dischargeForm?: OpenmrsResource;
+  dispositionDescriptor?: {
+    admissionLocationConcept?: OpenmrsResource;
+    dateOfDeathConcept?: OpenmrsResource;
+    dispositionConcept?: OpenmrsResource;
+    dispositionSetConcept?: OpenmrsResource;
+    internalTransferLocationConcept?: OpenmrsResource;
   };
-  dispositions: Array<{
-    actions: [];
-    additionalObs: null;
-    careSettingTypes: ['OUTPATIENT'];
-    conceptCode: string;
-    encounterTypes: null;
-    excludedEncounterTypes: Array<string>;
-    keepsVisitOpen: null;
-    name: string;
-    type: DispositionType;
-    uuid: string;
+  dispositions?: Array<{
+    actions?: [];
+    additionalObs?: null;
+    careSettingTypes?: ['OUTPATIENT'];
+    conceptCode?: string;
+    encounterTypes?: null;
+    excludedEncounterTypes?: Array<string>;
+    keepsVisitOpen?: null;
+    name?: string;
+    type?: DispositionType;
+    uuid?: string;
   }>;
-  emrApiConceptSource: OpenmrsResource;
-  exitFromInpatientEncounterType: OpenmrsResource;
-  extraPatientIdentifierTypes: OpenmrsResource;
-  fullPrivilegeLevel: OpenmrsResource;
-  highPrivilegeLevel: OpenmrsResource;
-  identifierTypesToSearch: OpenmrsResource;
-  inpatientNoteEncounterType: OpenmrsResource;
-  lastViewedPatientSizeLimit: OpenmrsResource;
-  metadataSourceName: OpenmrsResource;
-  motherChildRelationshipType: OpenmrsResource;
-  narrowerThanConceptMapType: OpenmrsResource;
-  nonDiagnosisConceptSets: OpenmrsResource;
-  orderingProviderEncounterRole: OpenmrsResource;
-  patientDiedConcept: OpenmrsResource;
-  personImageDirectory: OpenmrsResource;
-  primaryIdentifierType: OpenmrsResource;
-  sameAsConceptMapType: OpenmrsResource;
-  suppressedDiagnosisConcepts: OpenmrsResource;
-  supportsAdmissionLocationTag: LocationTag;
-  supportsLoginLocationTag: LocationTag;
-  supportsTransferLocationTag: LocationTag;
-  supportsVisitsLocationTag: LocationTag;
-  telephoneAttributeType: OpenmrsResource;
-  testPatientPersonAttributeType: OpenmrsResource;
-  transferForm: OpenmrsResource;
-  transferRequestEncounterType: OpenmrsResource;
-  transferWithinHospitalEncounterType: OpenmrsResource;
-  unknownCauseOfDeathConcept: OpenmrsResource;
-  unknownLocation: OpenmrsResource;
-  unknownPatientPersonAttributeType: OpenmrsResource;
-  unknownProvider: OpenmrsResource;
-  visitAssignmentHandlerAdjustEncounterTimeOfDayIfNecessary: OpenmrsResource;
-  visitExpireHours: OpenmrsResource;
-  visitNoteEncounterType: OpenmrsResource;
+  emrApiConceptSource?: OpenmrsResource;
+  exitFromInpatientEncounterType?: OpenmrsResource;
+  extraPatientIdentifierTypes?: OpenmrsResource;
+  fullPrivilegeLevel?: OpenmrsResource;
+  highPrivilegeLevel?: OpenmrsResource;
+  identifierTypesToSearch?: OpenmrsResource;
+  inpatientNoteEncounterType?: OpenmrsResource;
+  lastViewedPatientSizeLimit?: OpenmrsResource;
+  metadataSourceName?: OpenmrsResource;
+  motherChildRelationshipType?: OpenmrsResource;
+  narrowerThanConceptMapType?: OpenmrsResource;
+  nonDiagnosisConceptSets?: OpenmrsResource;
+  orderingProviderEncounterRole?: OpenmrsResource;
+  patientDiedConcept?: OpenmrsResource;
+  personImageDirectory?: OpenmrsResource;
+  primaryIdentifierType?: OpenmrsResource;
+  sameAsConceptMapType?: OpenmrsResource;
+  suppressedDiagnosisConcepts?: OpenmrsResource;
+  supportsAdmissionLocationTag?: LocationTag;
+  supportsLoginLocationTag?: LocationTag;
+  supportsTransferLocationTag?: LocationTag;
+  supportsVisitsLocationTag?: LocationTag;
+  telephoneAttributeType?: OpenmrsResource;
+  testPatientPersonAttributeType?: OpenmrsResource;
+  transferForm?: OpenmrsResource;
+  transferRequestEncounterType?: OpenmrsResource;
+  transferWithinHospitalEncounterType?: OpenmrsResource;
+  unknownCauseOfDeathConcept?: OpenmrsResource;
+  unknownLocation?: OpenmrsResource;
+  unknownPatientPersonAttributeType?: OpenmrsResource;
+  unknownProvider?: OpenmrsResource;
+  visitAssignmentHandlerAdjustEncounterTimeOfDayIfNecessary?: OpenmrsResource;
+  visitExpireHours?: OpenmrsResource;
+  visitNoteEncounterType?: OpenmrsResource;
 }
 
-// Add other properties as needed. Maintain alphabetical order.
+/*
+ * Add other properties as needed. Maintain alphabetical order. Keep in lockstep with the interface above.
+ */
 const customRepProps = [
   ['admissionDecisionConcept', 'ref'],
   ['admissionEncounterType', 'ref'],
