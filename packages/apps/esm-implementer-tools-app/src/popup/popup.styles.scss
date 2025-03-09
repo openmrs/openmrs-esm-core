@@ -12,6 +12,7 @@
   color: $color-gray-100;
   box-sizing: border-box;
 
+  transition: height 0.05s ease;
   tr {
     th,
     td {
@@ -22,7 +23,8 @@
 
 .content {
   width: 100%;
-  height: 50vh;
+  height: calc(100% - 50px);
+  overflow-y: auto;
 }
 
 .tabs {
@@ -66,5 +68,42 @@
 .closeButton {
   svg {
     fill: theme.$icon-primary;
+  }
+}
+
+.resizer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background-color: transparent;
+  cursor: n-resize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-5px);
+  z-index: 100001;
+
+  &:hover .resizerHandle {
+    background-color: theme.$icon-primary;
+  }
+}
+
+.resizerHandle {
+  width: 60px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: theme.$border-subtle;
+  transition: background-color 0.2s ease;
+}
+
+// Global class to prevent text selection during resizing
+:global(.no-select) {
+  user-select: none !important;
+  cursor: ns-resize !important;
+
+  * {
+    user-select: none !important;
   }
 }
