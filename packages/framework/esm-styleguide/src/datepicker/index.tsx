@@ -69,10 +69,11 @@ import {
   useContextProps,
 } from 'react-aria-components';
 import dayjs, { type ConfigType as DayjsConfigType } from 'dayjs';
-import { useOnClickOutside } from '@openmrs/esm-react-utils';
-import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
+import { useConfig, useOnClickOutside } from '@openmrs/esm-react-utils';
+import { getLocale, formatDate, getDefaultCalendar } from '@openmrs/esm-utils';
 import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon, WarningIcon } from '../icons';
 import styles from './datepicker.module.scss';
+import { type StyleguideConfigObject } from '../config-schema';
 
 /** A type for any of the acceptable date formats */
 export type DateInputValue = CalendarDate | CalendarDateTime | ZonedDateTime | DayjsConfigType;
@@ -447,14 +448,16 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
       ...datePickerProps
     } = Object.assign({}, defaultProps, props);
 
+    const config = useConfig<StyleguideConfigObject>({ externalModuleName: '@openmrs/esm-styleguide' });
+    const preferredDateLocaleMap = config.preferredDateLocale;
+
     const id = useId();
 
     const locale = useMemo(() => {
       let locale = getLocale();
-      let intlLocale = new Intl.Locale(locale);
 
-      if (intlLocale.language === 'en' && !intlLocale.region) {
-        locale = 'en-GB';
+      if (preferredDateLocaleMap[locale]) {
+        locale = preferredDateLocaleMap[locale];
       }
 
       return locale;

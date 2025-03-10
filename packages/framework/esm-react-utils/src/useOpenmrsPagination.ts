@@ -1,5 +1,5 @@
 /** @module @category UI */
-import { type FetchResponse, openmrsFetch } from '@openmrs/esm-api';
+import { type FetchResponse, makeUrl, openmrsFetch } from '@openmrs/esm-api';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import useSWR, { type SWRConfiguration } from 'swr';
 import useSWRImmutable from 'swr/immutable';
@@ -68,7 +68,7 @@ type OpenmrsServerPaginationHandlers<T> = ServerPaginationHandlers<T, OpenMRSPag
 export const openmrsServerPaginationHandlers: OpenmrsServerPaginationHandlers<any> = {
   getPaginatedUrl: (url: string | URL, limit: number, startIndex: number) => {
     if (url) {
-      const urlUrl = new URL(url.toString());
+      const urlUrl = new URL(makeUrl(url.toString()), window.location.toString());
       urlUrl.searchParams.set('limit', '' + limit);
       urlUrl.searchParams.set('startIndex', '' + startIndex);
       urlUrl.searchParams.set('totalCount', 'true');

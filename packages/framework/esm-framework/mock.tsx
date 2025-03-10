@@ -16,6 +16,8 @@ export * from '@openmrs/esm-state/mock';
 export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
 
+export { parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
+
 /* esm-globals */
 
 export function setupPaths(config: any) {
@@ -97,10 +99,6 @@ export const useWorkspaces = jest.fn();
 /* esm-utils */
 export {
   getDefaultsFromConfigSchema,
-  parseDate,
-  formatDate,
-  formatDatetime,
-  formatTime,
   getPatientName,
   formatPatientName,
   selectPreferredName,

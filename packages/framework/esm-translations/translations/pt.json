@@ -55,7 +55,7 @@
   "stateProvince": "Estado",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Desconhecido",
-  "unsavedChangesInWorkspace": "Existem alterações não gravadas em {{workspaceName}}. Favor de salva-los antes de abrir outro espaço de trabalho.",
+  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "Alterações não gravadas",
   "workspaceHeader": "Cabeçalho do espaço de trabalho"
 }

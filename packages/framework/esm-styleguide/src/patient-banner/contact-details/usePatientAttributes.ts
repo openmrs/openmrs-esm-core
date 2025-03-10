@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
 import { useConfig } from '@openmrs/esm-react-utils';
@@ -25,19 +26,34 @@ export const usePatientAttributes = (patientUuid: string) => {
 };
 
 /**
- *  React hook that takes patientUuid {@link string} and return contact details
- *  derived from patient-attributes using configured attributeTypes
- * @param patientUuid Unique patient identifier {@type string}
- * @returns Object containing `contactAttribute` {@link Attribute} loading status
+ * React hook that takes patientUuid and returns contact details
+ * derived from patient attributes using configured attributeTypes.
+ *
+ * Note: This hook loads configuration from '@openmrs/esm-patient-banner-app'
+ * because the contact attribute types are defined in the patient banner's
+ * configuration schema. While this hook lives in esm-styleguide, it serves
+ * the patient banner's contact details display.
+ *
+ * @param patientUuid - Unique patient identifier
+ * @returns {Object} Object containing filtered contact attributes, loading status, and error
+ * @property {Array} contactAttributes - List of contact-related attributes
+ * @property {boolean} isLoading - Loading status
+ * @property {Error|null} error - Error object if request fails
  */
 export const usePatientContactAttributes = (patientUuid: string) => {
-  const { contactAttributeTypes } = useConfig();
-  const { attributes, isLoading } = usePatientAttributes(patientUuid);
-  const contactAttributes = attributes.filter(
-    ({ attributeType }) => contactAttributeTypes?.some((uuid) => attributeType.uuid === uuid),
+  const { contactAttributeTypes = [] } = useConfig({
+    externalModuleName: '@openmrs/esm-patient-banner-app',
+  });
+
+  const { attributes, error, isLoading } = usePatientAttributes(patientUuid);
+  const contactAttributes = useMemo(
+    () => attributes.filter(({ attributeType }) => contactAttributeTypes?.some((uuid) => attributeType.uuid === uuid)),
+    [attributes, contactAttributeTypes],
   );
+
   return {
-    contactAttributes: contactAttributes ?? [],
+    contactAttributes,
     isLoading,
+    error,
   };
 };

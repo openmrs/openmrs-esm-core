@@ -1,7 +1,13 @@
-import { toOmrsIsoString, toDateObjectStrict, isOmrsDateStrict } from './omrs-dates';
+import {
+  toOmrsIsoString,
+  toDateObjectStrict,
+  isOmrsDateStrict,
+  formatDate,
+  formatDatetime,
+  formatTime,
+} from './date-util';
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
-import { formatDate, formatDatetime, formatTime } from '.';
 import type { i18n } from 'i18next';
 
 window.i18next = { language: 'en' } as i18n;

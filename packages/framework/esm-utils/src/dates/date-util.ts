@@ -13,6 +13,7 @@ import {
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
+import { getLocale } from '@openmrs/esm-utils';
 
 dayjs.extend(utc);
 dayjs.extend(isToday);
@@ -87,46 +88,6 @@ export function toOmrsIsoString(date: DateInput, toUTC = false): string {
   }
 
   return d.format(isoFormat);
-}
-
-/**
- * @deprecated use `formatTime`
- * Formats the input as a time string using the format "HH:mm".
- */
-export function toOmrsTimeString24(date: DateInput) {
-  return dayjs(date).format('HH:mm');
-}
-
-/**
- * @deprecated use `formatTime`
- * Formats the input as a time string using the format "HH:mm A".
- */
-export function toOmrsTimeString(date: DateInput) {
-  return dayjs.utc(date).format('HH:mm A');
-}
-
-/**
- * @deprecated use `formatDate(date, "wide")`
- * Formats the input as a date string using the format "DD - MMM - YYYY".
- */
-export function toOmrsDayDateFormat(date: DateInput) {
-  return toOmrsDateFormat(date, 'DD - MMM - YYYY');
-}
-
-/**
- * @deprecated use `formatDate(date, "no year")`
- * Formats the input as a date string using the format "DD-MMM".
- */
-export function toOmrsYearlessDateFormat(date: DateInput) {
-  return toOmrsDateFormat(date, 'DD-MMM');
-}
-
-/**
- * @deprecated use `formatDate(date)`
- * Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
- */
-export function toOmrsDateFormat(date: DateInput, format = 'YYYY-MMM-DD') {
-  return dayjs(date).format(format);
 }
 
 /**
@@ -380,21 +341,6 @@ export function formatTime(date: Date) {
  */
 export function formatDatetime(date: Date, options?: Partial<Omit<FormatDateOptions, 'time'>>) {
   return formatDate(date, { ...options, time: true });
-}
-
-/**
- * Returns the current locale of the application.
- * @returns string
- */
-export function getLocale() {
-  let language = window.i18next.language;
-  language = language.replace('_', '-'); // just in case
-  // hack for `ht` until https://unicode-org.atlassian.net/browse/CLDR-14956 is fixed
-  if (language === 'ht') {
-    language = 'fr-HT';
-  }
-
-  return language;
 }
 
 /**
