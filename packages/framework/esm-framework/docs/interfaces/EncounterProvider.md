@@ -1,28 +1,24 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / EncounterProvider
 
-# Interface: OpenmrsResource
+# Interface: EncounterProvider
 
 ## Hierarchy
 
 - [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
 
-  ↳ **`OpenmrsResource`**
-
-  ↳↳ [`User`](User.md)
-
-## Indexable
-
-▪ [anythingElse: `string`]: `any`
+  ↳ **`EncounterProvider`**
 
 ## Table of contents
 
 ### Properties
 
-- [auditInfo](OpenmrsResource.md#auditinfo)
-- [display](OpenmrsResource.md#display)
-- [links](OpenmrsResource.md#links)
-- [resourceVersion](OpenmrsResource.md#resourceversion)
-- [uuid](OpenmrsResource.md#uuid)
+- [auditInfo](EncounterProvider.md#auditinfo)
+- [display](EncounterProvider.md#display)
+- [encounterRole](EncounterProvider.md#encounterrole)
+- [links](EncounterProvider.md#links)
+- [provider](EncounterProvider.md#provider)
+- [resourceVersion](EncounterProvider.md#resourceversion)
+- [uuid](EncounterProvider.md#uuid)
 
 ## Properties
 
@@ -54,6 +50,16 @@ ___
 
 ___
 
+### encounterRole
+
+• **encounterRole**: [`EncounterRole`](EncounterRole.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/encounter-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L27)
+
+___
+
 ### links
 
 • `Optional` **links**: [`Link`](Link.md)[]
@@ -65,6 +71,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+
+___
+
+### provider
+
+• **provider**: [`OpenmrsResource`](OpenmrsResource.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/encounter-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L26)
 
 ___
 

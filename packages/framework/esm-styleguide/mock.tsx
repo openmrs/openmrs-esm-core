@@ -1,3 +1,4 @@
+import { Diagnosis } from '@openmrs/esm-api';
 import React from 'react';
 
 /* Please keep these stubs in alphabetical order for readability */
@@ -130,3 +131,11 @@ export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
     </div>
   );
 });
+
+export const DiagnosisTags = jest.fn(({ diagnoses }) => (
+  <>
+    {diagnoses.map((d) => (
+      <span key={d.uuid}>{d.display}</span>
+    ))}
+  </>
+));

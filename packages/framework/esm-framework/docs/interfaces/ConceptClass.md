@@ -1,28 +1,25 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / ConceptClass
 
-# Interface: OpenmrsResource
+# Interface: ConceptClass
 
 ## Hierarchy
 
 - [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
 
-  ↳ **`OpenmrsResource`**
-
-  ↳↳ [`User`](User.md)
-
-## Indexable
-
-▪ [anythingElse: `string`]: `any`
+  ↳ **`ConceptClass`**
 
 ## Table of contents
 
 ### Properties
 
-- [auditInfo](OpenmrsResource.md#auditinfo)
-- [display](OpenmrsResource.md#display)
-- [links](OpenmrsResource.md#links)
-- [resourceVersion](OpenmrsResource.md#resourceversion)
-- [uuid](OpenmrsResource.md#uuid)
+- [auditInfo](ConceptClass.md#auditinfo)
+- [description](ConceptClass.md#description)
+- [display](ConceptClass.md#display)
+- [links](ConceptClass.md#links)
+- [name](ConceptClass.md#name)
+- [resourceVersion](ConceptClass.md#resourceversion)
+- [retired](ConceptClass.md#retired)
+- [uuid](ConceptClass.md#uuid)
 
 ## Properties
 
@@ -37,6 +34,16 @@
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
+
+___
+
+### description
+
+• `Optional` **description**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/concept-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L12)
 
 ___
 
@@ -68,6 +75,16 @@ ___
 
 ___
 
+### name
+
+• `Optional` **name**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/concept-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L11)
+
+___
+
 ### resourceVersion
 
 • `Optional` **resourceVersion**: `string`
@@ -79,6 +96,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+
+___
+
+### retired
+
+• `Optional` **retired**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/concept-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L13)
 
 ___
 
