@@ -12,7 +12,7 @@
   "change": "Cambiar",
   "city": "Ciudad",
   "cityVillage": "Ciudad",
-  "Clinic": "Clinic",
+  "Clinic": "Clínica",
   "close": "Cerrar",
   "closeAllOpenedWorkspaces": "Descartar cambios en {{count}} espacios de trabajo",
   "closingAllWorkspacesPromptBody": "Hay cambios sin guardar en los siguientes espacios de trabajo. ¿Desea descartar los cambios en los siguientes espacios de trabajo? {{workspaceNames}}",
@@ -53,9 +53,9 @@
   "showMore": "Mostrar más",
   "state": "Estado",
   "stateProvince": "Estado",
-  "toggleDevTools": "Toggle dev tools",
+  "toggleDevTools": "Alternar herramientas de desarrollo",
   "unknown": "Desconocido",
-  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
+  "unsavedChangesInWorkspace": "Pueden haber cambios no guardados en \"{{workspaceName}}\". Por favor guárdelos antes de abrir otro espacio de trabajo.",
   "unsavedChangesTitleText": "Cambios sin guardar",
   "workspaceHeader": "Encabezado del espacio de trabajo"
 }
