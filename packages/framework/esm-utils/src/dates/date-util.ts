@@ -151,9 +151,7 @@ const defaultOptions: FormatDateOptions = {
 class LocaleCalendars {
   #registry = new Map<string, string>();
 
-  constructor() {
-    this.#registry.set('am', 'ethiopic');
-  }
+  constructor() {}
 
   register(locale: string, calendar: string) {
     this.#registry.set(locale, calendar);

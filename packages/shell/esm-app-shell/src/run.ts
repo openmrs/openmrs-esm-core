@@ -22,6 +22,7 @@ import {
   messageOmrsServiceWorker,
   subscribeConnectivity,
   getCurrentUser,
+  getConfig,
   setupModals,
   dispatchPrecacheStaticDependencies,
   activateOfflineCapability,
@@ -44,6 +45,7 @@ import { setupI18n } from './locale';
 import { registerOptionalDependencyHandler } from './optionaldeps';
 import { appName, getCoreExtensions } from './ui';
 import { setupCoreConfig } from './core-config';
+import { registerDefaultCalendar, type StyleguideConfigObject } from '@openmrs/esm-framework';
 
 // @internal
 // used to track when the window.installedModules global is finalised
@@ -192,9 +194,16 @@ function connectivityChanged() {
 /**
  * Runs the shell by importing the translations and starting single SPA.
  */
-function runShell() {
+async function runShell() {
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
+    .then(async () => {
+      const { preferredCalendar } = await getConfig<StyleguideConfigObject>('@openmrs/esm-styleguide');
+
+      for (const entry of Object.entries(preferredCalendar)) {
+        registerDefaultCalendar(entry[0], entry[1]);
+      }
+    })
     .then(() => start());
 }
 

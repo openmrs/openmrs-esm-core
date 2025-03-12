@@ -114,7 +114,9 @@ export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
 
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
-export const useOnClickOutside = jest.fn();
+export const useOnClickOutside = jest.fn(function useOnClickOutside() {
+  return React.useRef();
+});
 
 export const useBodyScrollLock = jest.fn();
 
