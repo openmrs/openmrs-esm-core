@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-- [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
+- [`OpenmrsResource`](OpenmrsResource.md)
 
   ↳ **`EncounterRole`**
 
@@ -29,7 +29,7 @@
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[auditInfo](OpenmrsResourceStrict.md#auditinfo)
+[OpenmrsResource](OpenmrsResource.md).[auditInfo](OpenmrsResource.md#auditinfo)
 
 #### Defined in
 
@@ -39,11 +39,11 @@ ___
 
 ### description
 
-• **description**: `string`
+• `Optional` **description**: `string`
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/encounter-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L32)
+[packages/framework/esm-api/src/types/encounter-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L34)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[display](OpenmrsResourceStrict.md#display)
+[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
 
 #### Defined in
 
@@ -67,7 +67,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[links](OpenmrsResourceStrict.md#links)
+[OpenmrsResource](OpenmrsResource.md).[links](OpenmrsResource.md#links)
 
 #### Defined in
 
@@ -77,11 +77,11 @@ ___
 
 ### name
 
-• **name**: `string`
+• `Optional` **name**: `string`
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/encounter-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L31)
+[packages/framework/esm-api/src/types/encounter-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L33)
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[resourceVersion](OpenmrsResourceStrict.md#resourceversion)
+[OpenmrsResource](OpenmrsResource.md).[resourceVersion](OpenmrsResource.md#resourceversion)
 
 #### Defined in
 
@@ -101,11 +101,11 @@ ___
 
 ### retired
 
-• **retired**: `boolean`
+• `Optional` **retired**: `boolean`
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/encounter-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L33)
+[packages/framework/esm-api/src/types/encounter-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L35)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[uuid](OpenmrsResourceStrict.md#uuid)
+[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
 
 #### Defined in
 

@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-- [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
+- [`OpenmrsResource`](OpenmrsResource.md)
 
   ↳ **`EncounterProvider`**
 
@@ -28,7 +28,7 @@
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[auditInfo](OpenmrsResourceStrict.md#auditinfo)
+[OpenmrsResource](OpenmrsResource.md).[auditInfo](OpenmrsResource.md#auditinfo)
 
 #### Defined in
 
@@ -42,7 +42,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[display](OpenmrsResourceStrict.md#display)
+[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
 
 #### Defined in
 
@@ -52,11 +52,11 @@ ___
 
 ### encounterRole
 
-• **encounterRole**: [`EncounterRole`](EncounterRole.md)
+• `Optional` **encounterRole**: [`EncounterRole`](EncounterRole.md)
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/encounter-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L27)
+[packages/framework/esm-api/src/types/encounter-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L29)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[links](OpenmrsResourceStrict.md#links)
+[OpenmrsResource](OpenmrsResource.md).[links](OpenmrsResource.md#links)
 
 #### Defined in
 
@@ -76,11 +76,11 @@ ___
 
 ### provider
 
-• **provider**: [`OpenmrsResource`](OpenmrsResource.md)
+• `Optional` **provider**: [`OpenmrsResource`](OpenmrsResource.md)
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/encounter-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L26)
+[packages/framework/esm-api/src/types/encounter-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L28)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[resourceVersion](OpenmrsResourceStrict.md#resourceversion)
+[OpenmrsResource](OpenmrsResource.md).[resourceVersion](OpenmrsResource.md#resourceversion)
 
 #### Defined in
 
@@ -104,7 +104,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[uuid](OpenmrsResourceStrict.md#uuid)
+[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
 
 #### Defined in
 

@@ -10,19 +10,7 @@ accounted for, use OpenmrsResource instead.
 
 - **`OpenmrsResourceStrict`**
 
-  ↳ [`Concept`](Concept.md)
-
   ↳ [`ConceptClass`](ConceptClass.md)
-
-  ↳ [`Diagnosis`](Diagnosis.md)
-
-  ↳ [`Encounter`](Encounter.md)
-
-  ↳ [`EncounterType`](EncounterType.md)
-
-  ↳ [`EncounterProvider`](EncounterProvider.md)
-
-  ↳ [`EncounterRole`](EncounterRole.md)
 
   ↳ [`Obs`](Obs.md)
 

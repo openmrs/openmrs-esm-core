@@ -5,30 +5,32 @@ import { type Visit } from './visit-resource';
 import { type Diagnosis } from './diagnosis-resource';
 import { type Obs } from './obs-resource';
 
-export interface Encounter extends OpenmrsResourceStrict {
-  encounterDateTime?: string;
+// TODO: make this extends OpenmrsResourceStrict
+export interface Encounter extends OpenmrsResource {
+  encounterDatetime?: string;
   patient?: Patient;
   location?: Location;
   encounterType?: EncounterType;
   obs?: Array<Obs>;
   visit?: Visit;
-  encounterProviders?: Array<OpenmrsResource>;
+  encounterProviders?: Array<EncounterProvider>;
   diagnoses?: Array<Diagnosis>;
+  form?: OpenmrsResource;
 }
 
-export interface EncounterType extends OpenmrsResourceStrict {
-  name: string;
-  description: string;
-  retired: boolean;
+export interface EncounterType extends OpenmrsResource {
+  name?: string;
+  description?: string;
+  retired?: boolean;
 }
 
-export interface EncounterProvider extends OpenmrsResourceStrict {
-  provider: OpenmrsResource;
-  encounterRole: EncounterRole;
+export interface EncounterProvider extends OpenmrsResource {
+  provider?: OpenmrsResource;
+  encounterRole?: EncounterRole;
 }
 
-export interface EncounterRole extends OpenmrsResourceStrict {
-  name: string;
-  description: string;
-  retired: boolean;
+export interface EncounterRole extends OpenmrsResource {
+  name?: string;
+  description?: string;
+  retired?: boolean;
 }
