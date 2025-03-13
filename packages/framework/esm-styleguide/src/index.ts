@@ -8,6 +8,7 @@ import { setupPictograms } from './pictograms/pictogram-registration';
 export * from './breakpoints';
 export * from './custom-overflow-menu';
 export * from './datepicker';
+export * from './diagnosis-tags';
 export * from './error-state';
 export * from './icons';
 export * from './left-nav';
@@ -22,7 +23,6 @@ export * from './snackbars';
 export * from './spinner';
 export * from './toasts';
 export * from './workspaces';
-export * from './diagnoses-tags';
 
 defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
 setupBranding();

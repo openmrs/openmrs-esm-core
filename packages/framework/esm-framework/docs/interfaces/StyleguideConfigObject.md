@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L46)
+[packages/framework/esm-styleguide/src/config-schema.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L4)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L47)
+[packages/framework/esm-styleguide/src/config-schema.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L5)
 
 ___
 
@@ -44,17 +44,24 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L48)
+[packages/framework/esm-styleguide/src/config-schema.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L6)
 
 ___
 
 ### diagnosisTags
 
-• **diagnosisTags**: `DiagnosisTagsConfig`[]
+• **diagnosisTags**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `primaryColor` | ``"red"`` \| ``"magenta"`` \| ``"purple"`` \| ``"blue"`` \| ``"teal"`` \| ``"cyan"`` \| ``"gray"`` \| ``"orange"`` \| ``"green"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
+| `secondaryColor` | ``"red"`` \| ``"magenta"`` \| ``"purple"`` \| ``"blue"`` \| ``"teal"`` \| ``"cyan"`` \| ``"gray"`` \| ``"orange"`` \| ``"green"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L60)
+[packages/framework/esm-styleguide/src/config-schema.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L18)
 
 ___
 
@@ -70,7 +77,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L49)
+[packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L7)
 
 ___
 
@@ -80,7 +87,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L52)
+[packages/framework/esm-styleguide/src/config-schema.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L10)
 
 ___
 
@@ -90,7 +97,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L53)
+[packages/framework/esm-styleguide/src/config-schema.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L11)
 
 ___
 
@@ -104,7 +111,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L54)
+[packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L12)
 
 ___
 
@@ -118,4 +125,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L57)
+[packages/framework/esm-styleguide/src/config-schema.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L15)

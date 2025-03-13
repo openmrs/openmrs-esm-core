@@ -1,47 +1,5 @@
 import { type ConfigSchema, Type, validators } from '@openmrs/esm-config';
-import { type DiagnosisTagsConfig } from './diagnoses-tags/diagnosis-tags.resource';
-
-export const carbonTagColors = [
-  'red',
-  'magenta',
-  'purple',
-  'blue',
-  'teal',
-  'cyan',
-  'gray',
-  'orange',
-  'green',
-  'warm-gray',
-  'cool-gray',
-  'high-contrast',
-  'outline',
-] as const;
-
-export const diagnosisTagConfigSchema: ConfigSchema = {
-  _type: Type.Array,
-  _description: 'Configures the tag colors to display for diagnoses of different ranks (e.g. primary, secondary)',
-  _elements: {
-    _type: Type.Object,
-    _elements: {
-      tagColor: {
-        _type: Type.String,
-        _description: 'The color of the tag',
-        _validators: validators.oneOf(carbonTagColors),
-      },
-      appliedToRanks: {
-        _type: Type.Array,
-        _elements: {
-          _type: Type.Number,
-          _description: 'A list of ranks (ex: 1 = Primary, 2 = Secondary) to apply the tag color to',
-        },
-      },
-    },
-  },
-  _default: [
-    { tagColor: 'red', appliedToRanks: [1] },
-    { tagColor: 'blue', appliedToRanks: [2] },
-  ],
-};
+import { type CarbonTagColor, carbonTagColors } from './utils';
 export interface StyleguideConfigObject {
   'Brand color #1': string;
   'Brand color #2': string;
@@ -57,8 +15,26 @@ export interface StyleguideConfigObject {
   preferredDateLocale: {
     [key: string]: string;
   };
-  diagnosisTags: Array<DiagnosisTagsConfig>;
+  diagnosisTags: {
+    primaryColor: CarbonTagColor;
+    secondaryColor: CarbonTagColor;
+  };
 }
+
+const diagnosisTagConfigSchema: ConfigSchema = {
+  primaryColor: {
+    _type: Type.String,
+    _description: 'The color for displaying primary diagnoses tags',
+    _default: 'red',
+    _validators: [validators.oneOf(carbonTagColors)],
+  },
+  secondaryColor: {
+    _type: Type.String,
+    _description: 'The color for displaying secondary diagnoses tags',
+    _default: 'blue',
+    _validators: [validators.oneOf(carbonTagColors)],
+  },
+};
 
 export const esmStyleGuideSchema: ConfigSchema = {
   'Brand color #1': {

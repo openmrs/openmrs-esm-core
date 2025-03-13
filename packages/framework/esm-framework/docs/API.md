@@ -1462,12 +1462,12 @@ ___
 • `Const` **DiagnosisTags**: `React.FC`<`DiagnosisTagsProps`\>
 
 This component takes a list of diagnoses and displays them as
-Carbon tags, with colors configured base on the rank (e.g. primary or
-secondary) of the diagnoses.
+Carbon tags, with colors configured base on whether the diagnoses are primary
+or secondary.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/diagnoses-tags/diagnosis-tags.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnoses-tags/diagnosis-tags.component.tsx#L15)
+[packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L16)
 
 ___
 
@@ -2365,7 +2365,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
 
 ___
 
@@ -7123,7 +7123,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L18)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L19)
 
 ___
 
@@ -7372,7 +7372,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L22)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L23)
 
 ___
 
