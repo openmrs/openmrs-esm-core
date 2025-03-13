@@ -47,7 +47,7 @@ const HeaderItems: React.FC = () => {
   );
 
   const showHamburger = useMemo(
-    () => (!isDesktop(layout) || mode == 'collapsed') && navMenuItems.length > 0,
+    () => (!isDesktop(layout) || mode === 'collapsed') && navMenuItems.length > 0,
     [navMenuItems.length, layout, mode],
   );
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
