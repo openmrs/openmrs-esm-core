@@ -5,6 +5,7 @@ import {
   formatDate,
   formatDatetime,
   formatTime,
+  registerDefaultCalendar,
 } from './date-util';
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
@@ -79,6 +80,8 @@ describe('Openmrs Dates', () => {
   });
 
   it('formats dates with respect to the active calendar', () => {
+    registerDefaultCalendar('am', 'ethiopic');
+
     timezoneMock.register('UTC');
     const testDate = new Date('2021-12-09T13:15:33');
     window.i18next.language = 'am';
