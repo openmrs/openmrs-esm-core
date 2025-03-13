@@ -161,7 +161,7 @@ Omit.children
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:53
+node_modules/react-aria-components/dist/types.d.ts:60
 
 ___
 
@@ -607,7 +607,7 @@ Omit.slot
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:70
+node_modules/react-aria-components/dist/types.d.ts:77
 
 ___
 
@@ -623,7 +623,7 @@ Omit.style
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:47
+node_modules/react-aria-components/dist/types.d.ts:54
 
 ___
 
@@ -643,7 +643,7 @@ Omit.validationBehavior
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:81
+node_modules/react-aria-components/dist/types.d.ts:88
 
 ___
 

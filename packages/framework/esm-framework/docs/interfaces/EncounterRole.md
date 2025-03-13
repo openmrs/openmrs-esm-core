@@ -1,28 +1,25 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / EncounterRole
 
-# Interface: OpenmrsResource
+# Interface: EncounterRole
 
 ## Hierarchy
 
 - [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
 
-  ↳ **`OpenmrsResource`**
-
-  ↳↳ [`User`](User.md)
-
-## Indexable
-
-▪ [anythingElse: `string`]: `any`
+  ↳ **`EncounterRole`**
 
 ## Table of contents
 
 ### Properties
 
-- [auditInfo](OpenmrsResource.md#auditinfo)
-- [display](OpenmrsResource.md#display)
-- [links](OpenmrsResource.md#links)
-- [resourceVersion](OpenmrsResource.md#resourceversion)
-- [uuid](OpenmrsResource.md#uuid)
+- [auditInfo](EncounterRole.md#auditinfo)
+- [description](EncounterRole.md#description)
+- [display](EncounterRole.md#display)
+- [links](EncounterRole.md#links)
+- [name](EncounterRole.md#name)
+- [resourceVersion](EncounterRole.md#resourceversion)
+- [retired](EncounterRole.md#retired)
+- [uuid](EncounterRole.md#uuid)
 
 ## Properties
 
@@ -37,6 +34,16 @@
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
+
+___
+
+### description
+
+• **description**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/encounter-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L32)
 
 ___
 
@@ -68,6 +75,16 @@ ___
 
 ___
 
+### name
+
+• **name**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/encounter-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L31)
+
+___
+
 ### resourceVersion
 
 • `Optional` **resourceVersion**: `string`
@@ -79,6 +96,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+
+___
+
+### retired
+
+• **retired**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/encounter-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L33)
 
 ___
 

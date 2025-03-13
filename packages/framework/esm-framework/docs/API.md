@@ -719,7 +719,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L16)
+[packages/framework/esm-api/src/types/visit-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L18)
 
 ___
 
@@ -1454,6 +1454,20 @@ Note this is an alias for ListCheckedIcon
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:739](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L739)
+
+___
+
+### DiagnosisTags
+
+• `Const` **DiagnosisTags**: `React.FC`<`DiagnosisTagsProps`\>
+
+This component takes a list of diagnoses and displays them as
+Carbon tags, with colors configured base on whether the diagnoses are primary
+or secondary.
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L16)
 
 ___
 
