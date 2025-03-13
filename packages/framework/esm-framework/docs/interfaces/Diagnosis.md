@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-- [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
+- [`OpenmrsResource`](OpenmrsResource.md)
 
   ↳ **`Diagnosis`**
 
@@ -24,6 +24,7 @@
 - [rank](Diagnosis.md#rank)
 - [resourceVersion](Diagnosis.md#resourceversion)
 - [uuid](Diagnosis.md#uuid)
+- [voided](Diagnosis.md#voided)
 
 ## Properties
 
@@ -33,7 +34,7 @@
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[auditInfo](OpenmrsResourceStrict.md#auditinfo)
+[OpenmrsResource](OpenmrsResource.md).[auditInfo](OpenmrsResource.md#auditinfo)
 
 #### Defined in
 
@@ -47,7 +48,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/diagnosis-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L19)
+[packages/framework/esm-api/src/types/diagnosis-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L20)
 
 ___
 
@@ -69,7 +70,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/diagnosis-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L7)
+[packages/framework/esm-api/src/types/diagnosis-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L8)
 
 ___
 
@@ -79,7 +80,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[display](OpenmrsResourceStrict.md#display)
+[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
 
 #### Defined in
 
@@ -93,7 +94,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/diagnosis-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L18)
+[packages/framework/esm-api/src/types/diagnosis-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L19)
 
 ___
 
@@ -103,7 +104,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/diagnosis-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L21)
+[packages/framework/esm-api/src/types/diagnosis-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L22)
 
 ___
 
@@ -113,7 +114,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/diagnosis-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L22)
+[packages/framework/esm-api/src/types/diagnosis-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L23)
 
 ___
 
@@ -123,7 +124,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[links](OpenmrsResourceStrict.md#links)
+[OpenmrsResource](OpenmrsResource.md).[links](OpenmrsResource.md#links)
 
 #### Defined in
 
@@ -137,7 +138,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/diagnosis-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L17)
+[packages/framework/esm-api/src/types/diagnosis-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L18)
 
 ___
 
@@ -147,7 +148,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/diagnosis-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L20)
+[packages/framework/esm-api/src/types/diagnosis-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L21)
 
 ___
 
@@ -157,7 +158,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[resourceVersion](OpenmrsResourceStrict.md#resourceversion)
+[OpenmrsResource](OpenmrsResource.md).[resourceVersion](OpenmrsResource.md#resourceversion)
 
 #### Defined in
 
@@ -171,8 +172,18 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[uuid](OpenmrsResourceStrict.md#uuid)
+[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
 
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+
+___
+
+### voided
+
+• `Optional` **voided**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/diagnosis-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/diagnosis-resource.ts#L24)

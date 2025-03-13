@@ -8,6 +8,22 @@
 
   ↳ **`OpenmrsResource`**
 
+  ↳↳ [`Concept`](Concept.md)
+
+  ↳↳ [`ConceptDatatype`](ConceptDatatype.md)
+
+  ↳↳ [`ConceptName`](ConceptName.md)
+
+  ↳↳ [`Diagnosis`](Diagnosis.md)
+
+  ↳↳ [`Encounter`](Encounter.md)
+
+  ↳↳ [`EncounterType`](EncounterType.md)
+
+  ↳↳ [`EncounterProvider`](EncounterProvider.md)
+
+  ↳↳ [`EncounterRole`](EncounterRole.md)
+
   ↳↳ [`User`](User.md)
 
 ## Indexable

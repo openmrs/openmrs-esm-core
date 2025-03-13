@@ -3,7 +3,8 @@ import { type Encounter } from './encounter-resource';
 import { type OpenmrsResource, type OpenmrsResourceStrict } from './openmrs-resource';
 import { type Patient } from './patient-resource';
 
-export interface Diagnosis extends OpenmrsResourceStrict {
+// TODO: make this extends OpenmrsResourceStrict
+export interface Diagnosis extends OpenmrsResource {
   diagnosis?: {
     coded?: {
       uuid: string;
@@ -20,4 +21,5 @@ export interface Diagnosis extends OpenmrsResourceStrict {
   rank?: number;
   formFieldNamespace?: string;
   formFieldPath?: string;
+  voided?: boolean;
 }
