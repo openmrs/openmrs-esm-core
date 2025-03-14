@@ -60,11 +60,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `coded?` | { `conceptClass`: [`ConceptClass`](ConceptClass.md) ; `datatype`: [`OpenmrsResource`](OpenmrsResource.md) ; `display?`: `string` ; `name`: [`Concept`](Concept.md) ; `uuid`: `string`  } |
-| `coded.conceptClass` | [`ConceptClass`](ConceptClass.md) |
-| `coded.datatype` | [`OpenmrsResource`](OpenmrsResource.md) |
+| `coded?` | { `conceptClass?`: [`ConceptClass`](ConceptClass.md) ; `datatype?`: [`OpenmrsResource`](OpenmrsResource.md) ; `display?`: `string` ; `name?`: [`Concept`](Concept.md) ; `uuid`: `string`  } |
+| `coded.conceptClass?` | [`ConceptClass`](ConceptClass.md) |
+| `coded.datatype?` | [`OpenmrsResource`](OpenmrsResource.md) |
 | `coded.display?` | `string` |
-| `coded.name` | [`Concept`](Concept.md) |
+| `coded.name?` | [`Concept`](Concept.md) |
 | `coded.uuid` | `string` |
 | `nonCoded?` | `string` |
 
