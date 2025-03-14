@@ -2,7 +2,7 @@ import React from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
-export { OpenmrsDatePicker } from './src';
+import dayjs from 'dayjs';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -95,6 +95,18 @@ export const launchWorkspace = jest.fn();
 export const launchWorkspaceGroup = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();
+
+export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange }) => (
+  <>
+    <label htmlFor={id}>{labelText}</label>
+    <input
+      id={id}
+      type="date"
+      value={value ? dayjs(value).format('DD/MM/YYYY') : ''}
+      onChange={(evt) => onChange?.(dayjs(evt.target.value).toDate())}
+    />
+  </>
+));
 
 /* esm-utils */
 export {
