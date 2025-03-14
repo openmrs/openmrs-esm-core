@@ -170,7 +170,7 @@ ___
 
 ### retired
 
-• **retired**: `boolean`
+• `Optional` **retired**: `boolean`
 
 #### Defined in
 
@@ -214,7 +214,7 @@ ___
 
 ### version
 
-• **version**: `string`
+• `Optional` **version**: `string`
 
 #### Defined in
 

@@ -1,10 +1,10 @@
 import { type Concept } from './concept-resource';
 import { type Encounter } from './encounter-resource';
 import { type Location } from './location-resource';
-import { type OpenmrsResource, type OpenmrsResourceStrict } from './openmrs-resource';
+import { type OpenmrsResource } from './openmrs-resource';
 import { type Person } from './person-resource';
 
-export interface Obs extends OpenmrsResourceStrict {
+export interface Obs extends OpenmrsResource {
   concept?: Concept;
   person?: Person;
   obsDatetime?: string;

@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-- [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
+- [`OpenmrsResource`](OpenmrsResource.md)
 
   ↳ **`Obs`**
 
@@ -53,7 +53,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[auditInfo](OpenmrsResourceStrict.md#auditinfo)
+[OpenmrsResource](OpenmrsResource.md).[auditInfo](OpenmrsResource.md#auditinfo)
 
 #### Defined in
 
@@ -87,7 +87,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[display](OpenmrsResourceStrict.md#display)
+[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
 
 #### Defined in
 
@@ -151,7 +151,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[links](OpenmrsResourceStrict.md#links)
+[OpenmrsResource](OpenmrsResource.md).[links](OpenmrsResource.md#links)
 
 #### Defined in
 
@@ -215,7 +215,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[resourceVersion](OpenmrsResourceStrict.md#resourceversion)
+[OpenmrsResource](OpenmrsResource.md).[resourceVersion](OpenmrsResource.md#resourceversion)
 
 #### Defined in
 
@@ -239,7 +239,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[uuid](OpenmrsResourceStrict.md#uuid)
+[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
 
 #### Defined in
 

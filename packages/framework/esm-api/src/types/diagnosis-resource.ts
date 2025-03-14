@@ -9,9 +9,9 @@ export interface Diagnosis extends OpenmrsResource {
     coded?: {
       uuid: string;
       display?: string;
-      name: Concept;
-      datatype: OpenmrsResource;
-      conceptClass: ConceptClass;
+      name?: Concept;
+      datatype?: OpenmrsResource;
+      conceptClass?: ConceptClass;
     };
     nonCoded?: string;
   };

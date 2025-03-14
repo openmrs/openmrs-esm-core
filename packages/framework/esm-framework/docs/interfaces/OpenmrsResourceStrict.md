@@ -10,10 +10,6 @@ accounted for, use OpenmrsResource instead.
 
 - **`OpenmrsResourceStrict`**
 
-  ↳ [`ConceptClass`](ConceptClass.md)
-
-  ↳ [`Obs`](Obs.md)
-
   ↳ [`OpenmrsResource`](OpenmrsResource.md)
 
   ↳ [`PatientIdentifierType`](PatientIdentifierType.md)

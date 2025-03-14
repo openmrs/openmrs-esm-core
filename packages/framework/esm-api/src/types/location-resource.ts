@@ -1,6 +1,6 @@
-import { type OpenmrsResource, type OpenmrsResourceStrict } from './openmrs-resource';
+import { type OpenmrsResource } from './openmrs-resource';
 
-export interface Location extends OpenmrsResourceStrict {
+export interface Location extends OpenmrsResource {
   name?: string;
   description?: string;
   cityVillage?: string;

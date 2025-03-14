@@ -1,4 +1,4 @@
-import { type OpenmrsResourceStrict, type OpenmrsResource } from './openmrs-resource';
+import { type OpenmrsResource } from './openmrs-resource';
 
 // TODO: make this extends OpenmrsResourceStrict
 export interface Concept extends OpenmrsResource {
@@ -6,8 +6,8 @@ export interface Concept extends OpenmrsResource {
   datatype?: ConceptDatatype;
   conceptClass?: ConceptClass;
   set?: boolean;
-  version: string;
-  retired: boolean;
+  version?: string;
+  retired?: boolean;
   names?: Array<ConceptName>;
   descriptions?: Array<OpenmrsResource>;
   // TODO: add better typings
@@ -31,7 +31,7 @@ export interface ConceptName extends OpenmrsResource {
   conceptNameType?: 'FULLY_SPECIFIED' | 'SHORT' | 'INDEX_TERM';
 }
 
-export interface ConceptClass extends OpenmrsResourceStrict {
+export interface ConceptClass extends OpenmrsResource {
   name?: string;
   description?: string;
   retired?: boolean;
