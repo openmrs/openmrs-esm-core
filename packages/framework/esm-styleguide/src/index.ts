@@ -1,8 +1,8 @@
 import { defineConfigSchema } from '@openmrs/esm-config';
+import { setupLogo } from './logo';
+import { setupIcons } from './icons/icon-registration';
 import { setupBranding } from './brand';
 import { esmStyleGuideSchema } from './config-schema';
-import { setupIcons } from './icons/icon-registration';
-import { setupLogo } from './logo';
 import { setupPictograms } from './pictograms/pictogram-registration';
 
 export * from './breakpoints';
