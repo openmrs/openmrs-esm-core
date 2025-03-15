@@ -230,6 +230,7 @@
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useFhirPagination](API.md#usefhirpagination)
 - [useLayoutType](API.md#uselayouttype)
+- [useLeftNavStore](API.md#useleftnavstore)
 - [useOnClickOutside](API.md#useonclickoutside)
 - [useOpenmrsFetchAll](API.md#useopenmrsfetchall)
 - [useOpenmrsInfinite](API.md#useopenmrsinfinite)
@@ -2363,9 +2364,15 @@ ___
 
 • `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
 
+This component renders the left nav in desktop mode. It's also used to render the same
+nav when the hamburger menu is clicked on in tablet mode. See side-menu-panel.component.tsx
+
+Use of this component by anything other than <SideMenuPanel> (where isChildOfHeader == false)
+is deprecated; it simply renders nothing.
+
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L53)
 
 ___
 
@@ -7115,7 +7122,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `Object` |
+| `__namedParameters` | `SetLeftNavParams` |
 
 #### Returns
 
@@ -7123,7 +7130,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L18)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
 
 ___
 
@@ -7372,7 +7379,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L22)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L35)
 
 ___
 
@@ -7467,6 +7474,20 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
+
+___
+
+### useLeftNavStore
+
+▸ **useLeftNavStore**(): `LeftNavStore`
+
+#### Returns
+
+`LeftNavStore`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L41)
 
 ___
 
