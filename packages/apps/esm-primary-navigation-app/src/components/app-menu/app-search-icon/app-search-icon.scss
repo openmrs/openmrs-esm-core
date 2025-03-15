@@ -1,0 +1,15 @@
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.appSearchIconWrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.searchIconButton {
+  @include brand-01(background-color);
+}
+
+.activeSearchIconButton {
+  @include brand-02(background-color);
+}
