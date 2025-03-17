@@ -2,7 +2,7 @@
 
 import yargs from 'yargs';
 import { fork } from 'child_process';
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { getImportmapAndRoutes, mergeImportmapAndRoutes, proxyImportmapAndRoutes, runProject, trimEnd } from './utils';
 
 import type * as commands from './commands';
