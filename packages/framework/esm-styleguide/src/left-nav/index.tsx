@@ -1,6 +1,6 @@
 /** @module @category UI */
 import { SideNav } from '@carbon/react';
-import { ExtensionSlot, useStore } from '@openmrs/esm-react-utils';
+import { ExtensionSlot, useAssignedExtensions, useExtensionSlot, useStore } from '@openmrs/esm-react-utils';
 import { createGlobalStore } from '@openmrs/esm-state';
 import React from 'react';
 import styles from './left-nav.module.scss';
@@ -53,8 +53,9 @@ type LeftNavMenuProps = SideNavProps;
 export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>((props, ref) => {
   const { slotName, basePath } = useLeftNavStore();
   const currentPath = window.location ?? { pathname: '' };
+  const navMenuItems = useAssignedExtensions(slotName ?? '');
 
-  if (props.isChildOfHeader) {
+  if (props.isChildOfHeader && slotName && navMenuItems.length > 0) {
     return (
       <SideNav ref={ref} expanded aria-label="Left navigation" className={styles.leftNav} {...props}>
         <ExtensionSlot name="global-nav-menu-slot" />
