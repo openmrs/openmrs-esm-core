@@ -1,5 +1,4 @@
 /** @module @category Feature Flags */
-import { useEffect } from 'react';
 import { useStore } from './useStore';
 import { featureFlagsStore } from '@openmrs/esm-feature-flags';
 
