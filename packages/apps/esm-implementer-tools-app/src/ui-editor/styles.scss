@@ -1,0 +1,94 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+
+.slotOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  &.blueScheme {
+    border: 1px dashed rgba(colors.$blue-70, 0.6);
+    background-color: rgba(colors.$blue-70, 0.1);
+
+    &.slotOverlayHover {
+      border-color: rgba(colors.$blue-70, 0.9);
+      background-color: rgba(colors.$blue-70, 0.15);
+    }
+  }
+
+  &.greenScheme {
+    border: 1px dashed rgba(colors.$green-70, 0.6);
+    background-color: rgba(colors.$green-70, 0.1);
+
+    &.slotOverlayHover {
+      border-color: rgba(colors.$green-70, 0.9);
+      background-color: rgba(colors.$green-70, 0.15);
+    }
+  }
+}
+
+.slotName {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(colors.$blue-70, 0.8);
+  color: #393939;
+  cursor: pointer;
+  position: absolute;
+  padding: layout.$spacing-03;
+  z-index: 99999;
+  font-size: layout.$spacing-04;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+
+  &:nth-child(even) {
+    border-color: rgba(colors.$green-70, 0.8);
+  }
+}
+
+.extensionOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+}
+
+.extensionOverlay:hover {
+  background-color: rgba(43, 43, 185, 0.1);
+}
+
+.extensionOverlay:focus .extensionTooltip,
+.extensionOverlay:hover .extensionTooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.extensionTooltip {
+  visibility: hidden;
+  width: auto;
+  background-color: rgb(255, 255, 255, 0.85);
+  text-align: center;
+  padding: layout.$spacing-05;
+  border: 1px solid rgba(43, 43, 185, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.exitButton {
+  position: fixed !important;
+  top: layout.$spacing-10;
+  right: layout.$spacing-05;
+  z-index: 999999;
+}
+
+.popover {
+  z-index: 7900;
+  top: layout.$spacing-11;
+  right: layout.$spacing-09;
+  position: fixed;
+}

@@ -11,11 +11,10 @@ import {
 registerTranslationNamespace('core');
 
 export function setupI18n() {
-  window.i18next = i18next.default || i18next;
+  const i18n = (window.i18next = i18next.default || i18next);
 
   const languageChangeObserver = new MutationObserver(() => {
-    const reDetect: any = undefined;
-    window.i18next.changeLanguage(reDetect).catch((e) => console.error('i18next failed to re-detect language', e));
+    i18n.changeLanguage().catch((e) => console.error('i18next failed to re-detect language', e));
   });
 
   languageChangeObserver.observe(document.documentElement, {
@@ -23,11 +22,11 @@ export function setupI18n() {
     attributes: true,
   });
 
-  window.i18next.on('languageChanged', () => {
-    document.documentElement.setAttribute('dir', window.i18next.dir());
+  i18n.on('languageChanged', () => {
+    document.documentElement.setAttribute('dir', i18n.dir());
   });
 
-  return window.i18next
+  return i18n
     .use(LanguageDetector)
     .use<i18next.BackendModule>({
       type: 'backend',
@@ -110,6 +109,12 @@ function getImportPromise(
 ) {
   if (typeof module.importTranslation !== 'function') {
     throw Error(`Module ${namespace} does not export an importTranslation function`);
+  }
+
+  if (!language) {
+    return Promise.resolve({});
+  } else if (language.includes('-')) {
+    language = language.replace('-', '_');
   }
 
   const importPromise = module.importTranslation(`./${language}.json`);

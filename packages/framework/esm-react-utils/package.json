@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-react-utils",
-  "version": "6.0.2",
+  "version": "6.2.0",
   "license": "MPL-2.0",
   "description": "React utilities for OpenMRS.",
   "browser": "dist/openmrs-esm-react-utils.js",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "single-spa-react": "^6.0.0"
+    "single-spa-react": "^6.0.2"
   },
   "peerDependencies": {
     "@openmrs/esm-api": "6.x",

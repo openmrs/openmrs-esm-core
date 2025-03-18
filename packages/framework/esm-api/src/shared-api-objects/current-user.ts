@@ -114,14 +114,22 @@ function isValidLocale(locale: unknown): locale is string {
 }
 
 export function setUserLanguage(data: Session) {
-  const locale = data?.user?.userProperties?.defaultLocale ?? data.locale;
-  const htmlLang = document.documentElement.getAttribute('lang');
+  let locale = data.user?.userProperties?.defaultLocale ?? data.locale;
 
-  if (isValidLocale(locale) && locale !== htmlLang) {
+  if (locale && locale.includes('_')) {
+    locale = locale.replaceAll('_', '-');
+  }
+
+  if (isValidLocale(locale) && locale !== document.documentElement.getAttribute('lang')) {
     document.documentElement.setAttribute('lang', locale);
   }
 }
-sessionStore.subscribe((state) => state.session && setUserLanguage(state.session));
+
+sessionStore.subscribe((state: SessionStore) => {
+  if (state.loaded && state.session) {
+    setUserLanguage(state.session);
+  }
+});
 
 function userHasPrivilege(requiredPrivilege: string | string[] | undefined, user: { privileges: Array<Privilege> }) {
   if (typeof requiredPrivilege === 'string') {

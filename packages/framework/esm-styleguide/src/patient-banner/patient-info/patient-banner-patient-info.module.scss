@@ -41,7 +41,7 @@
 .patientInfo {
   display: flex;
   flex-direction: column;
-  padding: layout.$spacing-05 0 layout.$spacing-05 0;
+  padding: layout.$spacing-05 layout.$spacing-03 layout.$spacing-05 0;
   width: 100%;
 }
 
@@ -50,7 +50,7 @@
   color: $text-02;
   display: flex;
   align-items: center;
-  column-gap: layout.$spacing-02;
+  gap: layout.$spacing-02;
   margin-top: layout.$spacing-02;
   flex-wrap: wrap;
 }

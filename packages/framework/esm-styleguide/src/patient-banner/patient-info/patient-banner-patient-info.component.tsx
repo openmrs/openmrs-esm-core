@@ -3,13 +3,20 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { ExtensionSlot } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { age, formatDate, parseDate } from '@openmrs/esm-utils';
+import { age , formatDate, parseDate } from '@openmrs/esm-utils';
 import { GenderFemaleIcon, GenderMaleIcon, GenderOtherIcon, GenderUnknownIcon } from '../../icons';
 import PatientBannerPatientIdentifiers from './patient-banner-patient-identifiers.component';
 import styles from './patient-banner-patient-info.module.scss';
 
 interface PatientBannerPatientInfoProps {
   patient: fhir.Patient;
+
+  /**
+   * A unique string to identify where the PatientInfo is rendered from.
+   * (ex: Patient Chart, search app, etc...). This string is passed into extensions to
+   * affect how / if they should be rendered
+   */
+  renderedFrom?: string;
 }
 
 type Gender = 'female' | 'male' | 'other' | 'unknown';
@@ -51,11 +58,14 @@ const getGender = (gender: string) => {
   };
 };
 
-export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
+export function PatientBannerPatientInfo({ patient, renderedFrom }: PatientBannerPatientInfoProps) {
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0]?.family}`;
   const genderInfo = patient?.gender && getGender(patient.gender);
 
-  const extensionState = useMemo(() => ({ patientUuid: patient.id, patient }), [patient.id, patient]);
+  const extensionState = useMemo(
+    () => ({ patientUuid: patient.id, patient, renderedFrom }),
+    [patient.id, patient, renderedFrom],
+  );
 
   return (
     <div className={styles.patientInfo}>
@@ -83,6 +93,7 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
           </>
         )}
         <PatientBannerPatientIdentifiers identifiers={patient.identifier} showIdentifierLabel />
+        <ExtensionSlot className={styles.extensionSlot} name="patient-banner-bottom-slot" state={extensionState} />
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
 /** @module @category Utility */
 import dayjs from 'dayjs';
-import { getLocale } from './omrs-dates';
 import { DurationFormat } from '@formatjs/intl-durationformat';
-import { type DurationInput } from '@formatjs/intl-durationformat/src/types';
-
+import { type DurationFormatOptions, type DurationInput } from '@formatjs/intl-durationformat/src/types';
+import { getLocale } from './get-locale';
 /**
  * Gets a human readable and locale supported representation of a person's age, given their birthDate,
  * The representation logic follows the guideline here:
@@ -32,9 +31,14 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
 
   const locale = getLocale();
 
+  const options: DurationFormatOptions = { style: 'short', localeMatcher: 'lookup' };
+
   if (hourDiff < 2) {
     const minuteDiff = to.diff(from, 'minutes');
     duration['minutes'] = minuteDiff;
+    if (minuteDiff == 0) {
+      options.minutesDisplay = 'always';
+    }
   } else if (dayDiff < 2) {
     duration['hours'] = hourDiff;
   } else if (weekDiff < 4) {
@@ -55,5 +59,5 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
     duration['years'] = yearDiff;
   }
 
-  return new DurationFormat(locale, { style: 'short', localeMatcher: 'lookup' }).format(duration);
+  return new DurationFormat(locale, options).format(duration);
 }

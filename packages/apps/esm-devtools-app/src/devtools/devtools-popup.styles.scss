@@ -1,4 +1,5 @@
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .popup {
   position: fixed;
@@ -19,34 +20,20 @@
 
 .tabList {
   position: fixed;
-  height: 4rem;
+  height: layout.$spacing-10;
   width: 100%;
   z-index: 1000;
   background-color: black;
 }
 
 .tabPanels {
-  padding: 1.5rem;
+  padding: layout.$spacing-06;
 }
 
 .farRight {
   position: absolute;
-  right: 24px;
-  top: 16px;
+  right: layout.$spacing-04;
+  top: layout.$spacing-04;
   display: flex;
   z-index: 1000;
-}
-
-.closeButton {
-  align-items: center;
-}
-
-.closeButton:focus {
-  /*
-    there's some 3rd party css that turns these off using !important, so the only way to override them is to also use important.
-    this is why you don't use !important -- it makes it hard for other people to override it when they need to :(
-  */
-  outline: solid !important;
-  outline-width: thin !important;
-  outline-color: #e5e5e6 !important;
 }

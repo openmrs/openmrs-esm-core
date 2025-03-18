@@ -239,6 +239,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
           <TableBody className={styles.imoTableBody}>
             {nextOverriddenModules.map((mod) => (
               <TableRow
+                key={`${mod.moduleName}-next-override`}
                 role="button"
                 tabIndex={0}
                 onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
@@ -263,6 +264,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
             ))}
             {pendingRefreshDefaultModules.map((mod) => (
               <TableRow
+                key={`${mod.moduleName}-pending-refresh-default`}
                 role="button"
                 tabIndex={0}
                 onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
@@ -287,6 +289,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
             ))}
             {disabledOverrides.map((mod) => (
               <TableRow
+                key={`${mod.moduleName}-disabled-override`}
                 role="button"
                 tabIndex={0}
                 onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
@@ -302,6 +305,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
             ))}
             {overriddenModules.map((mod) => (
               <TableRow
+                key={`${mod.moduleName}-current-override`}
                 role="button"
                 tabIndex={0}
                 onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
@@ -317,6 +321,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
             ))}
             {externalOverrideModules.map((mod) => (
               <TableRow
+                key={`${mod.moduleName}-external-override`}
                 role="button"
                 tabIndex={0}
                 onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
@@ -332,6 +337,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
             ))}
             {defaultModules.map((mod) => (
               <TableRow
+                key={`${mod.moduleName}-default`}
                 role="button"
                 tabIndex={0}
                 onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}

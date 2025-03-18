@@ -5,6 +5,7 @@ export interface UploadedFile {
   fileType: string;
   fileDescription: string;
   status?: 'uploading' | 'complete';
+  capturedFromWebcam?: boolean;
 }
 
 export interface Attachment {

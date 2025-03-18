@@ -112,18 +112,24 @@
 }
 
 .inputWrapper {
-  inline-size: 15rem;
-  padding-left: spacing.$spacing-04;
+  margin-left: spacing.$spacing-05;
+  min-width: spacing.$spacing-13;
+  max-width: 15rem;
 
   .inputSegment {
     caret-color: var(--cds-text-primary);
 
     &:focus {
       outline: unset;
+      background-color: theme.$layer-selected-hover;
     }
 
     &[data-placeholder] {
       color: theme.$text-disabled;
+    }
+
+    &[data-focused='true'] {
+      animation: cursor-blink 1s step-end infinite;
     }
   }
 
@@ -137,6 +143,16 @@
 
   [data-placeholder] + [data-readonly] {
     color: theme.$text-disabled;
+  }
+
+  @keyframes cursor-blink {
+    from,
+    to {
+      border-right: 1px solid transparent;
+    }
+    50% {
+      border-right: 1px solid currentColor;
+    }
   }
 }
 

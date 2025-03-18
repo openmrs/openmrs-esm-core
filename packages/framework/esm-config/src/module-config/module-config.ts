@@ -15,7 +15,6 @@ import {
   temporaryConfigStore,
   getExtensionSlotsConfigStore,
 } from './state';
-import type {} from '@openmrs/esm-globals';
 import { type TemporaryConfigStore } from '..';
 
 /**
@@ -654,7 +653,7 @@ function validateFreeformObjectStructure(freeformObjectSchema: ConfigSchema, con
   if (freeformObjectSchema._elements) {
     for (const key of Object.keys(config)) {
       const value = config[key];
-      validateStructure(freeformObjectSchema._elements, value, `${keyPath}.${key}`);
+      validateBranchStructure(freeformObjectSchema._elements, value, `${keyPath}.${key}`);
     }
   }
 }

@@ -380,11 +380,13 @@ html[dir='rtl'] {
   }
 
   .cds--header-panel--expanded {
-    right: calc(100vw - var(--omrs-sidenav-width));
+    left: 0;
+    right: auto;
   }
 
   .cds--btn--tertiary {
     padding: calc(0.875rem - 3px) 15px calc(0.875rem - 3px) 63px;
+
     svg {
       left: spacing.$spacing-05;
       right: unset;
@@ -416,6 +418,7 @@ html[dir='rtl'] {
 
   .cds--btn--primary {
     padding: calc(0.875rem - 3px) 15px calc(0.875rem - 3px) 63px;
+
     svg {
       left: spacing.$spacing-05;
       right: unset;
@@ -431,6 +434,7 @@ html[dir='rtl'] {
     & > svg {
       margin: 2px 0 0 1rem;
     }
+
     p {
       text-align: right;
     }
@@ -560,6 +564,7 @@ html[dir='rtl'] {
 
   .cds--list-box__field {
     padding: 0 spacing.$spacing-05 0 spacing.$spacing-09;
+
     .cds--list-box__menu-icon {
       left: spacing.$spacing-05;
       right: unset;
@@ -571,6 +576,7 @@ html[dir='rtl'] {
     select {
       padding: 0 spacing.$spacing-05 0 spacing.$spacing-09;
     }
+
     svg {
       right: unset;
       left: spacing.$spacing-05;
@@ -616,6 +622,7 @@ html[dir='rtl'] {
       & > section {
         margin-left: unset;
         margin-right: var(--omrs-sidenav-width);
+
         nav {
           left: calc(100vw - var(--omrs-sidenav-width));
           border-left: 1px solid #e0e0e0;
@@ -637,10 +644,12 @@ html[dir='rtl'] {
         & > button {
           text-align: right;
         }
+
         .active {
           border-left: unset !important;
           border-right: 0.5rem solid #009d9a;
         }
+
         .enabled {
           border-left: unset !important;
           border-right: 0.5rem solid #9ef0f0;

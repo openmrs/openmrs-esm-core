@@ -4,12 +4,14 @@ import {
   registerExtension,
   registerModal,
   registerWorkspace,
+  registerWorkspaceGroup,
 } from '@openmrs/esm-extensions';
 import {
   type FeatureFlagDefinition,
   type ExtensionDefinition,
   type ModalDefinition,
   type WorkspaceDefinition,
+  type WorkspaceGroupDefinition,
 } from '@openmrs/esm-globals';
 import { getLoader } from './app';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
@@ -194,16 +196,46 @@ supported, so the workspace will not be loaded.`,
       canMaximize: workspace.canMaximize,
       width: workspace.width,
       preferredWindowSize: workspace.preferredWindowSize,
-      groups: workspace.groups ?? [],
+      groups: workspace.groups,
+    });
+  }
+
+  for (const group of workspace.groups || []) {
+    registerWorkspaceGroup({
+      name: group,
+      members: [name],
     });
   }
 }
 
 /**
- * This function registers a workspace definition with the framework so that it can be launched.
+ * This function registers a workspace group definition with the framework so that it can be launched.
  *
  * @param appName The name of the app defining this workspace
- * @param featureFlag An object that describes the workspace, derived from `routes.json`
+ * @param workspace An object that describes the workspace, derived from `routes.json`
+ */
+export function tryRegisterWorkspaceGroup(appName: string, workspaceGroup: WorkspaceGroupDefinition) {
+  const name = workspaceGroup.name;
+  if (!name) {
+    console.error(
+      `A workspace group definition in ${appName} is missing a name and thus cannot be registered.
+To fix this, ensure that you define the "name" field inside the workspace definition.`,
+      workspaceGroup,
+    );
+    return;
+  }
+
+  registerWorkspaceGroup({
+    name,
+    members: workspaceGroup.members ?? [],
+  });
+}
+
+/**
+ * This function registers a feature flag definition with the framework.
+ *
+ * @param appName The name of the app defining this feature flag
+ * @param featureFlag An object that describes the feature flag, derived from `routes.json`
  */
 export function tryRegisterFeatureFlag(appName: string, featureFlag: FeatureFlagDefinition) {
   const name = featureFlag.flagName;

@@ -9,6 +9,7 @@
   :global(.cds--side-nav__link) {
     color: $text-02;
     @include type.type-style('heading-compact-01');
+    padding: 0 1rem;
 
     &:focus,
     &:hover {

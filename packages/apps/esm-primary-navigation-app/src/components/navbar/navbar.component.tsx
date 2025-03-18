@@ -13,6 +13,7 @@ import {
   CloseIcon,
   UserAvatarIcon,
   SwitcherIcon,
+  useLeftNavStore,
 } from '@openmrs/esm-framework';
 import { isDesktop } from '../../utils';
 import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
@@ -28,7 +29,8 @@ const HeaderItems: React.FC = () => {
   const config = useConfig();
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const layout = useLayoutType();
-  const navMenuItems = useAssignedExtensions('patient-chart-dashboard-slot').map((e) => e.id);
+  const { slotName, mode } = useLeftNavStore();
+  const navMenuItems = useAssignedExtensions(slotName);
   const appMenuItems = useAssignedExtensions('app-menu-slot');
   const userMenuItems = useAssignedExtensions('user-panel-slot');
   const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
@@ -44,7 +46,10 @@ const HeaderItems: React.FC = () => {
     [],
   );
 
-  const showHamburger = useMemo(() => !isDesktop(layout) && navMenuItems.length > 0, [navMenuItems.length, layout]);
+  const showHamburger = useMemo(
+    () => (!isDesktop(layout) || mode === 'collapsed') && navMenuItems.length > 0,
+    [navMenuItems.length, layout, mode],
+  );
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
   const showUserMenu = useMemo(() => userMenuItems.length > 0, [userMenuItems.length]);
   return (
@@ -67,7 +72,8 @@ const HeaderItems: React.FC = () => {
             <Logo />
           </div>
         </ConfigurableLink>
-        <ExtensionSlot className={styles.dividerOverride} name="top-nav-info-slot" />
+        <div className={styles.divider} />
+        <ExtensionSlot name="top-nav-info-slot" />
         <HeaderGlobalBar className={styles.headerGlobalBar}>
           <ExtensionSlot name="top-nav-actions-slot" className={styles.topNavActionsSlot} />
           <ExtensionSlot
@@ -114,7 +120,7 @@ const HeaderItems: React.FC = () => {
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
-        {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
+        <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />
         {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel('appMenu')} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
         {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel('userMenu')} />}

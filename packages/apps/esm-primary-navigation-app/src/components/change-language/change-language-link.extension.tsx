@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, SwitcherItem } from '@carbon/react';
+import { capitalize } from 'lodash-es';
 import { TranslateIcon, showModal, useSession } from '@openmrs/esm-framework';
 import styles from './change-language-link.scss';
 
@@ -22,7 +23,7 @@ function ChangeLanguageLink() {
     <SwitcherItem className={styles.panelItemContainer} aria-label={t('changeLanguage', 'Change language')}>
       <div>
         <TranslateIcon size={20} />
-        <p>{languageNames.of(session?.locale)}</p>
+        <p>{capitalize(languageNames.of(session?.locale))}</p>
       </div>
       <Button kind="ghost" onClick={launchChangeLanguageModal}>
         {t('change', 'Change')}

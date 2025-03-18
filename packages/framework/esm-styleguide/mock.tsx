@@ -1,3 +1,4 @@
+import { Diagnosis } from '@openmrs/esm-api';
 import React from 'react';
 
 /* Please keep these stubs in alphabetical order for readability */
@@ -24,6 +25,7 @@ export const CloseIcon = () => <span>CloseIcon</span>;
 export const CloseOutlineIcon = () => <span>CloseOutlineIcon</span>;
 export const ConditionsIcon = () => <span>ConditionsIcon</span>;
 export const DownloadIcon = () => <span>DownloadIcon</span>;
+export const DrugOrderIcon = () => <span>DrugOrderIcon</span>;
 export const EditIcon = () => <span>EditIcon</span>;
 export const EventScheduleIcon = () => <span>EventScheduleIcon</span>;
 export const EventsIcon = () => <span>EventsIcon</span>;
@@ -46,6 +48,7 @@ export const ListCheckedIcon = () => <span>ListCheckedIcon</span>;
 export const LocationIcon = () => <span>LocationIcon</span>;
 export const MaximizeIcon = () => <span>MaximizeIcon</span>;
 export const MedicationIcon = () => <span>MedicationIcon</span>;
+export const MaterialOrderIcon = () => <span>MaterialOrderIcon</span>;
 export const MessageQueueIcon = () => <span>MessageQueueIcon</span>;
 export const MicroscopeIcon = () => <span>MicroscopeIcon</span>;
 export const MoneyIcon = () => <span>MoneyIcon</span>;
@@ -57,8 +60,10 @@ export const PasswordIcon = () => <span>PasswordIcon</span>;
 export const PedestrianFamilyIcon = () => <span>PedestrianFamilyIcon</span>;
 export const PenIcon = () => <span>PenIcon</span>;
 export const PrinterIcon = () => <span>PrinterIcon</span>;
+export const ProcedureOrderIcon = () => <span>ProcedureOrderIcon</span>;
 export const ProgramsIcon = () => <span>ProgramsIcon</span>;
 export const RadiologyIcon = () => <span>RadiologyIcon</span>;
+export const ReferralOrderIcon = () => <span>ReferralOrderIcon</span>;
 export const RenewIcon = () => <span>RenewIcon</span>;
 export const ReportIcon = () => <span>ReportIcon</span>;
 export const ResetIcon = () => <span>ResetIcon</span>;
@@ -98,6 +103,8 @@ export const MaybePictogram = ({ pictogram }) => <span>{pictogram}</span>;
 
 export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
 
+export const OpenmrsDatePicker = () => <span>OpenmrsDatePicker</span>;
+
 export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   const locations = [
     {
@@ -126,3 +133,12 @@ export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
     </div>
   );
 });
+
+export const DiagnosisTags = jest.fn(({ diagnoses }) => (
+  <>
+    {diagnoses.map((d) => (
+      <span key={d.uuid}>{d.display}</span>
+    ))}
+  </>
+));
+export const useLeftNavStore = jest.fn();

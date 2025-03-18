@@ -29,7 +29,7 @@ const workspaceTranslations = {
   openAnyway: 'Open anyway',
   unsavedChangesInOpenedWorkspace: `You may have unsaved changes in the opened workspace. Do you want to discard these changes?`,
   unsavedChangesInWorkspace:
-    'There may be unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
+    'There may be unsaved changes in "{{workspaceName}}". Please save them before opening another workspace.',
   unsavedChangesTitleText: 'Unsaved changes',
   workspaceHeader: 'Workspace header',
 };
@@ -72,5 +72,6 @@ export const coreTranslations = {
   sex: 'Sex',
   showLess: 'Show less',
   showMore: 'Show more',
+  toggleDevTools: 'Toggle dev tools',
   unknown: 'Unknown',
 };

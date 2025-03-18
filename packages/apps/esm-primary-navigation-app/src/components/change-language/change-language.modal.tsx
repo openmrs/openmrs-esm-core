@@ -9,6 +9,7 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from '@carbon/react';
+import { capitalize } from 'lodash-es';
 import { useConnectivity, useSession } from '@openmrs/esm-framework';
 import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
 import styles from './change-language.scss';
@@ -69,7 +70,7 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
                 key={`locale-option-${locale}-${i}`}
                 id={`locale-option-${locale}-${i}`}
                 name={locale}
-                labelText={languageNames[locale]}
+                labelText={capitalize(languageNames[locale])}
                 value={locale}
               />
             ))}

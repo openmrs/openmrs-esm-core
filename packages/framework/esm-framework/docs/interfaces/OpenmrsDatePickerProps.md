@@ -23,6 +23,7 @@ Properties for the OpenmrsDatePicker
 - [className](OpenmrsDatePickerProps.md#classname)
 - [defaultOpen](OpenmrsDatePickerProps.md#defaultopen)
 - [defaultValue](OpenmrsDatePickerProps.md#defaultvalue)
+- [firstDayOfWeek](OpenmrsDatePickerProps.md#firstdayofweek)
 - [granularity](OpenmrsDatePickerProps.md#granularity)
 - [hideTimeZone](OpenmrsDatePickerProps.md#hidetimezone)
 - [hourCycle](OpenmrsDatePickerProps.md#hourcycle)
@@ -160,7 +161,7 @@ Omit.children
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:56
+node_modules/react-aria-components/dist/types.d.ts:53
 
 ___
 
@@ -172,7 +173,7 @@ Any CSS classes to add to the outer div of the date picker
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L82)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L102)
 
 ___
 
@@ -200,7 +201,23 @@ The default value (uncontrolled)
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L84)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L104)
+
+___
+
+### firstDayOfWeek
+
+• `Optional` **firstDayOfWeek**: ``"sun"`` \| ``"mon"`` \| ``"tue"`` \| ``"wed"`` \| ``"thu"`` \| ``"fri"`` \| ``"sat"``
+
+The day that starts the week.
+
+#### Inherited from
+
+Omit.firstDayOfWeek
+
+#### Defined in
+
+node_modules/@react-types/datepicker/src/index.d.ts:78
 
 ___
 
@@ -278,7 +295,7 @@ Whether the input value is invalid.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L86)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L106)
 
 ___
 
@@ -290,7 +307,7 @@ Text to show if the input is invalid e.g. an error message
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:88](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L88)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:108](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L108)
 
 ___
 
@@ -384,7 +401,7 @@ The label for this DatePicker element
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L93)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L113)
 
 ___
 
@@ -396,7 +413,7 @@ The label for this DatePicker element.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L95)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L115)
 
 ___
 
@@ -408,7 +425,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L97)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:117](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L117)
 
 ___
 
@@ -420,13 +437,13 @@ The latest date it is possible to select
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L99)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:119](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L119)
 
 ___
 
 ### maxValue
 
-• `Optional` **maxValue**: `DateValue`
+• `Optional` **maxValue**: ``null`` \| `DateValue`
 
 The maximum allowed date that a user may select.
 
@@ -448,13 +465,13 @@ The earliest date it is possible to select
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L101)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L121)
 
 ___
 
 ### minValue
 
-• `Optional` **minValue**: `DateValue`
+• `Optional` **minValue**: ``null`` \| `DateValue`
 
 The minimum allowed date that a user may select.
 
@@ -504,7 +521,7 @@ ___
 
 ### placeholderValue
 
-• `Optional` **placeholderValue**: `CalendarDate`
+• `Optional` **placeholderValue**: ``null`` \| `CalendarDate`
 
 A placeholder date that influences the format of the placeholder shown when no value is selected. Defaults to today's date at midnight.
 
@@ -526,7 +543,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L109)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L129)
 
 ___
 
@@ -573,7 +590,7 @@ Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` a
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L107)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:127](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L127)
 
 ___
 
@@ -590,13 +607,13 @@ Omit.slot
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:73
+node_modules/react-aria-components/dist/types.d.ts:70
 
 ___
 
 ### style
 
-• `Optional` **style**: `CSSProperties` \| (`values`: `DatePickerRenderProps` & { `defaultStyle`: `CSSProperties`  }) => `CSSProperties`
+• `Optional` **style**: `CSSProperties` \| (`values`: `DatePickerRenderProps` & { `defaultStyle`: `CSSProperties`  }) => `undefined` \| `CSSProperties`
 
 The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state.
 
@@ -606,7 +623,7 @@ Omit.style
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:50
+node_modules/react-aria-components/dist/types.d.ts:47
 
 ___
 
@@ -626,7 +643,7 @@ Omit.validationBehavior
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:84
+node_modules/react-aria-components/dist/types.d.ts:81
 
 ___
 
@@ -638,7 +655,7 @@ The value (controlled)
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L111)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L131)
 
 ## Methods
 
@@ -712,7 +729,7 @@ Handler that is called when the value changes.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L103)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:123](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L123)
 
 ___
 
@@ -734,7 +751,7 @@ Handler that is called when the value changes. Note that this provides types fro
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L105)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L125)
 
 ___
 

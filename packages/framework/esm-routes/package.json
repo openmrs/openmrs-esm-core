@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-routes",
-  "version": "6.0.2",
+  "version": "6.2.0",
   "license": "MPL-2.0",
   "description": "Utilities for working with the routes registry",
   "browser": "dist/openmrs-esm-routes.js",
@@ -55,6 +55,6 @@
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
     "jest-fetch-mock": "^3.0.3",
-    "single-spa": "^6.0.1"
+    "single-spa": "^6.0.3"
   }
 }

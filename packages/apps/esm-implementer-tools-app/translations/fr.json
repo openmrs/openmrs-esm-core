@@ -1,5 +1,5 @@
 {
-  "activeItemSourceText": "Origine de la valeur courante",
+  "activeItemSourceText": "La valeur vient de",
   "backendModules": "Modules du backend",
   "checkImplementerToolsMessage": "Consultez l'onglet Modules backend dans les outils d'implémentation pour plus de détails",
   "clearConfig": "Effacer la configuration locale",
@@ -14,7 +14,7 @@
   "featureFlag": "Fonctionnalité",
   "featureFlags": "Fonctionnalités",
   "frontendModules": "Modules du Frontend",
-  "implementerTools": "Implementer Tools",
+  "implementerTools": "Outils de mise en œuvre",
   "installedVersion": "Version Installée",
   "itemDescriptionSourceDefaultText": "Valeur courante est définié par défaut",
   "jsonEditor": "Editeur JSON",

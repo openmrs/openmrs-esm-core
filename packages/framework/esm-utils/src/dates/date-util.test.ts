@@ -1,7 +1,14 @@
-import { toOmrsIsoString, toDateObjectStrict, isOmrsDateStrict } from './omrs-dates';
+import {
+  toOmrsIsoString,
+  toDateObjectStrict,
+  isOmrsDateStrict,
+  formatDate,
+  formatDatetime,
+  formatTime,
+  registerDefaultCalendar,
+} from './date-util';
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
-import { formatDate, formatDatetime, formatTime } from '.';
 import type { i18n } from 'i18next';
 
 window.i18next = { language: 'en' } as i18n;
@@ -73,6 +80,8 @@ describe('Openmrs Dates', () => {
   });
 
   it('formats dates with respect to the active calendar', () => {
+    registerDefaultCalendar('am', 'ethiopic');
+
     timezoneMock.register('UTC');
     const testDate = new Date('2021-12-09T13:15:33');
     window.i18next.language = 'am';

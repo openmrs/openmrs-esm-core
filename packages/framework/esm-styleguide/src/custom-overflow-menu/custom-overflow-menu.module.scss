@@ -1,9 +1,14 @@
 @use '@carbon/colors';
+@use '@carbon/layout';
 @import '@openmrs/esm-styleguide/src/vars';
 
 .container {
   width: auto;
   height: auto;
+
+  :global(.cds--overflow-menu__trigger) {
+    min-height: layout.$spacing-09;
+  }
 }
 
 .menu {

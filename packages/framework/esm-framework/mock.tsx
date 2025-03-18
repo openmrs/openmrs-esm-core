@@ -2,7 +2,7 @@ import React from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
-import { OpenmrsDatePicker as realOpenmrsDatePicker } from './src';
+import dayjs from 'dayjs';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -15,6 +15,8 @@ export * from '@openmrs/esm-react-utils/mock';
 export * from '@openmrs/esm-state/mock';
 export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
+
+export { parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
 
 /* esm-globals */
 
@@ -63,7 +65,6 @@ export const LeftNavMenu = jest.fn(() => <div>Left Nav Menu</div>);
 export const setLeftNav = jest.fn();
 export const unsetLeftNav = jest.fn();
 export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
-export const OpenmrsDatePicker = jest.fn(realOpenmrsDatePicker);
 export const ErrorState = jest.fn(() => <div>Error State</div>);
 
 export const CustomOverflowMenu = jest.fn(({ menuTitle, children }) => (
@@ -95,13 +96,21 @@ export const launchWorkspaceGroup = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();
 
+export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange }) => (
+  <>
+    <label htmlFor={id}>{labelText}</label>
+    <input
+      id={id}
+      type="date"
+      value={value ? dayjs(value).format('DD/MM/YYYY') : ''}
+      onChange={(evt) => onChange?.(dayjs(evt.target.value).toDate())}
+    />
+  </>
+));
+
 /* esm-utils */
 export {
   getDefaultsFromConfigSchema,
-  parseDate,
-  formatDate,
-  formatDatetime,
-  formatTime,
   getPatientName,
   formatPatientName,
   selectPreferredName,
