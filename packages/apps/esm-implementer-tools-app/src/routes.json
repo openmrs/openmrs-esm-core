@@ -14,7 +14,8 @@
     {
       "name": "implementer-tools-button",
       "slot": "top-nav-actions-slot",
-      "component": "implementerToolsButton"
+      "component": "implementerToolsButton",
+      "order": 10
     }
   ]
 }

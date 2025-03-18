@@ -55,6 +55,21 @@
       "component": "navGroup",
       "online": true,
       "offline": true
+    },
+    {
+      "name": "user-menu-button",
+      "component": "userMenuButton",
+      "online": true,
+      "offline": true,
+      "slot": "top-nav-actions-slot",
+      "order": 30
+    },
+    {
+      "name": "app-menu-button",
+      "component": "appMenuButton",
+      "online": true,
+      "offline": true,
+      "slot": "top-nav-app-menu-slot"
     }
   ],
   "modals": [
