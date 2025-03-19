@@ -9,20 +9,15 @@ import {
   useSession,
 } from '@openmrs/esm-framework';
 import React, { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 import { isDesktop } from '../../utils';
 import Logo from '../logo/logo.component';
 import NotificationsMenuPanel from '../navbar-header-panels/notifications-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import OfflineBanner from '../offline-banner/offline-banner.component';
-import AppMenuButton from './app-menu-button.component';
 import styles from './navbar.scss';
-import UserMenuButton from './user-menu-button.component';
-import { MenuButtonProps } from './navbar.resources';
 
 const HeaderItems: React.FC = () => {
-  const { t } = useTranslation();
   const config = useConfig();
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const layout = useLayoutType();

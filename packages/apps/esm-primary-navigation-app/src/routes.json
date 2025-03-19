@@ -62,7 +62,7 @@
       "online": true,
       "offline": true,
       "slot": "top-nav-actions-slot",
-      "order": 30
+      "order": 40
     },
     {
       "name": "app-menu-button",

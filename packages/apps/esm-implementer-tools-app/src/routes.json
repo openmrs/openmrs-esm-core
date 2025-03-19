@@ -15,7 +15,7 @@
       "name": "implementer-tools-button",
       "slot": "top-nav-actions-slot",
       "component": "implementerToolsButton",
-      "order": 10
+      "order": 20
     }
   ]
 }

@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import styles from './navbar.scss';
 import { useTranslation } from 'react-i18next';
 import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
-import { type MenuButtonProps } from './navbar.resources';
+import { type MenuButtonProps } from './types';
 
 /**
  * This component displays the user menu button and the menu itself (when toggled on)

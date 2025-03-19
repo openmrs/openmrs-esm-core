@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
 import styles from './navbar.scss';
-import { type MenuButtonProps } from './navbar.resources';
+import { type MenuButtonProps } from './types';
 
 /**
  * This component displays the app menu button and the menu itself (when toggled on)
