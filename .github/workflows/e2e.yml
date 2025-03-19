@@ -144,7 +144,6 @@ jobs:
       - name: 📦 Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn install --immutable
-        working-directory: e2e_repo
 
       - name: 🚀 Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
@@ -206,7 +205,7 @@ jobs:
           name: report-${{ matrix.repo }}
           path: e2e_repo/playwright-report/
           retention-days: 30
-      
+
       - name: 📝 Capture Server Logs
         if: always()
         uses: jwalton/gh-docker-logs@v2
@@ -221,4 +220,3 @@ jobs:
           path: "./logs"
           retention-days: 2
           overwrite: true
-
