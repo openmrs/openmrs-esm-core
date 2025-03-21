@@ -2,10 +2,10 @@ import { HeaderGlobalAction } from '@carbon/react';
 import { CloseIcon, useAssignedExtensions, UserAvatarIcon } from '@openmrs/esm-framework';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
-import styles from './navbar.scss';
 import { useTranslation } from 'react-i18next';
 import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
 import { type MenuButtonProps } from './types';
+import styles from './navbar.scss';
 
 /**
  * This component displays the user menu button and the menu itself (when toggled on)
