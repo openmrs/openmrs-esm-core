@@ -6,6 +6,7 @@ import {
   formatDatetime,
   formatTime,
   registerDefaultCalendar,
+  formatPartialDate,
 } from './date-util';
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
@@ -77,6 +78,16 @@ describe('Openmrs Dates', () => {
     expect(formatDate(testDate)).toEqual('09 Des 2021');
     window.i18next.language = 'ru';
     expect(formatDate(testDate, { mode: 'wide' })).toMatch(/09\s—\sдек\.\s—\s2021\sг\./);
+  });
+
+  it('formats partial dates', () => {
+    timezoneMock.register('UTC');
+    window.i18next.language = 'en';
+    expect(formatPartialDate('2021')).toEqual('2021');
+    expect(formatPartialDate('2021-04')).toEqual('Apr 2021');
+    expect(formatPartialDate('2021-04-09')).toEqual('09-Apr-2021');
+    expect(formatPartialDate('2021-01-01')).toEqual('01-Jan-2021');
+    expect(formatPartialDate('2021-12')).toEqual('Dec 2021');
   });
 
   it('formats dates with respect to the active calendar', () => {
