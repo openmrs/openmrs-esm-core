@@ -15,8 +15,7 @@ import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import objectSupport from 'dayjs/plugin/objectSupport';
 import utc from 'dayjs/plugin/utc';
-import type { i18n } from 'i18next';
-import { omit } from 'lodash-es';
+import { isNil, omit } from 'lodash-es';
 
 dayjs.extend(isToday);
 dayjs.extend(utc);
@@ -242,7 +241,7 @@ export function formatPartialDate(dateString: string, options: Partial<FormatDat
   }
 
   // hack here but any date interprets 2000-01, etc. as yyyy-dd rather than yyyy-mm
-  if (parsed.day && !parsed.month) {
+  if (!isNil(parsed.day) && isNil(parsed.month)) {
     parsed = Object.assign({}, omit(parsed, 'day'), { month: parsed.day });
   }
 
@@ -258,15 +257,15 @@ export function formatPartialDate(dateString: string, options: Partial<FormatDat
 
   const date = dayjs().set(parsed).toDate();
 
-  if (!parsed.year) {
+  if (isNil(parsed.year)) {
     options.year = false;
   }
 
-  if (!parsed.month) {
+  if (isNil(parsed.month)) {
     options.month = false;
   }
 
-  if (!parsed.date) {
+  if (isNil(parsed.date)) {
     options.day = false;
   }
 

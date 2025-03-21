@@ -380,7 +380,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L25)
+[packages/framework/esm-utils/src/dates/date-util.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L24)
 
 ___
 
@@ -390,7 +390,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:168](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L168)
+[packages/framework/esm-utils/src/dates/date-util.ts:167](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L167)
 
 ___
 
@@ -414,7 +414,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:170](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L170)
+[packages/framework/esm-utils/src/dates/date-util.ts:169](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L169)
 
 ___
 
@@ -4038,7 +4038,7 @@ CalendarDate
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:407](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L407)
+[packages/framework/esm-utils/src/dates/date-util.ts:406](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L406)
 
 ___
 
@@ -4077,7 +4077,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:296](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L296)
+[packages/framework/esm-utils/src/dates/date-util.ts:295](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L295)
 
 ___
 
@@ -4106,7 +4106,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:399](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L399)
+[packages/framework/esm-utils/src/dates/date-util.ts:398](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L398)
 
 ___
 
@@ -4145,7 +4145,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L235)
+[packages/framework/esm-utils/src/dates/date-util.ts:234](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L234)
 
 ___
 
@@ -4168,7 +4168,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L383)
+[packages/framework/esm-utils/src/dates/date-util.ts:382](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L382)
 
 ___
 
@@ -4190,7 +4190,7 @@ Retrieves the default calendar for the specified locale if any.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L162)
+[packages/framework/esm-utils/src/dates/date-util.ts:161](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L161)
 
 ___
 
@@ -4213,7 +4213,7 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L33)
+[packages/framework/esm-utils/src/dates/date-util.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L32)
 
 ___
 
@@ -4233,7 +4233,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L62)
+[packages/framework/esm-utils/src/dates/date-util.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L61)
 
 ___
 
@@ -4256,7 +4256,7 @@ Uses `dayjs(dateString)`.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L95)
+[packages/framework/esm-utils/src/dates/date-util.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L94)
 
 ___
 
@@ -4284,7 +4284,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:153](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L153)
+[packages/framework/esm-utils/src/dates/date-util.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L152)
 
 ___
 
@@ -4307,7 +4307,7 @@ Otherwise returns null.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L70)
+[packages/framework/esm-utils/src/dates/date-util.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L69)
 
 ___
 
@@ -4330,7 +4330,7 @@ Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L81)
+[packages/framework/esm-utils/src/dates/date-util.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L80)
 
 ___
 
