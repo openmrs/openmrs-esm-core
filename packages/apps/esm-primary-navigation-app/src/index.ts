@@ -16,6 +16,8 @@ import changeLanguageLinkComponent from './components/change-language/change-lan
 import offlineBannerComponent from './components/offline-banner/offline-banner.component';
 import { NavGroup, navGroupConfigSchema } from './components/nav-group/nav-group.component';
 import genericLinkComponent, { genericLinkConfigSchema } from './components/generic-link/generic-link.component';
+import UserMenuButton from './components/navbar/user-menu-button.component';
+import AppMenuButton from './components/navbar/app-menu-button.component';
 
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
@@ -57,3 +59,13 @@ export const changeLanguageModal = getAsyncLifecycle(
   () => import('./components/change-language/change-language.modal'),
   options,
 );
+
+export const userMenuButton = getSyncLifecycle(UserMenuButton, {
+  featureName: 'user-menu-button',
+  moduleName,
+});
+
+export const appMenuButton = getSyncLifecycle(AppMenuButton, {
+  featureName: 'app-menu-button',
+  moduleName,
+});
