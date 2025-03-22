@@ -1,5 +1,5 @@
-import { Type, validators } from '@openmrs/esm-config';
-
+import { type ConfigSchema, Type, validators } from '@openmrs/esm-config';
+import { type CarbonTagColor, carbonTagColors } from './utils';
 export interface StyleguideConfigObject {
   'Brand color #1': string;
   'Brand color #2': string;
@@ -15,9 +15,28 @@ export interface StyleguideConfigObject {
   preferredDateLocale: {
     [key: string]: string;
   };
+  diagnosisTags: {
+    primaryColor: CarbonTagColor;
+    secondaryColor: CarbonTagColor;
+  };
 }
 
-export const esmStyleGuideSchema = {
+const diagnosisTagConfigSchema: ConfigSchema = {
+  primaryColor: {
+    _type: Type.String,
+    _description: 'The color for displaying primary diagnoses tags',
+    _default: 'red',
+    _validators: [validators.oneOf(carbonTagColors)],
+  },
+  secondaryColor: {
+    _type: Type.String,
+    _description: 'The color for displaying secondary diagnoses tags',
+    _default: 'blue',
+    _validators: [validators.oneOf(carbonTagColors)],
+  },
+};
+
+export const esmStyleGuideSchema: ConfigSchema = {
   'Brand color #1': {
     _default: '#005d5d',
     _type: Type.String,
@@ -95,4 +114,5 @@ export const esmStyleGuideSchema = {
       _type: Type.String,
     },
   },
+  diagnosisTags: diagnosisTagConfigSchema,
 };

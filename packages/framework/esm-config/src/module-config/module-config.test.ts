@@ -455,6 +455,49 @@ describe('getConfig', () => {
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/0.*foo-module.*baz.*must be an object/i));
   });
 
+  it('supports freeform object elements with defined _elements type string', async () => {
+    const daikonSchema = {
+      daikon: {
+        _type: Type.Object,
+        _default: {},
+        _elements: {
+          _type: Type.String,
+        },
+      },
+    };
+    Config.defineConfigSchema('daikon-module', daikonSchema);
+    // load to trigger validation
+    Config.registerModuleLoad('daikon-module');
+    const testConfig = {
+      'daikon-module': {
+        daikon: {
+          raw: 'pretty good',
+          pickled: 'very nice',
+        },
+      },
+    };
+    Config.provide(testConfig);
+    const result = await Config.getConfig('daikon-module');
+    expect(console.error).not.toHaveBeenCalled();
+    expect(result.daikon.pickled).toBe('very nice');
+
+    await resetAll();
+
+    Config.defineConfigSchema('daikon-module', daikonSchema);
+    // load to trigger validation
+    Config.registerModuleLoad('daikon-module');
+    const badConfig = {
+      'daikon-module': {
+        daikon: {
+          howMany: 42,
+        },
+      },
+    };
+    Config.provide(badConfig);
+    await Config.getConfig('daikon-module');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/42.*daikon-module.*daikon.*must be a string/i));
+  });
+
   it('does not crash when null is passed as a freeform object config value', async () => {
     Config.defineConfigSchema('object-null-module', {
       objnu: {

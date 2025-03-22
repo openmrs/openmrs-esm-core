@@ -112,8 +112,9 @@
 }
 
 .inputWrapper {
-  inline-size: 15rem;
-  padding-left: spacing.$spacing-04;
+  margin-left: spacing.$spacing-05;
+  min-width: spacing.$spacing-13;
+  max-width: 15rem;
 
   .inputSegment {
     caret-color: var(--cds-text-primary);
