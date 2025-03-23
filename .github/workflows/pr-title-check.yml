@@ -12,11 +12,11 @@ jobs:
         uses: amannn/action-semantic-pull-request@v5
         with:
           types: | 
-          docs 
-          test 
-          chore 
-          fix 
-          feat 
-          BREAKING
+            docs 
+            test 
+            chore 
+            fix 
+            feat 
+            BREAKING
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
