@@ -113,8 +113,8 @@
 
 .inputWrapper {
   inline-size: 15rem;
-  padding-left: layout.$spacing-05;
-  min-width: spacing.$spacing-13;
+  margin-left: layout.$spacing-05;
+  min-width: layout.$spacing-13;
   max-width: 15rem;
 
   .inputSegment {
