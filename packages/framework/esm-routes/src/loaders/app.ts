@@ -29,18 +29,18 @@ const initializedApps = new Map<string, Promise<unknown>>();
  * React-based pages or extensions should generally use the framework's
  * `getAsyncLifecycle()` or `getSyncLifecycle()` functions.
  *
- * @param routesDotJsonAppName The app name of the routes.json file defining the component to load
+ * @param routesAppName The app name of the routes.json file defining the component to load
  *
  * @param fullComponentName The name of the component to load. Note that this can optionally
  * include the appName to load the component from (in the format `${appName}#${componentName}`),
- * or omitted to implicitly use routesDotJsonAppName
+ * or omitted to implicitly use routesAppName
  *
  */
-export function getLoader(routesDotJsonAppName: string, fullComponentName: string): () => Promise<LifeCycles> {
+export function getLoader(routesAppName: string, fullComponentName: string): () => Promise<LifeCycles> {
   return async () => {
     const poundIndex = fullComponentName.indexOf('#');
     const isNamespaced = poundIndex >= 0;
-    const appName = isNamespaced ? fullComponentName.substring(0, poundIndex) : routesDotJsonAppName;
+    const appName = isNamespaced ? fullComponentName.substring(0, poundIndex) : routesAppName;
     const componentName = isNamespaced ? fullComponentName.substring(poundIndex + 1) : fullComponentName;
 
     const module = await importDynamic<Module>(appName);
@@ -49,14 +49,12 @@ export function getLoader(routesDotJsonAppName: string, fullComponentName: strin
       return initializeApp(appName, module).then(() => module[componentName]());
     } else {
       if (!module) {
-        console.warn(`Unknown app ${appName} for ${fullComponentName} defined in ${routesDotJsonAppName} routes.json`);
+        console.warn(`Unknown app ${appName} for ${fullComponentName} defined in ${routesAppName}'s routes.json`);
       } else if (module && Object.hasOwn(module, componentName)) {
-        console.warn(
-          `The export ${fullComponentName}, defined in ${routesDotJsonAppName} routes.json, is not a function`,
-        );
+        console.warn(`The export ${fullComponentName}, defined in ${routesAppName}'s routes.json, is not a function`);
       } else {
         console.warn(
-          `The app ${appName} does not define a component called ${componentName}, referenced in ${routesDotJsonAppName} routes.json. This cannot be loaded.`,
+          `${appName} does not define a component called "${componentName}", referenced in ${routesAppName}'s routes.json. This cannot be loaded.`,
         );
       }
     }
