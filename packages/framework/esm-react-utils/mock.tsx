@@ -93,19 +93,16 @@ export const useVisit = jest.fn().mockReturnValue({
 
 export const useVisitTypes = jest.fn(() => []);
 
-export const useAbortController = jest.fn().mockReturnValue(() => {
+export const useAbortController = jest.fn(() => {
   let aborted = false;
-  return jest.fn(
-    () =>
-      ({
-        abort: () => {
-          aborted = true;
-        },
-        signal: {
-          aborted,
-        },
-      }) as AbortController,
-  );
+  return {
+    abort: () => {
+      aborted = true;
+    },
+    signal: {
+      aborted,
+    },
+  } as AbortController;
 });
 
 export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
