@@ -3,7 +3,7 @@
 :root {
   --omrs-sidenav-width: 16rem;
   --omrs-offline-banner-height: 0;
-  --omrs-navbar-height: layout.$spacing-09;
+  --omrs-navbar-height: #{layout.$spacing-09};
   --omrs-topnav-height: var(--omrs-navbar-height);
 }
 
