@@ -8,7 +8,18 @@
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 1px 2px -1px rgba(0, 0, 0, 0.1);
   border-radius: layout.$spacing-02;
+  // this is to account for the position of the help menu button
+  bottom: layout.$spacing-10;
   color: colors.$gray-100;
+  cursor: pointer;
+  right: layout.$spacing-03;
+  position: fixed;
+  height: layout.$spacing-08;
+  width: layout.$spacing-08;
+  padding-inline: layout.$spacing-03;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     color: colors.$blue-60 !important;
@@ -18,11 +29,4 @@
 .overridden {
   background-color: colors.$red-30;
   color: colors.$white;
-}
-
-.popover {
-  z-index: 7900;
-  bottom: layout.$spacing-11;
-  right: layout.$spacing-02;
-  position: fixed;
 }

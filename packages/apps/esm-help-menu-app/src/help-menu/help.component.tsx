@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton } from '@carbon/react';
+import { Button } from '@carbon/react';
 import { Help } from '@carbon/react/icons';
 import { useSession } from '@openmrs/esm-framework';
 import HelpMenuPopup from './help-popup.component';
@@ -40,19 +40,17 @@ export default function HelpMenu() {
   return (
     <>
       {user && (
-        <IconButton
-          label={t('help', 'Help')}
-          align="left"
-          size="md"
-          aria-expanded={helpMenuOpen}
+        <Button
           aria-controls="help-menu-popup"
+          aria-expanded={helpMenuOpen}
+          className={styles.helpMenuButton}
+          kind="ghost"
           onClick={toggleHelpMenu}
           ref={helpMenuButtonRef}
-          className={styles.helpMenuButton}
-          wrapperClasses={styles.popover}
+          size="md"
         >
-          <Help size={24} />
-        </IconButton>
+          <Help size={20} />
+        </Button>
       )}
       {helpMenuOpen && (
         <div id="help-menu-popup" ref={popupRef} className={styles.helpMenuPopup}>

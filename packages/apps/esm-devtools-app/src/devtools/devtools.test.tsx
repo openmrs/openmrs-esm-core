@@ -37,7 +37,7 @@ describe('DevTools', () => {
 
       render(<Root {...defaultProps} />);
 
-      expect(screen.getByRole('button', { name: /toggle dev tools/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: '{···}' })).toBeInTheDocument();
     });
 
     it('should render DevTools when the devtools localStorage flag is set', () => {
@@ -45,7 +45,7 @@ describe('DevTools', () => {
 
       render(<Root {...defaultProps} />);
 
-      expect(screen.getByRole('button', { name: /toggle dev tools/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: '{···}' })).toBeInTheDocument();
     });
   });
 
@@ -59,7 +59,7 @@ describe('DevTools', () => {
     it('should toggle DevToolsPopup when clicking trigger button', async () => {
       render(<Root {...defaultProps} />);
 
-      const triggerButton = screen.getByRole('button', { name: /toggle dev tools/i });
+      const triggerButton = screen.getByRole('button', { name: '{···}' });
       // Initially, popup should not be present
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 

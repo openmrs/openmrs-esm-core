@@ -13,7 +13,7 @@
 }
 
 .omrs-offline {
-  --omrs-offline-banner-height: layout.$spacing-06;
+  --omrs-offline-banner-height: #{layout.$spacing-06};
   --omrs-topnav-height: 4.5rem;
 
   .cds--side-nav,

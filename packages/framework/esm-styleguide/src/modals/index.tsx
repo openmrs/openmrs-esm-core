@@ -32,26 +32,12 @@ const modalStore = createGlobalStore<ModalState>('modalState', {
   modalStack: [],
 });
 
-function htmlToElement(html: string) {
-  const template = document.createElement('template');
-  template.innerHTML = html;
-  return template.content.firstChild as ChildNode;
-}
-
 function createModalFrame({ size }: { size: ModalSize }) {
-  const closeTextTranslated = getCoreTranslation('close', 'Close');
-  const closeButton = htmlToElement(
-    `<button class="cds--modal-close" aria-label="${closeTextTranslated}" title="${closeTextTranslated}" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" class="cds--modal-close__icon" xmlns="http://www.w3.org/2000/svg"><path d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"></path></svg></button>`.trim(),
-  ) as HTMLButtonElement;
-
-  closeButton.addEventListener('click', closeHighestInstance);
   const modalFrame = document.createElement('div');
   modalFrame.className = `cds--modal-container cds--modal-container--${size}`;
-  // we also need to pass the aria label along to the modal container
   modalFrame.setAttribute('role', 'dialog');
   modalFrame.setAttribute('tabindex', '-1');
   modalFrame.setAttribute('aria-modal', 'true');
-  modalFrame.append(closeButton);
 
   return modalFrame;
 }
@@ -98,7 +84,9 @@ async function renderModalIntoDOM(
 const original = window.getComputedStyle(document.body).overflow;
 
 function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
-  if (!modalContainer) return;
+  if (!modalContainer) {
+    return;
+  }
 
   if (modalStack.length) {
     // ensure the container is visible

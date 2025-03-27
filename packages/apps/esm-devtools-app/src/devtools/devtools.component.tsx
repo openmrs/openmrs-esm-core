@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { IconButton } from '@carbon/react';
+import { Button } from '@carbon/react';
 import { type AppProps } from 'single-spa';
-import { getCoreTranslation } from '@openmrs/esm-framework';
 import { importMapOverridden } from './import-map.component';
 import DevToolsPopup from './devtools-popup.component';
 import styles from './devtools.styles.scss';
@@ -22,22 +21,16 @@ function DevTools(props: AppProps) {
 
   return (
     <>
-      <IconButton
-        align="left"
+      <Button
         className={classNames(styles.devtoolsTriggerButton, {
           [styles.overridden]: isOverridden,
         })}
-        direction="left"
         kind="ghost"
-        label={getCoreTranslation('toggleDevTools')}
         onClick={toggleDevTools}
         size="md"
-        tooltipAlignment="left"
-        tooltipPosition="top"
-        wrapperClasses={styles.popover}
       >
         {'{\u00B7\u00B7\u00B7}'}
-      </IconButton>
+      </Button>
       {devToolsOpen && <DevToolsPopup close={toggleDevTools} toggleOverridden={toggleOverridden} />}
     </>
   );
