@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { ContentSwitcher, IconButton, Switch } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { CloseIcon } from '@openmrs/esm-framework';
@@ -17,12 +17,6 @@ interface DevToolsPopupProps {
   visibleTabIndex?: number;
 }
 
-interface SwitcherItem {
-  index: number;
-  name: string;
-  text: string;
-}
-
 export default function Popup({
   close,
   frontendModules,
@@ -30,30 +24,65 @@ export default function Popup({
   visibleTabIndex = 0,
 }: DevToolsPopupProps) {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(visibleTabIndex ? visibleTabIndex : 0);
+  const [activeTab, setActiveTab] = useState(visibleTabIndex);
+  const [height, setHeight] = useState(50);
+  const [isResizing, setIsResizing] = useState(false);
+  const defaultHeight = 50;
+  const popupRef = useRef<HTMLDivElement>(null);
+
   const tabContent = useMemo(() => {
-    if (activeTab == 0) {
-      return <Configuration />;
-    } else if (activeTab === 1) {
-      return <FrontendModules frontendModules={frontendModules} />;
-    } else if (activeTab === 2) {
-      return <BackendDependencies backendDependencies={backendDependencies} />;
-    } else {
-      return <FeatureFlags />;
-    }
+    if (activeTab === 0) return <Configuration />;
+    if (activeTab === 1) return <FrontendModules frontendModules={frontendModules} />;
+    if (activeTab === 2) return <BackendDependencies backendDependencies={backendDependencies} />;
+    return <FeatureFlags />;
   }, [activeTab, backendDependencies, frontendModules]);
 
+  const startResizing = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+  }, []);
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isResizing) return;
+
+      const viewportHeight = window.innerHeight;
+      const mouseYPosition = e.clientY;
+      const newHeightPx = viewportHeight - mouseYPosition;
+      const newHeightVh = (newHeightPx / viewportHeight) * 100;
+
+      const clampedHeight = Math.max(defaultHeight, Math.min(90, newHeightVh));
+
+      requestAnimationFrame(() => {
+        setHeight(clampedHeight);
+      });
+    },
+    [isResizing, defaultHeight],
+  );
+
+  const stopResizing = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  useEffect(() => {
+    if (isResizing) {
+      document.body.classList.add('no-select');
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', stopResizing);
+    }
+
+    return () => {
+      document.body.classList.remove('no-select');
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', stopResizing);
+    };
+  }, [isResizing, handleMouseMove, stopResizing]);
+
   return (
-    <div className={styles.popup}>
+    <div ref={popupRef} className={styles.popup} style={{ height: `${height}vh` }}>
       <div className={styles.topBar}>
         <div className={styles.tabs}>
-          <ContentSwitcher
-            selectedIndex={activeTab}
-            onChange={(switcherItem: SwitcherItem) => {
-              setActiveTab(switcherItem.index);
-            }}
-            size="lg"
-          >
+          <ContentSwitcher selectedIndex={activeTab} onChange={({ index }) => setActiveTab(index)} size="lg">
             <Switch name="configuration-tab" text={t('configuration', 'Configuration')} className="darkThemeSwitch" />
             <Switch
               name="frontend-modules-tab"
@@ -68,19 +97,24 @@ export default function Popup({
             <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature flags')} className="darkThemeSwitch" />
           </ContentSwitcher>
         </div>
-        <div>
-          <IconButton
-            align="left"
-            className={styles.closeButton}
-            kind="secondary"
-            label={t('close', 'Close')}
-            onClick={close}
-          >
-            <CloseIcon />
-          </IconButton>
-        </div>
+        <IconButton
+          align="left"
+          className={styles.closeButton}
+          kind="secondary"
+          label={t('close', 'Close')}
+          onClick={close}
+        >
+          <CloseIcon />
+        </IconButton>
       </div>
       <div className={styles.content}>{tabContent}</div>
+      <div
+        className={styles.resizer}
+        onMouseDown={startResizing}
+        style={{ cursor: isResizing ? 'ns-resize' : 'n-resize' }}
+      >
+        <div className={styles.resizerHandle}></div>
+      </div>
     </div>
   );
 }
