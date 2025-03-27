@@ -52,6 +52,15 @@
   z-index: 0;
 }
 
+/* Modals */
+.cds--modal-close {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.cds--modal-close:hover {
+  background-color: colors.$gray-10-hover !important;
+}
+
 /* Content Switcher */
 .cds--content-switcher:not(.darkThemeSwitch) {
   & > :first-child {
@@ -564,7 +573,7 @@ html[dir='rtl'] {
 
   .cds--list-box__field {
     padding: 0 layout.$spacing-05 0 layout.$spacing-09;
-    
+
     .cds--list-box__menu-icon {
       left: layout.$spacing-05;
       right: unset;

@@ -4,30 +4,24 @@
 .helpMenuButton {
   z-index: 7900;
   background-color: colors.$white;
-  height: 2.5rem !important;
-  width: 2.5rem !important;
-  bottom: layout.$spacing-05;
-  right: layout.$spacing-02;
-  position: fixed;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  border: none;
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  border-radius: layout.$spacing-03;
-  color: colors.$black;
+  border-radius: layout.$spacing-02;
+  bottom: layout.$spacing-05;
+  color: colors.$gray-100;
+  cursor: pointer;
+  right: layout.$spacing-03;
+  height: layout.$spacing-08;
+  width: layout.$spacing-08;
+  position: fixed;
+  padding-inline: layout.$spacing-03;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: colors.$gray-20;
     color: colors.$black;
   }
-}
-
-.popover {
-  z-index: 7900;
-  bottom: layout.$spacing-07;
-  position: fixed;
-  right: layout.$spacing-09;
 }
