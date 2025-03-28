@@ -1,12 +1,11 @@
-@use '@carbon/styles/scss/spacing';
-@import '../root.scss';
+@use '@carbon/layout';
 
 .overviewCardContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: spacing.$spacing-05;
-  padding: spacing.$spacing-05;
-  padding-top: 0rem;
+  gap: layout.$spacing-05;
+  padding: layout.$spacing-05;
+  padding-top: 0;
   background-color: #ededed;
 }
 

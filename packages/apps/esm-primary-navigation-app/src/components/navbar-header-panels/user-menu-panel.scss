@@ -1,5 +1,18 @@
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../../root.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.bodyLong01 {
+  @include type.type-style('body-01');
+}
+
+.headerPanel {
+  height: max-content;
+}
+
+.primaryNavContainer {
+  height: var(--omrs-topnav-height);
+}
 
 .headerPanel {
   transition: none;
@@ -10,12 +23,12 @@
 }
 
 .userPanelSwitcher {
-  padding-top: 1rem;
+  padding-top: layout.$spacing-05;
   align-items: start;
 }
 
 .userPanelSwitcher :global(.cds--switcher__item) {
-  height: 3rem;
+  height: layout.$spacing-09;
 }
 
 .userPanelSwitcher :global(.cds--switcher__item:first-child) {
@@ -27,7 +40,7 @@
   align-items: center;
   color: $field-01;
   padding: 0;
-  height: 3rem;
+  height: layout.$spacing-09;
   @extend .bodyLong01;
 }
 
@@ -37,7 +50,7 @@
 }
 
 .userPanelSwitcher :global(.cds--switcher__item) svg {
-  margin: 0rem 0.75rem;
+  margin: 0 layout.$spacing-04;
   fill: $field-01;
   flex-shrink: 0;
 }

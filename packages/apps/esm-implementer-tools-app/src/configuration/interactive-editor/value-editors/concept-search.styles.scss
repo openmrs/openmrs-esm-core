@@ -1,12 +1,11 @@
-@use '@carbon/styles/scss/type';
-@use '@carbon/styles/scss/spacing';
-@import '../../implementer-tools.styles.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
 
 .activeConceptUuid {
   @include type.type-style('body-compact-01');
   color: $ui-05;
-  margin-bottom: spacing.$spacing-03;
-  padding-bottom: spacing.$spacing-03;
+  margin-bottom: layout.$spacing-03;
+  padding-bottom: layout.$spacing-03;
   border-bottom: 1px solid $ui-03;
 }
 
@@ -14,7 +13,7 @@
 .autocomplete > [role='combobox'] {
   display: flex;
   position: relative;
-  width: 20em;
+  width: 20rem;
 }
 
 .autocomplete [role='listbox'] {
@@ -27,10 +26,10 @@
 }
 
 .autocomplete li {
-  line-height: 0.75rem;
-  padding: 0.5em;
+  line-height: layout.$spacing-04;
+  padding: layout.$spacing-03;
   display: block;
-  border-bottom: 0.125rem solid #718096;
+  border-bottom: layout.$spacing-01 solid #718096;
   outline: 0;
   margin: 0;
   color: #000;

@@ -1,8 +1,8 @@
-@use '@carbon/styles/scss/spacing';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .cellContainer {
   display: flex;
   align-items: center;
-  column-gap: spacing.$spacing-03;
+  column-gap: layout.$spacing-03;
 }

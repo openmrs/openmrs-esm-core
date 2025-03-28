@@ -27,10 +27,10 @@ const AppMenuButton: React.FC<MenuButtonProps> = ({ isActivePanel, togglePanel, 
           })}
           enterDelayMs={500}
           isActive={isActivePanel('appMenu')}
-          tooltipAlignment="end"
           onClick={() => {
             togglePanel('appMenu');
           }}
+          tooltipAlignment="end"
         >
           {isActivePanel('appMenu') ? <CloseIcon size={20} /> : <SwitcherIcon size={20} />}
         </HeaderGlobalAction>

@@ -11,8 +11,8 @@ import { Button } from '@carbon/react';
 import { Renew } from '@carbon/react/icons';
 import { useTranslation } from 'react-i18next';
 import { usePendingSyncItems } from '../hooks/offline-actions';
-import SharedPageLayout from '../components/shared-page-layout.component';
 import OfflineActions from './offline-actions.component';
+import SharedPageLayout from '../components/shared-page-layout.component';
 import styles from './offline-actions-page.styles.scss';
 
 const OfflineActionsPage: React.FC = () => {
