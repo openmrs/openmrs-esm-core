@@ -96,15 +96,16 @@ export const launchWorkspaceGroup = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();
 
-export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange }) => (
+export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange, isInvalid, invalidText }) => (
   <>
     <label htmlFor={id}>{labelText}</label>
     <input
       id={id}
-      type="date"
+      type="text"
       value={value ? dayjs(value).format('DD/MM/YYYY') : ''}
       onChange={(evt) => onChange?.(dayjs(evt.target.value).toDate())}
     />
+    {isInvalid && <span>{invalidText}</span>}
   </>
 ));
 
