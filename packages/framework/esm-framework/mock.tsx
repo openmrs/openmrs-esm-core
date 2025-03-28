@@ -101,7 +101,7 @@ export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange }) =>
     <label htmlFor={id}>{labelText}</label>
     <input
       id={id}
-      type="date"
+      type="textbox"
       value={value ? dayjs(value).format('DD/MM/YYYY') : ''}
       onChange={(evt) => onChange?.(dayjs(evt.target.value).toDate())}
     />
