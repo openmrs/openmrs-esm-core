@@ -1,13 +1,13 @@
 import { util } from 'webpack';
 
-export function trimEnd(text: string, chr: string) {
+export function trimEnd(text: string, chr: string): string {
   while (text.endsWith(chr)) {
     text = text.slice(0, text.length - chr.length);
   }
   return text;
 }
 
-export function removeTrailingSlash(path: string) {
+export function removeTrailingSlash(path: string): string {
   const i = path.length - 1;
   return path[i] === '/' ? removeTrailingSlash(path.slice(0, i)) : path;
 }
