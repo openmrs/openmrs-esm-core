@@ -10,8 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from '@carbon/react';
-import styles from './frontend-modules.scss';
 import type { FrontendModule } from '../types';
+import styles from './frontend-modules.scss';
 
 export interface FrontendModulesProps {
   frontendModules: Array<FrontendModule>;
