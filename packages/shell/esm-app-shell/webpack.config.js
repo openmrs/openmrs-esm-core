@@ -93,11 +93,11 @@ function escapeRegExp(string) {
 }
 
 /**
- * @param {*} env
- * @param {*} argv
+ * @param {Record<string, string>} env
+ * @param {Array<string>} argv
  * @returns {import("webpack").Configuration}
  */
-module.exports = (env, argv = {}) => {
+module.exports = (env, argv = []) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? 'dist' : 'lib';
   const isProd = mode === 'production';
@@ -201,6 +201,21 @@ module.exports = (env, argv = {}) => {
            */
           onProxyRes(proxyRes) {
             proxyRes.headers && delete proxyRes.headers['content-security-policy'];
+          },
+          /**
+           * @param {string} path
+           * @param {Request} req
+           * @returns {string}
+           */
+          pathRewrite(path) {
+            if (path.startsWith(openmrsPublicPath)) {
+              const matcher = /^.*\/([^\/]*\.(?!html|js)[^.]+)$/i.exec(path);
+              if (matcher) {
+                return `${openmrsPublicPath}/${matcher[1]}`;
+              }
+            }
+
+            return path;
           },
         },
       ],
