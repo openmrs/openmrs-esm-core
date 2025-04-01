@@ -1,11 +1,16 @@
-@use '@carbon/styles/scss/spacing';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.productiveHeading03 {
+  @include type.type-style('heading-03');
+}
 
 .pageHeaderContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: spacing.$spacing-05;
+  padding: layout.$spacing-05;
   background-color: #ededed;
 
   .pageHeader {

@@ -1,11 +1,12 @@
+@use '@carbon/layout';
 @use '@carbon/styles/scss/components/button';
 
 .arrayEditor {
   :global(.cds--structured-list) {
-    margin-bottom: 0.25rem;
+    margin-bottom: layout.$spacing-02;
   }
   :global(.cds--structured-list-td) {
-    padding: 0.25rem 3rem 0.25rem 1rem;
+    padding: layout.$spacing-02 layout.$spacing-09 layout.$spacing-02 layout.$spacing-05;
   }
   :global(.cds--btn--primary) {
     background-color: button.$button-primary;

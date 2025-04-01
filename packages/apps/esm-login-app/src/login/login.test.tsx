@@ -87,9 +87,9 @@ describe('Login', () => {
     expect(screen.getByRole('textbox', { name: /username/i })).toHaveFocus();
     await user.type(screen.getByRole('textbox', { name: /username/i }), 'yoshi');
     await user.click(continueButton);
-    await screen.findByLabelText(/password/i);
-    await user.type(screen.getByLabelText(/password/i), 'no-tax-fraud');
-    expect(screen.getByLabelText(/password/i)).toHaveFocus();
+    await screen.findByLabelText(/^password$/i);
+    await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
+    expect(screen.getByLabelText(/^password$/i)).toHaveFocus();
   });
 
   it('makes an API request when you submit the form', async () => {
@@ -109,8 +109,8 @@ describe('Login', () => {
     await user.click(screen.getByRole('button', { name: /Continue/i }));
 
     const loginButton = screen.getByRole('button', { name: /log in/i });
-    await screen.findByLabelText(/password/i);
-    await user.type(screen.getByLabelText(/password/i), 'no-tax-fraud');
+    await screen.findByLabelText(/^password$/i);
+    await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(loginButton);
     await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
@@ -142,8 +142,8 @@ describe('Login', () => {
 
     await user.type(screen.getByRole('textbox', { name: /Username/i }), 'yoshi');
     await user.click(screen.getByRole('button', { name: /Continue/i }));
-    await screen.findByLabelText(/password/i);
-    await user.type(screen.getByLabelText(/password/i), 'no-tax-fraud');
+    await screen.findByLabelText(/^password$/i);
+    await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(screen.getByRole('button', { name: /log in/i }));
   });
 
@@ -163,7 +163,7 @@ describe('Login', () => {
 
     const usernameInput = screen.queryByRole('textbox', { name: /username/i });
     const continueButton = screen.queryByRole('button', { name: /Continue/i });
-    const passwordInput = screen.queryByLabelText(/password/i);
+    const passwordInput = screen.queryByLabelText(/^password$/i);
     const loginButton = screen.queryByRole('button', { name: /log in/i });
 
     expect(usernameInput).toBeInTheDocument();
@@ -214,7 +214,7 @@ describe('Login', () => {
     );
 
     const usernameInput = screen.getByRole('textbox', { name: /username/i });
-    const passwordInput = screen.getByLabelText(/password/i);
+    const passwordInput = screen.getByLabelText(/^password$/i);
     const loginButton = screen.getByRole('button', { name: /log in/i });
 
     await user.type(usernameInput, 'yoshi');
@@ -261,7 +261,7 @@ describe('Login', () => {
     await user.type(usernameInput, 'yoshi');
     await user.click(continueButton);
 
-    const passwordInput = screen.getByLabelText(/password/i);
+    const passwordInput = screen.getByLabelText(/^password$/i);
     expect(passwordInput).toHaveFocus();
   });
 

@@ -1,6 +1,6 @@
 @use '@carbon/colors';
 @use '@carbon/layout';
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .container {
   width: auto;
@@ -30,7 +30,7 @@
 .deceased {
   width: auto;
   height: auto;
-  padding: 0.875rem 1rem;
+  padding: 0.875rem layout.$spacing-05;
   color: colors.$blue-60;
 
   &:hover {

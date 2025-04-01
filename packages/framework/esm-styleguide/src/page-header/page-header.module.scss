@@ -1,11 +1,11 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .pageHeader {
   @include type.type-style('body-compact-02');
   color: $text-02;
-  height: spacing.$spacing-12;
+  height: layout.$spacing-12;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -23,6 +23,6 @@
 
 .pageLabels {
   p:first-of-type {
-    margin-bottom: 0.25rem;
+    margin-bottom: layout.$spacing-02;
   }
 }
