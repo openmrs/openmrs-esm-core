@@ -4,6 +4,7 @@ import changeLocationLinkComponent from './change-location-link/change-location-
 import changePasswordLinkComponent from './change-password/change-password-link.extension';
 import locationPickerComponent from './location-picker/location-picker-view.component';
 import logoutButtonComponent from './logout/logout.extension';
+import userActivityIconComponent from './user-activity/user-activity.extension';
 import rootComponent from './root.component';
 
 const moduleName = '@openmrs/esm-login-app';
@@ -20,8 +21,9 @@ export function startupApp() {
 }
 
 export const root = getSyncLifecycle(rootComponent, options);
-export const locationPicker = getSyncLifecycle(locationPickerComponent, options);
+export const locationPicker = getAsyncLifecycle(locationPickerComponent, options);
 export const logoutButton = getSyncLifecycle(logoutButtonComponent, options);
 export const changeLocationLink = getSyncLifecycle(changeLocationLinkComponent, options);
 export const changePasswordLink = getSyncLifecycle(changePasswordLinkComponent, options);
 export const changePasswordModal = getAsyncLifecycle(() => import('./change-password/change-password.modal'), options);
+export const userActivityIcon = getSyncLifecycle(userActivityIconComponent, options);

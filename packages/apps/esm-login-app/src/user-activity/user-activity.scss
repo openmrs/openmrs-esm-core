@@ -1,0 +1,54 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+
+.container {
+  padding: $spacing-05;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.activityCard {
+  padding: $spacing-05;
+  margin-bottom: $spacing-05;
+}
+
+.securityInfo {
+  padding: $spacing-05;
+
+  h3 {
+    @include type-style('productive-heading-03');
+    margin-bottom: $spacing-05;
+  }
+
+  p {
+    @include type-style('body-long-01');
+    margin-bottom: $spacing-03;
+  }
+}
+
+.adminTools {
+  padding: $spacing-05;
+
+  h3 {
+    @include type-style('productive-heading-03');
+    margin-bottom: $spacing-05;
+  }
+
+  button {
+    margin-right: $spacing-03;
+    margin-bottom: $spacing-03;
+  }
+}
+
+.securityDetails {
+  h4 {
+    @include type-style('productive-heading-03');
+    margin-bottom: $spacing-04;
+  }
+
+  p {
+    @include type-style('body-long-01');
+    margin-bottom: $spacing-03;
+  }
+}
