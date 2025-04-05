@@ -11,7 +11,6 @@ import {
   Checkbox,
   Form,
   FormGroup,
-  PasswordStrengthMeter,
 } from '@carbon/react';
 import {
   ArrowRightIcon,
@@ -285,7 +284,6 @@ const Login: React.FC = () => {
                         invalid={!!formErrors.password}
                         disabled={isLoggingIn}
                       />
-                      <PasswordStrengthMeter password={password} className={styles.passwordStrength} />
                       <Checkbox
                         id="rememberMe"
                         labelText={t('rememberMe', 'Remember me')}
@@ -333,7 +331,6 @@ const Login: React.FC = () => {
                       invalid={!!formErrors.password}
                       disabled={isLoggingIn}
                     />
-                    <PasswordStrengthMeter password={password} className={styles.passwordStrength} />
                     <Checkbox
                       id="rememberMe"
                       labelText={t('rememberMe', 'Remember me')}

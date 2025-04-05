@@ -33,18 +33,19 @@
 }
 
 .container {
+  min-height: 100vh;
+  background-color: #f4f4f4;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background-color: #f4f4f4;
 }
 
 .center {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
 }
 
 .logo {
@@ -86,7 +87,6 @@
 }
 
 .loginCard {
-  width: 100%;
   max-width: 400px;
   padding: 2rem;
   margin: 1rem;
@@ -131,13 +131,11 @@
 }
 
 .loader {
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .errorMessage {
   margin-bottom: 1rem;
-}
-
-.passwordStrength {
-  margin-top: 0.5rem;
 }
