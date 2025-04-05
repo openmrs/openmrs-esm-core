@@ -35,13 +35,16 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  position: relative;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
 }
 
 .center {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .logo {
@@ -83,14 +86,12 @@
 }
 
 .loginCard {
-  border-radius: 0;
-  border: 1px solid $ui-03;
-  background-color: $ui-02;
-  width: 23rem;
-  padding: layout.$spacing-08;
-  border-radius: layout.$spacing-03;
-  position: relative;
-  min-height: fit-content;
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  margin: 1rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @media only screen and (min-width: 481px) {
@@ -113,29 +114,13 @@
 
 .inputGroup {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
-  width: 18rem;
-  gap: layout.$spacing-05;
-
-  :global(.cds--text-input) {
-    height: layout.$spacing-09;
-    @extend .label01;
-  }
-
-  :global(.cds--text-input__field-outer-wrapper) {
-    width: 18rem;
-  }
-
-  &:not(:last-child) {
-    margin-bottom: layout.$spacing-05;
-  }
+  gap: 1rem;
 }
 
 .continueButton {
-  margin-top: layout.$spacing-06;
-  width: 18rem;
+  margin-top: 1rem;
+  width: 100%;
 }
 
 .backButtonDiv {
@@ -146,13 +131,13 @@
 }
 
 .loader {
-  min-height: fit-content;
+  margin: 0 auto;
 }
 
 .errorMessage {
-  width: 23rem;
-  margin-bottom: layout.$spacing-09;
-  position: absolute;
-  bottom: 100%;
-  left: 0;
+  margin-bottom: 1rem;
+}
+
+.passwordStrength {
+  margin-top: 0.5rem;
 }
