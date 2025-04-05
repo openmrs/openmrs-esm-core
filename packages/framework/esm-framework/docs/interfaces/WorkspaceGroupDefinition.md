@@ -19,7 +19,7 @@ List of workspace names which are part of the workspace group.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:362](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L362)
+[packages/framework/esm-globals/src/types.ts:362](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L362)
 
 ___
 
@@ -31,4 +31,4 @@ Name of the workspace group. This is used to launch the workspace group
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:358](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L358)
+[packages/framework/esm-globals/src/types.ts:358](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L358)

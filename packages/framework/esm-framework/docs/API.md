@@ -272,7 +272,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L6)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:6](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L6)
 
 ___
 
@@ -289,7 +289,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L11)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:11](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L11)
 
 ___
 
@@ -299,7 +299,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L6)
+[packages/framework/esm-react-utils/src/usePatient.ts:6](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L6)
 
 ___
 
@@ -309,7 +309,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L20)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L20)
 
 ___
 
@@ -319,7 +319,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L9)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:9](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L9)
 
 ___
 
@@ -336,7 +336,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L16)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:16](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L16)
 
 ___
 
@@ -368,7 +368,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L89)
+[packages/framework/esm-context/src/context.ts:89](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L89)
 
 ___
 
@@ -380,7 +380,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L24)
+[packages/framework/esm-utils/src/dates/date-util.ts:24](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L24)
 
 ___
 
@@ -390,7 +390,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:167](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L167)
+[packages/framework/esm-utils/src/dates/date-util.ts:167](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L167)
 
 ___
 
@@ -414,7 +414,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:169](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L169)
+[packages/framework/esm-utils/src/dates/date-util.ts:169](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L169)
 
 ___
 
@@ -426,7 +426,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L7)
+[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L7)
 
 ___
 
@@ -436,7 +436,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L24)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:24](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L24)
 
 ___
 
@@ -452,7 +452,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L10)
+[packages/framework/esm-navigation/src/navigation/navigate.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L10)
 
 ___
 
@@ -464,7 +464,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L41)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:41](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L41)
 
 ___
 
@@ -474,7 +474,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/mode.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L34)
+[packages/framework/esm-offline/src/mode.ts:34](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L34)
 
 ___
 
@@ -489,7 +489,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L15)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:15](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L15)
 
 ___
 
@@ -499,7 +499,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L40)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:40](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L40)
 
 ___
 
@@ -520,7 +520,7 @@ HTTP requests with these headers are handled in a special way by the SPA's servi
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L21)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:21](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L21)
 
 ___
 
@@ -532,7 +532,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L46)
+[packages/framework/esm-config/src/types.ts:46](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L46)
 
 ___
 
@@ -544,7 +544,7 @@ A type for any of the acceptable date formats
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L93)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:93](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L93)
 
 ___
 
@@ -556,7 +556,7 @@ The valid return types for `evaluate()` and `evaluateAsync()`
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L31)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:31](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L31)
 
 ___
 
@@ -568,7 +568,7 @@ A definition of an extension as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L182)
+[packages/framework/esm-globals/src/types.ts:182](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L182)
 
 ___
 
@@ -586,7 +586,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L7)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L7)
 
 ___
 
@@ -598,7 +598,7 @@ A definition of a modal as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:247](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L247)
+[packages/framework/esm-globals/src/types.ts:247](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L247)
 
 ___
 
@@ -608,7 +608,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:422](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L422)
+[packages/framework/esm-globals/src/types.ts:422](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L422)
 
 ___
 
@@ -621,7 +621,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:413](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L413)
+[packages/framework/esm-globals/src/types.ts:413](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L413)
 
 ___
 
@@ -633,7 +633,7 @@ A definition of a page extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L121)
+[packages/framework/esm-globals/src/types.ts:121](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L121)
 
 ___
 
@@ -650,7 +650,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L7)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L7)
 
 ___
 
@@ -667,7 +667,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L68)
+[packages/framework/esm-config/src/types.ts:68](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L68)
 
 ___
 
@@ -677,7 +677,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L76)
+[packages/framework/esm-globals/src/types.ts:76](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L76)
 
 ___
 
@@ -694,7 +694,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:795](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L795)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:795](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L795)
 
 ___
 
@@ -711,7 +711,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L102)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:102](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L102)
 
 ___
 
@@ -721,7 +721,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L18)
+[packages/framework/esm-api/src/types/visit-resource.ts:18](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L18)
 
 ___
 
@@ -745,7 +745,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L75)
+[packages/framework/esm-config/src/types.ts:75](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L75)
 
 ___
 
@@ -769,7 +769,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L73)
+[packages/framework/esm-config/src/types.ts:73](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L73)
 
 ___
 
@@ -785,7 +785,7 @@ An object containing the variable to use when evaluating this expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L26)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:26](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L26)
 
 ___
 
@@ -797,7 +797,7 @@ A definition of a workspace as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:281](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L281)
+[packages/framework/esm-globals/src/types.ts:281](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L281)
 
 ___
 
@@ -807,7 +807,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:276](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L276)
+[packages/framework/esm-globals/src/types.ts:276](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L276)
 
 ___
 
@@ -840,7 +840,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L6)
+[packages/framework/esm-react-utils/src/useStore.ts:6](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L6)
 
 ___
 
@@ -856,7 +856,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L7)
+[packages/framework/esm-react-utils/src/useStore.ts:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L7)
 
 ___
 
@@ -870,7 +870,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L10)
+[packages/framework/esm-react-utils/src/useStore.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L10)
 
 ___
 
@@ -882,7 +882,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L53)
+[packages/framework/esm-translations/src/index.ts:53](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L53)
 
 ___
 
@@ -894,7 +894,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L24)
+[packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:24](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L24)
 
 ___
 
@@ -904,7 +904,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L22)
+[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:22](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L22)
 
 ___
 
@@ -914,7 +914,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLayoutType.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L4)
+[packages/framework/esm-react-utils/src/useLayoutType.ts:4](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L4)
 
 ___
 
@@ -924,7 +924,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L30)
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:30](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L30)
 
 ___
 
@@ -934,7 +934,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L29)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:29](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L29)
 
 ___
 
@@ -944,7 +944,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L23)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:23](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L23)
 
 ___
 
@@ -956,7 +956,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L8)
+[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:8](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L8)
 
 ___
 
@@ -966,7 +966,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L9)
+[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:9](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L9)
 
 ___
 
@@ -985,7 +985,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L10)
+[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L10)
 
 ## API Variables
 
@@ -1024,7 +1024,7 @@ This can also be used to hide components when the current user is not logged in.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L40)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:40](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L40)
 
 ___
 
@@ -1034,7 +1034,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/attachments.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L5)
+[packages/framework/esm-api/src/attachments.ts:5](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L5)
 
 ___
 
@@ -1044,7 +1044,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L30)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:30](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L30)
 
 ___
 
@@ -1054,7 +1054,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L10)
+[packages/framework/esm-api/src/openmrs-fetch.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L10)
 
 ___
 
@@ -1066,7 +1066,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L113)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:113](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L113)
 
 ___
 
@@ -1076,7 +1076,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L9)
+[packages/framework/esm-api/src/openmrs-fetch.ts:9](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L9)
 
 ___
 
@@ -1086,7 +1086,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L11)
+[packages/framework/esm-api/src/openmrs-fetch.ts:11](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L11)
 
 ___
 
@@ -1107,7 +1107,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L65)
+[packages/framework/esm-config/src/validators/validators.ts:65](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L65)
 
 ___
 
@@ -1127,7 +1127,7 @@ and *must* only be used once within that `<ExtensionSlot>`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L20)
+[packages/framework/esm-react-utils/src/Extension.tsx:20](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L20)
 
 ___
 
@@ -1139,7 +1139,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/uuid.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L4)
+[packages/framework/esm-offline/src/uuid.ts:4](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L4)
 
 ___
 
@@ -1149,7 +1149,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L5)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:5](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L5)
 
 ___
 
@@ -1159,7 +1159,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L3)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:3](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L3)
 
 ___
 
@@ -1169,7 +1169,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L4)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:4](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L4)
 
 ___
 
@@ -1181,7 +1181,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L15)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:15](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L15)
 
 ___
 
@@ -1191,7 +1191,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L23)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:23](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L23)
 
 ___
 
@@ -1201,7 +1201,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:727](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L727)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:727](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L727)
 
 ___
 
@@ -1211,7 +1211,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L12)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:12](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L12)
 
 ___
 
@@ -1221,7 +1221,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L31)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:31](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L31)
 
 ___
 
@@ -1231,7 +1231,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L39)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:39](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L39)
 
 ___
 
@@ -1241,7 +1241,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L47)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:47](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L47)
 
 ___
 
@@ -1251,7 +1251,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L55)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:55](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L55)
 
 ___
 
@@ -1261,7 +1261,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:732](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L732)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:732](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L732)
 
 ___
 
@@ -1271,7 +1271,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L63)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:63](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L63)
 
 ___
 
@@ -1281,7 +1281,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L71)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:71](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L71)
 
 ___
 
@@ -1291,7 +1291,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L79)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:79](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L79)
 
 ___
 
@@ -1301,7 +1301,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L87)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:87](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L87)
 
 ___
 
@@ -1311,7 +1311,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L95)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:95](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L95)
 
 ___
 
@@ -1321,7 +1321,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L103)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:103](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L103)
 
 ___
 
@@ -1331,7 +1331,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L111)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:111](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L111)
 
 ___
 
@@ -1341,7 +1341,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:135](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L135)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:135](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L135)
 
 ___
 
@@ -1351,7 +1351,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:119](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L119)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:119](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L119)
 
 ___
 
@@ -1361,7 +1361,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:127](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L127)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:127](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L127)
 
 ___
 
@@ -1371,7 +1371,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:143](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L143)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:143](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L143)
 
 ___
 
@@ -1381,7 +1381,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:151](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L151)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:151](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L151)
 
 ___
 
@@ -1391,7 +1391,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:159](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L159)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:159](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L159)
 
 ___
 
@@ -1401,7 +1401,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:167](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L167)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:167](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L167)
 
 ___
 
@@ -1411,7 +1411,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L175)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:175](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L175)
 
 ___
 
@@ -1421,7 +1421,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:183](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L183)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:183](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L183)
 
 ___
 
@@ -1431,7 +1431,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:199](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L199)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:199](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L199)
 
 ___
 
@@ -1441,7 +1441,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:191](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L191)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:191](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L191)
 
 ___
 
@@ -1455,7 +1455,7 @@ Note this is an alias for ListCheckedIcon
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:739](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L739)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:739](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L739)
 
 ___
 
@@ -1469,7 +1469,7 @@ or secondary.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L16)
+[packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:16](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L16)
 
 ___
 
@@ -1479,7 +1479,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:207](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L207)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:207](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L207)
 
 ___
 
@@ -1489,7 +1489,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:215](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L215)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:215](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L215)
 
 ___
 
@@ -1499,7 +1499,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:223](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L223)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:223](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L223)
 
 ___
 
@@ -1509,7 +1509,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:231](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L231)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:231](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L231)
 
 ___
 
@@ -1519,7 +1519,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:239](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L239)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:239](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L239)
 
 ___
 
@@ -1529,7 +1529,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L12)
+[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:12](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L12)
 
 ___
 
@@ -1539,7 +1539,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:247](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L247)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:247](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L247)
 
 ___
 
@@ -1549,7 +1549,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:255](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L255)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:255](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L255)
 
 ___
 
@@ -1559,7 +1559,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:263](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L263)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:263](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L263)
 
 ___
 
@@ -1569,7 +1569,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L270)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:270](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L270)
 
 ___
 
@@ -1579,7 +1579,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:277](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L277)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:277](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L277)
 
 ___
 
@@ -1589,7 +1589,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:284](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L284)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:284](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L284)
 
 ___
 
@@ -1599,7 +1599,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:292](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L292)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:292](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L292)
 
 ___
 
@@ -1609,7 +1609,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:308](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L308)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:308](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L308)
 
 ___
 
@@ -1619,7 +1619,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:300](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L300)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:300](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L300)
 
 ___
 
@@ -1629,7 +1629,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L18)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:18](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L18)
 
 ___
 
@@ -1639,7 +1639,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:316](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L316)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:316](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L316)
 
 ___
 
@@ -1651,7 +1651,7 @@ This is a utility type for custom icons that use the svg-sprite-loader to bundle
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:803](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L803)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:803](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L803)
 
 ___
 
@@ -1661,7 +1661,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:324](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L324)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:324](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L324)
 
 ___
 
@@ -1671,7 +1671,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L24)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:24](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L24)
 
 ___
 
@@ -1681,7 +1681,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L348)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:348](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L348)
 
 ___
 
@@ -1691,7 +1691,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:340](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L340)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:340](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L340)
 
 ___
 
@@ -1701,7 +1701,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:356](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L356)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:356](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L356)
 
 ___
 
@@ -1711,7 +1711,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:332](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L332)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:332](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L332)
 
 ___
 
@@ -1721,7 +1721,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:364](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L364)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:364](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L364)
 
 ___
 
@@ -1731,7 +1731,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L30)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:30](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L30)
 
 ___
 
@@ -1741,7 +1741,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L372)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:372](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L372)
 
 ___
 
@@ -1751,7 +1751,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:380](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L380)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:380](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L380)
 
 ___
 
@@ -1761,7 +1761,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx#L15)
+[packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx:15](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx#L15)
 
 ___
 
@@ -1771,7 +1771,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:388](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L388)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:388](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L388)
 
 ___
 
@@ -1781,7 +1781,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:396](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L396)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:396](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L396)
 
 ___
 
@@ -1799,7 +1799,7 @@ is available. The goal is to make it easier to conditionally render configuratio
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:762](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L762)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:762](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L762)
 
 ___
 
@@ -1817,7 +1817,7 @@ is available. The goal is to make it easier to conditionally render configuratio
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L69)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:69](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L69)
 
 ___
 
@@ -1827,7 +1827,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:404](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L404)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:404](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L404)
 
 ___
 
@@ -1837,7 +1837,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:412](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L412)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:412](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L412)
 
 ___
 
@@ -1847,7 +1847,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:420](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L420)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:420](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L420)
 
 ___
 
@@ -1859,7 +1859,7 @@ Billing
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:429](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L429)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:429](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L429)
 
 ___
 
@@ -1869,7 +1869,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:437](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L437)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:437](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L437)
 
 ___
 
@@ -1879,7 +1879,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:445](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L445)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:445](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L445)
 
 ___
 
@@ -1891,7 +1891,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:598](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L598)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:598](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L598)
 
 ___
 
@@ -1901,7 +1901,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:453](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L453)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:453](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L453)
 
 ___
 
@@ -1911,7 +1911,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:461](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L461)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:461](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L461)
 
 ___
 
@@ -1921,7 +1921,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:684](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L684)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:684](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L684)
 
 ___
 
@@ -1931,7 +1931,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L36)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:36](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L36)
 
 ___
 
@@ -1941,7 +1941,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:469](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L469)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:469](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L469)
 
 ___
 
@@ -1951,7 +1951,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:477](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L477)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:477](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L477)
 
 ___
 
@@ -1961,7 +1961,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L42)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L42)
 
 ___
 
@@ -1973,7 +1973,7 @@ This is a utility type for custom pictograms. Please maintain alphabetical order
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L112)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:112](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L112)
 
 ___
 
@@ -1983,7 +1983,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:485](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L485)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:485](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L485)
 
 ___
 
@@ -1993,7 +1993,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:493](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L493)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:493](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L493)
 
 ___
 
@@ -2003,7 +2003,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:501](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L501)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:501](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L501)
 
 ___
 
@@ -2013,7 +2013,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:744](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L744)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:744](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L744)
 
 ___
 
@@ -2023,7 +2023,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:509](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L509)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:509](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L509)
 
 ___
 
@@ -2033,7 +2033,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)
 
 ___
 
@@ -2058,7 +2058,7 @@ A really simple component that renders its children if the prop named `value` ha
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/RenderIfValueIsTruthy.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/RenderIfValueIsTruthy.tsx#L17)
+[packages/framework/esm-react-utils/src/RenderIfValueIsTruthy.tsx:17](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/RenderIfValueIsTruthy.tsx#L17)
 
 ___
 
@@ -2068,7 +2068,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:517](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L517)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:517](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L517)
 
 ___
 
@@ -2078,7 +2078,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:525](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L525)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:525](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L525)
 
 ___
 
@@ -2088,7 +2088,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:533](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L533)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:533](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L533)
 
 ___
 
@@ -2098,7 +2098,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:549](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L549)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:549](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L549)
 
 ___
 
@@ -2108,7 +2108,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:557](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L557)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:557](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L557)
 
 ___
 
@@ -2118,7 +2118,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L54)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:54](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L54)
 
 ___
 
@@ -2132,7 +2132,7 @@ Note this is an alias for ShoppingCartArrowDownIcon
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:751](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L751)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:751](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L751)
 
 ___
 
@@ -2144,7 +2144,7 @@ Used as a button to add an item to the Order basket from a search
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:583](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L583)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:583](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L583)
 
 ___
 
@@ -2156,7 +2156,7 @@ Order Basket, the UI to enter Orders for Medications, Referrals, Labs, Procedure
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:574](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L574)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:574](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L574)
 
 ___
 
@@ -2168,7 +2168,7 @@ Used as action button to open ward in-patient note workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:592](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L592)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:592](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L592)
 
 ___
 
@@ -2178,7 +2178,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:565](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L565)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:565](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L565)
 
 ___
 
@@ -2188,7 +2188,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:600](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L600)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:600](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L600)
 
 ___
 
@@ -2198,7 +2198,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:617](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L617)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:617](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L617)
 
 ___
 
@@ -2210,7 +2210,7 @@ Used as a button to add an item to the Order basket from a search
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:609](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L609)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:609](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L609)
 
 ___
 
@@ -2222,7 +2222,7 @@ Lab investigations
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:626](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L626)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:626](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L626)
 
 ___
 
@@ -2232,7 +2232,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:634](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L634)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:634](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L634)
 
 ___
 
@@ -2242,7 +2242,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:541](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L541)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:541](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L541)
 
 ___
 
@@ -2252,7 +2252,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:642](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L642)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:642](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L642)
 
 ___
 
@@ -2262,7 +2262,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:650](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L650)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:650](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L650)
 
 ___
 
@@ -2274,7 +2274,7 @@ User of OpenMRS e.g. My Account
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:659](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L659)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:659](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L659)
 
 ___
 
@@ -2284,7 +2284,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:667](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L667)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:667](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L667)
 
 ___
 
@@ -2294,7 +2294,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:692](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L692)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:692](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L692)
 
 ___
 
@@ -2308,7 +2308,7 @@ UserXray Icon
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:678](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L678)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:678](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L678)
 
 ___
 
@@ -2318,7 +2318,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:708](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L708)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:708](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L708)
 
 ___
 
@@ -2328,7 +2328,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:700](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L700)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:700](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L700)
 
 ___
 
@@ -2338,7 +2338,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:716](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L716)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:716](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L716)
 
 ___
 
@@ -2355,7 +2355,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
+[packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
 
 ___
 
@@ -2373,7 +2373,7 @@ is deprecated; it simply renders nothing.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L53)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:53](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L53)
 
 ___
 
@@ -2406,7 +2406,7 @@ and some other content on the right side:
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L58)
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:58](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L58)
 
 ___
 
@@ -2429,7 +2429,7 @@ on its own, and the PageHeaderContent component is not needed.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L90)
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:90](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L90)
 
 ___
 
@@ -2443,7 +2443,7 @@ This provides a light background for form inputs on tablets, in accordance with 
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L15)
+[packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:15](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L15)
 
 ___
 
@@ -2455,7 +2455,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L38)
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:38](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L38)
 
 ## API Functions
 
@@ -2469,7 +2469,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L177)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:177](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L177)
 
 ___
 
@@ -2490,7 +2490,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/attachments.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L19)
+[packages/framework/esm-api/src/attachments.ts:19](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L19)
 
 ___
 
@@ -2511,7 +2511,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/attachments.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L38)
+[packages/framework/esm-api/src/attachments.ts:38](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L38)
 
 ___
 
@@ -2533,7 +2533,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L22)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:22](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L22)
 
 ___
 
@@ -2554,7 +2554,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/attachments.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L7)
+[packages/framework/esm-api/src/attachments.ts:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L7)
 
 ___
 
@@ -2576,7 +2576,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/attachments.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L13)
+[packages/framework/esm-api/src/attachments.ts:13](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L13)
 
 ___
 
@@ -2621,7 +2621,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L66)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:66](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L66)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`Session`](interfaces/Session.md)\>
 
@@ -2638,7 +2638,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L67)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:67](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L67)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
@@ -2655,7 +2655,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L68)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:68](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L68)
 
 ___
 
@@ -2676,7 +2676,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/location.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/location.ts#L14)
+[packages/framework/esm-api/src/shared-api-objects/location.ts:14](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/location.ts#L14)
 
 ___
 
@@ -2690,7 +2690,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L201)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:201](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L201)
 
 ___
 
@@ -2704,7 +2704,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:219](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L219)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:219](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L219)
 
 ___
 
@@ -2718,7 +2718,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L93)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:93](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L93)
 
 ___
 
@@ -2732,7 +2732,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L47)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:47](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L47)
 
 ___
 
@@ -2746,7 +2746,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L15)
+[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:15](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L15)
 
 ___
 
@@ -2770,7 +2770,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L96)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:96](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L96)
 
 ___
 
@@ -2799,7 +2799,7 @@ makeUrl('/foo/bar');
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L23)
+[packages/framework/esm-api/src/openmrs-fetch.ts:23](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L23)
 
 ___
 
@@ -2866,7 +2866,7 @@ free up memory and network resources and to prevent race conditions.
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L83)
+[packages/framework/esm-api/src/openmrs-fetch.ts:83](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L83)
 
 ___
 
@@ -2917,7 +2917,7 @@ To cancel the network request, simply call `subscription.unsubscribe();`
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:271](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L271)
+[packages/framework/esm-api/src/openmrs-fetch.ts:271](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L271)
 
 ___
 
@@ -2950,7 +2950,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L163)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:163](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L163)
 
 ___
 
@@ -2971,7 +2971,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L71)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:71](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L71)
 
 ___
 
@@ -2992,7 +2992,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L51)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:51](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L51)
 
 ___
 
@@ -3013,7 +3013,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L228)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:228](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L228)
 
 ___
 
@@ -3033,7 +3033,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L116)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L116)
 
 ___
 
@@ -3055,7 +3055,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L241)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:241](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L241)
 
 ___
 
@@ -3075,7 +3075,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/location.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/location.ts#L7)
+[packages/framework/esm-api/src/shared-api-objects/location.ts:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/location.ts#L7)
 
 ___
 
@@ -3095,7 +3095,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L7)
+[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L7)
 
 ___
 
@@ -3117,7 +3117,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L82)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:82](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L82)
 
 ___
 
@@ -3146,7 +3146,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAttachments.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L6)
+[packages/framework/esm-react-utils/src/useAttachments.ts:6](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L6)
 
 ___
 
@@ -3175,7 +3175,7 @@ Object containing:
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L158)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:158](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L158)
 
 ___
 
@@ -3196,7 +3196,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLocations.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.tsx#L6)
+[packages/framework/esm-react-utils/src/useLocations.tsx:6](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.tsx#L6)
 
 ___
 
@@ -3228,7 +3228,7 @@ a route listener is set up to update the patient whenever the route changes.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L19)
+[packages/framework/esm-react-utils/src/usePatient.ts:19](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L19)
 
 ___
 
@@ -3248,7 +3248,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts#L13)
+[packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts:13](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts#L13)
 
 ___
 
@@ -3270,7 +3270,7 @@ Current user session information
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useSession.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L17)
+[packages/framework/esm-react-utils/src/useSession.ts:17](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L17)
 
 ___
 
@@ -3307,7 +3307,7 @@ API call is in progress. `mutate` refreshes the data from both API calls.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L42)
+[packages/framework/esm-react-utils/src/useVisit.ts:42](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L42)
 
 ___
 
@@ -3321,7 +3321,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisitTypes.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitTypes.ts#L6)
+[packages/framework/esm-react-utils/src/useVisitTypes.ts:6](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitTypes.ts#L6)
 
 ___
 
@@ -3344,7 +3344,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:184](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L184)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:184](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L184)
 
 ___
 
@@ -3367,7 +3367,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/breadcrumbs/filter.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/filter.ts#L34)
+[packages/framework/esm-navigation/src/breadcrumbs/filter.ts:34](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/filter.ts#L34)
 
 ___
 
@@ -3381,7 +3381,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/breadcrumbs/db.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L32)
+[packages/framework/esm-navigation/src/breadcrumbs/db.ts:32](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L32)
 
 ___
 
@@ -3401,7 +3401,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/breadcrumbs/filter.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/filter.ts#L54)
+[packages/framework/esm-navigation/src/breadcrumbs/filter.ts:54](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/filter.ts#L54)
 
 ___
 
@@ -3421,7 +3421,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/breadcrumbs/db.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L18)
+[packages/framework/esm-navigation/src/breadcrumbs/db.ts:18](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L18)
 
 ___
 
@@ -3441,7 +3441,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/breadcrumbs/db.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L22)
+[packages/framework/esm-navigation/src/breadcrumbs/db.ts:22](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L22)
 
 ___
 
@@ -3471,7 +3471,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L165)
+[packages/framework/esm-config/src/module-config/module-config.ts:165](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L165)
 
 ___
 
@@ -3503,7 +3503,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
+[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
 
 ___
 
@@ -3535,7 +3535,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:274](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L274)
+[packages/framework/esm-config/src/module-config/module-config.ts:274](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L274)
 
 ___
 
@@ -3556,7 +3556,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:258](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L258)
+[packages/framework/esm-config/src/module-config/module-config.ts:258](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L258)
 
 ___
 
@@ -3584,7 +3584,7 @@ Use this React Hook to obtain your module's configuration.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:139](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L139)
+[packages/framework/esm-react-utils/src/useConfig.ts:139](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L139)
 
 ___
 
@@ -3609,7 +3609,7 @@ Verifies that the value is between the provided minimum and maximum
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L10)
+[packages/framework/esm-config/src/validators/validators.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L10)
 
 ___
 
@@ -3633,7 +3633,7 @@ Verifies that a string contains only the default URL template parameters.
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L52)
+[packages/framework/esm-config/src/validators/validators.ts:52](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L52)
 
 ___
 
@@ -3658,7 +3658,7 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L21)
+[packages/framework/esm-config/src/validators/validators.ts:21](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L21)
 
 ___
 
@@ -3680,7 +3680,7 @@ Verifies that the value is one of the allowed options.
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L58)
+[packages/framework/esm-config/src/validators/validators.ts:58](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L58)
 
 ___
 
@@ -3718,7 +3718,7 @@ A validator ready for use in a config schema
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validator.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validator.ts#L25)
+[packages/framework/esm-config/src/validators/validator.ts:25](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validator.ts#L25)
 
 ___
 
@@ -3758,7 +3758,7 @@ will see the values that you set for the namespace if they load the value of the
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/OpenmrsContext.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L24)
+[packages/framework/esm-react-utils/src/OpenmrsContext.ts:24](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L24)
 
 ___
 
@@ -3786,7 +3786,7 @@ Returns an _immutable_ version of the state of the namespace as it is currently
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L54)
+[packages/framework/esm-context/src/context.ts:54](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L54)
 
 ___
 
@@ -3816,7 +3816,7 @@ an already-registered namespace will display a warning and make no modifications
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L29)
+[packages/framework/esm-context/src/context.ts:29](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L29)
 
 ___
 
@@ -3853,7 +3853,7 @@ A function to unsubscribe from the context
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L98)
+[packages/framework/esm-context/src/context.ts:98](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L98)
 
 ___
 
@@ -3876,7 +3876,7 @@ will remove the namespace and all associated data.
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L45)
+[packages/framework/esm-context/src/context.ts:45](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L45)
 
 ___
 
@@ -3905,7 +3905,7 @@ Updates a namespace in the global context. If the namespace does not exist, it i
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L78)
+[packages/framework/esm-context/src/context.ts:78](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L78)
 
 ___
 
@@ -3947,7 +3947,7 @@ const patientName = useAppContext<PatientContext, string | undefined>('patient',
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
+[packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
 
 ___
 
@@ -4011,7 +4011,7 @@ A function which can be used to update the state associated with the namespace
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
+[packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
 
 ___
 
@@ -4038,7 +4038,7 @@ CalendarDate
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:406](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L406)
+[packages/framework/esm-utils/src/dates/date-util.ts:406](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L406)
 
 ___
 
@@ -4077,7 +4077,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:295](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L295)
+[packages/framework/esm-utils/src/dates/date-util.ts:295](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L295)
 
 ___
 
@@ -4106,7 +4106,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:398](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L398)
+[packages/framework/esm-utils/src/dates/date-util.ts:398](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L398)
 
 ___
 
@@ -4145,7 +4145,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:234](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L234)
+[packages/framework/esm-utils/src/dates/date-util.ts:234](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L234)
 
 ___
 
@@ -4168,7 +4168,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:382](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L382)
+[packages/framework/esm-utils/src/dates/date-util.ts:382](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L382)
 
 ___
 
@@ -4190,7 +4190,7 @@ Retrieves the default calendar for the specified locale if any.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:161](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L161)
+[packages/framework/esm-utils/src/dates/date-util.ts:161](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L161)
 
 ___
 
@@ -4213,7 +4213,7 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L32)
+[packages/framework/esm-utils/src/dates/date-util.ts:32](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L32)
 
 ___
 
@@ -4233,7 +4233,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L61)
+[packages/framework/esm-utils/src/dates/date-util.ts:61](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L61)
 
 ___
 
@@ -4256,7 +4256,7 @@ Uses `dayjs(dateString)`.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L94)
+[packages/framework/esm-utils/src/dates/date-util.ts:94](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L94)
 
 ___
 
@@ -4284,7 +4284,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L152)
+[packages/framework/esm-utils/src/dates/date-util.ts:152](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L152)
 
 ___
 
@@ -4307,7 +4307,7 @@ Otherwise returns null.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L69)
+[packages/framework/esm-utils/src/dates/date-util.ts:69](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L69)
 
 ___
 
@@ -4330,7 +4330,7 @@ Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L80)
+[packages/framework/esm-utils/src/dates/date-util.ts:80](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L80)
 
 ___
 
@@ -4368,7 +4368,7 @@ const { someComponent } = importDynamic("@openmrs/esm-template-app")
 
 #### Defined in
 
-[packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L37)
+[packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:37](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L37)
 
 ___
 
@@ -4396,7 +4396,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-error-handling/src/index.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L30)
+[packages/framework/esm-error-handling/src/index.ts:30](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L30)
 
 ___
 
@@ -4416,7 +4416,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-error-handling/src/index.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L23)
+[packages/framework/esm-error-handling/src/index.ts:23](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L23)
 
 ___
 
@@ -4467,7 +4467,7 @@ Passing a function as children
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L81)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:81](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L81)
 
 ___
 
@@ -4501,7 +4501,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:212](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L212)
+[packages/framework/esm-extensions/src/extensions.ts:212](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L212)
 
 ___
 
@@ -4524,7 +4524,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:245](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L245)
+[packages/framework/esm-extensions/src/extensions.ts:245](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L245)
 
 ___
 
@@ -4546,7 +4546,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L269)
+[packages/framework/esm-extensions/src/extensions.ts:269](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L269)
 
 ___
 
@@ -4570,7 +4570,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:396](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L396)
+[packages/framework/esm-extensions/src/extensions.ts:396](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L396)
 
 ___
 
@@ -4602,7 +4602,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:160](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L160)
+[packages/framework/esm-extensions/src/extensions.ts:160](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L160)
 
 ___
 
@@ -4619,7 +4619,7 @@ state of the extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L125)
+[packages/framework/esm-extensions/src/store.ts:125](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L125)
 
 ___
 
@@ -4648,7 +4648,7 @@ that registered an extension component for this slot.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L18)
+[packages/framework/esm-extensions/src/render.ts:18](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L18)
 
 ___
 
@@ -4673,7 +4673,7 @@ Does not consider if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts#L13)
+[packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts:13](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts#L13)
 
 ___
 
@@ -4695,7 +4695,7 @@ Gets the assigned extensions for a given extension slot name.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L8)
+[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:8](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L8)
 
 ___
 
@@ -4719,7 +4719,7 @@ Gets the assigned extension for a given extension slot name.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L10)
+[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L10)
 
 ___
 
@@ -4747,7 +4747,7 @@ Extract meta data from all extension for a given extension slot.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L10)
+[packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L10)
 
 ___
 
@@ -4767,7 +4767,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionSlotStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotStore.ts#L5)
+[packages/framework/esm-react-utils/src/useExtensionSlotStore.ts:5](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotStore.ts#L5)
 
 ___
 
@@ -4781,7 +4781,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
@@ -4797,7 +4797,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
@@ -4813,7 +4813,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ___
 
@@ -4856,7 +4856,7 @@ return (
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useRenderableExtensions.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useRenderableExtensions.tsx#L31)
+[packages/framework/esm-react-utils/src/useRenderableExtensions.tsx:31](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useRenderableExtensions.tsx#L31)
 
 ___
 
@@ -4882,7 +4882,7 @@ If you are using React, use `useFeatureFlag` instead.
 
 #### Defined in
 
-[packages/framework/esm-feature-flags/src/feature-flags.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L71)
+[packages/framework/esm-feature-flags/src/feature-flags.ts:71](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L71)
 
 ___
 
@@ -4909,7 +4909,7 @@ It can then be used to turn on or off features in the code.
 
 #### Defined in
 
-[packages/framework/esm-feature-flags/src/feature-flags.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L54)
+[packages/framework/esm-feature-flags/src/feature-flags.ts:54](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L54)
 
 ___
 
@@ -4942,7 +4942,7 @@ export function MyComponent() {
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFeatureFlag.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFeatureFlag.ts#L18)
+[packages/framework/esm-react-utils/src/useFeatureFlag.ts:18](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFeatureFlag.ts#L18)
 
 ___
 
@@ -4979,7 +4979,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L32)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:32](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L32)
 
 ___
 
@@ -5012,7 +5012,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L18)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:18](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L18)
 
 ___
 
@@ -5039,7 +5039,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L10)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L10)
 
 ___
 
@@ -5072,7 +5072,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L25)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:25](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L25)
 
 ___
 
@@ -5096,7 +5096,7 @@ A React link component which calls [navigate](API.md#navigate) when clicked
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L53)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:53](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L53)
 
 ___
 
@@ -5112,7 +5112,7 @@ Returns a list of URLs representing the history of the current window session.
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/history/history.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L47)
+[packages/framework/esm-navigation/src/history/history.ts:47](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L47)
 
 ___
 
@@ -5135,7 +5135,7 @@ Rolls back the history to the specified point and navigates to that URL.
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/history/history.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L58)
+[packages/framework/esm-navigation/src/history/history.ts:58](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L58)
 
 ___
 
@@ -5167,7 +5167,7 @@ interpolateString("test ok", { one: "1", two: "2" }) // will return "test ok"
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/navigation/interpolate-string.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L60)
+[packages/framework/esm-navigation/src/navigation/interpolate-string.ts:60](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L60)
 
 ___
 
@@ -5213,7 +5213,7 @@ navigate({
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/navigation/interpolate-string.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L36)
+[packages/framework/esm-navigation/src/navigation/interpolate-string.ts:36](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L36)
 
 ___
 
@@ -5257,7 +5257,7 @@ navigate({ to: "https://o3.openmrs.org/${openmrsSpaBase}/qux/page" }); // => nav
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/navigation/navigate.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L49)
+[packages/framework/esm-navigation/src/navigation/navigate.ts:49](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L49)
 
 ___
 
@@ -5282,7 +5282,7 @@ If this is not possible, throws an error.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:330](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L330)
+[packages/framework/esm-offline/src/sync.ts:330](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L330)
 
 ___
 
@@ -5305,7 +5305,7 @@ registered synchronization handlers.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L320)
+[packages/framework/esm-offline/src/sync.ts:320](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L320)
 
 ___
 
@@ -5327,7 +5327,7 @@ Deletes a queued up sync item with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:350](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L350)
+[packages/framework/esm-offline/src/sync.ts:350](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L350)
 
 ___
 
@@ -5343,7 +5343,7 @@ Generates a UUID-like string which is used for uniquely identifying objects whil
 
 #### Defined in
 
-[packages/framework/esm-offline/src/uuid.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L7)
+[packages/framework/esm-offline/src/uuid.ts:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L7)
 
 ___
 
@@ -5357,7 +5357,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/mode.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L45)
+[packages/framework/esm-offline/src/mode.ts:45](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L45)
 
 ___
 
@@ -5386,7 +5386,7 @@ Optionally returns only entries of a given type.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L128)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:128](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L128)
 
 ___
 
@@ -5416,7 +5416,7 @@ Optionally returns only entries of a given type.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:139](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L139)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:139](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L139)
 
 ___
 
@@ -5432,7 +5432,7 @@ Returns all handlers which have been setup using the [setupDynamicOfflineDataHan
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L104)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:104](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L104)
 
 ___
 
@@ -5460,7 +5460,7 @@ Returns all currently queued up sync items of the currently signed in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:302](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L302)
+[packages/framework/esm-offline/src/sync.ts:302](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L302)
 
 ___
 
@@ -5489,7 +5489,7 @@ Returns all currently queued up sync items of a given user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:281](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L281)
+[packages/framework/esm-offline/src/sync.ts:281](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L281)
 
 ___
 
@@ -5505,7 +5505,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L39)
+[packages/framework/esm-offline/src/offline-patient-data.ts:39](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L39)
 
 ___
 
@@ -5533,7 +5533,7 @@ Returns a queued sync item with the given ID or `undefined` if no such item exis
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L311)
+[packages/framework/esm-offline/src/sync.ts:311](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L311)
 
 ___
 
@@ -5561,7 +5561,7 @@ Returns the content of all currently queued up sync items of the currently signe
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:293](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L293)
+[packages/framework/esm-offline/src/sync.ts:293](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L293)
 
 ___
 
@@ -5583,7 +5583,7 @@ Checks whether the given string has the format of an offline UUID generated by [
 
 #### Defined in
 
-[packages/framework/esm-offline/src/uuid.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L12)
+[packages/framework/esm-offline/src/uuid.ts:12](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L12)
 
 ___
 
@@ -5607,7 +5607,7 @@ A promise which completes when the message has been successfully processed by th
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L11)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:11](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L11)
 
 ___
 
@@ -5631,7 +5631,7 @@ should be made available offline for the currently logged in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L157)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:157](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L157)
 
 ___
 
@@ -5656,7 +5656,7 @@ should be made available offline for the user with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:169](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L169)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:169](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L169)
 
 ___
 
@@ -5686,7 +5686,7 @@ Enqueues a new item in the sync queue and associates the item with the currently
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L261)
+[packages/framework/esm-offline/src/sync.ts:261](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L261)
 
 ___
 
@@ -5709,7 +5709,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L45)
+[packages/framework/esm-offline/src/offline-patient-data.ts:45](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L45)
 
 ___
 
@@ -5733,7 +5733,7 @@ no longer needs to be available offline for the currently logged in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L201)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:201](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L201)
 
 ___
 
@@ -5758,7 +5758,7 @@ no longer needs to be available offline for the user with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L213)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:213](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L213)
 
 ___
 
@@ -5781,7 +5781,7 @@ See [DynamicOfflineDataHandler](interfaces/DynamicOfflineDataHandler.md) for det
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L113)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:113](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L113)
 
 ___
 
@@ -5812,7 +5812,7 @@ Registers a new synchronization handler which is able to synchronize data of a s
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:365](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L365)
+[packages/framework/esm-offline/src/sync.ts:365](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L365)
 
 ___
 
@@ -5838,7 +5838,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L23)
+[packages/framework/esm-globals/src/events.ts:23](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L23)
 
 ___
 
@@ -5864,7 +5864,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L12)
+[packages/framework/esm-globals/src/events.ts:12](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L12)
 
 ___
 
@@ -5890,7 +5890,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L37)
+[packages/framework/esm-globals/src/events.ts:37](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L37)
 
 ___
 
@@ -5913,7 +5913,7 @@ Synchronizes all offline data entries of the given [type](interfaces/FetchRespon
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L241)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:241](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L241)
 
 ___
 
@@ -5937,7 +5937,7 @@ Synchronizes a single offline data entry of the given [type](interfaces/FetchRes
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:254](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L254)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:254](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L254)
 
 ___
 
@@ -5959,7 +5959,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L62)
+[packages/framework/esm-offline/src/offline-patient-data.ts:62](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L62)
 
 ___
 
@@ -5973,7 +5973,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectivity.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L6)
+[packages/framework/esm-react-utils/src/useConnectivity.ts:6](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L6)
 
 ___
 
@@ -6033,7 +6033,7 @@ This component also provides everything needed for workspace notifications to be
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L68)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:68](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L68)
 
 ___
 
@@ -6064,7 +6064,7 @@ An executable AST representation of the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:323](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L323)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:323](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L323)
 
 ___
 
@@ -6144,7 +6144,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L96)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:96](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L96)
 
 ___
 
@@ -6170,7 +6170,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:179](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L179)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:179](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L179)
 
 ___
 
@@ -6196,7 +6196,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L192)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:192](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L192)
 
 ___
 
@@ -6222,7 +6222,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L205)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:205](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L205)
 
 ___
 
@@ -6248,7 +6248,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:218](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L218)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:218](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L218)
 
 ___
 
@@ -6283,7 +6283,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L235)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:235](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L235)
 
 ___
 
@@ -6318,7 +6318,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:277](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L277)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:277](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L277)
 
 ___
 
@@ -6401,7 +6401,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L166)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:166](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L166)
 
 ___
 
@@ -6456,7 +6456,7 @@ on these expressions.
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/extractor.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/extractor.ts#L44)
+[packages/framework/esm-expression-evaluator/src/extractor.ts:44](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/extractor.ts#L44)
 
 ___
 
@@ -6474,7 +6474,7 @@ string
 
 #### Defined in
 
-[packages/framework/esm-utils/src/get-locale.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/get-locale.ts#L5)
+[packages/framework/esm-utils/src/get-locale.ts:5](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/get-locale.ts#L5)
 
 ___
 
@@ -6494,7 +6494,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/is-online.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/is-online.ts#L3)
+[packages/framework/esm-utils/src/is-online.ts:3](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/is-online.ts#L3)
 
 ___
 
@@ -6533,7 +6533,7 @@ a UseFhirInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFhirFetchAll.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L19)
+[packages/framework/esm-react-utils/src/useFhirFetchAll.ts:19](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L19)
 
 ___
 
@@ -6574,7 +6574,7 @@ a UseServerInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
+[packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
 
 ___
 
@@ -6607,7 +6607,7 @@ The newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L30)
+[packages/framework/esm-state/src/state.ts:30](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L30)
 
 ___
 
@@ -6666,7 +6666,7 @@ custom hook for a specific store.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L63)
+[packages/framework/esm-react-utils/src/useStore.ts:63](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L63)
 
 ___
 
@@ -6698,7 +6698,7 @@ The found or newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L92)
+[packages/framework/esm-state/src/state.ts:92](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L92)
 
 ___
 
@@ -6734,7 +6734,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L109)
+[packages/framework/esm-state/src/state.ts:109](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L109)
 
 ▸ **subscribeTo**<`T`, `U`\>(`store`, `select`, `handle`): () => `void`
 
@@ -6767,7 +6767,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L110)
+[packages/framework/esm-state/src/state.ts:110](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L110)
 
 ___
 
@@ -6794,7 +6794,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L36)
+[packages/framework/esm-react-utils/src/useStore.ts:36](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L36)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`): `U`
 
@@ -6818,7 +6818,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L37)
+[packages/framework/esm-react-utils/src/useStore.ts:37](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L37)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
 
@@ -6843,7 +6843,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L38)
+[packages/framework/esm-react-utils/src/useStore.ts:38](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L38)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)
 
@@ -6868,7 +6868,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L39)
+[packages/framework/esm-react-utils/src/useStore.ts:39](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L39)
 
 ___
 
@@ -6895,7 +6895,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L55)
+[packages/framework/esm-react-utils/src/useStore.ts:55](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L55)
 
 ___
 
@@ -6926,7 +6926,7 @@ invalid key to this function will result in a type error.
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L66)
+[packages/framework/esm-translations/src/index.ts:66](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L66)
 
 ___
 
@@ -6966,7 +6966,7 @@ The translated text as a string
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L40)
+[packages/framework/esm-translations/src/index.ts:40](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L40)
 
 ___
 
@@ -6988,7 +6988,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L13)
+[packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:13](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L13)
 
 ___
 
@@ -7008,7 +7008,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L21)
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:21](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L21)
 
 ___
 
@@ -7028,7 +7028,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:183](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L183)
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:183](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L183)
 
 ___
 
@@ -7048,7 +7048,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-identifiers.component.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-identifiers.component.tsx#L39)
+[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-identifiers.component.tsx:39](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-identifiers.component.tsx#L39)
 
 ___
 
@@ -7068,7 +7068,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L61)
+[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:61](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L61)
 
 ___
 
@@ -7088,7 +7088,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx#L16)
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx:16](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx#L16)
 
 ___
 
@@ -7110,7 +7110,7 @@ A component which displays the patient photo https://zeroheight.com/23a080e38/p/
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L21)
+[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:21](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L21)
 
 ___
 
@@ -7130,7 +7130,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFhirPagination.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L36)
+[packages/framework/esm-react-utils/src/useFhirPagination.ts:36](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L36)
 
 ___
 
@@ -7150,7 +7150,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLayoutType.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L40)
+[packages/framework/esm-react-utils/src/useLayoutType.ts:40](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L40)
 
 ___
 
@@ -7170,7 +7170,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
 
 ___
 
@@ -7192,7 +7192,7 @@ Displays an actionable notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/index.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L85)
+[packages/framework/esm-styleguide/src/notifications/index.tsx:85](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L85)
 
 ___
 
@@ -7229,7 +7229,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L201)
+[packages/framework/esm-styleguide/src/modals/index.tsx:201](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L201)
 
 ___
 
@@ -7251,7 +7251,7 @@ Displays an inline notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/index.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L43)
+[packages/framework/esm-styleguide/src/notifications/index.tsx:43](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L43)
 
 ___
 
@@ -7273,7 +7273,7 @@ Displays a snack bar notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
+[packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
 
 ___
 
@@ -7295,7 +7295,7 @@ Displays a toast notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/index.tsx#L36)
+[packages/framework/esm-styleguide/src/toasts/index.tsx:36](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/index.tsx#L36)
 
 ___
 
@@ -7321,7 +7321,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L111)
+[packages/framework/esm-globals/src/events.ts:111](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L111)
 
 ___
 
@@ -7347,7 +7347,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L104)
+[packages/framework/esm-globals/src/events.ts:104](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L104)
 
 ___
 
@@ -7373,7 +7373,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L125)
+[packages/framework/esm-globals/src/events.ts:125](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L125)
 
 ___
 
@@ -7399,7 +7399,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L118)
+[packages/framework/esm-globals/src/events.ts:118](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L118)
 
 ___
 
@@ -7419,7 +7419,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L35)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:35](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L35)
 
 ___
 
@@ -7439,7 +7439,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useBodyScrollLock.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useBodyScrollLock.ts#L4)
+[packages/framework/esm-react-utils/src/useBodyScrollLock.ts:4](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useBodyScrollLock.ts#L4)
 
 ___
 
@@ -7499,7 +7499,7 @@ This function is the FHIR counterpart of `useOpenmrsPagination`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFhirPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L27)
+[packages/framework/esm-react-utils/src/useFhirPagination.ts:27](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L27)
 
 ___
 
@@ -7513,7 +7513,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
+[packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
 
 ___
 
@@ -7527,7 +7527,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L41)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:41](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L41)
 
 ___
 
@@ -7554,7 +7554,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOnClickOutside.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.ts#L4)
+[packages/framework/esm-react-utils/src/useOnClickOutside.ts:4](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.ts#L4)
 
 ___
 
@@ -7593,7 +7593,7 @@ a UseOpenmrsInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
+[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
 
 ___
 
@@ -7640,7 +7640,7 @@ a UseServerInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L103)
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:103](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L103)
 
 ___
 
@@ -7708,7 +7708,7 @@ of the data set. In that case, all data must be loaded onto client-side first.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L59)
+[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:59](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L59)
 
 ___
 
@@ -7754,7 +7754,7 @@ Note that if the data is obtained from server-side, the caller must handle serve
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePagination.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L15)
+[packages/framework/esm-react-utils/src/usePagination.ts:15](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L15)
 
 ___
 
@@ -7774,7 +7774,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L30)
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:30](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L30)
 
 ___
 
@@ -7804,7 +7804,7 @@ A human-readable string version of the age.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L22)
+[packages/framework/esm-utils/src/age-helpers.ts:22](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L22)
 
 ___
 
@@ -7830,7 +7830,7 @@ True if the WebStorage API object is able to be accessed, false otherwise
 
 #### Defined in
 
-[packages/framework/esm-utils/src/storage.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/storage.ts#L11)
+[packages/framework/esm-utils/src/storage.ts:11](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/storage.ts#L11)
 
 ___
 
@@ -7852,7 +7852,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/patient-helpers.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L20)
+[packages/framework/esm-utils/src/patient-helpers.ts:20](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L20)
 
 ___
 
@@ -7876,7 +7876,7 @@ The formatted display name or an empty string if name is undefined.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/patient-helpers.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L29)
+[packages/framework/esm-utils/src/patient-helpers.ts:29](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L29)
 
 ___
 
@@ -7898,7 +7898,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/patient-helpers.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L35)
+[packages/framework/esm-utils/src/patient-helpers.ts:35](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L35)
 
 ___
 
@@ -7933,7 +7933,7 @@ need to override some of the default values.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/test-helpers.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/test-helpers.ts#L13)
+[packages/framework/esm-utils/src/test-helpers.ts:13](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/test-helpers.ts#L13)
 
 ___
 
@@ -7960,7 +7960,7 @@ The patient's display name or an empty string if name is not present.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
+[packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
 
 ___
 
@@ -7981,7 +7981,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/version.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/version.ts#L22)
+[packages/framework/esm-utils/src/version.ts:22](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/version.ts#L22)
 
 ___
 
@@ -8019,7 +8019,7 @@ The result of successfully executing `fn`.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/retry.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L40)
+[packages/framework/esm-utils/src/retry.ts:40](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L40)
 
 ___
 
@@ -8057,7 +8057,7 @@ the preferred name for the patient, or undefined if no acceptable name could be 
 
 #### Defined in
 
-[packages/framework/esm-utils/src/patient-helpers.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L57)
+[packages/framework/esm-utils/src/patient-helpers.ts:57](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L57)
 
 ___
 
@@ -8085,7 +8085,7 @@ true if the objects are shallowly equal to each other
 
 #### Defined in
 
-[packages/framework/esm-utils/src/shallowEqual.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/shallowEqual.ts#L13)
+[packages/framework/esm-utils/src/shallowEqual.ts:13](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/shallowEqual.ts#L13)
 
 ___
 
@@ -8119,7 +8119,7 @@ function MyComponent() {
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAbortController.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAbortController.ts#L25)
+[packages/framework/esm-react-utils/src/useAbortController.ts:25](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAbortController.ts#L25)
 
 ___
 
@@ -8171,7 +8171,7 @@ The debounced value
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
+[packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
 
 ___
 
@@ -8234,7 +8234,7 @@ function MyComponent() {
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L70)
+[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:70](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L70)
 
 ___
 
@@ -8259,7 +8259,7 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:433](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L433)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:433](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L433)
 
 ___
 
@@ -8310,7 +8310,7 @@ prop named `workspaceTitle` will override the title of the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:297](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L297)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:297](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L297)
 
 ___
 
@@ -8341,7 +8341,7 @@ launchWorkspaceGroup("myGroup", {
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:211](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L211)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:211](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L211)
 
 ___
 
@@ -8367,7 +8367,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:390](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L390)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:390](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L390)
 
 ___
 
@@ -8381,4 +8381,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:544](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L544)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:544](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L544)
