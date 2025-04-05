@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:8](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L8)
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L8)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:9](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L9)
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L9)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:10](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L10)
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L10)

@@ -6,6 +6,10 @@
   color: white;
   font-size: 14px;
   padding: layout.$spacing-04 !important; // this gets unset in rtl language without !important
+
+  &:hover {
+    color: white;
+  }
 }
 
 .currentLocationText {

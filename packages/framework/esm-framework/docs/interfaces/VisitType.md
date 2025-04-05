@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:41](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L41)
+[packages/framework/esm-api/src/types/visit-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L41)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:42](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L42)
+[packages/framework/esm-api/src/types/visit-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L42)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:40](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L40)
+[packages/framework/esm-api/src/types/visit-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L40)
