@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:48](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L48)
+[packages/framework/esm-globals/src/events.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L48)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:45](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L45)
+[packages/framework/esm-globals/src/events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L45)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:46](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L46)
+[packages/framework/esm-globals/src/events.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L46)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:49](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L49)
+[packages/framework/esm-globals/src/events.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L49)
 
 ___
 
@@ -60,4 +60,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:47](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L47)
+[packages/framework/esm-globals/src/events.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L47)

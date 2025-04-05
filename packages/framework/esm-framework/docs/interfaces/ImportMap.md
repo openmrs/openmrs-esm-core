@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:79](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L79)
+[packages/framework/esm-globals/src/types.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L79)

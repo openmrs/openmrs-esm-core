@@ -23,7 +23,7 @@ Options that control when this extension is displayed
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:31](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L31)
+[packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L31)
 
 ___
 
@@ -33,4 +33,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:32](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L32)
+[packages/framework/esm-config/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L32)
