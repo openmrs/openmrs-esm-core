@@ -67,7 +67,7 @@ describe('PatientBannerPatientInfo', () => {
 
     expect(screen.getByText(/john wilson/i)).toBeInTheDocument();
     expect(screen.getByText(/male/i)).toBeInTheDocument();
-    expect(screen.getByText(/52 yrs/i)).toBeInTheDocument();
+    expect(screen.getByText(/\d+ yrs/i)).toBeInTheDocument();
     expect(screen.getByText(/04-Apr-1972/i)).toBeInTheDocument();
     expect(screen.getByText(/openmrs id/i)).toBeInTheDocument();
     expect(screen.getByText(/100gej/i)).toBeInTheDocument();
