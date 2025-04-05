@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts#L7)
+[packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts:7](https://github.com/Vishal772-pixel/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePrimaryIdentifierResource.ts#L7)
