@@ -3,6 +3,7 @@ import { type i18n } from 'i18next';
 import { screen, render } from '@testing-library/react';
 import { usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
 import { PatientBannerPatientInfo } from './patient-banner-patient-info.component';
+import { age } from '@openmrs/esm-framework';
 
 window.i18next = { language: 'en' } as i18n;
 const mockUsePrimaryIdentifierCode = jest.mocked(usePrimaryIdentifierCode);
@@ -67,7 +68,7 @@ describe('PatientBannerPatientInfo', () => {
 
     expect(screen.getByText(/wilson, john/i)).toBeInTheDocument();
     expect(screen.getByText(/male/i)).toBeInTheDocument();
-    expect(screen.getByText(/53 yrs/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(age(mockPatient.birthDate)!, 'i'))).toBeInTheDocument();
     expect(screen.getByText(/04-Apr-1972/i)).toBeInTheDocument();
     expect(screen.getByText(/openmrs id/i)).toBeInTheDocument();
     expect(screen.getByText(/100gej/i)).toBeInTheDocument();
