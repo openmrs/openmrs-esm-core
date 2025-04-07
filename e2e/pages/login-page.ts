@@ -7,3 +7,4 @@ export class LoginPage {
     await this.page.goto(`${process.env.E2E_BASE_URL}/spa/login`);
   }
 }
+// comment
