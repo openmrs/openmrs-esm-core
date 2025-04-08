@@ -9,8 +9,6 @@ import styles from './patient-banner-actions-menu.module.scss';
 export interface PatientBannerActionsMenuProps {
   patient: fhir.Patient;
   patientUuid: string;
-  // TODO: Remove this prop once the patient chart is running the latest pre-release version
-  isDeceased: boolean;
   actionsSlotName: string;
   /**
    * Parts of the actions slot extension state that don't really make sense go in this object,
@@ -23,7 +21,6 @@ export function PatientBannerActionsMenu({
   patient,
   patientUuid,
   actionsSlotName,
-  isDeceased,
   additionalActionsSlotState,
 }: PatientBannerActionsMenuProps) {
   const { extensions: patientActions } = useExtensionSlot(actionsSlotName);
