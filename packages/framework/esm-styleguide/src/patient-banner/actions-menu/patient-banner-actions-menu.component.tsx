@@ -9,6 +9,7 @@ import styles from './patient-banner-actions-menu.module.scss';
 export interface PatientBannerActionsMenuProps {
   patient: fhir.Patient;
   patientUuid: string;
+  // TODO: Remove this prop once the patient chart is running the latest pre-release version
   isDeceased: boolean;
   actionsSlotName: string;
   /**
@@ -36,7 +37,6 @@ export function PatientBannerActionsMenu({
       {patientActions.length > 0 ? (
         <div className={styles.overflowMenuContainer}>
           <CustomOverflowMenu
-            deceased={isDeceased}
             menuTitle={
               <>
                 <span className={styles.actionsButtonText}>{getCoreTranslation('actions', 'Actions')}</span>{' '}
