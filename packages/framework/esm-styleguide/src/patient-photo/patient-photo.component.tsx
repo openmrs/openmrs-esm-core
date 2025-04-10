@@ -47,7 +47,7 @@ export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoPro
     <Avatar
       alt={altText}
       color="rgba(0,0,0,0)"
-      maxInitials={4}
+      maxInitials={3}
       name={patientName}
       size="56"
       src={validImageSrc ?? undefined}
