@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { ExtensionSlot } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { age, formatPartialDate } from '@openmrs/esm-utils';
+import { age, formatPartialDate, getPatientName } from '@openmrs/esm-utils';
 import { GenderFemaleIcon, GenderMaleIcon, GenderOtherIcon, GenderUnknownIcon } from '../../icons';
 import PatientBannerPatientIdentifiers from './patient-banner-patient-identifiers.component';
 import styles from './patient-banner-patient-info.module.scss';
@@ -59,7 +59,7 @@ const getGender = (gender: string) => {
 };
 
 export function PatientBannerPatientInfo({ patient, renderedFrom }: PatientBannerPatientInfoProps) {
-  const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0]?.family}`;
+  const name = getPatientName(patient);
   const genderInfo = patient?.gender && getGender(patient.gender);
 
   const extensionState = useMemo(
