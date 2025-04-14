@@ -3,11 +3,12 @@
  * @category Date and Time
  */
 import {
+  type CalendarDate,
   type CalendarDateTime,
+  type CalendarIdentifier,
   type ZonedDateTime,
   createCalendar,
   toCalendar,
-  type CalendarDate,
 } from '@internationalized/date';
 import { getLocale } from '@openmrs/esm-utils';
 import { attempt } from 'any-date-parser';
@@ -99,21 +100,21 @@ export function parseDate(dateString: string) {
  * Internal cache for per-locale calendars
  */
 class LocaleCalendars {
-  #registry = new Map<string, string>();
+  #registry = new Map<string, CalendarIdentifier>();
 
   constructor() {}
 
-  register(locale: string, calendar: string) {
+  register(locale: string, calendar: CalendarIdentifier) {
     this.#registry.set(locale, calendar);
   }
 
-  getCalendar(locale: Intl.Locale) {
+  getCalendar(locale: Intl.Locale): CalendarIdentifier | undefined {
     if (!Boolean(locale)) {
       return undefined;
     }
 
     if (locale.calendar) {
-      return locale.calendar;
+      return locale.calendar as CalendarIdentifier;
     }
 
     if (locale.region) {
@@ -127,7 +128,7 @@ class LocaleCalendars {
       return this.#registry.get(locale.language);
     }
 
-    const defaultCalendar = new Intl.DateTimeFormat(locale.toString()).resolvedOptions().calendar;
+    const defaultCalendar = new Intl.DateTimeFormat(locale.toString()).resolvedOptions().calendar as CalendarIdentifier;
 
     // cache this result
     this.#registry.set(`${locale.language}${locale.region ? `-${locale.region}` : ''}`, defaultCalendar);
@@ -149,7 +150,7 @@ const registeredLocaleCalendars = new LocaleCalendars();
  * @param locale the locale to register this calendar for
  * @param calendar the calendar to use for this registration
  */
-export function registerDefaultCalendar(locale: string, calendar: string) {
+export function registerDefaultCalendar(locale: string, calendar: CalendarIdentifier) {
   registeredLocaleCalendars.register(locale, calendar);
 }
 
