@@ -16,16 +16,10 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({ expanded, hidePanel }) =>
   const userMenuRef = useOnClickOutside(hidePanel, expanded);
 
   return (
-    <HeaderPanel
-      ref={userMenuRef}
-      className={styles.headerPanel}
-      expanded={expanded}
-      aria-label="Location"
-      aria-labelledby="Location Icon"
-    >
-      <Switcher className={styles.userPanelSwitcher} aria-label="Switcher Container">
+    <HeaderPanel ref={userMenuRef} className={styles.headerPanel} expanded={expanded} aria-label="User Menu">
+      <Switcher className={styles.userPanelSwitcher} aria-label="User Menu Options">
         <ExtensionSlot className={styles.fullWidth} name="user-panel-slot" />
-        <SwitcherDivider className={styles.divider} />
+        <SwitcherDivider className={styles.divider} aria-hidden="true" />
         <ExtensionSlot className={styles.fullWidth} name="user-panel-bottom-slot" />
       </Switcher>
     </HeaderPanel>
