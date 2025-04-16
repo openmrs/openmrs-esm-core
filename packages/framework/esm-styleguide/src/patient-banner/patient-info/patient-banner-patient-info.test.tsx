@@ -1,12 +1,13 @@
 import React from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { type i18n } from 'i18next';
 import { screen, render } from '@testing-library/react';
 import { usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
+import { age } from '@openmrs/esm-utils';
 import { PatientBannerPatientInfo } from './patient-banner-patient-info.component';
-import { age } from '@openmrs/esm-framework';
 
 window.i18next = { language: 'en' } as i18n;
-const mockUsePrimaryIdentifierCode = jest.mocked(usePrimaryIdentifierCode);
+const mockUsePrimaryIdentifierCode = vi.mocked(usePrimaryIdentifierCode);
 
 const nameWithFormat = {
   id: 'efdb246f-4142-4c12-a27a-9be60b9592e9',

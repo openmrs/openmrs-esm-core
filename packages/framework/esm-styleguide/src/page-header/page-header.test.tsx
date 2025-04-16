@@ -1,14 +1,15 @@
 import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { getConfig } from '@openmrs/esm-config';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { PageHeaderContent } from './page-header.component';
 
-const mockGetConfig = jest.mocked(getConfig);
-const mockGetCoreTranslation = jest.mocked(getCoreTranslation);
+const mockGetConfig = vi.mocked(getConfig);
+const mockGetCoreTranslation = vi.mocked(getCoreTranslation);
 
-jest.mock('@openmrs/esm-config', () => ({
-  getConfig: jest.fn(),
+vi.mock('@openmrs/esm-config', () => ({
+  getConfig: vi.fn(),
 }));
 
 describe('PageHeaderContent', () => {

@@ -2,7 +2,7 @@ export { type OfflineMode, type OfflineModeResult, getCurrentOfflineMode } from 
 export * from './offline-patient-data';
 export * from './service-worker-messaging';
 export * from './service-worker-http-headers';
-export * from './uuid';
+export * from './uuid-support';
 export {
   type QueueItemDescriptor,
   type SyncItem,

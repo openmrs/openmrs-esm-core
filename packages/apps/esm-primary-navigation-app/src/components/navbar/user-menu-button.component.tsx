@@ -25,8 +25,6 @@ const UserMenuButton: React.FC<MenuButtonProps> = ({ isActivePanel, togglePanel,
             [styles.headerGlobalBarButton]: isActivePanel('userMenu'),
             [styles.activePanel]: !isActivePanel('userMenu'),
           })}
-          enterDelayMs={500}
-          name="User"
           isActive={isActivePanel('userMenu')}
           onClick={() => {
             togglePanel('userMenu');

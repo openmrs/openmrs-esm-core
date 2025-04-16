@@ -32,6 +32,7 @@ export const ActionableNotificationComponent: React.FC<ActionableNotificationPro
     title,
     critical,
     progressActionLabel,
+    id,
     ...props
   } = notification;
 
@@ -44,7 +45,7 @@ export const ActionableNotificationComponent: React.FC<ActionableNotificationPro
 
   return (
     <ActionableNotification
-      kind={kind || 'info'}
+      kind={(kind as ActionableNotificationType) || 'info'}
       actionButtonLabel={actionText}
       ariaLabel="Closes actionable notification"
       onActionButtonClick={handleActionClick}

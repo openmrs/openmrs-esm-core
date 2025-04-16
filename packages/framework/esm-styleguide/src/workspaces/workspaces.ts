@@ -3,7 +3,6 @@ import { useMemo, type ReactNode } from 'react';
 import {
   getWorkspaceGroupRegistration,
   getWorkspaceRegistration,
-  WorkspaceGroupRegistration,
   type WorkspaceRegistration,
 } from '@openmrs/esm-extensions';
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';

@@ -39,6 +39,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
     timeoutInMs = 5000,
     autoClose = kind !== 'error',
     title,
+    id,
     ...props
   } = snackbar;
 
@@ -87,7 +88,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
         [styles.slideOut]: isClosing,
       })}
       inline
-      kind={kind}
+      kind={kind as SnackbarType}
       lowContrast={isLowContrast}
       onActionButtonClick={handleActionClick}
       onClose={closeSnackbar}

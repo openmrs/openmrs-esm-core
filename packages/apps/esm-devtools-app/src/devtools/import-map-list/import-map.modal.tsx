@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { type FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Form, ModalHeader, ModalBody, ModalFooter, Stack, TextInput } from '@carbon/react';
 import { addRoutesOverride, removeRoutesOverride } from '@openmrs/esm-framework/src/internal';
@@ -31,7 +31,7 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close })
   const inputRef = useRef<HTMLInputElement>();
 
   const handleSubmit = useCallback(
-    async (evt: Event) => {
+    async (evt: FormEvent<HTMLElement>) => {
       evt.preventDefault();
 
       if (!moduleName) {

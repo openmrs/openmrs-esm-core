@@ -1,5 +1,5 @@
 @use '@carbon/layout';
-@use '@openmrs/esm-styleguide/src/vars' as vars;
+@use '../vars' as vars;
 
 nav.breadcrumbs-container {
   padding: layout.$spacing-05;

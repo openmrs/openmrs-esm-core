@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:318](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L318)
+[packages/framework/esm-api/src/openmrs-fetch.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L316)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:317](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L317)
+[packages/framework/esm-api/src/openmrs-fetch.ts:315](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L315)
 
 ___
 
@@ -65,7 +65,7 @@ Omit.cache
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1500
+node_modules/typescript/lib/lib.dom.d.ts:1593
 
 ___
 
@@ -81,7 +81,7 @@ Omit.credentials
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1502
+node_modules/typescript/lib/lib.dom.d.ts:1595
 
 ___
 
@@ -97,7 +97,7 @@ Omit.integrity
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1506
+node_modules/typescript/lib/lib.dom.d.ts:1599
 
 ___
 
@@ -113,7 +113,7 @@ Omit.keepalive
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1508
+node_modules/typescript/lib/lib.dom.d.ts:1601
 
 ___
 
@@ -129,7 +129,7 @@ Omit.method
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1510
+node_modules/typescript/lib/lib.dom.d.ts:1603
 
 ___
 
@@ -145,7 +145,7 @@ Omit.mode
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1512
+node_modules/typescript/lib/lib.dom.d.ts:1605
 
 ___
 
@@ -161,7 +161,7 @@ Omit.redirect
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1514
+node_modules/typescript/lib/lib.dom.d.ts:1607
 
 ___
 
@@ -177,7 +177,7 @@ Omit.referrer
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1516
+node_modules/typescript/lib/lib.dom.d.ts:1609
 
 ___
 
@@ -193,7 +193,7 @@ Omit.referrerPolicy
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1518
+node_modules/typescript/lib/lib.dom.d.ts:1611
 
 ___
 
@@ -209,7 +209,7 @@ Omit.signal
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1520
+node_modules/typescript/lib/lib.dom.d.ts:1613
 
 ___
 
@@ -225,4 +225,4 @@ Omit.window
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:1522
+node_modules/typescript/lib/lib.dom.d.ts:1615

@@ -13,11 +13,15 @@
 - [millis](NotificationDescriptor.md#millis)
 - [title](NotificationDescriptor.md#title)
 
+### UI Methods
+
+- [onAction](NotificationDescriptor.md#onaction)
+
 ## UI Properties
 
 ### action
 
-• `Optional` **action**: `ReactNode`
+• `Optional` **action**: `string`
 
 #### Defined in
 
@@ -37,7 +41,7 @@ ___
 
 ### description
 
-• **description**: `ReactNode`
+• **description**: `string`
 
 #### Defined in
 
@@ -72,3 +76,17 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L15)
+
+## UI Methods
+
+### onAction
+
+▸ `Optional` **onAction**(): `void`
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L16)

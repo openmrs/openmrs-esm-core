@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect, vi } from 'vitest';
 import { compile, evaluate, evaluateAsBoolean, evaluateAsNumber, evaluateAsType, evaluateAsync } from './evaluator';
 
 describe('OpenMRS Expression Evaluator', () => {
@@ -173,9 +173,7 @@ describe('OpenMRS Expression Evaluator', () => {
   });
 
   it('should support mock functions', () => {
-    expect(evaluate('api.getValue()', { api: { getValue: jest.fn().mockImplementation(() => 'value') } })).toBe(
-      'value',
-    );
+    expect(evaluate('api.getValue()', { api: { getValue: vi.fn().mockImplementation(() => 'value') } })).toBe('value');
   });
 
   it('should support real-world use-cases', () => {

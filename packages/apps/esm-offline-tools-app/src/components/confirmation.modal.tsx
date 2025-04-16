@@ -45,6 +45,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           onConfirm?.();
         }}
         onRequestClose={onCancel}
+        children={undefined}
       />
     </>
   );
