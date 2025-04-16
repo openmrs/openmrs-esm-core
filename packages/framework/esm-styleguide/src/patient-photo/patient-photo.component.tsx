@@ -11,14 +11,12 @@ import styles from './patient-photo.module.scss';
 export interface PatientPhotoProps {
   patientName: string;
   patientUuid: string;
-  // TODO: Remove this prop
-  size?: 'small' | undefined;
 }
 
 /**
  * A component which displays the patient photo https://zeroheight.com/23a080e38/p/6663f3-patient-header. If there is no photo, it will display a generated avatar. The default size is 56px.
  */
-export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoProps) {
+export function PatientPhoto({ patientUuid, patientName }: PatientPhotoProps) {
   const { t } = useTranslation();
   const { data: photo, isLoading } = usePatientPhoto(patientUuid);
   const [validImageSrc, setValidImageSrc] = useState<string | null>(null);
@@ -36,7 +34,13 @@ export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoPro
   const altText = t('avatarAltText', 'Profile photo unavailable - grey placeholder image');
 
   if (isLoading) {
-    return <SkeletonIcon className={styles.skeleton} role="progressbar" />;
+    return (
+      <SkeletonIcon
+        className={styles.skeleton}
+        /* @ts-expect-error */
+        role="progressbar"
+      />
+    );
   }
 
   if (photo?.imageSrc && !validImageSrc) {

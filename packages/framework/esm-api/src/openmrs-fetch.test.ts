@@ -1,25 +1,42 @@
 import { isObservable } from 'rxjs';
-import { getConfig as mockGetConfig } from '@openmrs/esm-config';
-import { navigate as mockNavigate } from '@openmrs/esm-navigation';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { getConfig } from '@openmrs/esm-config';
+import { navigate } from '@openmrs/esm-navigation';
 import { openmrsFetch, openmrsObservableFetch } from './openmrs-fetch';
+
+vi.mock('@openmrs/esm-navigation', () => ({
+  clearHistory: vi.fn(),
+  navigate: vi.fn(),
+}));
+
+const mockGetConfig = vi.mocked(getConfig);
+const mockNavigate = vi.mocked(navigate);
 
 describe('openmrsFetch', () => {
   beforeEach(() => {
-    // @ts-ignore
+    mockGetConfig.mockReturnValue(
+      Promise.resolve({
+        redirectAuthFailure: {
+          enabled: true,
+          url: '${openmrsSpaBase}/login',
+          errors: [401],
+          resolvePromise: false,
+        },
+      }),
+    );
     window.openmrsBase = '/openmrs';
-    // @ts-ignore
     window.getOpenmrsSpaBase = () => '/openmrs/spa/';
-    window.fetch = jest.fn();
+    window.fetch = vi.fn();
     Object.defineProperty(window, 'location', {
       writable: true,
-      value: { assign: jest.fn() },
+      value: { assign: vi.fn() },
     });
   });
 
   afterEach(() => {
-    // @ts-ignore
+    // @ts-expect-error Not normally deletable
     delete window.openmrsBase;
-    // @ts-ignore
+    // @ts-expect-error Not normally deletable
     delete window.getOpenmrsSpaBase;
   });
 
@@ -39,14 +56,14 @@ describe('openmrsFetch', () => {
   });
 
   it('throws an Error if there is no openmrsBase', () => {
-    // @ts-ignore
+    // @ts-expect-error
     delete window.openmrsBase;
 
     expect(() => openmrsFetch('/session')).toThrow(/openmrsBase/);
   });
 
   it('calls window.fetch with the correct arguments for a basic GET request', () => {
-    // @ts-ignore
+    // @ts-expect-error
     window.fetch.mockReturnValue(new Promise(() => {}));
     openmrsFetch('/ws/rest/v1/session');
     expect(window.fetch).toHaveBeenCalledWith('/openmrs/ws/rest/v1/session', {
@@ -58,7 +75,7 @@ describe('openmrsFetch', () => {
   });
 
   it('calls window.fetch correctly for requests that have a request body', () => {
-    // @ts-ignore
+    // @ts-expect-error
     window.fetch.mockReturnValue(new Promise(() => {}));
     const requestBody = { some: 'json' };
     openmrsFetch('/ws/rest/v1/session', {
@@ -76,9 +93,8 @@ describe('openmrsFetch', () => {
   });
 
   it('allows you to specify your own Accept request header', () => {
-    // @ts-ignore
+    // @ts-expect-error mockReturnValue only exists on the mock, not on the raw type
     window.fetch.mockReturnValue(new Promise(() => {}));
-    const requestBody = { some: 'json' };
     openmrsFetch('/ws/rest/v1/session', {
       headers: {
         Accept: 'application/xml',
@@ -93,7 +109,7 @@ describe('openmrsFetch', () => {
   });
 
   it('allows you to specify no Accept request header to be sent', () => {
-    // @ts-ignore
+    // @ts-expect-error
     window.fetch.mockReturnValue(new Promise(() => {}));
     openmrsFetch('/ws/rest/v1/session', {
       headers: {
@@ -101,6 +117,7 @@ describe('openmrsFetch', () => {
         Accept: null,
       },
     });
+
     expect(window.fetch).toHaveBeenCalledWith('/openmrs/ws/rest/v1/session', {
       headers: {
         'Disable-WWW-Authenticate': 'true',
@@ -108,8 +125,8 @@ describe('openmrsFetch', () => {
     });
   });
 
-  it('returns a promise that resolves with a json object when the request succeeds', () => {
-    // @ts-ignore
+  it('returns a promise that resolves with a json object when the request succeeds', async () => {
+    // @ts-expect-error
     window.fetch.mockReturnValue(
       Promise.resolve({
         ok: true,
@@ -120,14 +137,13 @@ describe('openmrsFetch', () => {
       }),
     );
 
-    return openmrsFetch('/ws/rest/v1/session').then((response) => {
-      expect(response.status).toBe(200);
-      expect(response.data).toEqual({ value: 'hi' });
-    });
+    const response = await openmrsFetch('/ws/rest/v1/session');
+    expect(response.status).toBe(200);
+    expect(response.data).toEqual({ value: 'hi' });
   });
 
-  it('returns a promise that resolves with null when the request succeeds with HTTP 204', () => {
-    // @ts-ignore
+  it('returns a promise that resolves with null when the request succeeds with HTTP 204', async () => {
+    // @ts-expect-error
     window.fetch.mockReturnValue(
       Promise.resolve({
         ok: true,
@@ -136,14 +152,13 @@ describe('openmrsFetch', () => {
       }),
     );
 
-    return openmrsFetch('/ws/rest/v1/session').then((response) => {
-      expect(response.status).toBe(204);
-      expect(response.data).toEqual(null);
-    });
+    const response = await openmrsFetch('/ws/rest/v1/session');
+    expect(response.status).toBe(204);
+    expect(response.data).toEqual(null);
   });
 
-  it('gives you an amazing error when the server responds with a 500 that has json', () => {
-    // @ts-ignore
+  it('gives you an amazing error when the server responds with a 500 that has json', async () => {
+    // @ts-expect-error
     window.fetch.mockReturnValue(
       Promise.resolve({
         ok: false,
@@ -160,20 +175,19 @@ describe('openmrsFetch', () => {
       }),
     );
 
-    return openmrsFetch('/ws/rest/v1/session')
-      .then((data) => {
-        fail("Promise shouldn't resolve when server responds with 500");
-      })
-      .catch((err) => {
-        expect(err.message).toMatch(/Server responded with 500 \(Internal Server Error\)/);
-        expect(err.message).toMatch(/\/ws\/rest\/v1\/session/);
-        expect(err.responseBody).toEqual({ error: 'The server is dead' });
-        expect(err.response.status).toBe(500);
-      });
+    try {
+      await openmrsFetch('/ws/rest/v1/session');
+      fail("Promise shouldn't resolve when server responds with 500");
+    } catch (err) {
+      expect(err.message).toMatch(/Server responded with 500 \(Internal Server Error\)/);
+      expect(err.message).toMatch(/\/ws\/rest\/v1\/session/);
+      expect(err.responseBody).toEqual({ error: 'The server is dead' });
+      expect(err.response.status).toBe(500);
+    }
   });
 
-  it("gives you an amazing error when the server responds with a 400 that doesn't have json", () => {
-    // @ts-ignore
+  it("gives you an amazing error when the server responds with a 400 that doesn't have json", async () => {
+    // @ts-expect-error
     window.fetch.mockReturnValue(
       Promise.resolve({
         ok: false,
@@ -185,20 +199,19 @@ describe('openmrsFetch', () => {
       }),
     );
 
-    return openmrsFetch('/ws/rest/v1/session')
-      .then((data) => {
-        fail("Promise shouldn't resolve when server responds with 400");
-      })
-      .catch((err) => {
-        expect(err.message).toMatch(/Server responded with 400 \(You goofed up\)/);
-        expect(err.message).toMatch(/\/ws\/rest\/v1\/session/);
-        expect(err.responseBody).toEqual('a string response body');
-        expect(err.response.status).toBe(400);
-      });
+    try {
+      await openmrsFetch('/ws/rest/v1/session');
+      fail("Promise shouldn't resolve when server responds with 400");
+    } catch (err) {
+      expect(err.message).toMatch(/Server responded with 400 \(You goofed up\)/);
+      expect(err.message).toMatch(/\/ws\/rest\/v1\/session/);
+      expect(err.responseBody).toEqual('a string response body');
+      expect(err.response.status).toBe(400);
+    }
   });
 
-  it('navigates to spa login page when the server responds with a 401', () => {
-    (mockGetConfig as any).mockResolvedValueOnce({
+  it('navigates to spa login page when the server responds with a 401', async () => {
+    mockGetConfig.mockResolvedValueOnce({
       redirectAuthFailure: {
         enabled: true,
         url: '/openmrs/spa/login',
@@ -217,23 +230,21 @@ describe('openmrsFetch', () => {
       }),
     );
 
-    return openmrsFetch('/ws/rest/v1/session').then((data) => {
-      //@ts-ignore
-      expect(mockNavigate.mock.calls[0][0]).toStrictEqual({
-        to: '/openmrs/spa/login',
-      });
+    await openmrsFetch('/ws/rest/v1/session');
+
+    expect(mockNavigate.mock.calls[0][0]).toStrictEqual({
+      to: '/openmrs/spa/login',
     });
   });
 });
 
 describe('openmrsObservableFetch', () => {
   beforeEach(() => {
-    // @ts-ignore
     window.openmrsBase = '/openmrs';
-    window.fetch = jest.fn();
+    window.fetch = vi.fn();
   });
 
-  it('calls window.fetch with the correct arguments for a basic GET request', (done) => {
+  it('calls window.fetch with the correct arguments for a basic GET request', async () => {
     // @ts-ignore
     window.fetch.mockReturnValue(
       Promise.resolve({
@@ -248,29 +259,31 @@ describe('openmrsObservableFetch', () => {
     const observable = openmrsObservableFetch('/ws/rest/v1/session');
     expect(isObservable(observable)).toBe(true);
 
-    observable.subscribe(
-      (response) => {
-        expect(response.data).toEqual({ value: 'hi' });
-        done();
-      },
-      (err) => {
-        done.fail(err);
-      },
+    await new Promise<void>((resolve, reject) =>
+      observable.subscribe(
+        (response) => {
+          expect(response.data).toEqual({ value: 'hi' });
+          resolve();
+        },
+        (err) => {
+          reject(err);
+        },
+      ),
     );
 
     expect(window.fetch).toHaveBeenCalled();
-    // @ts-ignore
+    // @ts-expect-error
     expect(window.fetch.mock.calls[0][0]).toEqual('/openmrs/ws/rest/v1/session');
-    // @ts-ignore
+    // @ts-expect-error
     expect(window.fetch.mock.calls[0][1].headers.Accept).toEqual('application/json');
   });
 
   it('aborts the fetch request when subscription is unsubscribed', () => {
-    // @ts-ignore
+    // @ts-expect-error
     window.fetch.mockReturnValue(new Promise(() => {}));
 
     const subscription = openmrsObservableFetch('/ws/rest/v1/session').subscribe();
-    // @ts-ignore
+    // @ts-expect-error
     const abortSignal: AbortSignal = window.fetch.mock.calls[0][1].signal;
     expect(abortSignal.aborted).toBe(false);
 

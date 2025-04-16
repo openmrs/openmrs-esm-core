@@ -479,7 +479,7 @@ const DatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, DatePickerProps<Date
   function DatePicker(props, ref) {
     [props, ref] = useContextProps(props, ref, DatePickerContext);
     let { validationBehavior: formValidationBehavior } = useSlottedContext(FormContext) || {};
-    let validationBehavior = props.validationBehavior ?? formValidationBehavior ?? 'native';
+    let validationBehavior: typeof props['validationBehavior'] = props.validationBehavior ?? formValidationBehavior ?? 'native';
     let state = useDatePickerState({
       ...props,
       validationBehavior,

@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { clearMockExtensionRegistry } from '@openmrs/esm-framework/mock';
 import { registerExtension, registerWorkspace, registerWorkspaceGroup } from '@openmrs/esm-extensions';
 import {
@@ -17,9 +18,9 @@ describe('workspace system', () => {
     clearMockExtensionRegistry();
   });
 
-  test('registering, launching, and closing a workspace', () => {
+  it('registering, launching, and closing a workspace', () => {
     const store = getWorkspaceStore();
-    registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+    registerWorkspace({ name: 'allergies', title: 'Allergies', load: vi.fn(), moduleName: '@openmrs/foo' });
 
     launchWorkspace('allergies', { foo: true });
 
@@ -37,7 +38,7 @@ describe('workspace system', () => {
   describe('Testing launchPatientWorkspace', () => {
     it('should launch a workspace', () => {
       const store = getWorkspaceStore();
-      registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+      registerWorkspace({ name: 'allergies', title: 'Allergies', load: vi.fn(), moduleName: '@openmrs/foo' });
 
       launchWorkspace('allergies', { foo: true });
 
@@ -48,10 +49,10 @@ describe('workspace system', () => {
       expect(allergies.additionalProps['foo']).toBe(true);
     });
 
-    test('should update additionalProps when re-opening an already opened form with same name but with different props', () => {
+    it('should update additionalProps when re-opening an already opened form with same name but with different props', () => {
       const store = getWorkspaceStore();
 
-      registerWorkspace({ name: 'POC HIV Form', title: 'Clinical Form', load: jest.fn(), moduleName: '@openmrs/foo' });
+      registerWorkspace({ name: 'POC HIV Form', title: 'Clinical Form', load: vi.fn(), moduleName: '@openmrs/foo' });
       launchWorkspace('POC HIV Form', { workspaceTitle: 'POC HIV Form' });
 
       expect(store.getState().openWorkspaces.length).toEqual(1);
@@ -72,7 +73,7 @@ describe('workspace system', () => {
 
     it('should show a modal when a workspace is already open (with changes) and it cannot hide', () => {
       const store = getWorkspaceStore();
-      registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+      registerWorkspace({ name: 'allergies', title: 'Allergies', load: vi.fn(), moduleName: '@openmrs/foo' });
 
       launchWorkspace('allergies', { foo: true });
 
@@ -81,7 +82,7 @@ describe('workspace system', () => {
       const allergies = store.getState().openWorkspaces?.[0];
       allergies.promptBeforeClosing(() => true);
 
-      registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), moduleName: '@openmrs/foo' });
+      registerWorkspace({ name: 'conditions', title: 'Conditions', load: vi.fn(), moduleName: '@openmrs/foo' });
       launchWorkspace('conditions', { foo: true });
 
       const prompt = store.getState().prompt as Prompt;
@@ -106,7 +107,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'allergies',
         title: 'Allergies',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'allergies-form',
         moduleName: '@openmrs/foo',
@@ -119,7 +120,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'conditions',
         title: 'Conditions',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'conditions-form',
         moduleName: '@openmrs/foo',
       });
@@ -138,7 +139,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'allergies',
         title: 'Allergies',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'form',
         moduleName: '@openmrs/foo',
@@ -146,7 +147,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'conditions',
         title: 'Conditions',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'conditions-form',
         moduleName: '@openmrs/foo',
@@ -154,7 +155,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'vitals',
         title: 'Vitals form',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'form',
         moduleName: '@openmrs/foo',
       });
@@ -196,7 +197,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'allergies',
         title: 'Allergies',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'allergies-form',
         moduleName: '@openmrs/foo',
@@ -204,7 +205,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'conditions',
         title: 'Conditions',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'conditions-form',
         moduleName: '@openmrs/foo',
@@ -212,7 +213,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'vitals',
         title: 'Vitals form',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'vitals-form',
         moduleName: '@openmrs/foo',
       });
@@ -240,7 +241,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'allergies',
         title: 'Allergies',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'form',
         moduleName: '@openmrs/foo',
@@ -248,7 +249,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'attachments',
         title: 'Attachements',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'attachments-form',
         moduleName: '@openmrs/foo',
@@ -256,14 +257,14 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'conditions',
         title: 'Conditions',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'conditions-form',
         moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'vitals',
         title: 'Vitals form',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'form',
         moduleName: '@openmrs/foo',
       });
@@ -316,7 +317,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'allergies',
         title: 'Allergies',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'form',
         preferredWindowSize: 'maximized',
@@ -325,7 +326,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'attachments',
         title: 'Attachements',
-        load: jest.fn(),
+        load: vi.fn(),
         canHide: true,
         type: 'attachments-form',
         moduleName: '@openmrs/foo',
@@ -333,7 +334,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'conditions',
         title: 'Conditions',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'conditions-form',
         preferredWindowSize: 'maximized',
         moduleName: '@openmrs/foo',
@@ -365,28 +366,28 @@ describe('workspace system', () => {
     });
   });
 
-  test('coexisting and non-coexisting workspaces', () => {
+  it('coexisting and non-coexisting workspaces', () => {
     const store = getWorkspaceStore();
     // conditions and form-entry are of the same (default) type, so they will not coexist.
     // order-meds is of a different type, so it will open on top of the others.
     registerWorkspace({
       name: 'conditions',
       title: 'Conditions',
-      load: jest.fn(),
+      load: vi.fn(),
       canHide: true,
       moduleName: '@openmrs/foo',
     });
     registerWorkspace({
       name: 'form-entry',
       title: 'Some Form',
-      load: jest.fn(),
+      load: vi.fn(),
       canHide: true,
       moduleName: '@openmrs/foo',
     });
     registerWorkspace({
       name: 'order-meds',
       title: 'Order Medications',
-      load: jest.fn(),
+      load: vi.fn(),
       canHide: true,
       type: 'order',
       moduleName: '@openmrs/foo',
@@ -461,10 +462,10 @@ describe('workspace system', () => {
     expect(store.getState().openWorkspaces[0].name).toBe('order-meds');
   });
 
-  test('respects promptBeforeClosing function', () => {
+  it('respects promptBeforeClosing function', () => {
     const store = getWorkspaceStore();
-    registerWorkspace({ name: 'hiv', title: 'HIV', load: jest.fn(), moduleName: '@openmrs/foo' });
-    registerWorkspace({ name: 'diabetes', title: 'Diabetes', load: jest.fn(), moduleName: '@openmrs/foo' });
+    registerWorkspace({ name: 'hiv', title: 'HIV', load: vi.fn(), moduleName: '@openmrs/foo' });
+    registerWorkspace({ name: 'diabetes', title: 'Diabetes', load: vi.fn(), moduleName: '@openmrs/foo' });
 
     launchWorkspace('hiv');
 
@@ -489,13 +490,13 @@ describe('workspace system', () => {
     expect(store.getState().openWorkspaces[0].name).toBe('hiv');
   });
 
-  test('is compatible with workspaces registered as extensions', () => {
-    console.warn = jest.fn();
+  it('is compatible with workspaces registered as extensions', () => {
+    console.warn = vi.fn();
     const store = getWorkspaceStore();
     registerExtension({
       name: 'lab-results',
       moduleName: '@openmrs/esm-lab-results-app',
-      load: jest.fn(),
+      load: vi.fn(),
       meta: { title: 'Lab Results', screenSize: 'maximized' },
     });
 
@@ -511,15 +512,13 @@ describe('workspace system', () => {
     expect(console.warn).toHaveBeenCalled();
   });
 
-  test('launching unregistered workspace throws an error', () => {
-    const store = getWorkspaceStore();
-
+  it('launching unregistered workspace throws an error', () => {
     expect(() => launchWorkspace('test-results')).toThrow(/test-results.*registered/i);
   });
 
-  test('respects promptBeforeClosing function before closing workspace, with unsaved changes', () => {
+  it('respects promptBeforeClosing function before closing workspace, with unsaved changes', () => {
     const store = getWorkspaceStore();
-    registerWorkspace({ name: 'hiv', title: 'HIV', load: jest.fn(), moduleName: '@openmrs/foo' });
+    registerWorkspace({ name: 'hiv', title: 'HIV', load: vi.fn(), moduleName: '@openmrs/foo' });
 
     launchWorkspace('hiv');
 
@@ -581,13 +580,13 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'allergies',
         title: 'Allergies',
-        load: jest.fn(),
+        load: vi.fn(),
         moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'ward-patient-workspace',
         title: 'Ward Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
       });
@@ -621,7 +620,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'ward-patient-workspace',
         title: 'Ward Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
       });
@@ -651,14 +650,14 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'ward-patient-workspace',
         title: 'Ward Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
       });
       registerWorkspace({
         name: 'transfer-patient-workspace',
         title: 'Transfer Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
       });
@@ -695,14 +694,14 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'ward-patient-workspace',
         title: 'Ward Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
       });
       registerWorkspace({
         name: 'transfer-patient-workspace',
         title: 'Transfer Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
       });
@@ -750,7 +749,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'ward-patient-workspace',
         title: 'Ward Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
         canHide: true,
@@ -758,7 +757,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'transfer-patient-workspace',
         title: 'Transfer Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
       });
@@ -793,7 +792,7 @@ describe('workspace system', () => {
       registerWorkspace({
         name: 'ward-patient-workspace',
         title: 'Ward Patient Workspace',
-        load: jest.fn(),
+        load: vi.fn(),
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
       });

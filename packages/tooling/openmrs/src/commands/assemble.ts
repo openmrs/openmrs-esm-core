@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
 import { Readable } from 'node:stream';
 import { prompt, type Question } from 'inquirer';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
@@ -250,7 +250,7 @@ export async function runAssemble(args: AssembleArgs) {
   const { frontendModules = {}, publicUrl = '.' } = config;
 
   if (args.fresh && existsSync(args.target)) {
-    await new Promise((resolve) => rimraf(args.target, resolve));
+    await rimraf(args.target);
   }
 
   await mkdir(args.target, { recursive: true });

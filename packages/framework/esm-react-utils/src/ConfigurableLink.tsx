@@ -1,7 +1,6 @@
 /** @module @category Navigation */
 import React, { type MouseEvent, type AnchorHTMLAttributes, type PropsWithChildren, useEffect } from 'react';
-import type { TemplateParams } from '@openmrs/esm-navigation';
-import { navigate, interpolateUrl } from '@openmrs/esm-navigation';
+import { navigate, interpolateUrl, type TemplateParams } from '@openmrs/esm-navigation';
 
 function handleClick(
   event: MouseEvent,

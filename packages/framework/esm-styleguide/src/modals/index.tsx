@@ -3,12 +3,11 @@ import { mountRootParcel, type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { getModalRegistration } from '@openmrs/esm-extensions';
 import { reportError } from '@openmrs/esm-error-handling';
-import { getCoreTranslation } from '@openmrs/esm-translations';
 
 type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
 type ModalSize = 'xs' | 'sm' | 'md' | 'lg';
 
-interface ModalProps {
+export interface ModalProps {
   size?: ModalSize;
   [key: string]: unknown;
 }

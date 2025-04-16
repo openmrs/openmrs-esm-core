@@ -1,5 +1,5 @@
+import { describe, expect, it } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { useOpenmrsFetchAll } from './useOpenmrsFetchAll';
 import { type OpenMRSPaginatedResponse } from './useOpenmrsPagination';
 

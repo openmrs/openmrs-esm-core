@@ -1,10 +1,12 @@
 import React from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { useLayoutType } from '@openmrs/esm-react-utils';
 import { CustomOverflowMenu } from './custom-overflow-menu.component';
 
-const mockUseLayoutType = jest.mocked(useLayoutType);
+const mockUseLayoutType = vi.mocked(useLayoutType);
 
 describe('CustomOverflowMenu', () => {
   beforeEach(() => {
