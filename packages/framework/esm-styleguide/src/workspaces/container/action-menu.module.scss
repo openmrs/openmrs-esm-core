@@ -1,5 +1,5 @@
 @use '@carbon/layout';
-@use '@openmrs/esm-styleguide/src/vars' as *;
+@use '../../vars' as *;
 
 $icon-button-size: layout.$spacing-08;
 $actionPanelOffset: layout.$spacing-09;

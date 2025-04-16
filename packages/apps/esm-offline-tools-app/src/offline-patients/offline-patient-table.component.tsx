@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { type ChangeEvent, useMemo, useState } from 'react';
 import { capitalize } from 'lodash-es';
 import { useTranslation } from 'react-i18next';
 import {
@@ -120,7 +120,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({ isInteractive
                     labelText={t('offlinePatientsTableSearchLabel', 'Search this list')}
                     placeholder={t('offlinePatientsTableSearchPlaceholder', 'Search this list')}
                     size={toolbarItemSize}
-                    onChange={onInputChange}
+                    onChange={(e) => onInputChange(e as ChangeEvent<HTMLInputElement>)}
                   />
                 </Layer>
               )}

@@ -1,18 +1,19 @@
+import { afterAll, beforeAll, beforeEach, describe, expect, type Mock, it, vi } from 'vitest';
 import { navigateToUrl } from 'single-spa';
 import { navigate } from './navigate';
 
-jest.mock('single-spa');
-const mockNavigateToUrl = navigateToUrl as jest.Mock;
+vi.mock('single-spa');
+const mockNavigateToUrl = vi.fn(navigateToUrl);
 
 describe('navigate', () => {
   const originalWindowLocation = window.location;
-  let mockLocationAssign;
+  let mockLocationAssign: Mock<typeof window.location.assign>;
 
   beforeAll(() => {
     delete (window as any).location;
     //@ts-ignore
-    window.location = { assign: jest.fn(), origin: 'https://o3.openmrs.org' };
-    mockLocationAssign = window.location.assign as jest.Mock;
+    window.location = { assign: vi.fn(), origin: 'https://o3.openmrs.org' };
+    mockLocationAssign = window.location.assign as Mock<typeof window.location.assign>;
   });
 
   beforeEach(() => {

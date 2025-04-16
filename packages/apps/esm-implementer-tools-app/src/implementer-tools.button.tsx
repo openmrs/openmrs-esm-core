@@ -15,8 +15,6 @@ const ImplementerToolsButton: React.FC = () => {
         aria-label={t('implementerTools', 'Implementer Tools')}
         aria-labelledby="Implementer Tools"
         className={styles.toolStyles}
-        enterDelayMs={500}
-        name="ImplementerToolsIcon"
         onClick={togglePopup}
       >
         {isOpen ? <CloseIcon size={20} /> : <ToolsIcon size={20} />}

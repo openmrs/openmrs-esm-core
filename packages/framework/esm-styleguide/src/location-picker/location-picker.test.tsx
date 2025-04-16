@@ -1,8 +1,10 @@
 /* eslint-disable */
 import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useConfig, useSession, type LoggedInUser, type Session } from '@openmrs/esm-framework';
+import { type LoggedInUser, type Session } from '@openmrs/esm-api';
+import { useConfig, useSession } from '@openmrs/esm-react-utils';
 import {
   inpatientWardResponse,
   locationResponseForNonExistingSearch,
@@ -14,10 +16,9 @@ import { LocationPicker } from './location-picker.component';
 
 const validLocationUuid = '1ce1b7d4-c865-4178-82b0-5932e51503d6';
 const inpatientWardLocationUuid = 'ba685651-ed3b-4e63-9b35-78893060758a';
-const outpatientClinicLocationUuid = '44c3efb0-2583-4c80-a79e-1f756a03c0a1';
 
-const mockUseConfig = jest.mocked(useConfig);
-const mockUseSession = jest.mocked(useSession);
+const mockUseConfig = vi.mocked(useConfig);
+const mockUseSession = vi.mocked(useSession);
 
 mockUseConfig.mockReturnValue(mockConfig);
 mockUseSession.mockReturnValue({
@@ -28,13 +29,9 @@ mockUseSession.mockReturnValue({
   } as LoggedInUser,
 } as Session);
 
-jest.mock('@openmrs/esm-framework', () => ({
-  ...jest.requireActual('@openmrs/esm-framework'),
-  setSessionLocation: jest.fn().mockResolvedValue({}),
-  setUserProperties: jest.fn().mockResolvedValue({}),
-  navigate: jest.fn(),
-  showToast: jest.fn(),
-  openmrsFetch: jest.fn((url) => {
+vi.mock('@openmrs/esm-api', async () => ({
+  ...(await import('@openmrs/esm-api')),
+  openmrsFetch: vi.fn((url) => {
     if (url === `/ws/fhir2/R4/Location?_id=${inpatientWardLocationUuid}`) {
       return inpatientWardResponse;
     }
@@ -46,12 +43,14 @@ jest.mock('@openmrs/esm-framework', () => ({
     }
     return mockLoginLocations;
   }),
+  setSessionLocation: vi.fn().mockResolvedValue({}),
+  setUserProperties: vi.fn().mockResolvedValue({}),
 }));
 
 describe('LocationPicker', () => {
   it('renders a list of login locations', async () => {
     await act(async () => {
-      render(<LocationPicker selectedLocationUuid={inpatientWardLocationUuid} onChange={jest.fn()} />);
+      render(<LocationPicker selectedLocationUuid={inpatientWardLocationUuid} onChange={vi.fn()} />);
     });
 
     expect(
@@ -72,7 +71,7 @@ describe('LocationPicker', () => {
 
   it('call onChange when a location is selected', async () => {
     const user = userEvent.setup();
-    const handleChange = jest.fn();
+    const handleChange = vi.fn();
 
     await act(async () => {
       render(<LocationPicker selectedLocationUuid={validLocationUuid} onChange={handleChange} />);
@@ -86,7 +85,7 @@ describe('LocationPicker', () => {
 
   it('selects the provided selectedLocation when the component is rendered', async () => {
     await act(async () => {
-      render(<LocationPicker selectedLocationUuid={inpatientWardLocationUuid} onChange={jest.fn()} />);
+      render(<LocationPicker selectedLocationUuid={inpatientWardLocationUuid} onChange={vi.fn()} />);
     });
     const inpatientWardOption = screen.getByRole('radio', { name: /inpatient ward/i });
     expect(inpatientWardOption).toBeChecked();
@@ -94,7 +93,7 @@ describe('LocationPicker', () => {
 
   it('loads the default location on top of the list', async () => {
     await act(async () => {
-      render(<LocationPicker defaultLocationUuid={inpatientWardLocationUuid} onChange={jest.fn()} />);
+      render(<LocationPicker defaultLocationUuid={inpatientWardLocationUuid} onChange={vi.fn()} />);
     });
 
     const locations = screen.getAllByRole('radio');
@@ -111,7 +110,7 @@ describe('LocationPicker', () => {
   it('should not display the default location if search result does not contain the default location', async () => {
     const user = userEvent.setup();
     await act(async () => {
-      render(<LocationPicker defaultLocationUuid={inpatientWardLocationUuid} onChange={jest.fn()} />);
+      render(<LocationPicker defaultLocationUuid={inpatientWardLocationUuid} onChange={vi.fn()} />);
     });
     const searchInput = screen.getByRole('searchbox', { name: /search for a location/i });
     await user.type(searchInput, 'outpatient');
@@ -122,7 +121,7 @@ describe('LocationPicker', () => {
   it('should display a message and should not display locations when search results are empty', async () => {
     const user = userEvent.setup();
     await act(async () => {
-      render(<LocationPicker defaultLocationUuid={inpatientWardLocationUuid} onChange={jest.fn()} />);
+      render(<LocationPicker defaultLocationUuid={inpatientWardLocationUuid} onChange={vi.fn()} />);
     });
     const searchInput = screen.getByRole('searchbox', { name: /search for a location/i });
     await user.type(searchInput, 'search_for_no_location');

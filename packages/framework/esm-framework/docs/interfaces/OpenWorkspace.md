@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-- [`WorkspaceRegistration`](WorkspaceRegistration.md)
+- `WorkspaceRegistration`
 
 - [`DefaultWorkspaceProps`](DefaultWorkspaceProps.md)
 
@@ -46,11 +46,11 @@
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[canHide](WorkspaceRegistration.md#canhide)
+WorkspaceRegistration.canHide
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L14)
+packages/framework/esm-extensions/dist/workspaces.d.ts:10
 
 ___
 
@@ -60,11 +60,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[canMaximize](WorkspaceRegistration.md#canmaximize)
+WorkspaceRegistration.canMaximize
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L15)
+packages/framework/esm-extensions/dist/workspaces.d.ts:11
 
 ___
 
@@ -74,11 +74,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[groups](WorkspaceRegistration.md#groups)
+WorkspaceRegistration.groups
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
+packages/framework/esm-extensions/dist/workspaces.d.ts:18
 
 ___
 
@@ -88,11 +88,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[moduleName](WorkspaceRegistration.md#modulename)
+WorkspaceRegistration.moduleName
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
+packages/framework/esm-extensions/dist/workspaces.d.ts:17
 
 ___
 
@@ -102,11 +102,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[name](WorkspaceRegistration.md#name)
+WorkspaceRegistration.name
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L10)
+packages/framework/esm-extensions/dist/workspaces.d.ts:6
 
 ___
 
@@ -116,11 +116,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[preferredWindowSize](WorkspaceRegistration.md#preferredwindowsize)
+WorkspaceRegistration.preferredWindowSize
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
+packages/framework/esm-extensions/dist/workspaces.d.ts:13
 
 ___
 
@@ -130,11 +130,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[title](WorkspaceRegistration.md#title)
+WorkspaceRegistration.title
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L11)
+packages/framework/esm-extensions/dist/workspaces.d.ts:7
 
 ___
 
@@ -144,11 +144,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[titleNode](WorkspaceRegistration.md#titlenode)
+WorkspaceRegistration.titleNode
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L12)
+packages/framework/esm-extensions/dist/workspaces.d.ts:8
 
 ___
 
@@ -158,11 +158,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[type](WorkspaceRegistration.md#type)
+WorkspaceRegistration.type
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L13)
+packages/framework/esm-extensions/dist/workspaces.d.ts:9
 
 ___
 
@@ -172,11 +172,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[width](WorkspaceRegistration.md#width)
+WorkspaceRegistration.width
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L16)
+packages/framework/esm-extensions/dist/workspaces.d.ts:12
 
 ___
 
@@ -188,7 +188,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L115)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L114)
 
 ___
 
@@ -198,7 +198,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L116)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L115)
 
 ## Methods
 
@@ -228,7 +228,7 @@ closed, given the user forcefully closes the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L50)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L49)
 
 ___
 
@@ -255,7 +255,7 @@ will directly close the workspace without any prompt
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L60)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L59)
 
 ___
 
@@ -269,11 +269,11 @@ ___
 
 #### Inherited from
 
-[WorkspaceRegistration](WorkspaceRegistration.md).[load](WorkspaceRegistration.md#load)
+WorkspaceRegistration.load
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+packages/framework/esm-extensions/dist/workspaces.d.ts:14
 
 ___
 
@@ -300,7 +300,7 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L55)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L54)
 
 ___
 
@@ -332,4 +332,4 @@ title needs to be set dynamically.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L75)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L74)

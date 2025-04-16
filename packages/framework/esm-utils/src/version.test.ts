@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { isVersionSatisfied } from './version';
 
 describe('Version utilities', () => {
@@ -53,13 +54,16 @@ describe('Version utilities', () => {
 
   it('Is satisfied with major version caret specifier and pre', () => {
     const result = isVersionSatisfied('^3', '3.1.14-pre.3');
+    expect(result).toBe(true);
   });
 
   it('Is satisfied with major version caret specifier and pre and a build number', () => {
     const result = isVersionSatisfied('^3', '3.1.14.7e24fb-pre.3');
+    expect(result).toBe(true);
   });
 
   it('Is satisfied with major version caret specifier and a build number', () => {
     const result = isVersionSatisfied('^3', '3.1.14.7e24fb');
+    expect(result).toBe(true);
   });
 });

@@ -1,5 +1,7 @@
-import { enableFetchMocks } from 'jest-fetch-mock';
-enableFetchMocks();
+import createFetchMock from 'vitest-fetch-mock';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+createFetchMock(vi).enableMocks();
 
 import { addRoutesOverride, isOpenmrsAppRoutes } from './routes';
 

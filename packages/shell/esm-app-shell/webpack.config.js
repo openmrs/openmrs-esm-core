@@ -300,6 +300,11 @@ module.exports = (env, argv = []) => {
         'lodash.isequal': 'lodash-es/isEqual',
         'lodash.omit': 'lodash-es/omit',
         'lodash.throttle': 'lodash-es/throttle',
+        // ugly, stupid hack to support dynamic translation resolution here
+        '@openmrs/esm-translations/translations': resolve(
+          dirname(require.resolve('@openmrs/esm-translations/package.json')),
+          'translations',
+        ),
       },
     },
     plugins: [

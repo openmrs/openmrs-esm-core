@@ -75,7 +75,6 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
         id="search-1"
         placeholder={t('searchForLocation', 'Search for a location')}
         onChange={(event) => search(event.target.value)}
-        name="searchForLocation"
         size="lg"
       />
       <div className={styles.searchResults}>
@@ -94,7 +93,7 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
                 <RadioButtonGroup
                   name="loginLocations"
                   onChange={(ev) => {
-                    onChange(ev.toString());
+                    onChange(ev?.toString());
                   }}
                   orientation="vertical"
                   valueSelected={selectedLocationUuid}
