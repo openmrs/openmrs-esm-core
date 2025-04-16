@@ -1,7 +1,8 @@
+import { describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { attach, registerExtensionSlot } from './extensions';
 
-jest.mock('@openmrs/esm-api', () => ({
+vi.mock('@openmrs/esm-api', () => ({
   sessionStore: createGlobalStore('mock-session-store', {
     loaded: false,
     session: null,

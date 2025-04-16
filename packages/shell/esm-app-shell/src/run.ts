@@ -1,4 +1,5 @@
 import { start, triggerAppChange } from 'single-spa';
+import { type CalendarIdentifier } from '@internationalized/date';
 import {
   activateOfflineCapability,
   canAccessStorage,
@@ -17,6 +18,7 @@ import {
   openmrsFetch,
   provide,
   registerApp,
+  registerDefaultCalendar,
   registerOmrsServiceWorker,
   renderActionableNotifications,
   renderInlineNotifications,
@@ -41,12 +43,12 @@ import {
   type Config,
   type OpenmrsAppRoutes,
   type OpenmrsRoutes,
+  type StyleguideConfigObject,
 } from '@openmrs/esm-framework/src/internal';
 import { setupI18n } from './locale';
 import { registerOptionalDependencyHandler } from './optionaldeps';
 import { appName, getCoreExtensions } from './ui';
 import { setupCoreConfig } from './core-config';
-import { registerDefaultCalendar, type StyleguideConfigObject } from '@openmrs/esm-framework';
 
 // @internal
 // used to track when the window.installedModules global is finalised
@@ -202,7 +204,7 @@ async function runShell() {
       const { preferredCalendar } = await getConfig<StyleguideConfigObject>('@openmrs/esm-styleguide');
 
       for (const entry of Object.entries(preferredCalendar)) {
-        registerDefaultCalendar(entry[0], entry[1]);
+        registerDefaultCalendar(entry[0], entry[1] as CalendarIdentifier);
       }
     })
     .then(() => start());
@@ -405,31 +407,33 @@ export function run(configUrls: Array<string>) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
-  integrateBreakpoints();
-  showToasts();
-  showModals();
-  showNotifications();
-  showActionableNotifications();
-  showSnackbars();
-  subscribeNotificationShown(showNotification);
-  subscribeActionableNotificationShown(showActionableNotification);
-  subscribeToastShown(showToast);
-  subscribeSnackbarShown(showSnackbar);
-  subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
-  setupApiModule();
-  setupHistory();
-  registerCoreExtensions();
-  setupCoreConfig();
+  return import('@openmrs/esm-styleguide/src/index').then(() => {
+    integrateBreakpoints();
+    showToasts();
+    showModals();
+    showNotifications();
+    showActionableNotifications();
+    showSnackbars();
+    subscribeNotificationShown(showNotification);
+    subscribeActionableNotificationShown(showActionableNotification);
+    subscribeToastShown(showToast);
+    subscribeSnackbarShown(showSnackbar);
+    subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
+    setupApiModule();
+    setupHistory();
+    registerCoreExtensions();
+    setupCoreConfig();
 
-  return setupApps()
-    .then(finishRegisteringAllApps)
-    .then(offlineEnabled ? setupOfflineCssClasses : undefined)
-    .then(offlineEnabled ? registerOfflineHandlers : undefined)
-    .then(provideConfigs)
-    .then(runShell)
-    .catch(handleInitFailure)
-    .then(closeLoading)
-    .then(offlineEnabled ? setupOffline : undefined)
-    .then(registerOptionalDependencyHandler)
-    .then(cleanupObsoleteFeatureFlags);
+    return setupApps()
+      .then(finishRegisteringAllApps)
+      .then(offlineEnabled ? setupOfflineCssClasses : undefined)
+      .then(offlineEnabled ? registerOfflineHandlers : undefined)
+      .then(provideConfigs)
+      .then(runShell)
+      .catch(handleInitFailure)
+      .then(closeLoading)
+      .then(offlineEnabled ? setupOffline : undefined)
+      .then(registerOptionalDependencyHandler)
+      .then(cleanupObsoleteFeatureFlags);
+  });
 }

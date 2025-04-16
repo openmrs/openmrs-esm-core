@@ -1,5 +1,7 @@
 /** @module @category UI */
 import React from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { screen } from '@testing-library/react';
 import { usePatient } from '@openmrs/esm-react-utils';
 import { usePatientAttributes, usePatientContactAttributes } from './usePatientAttributes';
@@ -8,11 +10,11 @@ import { useRelationships } from './useRelationships';
 import { PatientBannerContactDetails } from './patient-banner-contact-details.component';
 import { renderWithSwr } from '../../test-utils';
 
-const mockUsePatient = jest.mocked(usePatient);
-const mockUsePatientAttributes = jest.mocked(usePatientAttributes);
-const mockUsePatientContactAttributes = jest.mocked(usePatientContactAttributes);
-const mockUsePatientListsForPatient = jest.mocked(usePatientListsForPatient);
-const mockUseRelationships = jest.mocked(useRelationships);
+const mockUsePatient = vi.mocked(usePatient);
+const mockUsePatientAttributes = vi.mocked(usePatientAttributes);
+const mockUsePatientContactAttributes = vi.mocked(usePatientContactAttributes);
+const mockUsePatientListsForPatient = vi.mocked(usePatientListsForPatient);
+const mockUseRelationships = vi.mocked(useRelationships);
 
 const mockRelationships = [
   {
@@ -73,17 +75,17 @@ const mockCohorts = [
   },
 ];
 
-jest.mock('./usePatientAttributes', () => ({
-  usePatientAttributes: jest.fn(),
-  usePatientContactAttributes: jest.fn(),
+vi.mock('./usePatientAttributes', () => ({
+  usePatientAttributes: vi.fn(),
+  usePatientContactAttributes: vi.fn(),
 }));
 
-jest.mock('./usePatientListsForPatient', () => ({
-  usePatientListsForPatient: jest.fn(),
+vi.mock('./usePatientListsForPatient', () => ({
+  usePatientListsForPatient: vi.fn(),
 }));
 
-jest.mock('./useRelationships', () => ({
-  useRelationships: jest.fn(),
+vi.mock('./useRelationships', () => ({
+  useRelationships: vi.fn(),
 }));
 
 describe('ContactDetails', () => {
@@ -110,6 +112,7 @@ describe('ContactDetails', () => {
     mockUsePatientContactAttributes.mockReturnValue({
       isLoading: false,
       contactAttributes: mockPersonAttributes,
+      error: null,
     });
 
     mockUsePatientListsForPatient.mockReturnValue({
@@ -166,6 +169,7 @@ describe('ContactDetails', () => {
     mockUsePatientContactAttributes.mockReturnValue({
       isLoading: false,
       contactAttributes: [],
+      error: null,
     });
 
     mockUsePatientListsForPatient.mockReturnValue({

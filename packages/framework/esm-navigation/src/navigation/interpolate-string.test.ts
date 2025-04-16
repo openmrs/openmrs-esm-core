@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { interpolateString, interpolateUrl } from './interpolate-string';
 
 describe('interpolateUrl', () => {

@@ -6,32 +6,32 @@
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
 @use '@carbon/styles/scss/utilities/focus-outline' as focus;
-@use '@openmrs/esm-styleguide/src/vars' as *;
+@use '../vars' as *;
 
 .calendarGrid {
   width: 17rem;
 
-  tr,
-  tr > th,
-  tr > td {
+  & tr,
+  & tr > th,
+  & tr > td {
     height: 2.428rem;
     width: 2.428rem;
   }
 
-  > thead > tr > th {
+  & > thead > tr > th {
     @include type.type-style('body-compact-01');
     cursor: default;
     text-align: center;
     vertical-align: middle;
   }
 
-  > tbody > tr > td {
+  & > tbody > tr > td {
     @include type.type-style('body-compact-01');
     cursor: pointer;
     text-align: center;
     vertical-align: middle;
 
-    > div {
+    & > div {
       outline: unset;
     }
 
@@ -44,7 +44,7 @@
       color: $ui-background;
     }
 
-    [aria-disabled] {
+    &[aria-disabled] {
       color: theme.$text-disabled;
       cursor: default;
     }
@@ -60,14 +60,17 @@
 
 .flatButton {
   @include component-reset.reset;
-  background-color: inherit;
-  display: inline-flex;
+
+  & {
+    background-color: inherit;
+    display: inline-flex;
+  }
 
   &:hover:not(:has([aria-disabled='true'])) {
     background-color: theme.$layer-hover;
   }
 
-  > svg {
+  & > svg {
     display: block;
     margin: auto;
     text-align: center;
@@ -107,7 +110,10 @@
 
   &[data-invalid] {
     @include focus.focus-outline('invalid');
-    color: theme.$support-error;
+
+    & {
+      color: theme.$support-error;
+    }
   }
 }
 
@@ -117,7 +123,7 @@
   min-width: layout.$spacing-13;
   max-width: 15rem;
 
-  .inputSegment {
+  & .inputSegment {
     caret-color: var(--cds-text-primary);
 
     &:focus {
@@ -165,25 +171,30 @@
   @include component-reset.reset;
   @include type.type-style('heading-compact-01');
 
-  margin-top: layout.$spacing-03;
-  margin-block-end: layout.$spacing-01;
-  text-align: center;
+  & {
+    margin-top: layout.$spacing-03;
+    margin-block-end: layout.$spacing-01;
+    text-align: center;
+  }
 
-  > span {
+  & > span {
     margin-left: layout.$spacing-02;
     margin-right: layout.$spacing-02;
   }
 
-  div:has(input[inputmode='numeric']) {
+  & div:has(input[inputmode='numeric']) {
     display: inline;
 
-    > input[inputmode='numeric'] {
+    & > input[inputmode='numeric'] {
       @include component-reset.reset;
       @include type.type-style('heading-compact-01');
-      background-color: var(--cds-field);
-      inline-size: layout.$spacing-08;
-      padding: layout.$spacing-02;
-      padding-right: 0;
+
+      & {
+        background-color: var(--cds-field);
+        inline-size: layout.$spacing-08;
+        padding: layout.$spacing-02;
+        padding-right: 0;
+      }
 
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {
@@ -216,27 +227,33 @@
       }
     }
 
-    div[role='group'] {
+    & div[role='group'] {
       @include component-reset.reset;
-      display: inline;
-      position: relative;
+
+      & {
+        display: inline;
+        position: relative;
+      }
     }
 
     &:hover button {
       opacity: 1;
     }
 
-    button {
+    & button {
       @include component-reset.reset;
-      position: absolute;
-      padding: 0 layout.$spacing-02 0 layout.$spacing-01;
-      border: none;
-      block-size: 50%;
-      cursor: pointer;
-      inline-size: layout.$spacing-04;
-      inset-inline-start: layout.$spacing-08;
-      line-height: 50%;
-      opacity: 0;
+
+      & {
+        position: absolute;
+        padding: 0 layout.$spacing-02 0 layout.$spacing-01;
+        border: none;
+        block-size: 50%;
+        cursor: pointer;
+        inline-size: layout.$spacing-04;
+        inset-inline-start: layout.$spacing-08;
+        line-height: 50%;
+        opacity: 0;
+      }
 
       &::after {
         display: block;
@@ -296,13 +313,13 @@
   }
 
   .monthYear {
-    div:has(input[inputmode='numeric']) {
+    & div:has(input[inputmode='numeric']) {
       > input[inputmode='numeric'] {
         padding-right: layout.$spacing-02;
       }
     }
 
-    button {
+    & button {
       &[slot='increment'] {
         top: 0;
         left: unset;

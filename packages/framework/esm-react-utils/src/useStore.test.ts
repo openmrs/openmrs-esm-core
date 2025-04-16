@@ -1,6 +1,7 @@
+import { describe, expect, it } from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import { createGlobalStore } from '@openmrs/esm-state';
-import { useStore, useStoreWithActions } from '@openmrs/esm-react-utils';
+import { useStore, useStoreWithActions } from './useStore';
 
 describe('useStore', () => {
   it('updates state, selects, and correctly binds actions', () => {

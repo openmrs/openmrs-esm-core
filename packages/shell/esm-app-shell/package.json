@@ -4,13 +4,13 @@
   "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
-    "start": "npm run watch",
+    "start": "yarn run watch",
     "test": "jest --passWithNoTests --color",
     "watch": "cross-env OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" OMRS_OFFLINE=\"disable\" webpack serve --mode development",
     "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"disable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" webpack serve --mode development",
     "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"production\" webpack --mode production",
     "build:development": "cross-env OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" webpack --mode development",
-    "build": "npm run build:production && npm run build:development",
+    "build": "yarn run build:production && yarn run build:development",
     "analyze": "webpack --mode=production --env analyze=true",
     "lint": "eslint src --ext ts,tsx"
   },
@@ -33,7 +33,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.76.0",
+    "@carbon/react": "^1.80.1",
+    "@internationalized/date": "^3.8.0",
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/esm-styleguide": "workspace:*",
     "dayjs": "^1.10.4",

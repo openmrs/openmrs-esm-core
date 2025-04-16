@@ -1,3 +1,4 @@
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import unset from 'lodash/unset';
 import * as Config from './module-config';
 import type { MockedStore } from '@openmrs/esm-state/mock';
@@ -14,6 +15,8 @@ import {
 } from './state';
 import { Type } from '../types';
 import { getExtensionSlotsConfigStore } from '..';
+
+vi.mock('@openmrs/esm-state', () => import('@openmrs/esm-state/mock'));
 
 // Names from Wikipedia's "Metasyntactic variable" page:
 // foo, bar, baz, qux, quux, corge, grault, garply, waldo, fred, plugh, xyzzy, thud
@@ -41,7 +44,7 @@ async function resetAll() {
 
 describe('defineConfigSchema', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -216,7 +219,7 @@ describe('getConfig', () => {
   beforeAll(resetAll);
 
   beforeEach(async () => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -308,7 +311,7 @@ describe('getConfig', () => {
   // DISABLED: Presently getConfig *does not resolve* when looking up a module
   //   with no schema. The behavior described in this test would be preferable,
   //   but would require some deeper changes.
-  xit('throws if looking up module with no schema', async () => {
+  it.skip('throws if looking up module with no schema', async () => {
     await expect(Config.getConfig('fake-module')).rejects.toThrow(/No config schema has been defined.*fake-module/);
   });
 
@@ -958,12 +961,12 @@ describe('getConfig', () => {
 
 describe('type validations', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
 
-  test.each([
+  it.each([
     [Type.Array, 'doop'],
     [Type.Boolean, 0],
     [Type.ConceptUuid, 'Weight'],
@@ -985,7 +988,7 @@ describe('type validations', () => {
 
 describe('processConfig', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -1070,7 +1073,7 @@ describe('implementer tools config', () => {
 
 describe('temporary config', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -1131,7 +1134,7 @@ describe('temporary config', () => {
 
 describe('extension slot config', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -1239,7 +1242,7 @@ describe('extension slot config', () => {
 
 describe('extension config', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
     Config.defineConfigSchema('ext-mod', {
       bar: { _default: 'barry' },
       baz: { _default: 'bazzy' },
@@ -1397,7 +1400,7 @@ describe('extension config', () => {
 
 describe('translation overrides', () => {
   it('allows obtaining translation overrides before schema is registered', async () => {
-    console.error = jest.fn();
+    console.error = vi.fn();
     Config.provide({
       'corge-module': {
         'Translation overrides': {

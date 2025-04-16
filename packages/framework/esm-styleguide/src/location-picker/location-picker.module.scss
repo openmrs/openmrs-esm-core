@@ -1,6 +1,6 @@
 @use '@carbon/layout';
 @use '@carbon/type';
-@use '@openmrs/esm-styleguide/src/vars' as *;
+@use '../vars' as *;
 
 .bodyCompact01 {
   @include type.type-style('body-compact-01');

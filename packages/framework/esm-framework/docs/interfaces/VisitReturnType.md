@@ -21,7 +21,7 @@
 
 ### activeVisit
 
-• **activeVisit**: ``null`` \| [`Visit`](Visit.md)
+• **activeVisit**: ``null`` \| `Visit`
 
 #### Defined in
 
@@ -31,7 +31,7 @@ ___
 
 ### currentVisit
 
-• **currentVisit**: ``null`` \| [`Visit`](Visit.md)
+• **currentVisit**: ``null`` \| `Visit`
 
 #### Defined in
 

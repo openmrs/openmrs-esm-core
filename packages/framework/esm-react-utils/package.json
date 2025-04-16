@@ -3,14 +3,29 @@
   "version": "6.3.0",
   "license": "MPL-2.0",
   "description": "React utilities for OpenMRS.",
-  "browser": "dist/openmrs-esm-react-utils.js",
-  "main": "src/index.ts",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./src/public": {
+      "types": "./src/public.ts",
+      "default": "./dist/public.js"
+    },
+    "./mock": {
+      "import": "./mock.tsx",
+      "require": "./mock-jest.tsx"
+    }
+  },
   "source": true,
   "scripts": {
-    "test": "jest --passWithNoTests --color",
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode development",
-    "analyze": "webpack --mode=production --env analyze=true",
+    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
+    "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "typescript": "tsc --project tsconfig.build.json",
     "lint": "eslint src"
   },
   "keywords": [
@@ -46,11 +61,13 @@
     "@openmrs/esm-api": "6.x",
     "@openmrs/esm-config": "6.x",
     "@openmrs/esm-context": "6.x",
+    "@openmrs/esm-emr-api": "6.x",
     "@openmrs/esm-error-handling": "6.x",
     "@openmrs/esm-extensions": "6.x",
     "@openmrs/esm-feature-flags": "6.x",
     "@openmrs/esm-globals": "6.x",
     "@openmrs/esm-navigation": "6.x",
+    "@openmrs/esm-state": "6.x",
     "@openmrs/esm-utils": "6.x",
     "dayjs": "1.x",
     "i18next": "21.x",
@@ -64,19 +81,27 @@
     "@openmrs/esm-api": "workspace:*",
     "@openmrs/esm-config": "workspace:*",
     "@openmrs/esm-context": "workspace:*",
+    "@openmrs/esm-emr-api": "workspace:*",
     "@openmrs/esm-error-handling": "workspace:*",
     "@openmrs/esm-extensions": "workspace:*",
     "@openmrs/esm-feature-flags": "workspace:*",
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-navigation": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.11.18",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
     "dayjs": "^1.10.8",
+    "happy-dom": "^17.4.4",
     "i18next": "^21.10.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "^11.18.6",
+    "rimraf": "^6.0.1",
     "rxjs": "^6.5.3",
     "swr": "^2.2.5",
-    "webpack": "^5.88.0"
+    "vitest": "^3.1.1"
   }
 }

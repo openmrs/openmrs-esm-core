@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './styles.scss';
 import { ArrowUpRight } from '@carbon/react/icons';
 import { Link } from '@carbon/react';
+import styles from './styles.scss';
 
 const ReleaseNotes = () => {
   const { t } = useTranslation();

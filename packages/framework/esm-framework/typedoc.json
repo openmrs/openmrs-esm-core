@@ -4,5 +4,6 @@
   "readme": "none",
   "excludeInternal": true,
   "gitRevision": "main",
+  "entryPoints": ["./src/index.ts"],
   "entryDocument": "API.md"
 }
