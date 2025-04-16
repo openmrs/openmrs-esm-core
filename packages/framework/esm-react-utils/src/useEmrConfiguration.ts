@@ -15,7 +15,7 @@ type DispositionType = 'ADMIT' | 'TRANSFER' | 'DISCHARGE';
  * For all available configuration constants and global property keys, see:
  * @see https://github.com/openmrs/openmrs-module-emrapi/blob/master/api/src/main/java/org/openmrs/module/emrapi/EmrApiConstants.java
  */
-interface EmrApiConfigurationResponse {
+export interface EmrApiConfigurationResponse {
   admissionDecisionConcept?: OpenmrsResource;
   admissionEncounterType?: OpenmrsResource;
   admissionForm?: OpenmrsResource;

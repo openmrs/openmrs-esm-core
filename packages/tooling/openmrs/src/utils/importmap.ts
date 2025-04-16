@@ -153,11 +153,12 @@ function runProjectWebpack(
   sourceDirectory: string,
   importMap: Record<string, string>,
   routes: Record<string, unknown>,
+  useRspack: boolean = false,
 ) {
   const bundle = getMainBundle(project);
   const host = `http://localhost:${port}`;
 
-  startWebpack(configPath, port, sourceDirectory);
+  startWebpack(configPath, port, sourceDirectory, useRspack);
   importMap[project.name] = `${host}/${bundle.name}`;
   routes[project.name] = getAppRoutes(sourceDirectory, project);
 }
@@ -181,8 +182,12 @@ export async function runProject(
   for (let i = 0; i < sourceDirectories.length; i++) {
     const sourceDirectory = resolve(baseDir, sourceDirectories[i]);
     const projectFile = resolve(sourceDirectory, 'package.json');
-    const configPath = resolve(sourceDirectory, 'webpack.config.js');
     const routesFile = resolve(sourceDirectory, 'src', 'routes.json');
+
+    const configPath = resolve(sourceDirectory, 'webpack.config.js');
+    const rspackConfigPath = resolve(sourceDirectory, 'rspack.config.js');
+    const hasConfig = existsSync(configPath);
+    const hasRspackConfig = existsSync(rspackConfigPath);
 
     const port = basePort + i + 1;
 
@@ -209,14 +214,18 @@ export async function runProject(
       cp.stderr?.pipe(process.stderr);
       // connect to either startup.url or a computed value based on startup.host
       importMap[project.name] = startup.url || `${startup.host}/${basename(project.browser)}`;
-    } else if (!existsSync(configPath)) {
+    } else if (!hasConfig && !hasRspackConfig) {
       // try to locate and run via default webpack
       logWarn(`No "webpack.config.js" found in directory "${sourceDirectory}". Trying to use default config ...`);
 
       runProjectWebpack(defaultConfigPath, port, project, sourceDirectory, importMap, routes);
     } else {
-      // run via specialized webpack.config.js
-      runProjectWebpack(configPath, port, project, sourceDirectory, importMap, routes);
+      if (hasConfig) {
+        // run via specialized webpack.config.js
+        runProjectWebpack(configPath, port, project, sourceDirectory, importMap, routes);
+      } else {
+        runProjectWebpack(rspackConfigPath, port, project, sourceDirectory, importMap, routes, true);
+      }
     }
   }
 

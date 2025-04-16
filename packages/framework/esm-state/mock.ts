@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { createStore, type StoreApi } from 'zustand';
 export { subscribeTo } from './src/index';
 
@@ -57,9 +58,11 @@ export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> 
 
 function instrumentedStore<T>(name: string, store: StoreApi<T>) {
   return {
-    getState: jest.spyOn(store, 'getState'),
-    setState: jest.spyOn(store, 'setState'),
-    subscribe: jest.spyOn(store, 'subscribe'),
+    getInitialState: vi.spyOn(store, 'getInitialState'),
+    getState: vi.spyOn(store, 'getState'),
+    setState: vi.spyOn(store, 'setState'),
+    subscribe: vi.spyOn(store, 'subscribe'),
+    destroy: vi.spyOn(store, 'destroy'),
     resetMock: () => store.setState(initialStates[name]),
-  } as any as MockedStore<T>;
+  } as unknown as MockedStore<T>;
 }

@@ -1,4 +1,6 @@
 import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Pen } from '@carbon/react/icons';
@@ -6,29 +8,29 @@ import { useLayoutType } from '@openmrs/esm-react-utils';
 import { ActionMenuButton } from './action-menu-button.component';
 import { type OpenWorkspace, useWorkspaces, type WorkspacesInfo } from '../workspaces';
 
-const mockUseLayoutType = jest.mocked(useLayoutType);
-const mockUseWorkspaces = jest.mocked(useWorkspaces);
+const mockUseLayoutType = vi.mocked(useLayoutType);
+const mockUseWorkspaces = vi.mocked(useWorkspaces);
 
-jest.mock('@carbon/react/icons', () => ({
-  ...jest.requireActual('@carbon/react/icons'),
-  Pen: jest.fn(({ size }) => <div data-testid="pen-icon">size: {size}</div>),
+vi.mock('@carbon/react/icons', async () => ({
+  ...(await vi.importActual('@carbon/react/icons')),
+  Pen: vi.fn(({ size }) => <div data-testid="pen-icon">size: {size}</div>),
 }));
 
-jest.mock('@openmrs/esm-react-utils', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-react-utils');
+vi.mock('@openmrs/esm-react-utils', async () => {
+  const originalModule = await vi.importActual('@openmrs/esm-react-utils');
 
   return {
     ...originalModule,
-    useLayoutType: jest.fn(),
+    useLayoutType: vi.fn(),
   };
 });
 
-jest.mock('../workspaces', () => {
-  const originalModule = jest.requireActual('../workspaces');
+vi.mock('../workspaces', async () => {
+  const originalModule = await vi.importActual('../workspaces');
 
   return {
     ...originalModule,
-    useWorkspaces: jest.fn(),
+    useWorkspaces: vi.fn(),
   };
 });
 
@@ -43,7 +45,7 @@ describe('ActionMenuButton', () => {
 
     mockUseLayoutType.mockReturnValue('tablet');
 
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     render(
       <ActionMenuButton
@@ -63,7 +65,7 @@ describe('ActionMenuButton', () => {
 
     await user.click(button);
     expect(handler).toHaveBeenCalled();
-    expect(button).not.toHaveClass('active');
+    expect(button.getAttribute('class')).not.toContain('active');
   });
 
   it('should have not active className if workspace is not active', async () => {
@@ -74,7 +76,7 @@ describe('ActionMenuButton', () => {
 
     mockUseLayoutType.mockReturnValue('tablet');
 
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     render(
       <ActionMenuButton
@@ -89,7 +91,7 @@ describe('ActionMenuButton', () => {
     const button = screen.getByRole('button', { name: /Visit note/i });
     expect(button).toBeInTheDocument();
 
-    expect(button).not.toHaveClass('active');
+    expect(button.getAttribute('class')).not.toContain('active');
   });
 
   it('should have active className if workspace is active', async () => {
@@ -100,7 +102,7 @@ describe('ActionMenuButton', () => {
 
     mockUseLayoutType.mockReturnValue('tablet');
 
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     render(
       <ActionMenuButton
@@ -115,7 +117,9 @@ describe('ActionMenuButton', () => {
     const button = screen.getByRole('button', { name: /Visit note/i });
     expect(button).toBeInTheDocument();
 
-    expect(button).toHaveClass('active');
+    // toHaveAttribute() cannot do either partial or regex matches
+    // eslint-disable-next-line jest-dom/prefer-to-have-attribute
+    expect(button.getAttribute('class')).toContain('active');
   });
 
   it('should not display active className if workspace is active but workspace window is hidden', async () => {
@@ -126,7 +130,7 @@ describe('ActionMenuButton', () => {
 
     mockUseLayoutType.mockReturnValue('tablet');
 
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     render(
       <ActionMenuButton
@@ -141,7 +145,7 @@ describe('ActionMenuButton', () => {
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
 
-    expect(button).not.toHaveClass('active');
+    expect(button.getAttribute('class')).not.toContain('active');
   });
 
   it('should display desktop view', async () => {
@@ -154,7 +158,7 @@ describe('ActionMenuButton', () => {
 
     mockUseLayoutType.mockReturnValue('small-desktop');
 
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     render(
       <ActionMenuButton
@@ -174,7 +178,7 @@ describe('ActionMenuButton', () => {
     await user.click(button);
     expect(handler).toHaveBeenCalled();
 
-    expect(button).not.toHaveClass('active');
+    expect(button.getAttribute('class')).not.toContain('active');
   });
 
   it('should display have active className if workspace is not active', async () => {
@@ -185,7 +189,7 @@ describe('ActionMenuButton', () => {
 
     mockUseLayoutType.mockReturnValue('small-desktop');
 
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     render(
       <ActionMenuButton
@@ -200,7 +204,7 @@ describe('ActionMenuButton', () => {
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
 
-    expect(button).not.toHaveClass('active');
+    expect(button.getAttribute('class')).not.toContain('active');
   });
 
   it('should display active className if workspace is active and workspace window is normal', async () => {
@@ -211,7 +215,7 @@ describe('ActionMenuButton', () => {
 
     mockUseLayoutType.mockReturnValue('small-desktop');
 
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     render(
       <ActionMenuButton
@@ -226,7 +230,9 @@ describe('ActionMenuButton', () => {
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
 
-    expect(button).toHaveClass('active');
+    // toHaveAttribute() cannot do either partial or regex matches
+    // eslint-disable-next-line jest-dom/prefer-to-have-attribute
+    expect(button.getAttribute('class')).toContain('active');
   });
 
   it('should not display active className if workspace is active but workspace window is hidden', async () => {
@@ -237,7 +243,7 @@ describe('ActionMenuButton', () => {
 
     mockUseLayoutType.mockReturnValue('small-desktop');
 
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     render(
       <ActionMenuButton
@@ -252,6 +258,6 @@ describe('ActionMenuButton', () => {
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
 
-    expect(button).not.toHaveClass('active');
+    expect(button.getAttribute('class')).not.toContain('active');
   });
 });

@@ -1,15 +1,18 @@
 import React from 'react';
-import '@testing-library/jest-dom';
+import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { navigate } from '@openmrs/esm-navigation';
 import { ConfigurableLink } from './ConfigurableLink';
 
-jest.mock('single-spa');
+vi.mock('single-spa');
 
-const mockNavigate = jest.mocked(navigate);
+const mockNavigate = vi.mocked(navigate);
 
 describe(`ConfigurableLink`, () => {
+  afterAll(vi.clearAllMocks);
+
   const path = '${openmrsSpaBase}/home';
   beforeEach(() => {
     mockNavigate.mockClear();
@@ -59,7 +62,7 @@ describe(`ConfigurableLink`, () => {
   });
 
   it('executes onBeforeNavigate callback on any click that would open the page (including ctrl-click etc)', async () => {
-    const onBeforeNavigate = jest.fn();
+    const onBeforeNavigate = vi.fn();
     render(
       <ConfigurableLink to={path} onBeforeNavigate={onBeforeNavigate}>
         SPA Home

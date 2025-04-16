@@ -16,18 +16,6 @@
 
   ↳↳ [`ConceptClass`](ConceptClass.md)
 
-  ↳↳ [`Diagnosis`](Diagnosis.md)
-
-  ↳↳ [`Encounter`](Encounter.md)
-
-  ↳↳ [`EncounterType`](EncounterType.md)
-
-  ↳↳ [`EncounterProvider`](EncounterProvider.md)
-
-  ↳↳ [`EncounterRole`](EncounterRole.md)
-
-  ↳↳ [`Obs`](Obs.md)
-
   ↳↳ [`User`](User.md)
 
 ## Indexable

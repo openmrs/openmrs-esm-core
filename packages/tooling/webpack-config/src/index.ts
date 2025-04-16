@@ -216,7 +216,11 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
               cssLoader,
               {
                 loader: require.resolve('sass-loader'),
-                options: { sassOptions: { quietDeps: true } },
+                options: {
+                  api: 'modern-compiler',
+                  implementation: require.resolve('sass-embedded'),
+                  sassOptions: { quietDeps: true },
+                },
               },
             ],
           },
