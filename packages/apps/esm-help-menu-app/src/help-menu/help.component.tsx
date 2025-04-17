@@ -43,6 +43,7 @@ export default function HelpMenu() {
         <Button
           aria-controls="help-menu-popup"
           aria-expanded={helpMenuOpen}
+          aria-label={t('openHelpMenu', 'Open help menu')}
           className={styles.helpMenuButton}
           kind="ghost"
           onClick={toggleHelpMenu}

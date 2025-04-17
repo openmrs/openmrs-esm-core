@@ -10,20 +10,27 @@
 .chevronImplementerToolsButton {
   position: fixed;
   bottom: 0;
-  left: calc(50vw - layout.$spacing-05);
-  z-index: 9999;
+  left: calc(50vw - layout.$spacing-07 / 2);
 
-  div {
+  .implementerToolsButton {
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+
     background-color: $ui-02;
     width: layout.$spacing-07;
+    height: layout.$spacing-06;
     display: flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
-    transition: all 0.1s ease-in-out;
+    border-radius: layout.$spacing-01;
+    transition: all 0.3s ease-in-out;
   }
 
-  div:hover {
-    padding: layout.$spacing-03 0;
+  .implementerToolsButton:hover {
+    transform: translateY(-3px);
   }
 }
 
