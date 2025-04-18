@@ -23,6 +23,7 @@
   "modulesWithMissingDependenciesWarning": "Alcuni moduli hanno dipendenze backend non risolte",
   "requiredVersion": "Versione richiesta",
   "resetToDefaultValueButtonText": "Ripristina ai valori predefiniti",
+  "toggleImplementerTools": "Toggle Implementer Tools",
   "uiEditor": "Editor UI",
   "unknownVersion": "sconosciuto",
   "updateConfig": "Aggiorna configurazione",
