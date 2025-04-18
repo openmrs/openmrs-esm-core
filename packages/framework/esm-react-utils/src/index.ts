@@ -32,6 +32,7 @@ export * from './useFhirPagination';
 export * from './useLayoutType';
 export * from './useLocations';
 export * from './useOnClickOutside';
+export * from './useOnVisible';
 export * from './useOpenmrsSWR';
 export * from './usePagination';
 export * from './usePatient';
