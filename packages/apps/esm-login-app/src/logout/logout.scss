@@ -1,8 +1,9 @@
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 button.logout {
   color: $field-01 !important;
-  font-size: 1rem;
+  font-size: layout.$spacing-05;
   width: 16rem;
 
   &:hover {

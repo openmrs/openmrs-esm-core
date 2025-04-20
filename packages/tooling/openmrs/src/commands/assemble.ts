@@ -1,7 +1,7 @@
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import { existsSync } from 'fs';
-import { resolve, dirname, basename } from 'path';
-import { Readable } from 'stream';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import { resolve, dirname, basename } from 'node:path';
+import { Readable } from 'node:stream';
 import { prompt, type Question } from 'inquirer';
 import rimraf from 'rimraf';
 import axios from 'axios';

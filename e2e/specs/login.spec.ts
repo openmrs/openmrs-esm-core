@@ -19,7 +19,7 @@ test('Login as Admin user', async ({ page }) => {
   });
 
   await test.step('And I enter my password', async () => {
-    await page.getByLabel(/password/i).fill(`${process.env.E2E_USER_ADMIN_PASSWORD}`);
+    await page.getByLabel(/^password$/i).fill(`${process.env.E2E_USER_ADMIN_PASSWORD}`);
   });
 
   await test.step('And I click the `Log in` button', async () => {

@@ -1,3 +1,4 @@
+import { Diagnosis } from '@openmrs/esm-api';
 import React from 'react';
 
 /* Please keep these stubs in alphabetical order for readability */
@@ -102,6 +103,8 @@ export const MaybePictogram = ({ pictogram }) => <span>{pictogram}</span>;
 
 export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
 
+export const OpenmrsDatePicker = () => <span>OpenmrsDatePicker</span>;
+
 export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   const locations = [
     {
@@ -130,3 +133,12 @@ export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
     </div>
   );
 });
+
+export const DiagnosisTags = jest.fn(({ diagnoses }) => (
+  <>
+    {diagnoses.map((d) => (
+      <span key={d.uuid}>{d.display}</span>
+    ))}
+  </>
+));
+export const useLeftNavStore = jest.fn();

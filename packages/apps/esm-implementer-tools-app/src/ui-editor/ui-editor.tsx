@@ -189,7 +189,6 @@ export function ExitButton({ t }: ExitButtonProps) {
       renderIcon={(props) => <CloseIcon {...props} size={16} />}
       size="sm"
       tooltipPosition="left"
-      wrapperClasses={styles.popover}
     />
   );
 }

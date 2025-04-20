@@ -1,6 +1,6 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { logInfo, logWarn } from '../utils';
 
 /* eslint-disable no-console */

@@ -9,6 +9,7 @@
 - [Brand color #1](StyleguideConfigObject.md#brand color #1)
 - [Brand color #2](StyleguideConfigObject.md#brand color #2)
 - [Brand color #3](StyleguideConfigObject.md#brand color #3)
+- [diagnosisTags](StyleguideConfigObject.md#diagnosistags)
 - [excludePatientIdentifierCodeTypes](StyleguideConfigObject.md#excludepatientidentifiercodetypes)
 - [implementationName](StyleguideConfigObject.md#implementationname)
 - [patientPhotoConceptUuid](StyleguideConfigObject.md#patientphotoconceptuuid)
@@ -44,6 +45,23 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/config-schema.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L6)
+
+___
+
+### diagnosisTags
+
+• **diagnosisTags**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `primaryColor` | ``"red"`` \| ``"magenta"`` \| ``"purple"`` \| ``"blue"`` \| ``"teal"`` \| ``"cyan"`` \| ``"gray"`` \| ``"orange"`` \| ``"green"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
+| `secondaryColor` | ``"red"`` \| ``"magenta"`` \| ``"purple"`` \| ``"blue"`` \| ``"teal"`` \| ``"cyan"`` \| ``"gray"`` \| ``"orange"`` \| ``"green"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/config-schema.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L18)
 
 ___
 

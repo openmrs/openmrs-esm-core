@@ -1,6 +1,6 @@
 import { copyFileSync, existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { checkImportmapJson, checkRoutesJson, getImportMap, getRoutes, loadWebpackConfig, logInfo } from '../utils';
-import { basename, join, parse, resolve } from 'path';
+import { basename, join, parse, resolve } from 'node:path';
 import type { webpack } from 'webpack';
 
 type WebpackExport = typeof webpack;

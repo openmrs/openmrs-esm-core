@@ -1,6 +1,5 @@
-@use '@carbon/styles/scss/spacing';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .errorIcon {
   color: $danger;
@@ -13,5 +12,5 @@
 .cellContainer {
   display: flex;
   align-items: center;
-  gap: spacing.$spacing-02;
+  gap: layout.$spacing-02;
 }

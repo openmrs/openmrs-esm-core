@@ -1,12 +1,12 @@
-@use '@carbon/styles/scss/spacing';
+@use '@carbon/layout';
 
 .omrs-snackbars-container {
   z-index: 1000;
   position: fixed;
   width: 20rem;
-  bottom: 1rem;
-  left: 1rem;
-  gap: 0.5rem;
+  bottom: layout.$spacing-05;
+  left: layout.$spacing-05;
+  gap: layout.$spacing-03;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -7,10 +7,6 @@ export function openmrsFetch() {
   return new Promise(() => {});
 }
 
-export function useOnClickOutside() {
-  return React.useRef();
-}
-
 export function getCurrentUser() {
   return of({ authenticated: false });
 }

@@ -9,7 +9,6 @@ import styles from './patient-banner-actions-menu.module.scss';
 export interface PatientBannerActionsMenuProps {
   patient: fhir.Patient;
   patientUuid: string;
-  isDeceased: boolean;
   actionsSlotName: string;
   /**
    * Parts of the actions slot extension state that don't really make sense go in this object,
@@ -22,7 +21,6 @@ export function PatientBannerActionsMenu({
   patient,
   patientUuid,
   actionsSlotName,
-  isDeceased,
   additionalActionsSlotState,
 }: PatientBannerActionsMenuProps) {
   const { extensions: patientActions } = useExtensionSlot(actionsSlotName);
@@ -36,7 +34,6 @@ export function PatientBannerActionsMenu({
       {patientActions.length > 0 ? (
         <div className={styles.overflowMenuContainer}>
           <CustomOverflowMenu
-            deceased={isDeceased}
             menuTitle={
               <>
                 <span className={styles.actionsButtonText}>{getCoreTranslation('actions', 'Actions')}</span>{' '}

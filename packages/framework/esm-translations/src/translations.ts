@@ -48,6 +48,8 @@ export const coreTranslations = {
   confirm: 'Confirm',
   contactAdministratorIfIssuePersists: 'Contact your system administrator if the problem persists.',
   contactDetails: 'Contact details',
+  delete: 'Delete',
+  edit: 'Edit',
   error: 'Error',
   errorCopy:
     'Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.',

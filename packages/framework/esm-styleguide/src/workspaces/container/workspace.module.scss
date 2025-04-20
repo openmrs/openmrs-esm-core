@@ -1,10 +1,9 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/colors';
-@use '@carbon/styles/scss/type';
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@carbon/colors';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
-$actionPanelOffset: 3rem;
-
+$actionPanelOffset: layout.$spacing-09;
 $narrowWorkspaceWidth: 26.25rem;
 $widerWorkspaceWidth: 32.25rem;
 $extraWideWorkspaceWidth: 48.25rem;
@@ -13,7 +12,7 @@ $extraWideWorkspaceWidth: 48.25rem;
   display: flex;
   background-color: $openmrs-background-grey;
   justify-content: center;
-  min-height: spacing.$spacing-09;
+  min-height: layout.$spacing-09;
 }
 
 .hiddenExtraWorkspace {

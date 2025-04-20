@@ -93,19 +93,16 @@ export const useVisit = jest.fn().mockReturnValue({
 
 export const useVisitTypes = jest.fn(() => []);
 
-export const useAbortController = jest.fn().mockReturnValue(() => {
+export const useAbortController = jest.fn(() => {
   let aborted = false;
-  return jest.fn(
-    () =>
-      ({
-        abort: () => {
-          aborted = true;
-        },
-        signal: {
-          aborted,
-        },
-      }) as AbortController,
-  );
+  return {
+    abort: () => {
+      aborted = true;
+    },
+    signal: {
+      aborted,
+    },
+  } as AbortController;
 });
 
 export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
@@ -114,7 +111,9 @@ export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
 
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
-export const useOnClickOutside = jest.fn();
+export const useOnClickOutside = jest.fn(function useOnClickOutside() {
+  return React.useRef();
+});
 
 export const useBodyScrollLock = jest.fn();
 
@@ -144,3 +143,10 @@ export const useForceUpdate = jest.fn();
 export const usePrimaryIdentifierResource = jest.fn();
 
 export const usePrimaryIdentifierCode = jest.fn();
+
+export const useEmrConfiguration = jest.fn().mockReturnValue({
+  emrConfiguration: undefined,
+  isLoadingEmrConfiguration: false,
+  mutateEmrConfiguration: jest.fn(),
+  errorFetchingEmrConfiguration: undefined,
+});

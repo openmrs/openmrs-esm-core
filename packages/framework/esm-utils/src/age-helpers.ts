@@ -1,8 +1,14 @@
 /** @module @category Utility */
-import dayjs from 'dayjs';
 import { DurationFormat } from '@formatjs/intl-durationformat';
 import { type DurationFormatOptions, type DurationInput } from '@formatjs/intl-durationformat/src/types';
+import { attempt } from 'any-date-parser';
+import dayjs from 'dayjs';
+import objectSupport from 'dayjs/plugin/objectSupport';
+import { omit } from 'lodash-es';
 import { getLocale } from './get-locale';
+
+dayjs.extend(objectSupport);
+
 /**
  * Gets a human readable and locale supported representation of a person's age, given their birthDate,
  * The representation logic follows the guideline here:
@@ -18,8 +24,37 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
     return null;
   }
 
+  const locale = getLocale();
+
   const to = dayjs(currentDate);
-  const from = dayjs(birthDate);
+  let from: dayjs.Dayjs;
+
+  if (typeof birthDate === 'string') {
+    let parsedDate = attempt(birthDate, locale);
+    if (parsedDate.invalid) {
+      console.warn(`Could not interpret '${birthDate}' as a date`);
+      return null;
+    }
+
+    // hack here but any date interprets 2000-01, etc. as yyyy-dd rather than yyyy-mm
+    if (parsedDate.day && !parsedDate.month) {
+      parsedDate = Object.assign({}, omit(parsedDate, 'day'), { month: parsedDate.day });
+    }
+
+    // dayjs' object support uses 0-based months, whereas any-date-parser uses 1-based months
+    if (parsedDate.month) {
+      parsedDate.month -= 1;
+    }
+
+    // in dayjs day is day of week; in any-date-parser, its day of month, so we need to convert them
+    if (parsedDate.day) {
+      parsedDate = Object.assign({}, omit(parsedDate, 'day'), { date: parsedDate.day });
+    }
+
+    from = dayjs(to).set(parsedDate);
+  } else {
+    from = dayjs(birthDate);
+  }
 
   const hourDiff = to.diff(from, 'hours');
   const dayDiff = to.diff(from, 'days');
@@ -28,15 +63,12 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
   const yearDiff = to.diff(from, 'years');
 
   const duration: DurationInput = {};
-
-  const locale = getLocale();
-
   const options: DurationFormatOptions = { style: 'short', localeMatcher: 'lookup' };
 
   if (hourDiff < 2) {
     const minuteDiff = to.diff(from, 'minutes');
     duration['minutes'] = minuteDiff;
-    if (minuteDiff == 0) {
+    if (minuteDiff === 0) {
       options.minutesDisplay = 'always';
     }
   } else if (dayDiff < 2) {

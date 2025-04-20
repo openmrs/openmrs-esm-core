@@ -1,6 +1,7 @@
 import { test } from '../core';
 import { expect } from '@playwright/test';
 import { HomePage } from '../pages';
+import globalSetup from '../core/global-setup';
 
 test('Logout as Admin user', async ({ page }) => {
   const homePage = new HomePage(page);
@@ -22,6 +23,11 @@ test('Logout as Admin user', async ({ page }) => {
   });
 
   await test.step('And I should not see any error messages', async () => {
-    await expect(page.getByText('error')).not.toBeVisible();
+    await expect(page.getByText('error')).toBeHidden();
   });
+});
+
+test.afterEach(async () => {
+  // log in again
+  globalSetup();
 });

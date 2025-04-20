@@ -1,43 +1,36 @@
-@use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/type';
+@use '@carbon/layout';
 @use '@carbon/react/scss/themes';
 @use '@carbon/react/scss/theme';
-@import '~@openmrs/esm-styleguide/src/vars';
-
-.productiveHeading01 {
-  @include type.type-style('heading-compact-01');
-}
-
-.productiveHeading02 {
-  @include type.type-style('heading-compact-02');
-}
-
-.bodyShort01 {
-  @include type.type-style('body-compact-01');
-}
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .toolStyles {
   background-color: transparent;
 }
 
-// Chevron button - implementer-tools component
 .chevronImplementerToolsButton {
   position: fixed;
   bottom: 0;
-  left: calc(50vw - spacing.$spacing-05);
-  z-index: 9999;
+  left: calc(50vw - layout.$spacing-07 / 2);
 
-  div {
+  .implementerToolsButton {
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+
     background-color: $ui-02;
-    width: spacing.$spacing-07;
+    width: layout.$spacing-07;
+    height: layout.$spacing-06;
     display: flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
-    transition: all 0.1s ease-in-out;
+    border-radius: layout.$spacing-01;
+    transition: all 0.3s ease-in-out;
   }
 
-  div:hover {
-    padding: spacing.$spacing-03 0;
+  .implementerToolsButton:hover {
+    transform: translateY(-3px);
   }
 }
 

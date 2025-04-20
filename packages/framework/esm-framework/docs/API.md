@@ -33,6 +33,7 @@
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
 - [useAttachments](API.md#useattachments)
+- [useEmrConfiguration](API.md#useemrconfiguration)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [usePrimaryIdentifierCode](API.md#useprimaryidentifiercode)
@@ -81,6 +82,7 @@
 - [convertToLocaleCalendar](API.md#converttolocalecalendar)
 - [formatDate](API.md#formatdate)
 - [formatDatetime](API.md#formatdatetime)
+- [formatPartialDate](API.md#formatpartialdate)
 - [formatTime](API.md#formattime)
 - [getDefaultCalendar](API.md#getdefaultcalendar)
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
@@ -229,6 +231,7 @@
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useFhirPagination](API.md#usefhirpagination)
 - [useLayoutType](API.md#uselayouttype)
+- [useLeftNavStore](API.md#useleftnavstore)
 - [useOnClickOutside](API.md#useonclickoutside)
 - [useOpenmrsFetchAll](API.md#useopenmrsfetchall)
 - [useOpenmrsInfinite](API.md#useopenmrsinfinite)
@@ -377,7 +380,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L27)
+[packages/framework/esm-utils/src/dates/date-util.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L25)
 
 ___
 
@@ -387,7 +390,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L101)
+[packages/framework/esm-utils/src/dates/date-util.ts:168](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L168)
 
 ___
 
@@ -411,7 +414,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L103)
+[packages/framework/esm-utils/src/dates/date-util.ts:170](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L170)
 
 ___
 
@@ -541,7 +544,7 @@ A type for any of the acceptable date formats
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L79)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L93)
 
 ___
 
@@ -718,7 +721,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L16)
+[packages/framework/esm-api/src/types/visit-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L18)
 
 ___
 
@@ -1456,6 +1459,20 @@ Note this is an alias for ListCheckedIcon
 
 ___
 
+### DiagnosisTags
+
+• `Const` **DiagnosisTags**: `React.FC`<`DiagnosisTagsProps`\>
+
+This component takes a list of diagnoses and displays them as
+Carbon tags, with colors configured base on whether the diagnoses are primary
+or secondary.
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L16)
+
+___
+
 ### DocumentAttachmentIcon
 
 • `Const` **DocumentAttachmentIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
@@ -1874,7 +1891,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:430](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L430)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:598](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L598)
 
 ___
 
@@ -2348,9 +2365,15 @@ ___
 
 • `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
 
+This component renders the left nav in desktop mode. It's also used to render the same
+nav when the hamburger menu is clicked on in tablet mode. See side-menu-panel.component.tsx
+
+Use of this component by anything other than <SideMenuPanel> (where isChildOfHeader == false)
+is deprecated; it simply renders nothing.
+
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L53)
 
 ___
 
@@ -3124,6 +3147,35 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useAttachments.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L6)
+
+___
+
+### useEmrConfiguration
+
+▸ **useEmrConfiguration**(): `Object`
+
+React hook for fetching and managing OpenMRS EMR configuration
+
+#### Returns
+
+`Object`
+
+Object containing:
+  - emrConfiguration: EmrApiConfigurationResponse | undefined - The EMR configuration data
+  - isLoadingEmrConfiguration: boolean - Loading state indicator
+  - mutateEmrConfiguration: Function - SWR's mutate function for manual revalidation
+  - errorFetchingEmrConfiguration: Error | undefined - Error object if request fails
+
+| Name | Type |
+| :------ | :------ |
+| `emrConfiguration` | `undefined` \| `EmrApiConfigurationResponse` |
+| `errorFetchingEmrConfiguration` | `undefined` \| `Error` |
+| `isLoadingEmrConfiguration` | `boolean` |
+| `mutateEmrConfiguration` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<`EmrApiConfigurationResponse`\>\> |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L158)
 
 ___
 
@@ -3986,7 +4038,7 @@ CalendarDate
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:350](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L350)
+[packages/framework/esm-utils/src/dates/date-util.ts:407](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L407)
 
 ___
 
@@ -4025,7 +4077,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:239](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L239)
+[packages/framework/esm-utils/src/dates/date-util.ts:296](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L296)
 
 ___
 
@@ -4054,7 +4106,46 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:342](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L342)
+[packages/framework/esm-utils/src/dates/date-util.ts:399](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L399)
+
+___
+
+### formatPartialDate
+
+▸ **formatPartialDate**(`dateString`, `options?`): ``null`` \| `string`
+
+Formats the string representing a date, including partial representations of dates, according to the current
+locale and the given options.
+
+Default options:
+ - mode: "standard",
+ - time: "for today",
+ - day: true,
+ - month: true,
+ - year: true
+ - noToday: false
+
+If the date is today then "Today" is produced (in the locale language).
+This behavior can be disabled with `noToday: true`.
+
+When time is included, it is appended with a comma and a space. This
+agrees with the output of `Date.prototype.toLocaleString` for *most*
+locales.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dateString` | `string` |
+| `options` | `Partial`<[`FormatDateOptions`](API.md#formatdateoptions)\> |
+
+#### Returns
+
+``null`` \| `string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/dates/date-util.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L235)
 
 ___
 
@@ -4077,13 +4168,13 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:326](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L326)
+[packages/framework/esm-utils/src/dates/date-util.ts:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L383)
 
 ___
 
 ### getDefaultCalendar
 
-▸ **getDefaultCalendar**(`locale`): `undefined` \| `string`
+▸ **getDefaultCalendar**(`locale`): `undefined` \| `CalendarIdentifier`
 
 Retrieves the default calendar for the specified locale if any.
 
@@ -4095,11 +4186,11 @@ Retrieves the default calendar for the specified locale if any.
 
 #### Returns
 
-`undefined` \| `string`
+`undefined` \| `CalendarIdentifier`
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L213)
+[packages/framework/esm-utils/src/dates/date-util.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L162)
 
 ___
 
@@ -4122,7 +4213,7 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L35)
+[packages/framework/esm-utils/src/dates/date-util.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L33)
 
 ___
 
@@ -4142,7 +4233,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L64)
+[packages/framework/esm-utils/src/dates/date-util.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L62)
 
 ___
 
@@ -4165,7 +4256,7 @@ Uses `dayjs(dateString)`.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L97)
+[packages/framework/esm-utils/src/dates/date-util.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L95)
 
 ___
 
@@ -4185,7 +4276,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `locale` | `string` | the locale to register this calendar for |
-| `calendar` | `string` | the calendar to use for this registration |
+| `calendar` | `CalendarIdentifier` | the calendar to use for this registration |
 
 #### Returns
 
@@ -4193,7 +4284,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:204](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L204)
+[packages/framework/esm-utils/src/dates/date-util.ts:153](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L153)
 
 ___
 
@@ -4216,7 +4307,7 @@ Otherwise returns null.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L72)
+[packages/framework/esm-utils/src/dates/date-util.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L70)
 
 ___
 
@@ -4239,7 +4330,7 @@ Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/dates/date-util.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L83)
+[packages/framework/esm-utils/src/dates/date-util.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L81)
 
 ___
 
@@ -4851,7 +4942,7 @@ export function MyComponent() {
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFeatureFlag.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFeatureFlag.ts#L19)
+[packages/framework/esm-react-utils/src/useFeatureFlag.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFeatureFlag.ts#L18)
 
 ___
 
@@ -6897,7 +6988,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L13)
+[packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L12)
 
 ___
 
@@ -6917,7 +7008,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L21)
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L20)
 
 ___
 
@@ -7071,7 +7162,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `Object` |
+| `__namedParameters` | `SetLeftNavParams` |
 
 #### Returns
 
@@ -7079,7 +7170,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L18)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
 
 ___
 
@@ -7138,7 +7229,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L213)
+[packages/framework/esm-styleguide/src/modals/index.tsx:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L201)
 
 ___
 
@@ -7328,7 +7419,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L22)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L35)
 
 ___
 
@@ -7423,6 +7514,20 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
+
+___
+
+### useLeftNavStore
+
+▸ **useLeftNavStore**(): `LeftNavStore`
+
+#### Returns
+
+`LeftNavStore`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L41)
 
 ___
 
@@ -7688,8 +7793,8 @@ https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://system
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `birthDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | The birthDate. If birthDate is null, returns null. |
-| `currentDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | Optional. If provided, calculates the age of the person at the provided currentDate (instead of now). |
+| `birthDate` | `ConfigType` | The birthDate. If birthDate is null, returns null. |
+| `currentDate` | `ConfigType` | Optional. If provided, calculates the age of the person at the provided currentDate (instead of now). |
 
 #### Returns
 
@@ -7699,7 +7804,7 @@ A human-readable string version of the age.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L16)
+[packages/framework/esm-utils/src/age-helpers.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L22)
 
 ___
 
