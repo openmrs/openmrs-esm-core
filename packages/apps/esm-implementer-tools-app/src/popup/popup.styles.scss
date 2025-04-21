@@ -83,22 +83,7 @@
 }
 
 .toggleButton {
-  margin-right: 8px;
-
   svg {
     fill: theme.$icon-primary;
-  }
-
-  &:hover::before {
-    content: attr(label);
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: theme.$background;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    white-space: nowrap;
   }
 }

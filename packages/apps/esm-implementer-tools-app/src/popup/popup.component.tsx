@@ -39,8 +39,8 @@ export default function Popup({
   };
 
   const tabContent = useMemo(() => {
-    if (activeTab == 0) {
-      return <Configuration />;
+    if (activeTab === 0) {
+      return <Configuration isExpanded={isExpanded} />;
     } else if (activeTab === 1) {
       return <FrontendModules frontendModules={frontendModules} />;
     } else if (activeTab === 2) {
@@ -48,7 +48,7 @@ export default function Popup({
     } else {
       return <FeatureFlags />;
     }
-  }, [activeTab, backendDependencies, frontendModules]);
+  }, [activeTab, backendDependencies, frontendModules, isExpanded]);
 
   return (
     <div className={`${styles.popup} ${isExpanded ? styles.expanded : ''}`}>
