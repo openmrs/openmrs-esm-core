@@ -23,6 +23,7 @@
   "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
   "requiredVersion": "גרסה נדרשת",
   "resetToDefaultValueButtonText": "איפוס לברירת מחדל",
+  "toggleImplementerTools": "Toggle Implementer Tools",
   "uiEditor": "עורך ממשק משתמש",
   "unknownVersion": "לא ידוע",
   "updateConfig": "Update config",
