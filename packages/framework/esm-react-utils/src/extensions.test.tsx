@@ -115,7 +115,7 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   });
 
   it('Extension Slot receives meta', async () => {
-    registerSimpleExtension('Spanish', 'esm-languages-app', undefined, {
+    registerSimpleExtension('Spanish', 'esm-languages-app', () => <div>Spanish</div>, {
       code: 'es',
     });
     attach('Box', 'Spanish');
