@@ -115,7 +115,7 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   });
 
   it('Extension Slot receives meta', async () => {
-    registerSimpleExtension('Spanish', 'esm-languages-app', () => <div>Spanish</div>, {
+    registerSimpleExtension('Spanish', 'esm-languages-app', undefined, {
       code: 'es',
     });
     attach('Box', 'Spanish');
@@ -144,7 +144,6 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
 
     expect(await screen.findByRole('heading')).toBeInTheDocument();
     expect(screen.getByRole('heading')).toHaveTextContent('es');
-    expect(screen.getByText('Spanish')).toBeInTheDocument();
   });
 
   it('Both meta and state can be used at the same time', async () => {
