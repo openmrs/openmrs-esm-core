@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import isEqual from 'lodash-es/isEqual';
-import unset from 'lodash-es/unset';
-import cloneDeep from 'lodash-es/cloneDeep';
-import styles from './editable-value.styles.scss';
-import { Button } from '@carbon/react';
-import type { ConfigValue, Validator, Type, Config } from '@openmrs/esm-framework/src/internal';
-import { EditIcon, ResetIcon } from '@openmrs/esm-framework';
-import { clearConfigErrors, temporaryConfigStore } from '@openmrs/esm-framework/src/internal';
-import type { CustomValueType } from './value-editor';
-import { ValueEditor } from './value-editor';
-import type { ImplementerToolsStore } from '../../store';
-import { implementerToolsStore } from '../../store';
-import { DisplayValue } from './display-value';
 import { useTranslation } from 'react-i18next';
+import { isEqual, cloneDeep, unset } from 'lodash-es';
+import { Button } from '@carbon/react';
+import { EditIcon, ResetIcon } from '@openmrs/esm-framework';
+import {
+  clearConfigErrors,
+  temporaryConfigStore,
+  type ConfigValue,
+  type Config,
+  type Validator,
+  type Type,
+} from '@openmrs/esm-framework/src/internal';
+import { implementerToolsStore, type ImplementerToolsStore } from '../../store';
+import { DisplayValue } from './display-value';
+import { ValueEditor, type CustomValueType } from './value-editor';
+import styles from './editable-value.styles.scss';
 
 export interface EditableValueProps {
   path: Array<string>;

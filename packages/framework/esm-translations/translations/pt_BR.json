@@ -22,8 +22,10 @@
   "contactDetails": "Detalhes de contato",
   "country": "País",
   "countyDistrict": "Distrito",
+  "delete": "Delete",
   "discard": "Descarte",
   "district": "Distrito",
+  "edit": "Edit",
   "error": "Erro",
   "errorCopy": "Desculpe, houve um problema ao exibir essas informações. Você pode tentar recarregar esta página ou entrar em contato com o administrador do site e informar o código de erro acima.",
   "female": "Feminino",
@@ -55,7 +57,7 @@
   "stateProvince": "Estado",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Desconhecido",
-  "unsavedChangesInWorkspace": "Há alterações não salvas em {{workspaceName}}. Salve-as antes de abrir outro espaço de trabalho.",
+  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "Alterações não salvas",
   "workspaceHeader": "Cabeçalho do espaço de trabalho"
 }

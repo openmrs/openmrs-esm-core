@@ -22,8 +22,10 @@
   "contactDetails": "Contact Details",
   "country": "Country",
   "countyDistrict": "District",
+  "delete": "Delete",
   "discard": "Discard",
   "district": "District",
+  "edit": "Edit",
   "error": "Error",
   "errorCopy": "Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.",
   "female": "Female",
@@ -55,7 +57,7 @@
   "stateProvince": "State",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Unknown",
-  "unsavedChangesInWorkspace": "There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.",
+  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "Unsaved changes",
   "workspaceHeader": "Workspace header"
 }

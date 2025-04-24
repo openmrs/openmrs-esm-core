@@ -7,18 +7,12 @@ export const configSchema = {
       _default: 'basic',
       _description:
         "Selects the login mechanism to use. Choices are 'basic' and 'oauth2'. " +
-        "For 'oauth2' you'll also need to set the 'loginUrl' and 'logoutUrl'.",
+        "For 'oauth2' you'll also need to set the 'loginUrl'",
     },
     loginUrl: {
       _type: Type.String,
       _default: '${openmrsSpaBase}/login',
       _description: 'The URL to use for an OAuth2 login.',
-      _validators: [validators.isUrl],
-    },
-    logoutUrl: {
-      _type: Type.String,
-      _default: '${openmrsSpaBase}/logout',
-      _description: 'The URL to use for an OAuth2 logout.',
       _validators: [validators.isUrl],
     },
   },

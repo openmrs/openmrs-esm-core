@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from 'react';
+import { capitalize } from 'lodash-es';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   DataTable,
@@ -18,24 +20,22 @@ import {
   TableSelectRow,
 } from '@carbon/react';
 import { Renew } from '@carbon/react/icons';
-import type { DynamicOfflineDataSyncState } from '@openmrs/esm-framework';
 import {
   age,
-  isDesktop,
-  showModal,
   deleteSynchronizationItem,
-  getFullSynchronizationItems,
-  removeDynamicOfflineData,
-  syncDynamicOfflineData,
   getDynamicOfflineDataEntries,
+  getFullSynchronizationItems,
+  isDesktop,
+  removeDynamicOfflineData,
+  showModal,
+  syncDynamicOfflineData,
   useLayoutType,
+  type DynamicOfflineDataSyncState,
 } from '@openmrs/esm-framework';
-import { useTranslation } from 'react-i18next';
-import capitalize from 'lodash-es/capitalize';
+import { useOfflinePatientsWithEntries, useOfflineRegisteredPatients } from '../hooks/offline-patient-data-hooks';
 import EmptyState from './empty-state.component';
 import LastUpdatedTableCell from './last-updated-table-cell.component';
 import PatientNameTableCell from './patient-name-table-cell.component';
-import { useOfflinePatientsWithEntries, useOfflineRegisteredPatients } from '../hooks/offline-patient-data-hooks';
 import styles from './offline-patient-table.scss';
 
 export interface OfflinePatientTableProps {

@@ -1,13 +1,17 @@
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../root.scss';
+@use '@carbon/layout';
 
-.panelItemContainer a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.changeLocationButton {
+  width: fit-content;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  padding: layout.$spacing-04 !important; // this gets unset in rtl language without !important
+
+  &:hover {
+    color: white;
+  }
 }
 
-.panelItemContainer div {
-  display: flex;
-  align-items: center;
+.currentLocationText {
+  padding-inline-start: layout.$spacing-03;
 }

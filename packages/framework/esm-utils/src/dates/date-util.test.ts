@@ -1,7 +1,15 @@
-import { toOmrsIsoString, toDateObjectStrict, isOmrsDateStrict } from './omrs-dates';
+import {
+  toOmrsIsoString,
+  toDateObjectStrict,
+  isOmrsDateStrict,
+  formatDate,
+  formatDatetime,
+  formatTime,
+  registerDefaultCalendar,
+  formatPartialDate,
+} from './date-util';
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
-import { formatDate, formatDatetime, formatTime } from '.';
 import type { i18n } from 'i18next';
 
 window.i18next = { language: 'en' } as i18n;
@@ -72,7 +80,19 @@ describe('Openmrs Dates', () => {
     expect(formatDate(testDate, { mode: 'wide' })).toMatch(/09\s—\sдек\.\s—\s2021\sг\./);
   });
 
+  it('formats partial dates', () => {
+    timezoneMock.register('UTC');
+    window.i18next.language = 'en';
+    expect(formatPartialDate('2021')).toEqual('2021');
+    expect(formatPartialDate('2021-04')).toEqual('Apr 2021');
+    expect(formatPartialDate('2021-04-09')).toEqual('09-Apr-2021');
+    expect(formatPartialDate('2021-01-01')).toEqual('01-Jan-2021');
+    expect(formatPartialDate('2021-12')).toEqual('Dec 2021');
+  });
+
   it('formats dates with respect to the active calendar', () => {
+    registerDefaultCalendar('am', 'ethiopic');
+
     timezoneMock.register('UTC');
     const testDate = new Date('2021-12-09T13:15:33');
     window.i18next.language = 'am';

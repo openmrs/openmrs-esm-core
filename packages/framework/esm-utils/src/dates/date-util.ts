@@ -2,26 +2,25 @@
  * @module
  * @category Date and Time
  */
-import type { i18n } from 'i18next';
 import {
+  type CalendarDate,
   type CalendarDateTime,
+  type CalendarIdentifier,
   type ZonedDateTime,
   createCalendar,
   toCalendar,
-  type CalendarDate,
 } from '@internationalized/date';
+import { getLocale } from '@openmrs/esm-utils';
+import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
+import objectSupport from 'dayjs/plugin/objectSupport';
+import utc from 'dayjs/plugin/utc';
+import { isNil, omit } from 'lodash-es';
 
-dayjs.extend(utc);
 dayjs.extend(isToday);
-
-declare global {
-  interface Window {
-    i18next: i18n;
-  }
-}
+dayjs.extend(utc);
+dayjs.extend(objectSupport);
 
 export type DateInput = string | number | Date;
 
@@ -90,51 +89,80 @@ export function toOmrsIsoString(date: DateInput, toUTC = false): string {
 }
 
 /**
- * @deprecated use `formatTime`
- * Formats the input as a time string using the format "HH:mm".
- */
-export function toOmrsTimeString24(date: DateInput) {
-  return dayjs(date).format('HH:mm');
-}
-
-/**
- * @deprecated use `formatTime`
- * Formats the input as a time string using the format "HH:mm A".
- */
-export function toOmrsTimeString(date: DateInput) {
-  return dayjs.utc(date).format('HH:mm A');
-}
-
-/**
- * @deprecated use `formatDate(date, "wide")`
- * Formats the input as a date string using the format "DD - MMM - YYYY".
- */
-export function toOmrsDayDateFormat(date: DateInput) {
-  return toOmrsDateFormat(date, 'DD - MMM - YYYY');
-}
-
-/**
- * @deprecated use `formatDate(date, "no year")`
- * Formats the input as a date string using the format "DD-MMM".
- */
-export function toOmrsYearlessDateFormat(date: DateInput) {
-  return toOmrsDateFormat(date, 'DD-MMM');
-}
-
-/**
- * @deprecated use `formatDate(date)`
- * Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
- */
-export function toOmrsDateFormat(date: DateInput, format = 'YYYY-MMM-DD') {
-  return dayjs(date).format(format);
-}
-
-/**
  * Utility function to parse an arbitrary string into a date.
  * Uses `dayjs(dateString)`.
  */
 export function parseDate(dateString: string) {
   return dayjs(dateString).toDate();
+}
+
+/**
+ * Internal cache for per-locale calendars
+ */
+class LocaleCalendars {
+  #registry = new Map<string, CalendarIdentifier>();
+
+  constructor() {}
+
+  register(locale: string, calendar: CalendarIdentifier) {
+    this.#registry.set(locale, calendar);
+  }
+
+  getCalendar(locale: Intl.Locale): CalendarIdentifier | undefined {
+    if (!Boolean(locale)) {
+      return undefined;
+    }
+
+    if (locale.calendar) {
+      return locale.calendar as CalendarIdentifier;
+    }
+
+    if (locale.region) {
+      const key = `${locale.language}-${locale.region}`;
+      if (this.#registry.has(key)) {
+        return this.#registry.get(key);
+      }
+    }
+
+    if (locale.language && this.#registry.has(locale.language)) {
+      return this.#registry.get(locale.language);
+    }
+
+    const defaultCalendar = new Intl.DateTimeFormat(locale.toString()).resolvedOptions().calendar as CalendarIdentifier;
+
+    // cache this result
+    this.#registry.set(`${locale.language}${locale.region ? `-${locale.region}` : ''}`, defaultCalendar);
+
+    return defaultCalendar;
+  }
+}
+
+const registeredLocaleCalendars = new LocaleCalendars();
+
+/**
+ * Provides the name of the calendar to associate, as a default, with the given base locale.
+ *
+ * @example
+ * ```
+ * registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the 'en' locale to Buddhist.
+ * ```
+ *
+ * @param locale the locale to register this calendar for
+ * @param calendar the calendar to use for this registration
+ */
+export function registerDefaultCalendar(locale: string, calendar: CalendarIdentifier) {
+  registeredLocaleCalendars.register(locale, calendar);
+}
+
+/**
+ * Retrieves the default calendar for the specified locale if any.
+ *
+ * @param locale the locale to look-up
+ */
+export function getDefaultCalendar(locale: Intl.Locale | string | undefined) {
+  const locale_ = locale ?? getLocale();
+
+  return registeredLocaleCalendars.getCalendar(locale_ instanceof Intl.Locale ? locale_ : new Intl.Locale(locale_));
 }
 
 export type FormatDateMode = 'standard' | 'wide';
@@ -185,74 +213,64 @@ const defaultOptions: FormatDateOptions = {
 };
 
 /**
- * Internal cache for per-locale calendars
+ * Formats the string representing a date, including partial representations of dates, according to the current
+ * locale and the given options.
+ *
+ * Default options:
+ *  - mode: "standard",
+ *  - time: "for today",
+ *  - day: true,
+ *  - month: true,
+ *  - year: true
+ *  - noToday: false
+ *
+ * If the date is today then "Today" is produced (in the locale language).
+ * This behavior can be disabled with `noToday: true`.
+ *
+ * When time is included, it is appended with a comma and a space. This
+ * agrees with the output of `Date.prototype.toLocaleString` for *most*
+ * locales.
  */
-class LocaleCalendars {
-  #registry = new Map<string, string>();
+// TODO: Shouldn't throw on null input
+export function formatPartialDate(dateString: string, options: Partial<FormatDateOptions> = {}) {
+  const locale = getLocale();
+  let parsed: ReturnType<typeof attempt> & { date?: number } = attempt(dateString, locale);
 
-  constructor() {
-    this.#registry.set('am', 'ethiopic');
+  if (parsed.invalid) {
+    console.warn(`Could not parse invalid date '${dateString}'`);
+    return null;
   }
 
-  register(locale: string, calendar: string) {
-    this.#registry.set(locale, calendar);
+  // hack here but any date interprets 2000-01, etc. as yyyy-dd rather than yyyy-mm
+  if (!isNil(parsed.day) && isNil(parsed.month)) {
+    parsed = Object.assign({}, omit(parsed, 'day'), { month: parsed.day });
   }
 
-  getCalendar(locale: Intl.Locale) {
-    if (!Boolean(locale)) {
-      return undefined;
-    }
-
-    if (locale.calendar) {
-      return locale.calendar;
-    }
-
-    if (locale.region) {
-      const key = `${locale.language}-${locale.region}`;
-      if (this.#registry.has(key)) {
-        return this.#registry.get(key);
-      }
-    }
-
-    if (locale.language && this.#registry.has(locale.language)) {
-      return this.#registry.get(locale.language);
-    }
-
-    const defaultCalendar = new Intl.DateTimeFormat(locale.toString()).resolvedOptions().calendar;
-
-    // cache this result
-    this.#registry.set(`${locale.language}${locale.region ? `-${locale.region}` : ''}`, defaultCalendar);
-
-    return defaultCalendar;
+  // dayjs' object support uses 0-based months, whereas any-date-parser uses 1-based months
+  if (parsed.month) {
+    parsed.month -= 1;
   }
-}
 
-const registeredLocaleCalendars = new LocaleCalendars();
+  // in dayjs day is day of week; in any-date-parser, its day of month, so we need to convert them
+  if (parsed.day) {
+    parsed = Object.assign({}, omit(parsed, 'day'), { date: parsed.day });
+  }
 
-/**
- * Provides the name of the calendar to associate, as a default, with the given base locale.
- *
- * @example
- * ```
- * registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the 'en' locale to Buddhist.
- * ```
- *
- * @param locale the locale to register this calendar for
- * @param calendar the calendar to use for this registration
- */
-export function registerDefaultCalendar(locale: string, calendar: string) {
-  registeredLocaleCalendars.register(locale, calendar);
-}
+  const date = dayjs().set(parsed).toDate();
 
-/**
- * Retrieves the default calendar for the specified locale if any.
- *
- * @param locale the locale to look-up
- */
-export function getDefaultCalendar(locale: Intl.Locale | string | undefined) {
-  const locale_ = locale ?? getLocale();
+  if (isNil(parsed.year)) {
+    options.year = false;
+  }
 
-  return registeredLocaleCalendars.getCalendar(locale_ instanceof Intl.Locale ? locale_ : new Intl.Locale(locale_));
+  if (isNil(parsed.month)) {
+    options.month = false;
+  }
+
+  if (isNil(parsed.date)) {
+    options.day = false;
+  }
+
+  return formatDate(date, options);
 }
 
 /**
@@ -380,21 +398,6 @@ export function formatTime(date: Date) {
  */
 export function formatDatetime(date: Date, options?: Partial<Omit<FormatDateOptions, 'time'>>) {
   return formatDate(date, { ...options, time: true });
-}
-
-/**
- * Returns the current locale of the application.
- * @returns string
- */
-export function getLocale() {
-  let language = window.i18next.language;
-  language = language.replace('_', '-'); // just in case
-  // hack for `ht` until https://unicode-org.atlassian.net/browse/CLDR-14956 is fixed
-  if (language === 'ht') {
-    language = 'fr-HT';
-  }
-
-  return language;
 }
 
 /**

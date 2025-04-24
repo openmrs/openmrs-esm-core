@@ -263,7 +263,16 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       optimizationConfig,
     ),
     plugins: [
-      new ForkTsCheckerWebpackPlugin(),
+      new ForkTsCheckerWebpackPlugin({
+        issue: {
+          exclude: [
+            {
+              severity: 'error',
+              code: 'TS2786',
+            },
+          ],
+        },
+      }),
       new CleanWebpackPlugin(),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? 'server' : 'disabled',

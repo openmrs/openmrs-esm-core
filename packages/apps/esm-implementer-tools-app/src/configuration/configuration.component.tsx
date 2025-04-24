@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Column, FlexGrid, Row, TextInput, Toggle } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
-import cloneDeep from 'lodash-es/cloneDeep';
-import isEmpty from 'lodash-es/isEmpty';
+import { cloneDeep, isEmpty } from 'lodash-es';
 import type { Config } from '@openmrs/esm-framework/src/internal';
 import {
   ChevronDownIcon,
@@ -18,8 +17,7 @@ import {
 } from '@openmrs/esm-framework/src/internal';
 import { ConfigTree } from './interactive-editor/config-tree.component';
 import { Description } from './interactive-editor/description.component';
-import type { ImplementerToolsStore } from '../store';
-import { implementerToolsStore } from '../store';
+import { implementerToolsStore, type ImplementerToolsStore } from '../store';
 import styles from './configuration.styles.scss';
 
 const JsonEditor = React.lazy(() => import('./json-editor/json-editor.component'));

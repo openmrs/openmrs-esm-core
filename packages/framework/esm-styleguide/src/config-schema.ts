@@ -1,5 +1,5 @@
-import { Type, validators } from '@openmrs/esm-config';
-
+import { type ConfigSchema, Type, validators } from '@openmrs/esm-config';
+import { type CarbonTagColor, carbonTagColors } from './utils';
 export interface StyleguideConfigObject {
   'Brand color #1': string;
   'Brand color #2': string;
@@ -12,9 +12,31 @@ export interface StyleguideConfigObject {
   preferredCalendar: {
     [key: string]: string;
   };
+  preferredDateLocale: {
+    [key: string]: string;
+  };
+  diagnosisTags: {
+    primaryColor: CarbonTagColor;
+    secondaryColor: CarbonTagColor;
+  };
 }
 
-export const esmStyleGuideSchema = {
+const diagnosisTagConfigSchema: ConfigSchema = {
+  primaryColor: {
+    _type: Type.String,
+    _description: 'The color for displaying primary diagnoses tags',
+    _default: 'red',
+    _validators: [validators.oneOf(carbonTagColors)],
+  },
+  secondaryColor: {
+    _type: Type.String,
+    _description: 'The color for displaying secondary diagnoses tags',
+    _default: 'blue',
+    _validators: [validators.oneOf(carbonTagColors)],
+  },
+};
+
+export const esmStyleGuideSchema: ConfigSchema = {
   'Brand color #1': {
     _default: '#005d5d',
     _type: Type.String,
@@ -81,4 +103,16 @@ export const esmStyleGuideSchema = {
       ],
     },
   },
+  preferredDateLocale: {
+    _type: Type.Object,
+    _description:
+      "Allows setting the locale used for date formatting for any browser locale. Does not affect time formatting. Keys should be locale codes, and values should be the preferred locale for formatting dates. For example, {'en': 'en-US', 'fr-CA': 'en-CA'}.",
+    _default: {
+      en: 'en-GB',
+    },
+    _elements: {
+      _type: Type.String,
+    },
+  },
+  diagnosisTags: diagnosisTagConfigSchema,
 };

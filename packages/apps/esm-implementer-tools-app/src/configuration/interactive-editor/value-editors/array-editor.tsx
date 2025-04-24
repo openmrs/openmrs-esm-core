@@ -49,7 +49,7 @@ export function ArrayEditor({ element, valueArray, setValue }: ArrayEditorProps)
                 <Button
                   renderIcon={(props) => <TrashCanIcon {...props} size={16} />}
                   size="sm"
-                  kind="secondary"
+                  kind="ghost"
                   iconDescription="Remove"
                   hasIconOnly
                   onClick={() => {

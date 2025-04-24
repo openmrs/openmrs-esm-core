@@ -22,8 +22,10 @@
   "contactDetails": "联系方式",
   "country": "国家",
   "countyDistrict": "区县",
+  "delete": "Delete",
   "discard": "放弃",
   "district": "District",
+  "edit": "Edit",
   "error": "错误",
   "errorCopy": "抱歉，显示此信息时出现问题。您可以尝试重新加载此页面，或联系网站管理员并引用上面的错误代码。",
   "female": "女性",
@@ -55,7 +57,7 @@
   "stateProvince": "省份",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "未知",
-  "unsavedChangesInWorkspace": "{{workspaceName}} 中有未保存的更改。请在打开另一个工作区之前保存它们。",
+  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "Unsaved changes",
   "workspaceHeader": "Workspace header"
 }

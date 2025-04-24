@@ -7,10 +7,9 @@ import styles from './custom-overflow-menu.module.scss';
 interface CustomOverflowMenuProps {
   menuTitle: React.ReactNode;
   children: React.ReactNode;
-  deceased?: boolean;
 }
 
-export function CustomOverflowMenu({ menuTitle, children, deceased }: CustomOverflowMenuProps) {
+export function CustomOverflowMenu({ menuTitle, children }: CustomOverflowMenuProps) {
   const [menuIsOpen, setMenuIsOpen] = React.useState(false);
   const ref = useOnClickOutside<HTMLDivElement>(() => setMenuIsOpen(false), menuIsOpen);
   const isTablet = useLayoutType() === 'tablet';
@@ -24,7 +23,6 @@ export function CustomOverflowMenu({ menuTitle, children, deceased }: CustomOver
           'cds--btn--ghost',
           'cds--overflow-menu__trigger',
           { 'cds--overflow-menu--open': menuIsOpen },
-          { [styles.deceased]: deceased },
           styles.overflowMenuButton,
         )}
         aria-haspopup="true"

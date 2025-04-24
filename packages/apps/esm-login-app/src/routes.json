@@ -47,7 +47,7 @@
     },
     {
       "name": "location-changer",
-      "slot": "user-panel-slot",
+      "slot": "top-nav-info-slot",
       "component": "changeLocationLink",
       "online": true,
       "offline": true,

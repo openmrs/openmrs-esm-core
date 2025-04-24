@@ -1,6 +1,6 @@
 import React, { type ComponentType, type ErrorInfo, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { SWRConfig } from 'swr';
+import { SWRConfig, type SWRConfiguration } from 'swr';
 import type {} from '@openmrs/esm-globals';
 import { openmrsFetch } from '@openmrs/esm-api';
 import { ComponentContext, type ComponentConfig, type ExtensionData } from './ComponentContext';
@@ -31,6 +31,7 @@ export interface ComponentDecoratorOptions {
   featureName: string;
   disableTranslations?: boolean;
   strictMode?: boolean;
+  swrConfig?: Partial<Omit<SWRConfiguration, 'fetcher'>>;
 }
 
 export interface OpenmrsReactComponentProps {
@@ -98,9 +99,10 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
           // TO-DO have a UX designed for when a catastrophic error occurs
           return <div>An error has occurred. Please try reloading the page.</div>;
         } else {
+          const swrConfig = { ...defaultSwrConfig, ...opts.swrConfig };
           const content = (
             <Suspense fallback={null}>
-              <SWRConfig value={defaultSwrConfig}>
+              <SWRConfig value={swrConfig}>
                 <ComponentContext.Provider value={this.state.config}>
                   {opts.disableTranslations ? (
                     <Comp {...this.props} />
@@ -120,7 +122,7 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
               </SWRConfig>
             </Suspense>
           );
-          
+
           if (!opts.strictMode || !React.StrictMode) {
             return content;
           } else {

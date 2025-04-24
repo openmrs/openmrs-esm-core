@@ -12,7 +12,9 @@ const RedirectLogout: React.FC = () => {
   useEffect(() => {
     clearHistory();
     if (!session.authenticated || !isLoginEnabled) {
-      navigate({ to: '${openmrsSpaBase}/login' });
+      if (config.provider.type !== 'oauth2') {
+        navigate({ to: '${openmrsSpaBase}/login' });
+      }
     } else {
       performLogout()
         .then(() => {
@@ -24,9 +26,7 @@ const RedirectLogout: React.FC = () => {
             sessionId: '',
           });
 
-          if (config.provider.type === 'oauth2') {
-            navigate({ to: config.provider.logoutUrl });
-          } else {
+          if (config.provider.type !== 'oauth2') {
             navigate({ to: '${openmrsSpaBase}/login' });
           }
         })

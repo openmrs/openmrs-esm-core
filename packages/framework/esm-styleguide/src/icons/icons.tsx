@@ -228,6 +228,14 @@ export const DownloadIcon = memo(
 
 /**
  */
+export const DrugOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function DrugOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-drug-order" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const EditIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function EditIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-edit" iconProps={props} />;
@@ -377,6 +385,14 @@ export const LocationIcon = memo(
 
 /**
  */
+export const MaterialOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MaterialOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-pict-material-order" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const MaximizeIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function MaximizeIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-maximize" iconProps={props} />;
@@ -474,9 +490,25 @@ export const PrinterIcon = memo(
 
 /**
  */
+export const ProcedureOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ProcedureOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-pict-procedure-order" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const ProgramsIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ProgramsIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-programs" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const ReferralOrderIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ReferralOrderIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-pict-referral-order" iconProps={props} />;
   }),
 );
 
@@ -639,6 +671,9 @@ export const UserFollowIcon = memo(
 );
 
 /**
+ * UserXray Icon
+ *
+ * `UserXrayIcon` is also used for imaging orders
  */
 export const UserXrayIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function UserXrayIcon(props, ref) {

@@ -23,6 +23,7 @@
   "modulesWithMissingDependenciesWarning": "部分模块存在未解决的backend依赖关系",
   "requiredVersion": "所需版本",
   "resetToDefaultValueButtonText": "恢复为默认值",
+  "toggleImplementerTools": "Toggle Implementer Tools",
   "uiEditor": "UI编辑器",
   "unknownVersion": "未知",
   "updateConfig": "更新配置",

@@ -2,8 +2,10 @@
   "AppMenuTooltip": "Applications",
   "cancel": "Annuler",
   "change": "Modifier",
-  "changeLanguage": "Modifier la langue",
-  "changingLanguage": "Modification de la langue",
+  "changeLanguage": "Changer de langue",
+  "changingLanguage": "Changement de langue",
   "notifications": "Notifications",
-  "userMenuTooltip": "Mon Compte"
+  "userMenu": "User menu",
+  "userMenuOptions": "User menu options",
+  "userMenuTooltip": "Mon compte"
 }

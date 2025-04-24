@@ -29,7 +29,7 @@ const workspaceTranslations = {
   openAnyway: 'Open anyway',
   unsavedChangesInOpenedWorkspace: `You may have unsaved changes in the opened workspace. Do you want to discard these changes?`,
   unsavedChangesInWorkspace:
-    'There may be unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
+    'There may be unsaved changes in "{{workspaceName}}". Please save them before opening another workspace.',
   unsavedChangesTitleText: 'Unsaved changes',
   workspaceHeader: 'Workspace header',
 };
@@ -48,6 +48,8 @@ export const coreTranslations = {
   confirm: 'Confirm',
   contactAdministratorIfIssuePersists: 'Contact your system administrator if the problem persists.',
   contactDetails: 'Contact details',
+  delete: 'Delete',
+  edit: 'Edit',
   error: 'Error',
   errorCopy:
     'Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.',

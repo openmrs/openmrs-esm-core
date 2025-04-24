@@ -1,7 +1,7 @@
 import React from 'react';
+import { pickBy } from 'lodash-es';
 import { ExtensionSlotsConfigTree } from './extension-slots-config-tree';
 import { ConfigSubtree } from './config-subtree.component';
-import pickBy from 'lodash-es/pickBy';
 import { TreeContainer } from './layout/tree-container.component';
 
 export interface ConfigTreeForModuleProps {

@@ -1,4 +1,5 @@
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .offlineBanner {
   position: fixed;
@@ -15,7 +16,7 @@
 }
 
 .offlineIconContainer {
-  width: 3rem;
+  width: layout.$spacing-09;
   display: flex;
   justify-content: center;
 }
@@ -29,10 +30,10 @@
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  padding-right: 1rem;
+  padding-right: layout.$spacing-05;
 }
 
 .lastUpdatedNote {
   color: $color-gray-30;
-  font-size: 0.75rem;
+  font-size: layout.$spacing-04;
 }

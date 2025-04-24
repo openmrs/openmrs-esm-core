@@ -1,4 +1,6 @@
+import { type Encounter } from './encounter-resource';
 import type { OpenmrsResource } from './openmrs-resource';
+import { type Patient } from './patient-resource';
 
 export interface NewVisitPayload {
   uuid?: string;
@@ -18,8 +20,8 @@ export type UpdateVisitPayload = Partial<NewVisitPayload> & {};
 export interface Visit {
   uuid: string;
   display?: string;
-  encounters: Array<OpenmrsResource>;
-  patient?: OpenmrsResource;
+  encounters?: Array<Encounter>;
+  patient?: Patient;
   visitType: VisitType;
   location?: Location;
   startDatetime: string;

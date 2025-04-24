@@ -62,7 +62,7 @@ jobs:
       - name: 🛠️ Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: 💾 Cache dependencies
         id: cache-dependencies
@@ -132,7 +132,7 @@ jobs:
       - name: 🛠️ Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: 💾 Cache dependencies
         id: cache-dependencies
@@ -144,7 +144,6 @@ jobs:
       - name: 📦 Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn install --immutable
-        working-directory: e2e_repo
 
       - name: 🚀 Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
@@ -206,3 +205,18 @@ jobs:
           name: report-${{ matrix.repo }}
           path: e2e_repo/playwright-report/
           retention-days: 30
+
+      - name: 📝 Capture Server Logs
+        if: always()
+        uses: jwalton/gh-docker-logs@v2
+        with:
+          dest: "./logs"
+
+      - name: 📤 Upload Logs as Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-logs-${{ matrix.repo }}
+          path: "./logs"
+          retention-days: 2
+          overwrite: true

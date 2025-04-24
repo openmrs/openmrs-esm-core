@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-help-menu-app",
-  "version": "6.0.4",
+  "version": "6.2.0",
   "license": "MPL-2.0",
   "description": " A microfrontend that provides a help menu for O3",
   "browser": "dist/openmrs-esm-help-menu-app.js",
@@ -53,7 +53,7 @@
     "webpack": "^5.88.0"
   },
   "dependencies": {
-    "@carbon/react": "1.37.0",
+    "@carbon/react": "^1.76.0",
     "fuzzy": "^0.1.3"
   }
 }

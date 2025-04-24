@@ -22,8 +22,10 @@
   "contactDetails": "Chi tiết liên lạc",
   "country": "Quốc gia",
   "countyDistrict": "Quận/Huyện",
+  "delete": "Delete",
   "discard": "Hủy bỏ",
   "district": "District",
+  "edit": "Edit",
   "error": "Lỗi",
   "errorCopy": "Xin lỗi, đã xảy ra sự cố khi hiển thị thông tin này. Bạn có thể thử tải lại trang này hoặc liên hệ với quản trị viên trang web và trích dẫn mã lỗi ở trên.",
   "female": "Nữ giới",
@@ -55,7 +57,7 @@
   "stateProvince": "State",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Unknown",
-  "unsavedChangesInWorkspace": "Có những thay đổi chưa được lưu trong {{workspaceName}}. Vui lòng lưu chúng trước khi mở không gian làm việc khác.",
+  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "Những thay đổi chưa lưu",
   "workspaceHeader": "Tiêu đề không gian làm việc"
 }

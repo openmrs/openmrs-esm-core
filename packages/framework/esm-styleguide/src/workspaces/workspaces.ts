@@ -617,7 +617,7 @@ export function showWorkspacePrompts(
         title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
         body: getCoreTranslation(
           'unsavedChangesInWorkspace',
-          'There may be unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
+          'There may be unsaved changes in "{{workspaceName}}". Please save them before opening another workspace.',
           { workspaceName: workspaceTitle },
         ),
         onConfirm: () => {

@@ -1,9 +1,9 @@
-@use '@carbon/styles/scss/spacing';
-@import '../root.scss';
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .notificationLoadingContainer {
   display: flex;
-  gap: spacing.$spacing-03;
+  gap: layout.$spacing-03;
   justify-content: space-between;
   align-items: center;
 }

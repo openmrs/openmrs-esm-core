@@ -182,7 +182,11 @@ const Relationships: React.FC<{ patientId: string }> = ({ patientId }) => {
 
 export function PatientBannerContactDetails({ patientId, deceased }: ContactDetailsProps) {
   return (
-    <div className={classNames(deceased && styles.deceased, styles.contactDetails)}>
+    <div
+      className={classNames(styles.contactDetails, {
+        [styles.deceased]: deceased,
+      })}
+    >
       <div className={styles.row}>
         <div className={styles.col}>
           <Address patientId={patientId} />
