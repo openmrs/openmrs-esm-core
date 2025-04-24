@@ -170,17 +170,17 @@ export async function runDevelop(args: DevelopArgs) {
     logInfo(`SPA available at ${pageUrl}`);
 
     if (open) {
-      const open = require('open');
-
-      setTimeout(
-        () =>
-          open(pageUrl, { wait: false }).catch(() => {
-            logWarn(
-              `Unable to open "${pageUrl}" in browser. If you are running in a headless environment, please do not use the --open flag.`,
-            );
-          }),
-        2000,
-      );
+      import('open').then(({ default: open }) => {
+        setTimeout(
+          () =>
+            open(pageUrl, { wait: false }).catch(() => {
+              logWarn(
+                `Unable to open "${pageUrl}" in browser. If you are running in a headless environment, please do not use the --open flag.`,
+              );
+            }),
+          2000,
+        );
+      });
     }
   });
 
