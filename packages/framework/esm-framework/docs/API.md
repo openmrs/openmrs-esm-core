@@ -7561,7 +7561,7 @@ ___
 
 ### useOnVisible
 
-▸ **useOnVisible**(`callBack`): (`node`: ``null`` \| `Element`) => `void`
+▸ **useOnVisible**(`callBack`): `MutableRefObject`<`HTMLElement`\>
 
 Returns a ref that can be used on a HTML component to trigger
 an action when the component is scrolled into visible view,
@@ -7575,21 +7575,9 @@ This is particularly useful for infinite scrolling UIs to load data on demand.
 
 #### Returns
 
-`fn`
+`MutableRefObject`<`HTMLElement`\>
 
 a ref that can be passed to an HTML Element
-
-▸ (`node`): `void`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `node` | ``null`` \| `Element` |
-
-##### Returns
-
-`void`
 
 #### Defined in
 
