@@ -23,6 +23,7 @@
   "modulesWithMissingDependenciesWarning": "بعض الوحدات لديها اعتمادات خلفية غير محلولة",
   "requiredVersion": "الإصدار المطلوب",
   "resetToDefaultValueButtonText": "إعادة تعيين إلى القيمة الافتراضية",
+  "toggleImplementerTools": "Toggle Implementer Tools",
   "uiEditor": "محرر الواجهة",
   "unknownVersion": "غير معروف",
   "updateConfig": "Update config",
