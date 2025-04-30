@@ -5,7 +5,7 @@ import { basename, resolve } from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
 import { exec } from 'child_process';
 import { logFail, logInfo, logWarn } from './logger';
-import { startWebpack } from './webpack';
+import { startDevServer } from './devserver';
 import { getMainBundle, getAppRoutes } from './dependencies';
 
 async function readImportmap(path: string, backend?: string, spaPath?: string) {
@@ -146,7 +146,7 @@ async function matchAny(baseDir: string, patterns: Array<string>) {
 
 const defaultConfigPath = resolve(__dirname, '..', '..', 'default-webpack-config.js');
 
-function runProjectWebpack(
+function runProjectDevServer(
   configPath: string,
   port: number,
   project: any,
@@ -158,7 +158,7 @@ function runProjectWebpack(
   const bundle = getMainBundle(project);
   const host = `http://localhost:${port}`;
 
-  startWebpack(configPath, port, sourceDirectory, useRspack);
+  startDevServer(configPath, port, sourceDirectory, useRspack);
   importMap[project.name] = `${host}/${bundle.name}`;
   routes[project.name] = getAppRoutes(sourceDirectory, project);
 }
@@ -166,6 +166,7 @@ function runProjectWebpack(
 export async function runProject(
   basePort: number,
   sourceDirectoryPatterns: Array<string>,
+  useRspack?: boolean,
 ): Promise<{
   importMap: Record<string, string>;
   routes: Record<string, unknown>;
@@ -186,8 +187,8 @@ export async function runProject(
 
     const configPath = resolve(sourceDirectory, 'webpack.config.js');
     const rspackConfigPath = resolve(sourceDirectory, 'rspack.config.js');
-    const hasConfig = existsSync(configPath);
-    const hasRspackConfig = existsSync(rspackConfigPath);
+    const hasConfig = typeof useRspack !== 'undefined' ? !useRspack : existsSync(configPath);
+    const hasRspackConfig = typeof useRspack !== 'undefined' ? useRspack : existsSync(rspackConfigPath);
 
     const port = basePort + i + 1;
 
@@ -218,13 +219,13 @@ export async function runProject(
       // try to locate and run via default webpack
       logWarn(`No "webpack.config.js" found in directory "${sourceDirectory}". Trying to use default config ...`);
 
-      runProjectWebpack(defaultConfigPath, port, project, sourceDirectory, importMap, routes);
+      runProjectDevServer(defaultConfigPath, port, project, sourceDirectory, importMap, routes);
     } else {
       if (hasConfig) {
         // run via specialized webpack.config.js
-        runProjectWebpack(configPath, port, project, sourceDirectory, importMap, routes);
+        runProjectDevServer(configPath, port, project, sourceDirectory, importMap, routes);
       } else {
-        runProjectWebpack(rspackConfigPath, port, project, sourceDirectory, importMap, routes, true);
+        runProjectDevServer(rspackConfigPath, port, project, sourceDirectory, importMap, routes, true);
       }
     }
   }
