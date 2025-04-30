@@ -7949,7 +7949,7 @@ ___
 
 #### Defined in
 
-packages/framework/esm-utils/dist/patient-helpers.d.ts:14
+packages/framework/esm-utils/dist/patient-helpers.d.ts:15
 
 ___
 
@@ -7973,7 +7973,7 @@ The formatted display name or an empty string if name is undefined.
 
 #### Defined in
 
-packages/framework/esm-utils/dist/patient-helpers.d.ts:20
+packages/framework/esm-utils/dist/patient-helpers.d.ts:21
 
 ___
 
@@ -7995,7 +7995,7 @@ ___
 
 #### Defined in
 
-packages/framework/esm-utils/dist/patient-helpers.d.ts:22
+packages/framework/esm-utils/dist/patient-helpers.d.ts:23
 
 ___
 
@@ -8057,7 +8057,7 @@ The patient's display name or an empty string if name is not present.
 
 #### Defined in
 
-packages/framework/esm-utils/dist/patient-helpers.d.ts:12
+packages/framework/esm-utils/dist/patient-helpers.d.ts:13
 
 ___
 
@@ -8133,7 +8133,7 @@ the preferred name for the patient, or undefined if no acceptable name could be 
 
 #### Defined in
 
-packages/framework/esm-utils/dist/patient-helpers.d.ts:41
+packages/framework/esm-utils/dist/patient-helpers.d.ts:42
 
 ___
 
