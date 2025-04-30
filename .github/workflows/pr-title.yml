@@ -193,72 +193,70 @@ jobs:
             const title = context.payload.pull_request.title.trim();
             const validTypes = ['docs', 'test', 'chore', 'fix', 'feat'];
             
-            // 1. Validate title structure
-            if (!/^(?:\((docs|test|chore|fix|feat)\)|BREAKING:)\s(?:[^:]+:\s)?\S.+$/.test(title)) {
-              let errorMessage = 'Invalid PR title structure.\n\n';
-              
-              if (/^[a-z]/.test(title)) {
-                errorMessage += '✖ Must start with "(type)" or "BREAKING:"\n';
-              }
-              else if (/^\([^)]+\)\s+[^:]+[^:\s]/.test(title)) {
-                errorMessage += '✖ Ticket reference must end with colon (e.g., "ABC-123: Description")\n';
-              }
-              else if (/^\([^)]+\)\s*$/.test(title)) {
-                errorMessage += '✖ Missing description after type\n';
-              }
-              else if (/^BREAKING[^:]/.test(title)) {
-                errorMessage += '✖ BREAKING changes must use format: "BREAKING: Description"\n';
-              }
-              
-              core.setFailed(errorMessage + '\n💡 Valid examples:\n' +
-                '• "(feat) ABC-123: New feature"\n' +
-                '• "(fix) Bug fix"\n' +
-                '• "BREAKING: Major change"\n' +
-                '• "BREAKING: DEF-456: Breaking change"');
+            // 1. First check for strictly invalid o3/03 prefixes
+            const badPrefixMatch = title.match(/(^|\s)(o3|03)-\d+/i);
+            if (badPrefixMatch) {
+              const badPrefix = badPrefixMatch[2];
+              core.setFailed(`❌ Invalid ticket prefix "${badPrefix}".\n` +
+                '• Must use uppercase "O3-" (letter O, not zero)\n' +
+                '• Example: "(fix) O3-1234: Description"');
               return;
             }
 
-            // 2. Validate type in parentheses
+            // 2. Check for missing colon after O3 ticket
+            const o3TicketMatch = title.match(/O3-\d+/);
+            if (o3TicketMatch && !title.includes(`${o3TicketMatch[0]}:`)) {
+              core.setFailed(`❌ Missing colon after ticket number.\n` +
+                `• Correct format: "${o3TicketMatch[0]}: Description"\n` +
+                `• Your title: "${title}"`);
+              return;
+            }
+
+            // 3. Validate title structure
+            if (!/^(?:\((docs|test|chore|fix|feat)\)|BREAKING:)\s(?:[^:]+:\s)?\S.+$/.test(title)) {
+              let errorMessage = '❌ Invalid PR title structure.\n\n';
+              
+              if (/^[a-z]/.test(title)) {
+                errorMessage += '• Must start with "(type)" or "BREAKING:"\n';
+              }
+              else if (/^\([^)]+\)\s*$/.test(title)) {
+                errorMessage += '• Missing description after type\n';
+              }
+              else if (/^BREAKING[^:]/.test(title)) {
+                errorMessage += '• Must use format: "BREAKING: Description"\n';
+              }
+              
+              core.setFailed(errorMessage + '\n💡 Valid examples:\n' +
+                '• "(feat) O3-123: New feature"\n' +
+                '• "(fix) General bug fix"\n' +
+                '• "BREAKING: Major change"\n');
+              return;
+            }
+
+            // 4. Validate type in parentheses
             const typeMatch = title.match(/^\(([^)]+)\)/);
             if (typeMatch) {
               if (!validTypes.includes(typeMatch[1])) {
-                core.setFailed(`Invalid type "${typeMatch[1]}". Valid types: ${validTypes.join(', ')}`);
+                core.setFailed(`❌ Invalid type "${typeMatch[1]}".\n` +
+                  `• Valid types: ${validTypes.join(', ')}\n` +
+                  `• Example: "(fix) O3-123: Description"`);
                 return;
               }
               
-              // 3. Validate BREAKING doesn't use parentheses
               if (typeMatch[1] === 'BREAKING') {
-                core.setFailed('BREAKING changes must use "BREAKING:" format without parentheses');
+                core.setFailed('❌ BREAKING changes must use format:\n' +
+                  '• "BREAKING: Description"\n' +
+                  '• Without parentheses');
                 return;
               }
             } else {
-              // 4. Validate BREAKING format
               if (/^BREAKING:/i.test(title) && !/^BREAKING:\s/.test(title)) {
-                core.setFailed('BREAKING: must be followed by a space');
-                return;
-              }
-            }
-
-            // 5. Validate ticket numbers (if present)
-            const ticketMatch = title.match(/(o3|03|[A-Za-z]+-\d+)/i);
-            if (ticketMatch) {
-              const ticketRef = ticketMatch[0];
-              
-              if (ticketRef.toLowerCase().startsWith('o3') || ticketRef.startsWith('03')) {
-                core.setFailed(`Invalid ticket prefix "${ticketRef.split('-')[0]}". Must use uppercase "O3-"`);
-                return;
-              }
-              
-              if (!title.includes(`${ticketRef}:`)) {
-                core.setFailed(`Missing colon after ticket reference. Use format: "${ticketRef}: Description"`);
-                return;
-              }
-              
-              if (!/[A-Z]+-\d+/.test(ticketRef)) {
-                core.setFailed(`Invalid ticket format "${ticketRef}". Must be in format "ABC-123"`);
+                core.setFailed('❌ BREAKING format error:\n' +
+                  '• Must include space after colon\n' +
+                  '• Example: "BREAKING: Description"');
                 return;
               }
             }
 
             // All validations passed
-            core.info('✔ PR title format is valid');
+            core.info('✅ PR title format is valid');
