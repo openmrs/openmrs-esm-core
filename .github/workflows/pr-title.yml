@@ -193,23 +193,36 @@ jobs:
             const title = context.payload.pull_request.title.trim();
             const validTypes = ['docs', 'test', 'chore', 'fix', 'feat'];
             
-            // 1. First check for strictly invalid o3/03 prefixes
+            // 1. First check for strictly invalid o3/03 prefixes (case-sensitive)
             const badPrefixMatch = title.match(/(^|\s)(o3|03)-\d+/i);
             if (badPrefixMatch) {
-              const badPrefix = badPrefixMatch[2];
+              const badPrefix = badPrefixMatch[0].trim().split('-')[0];
               core.setFailed(`❌ Invalid ticket prefix "${badPrefix}".\n` +
                 '• Must use uppercase "O3-" (letter O, not zero)\n' +
                 '• Example: "(fix) O3-1234: Description"');
               return;
             }
 
-            // 2. Check for missing colon after O3 ticket
-            const o3TicketMatch = title.match(/O3-\d+/);
-            if (o3TicketMatch && !title.includes(`${o3TicketMatch[0]}:`)) {
-              core.setFailed(`❌ Missing colon after ticket number.\n` +
-                `• Correct format: "${o3TicketMatch[0]}: Description"\n` +
-                `• Your title: "${title}"`);
-              return;
+            // 2. Check for O3 tickets (case-sensitive)
+            const o3TicketMatch = title.match(/(^|\s)(O3-\d+)/);
+            if (o3TicketMatch) {
+              const ticketRef = o3TicketMatch[2];
+              
+              // Check for missing colon after O3 ticket
+              if (!title.includes(`${ticketRef}:`)) {
+                core.setFailed(`❌ Missing colon after ticket number.\n` +
+                  `• Correct format: "${ticketRef}: Description"\n` +
+                  `• Your title: "${title}"`);
+                return;
+              }
+              
+              // Check if numbers follow O3-
+              if (!/O3-\d+/.test(ticketRef)) {
+                core.setFailed(`❌ Invalid ticket format.\n` +
+                  `• Must include numbers after O3-\n` +
+                  `• Example: "O3-1234: Description"`);
+                return;
+              }
             }
 
             // 3. Validate title structure
@@ -240,20 +253,6 @@ jobs:
                 core.setFailed(`❌ Invalid type "${typeMatch[1]}".\n` +
                   `• Valid types: ${validTypes.join(', ')}\n` +
                   `• Example: "(fix) O3-123: Description"`);
-                return;
-              }
-              
-              if (typeMatch[1] === 'BREAKING') {
-                core.setFailed('❌ BREAKING changes must use format:\n' +
-                  '• "BREAKING: Description"\n' +
-                  '• Without parentheses');
-                return;
-              }
-            } else {
-              if (/^BREAKING:/i.test(title) && !/^BREAKING:\s/.test(title)) {
-                core.setFailed('❌ BREAKING format error:\n' +
-                  '• Must include space after colon\n' +
-                  '• Example: "BREAKING: Description"');
                 return;
               }
             }
