@@ -177,7 +177,9 @@
 #             }
 
 name: PR Title Checker
-on: [pull_request]
+on:
+  pull_request:
+    types: [opened, edited]
 
 jobs:
   validate-title:
