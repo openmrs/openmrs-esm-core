@@ -1,6 +1,6 @@
 # Requirements
 
-- [ ] This PR has a title that briefly describes the work done including the ticket number. Ensure your PR title includes a [conventional commit](https://o3-docs.openmrs.org/docs/frontend-modules/contributing#contributing-guidelines) label (such as `feat`, `fix`, or `chore`, among others). See existing PR titles for inspiration.
+- [ ] This PR has a title that briefly describes the work done including the ticket number. Ensure your PR title includes a [conventional commit](https://o3-docs.openmrs.org/docs/frontend-modules/contributing#contributing-guidelines) label (such as `feat`, `fix`, or `chore`, among others). See existing PR titles for inspiration..
 
 ## For changes to apps
 
