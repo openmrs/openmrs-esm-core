@@ -29,7 +29,7 @@ function loadConfig(configPath: string): WebpackConfiguration | RspackConfigurat
   return content;
 }
 
-function debugWebpack(configPath: string, port: number, useRspack: boolean = false) {
+function startDevServer(configPath: string, port: number, useRspack: boolean = false) {
   const config = loadConfig(configPath);
 
   const devServerOptions = {
@@ -55,5 +55,5 @@ function debugWebpack(configPath: string, port: number, useRspack: boolean = fal
 }
 
 process.on('message', ({ source, port, useRspack }: { source: string; port: number; useRspack: boolean }) =>
-  debugWebpack(source, port, useRspack),
+  startDevServer(source, port, useRspack),
 );
