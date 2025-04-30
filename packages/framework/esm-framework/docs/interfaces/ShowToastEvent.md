@@ -23,7 +23,7 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L66)
+packages/framework/esm-globals/dist/events.d.ts:36
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L63)
+packages/framework/esm-globals/dist/events.d.ts:33
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L64)
+packages/framework/esm-globals/dist/events.d.ts:34
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L65)
+packages/framework/esm-globals/dist/events.d.ts:35
 
 ## Methods
 
@@ -67,4 +67,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L67)
+packages/framework/esm-globals/dist/events.d.ts:37

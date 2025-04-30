@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { isString, isBoolean, isUuid, isObject, isNumber, isArray } from './type-validators';
 
 describe('all validators', () => {

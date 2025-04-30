@@ -1,10 +1,12 @@
+import { vi } from 'vitest';
 import { getGlobalStore } from '@openmrs/esm-state/mock';
+import { type WorkspaceGroupRegistration, type WorkspaceRegistration } from '.';
 
-export const attach = jest.fn();
-export const detach = jest.fn();
-export const detachAll = jest.fn();
+export const attach = vi.fn();
+export const detach = vi.fn();
+export const detachAll = vi.fn();
 
-export const switchTo = jest.fn();
+export const switchTo = vi.fn();
 
 export const getExtensionStore = () => getGlobalStore('extensions', { slots: {} });
 
@@ -16,11 +18,11 @@ export const getExtensionInternalStore = () =>
 
 const mockExtensionRegistry = {};
 
-export const getExtensionRegistration = jest.fn((name) => {
+export const getExtensionRegistration = vi.fn((name) => {
   return mockExtensionRegistry[name];
 });
 
-export const registerExtension = jest.fn((ext) => {
+export const registerExtension = vi.fn((ext) => {
   mockExtensionRegistry[ext.name] = ext;
 });
 

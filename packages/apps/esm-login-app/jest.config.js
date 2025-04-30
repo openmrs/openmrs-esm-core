@@ -1,7 +1,8 @@
+/** @type {import('jest').Config} */
 module.exports = {
   clearMocks: true,
   transform: {
-    '^.+\\.tsx?$': ['@swc/jest'],
+    '^.+\\.[jt]sx?$': ['@swc/jest'],
   },
   moduleNameMapper: {
     '@openmrs/esm-framework': '@openmrs/esm-framework/mock',
@@ -15,4 +16,5 @@ module.exports = {
   testEnvironmentOptions: {
     url: 'http://localhost/',
   },
+  transformIgnorePatterns: ['/node_modules/', '\\.pnp\\.[^\\/]+$'],
 };

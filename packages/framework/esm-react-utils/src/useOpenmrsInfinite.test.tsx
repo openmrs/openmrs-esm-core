@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+import { describe, expect, it } from 'vitest';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { useOpenmrsInfinite } from './useOpenmrsInfinite';
 import { getIntArray, getTestData } from './useOpenmrsPagination.test';

@@ -8,7 +8,6 @@
 
 - [patientName](PatientPhotoProps.md#patientname)
 - [patientUuid](PatientPhotoProps.md#patientuuid)
-- [size](PatientPhotoProps.md#size)
 
 ## UI Properties
 
@@ -29,13 +28,3 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L13)
-
-___
-
-### size
-
-• `Optional` **size**: ``"small"``
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L15)

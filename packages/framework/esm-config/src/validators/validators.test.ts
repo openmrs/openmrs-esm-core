@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { inRange, isUrl, isUrlWithTemplateParameters, oneOf } from './validators';
 
 describe('all validators', () => {

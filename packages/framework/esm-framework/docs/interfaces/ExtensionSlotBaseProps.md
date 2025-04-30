@@ -50,17 +50,17 @@ ___
 
 ### select
 
-▸ `Optional` **select**(`extensions`): [`AssignedExtension`](AssignedExtension.md)[]
+▸ `Optional` **select**(`extensions`): `AssignedExtension`[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `extensions` | [`AssignedExtension`](AssignedExtension.md)[] |
+| `extensions` | `AssignedExtension`[] |
 
 #### Returns
 
-[`AssignedExtension`](AssignedExtension.md)[]
+`AssignedExtension`[]
 
 #### Defined in
 

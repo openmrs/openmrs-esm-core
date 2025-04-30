@@ -10,7 +10,6 @@ export const carbonTagColors = [
   'teal',
   'cyan',
   'gray',
-  'orange',
   'green',
   'warm-gray',
   'cool-gray',

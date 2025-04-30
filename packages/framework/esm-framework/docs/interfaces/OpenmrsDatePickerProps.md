@@ -629,7 +629,7 @@ ___
 
 ### validationBehavior
 
-• `Optional` **validationBehavior**: ``"native"`` \| ``"aria"``
+• `Optional` **validationBehavior**: ``"aria"`` \| ``"native"``
 
 Whether to use native HTML form validation to prevent form submission
 when the value is missing or invalid, or mark the field as required
