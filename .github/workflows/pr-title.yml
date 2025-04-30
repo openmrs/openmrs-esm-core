@@ -186,94 +186,59 @@ jobs:
   validate-title:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR Title Format
+      - name: Validate PR Title
         uses: actions/github-script@v6
         with:
           script: |
             const title = context.payload.pull_request.title.trim();
             const validTypes = ['docs', 'test', 'chore', 'fix', 'feat'];
-            
-            // 1. Check for invalid prefixes (o3 or 03) - must come first
-            const invalidPrefix = title.match(/\b(o3|03)-\d+/i);
-            if (invalidPrefix) {
-              const foundPrefix = invalidPrefix[1];
-              core.setFailed(`❌ Invalid ticket prefix "${foundPrefix}" detected.\n` +
-                '• Must use uppercase "O3-" (letter O, not zero)\n' +
-                '• Example valid format: "(fix) O3-1234: Description"');
+
+            // 1. Check for invalid prefixes FIRST (o3 or 03)
+            const badPrefix = title.match(/\b(o3|03)-\d+/i);
+            if (badPrefix) {
+              core.setFailed(`❌ Invalid ticket prefix "${badPrefix[0].split('-')[0]}"\n` +
+                '• Must use "O3-" (uppercase O, not zero)\n' +
+                '• Example: "(fix) O3-1234: Description"');
               return;
             }
 
-            // 2. Check for valid O3 tickets
+            // 2. Handle O3 tickets SPECIFICALLY
             const o3Ticket = title.match(/\b(O3-\d+)/);
             if (o3Ticket) {
-              const ticket = o3Ticket[1];
-              
-              // Check for missing colon
-              if (!title.includes(`${ticket}:`)) {
-                core.setFailed(`❌ Format error for ticket "${ticket}"\n` +
-                  '• Must include a colon after ticket number\n' +
-                  `• Correct format: "${ticket}: Description"\n` +
+              // Check colon format for O3 tickets
+              if (!title.includes(`${o3Ticket[0]}:`)) {
+                core.setFailed(`❌ Missing colon after O3 ticket\n` +
+                  `• Correct format: "${o3Ticket[0]}: Description"\n` +
                   `• Your title: "${title}"`);
                 return;
               }
-              
-              // Check if ticket has numbers
-              if (!/O3-\d+$/.test(ticket)) {
-                core.setFailed(`❌ Invalid ticket number format\n` +
-                  `• Ticket must include numbers after O3-\n` +
-                  `• Example: "O3-1234: Description"`);
-                return;
-              }
+              // Continue with other validations
             }
 
-            // 3. Validate title structure
-            const titlePattern = /^(?:\((docs|test|chore|fix|feat)\)|BREAKING:)\s(?:[^:]+:\s)?\S.+$/;
-            if (!titlePattern.test(title)) {
-              let errorMsg = '❌ Invalid PR title structure\n\n';
-              
-              if (!/^(\(|BREAKING:)/.test(title)) {
-                errorMsg += '• Must start with "(type)" or "BREAKING:"\n';
-              }
-              else if (/^\([^)]+\)\s*$/.test(title)) {
-                errorMsg += '• Missing description after type\n';
-              }
-              else if (/^BREAKING[^:]/.test(title)) {
-                errorMsg += '• Must use format: "BREAKING: Description"\n';
-              }
-              
-              core.setFailed(errorMsg + '\n💡 Valid examples:\n' +
-                '• "(feat) O3-123: New feature"\n' +
-                '• "(fix) General bug fix"\n' +
-                '• "BREAKING: Major change"\n' +
-                '• "BREAKING: O3-456: Breaking change"');
+            // 3. Main title pattern (now simplified)
+            if (!/^\((docs|test|chore|fix|feat)\)|^BREAKING:/.test(title)) {
+              core.setFailed('❌ Must start with "(type)" or "BREAKING:"');
               return;
             }
 
-            // 4. Validate type in parentheses
-            const typeMatch = title.match(/^\(([^)]+)\)/);
-            if (typeMatch && !validTypes.includes(typeMatch[1])) {
-              core.setFailed(`❌ Invalid type "${typeMatch[1]}"\n` +
-                `• Valid types: ${validTypes.join(', ')}\n` +
-                '• Example: "(fix) Description"');
+            // 4. Validate description exists
+            if (!/: .+$/.test(title) && !/\) .+$/.test(title)) {
+              core.setFailed('❌ Missing description after type/ticket');
               return;
             }
 
-            // 5. Validate BREAKING format
-            if (/^BREAKING:/i.test(title)) {
-              if (title.match(/^\(/)) {
-                core.setFailed('❌ BREAKING change format error\n' +
-                  '• Must NOT use parentheses\n' +
-                  '• Correct format: "BREAKING: Description"');
+            // 5. BREAKING change specific rules
+            if (/^BREAKING/i.test(title)) {
+              if (!/^BREAKING: /.test(title)) {
+                core.setFailed('❌ BREAKING changes require format:\n' +
+                  '• "BREAKING: Description"\n' +
+                  '• With colon and space');
                 return;
               }
-              
-              if (!/^BREAKING:\s/.test(title)) {
-                core.setFailed('❌ BREAKING change format error\n' +
-                  '• Must include space after colon\n' +
-                  '• Example: "BREAKING: Description"');
+              if (/^\(/.test(title)) {
+                core.setFailed('❌ BREAKING changes must NOT use parentheses');
                 return;
               }
             }
 
-            // All checks passed
-            core.info('✅ PR title format is valid');
+            core.info('✅ PR title is valid');
