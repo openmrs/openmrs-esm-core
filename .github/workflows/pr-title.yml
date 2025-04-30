@@ -100,6 +100,82 @@
 #               }
 #             }
 
+# name: PR Title Checker
+
+# on:
+#   pull_request:
+#     types: [opened, edited, reopened, synchronize]
+
+# jobs:
+#   validate-title:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check PR Title Format
+#         uses: actions/github-script@v6
+#         with:
+#           script: |
+#             const title = context.payload.pull_request.title.trim();
+            
+#             // Validate type in parentheses if present
+#             const typeInParentheses = title.match(/^\(([^)]+)\)/);
+#             if (typeInParentheses) {
+#               const validTypes = ['docs', 'test', 'chore', 'fix', 'feat'];
+#               if (!validTypes.includes(typeInParentheses[1])) {
+#                 core.setFailed(`Invalid type in parentheses. Valid types are: ${validTypes.join(', ')}`);
+#               }
+#             }
+
+#             // Main pattern matching
+#             const isValid = /^(?:\((docs|test|chore|fix|feat)\)|BREAKING:)\s(?:[A-Z][A-Z0-9]+-\d+:\s)?\S.+$/.test(title);
+            
+#             if (!isValid) {
+#               let errorMessage = `🚫 Invalid PR title format. Requirements:\n\n`;
+              
+#               // Check for missing parentheses for non-BREAKING changes
+#               if (/^(docs|test|chore|fix|feat)[:\s]/.test(title)) {
+#                 errorMessage += `• Type prefix must be in parentheses (e.g., "(feat)")\n`;
+#               }
+              
+#               // Check for BREAKING format issues
+#               if (/BREAKING/i.test(title)) {
+#                 if (title.includes('(')) {
+#                   errorMessage += `• BREAKING changes should NOT use parentheses\n`;
+#                 }
+#                 if (!title.startsWith('BREAKING:')) {
+#                   errorMessage += `• BREAKING changes must use format: "BREAKING: Description"\n`;
+#                 }
+#               }
+              
+#               // Check for ticket number format issues
+#               const ticketMatch = title.match(/(o3|03)-\d+/i);
+#               if (ticketMatch) {
+#                 errorMessage += `• Ticket reference must use uppercase O (O3-1234), found: "${ticketMatch[0]}"\n`;
+#               }
+              
+#               errorMessage += `\n💡 Examples of valid titles:\n`;
+#               errorMessage += `• "(feat) O3-1234: Description"\n`;
+#               errorMessage += `• "(chore) Description without ticket"\n`;
+#               errorMessage += `• "BREAKING: Description"\n`;
+#               errorMessage += `• "BREAKING: O3-1234: Description"\n`;
+              
+#               core.setFailed(errorMessage);
+#             }
+
+#             // Additional validation for ticket numbers
+#             const ticketMatch = title.match(/(o3|03|O3)-\d+/i);
+#             if (ticketMatch) {
+#               const ticketRef = ticketMatch[0];
+#               if (ticketRef.startsWith('o3')) {
+#                 core.setFailed(`Invalid ticket reference: Must use uppercase O (O3-1234), found: "${ticketRef}"`);
+#               } else if (ticketRef.startsWith('03')) {
+#                 core.setFailed(`Invalid ticket reference: Must use letter O (O3-1234), found: "${ticketRef}"`);
+#               } else if (ticketRef === 'O3-') {
+#                 core.setFailed(`Invalid ticket reference: Must include numbers after O3-`);
+#               } else if (title.includes(ticketRef) && !title.includes(`${ticketRef}:`)) {
+#                 core.setFailed(`Missing colon after ticket reference: Must be "O3-1234: Description"`);
+#               }
+#             }
+
 name: PR Title Checker
 
 on:
@@ -115,63 +191,73 @@ jobs:
         with:
           script: |
             const title = context.payload.pull_request.title.trim();
+            const validTypes = ['docs', 'test', 'chore', 'fix', 'feat'];
             
-            // Validate type in parentheses if present
-            const typeInParentheses = title.match(/^\(([^)]+)\)/);
-            if (typeInParentheses) {
-              const validTypes = ['docs', 'test', 'chore', 'fix', 'feat'];
-              if (!validTypes.includes(typeInParentheses[1])) {
-                core.setFailed(`Invalid type in parentheses. Valid types are: ${validTypes.join(', ')}`);
+            // 1. First check for invalid ticket prefixes (o3/03)
+            const badTicketMatch = title.match(/\b(o3|03)-\d+/i);
+            if (badTicketMatch) {
+              const badPrefix = badTicketMatch[1];
+              core.setFailed(`❌ Invalid ticket prefix "${badPrefix}"\n` +
+                '• Must use uppercase "O3-" (letter O, not zero)\n' +
+                '• Example: "(fix) O3-1234: Description"');
+              return;
+            }
+
+            // 2. Validate O3 ticket format (if present)
+            const o3TicketMatch = title.match(/\b(O3-\d+)/);
+            if (o3TicketMatch) {
+              if (!title.includes(`${o3TicketMatch[0]}:`)) {
+                core.setFailed(`❌ Missing colon after ticket\n` +
+                  `• Correct format: "${o3TicketMatch[0]}: Description"\n` +
+                  `• Your title: "${title}"`);
+                return;
               }
             }
 
-            // Main pattern matching
-            const isValid = /^(?:\((docs|test|chore|fix|feat)\)|BREAKING:)\s(?:[A-Z][A-Z0-9]+-\d+:\s)?\S.+$/.test(title);
-            
-            if (!isValid) {
-              let errorMessage = `🚫 Invalid PR title format. Requirements:\n\n`;
+            // 3. Validate title structure
+            if (!/^(?:\((docs|test|chore|fix|feat)\)|BREAKING:)\s(?:[^:]+:\s)?\S.+$/.test(title)) {
+              let errorMessage = '❌ Invalid PR title structure\n\n';
               
-              // Check for missing parentheses for non-BREAKING changes
               if (/^(docs|test|chore|fix|feat)[:\s]/.test(title)) {
-                errorMessage += `• Type prefix must be in parentheses (e.g., "(feat)")\n`;
+                errorMessage += '• Type prefix must be in parentheses (e.g., "(feat)"\n';
+              }
+              else if (/^BREAKING[^:]/.test(title)) {
+                errorMessage += '• Must use format: "BREAKING: Description"\n';
+              }
+              else {
+                errorMessage += '• Must follow one of these patterns:\n';
               }
               
-              // Check for BREAKING format issues
-              if (/BREAKING/i.test(title)) {
-                if (title.includes('(')) {
-                  errorMessage += `• BREAKING changes should NOT use parentheses\n`;
-                }
-                if (!title.startsWith('BREAKING:')) {
-                  errorMessage += `• BREAKING changes must use format: "BREAKING: Description"\n`;
-                }
-              }
-              
-              // Check for ticket number format issues
-              const ticketMatch = title.match(/(o3|03)-\d+/i);
-              if (ticketMatch) {
-                errorMessage += `• Ticket reference must use uppercase O (O3-1234), found: "${ticketMatch[0]}"\n`;
-              }
-              
-              errorMessage += `\n💡 Examples of valid titles:\n`;
-              errorMessage += `• "(feat) O3-1234: Description"\n`;
-              errorMessage += `• "(chore) Description without ticket"\n`;
-              errorMessage += `• "BREAKING: Description"\n`;
-              errorMessage += `• "BREAKING: O3-1234: Description"\n`;
+              errorMessage += '\n💡 Valid examples:\n' +
+                '• "(feat) O3-1234: Description"\n' +
+                '• "(chore) General update"\n' +
+                '• "BREAKING: Major change"\n' +
+                '• "BREAKING: O3-4567: Breaking change"';
               
               core.setFailed(errorMessage);
+              return;
             }
 
-            // Additional validation for ticket numbers
-            const ticketMatch = title.match(/(o3|03|O3)-\d+/i);
-            if (ticketMatch) {
-              const ticketRef = ticketMatch[0];
-              if (ticketRef.startsWith('o3')) {
-                core.setFailed(`Invalid ticket reference: Must use uppercase O (O3-1234), found: "${ticketRef}"`);
-              } else if (ticketRef.startsWith('03')) {
-                core.setFailed(`Invalid ticket reference: Must use letter O (O3-1234), found: "${ticketRef}"`);
-              } else if (ticketRef === 'O3-') {
-                core.setFailed(`Invalid ticket reference: Must include numbers after O3-`);
-              } else if (title.includes(ticketRef) && !title.includes(`${ticketRef}:`)) {
-                core.setFailed(`Missing colon after ticket reference: Must be "O3-1234: Description"`);
+            // 4. Validate type in parentheses
+            const typeMatch = title.match(/^\(([^)]+)\)/);
+            if (typeMatch && !validTypes.includes(typeMatch[1])) {
+              core.setFailed(`❌ Invalid type "${typeMatch[1]}"\n` +
+                `• Valid types: ${validTypes.join(', ')}`);
+              return;
+            }
+
+            // 5. Validate BREAKING format
+            if (/^BREAKING:/i.test(title)) {
+              if (title.includes('(')) {
+                core.setFailed('❌ BREAKING changes must NOT use parentheses');
+                return;
+              }
+              
+              if (!/^BREAKING:\s/.test(title)) {
+                core.setFailed('❌ Must include space after "BREAKING:"');
+                return;
               }
             }
+
+            // All validations passed
+            core.info('✅ PR title format is valid');
