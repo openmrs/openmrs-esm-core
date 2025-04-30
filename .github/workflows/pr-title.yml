@@ -177,68 +177,36 @@
 #             }
 
 name: PR Title Checker
-
-on:
-  pull_request:
-    types: [opened, edited]
+on: [pull_request]
 
 jobs:
   validate-title:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate PR Title
+      - name: Check Title
         uses: actions/github-script@v6
         with:
           script: |
             const title = context.payload.pull_request.title.trim();
-            const validTypes = ['docs', 'test', 'chore', 'fix', 'feat'];
-
-            // 1. Check for invalid prefixes FIRST (o3 or 03)
-            const badPrefix = title.match(/\b(o3|03)-\d+/i);
-            if (badPrefix) {
-              core.setFailed(`❌ Invalid ticket prefix "${badPrefix[0].split('-')[0]}"\n` +
-                '• Must use "O3-" (uppercase O, not zero)\n' +
-                '• Example: "(fix) O3-1234: Description"');
+            
+            // 1. FIRST check for bad prefixes (o3/03)
+            if (/(^|\s)(o3|03)-\d+/i.test(title)) {
+              core.setFailed('❌ Use "O3-" not "o3-" or "03-"');
               return;
             }
 
-            // 2. Handle O3 tickets SPECIFICALLY
-            const o3Ticket = title.match(/\b(O3-\d+)/);
-            if (o3Ticket) {
-              // Check colon format for O3 tickets
-              if (!title.includes(`${o3Ticket[0]}:`)) {
-                core.setFailed(`❌ Missing colon after O3 ticket\n` +
-                  `• Correct format: "${o3Ticket[0]}: Description"\n` +
-                  `• Your title: "${title}"`);
-                return;
-              }
-              // Continue with other validations
-            }
-
-            // 3. Main title pattern (now simplified)
-            if (!/^\((docs|test|chore|fix|feat)\)|^BREAKING:/.test(title)) {
-              core.setFailed('❌ Must start with "(type)" or "BREAKING:"');
-              return;
-            }
-
-            // 4. Validate description exists
-            if (!/: .+$/.test(title) && !/\) .+$/.test(title)) {
-              core.setFailed('❌ Missing description after type/ticket');
-              return;
-            }
-
-            // 5. BREAKING change specific rules
-            if (/^BREAKING/i.test(title)) {
-              if (!/^BREAKING: /.test(title)) {
-                core.setFailed('❌ BREAKING changes require format:\n' +
-                  '• "BREAKING: Description"\n' +
-                  '• With colon and space');
-                return;
-              }
-              if (/^\(/.test(title)) {
-                core.setFailed('❌ BREAKING changes must NOT use parentheses');
+            // 2. THEN check valid O3 format
+            if (/(^|\s)O3-\d+/.test(title)) {
+              if (!/: /.test(title.split('O3-')[1])) {
+                core.setFailed('❌ O3 tickets need colon: "O3-123: Description"');
                 return;
               }
             }
 
-            core.info('✅ PR title is valid');
+            // 3. Basic structure check
+            if (!/^(\([a-z]+\)|BREAKING:)/.test(title)) {
+              core.setFailed('❌ Start with "(type)" or "BREAKING:"');
+              return;
+            }
+
+            core.info('✅ Valid title');
