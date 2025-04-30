@@ -36,7 +36,7 @@ by unique component IDs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L34)
+[packages/framework/esm-emr-api/src/visit-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L34)
 
 ___
 
