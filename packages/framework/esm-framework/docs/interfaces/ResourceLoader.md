@@ -1,23 +1,19 @@
-[@openmrs/esm-framework](../API.md) / ResourceLoader
+[O3 Framework](../API.md) / ResourceLoader
 
-# Interface: ResourceLoader<T\>
+# Interface: ResourceLoader()\<T\>
 
-## Type parameters
+Defined in: packages/framework/esm-globals/dist/types.d.ts:389
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `any` |
+## Type Parameters
 
-## Callable
+### T
 
-### ResourceLoader
+`T` = `any`
 
-▸ **ResourceLoader**(): `Promise`<`T`\>
+> **ResourceLoader**(): `Promise`\<`T`\>
 
-#### Returns
+Defined in: packages/framework/esm-globals/dist/types.d.ts:390
 
-`Promise`<`T`\>
+## Returns
 
-#### Defined in
-
-packages/framework/esm-globals/dist/types.d.ts:390
+`Promise`\<`T`\>

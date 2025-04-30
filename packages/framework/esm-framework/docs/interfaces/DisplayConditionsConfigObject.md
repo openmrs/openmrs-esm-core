@@ -1,60 +1,45 @@
-[@openmrs/esm-framework](../API.md) / DisplayConditionsConfigObject
+[O3 Framework](../API.md) / DisplayConditionsConfigObject
 
 # Interface: DisplayConditionsConfigObject
 
-## Table of contents
-
-### Properties
-
-- [expression](DisplayConditionsConfigObject.md#expression)
-- [offline](DisplayConditionsConfigObject.md#offline)
-- [online](DisplayConditionsConfigObject.md#online)
-- [privileges](DisplayConditionsConfigObject.md#privileges)
+Defined in: [packages/framework/esm-config/src/types.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L35)
 
 ## Properties
 
-### expression
+### expression?
 
-• `Optional` **expression**: `string`
+> `optional` **expression**: `string`
+
+Defined in: [packages/framework/esm-config/src/types.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L39)
 
 An expression to evaluate whether or not the user should see this extension
 
-#### Defined in
+***
 
-[packages/framework/esm-config/src/types.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L39)
+### offline?
 
-___
+> `optional` **offline**: `boolean`
 
-### offline
-
-• `Optional` **offline**: `boolean`
+Defined in: [packages/framework/esm-config/src/types.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L43)
 
 Whether to display this extension when not connected to the server
 
-#### Defined in
+***
 
-[packages/framework/esm-config/src/types.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L43)
+### online?
 
-___
+> `optional` **online**: `boolean`
 
-### online
-
-• `Optional` **online**: `boolean`
+Defined in: [packages/framework/esm-config/src/types.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L41)
 
 Whether to display this extension when connected to the server
 
-#### Defined in
+***
 
-[packages/framework/esm-config/src/types.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L41)
+### privileges?
 
-___
+> `optional` **privileges**: `string`[]
 
-### privileges
-
-• `Optional` **privileges**: `string`[]
+Defined in: [packages/framework/esm-config/src/types.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L37)
 
 The privileges a user should have to see this extension
-
-#### Defined in
-
-[packages/framework/esm-config/src/types.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L37)

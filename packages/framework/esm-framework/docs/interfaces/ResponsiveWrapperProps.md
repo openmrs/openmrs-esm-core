@@ -1,19 +1,13 @@
-[@openmrs/esm-framework](../API.md) / ResponsiveWrapperProps
+[O3 Framework](../API.md) / ResponsiveWrapperProps
 
 # Interface: ResponsiveWrapperProps
 
-## Table of contents
+Defined in: [packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L6)
 
-### UI Properties
-
-- [children](ResponsiveWrapperProps.md#children)
-
-## UI Properties
+## Properties
 
 ### children
 
-• **children**: `ReactNode`
+> **children**: `ReactNode`
 
-#### Defined in
-
-[packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L7)
+Defined in: [packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L7)

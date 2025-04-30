@@ -8,7 +8,7 @@ const mockNavigate = jest.mocked(navigate);
 const mockUseSession = jest.mocked(useSession);
 
 delete window.location;
-window.location = new URL('https://dev3.openmrs.org/openmrs/spa/home') as unknown as Location;
+(window.location as Location) = new URL('https://dev3.openmrs.org/openmrs/spa/home') as unknown as Location;
 
 describe('ChangeLocationLink', () => {
   beforeEach(() => {

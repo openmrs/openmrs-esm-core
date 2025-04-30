@@ -1,41 +1,29 @@
-[@openmrs/esm-framework](../API.md) / UsePatientPhotoResult
+[O3 Framework](../API.md) / UsePatientPhotoResult
 
 # Interface: UsePatientPhotoResult
 
-## Table of contents
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L7)
 
-### UI Properties
-
-- [data](UsePatientPhotoResult.md#data)
-- [error](UsePatientPhotoResult.md#error)
-- [isLoading](UsePatientPhotoResult.md#isloading)
-
-## UI Properties
+## Properties
 
 ### data
 
-• **data**: ``null`` \| { `dateTime`: `string` ; `imageSrc`: `string`  }
+> **data**: `null` \| \{ `dateTime`: `string`; `imageSrc`: `string`; \}
 
-#### Defined in
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L8)
 
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L8)
+***
 
-___
+### error?
 
-### error
+> `optional` **error**: `Error`
 
-• `Optional` **error**: `Error`
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L9)
 
-#### Defined in
-
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L9)
-
-___
+***
 
 ### isLoading
 
-• **isLoading**: `boolean`
+> **isLoading**: `boolean`
 
-#### Defined in
-
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L10)
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L10)

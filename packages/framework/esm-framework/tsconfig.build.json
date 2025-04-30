@@ -3,7 +3,8 @@
   "compilerOptions": {
     "declarationDir": "dist",
     "emitDeclarationOnly": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "stripInternal": true
   },
   "extends": "./tsconfig.json",
   "exclude": ["**/*.test.*", "**/setup-tests.ts", "**/__mocks__/*", "**/mock.tsx"]

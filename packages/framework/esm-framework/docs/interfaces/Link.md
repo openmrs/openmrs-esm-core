@@ -1,41 +1,29 @@
-[@openmrs/esm-framework](../API.md) / Link
+[O3 Framework](../API.md) / Link
 
 # Interface: Link
 
-## Table of contents
-
-### Properties
-
-- [rel](Link.md#rel)
-- [resourceAlias](Link.md#resourcealias)
-- [uri](Link.md#uri)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/openmrs-resource.ts#L20)
 
 ## Properties
 
 ### rel
 
-• **rel**: `string`
+> **rel**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/openmrs-resource.ts#L21)
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L21)
+***
 
-___
+### resourceAlias?
 
-### resourceAlias
+> `optional` **resourceAlias**: `string`
 
-• `Optional` **resourceAlias**: `string`
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/openmrs-resource.ts#L23)
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L23)
-
-___
+***
 
 ### uri
 
-• **uri**: `string`
+> **uri**: `string`
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L22)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/openmrs-resource.ts#L22)

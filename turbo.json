@@ -11,8 +11,8 @@
       "outputs": ["dist/**"]
     },
     "document": {
-      "inputs": ["packages/framework/**/src/**/*.{ts,tsx}", "!packages/framework/**/src/**/*.test.{ts,tsx}"],
-      "outputs": ["packages/framework/esm-framework/docs/**"]
+      "inputs": ["$TURBO_ROOT$/packages/framework/**/src/**/*.{ts,tsx}", "!$TURBO_ROOT$/packages/framework/**/src/**/*.test.{ts,tsx}"],
+      "outputs": ["docs/**/*.md"]
     },
     "test": {},
     "test:watch": {

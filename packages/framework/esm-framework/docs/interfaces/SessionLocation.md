@@ -1,41 +1,29 @@
-[@openmrs/esm-framework](../API.md) / SessionLocation
+[O3 Framework](../API.md) / SessionLocation
 
 # Interface: SessionLocation
 
-## Table of contents
-
-### Properties
-
-- [display](SessionLocation.md#display)
-- [links](SessionLocation.md#links)
-- [uuid](SessionLocation.md#uuid)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/user-resource.ts#L49)
 
 ## Properties
 
 ### display
 
-• **display**: `string`
+> **display**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/user-resource.ts#L51)
 
-[packages/framework/esm-api/src/types/user-resource.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L51)
-
-___
+***
 
 ### links
 
-• **links**: `any`[]
+> **links**: `any`[]
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/user-resource.ts#L52)
 
-[packages/framework/esm-api/src/types/user-resource.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L52)
-
-___
+***
 
 ### uuid
 
-• **uuid**: `string`
+> **uuid**: `string`
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/user-resource.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L50)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/user-resource.ts#L50)

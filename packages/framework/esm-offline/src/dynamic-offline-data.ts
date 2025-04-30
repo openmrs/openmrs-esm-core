@@ -27,13 +27,13 @@ export interface DynamicOfflineDataHandler {
    * of this single handler.
    * If `false`, the handler would have to (re-)sync the data in order for offline mode to properly work.
    * @param identifier The identifier of the offline data. See {@link DynamicOfflineData} for details.
-   * @param abortSignal An {@link AbortSignal} which can be used to cancel the operation.
+   * @param abortSignal An `AbortSignal` which can be used to cancel the operation.
    */
   isSynced(identifier: string, abortSignal?: AbortSignal): Promise<boolean>;
   /**
    * Synchronizes the given offline data.
    * @param identifier The identifier of the offline data. See {@link DynamicOfflineData} for details.
-   * @param abortSignal An {@link AbortSignal} which can be used to cancel the operation.
+   * @param abortSignal An `AbortSignal` which can be used to cancel the operation.
    */
   sync(identifier: string, abortSignal?: AbortSignal): Promise<void>;
 }
@@ -236,7 +236,7 @@ export async function removeDynamicOfflineDataFor(userId: string, type: string, 
 /**
  * Synchronizes all offline data entries of the given {@link type} for the currently logged in user.
  * @param type The type of the offline data. See {@link DynamicOfflineData} for details.
- * @param abortSignal An {@link AbortSignal} which can be used to cancel the operation.
+ * @param abortSignal An `AbortSignal` which can be used to cancel the operation.
  */
 export async function syncAllDynamicOfflineData(type: string, abortSignal?: AbortSignal): Promise<void> {
   const dataEntriesToSync = await getDynamicOfflineDataEntries(type);
@@ -249,7 +249,7 @@ export async function syncAllDynamicOfflineData(type: string, abortSignal?: Abor
  * Synchronizes a single offline data entry of the given {@link type} for the currently logged in user.
  * @param type The type of the offline data. See {@link DynamicOfflineData} for details.
  * @param identifier The identifier of the offline data. See {@link DynamicOfflineData} for details.
- * @param abortSignal An {@link AbortSignal} which can be used to cancel the operation.
+ * @param abortSignal An `AbortSignal` which can be used to cancel the operation.
  */
 export async function syncDynamicOfflineData(
   type: string,

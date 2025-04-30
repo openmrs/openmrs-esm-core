@@ -1,47 +1,35 @@
-[@openmrs/esm-framework](../API.md) / MessageServiceWorkerResult
+[O3 Framework](../API.md) / MessageServiceWorkerResult
 
-# Interface: MessageServiceWorkerResult<T\>
+# Interface: MessageServiceWorkerResult\<T\>
 
-## Type parameters
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-offline/src/service-worker-messaging.ts#L46)
 
-| Name |
-| :------ |
-| `T` |
+## Type Parameters
 
-## Table of contents
+### T
 
-### Offline Properties
+`T`
 
-- [error](MessageServiceWorkerResult.md#error)
-- [result](MessageServiceWorkerResult.md#result)
-- [success](MessageServiceWorkerResult.md#success)
+## Properties
 
-## Offline Properties
+### error?
 
-### error
+> `optional` **error**: `string`
 
-• `Optional` **error**: `string`
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-offline/src/service-worker-messaging.ts#L49)
 
-#### Defined in
+***
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L49)
+### result?
 
-___
+> `optional` **result**: `T`
 
-### result
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-offline/src/service-worker-messaging.ts#L48)
 
-• `Optional` **result**: `T`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker-messaging.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L48)
-
-___
+***
 
 ### success
 
-• **success**: `boolean`
+> **success**: `boolean`
 
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker-messaging.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L47)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-offline/src/service-worker-messaging.ts#L47)
