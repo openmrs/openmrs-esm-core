@@ -1,22 +1,16 @@
-[@openmrs/esm-framework](../API.md) / UseConfigOptions
+[O3 Framework](../API.md) / UseConfigOptions
 
 # Interface: UseConfigOptions
 
-## Table of contents
+Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useConfig.ts#L128)
 
-### Config Properties
+## Properties
 
-- [externalModuleName](UseConfigOptions.md#externalmodulename)
+### externalModuleName?
 
-## Config Properties
+> `optional` **externalModuleName**: `string`
 
-### externalModuleName
-
-• `Optional` **externalModuleName**: `string`
+Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useConfig.ts#L131)
 
 An external module to load the configuration from. This option should only be used if
 absolutely necessary as it can end up making frontend modules coupled to one another.
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useConfig.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L131)

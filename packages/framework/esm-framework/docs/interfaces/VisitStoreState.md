@@ -1,30 +1,21 @@
-[@openmrs/esm-framework](../API.md) / VisitStoreState
+[O3 Framework](../API.md) / VisitStoreState
 
 # Interface: VisitStoreState
 
-## Table of contents
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L25)
 
-### API Properties
-
-- [manuallySetVisitUuid](VisitStoreState.md#manuallysetvisituuid)
-- [patientUuid](VisitStoreState.md#patientuuid)
-
-## API Properties
+## Properties
 
 ### manuallySetVisitUuid
 
-• **manuallySetVisitUuid**: ``null`` \| `string`
+> **manuallySetVisitUuid**: `null` \| `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
 
-[packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
-
-___
+***
 
 ### patientUuid
 
-• **patientUuid**: ``null`` \| `string`
+> **patientUuid**: `null` \| `string`
 
-#### Defined in
-
-[packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L26)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L26)

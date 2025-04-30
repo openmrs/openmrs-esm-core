@@ -1,52 +1,37 @@
-[@openmrs/esm-framework](../API.md) / VisitItem
+[O3 Framework](../API.md) / VisitItem
 
 # Interface: VisitItem
 
-## Table of contents
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L7)
 
-### API Properties
+## Properties
 
-- [anythingElse](VisitItem.md#anythingelse)
-- [mode](VisitItem.md#mode)
-- [status](VisitItem.md#status)
-- [visitData](VisitItem.md#visitdata)
+### anythingElse?
 
-## API Properties
+> `optional` **anythingElse**: `any`
 
-### anythingElse
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L11)
 
-• `Optional` **anythingElse**: `any`
-
-#### Defined in
-
-[packages/framework/esm-emr-api/src/visit-utils.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L11)
-
-___
+***
 
 ### mode
 
-• **mode**: [`VisitMode`](../enums/VisitMode.md)
+> **mode**: [`VisitMode`](../enumerations/VisitMode.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L8)
 
-[packages/framework/esm-emr-api/src/visit-utils.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L8)
-
-___
+***
 
 ### status
 
-• **status**: [`VisitStatus`](../enums/VisitStatus.md)
+> **status**: [`VisitStatus`](../enumerations/VisitStatus.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L10)
 
-[packages/framework/esm-emr-api/src/visit-utils.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L10)
+***
 
-___
+### visitData?
 
-### visitData
+> `optional` **visitData**: [`Visit`](Visit.md)
 
-• `Optional` **visitData**: [`Visit`](Visit.md)
-
-#### Defined in
-
-[packages/framework/esm-emr-api/src/visit-utils.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L9)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L9)

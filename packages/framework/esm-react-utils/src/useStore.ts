@@ -19,8 +19,7 @@ function bindActions<T>(store: StoreApi<T>, actions: Actions<T>): BoundActions {
   for (let i in actions) {
     bound[i] = function (...args: Array<unknown>) {
       store.setState((state) => {
-        let _args = [state, ...args];
-        return actions[i](..._args);
+        return actions[i](state, ...args);
       });
     };
   }

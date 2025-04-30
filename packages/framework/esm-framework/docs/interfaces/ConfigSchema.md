@@ -1,45 +1,33 @@
-[@openmrs/esm-framework](../API.md) / ConfigSchema
+[O3 Framework](../API.md) / ConfigSchema
 
 # Interface: ConfigSchema
 
+Defined in: [packages/framework/esm-config/src/types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L17)
+
 ## Indexable
 
-▪ [key: `string`]: [`ConfigSchema`](ConfigSchema.md) \| [`ConfigValue`](../API.md#configvalue)
-
-## Table of contents
-
-### Properties
-
-- [\_elements](ConfigSchema.md#_elements)
-- [\_type](ConfigSchema.md#_type)
-- [\_validators](ConfigSchema.md#_validators)
+\[`key`: `string`\]: `ConfigSchema` \| [`ConfigValue`](../type-aliases/ConfigValue.md)
 
 ## Properties
 
-### \_elements
+### \_elements?
 
-• `Optional` **\_elements**: [`ConfigSchema`](ConfigSchema.md)
+> `optional` **\_elements**: `ConfigSchema`
 
-#### Defined in
+Defined in: [packages/framework/esm-config/src/types.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L21)
 
-[packages/framework/esm-config/src/types.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L21)
+***
 
-___
+### \_type?
 
-### \_type
+> `optional` **\_type**: [`Type`](../enumerations/Type.md)
 
-• `Optional` **\_type**: [`Type`](../enums/Type.md)
+Defined in: [packages/framework/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L19)
 
-#### Defined in
+***
 
-[packages/framework/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L19)
+### \_validators?
 
-___
+> `optional` **\_validators**: [`Validator`](../type-aliases/Validator.md)[]
 
-### \_validators
-
-• `Optional` **\_validators**: [`Validator`](../API.md#validator)[]
-
-#### Defined in
-
-[packages/framework/esm-config/src/types.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L20)
+Defined in: [packages/framework/esm-config/src/types.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L20)

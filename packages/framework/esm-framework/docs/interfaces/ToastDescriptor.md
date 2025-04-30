@@ -1,87 +1,61 @@
-[@openmrs/esm-framework](../API.md) / ToastDescriptor
+[O3 Framework](../API.md) / ToastDescriptor
 
 # Interface: ToastDescriptor
 
-## Hierarchy
+Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L10)
 
-- **`ToastDescriptor`**
+## Extended by
 
-  ↳ [`ToastNotificationMeta`](ToastNotificationMeta.md)
+- [`ToastNotificationMeta`](ToastNotificationMeta.md)
 
-## Table of contents
+## Properties
 
-### UI Properties
+### actionButtonLabel?
 
-- [actionButtonLabel](ToastDescriptor.md#actionbuttonlabel)
-- [critical](ToastDescriptor.md#critical)
-- [description](ToastDescriptor.md#description)
-- [kind](ToastDescriptor.md#kind)
-- [title](ToastDescriptor.md#title)
+> `optional` **actionButtonLabel**: `string`
 
-### UI Methods
+Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L13)
 
-- [onActionButtonClick](ToastDescriptor.md#onactionbuttonclick)
+***
 
-## UI Properties
+### critical?
 
-### actionButtonLabel
+> `optional` **critical**: `boolean`
 
-• `Optional` **actionButtonLabel**: `string`
+Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L15)
 
-#### Defined in
-
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L13)
-
-___
-
-### critical
-
-• `Optional` **critical**: `boolean`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L15)
-
-___
+***
 
 ### description
 
-• **description**: `ReactNode`
+> **description**: `ReactNode`
 
-#### Defined in
+Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L11)
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L11)
+***
 
-___
+### kind?
 
-### kind
+> `optional` **kind**: [`ToastType`](../type-aliases/ToastType.md)
 
-• `Optional` **kind**: [`ToastType`](../API.md#toasttype)
+Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L14)
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L14)
+### onActionButtonClick()?
 
-___
+> `optional` **onActionButtonClick**: () => `void`
 
-### title
-
-• `Optional` **title**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L16)
-
-## UI Methods
-
-### onActionButtonClick
-
-▸ `Optional` **onActionButtonClick**(): `void`
+Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L12)
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L12)
+### title?
+
+> `optional` **title**: `string`
+
+Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L16)

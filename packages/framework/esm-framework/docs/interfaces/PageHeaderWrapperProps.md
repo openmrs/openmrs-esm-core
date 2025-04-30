@@ -1,30 +1,21 @@
-[@openmrs/esm-framework](../API.md) / PageHeaderWrapperProps
+[O3 Framework](../API.md) / PageHeaderWrapperProps
 
 # Interface: PageHeaderWrapperProps
 
-## Table of contents
+Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L15)
 
-### UI Properties
-
-- [children](PageHeaderWrapperProps.md#children)
-- [className](PageHeaderWrapperProps.md#classname)
-
-## UI Properties
+## Properties
 
 ### children
 
-• **children**: `ReactNode`
+> **children**: `ReactNode`
 
-#### Defined in
+Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L16)
 
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L16)
+***
 
-___
+### className?
 
-### className
+> `optional` **className**: `string`
 
-• `Optional` **className**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L17)
+Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L17)
