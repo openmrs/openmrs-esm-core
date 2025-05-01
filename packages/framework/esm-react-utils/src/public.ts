@@ -32,6 +32,7 @@ export * from './useRenderableExtensions';
 export { useSession } from './useSession';
 export * from './useStore';
 export * from './useVisit';
+export * from './useVisitContextStore';
 export * from './useVisitTypes';
 export * from './usePagination';
 export * from './usePrimaryIdentifierResource';

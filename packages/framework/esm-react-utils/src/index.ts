@@ -40,6 +40,7 @@ export * from './usePrimaryIdentifierResource';
 export * from './useRenderableExtensions';
 export * from './useStore';
 export * from './useVisit';
+export * from './useVisitContextStore';
 export * from './useVisitTypes';
 export { useOpenmrsFetchAll, type UseServerFetchAllOptions } from './useOpenmrsFetchAll';
 export { useOpenmrsInfinite, type UseServerInfiniteOptions } from './useOpenmrsInfinite';
