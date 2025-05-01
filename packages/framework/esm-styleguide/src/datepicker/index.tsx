@@ -35,6 +35,7 @@ import { type AriaLabelingProps, type DOMProps } from '@react-types/shared';
 import { filterDOMProps, useResizeObserver } from '@react-aria/utils';
 import {
   I18nProvider,
+  type I18nProviderProps,
   type DateValue,
   mergeProps,
   useLocale,
@@ -592,6 +593,10 @@ const OpenmrsIntlLocaleContext = createContext<Intl.Locale | null>(null);
 
 const useIntlLocale = () => useContext(OpenmrsIntlLocaleContext)!;
 
+function I18nWrapper(props: I18nProviderProps): JSX.Element {
+  return React.createElement(I18nProvider as (props: I18nProviderProps) => JSX.Element, props);
+}
+
 /**
  * A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
  */
@@ -655,7 +660,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
     }, [onChangeRaw, rawOnChange]);
 
     return (
-      <I18nProvider locale={intlLocale.toString()}>
+      <I18nWrapper locale={intlLocale.toString()}>
         <div className={classNames('cds--form-item', className)}>
           <Provider values={[[OpenmrsIntlLocaleContext, intlLocale]]}>
             <DatePicker
@@ -725,7 +730,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
             </DatePicker>
           </Provider>
         </div>
-      </I18nProvider>
+      </I18nWrapper>
     );
   },
 );
