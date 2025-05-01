@@ -40,6 +40,7 @@ import {
   tryRegisterExtension,
   type OpenmrsAppRoutes,
   restBaseUrl,
+  cleanupObsoleteFeatureFlags,
 } from '@openmrs/esm-framework/src/internal';
 import { setupI18n } from './locale';
 import { registerOptionalDependencyHandler } from './optionaldeps';
@@ -429,5 +430,6 @@ export function run(configUrls: Array<string>) {
     .catch(handleInitFailure)
     .then(closeLoading)
     .then(offlineEnabled ? setupOffline : undefined)
-    .then(registerOptionalDependencyHandler);
+    .then(registerOptionalDependencyHandler)
+    .then(cleanupObsoleteFeatureFlags);
 }
