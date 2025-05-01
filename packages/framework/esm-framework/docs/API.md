@@ -4883,7 +4883,7 @@ If you are using React, use `useFeatureFlag` instead.
 
 #### Defined in
 
-[packages/framework/esm-feature-flags/src/feature-flags.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L71)
+[packages/framework/esm-feature-flags/src/feature-flags.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L87)
 
 ___
 
