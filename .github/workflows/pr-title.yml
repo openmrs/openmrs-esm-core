@@ -208,5 +208,28 @@ jobs:
 
                 Your title: "${title}"
               `);
+              return;
             }
+            
+            const titleWithTicket = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+(\w+\s?-\s?\w+)/;
+            if (titleWithTicket.test(title)) {
+              const titleWithCorrectTicketFormat = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+[A-Z][a-zA-Z0-9]*-\d{1,8}:/;
+              if (!titleWithCorrectTicketFormat.test(title)) {
+                core.setFailed(
+                  'Invalid ticket format boy'
+                )
+                return;
+              }
+            }
+            
+            const titleWithDescription = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+(?:(\w+\s?-\s?\w+):\s+)?\w.+/;
+            if (!titleWithDescription.test(title)) {
+              core.setFailed(`
+                ❌ Invalid PR title format. Must include a description.
+                Example: "(feat) O3-1234: Add new login button"
+                Your title: "${title}"
+              `);
+              return;
+            }
+              
             core.info(`✅ Valid PR title prefix: "${title}"`);
