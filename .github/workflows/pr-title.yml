@@ -13,11 +13,11 @@ jobs:
         with:
           script: |
             const title = context.payload.pull_request.title.trim();
-            const PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s/;
+            const PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) /;
             const TICKET_PRESENT_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+)/;
-            const TICKET_FORMAT_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+[A-Z][a-zA-Z0-9]*-\d{1,8}:/;
-            const DESC_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+\w(?:.+)?/;
-            const DESC_AFTER_TICKET_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+):\s+?\w(.+)?/;
+            const TICKET_FORMAT_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) [A-Z][a-zA-Z0-9]*-\d{1,8}:/;
+            const DESC_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) \w(?:.+)?/;
+            const DESC_AFTER_TICKET_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) [A-Z][a-zA-Z0-9]*-\d{1,8}: \w(.+)?/;
             
             if (!PREFIX_REGEX.test(title)) {
               core.setFailed(`
