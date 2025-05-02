@@ -190,6 +190,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const title = context.payload.pull_request.title.trim();
             const requiredPrefix = /^(?:\((feat|fix|docs)\)|BREAKING:)\s/;
             
             if (!requiredPrefix.test(title)) {
