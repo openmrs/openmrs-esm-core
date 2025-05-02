@@ -8,7 +8,7 @@ jobs:
   title-patrol:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR Title Format
+      - name: Lint PR Title
         uses: actions/github-script@v6
         with:
           script: |
