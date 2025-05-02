@@ -209,4 +209,4 @@ jobs:
                 Your title: "${title}"
               `);
             }
-            You have a valid PR title format!
+            core.info(`✅ Valid PR title prefix: "${title}"`);
