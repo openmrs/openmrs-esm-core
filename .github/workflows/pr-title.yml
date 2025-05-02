@@ -229,7 +229,7 @@ jobs:
                   Your title: "${title}"
                 `);
                 return;
-              } elese {
+              } else {
                 core.info(`✅ Valid PR title prefix: "${title}"`);
                 return;
               }
