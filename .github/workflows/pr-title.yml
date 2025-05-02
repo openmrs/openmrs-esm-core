@@ -13,13 +13,13 @@ jobs:
         with:
           script: |
             const title = context.payload.pull_request.title.trim();
-            const versionBumpMarker = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s/;
-            const ticketExists = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+)/;
-            const validTicketFormat = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+[A-Z][a-zA-Z0-9]*-\d{1,8}:/;
-            const descriptionAfterMarker = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+\w(?:.+)?/;
-            const descriptionAfterTicket = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+):\s+?\w(.+)?/;
+            const PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s/;
+            const TICKET_PRESENT_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+)/;
+            const TICKET_FORMAT_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+[A-Z][a-zA-Z0-9]*-\d{1,8}:/;
+            const DESC_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+\w(?:.+)?/;
+            const DESC_AFTER_TICKET_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+):\s+?\w(.+)?/;
             
-            if (!versionBumpMarker.test(title)) {
+            if (!PREFIX_REGEX.test(title)) {
               core.setFailed(`
                 ❌ Invalid PR title prefix format. Please follow these requirements:
 
@@ -63,8 +63,8 @@ jobs:
               return;
             }
             
-            if (ticketExists.test(title)) {
-              if (!validTicketFormat.test(title)) {
+            if (TICKET_PRESENT_REGEX.test(title)) {
+              if (!TICKET_FORMAT_REGEX.test(title)) {
                 core.setFailed(`
                   ❌ Invalid ticket number format in your PR title. Please follow these rules:
 
@@ -100,8 +100,8 @@ jobs:
                 return;
               }
             } else {
-              const descriptionAfterMarker = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+\w(?:.+)?/;
-              if (!descriptionAfterMarker.test(title)) {
+              const DESC_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+\w(?:.+)?/;
+              if (!DESC_AFTER_PREFIX_REGEX.test(title)) {
                 core.setFailed(`
                   ❌ PR title is missing a description.
 
@@ -127,7 +127,7 @@ jobs:
               }
             }
             
-            if (!descriptionAfterTicket.test(title)) {
+            if (!DESC_AFTER_TICKET_REGEX.test(title)) {
               core.setFailed(`
                 ❌ PR Title Missing a Description
 
