@@ -57,7 +57,7 @@ jobs:
 
                 WHY THIS MATTERS:
                 These labels determine version bumps when releasing modules and generate our changelogs.
-                
+
                 Need help? Ask your reviewer about which label to use!
               `);
               return;
@@ -65,33 +65,106 @@ jobs:
             
             if (ticketExists.test(title)) {
               if (!validTicketFormat.test(title)) {
-                core.setFailed(
-                  'Invalid ticket format boy'
-                )
+                core.setFailed(`
+                  ❌ Invalid ticket number format in your PR title. Please follow these rules:
+
+                  TICKET NUMBER REQUIREMENTS:
+                  • Must start with uppercase letters (e.g., O3, TRUNK, ITSMOLD)
+                  • Followed by a hyphen (-)
+                  • Followed by 1-8 digits
+                  • Must end with ": " (colon and space)
+                  
+                  VALID FORMATS:
+                  ✓ "(feat) O3-1234: Add new feature"
+                  ✓ "(fix) TRUNK-453: Fix alignment issue"
+                  ✓ "BREAKING: ITSMOLD-2932: Migrate database"
+
+                  COMMON MISTAKES:
+                  ✖ "O3-123" → Missing colon and space
+                  ✖ "o3-123: " → Lowercase prefix (should be O3)
+                  ✖ "03-123: " → Starts with number (should be O3)
+                  ✖ "TRUNK-123456789: " → Too many digits (max 8)
+                  ✖ "TRUNK-: " → Missing ticket number
+
+                  YOUR TITLE: "${title}"
+
+                  EXAMPLES OF VALID TICKETS:
+                  • O3-123
+                  • TRUNK-453
+                  • ITSMOLD-2932
+                  • IFRA-44
+                  • BIR-24
+
+                  Remember: The ticket number must be followed by ": " before your description.
+                `);
                 return;
               }
             } else {
               const descriptionAfterMarker = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+\w(?:.+)?/;
               if (!descriptionAfterMarker.test(title)) {
                 core.setFailed(`
-                  ❌ Invalid PR title format. Must include a description.
-                  Example: "(feat) O3-1234: Add new login button"
+                  ❌ PR title is missing a description.
+
+                  Please add a description after the prefix. Examples:
+                  • "(feat) Add new login button"
+                  • "(fix) Resolve header alignment issue"
+                  • "(docs) Update API documentation"
+                  • "BREAKING: Remove deprecated endpoints"
+
                   Your title: "${title}"
                 `);
                 return;
               } else {
-                core.info(`✅ Valid PR title prefix: "${title}"`);
+                core.info(`
+                  ✅ PR title looks great! Here's what we found:
+                  
+                  • Valid prefix
+                  • Has a description
+                  
+                  Good to go! 🚀
+                `);
                 return;
               }
             }
             
             if (!descriptionAfterTicket.test(title)) {
               core.setFailed(`
-                ❌ Invalid PR title format. Must include a description.
-                Example: "(feat) O3-1234: Add new login button"
-                Your title: "${title}"
+                ❌ PR Title Missing a Description
+
+                Validation Requirements:
+                - Title must include a descriptive text after the ticket reference
+                - Format: "(type) TICKET-123: Description text" 
+                - The colon (:) after ticket number must be followed by a space and description
+
+                Current Title: "${title}"
+                
+                Correct Examples:
+                • "(feat) O3-1234: Implement dark mode toggle"
+                • "(fix) TRUNK-453: Resolve header alignment issue"
+                • "BREAKING: ITSMOLD-2932: Remove deprecated API endpoints"
+
+                Please add a clear description after the ticket reference.
               `);
               return;
             }
 
-            core.info(`✅ Valid PR title: "${title}"`);
+            core.info(`
+              ✅ PR Title Validation Passed - All Requirements Met
+
+              ┌──────────────────────────────────────────────────────┐
+              │  PR TITLE VALIDATION SUMMARY                         │
+              ├──────────────────────────────────────────────────────┤
+              │  ✓ Valid Prefix:                                     |
+              │  ✓ Ticket Format:                                    |
+              │  ✓ Description:                                      |
+              ├──────────────────────────────────────────────────────┤
+              │  Full Title: "${title}"                              │
+              └──────────────────────────────────────────────────────┘
+
+              All checks passed:
+              • Conventional commit prefix validated
+              • Ticket number format correct (UPPERCASE-123:)
+              • Description present and properly formatted
+
+              Ready for review! 🚀
+            `);
