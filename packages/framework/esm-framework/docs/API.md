@@ -191,6 +191,7 @@
 - [isOnline](API.md#isonline)
 - [useFhirFetchAll](API.md#usefhirfetchall)
 - [useFhirInfinite](API.md#usefhirinfinite)
+- [useVisitContextStore](API.md#usevisitcontextstore)
 
 ### Store Functions
 
@@ -233,6 +234,7 @@
 - [useLayoutType](API.md#uselayouttype)
 - [useLeftNavStore](API.md#useleftnavstore)
 - [useOnClickOutside](API.md#useonclickoutside)
+- [useOnVisible](API.md#useonvisible)
 - [useOpenmrsFetchAll](API.md#useopenmrsfetchall)
 - [useOpenmrsInfinite](API.md#useopenmrsinfinite)
 - [useOpenmrsPagination](API.md#useopenmrspagination)
@@ -544,7 +546,7 @@ A type for any of the acceptable date formats
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L93)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L94)
 
 ___
 
@@ -846,7 +848,7 @@ ___
 
 ### Actions
 
-Ƭ **Actions**<`T`\>: (`store`: `StoreApi`<`T`\>) => `Record`<`string`, [`ActionFunction`](API.md#actionfunction)<`T`\>\> \| `Record`<`string`, [`ActionFunction`](API.md#actionfunction)<`T`\>\>
+Ƭ **Actions**<`T`\>: (`store`: `StoreApi`<`T`\>) => `ActionFunctionsRecord`<`T`\> \| `ActionFunctionsRecord`<`T`\>
 
 #### Type parameters
 
@@ -856,21 +858,24 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L7)
+[packages/framework/esm-react-utils/src/useStore.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L10)
 
 ___
 
 ### BoundActions
 
-Ƭ **BoundActions**: `Object`
+Ƭ **BoundActions**<`T`, `A`\>: `A` extends `ActionFunctionsRecord`<`T`\> ? `BindFunctionsIn`<`A`\> : `A` extends (`store`: `StoreApi`<`T`\>) => `ActionFunctionsRecord`<`T`\> ? `BindFunctionsIn`<`ActionFunctionsRecord`<`T`\>\> : `never`
 
-#### Index signature
+#### Type parameters
 
-▪ [key: `string`]: (...`args`: `any`[]) => `void`
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `A` | extends [`Actions`](API.md#actions)<`T`\> |
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L10)
+[packages/framework/esm-react-utils/src/useStore.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L12)
 
 ___
 
@@ -1044,7 +1049,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L30)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L39)
 
 ___
 
@@ -1066,7 +1071,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L113)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L127)
 
 ___
 
@@ -1761,7 +1766,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx#L15)
+[packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx#L16)
 
 ___
 
@@ -1891,7 +1896,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:598](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L598)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:603](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L603)
 
 ___
 
@@ -2732,7 +2737,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L47)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L57)
 
 ___
 
@@ -2770,7 +2775,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L96)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L110)
 
 ___
 
@@ -2971,7 +2976,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L71)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L81)
 
 ___
 
@@ -2992,7 +2997,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L51)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L61)
 
 ___
 
@@ -3101,7 +3106,7 @@ ___
 
 ### updateVisit
 
-▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`Visit`](interfaces/Visit.md)\>\>
 
 #### Parameters
 
@@ -3113,11 +3118,11 @@ ___
 
 #### Returns
 
-`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`Visit`](interfaces/Visit.md)\>\>
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L82)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L92)
 
 ___
 
@@ -4783,33 +4788,45 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
-▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**<`A`\>(`actions`): `T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `A` | extends [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
+| `actions` | `A` |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
-▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**<`A`\>(`actions?`): `T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `A` | extends [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
+| `actions?` | `A` |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Defined in
 
@@ -4882,7 +4899,7 @@ If you are using React, use `useFeatureFlag` instead.
 
 #### Defined in
 
-[packages/framework/esm-feature-flags/src/feature-flags.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L71)
+[packages/framework/esm-feature-flags/src/feature-flags.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L87)
 
 ___
 
@@ -6578,6 +6595,28 @@ a UseServerInfiniteReturnObject object
 
 ___
 
+### useVisitContextStore
+
+▸ **useVisitContextStore**(`mutateVisitCallback?`): [`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: `string` = newSelectedVisit.uuid; `patientUuid`: `undefined` \| `string` = newSelectedVisit.patient.uuid }  }\>
+
+A hook to return the visit context store and corresponding actions.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `mutateVisitCallback?` | () => `void` | An optional mutate callback to register. If provided, the store action's `mutateVisit` function will invoke this callback (along with any other callbacks also registered into the store) |
+
+#### Returns
+
+[`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: `string` = newSelectedVisit.uuid; `patientUuid`: `undefined` \| `string` = newSelectedVisit.patient.uuid }  }\>
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useVisitContextStore.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitContextStore.ts#L28)
+
+___
+
 ## Store Functions
 
 ### createGlobalStore
@@ -6613,7 +6652,7 @@ ___
 
 ### createUseStore
 
-▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)<`T`\>) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)<`T`\>) => `T` & [`BoundActions`](API.md#boundactions)
+▸ **createUseStore**<`T`\>(`store`): () => `T`<A\>(`actions`: `A`) => `T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\><A\>(`actions?`: `A`) => `T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 Whenever possible, use `useStore(yourStore)` instead. This function is for creating a
 custom hook for a specific store.
@@ -6640,33 +6679,45 @@ custom hook for a specific store.
 
 `T`
 
-▸ (`actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ <`A`\>(`actions`): `T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `A` | extends [`Actions`](API.md#actions)<`T`\> |
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [`Actions`](API.md#actions)<`T`\> |
+| `actions` | `A` |
 
 ##### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
-▸ (`actions?`): `T` & [`BoundActions`](API.md#boundactions)
+▸ <`A`\>(`actions?`): `T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `A` | extends [`Actions`](API.md#actions)<`T`\> |
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions)<`T`\> |
+| `actions?` | `A` |
 
 ##### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L63)
+[packages/framework/esm-react-utils/src/useStore.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L95)
 
 ___
 
@@ -6773,14 +6824,13 @@ ___
 
 ### useStore
 
-▸ **useStore**<`T`, `U`\>(`store`): `T`
+▸ **useStore**<`T`\>(`store`): `T`
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-| `U` |
 
 #### Parameters
 
@@ -6794,7 +6844,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L36)
+[packages/framework/esm-react-utils/src/useStore.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L53)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`): `U`
 
@@ -6818,16 +6868,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L37)
+[packages/framework/esm-react-utils/src/useStore.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L54)
 
-▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useStore**<`T`, `U`, `A`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
-| `U` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | `U` |
+| `A` | extends [`Actions`](API.md#actions)<`T`\> |
 
 #### Parameters
 
@@ -6835,24 +6886,25 @@ ___
 | :------ | :------ |
 | `store` | `StoreApi`<`T`\> |
 | `select` | `undefined` |
-| `actions` | [`Actions`](API.md#actions)<`T`\> |
+| `actions` | `A` |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L38)
+[packages/framework/esm-react-utils/src/useStore.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L55)
 
-▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)
+▸ **useStore**<`T`, `U`, `A`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
-| `U` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | `U` |
+| `A` | extends [`Actions`](API.md#actions)<`T`\> |
 
 #### Parameters
 
@@ -6860,42 +6912,43 @@ ___
 | :------ | :------ |
 | `store` | `StoreApi`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
-| `actions` | [`Actions`](API.md#actions)<`T`\> |
+| `actions` | `A` |
 
 #### Returns
 
-`U` & [`BoundActions`](API.md#boundactions)
+`U` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L39)
+[packages/framework/esm-react-utils/src/useStore.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L60)
 
 ___
 
 ### useStoreWithActions
 
-▸ **useStoreWithActions**<`T`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useStoreWithActions**<`T`, `A`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `A` | extends [`Actions`](API.md#actions)<`T`\> |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `store` | `StoreApi`<`T`\> | A zustand store |
-| `actions` | [`Actions`](API.md#actions)<`T`\> |  |
+| `actions` | `A` |  |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`T`, `A`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L55)
+[packages/framework/esm-react-utils/src/useStore.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L87)
 
 ___
 
@@ -7555,6 +7608,32 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useOnClickOutside.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.ts#L4)
+
+___
+
+### useOnVisible
+
+▸ **useOnVisible**(`callBack`): `MutableRefObject`<`HTMLElement`\>
+
+Returns a ref that can be used on a HTML component to trigger
+an action when the component is scrolled into visible view,
+This is particularly useful for infinite scrolling UIs to load data on demand.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `callBack` | () => `void` | The callback to run when the component is scrolled into visible view.   Care should be taken with this param. The callback should   be cached across re-renders (via useCallback) and it should have   logic to avoid doing work multiple times while scrolling. |
+
+#### Returns
+
+`MutableRefObject`<`HTMLElement`\>
+
+a ref that can be passed to an HTML Element
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOnVisible.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnVisible.ts#L15)
 
 ___
 

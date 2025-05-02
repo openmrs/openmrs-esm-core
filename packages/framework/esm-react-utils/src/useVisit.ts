@@ -4,8 +4,8 @@ import { defaultVisitCustomRepresentation, getVisitStore, openmrsFetch } from '@
 import useSWR from 'swr';
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
-import { useMemo } from 'react';
-import { useStore } from './useStore';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useVisitContextStore } from './useVisitContextStore';
 
 dayjs.extend(isToday);
 
@@ -40,7 +40,7 @@ export interface VisitReturnType {
  * @param representation The custom representation of the visit
  */
 export function useVisit(patientUuid: string, representation = defaultVisitCustomRepresentation): VisitReturnType {
-  const { patientUuid: visitStorePatientUuid, manuallySetVisitUuid } = useStore(getVisitStore());
+  const { patientUuid: visitStorePatientUuid, manuallySetVisitUuid, setVisitContext } = useVisitContextStore();
   // Ignore the visit store data if it is not for this patient
   const retrospectiveVisitUuid = patientUuid && visitStorePatientUuid == patientUuid ? manuallySetVisitUuid : null;
   const activeVisitUrlSuffix = `?patient=${patientUuid}&v=${representation}&includeInactive=false`;
@@ -74,12 +74,22 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     [retroData, activeVisit, retrospectiveVisitUuid],
   );
 
+  useEffect(() => {
+    if (currentVisit && currentVisit.uuid !== manuallySetVisitUuid) {
+      setVisitContext(currentVisit);
+    }
+  }, [currentVisit, manuallySetVisitUuid]);
+
+  const mutateVisit = useCallback(() => {
+    activeMutate();
+    retroMutate();
+  }, [activeVisit, currentVisit, activeMutate, retroMutate]);
+
+  useVisitContextStore(mutateVisit);
+
   return {
     error: activeError || retroError,
-    mutate: () => {
-      activeMutate();
-      retroMutate();
-    },
+    mutate: mutateVisit,
     isValidating: activeIsValidating || retroIsValidating,
     activeVisit,
     currentVisit,

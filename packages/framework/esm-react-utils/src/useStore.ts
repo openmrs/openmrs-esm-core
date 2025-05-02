@@ -4,25 +4,42 @@ import { useEffect, useMemo, useState } from 'react';
 import type { StoreApi } from 'zustand';
 
 export type ActionFunction<T> = (state: T, ...args: any[]) => Partial<T>;
-export type Actions<T> =
-  | ((store: StoreApi<T>) => Record<string, ActionFunction<T>>)
-  | Record<string, ActionFunction<T>>;
-export type BoundActions = { [key: string]: (...args: any[]) => void };
 
-function bindActions<T>(store: StoreApi<T>, actions: Actions<T>): BoundActions {
+type ActionFunctionsRecord<T> = Record<string, ActionFunction<T>>;
+
+export type Actions<T> = ((store: StoreApi<T>) => ActionFunctionsRecord<T>) | ActionFunctionsRecord<T>;
+
+export type BoundActions<T, A extends Actions<T>> = A extends ActionFunctionsRecord<T>
+  ? BindFunctionsIn<A>
+  : A extends (store: StoreApi<T>) => ActionFunctionsRecord<T>
+    ? BindFunctionsIn<ActionFunctionsRecord<T>>
+    : never;
+
+// Given function type F, returns a new function type
+// with F's first input argument removed and its return type set to void
+type Bind<F extends (...args: any[]) => any> = F extends (firstArg, ...restArgs: infer RestArgsType) => any
+  ? (...args: RestArgsType) => void
+  : never;
+
+// Given record type R, returns a new record type with Bind applied to every function in R
+type BindFunctionsIn<R extends Record<string, (...args: any[]) => any>> = {
+  [Prop in keyof R]: Bind<R[Prop]>;
+};
+
+function bindActions<T>(store: StoreApi<T>, actions: Actions<T>): BoundActions<T, Actions<T>> {
   if (typeof actions == 'function') {
     actions = actions(store);
   }
 
   const bound = {};
 
-  for (let i in actions) {
-    bound[i] = function (...args: Array<unknown>) {
+  for (const [actionName, actionFunction] of Object.entries(actions)) {
+    const boundFunction: Bind<ActionFunction<T>> = function (...args) {
       store.setState((state) => {
-        let _args = [state, ...args];
-        return actions[i](..._args);
+        return actionFunction(state, ...args);
       });
     };
+    bound[actionName] = boundFunction;
   }
 
   return bound;
@@ -33,15 +50,30 @@ const defaultSelectFunction =
   (x: T) =>
     x as unknown as U;
 
-function useStore<T, U>(store: StoreApi<T>): T;
+function useStore<T>(store: StoreApi<T>): T;
 function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U): U;
-function useStore<T, U>(store: StoreApi<T>, select: undefined, actions: Actions<T>): T & BoundActions;
-function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U, actions: Actions<T>): U & BoundActions;
-function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U = defaultSelectFunction(), actions?: Actions<T>) {
+function useStore<T, U, A extends Actions<T>>(
+  store: StoreApi<T>,
+  select: undefined,
+  actions: A,
+): T & BoundActions<T, A>;
+function useStore<T, U, A extends Actions<T>>(
+  store: StoreApi<T>,
+  select: (state: T) => U,
+  actions: A,
+): U & BoundActions<T, A>;
+function useStore<T, U, A extends Actions<T>>(
+  store: StoreApi<T>,
+  select: (state: T) => U = defaultSelectFunction(),
+  actions?: A,
+) {
   const [state, setState] = useState<U>(() => select(store.getState()));
   useEffect(() => subscribeTo(store, select, setState), [store, select]);
 
-  let boundActions: BoundActions = useMemo(() => (actions ? bindActions(store, actions) : {}), [store, actions]);
+  let boundActions: BoundActions<T, Actions<T>> = useMemo(
+    () => (actions ? bindActions(store, actions) : {}),
+    [store, actions],
+  );
 
   return { ...state, ...boundActions };
 }
@@ -52,7 +84,7 @@ function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U = defaultSel
  * @param actions
  * @returns
  */
-function useStoreWithActions<T>(store: StoreApi<T>, actions: Actions<T>): T & BoundActions {
+function useStoreWithActions<T, A extends Actions<T>>(store: StoreApi<T>, actions: A): T & BoundActions<T, A> {
   return useStore(store, defaultSelectFunction<T, T>(), actions);
 }
 
@@ -62,12 +94,15 @@ function useStoreWithActions<T>(store: StoreApi<T>, actions: Actions<T>): T & Bo
  */
 function createUseStore<T>(store: StoreApi<T>) {
   function useStore(): T;
-  function useStore(actions: Actions<T>): T & BoundActions;
-  function useStore(actions?: Actions<T>): T & BoundActions;
-  function useStore(actions?: Actions<T>) {
+  function useStore<A extends Actions<T>>(actions: A): T & BoundActions<T, A>;
+  function useStore<A extends Actions<T>>(actions?: A): T & BoundActions<T, A>;
+  function useStore<A extends Actions<T>>(actions?: A) {
     const [state, set] = useState(store.getState());
     useEffect(() => store.subscribe((state) => set(state)), []);
-    let boundActions: BoundActions = useMemo(() => (actions ? bindActions(store, actions) : {}), [actions]);
+    let boundActions: BoundActions<T, Actions<T>> = useMemo(
+      () => (actions ? bindActions(store, actions) : {}),
+      [actions],
+    );
 
     return { ...state, ...boundActions };
   }

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
+import { useOnVisible } from '@openmrs/esm-framework';
 import { useTranslation } from 'react-i18next';
 import { InlineLoading, RadioButton, RadioButtonGroup, RadioButtonSkeleton, Search } from '@carbon/react';
 import { useLocationByUuid, useLocations } from './location-picker.resource';
@@ -44,26 +45,15 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
     setSearchTerm(location);
   };
 
-  // Infinite scroll
-  const observer = useRef<IntersectionObserver | null>(null);
-  const loadingIconRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (loadingNewData) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && hasMore) {
-            setPage((page) => page + 1);
-          }
-        },
-        {
-          threshold: 1,
-        },
-      );
-      if (node) observer.current.observe(node);
-    },
-    [loadingNewData, hasMore, setPage],
-  );
+  const loadMore = useCallback(() => {
+    if (loadingNewData || !hasMore) {
+      return;
+    } else {
+      setPage((page) => page + 1);
+    }
+  }, [loadingNewData, hasMore, setPage]);
+
+  const loadingIconRef = useOnVisible(loadMore);
 
   const reloadIndex = hasMore ? locations.length - locationsPerRequest / 2 : -1;
 
