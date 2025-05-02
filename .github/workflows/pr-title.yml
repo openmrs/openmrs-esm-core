@@ -1,0 +1,192 @@
+name: Policing PR Titles
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  title-patrol:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint PR Title
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const title = context.payload.pull_request.title.trim();
+            const PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) /;
+            const TICKET_PRESENT_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+)/;
+            const TICKET_FORMAT_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) [A-Z][a-zA-Z0-9]*-\d{1,8}:/;
+            const DESC_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) \w(?:.+)?/;
+            const DESC_AFTER_TICKET_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) [A-Z][a-zA-Z0-9]*-\d{1,8}: \w(.+)?/;
+            const MULTI_SPACES_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s{2,}/;
+            const MULTI_SPACES_AFTER_TICKET_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)(\s{2,}| )[A-Z][a-zA-Z0-9]*-\d{1,8}:\s{2,}/;
+
+            if (MULTI_SPACES_AFTER_PREFIX_REGEX.test(title) || MULTI_SPACES_AFTER_TICKET_REGEX.test(title)) {
+              core.setFailed(`
+                ❌ Invalid PR title format. Please ensure there are no multiple spaces after the prefix or ticket number.
+
+                COMMON MISTAKES:
+                ✖ "(feat)  O3-1234:  Add new feature" → Extra spaces after "(feat)" and "O3-1234:"
+                ✖ "BREAKING:  ITSMOLD-2932:  Migrate database" → Extra spaces after "BREAKING:" and "ITSMOLD-2932:"
+
+                YOUR TITLE: "${title}"
+
+                VALID EXAMPLES:
+                ✓ "(feat) O3-1234: Add new feature"
+                ✓ "(fix) TRUNK-453: Fix alignment issue"
+                ✓ "BREAKING: ITSMOLD-2932: Migrate database"
+
+                Please correct the spacing in your title to only single spaces.
+              `);
+              return;
+            }
+            
+            if (!PREFIX_REGEX.test(title)) {
+              core.setFailed(`
+                ❌ Invalid PR title prefix format. Please follow these requirements:
+
+                REQUIRED FORMAT:
+                • Start with one of these prefixes:
+                  - "(feat) "     (note the space after)
+                  - "(fix) "      (note the space after)
+                  - "(docs) "     (note the space after)
+                  - "(chore) "    (note the space after)
+                  - "(test) "     (note the space after)
+                  - "BREAKING: "  (note the space after)
+
+                • Optionally include a ticket number (e.g., "O3-1234:")
+                • Follow with a descriptive title
+
+                COMMON MISTAKES TO AVOID:
+                ✖ "(feat)TRUNK-48456" → Missing space after "(feat)"
+                ✖ "BREAKING:for breaking changes" → Missing space after "BREAKING:"
+                ✖ "(feat TRUNK-48456" → Missing closing parenthesis
+                ✖ "feat: O3-486" → Wrong format (should use parentheses)
+                ✖ "(BREAKING): O3-345" → Wrong format (DON'T use parentheses for BREAKING)
+
+                VALID EXAMPLES:
+                ✓ "(chore) Remove orders widget feature flag"
+                ✓ "(fix) O3-2657: Show inline errors"
+                ✓ "(feat) O3-2724: Move overlays into the framework"
+                ✓ "BREAKING: Upgrade to Carbon v11"
+                ✓ "BREAKING: TRUNK-874: Upgrade to React v18"
+                ✓ "(docs) Add steps for running E2E tests"
+
+                YOUR TITLE: "${title}"
+                PROBLEM: ${title.match(/^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)/) ? 
+                          'Missing required space after the prefix' : 
+                          'Missing or invalid prefix'}
+
+                WHY THIS MATTERS:
+                These labels determine version bumps when releasing modules and generate our changelogs.
+
+                Need help? Ask your reviewer about which label to use!
+              `);
+              return;
+            }
+            
+            if (TICKET_PRESENT_REGEX.test(title)) {
+              if (!TICKET_FORMAT_REGEX.test(title)) {
+                core.setFailed(`
+                  ❌ Invalid ticket number format in your PR title. Please follow these rules:
+
+                  TICKET NUMBER REQUIREMENTS:
+                  • Must start with uppercase letters (e.g., O3, TRUNK, ITSMOLD)
+                  • Followed by a hyphen (-)
+                  • Followed by 1-8 digits
+                  • Must end with ": " (colon and space)
+                  
+                  VALID FORMATS:
+                  ✓ "(feat) O3-1234: Add new feature"
+                  ✓ "(fix) TRUNK-453: Fix alignment issue"
+                  ✓ "BREAKING: ITSMOLD-2932: Migrate database"
+
+                  COMMON MISTAKES:
+                  ✖ "O3-123" → Missing colon and space
+                  ✖ "o3-123: " → Lowercase prefix (should be O3)
+                  ✖ "03-123: " → Starts with number (should be O3)
+                  ✖ "TRUNK-123456789: " → Too many digits (max 8)
+                  ✖ "TRUNK-: " → Missing ticket number
+
+                  YOUR TITLE: "${title}"
+
+                  EXAMPLES OF VALID TICKETS:
+                  • O3-123
+                  • TRUNK-453
+                  • ITSMOLD-2932
+                  • IFRA-44
+                  • BIR-24
+
+                  Remember: The ticket number must be followed by ": " before your description.
+                `);
+                return;
+              }
+            } else {
+              const DESC_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+\w(?:.+)?/;
+              if (!DESC_AFTER_PREFIX_REGEX.test(title)) {
+                core.setFailed(`
+                  ❌ PR title is missing a description.
+
+                  Please add a description after the prefix. Examples:
+                  • "(feat) Add new login button"
+                  • "(fix) Resolve header alignment issue"
+                  • "(docs) Update API documentation"
+                  • "BREAKING: Remove deprecated endpoints"
+
+                  Your title: "${title}"
+                `);
+                return;
+              } else {
+                core.info(`
+                  ✅ PR title looks great! Here's what we found:
+                  
+                  • Valid prefix
+                  • Has a description
+                  
+                  Good to go! 🚀
+                `);
+                return;
+              }
+            }
+            
+            if (!DESC_AFTER_TICKET_REGEX.test(title)) {
+              core.setFailed(`
+                ❌ PR Title Missing a Description
+
+                Validation Requirements:
+                - Title must include a descriptive text after the ticket reference
+                - Format: "(type) TICKET-123: Description text" 
+                - The colon (:) after ticket number must be followed by a space and description
+
+                Current Title: "${title}"
+                
+                Correct Examples:
+                • "(feat) O3-1234: Implement dark mode toggle"
+                • "(fix) TRUNK-453: Resolve header alignment issue"
+                • "BREAKING: ITSMOLD-2932: Remove deprecated API endpoints"
+
+                Please add a clear description after the ticket reference.
+              `);
+              return;
+            }
+
+            core.info(`
+              ✅ PR Title Validation Passed - All Requirements Met
+
+              ┌──────────────────────────────────────────────────────┐
+              │  PR TITLE VALIDATION SUMMARY                         │
+              ├──────────────────────────────────────────────────────┤
+              │  ✓ Valid Prefix:                                     |
+              │  ✓ Ticket Format:                                    |
+              │  ✓ Description:                                      |
+              ├──────────────────────────────────────────────────────┤
+              │  Full Title: "${title}"                              │
+              └──────────────────────────────────────────────────────┘
+
+              All checks passed:
+              • Conventional commit prefix validated
+              • Ticket number format correct (UPPERCASE-123:)
+              • Description present and properly formatted
+
+              Ready for review! 🚀
+            `);
