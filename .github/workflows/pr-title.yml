@@ -18,6 +18,28 @@ jobs:
             const TICKET_FORMAT_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) [A-Z][a-zA-Z0-9]*-\d{1,8}:/;
             const DESC_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) \w(?:.+)?/;
             const DESC_AFTER_TICKET_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:) [A-Z][a-zA-Z0-9]*-\d{1,8}: \w(.+)?/;
+            const MULTI_SPACES_AFTER_PREFIX_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s{2,}/;
+            const MULTI_SPACES_AFTER_TICKET_REGEX = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)(\s{2,}| )[A-Z][a-zA-Z0-9]*-\d{1,8}:\s{2,}/;
+
+            if (MULTI_SPACES_AFTER_PREFIX_REGEX.test(title) || MULTI_SPACES_AFTER_TICKET_REGEX.test(title)) {
+              core.setFailed(`
+                ❌ Invalid PR title format. Please ensure there are no multiple spaces after the prefix or ticket number.
+
+                COMMON MISTAKES:
+                ✖ "(feat)  O3-1234:  Add new feature" → Extra spaces after "(feat)" and "O3-1234:"
+                ✖ "BREAKING:  ITSMOLD-2932:  Migrate database" → Extra spaces after "BREAKING:" and "ITSMOLD-2932:"
+
+                YOUR TITLE: "${title}"
+
+                VALID EXAMPLES:
+                ✓ "(feat) O3-1234: Add new feature"
+                ✓ "(fix) TRUNK-453: Fix alignment issue"
+                ✓ "BREAKING: ITSMOLD-2932: Migrate database"
+
+                Please correct the spacing in your title to only single spaces.
+              `);
+              return;
+            }
             
             if (!PREFIX_REGEX.test(title)) {
               core.setFailed(`
