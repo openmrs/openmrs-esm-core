@@ -220,9 +220,22 @@ jobs:
                 )
                 return;
               }
+            } else {
+              const titleWithDescription = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+\w(?:.+)?/;
+              if (!titleWithDescription.test(title)) {
+                core.setFailed(`
+                  ❌ Invalid PR title format. Must include a description.
+                  Example: "(feat) O3-1234: Add new login button"
+                  Your title: "${title}"
+                `);
+                return;
+              } elese {
+                core.info(`✅ Valid PR title prefix: "${title}"`);
+                return;
+              }
             }
             
-            const titleWithDescription = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+(?:(\w+\s?-\s?\w+):\s+)?\w.+/;
+            const titleWithDescription = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+(\w+\s?-\s?\w+):\s+?\w(.+)?/;
             if (!titleWithDescription.test(title)) {
               core.setFailed(`
                 ❌ Invalid PR title format. Must include a description.
@@ -231,5 +244,5 @@ jobs:
               `);
               return;
             }
-              
+
             core.info(`✅ Valid PR title prefix: "${title}"`);
