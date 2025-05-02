@@ -1,11 +1,11 @@
-name: PR Title Checker
+name: PR Title Cop
 
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
 
 jobs:
-  validate-title:
+  title-patrol:
     runs-on: ubuntu-latest
     steps:
       - name: Check PR Title Format
