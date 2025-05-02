@@ -13,30 +13,55 @@ jobs:
         with:
           script: |
             const title = context.payload.pull_request.title.trim();
-            const versionBumpMarker = /^(?:\((feat|fix|docs)\)|BREAKING:)\s/;
-            const ticketExists = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+(\w+\s?-\s?\w+)/;
-            const validTicketFormat = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+[A-Z][a-zA-Z0-9]*-\d{1,8}:/;
-            const descriptionAfterMarker = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+\w(?:.+)?/;
-            const descriptionAfterTicket = /^(?:\((feat|fix|docs)\)|BREAKING:)\s+(\w+\s?-\s?\w+):\s+?\w(.+)?/;
+            const versionBumpMarker = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s/;
+            const ticketExists = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+)/;
+            const validTicketFormat = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+[A-Z][a-zA-Z0-9]*-\d{1,8}:/;
+            const descriptionAfterMarker = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+\w(?:.+)?/;
+            const descriptionAfterTicket = /^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)\s+(\w+\s?-\s?\w+):\s+?\w(.+)?/;
             
             if (!versionBumpMarker.test(title)) {
               core.setFailed(`
-                ❌ Invalid PR title prefix. Must start with one of these:
-                • "(feat) "
-                • "(fix) "
-                • "(docs) "
-                • "BREAKING: "
+                ❌ Invalid PR title prefix format. Please follow these requirements:
 
-                Examples:
-                - "(feat) Add new login button"
-                - "(fix) O3-1234: Resize header"
-                - "BREAKING: Remove deprecated API"
+                REQUIRED FORMAT:
+                • Start with one of these prefixes:
+                  - "(feat) "     (note the space after)
+                  - "(fix) "      (note the space after)
+                  - "(docs) "     (note the space after)
+                  - "(chore) "    (note the space after)
+                  - "(test) "     (note the space after)
+                  - "BREAKING: "  (note the space after)
 
-                Your title: "${title}"
+                • Optionally include a ticket number (e.g., "O3-1234:")
+                • Follow with a descriptive title
+
+                COMMON MISTAKES TO AVOID:
+                ✖ "(feat)TRUNK-48456" → Missing space after "(feat)"
+                ✖ "BREAKING:for breaking changes" → Missing space after "BREAKING:"
+                ✖ "(feat TRUNK-48456" → Missing closing parenthesis
+                ✖ "feat: O3-486" → Wrong format (should use parentheses)
+                ✖ "(BREAKING): O3-345" → Wrong format (DON'T use parentheses for BREAKING)
+
+                VALID EXAMPLES:
+                ✓ "(chore) Remove orders widget feature flag"
+                ✓ "(fix) O3-2657: Show inline errors"
+                ✓ "(feat) O3-2724: Move overlays into the framework"
+                ✓ "BREAKING: Upgrade to Carbon v11"
+                ✓ "BREAKING: TRUNK-874: Upgrade to React v18"
+                ✓ "(docs) Add steps for running E2E tests"
+
+                YOUR TITLE: "${title}"
+                PROBLEM: ${title.match(/^(?:\((feat|fix|docs|chore|test)\)|BREAKING:)/) ? 
+                          'Missing required space after the prefix' : 
+                          'Missing or invalid prefix'}
+
+                WHY THIS MATTERS:
+                These labels determine version bumps when releasing modules and generate our changelogs.
+                
+                Need help? Ask your reviewer about which label to use!
               `);
               return;
             }
-            
             
             if (ticketExists.test(title)) {
               if (!validTicketFormat.test(title)) {
