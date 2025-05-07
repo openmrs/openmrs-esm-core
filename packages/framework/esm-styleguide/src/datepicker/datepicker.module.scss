@@ -360,3 +360,14 @@
     background-color: var(--cds-link-primary, theme.$link-primary);
   }
 }
+
+.cds--date-picker--disabled .cds--date-picker-input__wrapper {
+  background-color: $ui-03;
+  color: $ui-04;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.cds--date-picker--disabled .cds--date-picker__calendar {
+  display: none;
+}
