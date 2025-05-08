@@ -45,6 +45,7 @@
   width: 100%;
   display: flex;
   overflow-y: auto;
+  transition: max-height 0.3s ease;
 
   :global(.ace_scroller) {
     background-color: theme.$background;
@@ -62,6 +63,10 @@
   :global(.ace_cursor) {
     color: theme.$text-secondary;
   }
+}
+
+.expandedContent {
+  max-height: 80vh;
 }
 
 .configTreePane {
