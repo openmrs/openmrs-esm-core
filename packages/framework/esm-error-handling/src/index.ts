@@ -11,7 +11,7 @@ window.onerror = function (error) {
   return false;
 };
 
-window.onunhandledrejection = function (event) {
+window.onunhandledrejection = function (event: PromiseRejectionEvent) {
   console.error('Unhandled rejection: ', event.reason);
   dispatchToastShown({
     description: event.reason ?? 'Oops! An unhandled promise rejection occurred.',
@@ -20,7 +20,7 @@ window.onunhandledrejection = function (event) {
   });
 };
 
-export function reportError(err) {
+export function reportError(err: unknown) {
   const error = ensureErrorObject(err);
   setTimeout(() => {
     throw error;
@@ -29,7 +29,7 @@ export function reportError(err) {
 
 export function createErrorHandler() {
   const outgoingErr = Error();
-  return (incomingErr) => {
+  return (incomingErr: unknown) => {
     const finalErr = ensureErrorObject(incomingErr);
     finalErr.stack += `\nAsync stacktrace:\n${outgoingErr.stack}`;
     reportError(incomingErr);
@@ -37,7 +37,7 @@ export function createErrorHandler() {
 }
 
 function ensureErrorObject(thing: any) {
-  let message;
+  let message: string;
 
   if (thing instanceof Error) {
     return thing;

@@ -12,12 +12,6 @@ accounted for, use OpenmrsResource instead.
 
   ↳ [`OpenmrsResource`](OpenmrsResource.md)
 
-  ↳ [`PatientIdentifierType`](PatientIdentifierType.md)
-
-  ↳ [`Patient`](Patient.md)
-
-  ↳ [`PatientIdentifier`](PatientIdentifier.md)
-
   ↳ [`PersonAttribute`](PersonAttribute.md)
 
   ↳ [`Person`](Person.md)

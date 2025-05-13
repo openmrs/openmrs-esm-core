@@ -1,6 +1,6 @@
 @use '@carbon/colors';
 @use '@carbon/layout';
-@use '@openmrs/esm-styleguide/src/vars' as *;
+@use '../vars' as *;
 
 .container {
   width: auto;

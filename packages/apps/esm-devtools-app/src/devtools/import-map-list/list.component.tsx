@@ -211,7 +211,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
           className={styles.imoSearchBox}
           aria-label={t('searchModules', 'Search modules')}
           placeholder={t('searchModules', 'Search modules')}
-          onChange={(evt: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(evt.target.value)}
+          onChange={(evt) => setSearchQuery(evt.target.value)}
           labelText=""
           size="lg"
         />

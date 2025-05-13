@@ -4,12 +4,6 @@
 
 See [WorkspaceDefinition](../API.md#workspacedefinition) for more information about these properties
 
-## Hierarchy
-
-- **`WorkspaceRegistration`**
-
-  ↳ [`OpenWorkspace`](OpenWorkspace.md)
-
 ## Table of contents
 
 ### Properties

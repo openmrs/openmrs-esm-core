@@ -1,10 +1,12 @@
 import React from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import { useConfig, usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
 import PatientBannerPatientIdentifiers from './patient-banner-patient-identifiers.component';
 
-const mockUsePrimaryIdentifierCode = jest.mocked(usePrimaryIdentifierCode);
-const mockUseConfig = jest.mocked(useConfig);
+const mockUsePrimaryIdentifierCode = vi.mocked(usePrimaryIdentifierCode);
+const mockUseConfig = vi.mocked(useConfig);
 
 describe('PatientBannerPatientIdentifiers', () => {
   const mockIdentifiers = [

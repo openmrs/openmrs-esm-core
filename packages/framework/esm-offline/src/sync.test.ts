@@ -1,3 +1,4 @@
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import 'fake-indexeddb/auto';
 import { getLoggedInUser } from '@openmrs/esm-api';
 import type { QueueItemDescriptor } from './sync';
@@ -30,8 +31,8 @@ const defaultMockSyncItemDescriptor: QueueItemDescriptor = {
   patientUuid: '00000000-0000-0000-0000-000000000001',
 };
 
-jest.mock('@openmrs/esm-api', () => ({
-  getLoggedInUser: jest.fn(async () => ({ uuid: mockUserId })),
+vi.mock('@openmrs/esm-api', () => ({
+  getLoggedInUser: vi.fn(async () => ({ uuid: mockUserId })),
 }));
 
 afterEach(async () => {
@@ -43,12 +44,12 @@ describe('Sync Queue', () => {
   beforeAll(() => {
     // We want to control the timers to ensure that we can test the `createdOn` attribute
     // of the sync item (which is created using `new Date()`).
-    jest.useFakeTimers();
-    jest.setSystemTime(systemTime);
+    vi.useFakeTimers();
+    vi.setSystemTime(systemTime);
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('enqueues sync item with expected attributes', async () => {

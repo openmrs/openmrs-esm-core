@@ -5,25 +5,6 @@ import { setupBranding } from './brand';
 import { esmStyleGuideSchema } from './config-schema';
 import { setupPictograms } from './pictograms/pictogram-registration';
 
-export * from './breakpoints';
-export * from './custom-overflow-menu';
-export * from './datepicker';
-export * from './diagnosis-tags';
-export * from './error-state';
-export * from './icons';
-export * from './left-nav';
-export * from './modals';
-export * from './notifications';
-export * from './page-header';
-export * from './patient-banner';
-export * from './patient-photo';
-export * from './pictograms';
-export * from './responsive-wrapper';
-export * from './snackbars';
-export * from './spinner';
-export * from './toasts';
-export * from './workspaces';
-
 defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
 setupBranding();
 setupLogo();

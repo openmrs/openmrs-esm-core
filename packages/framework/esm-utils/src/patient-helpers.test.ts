@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+import { type NameUse } from '@openmrs/esm-globals';
 import { formatPatientName, getPatientName, selectPreferredName } from './patient-helpers';
 import {
   mockPatientWithNoName,
@@ -9,7 +11,6 @@ import {
   mockPatientWithMultipleNames,
   mockPatientWithNickAndOfficialName,
 } from './patient-helpers.test.data';
-import { type NameUse } from '@openmrs/esm-globals';
 
 describe('Formatted display name', () => {
   it.each([

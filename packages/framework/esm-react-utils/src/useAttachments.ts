@@ -1,7 +1,8 @@
 /** @module @category API */
 import { useMemo } from 'react';
 import useSWR from 'swr';
-import { attachmentUrl, openmrsFetch, type AttachmentResponse, type FetchResponse } from '@openmrs/esm-api';
+import { openmrsFetch, type FetchResponse } from '@openmrs/esm-api';
+import { attachmentUrl, type AttachmentResponse } from '@openmrs/esm-emr-api';
 
 export function useAttachments(patientUuid: string, includeEncounterless: boolean) {
   const { data, error, mutate, isLoading, isValidating } = useSWR<

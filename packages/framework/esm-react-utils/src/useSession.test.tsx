@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
+import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { useSession, __cleanup } from './useSession';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { type SessionStore } from '@openmrs/esm-api';
@@ -10,8 +10,8 @@ const mockSessionStore = createGlobalStore<SessionStore>('mockSessionStore', {
   session: null,
 });
 
-jest.mock('@openmrs/esm-api', () => ({
-  getSessionStore: jest.fn(() => mockSessionStore),
+vi.mock('@openmrs/esm-api', () => ({
+  getSessionStore: vi.fn(() => mockSessionStore),
 }));
 
 function Component() {
@@ -20,6 +20,8 @@ function Component() {
 }
 
 describe('useSession', () => {
+  afterAll(vi.clearAllMocks);
+
   beforeEach(() => {
     __cleanup();
     mockSessionStore.setState({ loaded: false, session: null });

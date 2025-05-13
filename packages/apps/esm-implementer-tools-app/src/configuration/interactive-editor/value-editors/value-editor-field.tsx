@@ -45,7 +45,7 @@ export function ValueEditorField({ element, path, valueType, value, onChange }: 
     <NumberInput
       id={id}
       value={value}
-      onChange={(e, { value }) => onChange(value ? parseInt(value) : 0)}
+      onChange={(_, { value }) => onChange(value ? (typeof value === 'string' ? parseInt(value) : value) : 0)}
       hideSteppers
     />
   ) : valueType === Type.String || valueType === Type.UUID ? (

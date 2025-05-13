@@ -10,13 +10,13 @@ import {
   createCalendar,
   toCalendar,
 } from '@internationalized/date';
-import { getLocale } from '@openmrs/esm-utils';
 import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
-import isToday from 'dayjs/plugin/isToday';
-import objectSupport from 'dayjs/plugin/objectSupport';
-import utc from 'dayjs/plugin/utc';
+import isToday from 'dayjs/plugin/isToday.js';
+import objectSupport from 'dayjs/plugin/objectSupport.js';
+import utc from 'dayjs/plugin/utc.js';
 import { isNil, omit } from 'lodash-es';
+import { getLocale } from '../';
 
 dayjs.extend(isToday);
 dayjs.extend(utc);
