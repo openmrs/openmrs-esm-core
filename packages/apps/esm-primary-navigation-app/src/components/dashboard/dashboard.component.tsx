@@ -1,10 +1,6 @@
-import React, { useMemo } from 'react';
-import classNames from 'classnames';
-import { last } from 'lodash-es';
-import { useTranslation } from 'react-i18next';
-import { BrowserRouter, useLocation } from 'react-router-dom';
-import { ConfigurableLink, MaybeIcon, Type, useConfig } from '@openmrs/esm-framework';
-import styles from './dashboard.scss';
+import React from 'react';
+import { Type, useConfig } from '@openmrs/esm-framework';
+import { DashboardExtension } from '@openmrs/esm-styleguide';
 
 export const dashboardFeatureName = 'Dashboard';
 
@@ -44,24 +40,14 @@ interface DashboardProps {
 
 export default function Dashboard({ basePath }: DashboardProps) {
   const config = useConfig<DashboardConfig>();
-  const { t } = useTranslation(config.moduleName);
-  const location = useLocation();
-
-  const navLink = useMemo(() => decodeURIComponent(last(location.pathname.split('/'))), [location.pathname]);
 
   return (
-    <BrowserRouter>
-      <div key={config.path}>
-        <ConfigurableLink
-          className={classNames('cds--side-nav__link', { 'active-left-nav-link': config.path === navLink })}
-          to={`${basePath}/${encodeURIComponent(config.path)}`}
-        >
-          <span className={styles.menu}>
-            <MaybeIcon icon={config.icon} className={styles.icon} size={16} />
-            <span>{t(config.title)}</span>
-          </span>
-        </ConfigurableLink>
-      </div>
-    </BrowserRouter>
+    <DashboardExtension
+      path={config.path}
+      title={config.title}
+      basePath={basePath}
+      icon={config.icon}
+      moduleName={config.moduleName}
+    />
   );
 }
