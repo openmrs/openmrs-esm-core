@@ -176,6 +176,7 @@
 
 ### Other Functions
 
+- [DashboardExtension](API.md#dashboardextension)
 - [WorkspaceContainer](API.md#workspacecontainer)
 - [compile](API.md#compile)
 - [evaluate](API.md#evaluate)
@@ -5995,6 +5996,26 @@ ___
 ___
 
 ## Other Functions
+
+### DashboardExtension
+
+▸ **DashboardExtension**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`DashboardExtensionProps`](interfaces/DashboardExtensionProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L17)
+
+___
 
 ### WorkspaceContainer
 

@@ -12,6 +12,7 @@ export * from './diagnosis-tags';
 export * from './error-state';
 export * from './icons';
 export * from './left-nav';
+export * from './dashboard-extension';
 export * from './modals';
 export * from './notifications';
 export * from './page-header';
