@@ -4,7 +4,7 @@ import { defaultVisitCustomRepresentation, getVisitStore, openmrsFetch } from '@
 import useSWR from 'swr';
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useVisitContextStore } from './useVisitContextStore';
 
 dayjs.extend(isToday);
@@ -52,7 +52,7 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     mutate: activeMutate,
     isValidating: activeIsValidating,
   } = useSWR<{
-    data: Visit | { results: Array<Visit> };
+    data: { results: Array<Visit> };
   }>(patientUuid ? `${restBaseUrl}/visit${activeVisitUrlSuffix}` : null, openmrsFetch);
 
   const {
@@ -61,7 +61,7 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     mutate: retroMutate,
     isValidating: retroIsValidating,
   } = useSWR<{
-    data: Visit | { results: Array<Visit> };
+    data: Visit;
   }>(patientUuid && retrospectiveVisitUuid ? `${restBaseUrl}/visit${retrospectiveVisitUrlSuffix}` : null, openmrsFetch);
 
   const activeVisit = useMemo(
@@ -70,15 +70,25 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
   );
 
   const currentVisit = useMemo(
-    () => (retrospectiveVisitUuid ? retroData?.data : activeVisit ?? null),
-    [retroData, activeVisit, retrospectiveVisitUuid],
+    () => (retrospectiveVisitUuid && retroData ? retroData.data : null),
+    [retroData, retrospectiveVisitUuid],
   );
+  const currentVisitIsActive = useRef(false);
 
   useEffect(() => {
-    if (currentVisit && currentVisit.uuid !== manuallySetVisitUuid) {
-      setVisitContext(currentVisit);
+    // if an active visit is created and there is no visit in context, set the context to the active visit
+    if (manuallySetVisitUuid == null && !activeIsValidating && activeVisit) {
+      setVisitContext(activeVisit);
     }
-  }, [currentVisit, manuallySetVisitUuid]);
+    if (!retroIsValidating) {
+      // if the current visit happened to be active but it just got ended (inactive), remove the
+      // visit from context
+      if (currentVisitIsActive && !retroIsValidating && currentVisit && currentVisit.stopDatetime) {
+        setVisitContext(null);
+      }
+      currentVisitIsActive.current = currentVisit ? !currentVisit.stopDatetime : false;
+    }
+  }, [currentVisit, manuallySetVisitUuid, activeVisit, activeIsValidating, retroIsValidating]);
 
   const mutateVisit = useCallback(() => {
     activeMutate();

@@ -6597,7 +6597,7 @@ ___
 
 ### useVisitContextStore
 
-▸ **useVisitContextStore**(`mutateVisitCallback?`): [`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: `string` = newSelectedVisit.uuid; `patientUuid`: `undefined` \| `string` = newSelectedVisit.patient.uuid }  }\>
+▸ **useVisitContextStore**(`mutateVisitCallback?`): [`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: ``null`` \| [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: ``null`` \| `string` ; `patientUuid`: `undefined` \| ``null`` \| `string`  }  }\>
 
 A hook to return the visit context store and corresponding actions.
 
@@ -6609,7 +6609,7 @@ A hook to return the visit context store and corresponding actions.
 
 #### Returns
 
-[`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: `string` = newSelectedVisit.uuid; `patientUuid`: `undefined` \| `string` = newSelectedVisit.patient.uuid }  }\>
+[`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: ``null`` \| [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: ``null`` \| `string` ; `patientUuid`: `undefined` \| ``null`` \| `string`  }  }\>
 
 #### Defined in
 
