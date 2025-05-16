@@ -713,7 +713,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L102)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:108](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L108)
 
 ___
 
@@ -1822,7 +1822,7 @@ is available. The goal is to make it easier to conditionally render configuratio
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L69)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L75)
 
 ___
 
@@ -1978,7 +1978,7 @@ This is a utility type for custom pictograms. Please maintain alphabetical order
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L112)
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L118)
 
 ___
 
@@ -2174,6 +2174,16 @@ Used as action button to open ward in-patient note workspace
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:592](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L592)
+
+___
+
+### StockManagementPictogram
+
+• `Const` **StockManagementPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L60)
 
 ___
 
@@ -6597,7 +6607,7 @@ ___
 
 ### useVisitContextStore
 
-▸ **useVisitContextStore**(`mutateVisitCallback?`): [`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: ``null`` \| [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: ``null`` \| `string` ; `patientUuid`: `undefined` \| ``null`` \| `string`  }  }\>
+▸ **useVisitContextStore**(`mutateVisitCallback?`): [`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: ``null`` \| [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: ``null`` \| `string` ; `patientUuid`: ``null`` \| `string`  }  }\>
 
 A hook to return the visit context store and corresponding actions.
 
@@ -6609,7 +6619,7 @@ A hook to return the visit context store and corresponding actions.
 
 #### Returns
 
-[`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: ``null`` \| [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: ``null`` \| `string` ; `patientUuid`: `undefined` \| ``null`` \| `string`  }  }\>
+[`VisitStoreState`](interfaces/VisitStoreState.md) & `BindFunctionsIn`<{ `mutateVisit`: (`currState`: [`VisitStoreState`](interfaces/VisitStoreState.md)) => {} ; `setVisitContext`: (`_`: [`VisitStoreState`](interfaces/VisitStoreState.md), `newSelectedVisit`: ``null`` \| [`Visit`](interfaces/Visit.md)) => { `manuallySetVisitUuid`: ``null`` \| `string` ; `patientUuid`: ``null`` \| `string`  }  }\>
 
 #### Defined in
 
