@@ -7,6 +7,7 @@ import patientLists from './svgs/Patient Management_Patients.svg';
 import patientRegistration from './svgs/registration.svg';
 import pharmacy from './svgs/pharmacy-1.svg';
 import serviceQueues from './svgs/service-queues.svg';
+import stockManagement from './svgs/inventory.svg';
 
 export function setupPictograms() {
   addSvg('omrs-pict-home', home);
@@ -17,4 +18,5 @@ export function setupPictograms() {
   addSvg('omrs-pict-registration', patientRegistration);
   addSvg('omrs-pict-in-patient', inPatient);
   addSvg('omrs-pict-pharmacy', pharmacy);
+  addSvg('omrs-pict-stock-management', stockManagement);
 }

@@ -96,6 +96,7 @@ export const HomePictogram = () => <span>HomePictogram</span>;
 export const LaboratoryPictogram = () => <span>LaboratoryPictogramPictogram</span>;
 export const PatientListsPictogram = () => <span>PatientListsPictogram</span>;
 export const ServiceQueuesPictogram = () => <span>ServiceQueuesPictogramPictogram</span>;
+export const StockManagementPictogram = () => <span>StockManagementPictogram</span>;
 
 // Misc stubs
 export const MaybeIcon = ({ icon }) => <span>{icon}</span>;
