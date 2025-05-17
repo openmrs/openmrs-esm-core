@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { ContentSwitcher, IconButton, Switch } from '@carbon/react';
+import { ChevronUp, ChevronDown } from '@carbon/react/icons';
 import { useTranslation } from 'react-i18next';
 import { CloseIcon } from '@openmrs/esm-framework';
 import { Configuration } from '../configuration/configuration.component';
@@ -31,9 +32,15 @@ export default function Popup({
 }: DevToolsPopupProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(visibleTabIndex ? visibleTabIndex : 0);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleHeight = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   const tabContent = useMemo(() => {
-    if (activeTab == 0) {
-      return <Configuration />;
+    if (activeTab === 0) {
+      return <Configuration isExpanded={isExpanded} />;
     } else if (activeTab === 1) {
       return <FrontendModules frontendModules={frontendModules} />;
     } else if (activeTab === 2) {
@@ -41,10 +48,10 @@ export default function Popup({
     } else {
       return <FeatureFlags />;
     }
-  }, [activeTab, backendDependencies, frontendModules]);
+  }, [activeTab, backendDependencies, frontendModules, isExpanded]);
 
   return (
-    <div className={styles.popup}>
+    <div className={`${styles.popup} ${isExpanded ? styles.expanded : ''}`}>
       <div className={styles.topBar}>
         <div className={styles.tabs}>
           <ContentSwitcher
@@ -69,6 +76,15 @@ export default function Popup({
           </ContentSwitcher>
         </div>
         <div>
+          <IconButton
+            align="left"
+            className={styles.toggleButton}
+            kind="secondary"
+            label={isExpanded ? t('collapse', 'Collapse') : t('expand', 'Expand')}
+            onClick={toggleHeight}
+          >
+            {isExpanded ? <ChevronDown /> : <ChevronUp />}
+          </IconButton>
           <IconButton
             align="left"
             className={styles.closeButton}
