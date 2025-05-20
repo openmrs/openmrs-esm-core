@@ -73,7 +73,7 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     () => (retrospectiveVisitUuid && retroData ? retroData.data : null),
     [retroData, retrospectiveVisitUuid],
   );
-  const currentVisitIsActive = useRef(false);
+  const previousCurrentVisit = useRef<Visit | null>(null);
 
   useEffect(() => {
     // if an active visit is created and there is no visit in context, set the context to the active visit
@@ -83,10 +83,10 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     if (!retroIsValidating) {
       // if the current visit happened to be active but it just got ended (inactive), remove the
       // visit from context
-      if (currentVisitIsActive && !retroIsValidating && currentVisit && currentVisit.stopDatetime) {
+      if (previousCurrentVisit.current && currentVisit && previousCurrentVisit.current.uuid === currentVisit.uuid && !previousCurrentVisit.current.stopDatetime && currentVisit.stopDatetime) {
         setVisitContext(null);
       }
-      currentVisitIsActive.current = currentVisit ? !currentVisit.stopDatetime : false;
+      previousCurrentVisit.current = currentVisit;
     }
   }, [currentVisit, manuallySetVisitUuid, activeVisit, activeIsValidating, retroIsValidating]);
 
