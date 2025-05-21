@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter } from 'react-router-dom';
 import { isEmpty } from 'lodash-es';
@@ -44,9 +44,11 @@ export default function Dashboard({ basePath }: DashboardProps) {
   const { t } = useTranslation();
   const config = useConfig<DashboardConfig>();
 
-  if (!config.moduleName || isEmpty(config.moduleName)) {
-    console.error("Config schema for the dashboard extension is missing the property 'moduleName'");
-  }
+  useEffect(() => {
+    if (!config.moduleName || isEmpty(config.moduleName)) {
+      console.error("Config schema for the dashboard extension is missing the property 'moduleName'");
+    }
+  }, [config.moduleName]);
 
   if (!config.path || isEmpty(config.path)) {
     console.error("Config schema for the dashboard extension is missing the property 'path'");
