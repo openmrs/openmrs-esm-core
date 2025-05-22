@@ -60,14 +60,14 @@
     "@openmrs/esm-feature-flags": "workspace:*",
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
-    "@swc/cli": "^0.6.0",
-    "@swc/core": "^1.11.18",
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "happy-dom": "^17.4.4",
     "rimraf": "^6.0.1",
     "single-spa": "^6.0.3",
-    "vitest": "^3.1.1",
+    "vitest": "^3.1.4",
     "vitest-fetch-mock": "^0.4.5"
   }
 }
