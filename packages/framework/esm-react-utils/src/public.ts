@@ -1,4 +1,3 @@
-export { type ExtensionData } from './ComponentContext';
 export * from './ConfigurableLink';
 export * from './Extension';
 export * from './ExtensionSlot';
@@ -23,6 +22,8 @@ export * from './useExtensionStore';
 export * from './useExtensionSlotStore';
 export * from './useFeatureFlag';
 export * from './useLayoutType';
+export * from './useLeftNav';
+export * from './useLeftNavStore';
 export * from './useLocations';
 export * from './useOnClickOutside';
 export * from './useOnVisible';

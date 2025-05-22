@@ -191,8 +191,12 @@
 - [isOnline](API.md#isonline)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [reportError](API.md#reporterror)
+- [setLeftNav](API.md#setleftnav)
+- [unsetLeftNav](API.md#unsetleftnav)
 - [useFhirFetchAll](API.md#usefhirfetchall)
 - [useFhirInfinite](API.md#usefhirinfinite)
+- [useLeftNav](API.md#useleftnav)
+- [useLeftNavStore](API.md#useleftnavstore)
 - [useVisitContextStore](API.md#usevisitcontextstore)
 
 ### Store Functions
@@ -220,7 +224,6 @@
 - [PatientPhoto](API.md#patientphoto)
 - [getFhirServerPaginationHandlers](API.md#getfhirserverpaginationhandlers)
 - [isDesktop](API.md#isdesktop)
-- [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
@@ -230,11 +233,9 @@
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
 - [subscribeSnackbarShown](API.md#subscribesnackbarshown)
 - [subscribeToastShown](API.md#subscribetoastshown)
-- [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useFhirPagination](API.md#usefhirpagination)
 - [useLayoutType](API.md#uselayouttype)
-- [useLeftNavStore](API.md#useleftnavstore)
 - [useOnClickOutside](API.md#useonclickoutside)
 - [useOnVisible](API.md#useonvisible)
 - [useOpenmrsFetchAll](API.md#useopenmrsfetchall)
@@ -2398,7 +2399,7 @@ is deprecated; it simply renders nothing.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L52)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L20)
 
 ___
 
@@ -3609,7 +3610,7 @@ Use this React Hook to obtain your module's configuration.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:139](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L139)
+[packages/framework/esm-react-utils/src/useConfig.ts:145](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L145)
 
 ___
 
@@ -4478,7 +4479,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:212](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L212)
+[packages/framework/esm-extensions/src/extensions.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L215)
 
 ___
 
@@ -4501,7 +4502,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:245](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L245)
+[packages/framework/esm-extensions/src/extensions.ts:248](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L248)
 
 ___
 
@@ -4523,7 +4524,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L269)
+[packages/framework/esm-extensions/src/extensions.ts:272](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L272)
 
 ___
 
@@ -4547,7 +4548,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:396](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L396)
+[packages/framework/esm-extensions/src/extensions.ts:399](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L399)
 
 ___
 
@@ -4579,7 +4580,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:160](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L160)
+[packages/framework/esm-extensions/src/extensions.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L163)
 
 ___
 
@@ -6642,6 +6643,54 @@ packages/framework/esm-error-handling/dist/index.d.ts:1
 
 ___
 
+### setLeftNav
+
+▸ **setLeftNav**(`__namedParameters`): `void`
+
+Sets the current left nav context. Must be paired with [unsetLeftNav](API.md#unsetleftnav).
+
+**`deprecated`** Please use [useLeftNav](API.md#useleftnav) instead. This function will be made internal in a future release.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`SetLeftNavParams`](interfaces/SetLeftNavParams.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/left-nav.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L35)
+
+___
+
+### unsetLeftNav
+
+▸ **unsetLeftNav**(`name`): `void`
+
+Unsets the left nav context if the current context is for the supplied name.
+
+**`deprecated`** Please use [useLeftNav](API.md#useleftnav) instead. This function will be made internal in a future release.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/left-nav.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L44)
+
+___
+
 ### useFhirFetchAll
 
 ▸ **useFhirFetchAll**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
@@ -6719,6 +6768,40 @@ a UseServerInfiniteReturnObject object
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
+
+___
+
+### useLeftNav
+
+▸ **useLeftNav**(`params`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `params` | `Omit`<`SetLeftNavParams`, ``"module"``\> |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useLeftNav.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLeftNav.ts#L5)
+
+___
+
+### useLeftNavStore
+
+▸ **useLeftNavStore**(): `LeftNavStore`
+
+#### Returns
+
+`LeftNavStore`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useLeftNavStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLeftNavStore.ts#L4)
 
 ___
 
@@ -7334,26 +7417,6 @@ ___
 
 ___
 
-### setLeftNav
-
-▸ **setLeftNav**(`__namedParameters`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | `SetLeftNavParams` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
-
-___
-
 ### showActionableNotification
 
 ▸ **showActionableNotification**(`notification`): `void`
@@ -7591,26 +7654,6 @@ packages/framework/esm-globals/dist/events.d.ts:62
 
 ___
 
-### unsetLeftNav
-
-▸ **unsetLeftNav**(`name`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L35)
-
-___
-
 ### useBodyScrollLock
 
 ▸ **useBodyScrollLock**(`active`): `void`
@@ -7702,20 +7745,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
-
-___
-
-### useLeftNavStore
-
-▸ **useLeftNavStore**(): `LeftNavStore`
-
-#### Returns
-
-`LeftNavStore`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L41)
 
 ___
 

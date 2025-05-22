@@ -1,21 +1,10 @@
-import React from 'react';
-
-export interface ExtensionData {
-  extensionSlotName: string;
-  extensionSlotModuleName: string;
-  extensionId: string;
-}
-
-export interface ComponentConfig {
-  moduleName: string;
-  featureName: string;
-  extension?: ExtensionData;
-}
+import { createContext } from 'react';
+import { type ComponentConfig } from '@openmrs/esm-extensions';
 
 /**
  * Available to all components. Provided by `openmrsComponentDecorator`.
  */
-export const ComponentContext = React.createContext<ComponentConfig>({
+export const ComponentContext = createContext<ComponentConfig>({
   moduleName: '',
   featureName: '',
 });
