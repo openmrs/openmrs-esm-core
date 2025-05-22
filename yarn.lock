@@ -1353,9 +1353,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/charts@npm:^1.23.6":
-  version: 1.23.7
-  resolution: "@carbon/charts@npm:1.23.7"
+"@carbon/charts@npm:^1.23.8":
+  version: 1.23.8
+  resolution: "@carbon/charts@npm:1.23.8"
   dependencies:
     "@carbon/colors": "npm:^11.31.0"
     "@carbon/utils-position": "npm:^1.3.0"
@@ -1366,12 +1366,12 @@ __metadata:
     d3-cloud: "npm:^1.2.7"
     d3-sankey: "npm:^0.12.3"
     date-fns: "npm:^4.1.0"
-    dompurify: "npm:^3.2.5"
+    dompurify: "npm:^3.2.6"
     html-to-image: "npm:1.11.11"
     lodash-es: "npm:^4.17.21"
     topojson-client: "npm:^3.1.0"
     tslib: "npm:^2.8.1"
-  checksum: 10/9f97e1b8a7eec062002b11a67fdc96ddb9265e05731692d1bb678c306e4ef08e539151c485db3715f0947e3ff2c44eed8756775087ae677dbadd6744a1b5601b
+  checksum: 10/dde4ec5c0cbe0a23065402960a8b1ece67f89fb505a044280911bd1781a9727afeda6f126effffbe788572e74c7c2af34eeb2e09f5ff63208ba8b88e7bf248ff
   languageName: node
   linkType: hard
 
@@ -1443,16 +1443,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/react@npm:^1.80.1":
-  version: 1.82.1
-  resolution: "@carbon/react@npm:1.82.1"
+"@carbon/react@npm:^1.83.0":
+  version: 1.83.0
+  resolution: "@carbon/react@npm:1.83.0"
   dependencies:
     "@babel/runtime": "npm:^7.24.7"
     "@carbon/feature-flags": "npm:^0.26.0"
     "@carbon/icons-react": "npm:^11.60.0"
     "@carbon/layout": "npm:^11.34.0"
-    "@carbon/styles": "npm:^1.81.0"
-    "@carbon/utilities": "npm:^0.5.1"
+    "@carbon/styles": "npm:^1.82.0"
+    "@carbon/utilities": "npm:^0.6.0"
     "@floating-ui/react": "npm:^0.27.4"
     "@ibm/telemetry-js": "npm:^1.5.0"
     classnames: "npm:2.5.1"
@@ -1464,27 +1464,26 @@ __metadata:
     prop-types: "npm:^15.8.1"
     react-fast-compare: "npm:^3.2.2"
     tabbable: "npm:^6.2.0"
-    use-resize-observer: "npm:^9.1.0"
     window-or-global: "npm:^1.0.1"
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-is: ^16.13.1 || ^17.0.2 || ^18.3.1 || ^19.0.0
     sass: ^1.33.0
-  checksum: 10/f3b03db3d38dc4b8e3939d25c11ad678a5ec06f755d0d5fd11e7e9648db51cfd5f326b269a8beaf9009c836ff5cf26f7854400f56c710f66e12ace44cd3e9508
+  checksum: 10/8396b673af9ebb0a53d46fbb3226fc93ff48af75748d5b1bb6d87bce93bef835fb8e609f0f9003b4b31eec7b28aa14ea4a4ef32893c498b831d1b13fffa4bacc
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.81.0":
-  version: 1.81.0
-  resolution: "@carbon/styles@npm:1.81.0"
+"@carbon/styles@npm:^1.82.0":
+  version: 1.82.0
+  resolution: "@carbon/styles@npm:1.82.0"
   dependencies:
     "@carbon/colors": "npm:^11.33.0"
     "@carbon/feature-flags": "npm:^0.26.0"
     "@carbon/grid": "npm:^11.36.0"
     "@carbon/layout": "npm:^11.34.0"
     "@carbon/motion": "npm:^11.28.0"
-    "@carbon/themes": "npm:^11.52.0"
+    "@carbon/themes": "npm:^11.53.0"
     "@carbon/type": "npm:^11.40.0"
     "@ibm/plex": "npm:6.0.0-next.6"
     "@ibm/plex-mono": "npm:0.0.3-alpha.0"
@@ -1501,20 +1500,20 @@ __metadata:
   peerDependenciesMeta:
     sass:
       optional: true
-  checksum: 10/5fdb968cdb41d27ded00258c94b82523d7d33175016a1c8c09e8c9632e9cf6e773d9d3b542e49b41d36bd4a0ebe08bd11f449daedeb96423ab1483ce0a589d83
+  checksum: 10/4b6bfce1191152c4bd14866933b2d9d27784fc7c97747b800b6b283258a53deab4ece1257f62e78e77ce6d4027941326e9632263e2c18a8cd76956adc29d1f07
   languageName: node
   linkType: hard
 
-"@carbon/themes@npm:^11.52.0":
-  version: 11.52.0
-  resolution: "@carbon/themes@npm:11.52.0"
+"@carbon/themes@npm:^11.53.0":
+  version: 11.53.0
+  resolution: "@carbon/themes@npm:11.53.0"
   dependencies:
     "@carbon/colors": "npm:^11.33.0"
     "@carbon/layout": "npm:^11.34.0"
     "@carbon/type": "npm:^11.40.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
     color: "npm:^4.0.0"
-  checksum: 10/436406bc88f31f5023daf285d8786a78f92964c1656093bcf727e74c707a1b23138fdfcb9337b9abe552d70781a456c18e639596b31ac0f2112269bc3b3e2093
+  checksum: 10/af2e5e430e7e76028cc05e3a56072da0ceacc65e862df381a95aa9ae89480eee21beaf14a6aeca53badcf4e3e51e5248a4355d17e03f5ee376c9ab3654207329
   languageName: node
   linkType: hard
 
@@ -1529,12 +1528,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/utilities@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@carbon/utilities@npm:0.5.1"
+"@carbon/utilities@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@carbon/utilities@npm:0.6.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.6.1"
-  checksum: 10/7ae6c48ab40e41483338cc5cdf629b2a64607095a9e72e0b096c8331dace955cb1cd50a3e901d128ea9c51dd593ec7f7e0c6117d43c0aa4634bf86862d7cd243
+  checksum: 10/2217d67fc897b40a9cf7d4b7ab55e1a252cbf11530d9754acfd347f081daed9dd6c2a87d0a8f81d1b3b8050fc46ff6a63443a0df334a076c4b85573b4e84c5c4
   languageName: node
   linkType: hard
 
@@ -3131,13 +3130,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@juggle/resize-observer@npm:^3.3.1":
-  version: 3.4.0
-  resolution: "@juggle/resize-observer@npm:3.4.0"
-  checksum: 10/73d1d00ee9132fb6f0aea0531940a6b93603e935590bd450fc6285a328d906102eeeb95dea77b2edac0e779031a9708aa8c82502bd298ee4dd26e7dff48f397a
-  languageName: node
-  linkType: hard
-
 "@leichtgewicht/ip-codec@npm:^2.0.1":
   version: 2.0.4
   resolution: "@leichtgewicht/ip-codec@npm:2.0.4"
@@ -3512,7 +3504,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell"
   dependencies:
-    "@carbon/react": "npm:^1.80.1"
+    "@carbon/react": "npm:^1.83.0"
     "@internationalized/date": "npm:^3.8.0"
     "@openmrs/esm-framework": "workspace:*"
     "@openmrs/esm-styleguide": "workspace:*"
@@ -3637,7 +3629,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-devtools-app@workspace:packages/apps/esm-devtools-app"
   dependencies:
-    "@carbon/react": "npm:^1.80.1"
+    "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
     "@openmrs/webpack-config": "workspace:*"
     cross-env: "npm:^7.0.3"
@@ -3847,7 +3839,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-help-menu-app@workspace:packages/apps/esm-help-menu-app"
   dependencies:
-    "@carbon/react": "npm:^1.80.1"
+    "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
     "@openmrs/webpack-config": "workspace:*"
     cross-env: "npm:^7.0.3"
@@ -3872,7 +3864,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-implementer-tools-app@workspace:packages/apps/esm-implementer-tools-app"
   dependencies:
-    "@carbon/react": "npm:^1.80.1"
+    "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
     "@openmrs/webpack-config": "workspace:*"
     ace-builds: "npm:^1.4.14"
@@ -3899,7 +3891,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-login-app@workspace:packages/apps/esm-login-app"
   dependencies:
-    "@carbon/react": "npm:^1.80.1"
+    "@carbon/react": "npm:^1.83.0"
     "@hookform/resolvers": "npm:^3.6.0"
     "@openmrs/esm-framework": "workspace:*"
     "@openmrs/webpack-config": "workspace:*"
@@ -3954,7 +3946,7 @@ __metadata:
   resolution: "@openmrs/esm-offline-tools-app@workspace:packages/apps/esm-offline-tools-app"
   dependencies:
     "@carbon/icons-react": "npm:^11.58.0"
-    "@carbon/react": "npm:^1.80.1"
+    "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
     "@openmrs/webpack-config": "workspace:*"
     "@types/lodash-es": "npm:^4.17.12"
@@ -4010,7 +4002,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-primary-navigation-app@workspace:packages/apps/esm-primary-navigation-app"
   dependencies:
-    "@carbon/react": "npm:^1.80.1"
+    "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
     "@openmrs/webpack-config": "workspace:*"
     jest: "npm:^29.7.0"
@@ -4138,8 +4130,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide"
   dependencies:
-    "@carbon/charts": "npm:^1.23.6"
-    "@carbon/react": "npm:^1.80.1"
+    "@carbon/charts": "npm:^1.23.8"
+    "@carbon/react": "npm:^1.83.0"
     "@internationalized/date": "npm:^3.8.0"
     "@openmrs/esm-api": "workspace:*"
     "@openmrs/esm-config": "workspace:*"
@@ -11145,15 +11137,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.2.5":
-  version: 3.2.5
-  resolution: "dompurify@npm:3.2.5"
+"dompurify@npm:^3.2.6":
+  version: 3.2.6
+  resolution: "dompurify@npm:3.2.6"
   dependencies:
     "@types/trusted-types": "npm:^2.0.7"
   dependenciesMeta:
     "@types/trusted-types":
       optional: true
-  checksum: 10/03974f18851fb4e447d26adc0ebf7a64b6c5b4a11caebebec3e04de8fcaa19cdb67bf3575a2335727123d0fc1c2febc1bc992a84f327a8ce65a0bfd11e3afc50
+  checksum: 10/b91631ed0e4d17fae950ef53613cc009ed7e73adc43ac94a41dd52f35483f7538d13caebdafa7626e0da145fc8184e7ac7935f14f25b7e841b32fda777e40447
   languageName: node
   linkType: hard
 
@@ -21291,18 +21283,6 @@ __metadata:
     querystringify: "npm:^2.1.1"
     requires-port: "npm:^1.0.0"
   checksum: 10/c9e96bc8c5b34e9f05ddfeffc12f6aadecbb0d971b3cc26015b58d5b44676a99f50d5aeb1e5c9e61fa4d49961ae3ab1ae997369ed44da51b2f5ac010d188e6ad
-  languageName: node
-  linkType: hard
-
-"use-resize-observer@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "use-resize-observer@npm:9.1.0"
-  dependencies:
-    "@juggle/resize-observer": "npm:^3.3.1"
-  peerDependencies:
-    react: 16.8.0 - 18
-    react-dom: 16.8.0 - 18
-  checksum: 10/821d3f783090e36c694ef0ae3e366b364a691a8254d04337700ea79757e01e2d79f307ee517487c9246db7e8bc9625b474dd6ac7dad18d777004dee817826080
   languageName: node
   linkType: hard
 
