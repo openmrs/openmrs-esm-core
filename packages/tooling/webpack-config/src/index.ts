@@ -54,8 +54,9 @@ import {
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 
-type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module'> & {
+type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module' | 'output'> & {
   module: ModuleOptions;
+  output: Partial<WebpackConfiguration['output']>;
 };
 
 const production = 'production';

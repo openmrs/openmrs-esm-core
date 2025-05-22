@@ -89,11 +89,11 @@
     "@openmrs/esm-navigation": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
-    "@swc/cli": "^0.6.0",
-    "@swc/core": "^1.11.18",
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
-    "dayjs": "^1.10.8",
+    "dayjs": "^1.11.13",
     "happy-dom": "^17.4.4",
     "i18next": "^21.10.0",
     "react": "^18.1.0",
@@ -102,6 +102,6 @@
     "rimraf": "^6.0.1",
     "rxjs": "^6.5.3",
     "swr": "^2.2.5",
-    "vitest": "^3.1.1"
+    "vitest": "^3.1.4"
   }
 }
