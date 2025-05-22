@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 window.i18next = { ...window.i18next, language: 'en' };
 
 export * from '@openmrs/esm-api/mock';
+export * from '@openmrs/esm-emr-api/mock';
 export * from '@openmrs/esm-config/mock';
 export * from '@openmrs/esm-context';
 export * from '@openmrs/esm-expression-evaluator/src/public';
