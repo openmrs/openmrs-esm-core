@@ -66,7 +66,7 @@
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
-    "happy-dom": "^17.4.4",
+    "happy-dom": "^17.4.7",
     "rimraf": "^6.0.1",
     "rxjs": "^6.5.3",
     "vitest": "^3.1.4"
