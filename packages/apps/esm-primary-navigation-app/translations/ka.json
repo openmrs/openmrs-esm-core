@@ -1,11 +1,11 @@
 {
-  "AppMenuTooltip": "App Menu",
-  "cancel": "Cancel",
-  "change": "Change",
-  "changeLanguage": "Change language",
-  "changingLanguage": "Changing language",
-  "notifications": "Notifications",
-  "userMenu": "User menu",
+  "AppMenuTooltip": "აპის მენიუ",
+  "cancel": "გაუქმება",
+  "change": "შეცვლა",
+  "changeLanguage": "ენის შეცვლა",
+  "changingLanguage": "მიმდინარეობს ენის შეცვლა",
+  "notifications": "გაფრთხილებები",
+  "userMenu": "მომხმარებლის მენიუ",
   "userMenuOptions": "User menu options",
-  "userMenuTooltip": "My Account"
+  "userMenuTooltip": "ჩემი ანგარიში"
 }
