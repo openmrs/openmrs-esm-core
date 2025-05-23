@@ -1,12 +1,13 @@
-/// <reference path="../../../setupTests.ts" />
 import React from 'react';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { act, screen, renderHook, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { registerWorkspace } from '@openmrs/esm-extensions';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { type DefaultWorkspaceProps, WorkspaceContainer, launchWorkspace, useWorkspaces } from '..';
 
-jest.mock('./workspace-renderer.component.tsx', () => {
+vi.mock('./workspace-renderer.component.tsx', () => {
   return {
     WorkspaceRenderer: ({ workspace }) => (
       <div>
@@ -17,17 +18,17 @@ jest.mock('./workspace-renderer.component.tsx', () => {
   };
 });
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: jest.fn().mockImplementation(() => ({ t: (arg: string) => arg })),
+vi.mock('react-i18next', async () => ({
+  ...(await vi.importActual('react-i18next')),
+  useTranslation: vi.fn(() => ({ t: (arg: string) => arg })),
 }));
 
-const mockIsDesktop = jest.mocked(isDesktop);
-const mockUseLayoutType = jest.mocked(useLayoutType);
+const mockIsDesktop = vi.mocked(isDesktop);
+const mockUseLayoutType = vi.mocked(useLayoutType);
 
 window.history.pushState({}, 'Workspace Container', '/workspace-container');
 
-jest.mock('single-spa-react/parcel', () => jest.fn().mockImplementation(() => <div>Parcel</div>));
+vi.mock('single-spa-react/parcel', () => vi.fn().mockImplementation(() => <div>Parcel</div>));
 
 interface ClinicalFormWorkspaceProps extends DefaultWorkspaceProps {
   patientUuid: string;
@@ -38,7 +39,7 @@ describe('WorkspaceContainer in window mode', () => {
     registerWorkspace({
       name: 'clinical-form',
       title: 'clinicalForm',
-      load: jest.fn(),
+      load: vi.fn(),
       moduleName: '@openmrs/foo',
       canHide: true,
       canMaximize: true,
@@ -47,14 +48,14 @@ describe('WorkspaceContainer in window mode', () => {
     registerWorkspace({
       name: 'order-basket',
       title: 'orderBasket',
-      load: jest.fn(),
+      load: vi.fn(),
       moduleName: '@openmrs/bar',
       canHide: true,
       canMaximize: true,
     });
   });
 
-  test('should translate the workspace title inside the workspace container', () => {
+  it('should translate the workspace title inside the workspace container', () => {
     mockIsDesktop.mockReturnValue(true);
     renderWorkspaceWindow();
     act(() => launchWorkspace('clinical-form'));
@@ -68,7 +69,7 @@ describe('WorkspaceContainer in window mode', () => {
     expect(within(header).getByText('orderBasket')).toBeInTheDocument();
   });
 
-  test('should override title via additional props and via setTitle', async () => {
+  it('should override title via additional props and via setTitle', async () => {
     mockIsDesktop.mockReturnValue(true);
     renderWorkspaceWindow();
     // In this line we are also verifying that the type argument to `launchWorkspace`
@@ -95,7 +96,7 @@ describe('WorkspaceContainer in window mode', () => {
     expect(within(header).getByTestId('patient-name')).toBeInTheDocument();
   });
 
-  test('re-launching workspace should update title, but only if setTitle was not used', async () => {
+  it('re-launching workspace should update title, but only if setTitle was not used', async () => {
     mockIsDesktop.mockReturnValue(true);
     renderWorkspaceWindow();
 
@@ -118,7 +119,7 @@ describe('WorkspaceContainer in window mode', () => {
     expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
   });
 
-  test('should reopen hidden workspace window when user relaunches the same workspace window', async () => {
+  it('should reopen hidden workspace window when user relaunches the same workspace window', async () => {
     const user = userEvent.setup();
     const utils = renderHook(() => useWorkspaces());
     mockIsDesktop.mockReturnValue(true);
@@ -140,19 +141,19 @@ describe('WorkspaceContainer in window mode', () => {
 
     const hideButton = screen.getByRole('button', { name: 'Hide' });
     await user.click(hideButton);
-    expect(screen.queryByRole('complementary')).toHaveClass('hiddenRelative');
+    expect(screen.queryByRole('complementary')?.getAttribute('class')).toContain('hiddenRelative');
 
     act(() => launchWorkspace('clinical-form', { workspaceTitle: 'POC Triage' }));
 
     expectToBeVisible(await screen.findByRole('complementary'));
-    expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenRelative');
-    expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenFixed');
+    expect(screen.queryByRole('complementary')?.getAttribute('class')).not.toContain('hiddenRelative');
+    expect(screen.queryByRole('complementary')?.getAttribute('class')).not.toContain('hiddenFixed');
     expect(utils.result.current.workspaces.length).toBe(1);
     input = screen.getByRole('textbox');
     expect(input).toHaveValue("what's good");
   });
 
-  test('should toggle between maximized and normal screen size', async () => {
+  it('should toggle between maximized and normal screen size', async () => {
     const user = userEvent.setup();
     mockIsDesktop.mockReturnValue(true);
     renderWorkspaceWindow();
@@ -162,24 +163,24 @@ describe('WorkspaceContainer in window mode', () => {
     const header = screen.getByRole('banner');
     expect(within(header).getByText('clinicalForm')).toBeInTheDocument();
     // eslint-disable-next-line testing-library/no-node-access
-    expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstElementChild?.getAttribute('class')).not.toContain('maximizedWindow');
 
     const maximizeButton = await screen.findByRole('button', { name: 'Maximize' });
     await user.click(maximizeButton);
     // eslint-disable-next-line testing-library/no-node-access
-    expect(screen.getByRole('complementary').firstChild).toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstElementChild?.getAttribute('class')).toContain('maximizedWindow');
 
     const minimizeButton = await screen.findByRole('button', { name: 'Minimize' });
     await user.click(minimizeButton);
     // eslint-disable-next-line testing-library/no-node-access
-    expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstElementChild?.getAttribute('class')).not.toContain('maximizedWindow');
   });
 
   // This would be a nice test if it worked, but it seems there are important differences between
   // the React DOM and Jest DOM that cause this to fail when it should be working.
   // This logic should be tested in the E2E tests.
   // Try this again periodically to see if it starts working.
-  xtest("shouldn't lose data when transitioning between workspaces", async () => {
+  it.skip("shouldn't lose data when transitioning between workspaces", async () => {
     renderWorkspaceWindow();
 
     const user = userEvent.setup();
@@ -219,7 +220,7 @@ describe('WorkspaceContainer in overlay mode', () => {
     registerWorkspace({
       name: 'patient-search',
       title: 'Patient Search',
-      load: jest.fn(),
+      load: vi.fn(),
       moduleName: '@openmrs/foo',
     });
   });
@@ -237,7 +238,10 @@ describe('WorkspaceContainer in overlay mode', () => {
 
     const closeButton = screen.getByRole('button', { name: 'Close' });
     await user.click(closeButton);
-    expect(screen.getByRole('complementary')).toHaveClass('hiddenRelative');
+
+    // toHaveAttribute() cannot do either partial or regex matches
+    // eslint-disable-next-line jest-dom/prefer-to-have-attribute
+    expect(screen.getByRole('complementary').getAttribute('class')).toContain('hiddenRelative');
   });
 });
 
@@ -251,7 +255,7 @@ function renderWorkspaceOverlay() {
 
 function expectToBeVisible(element: HTMLElement) {
   expect(element).toBeVisible();
-  expect(element).not.toHaveClass('hiddenRelative');
-  expect(element).not.toHaveClass('hiddenFixed');
-  expect(element).not.toHaveClass('hidden');
+  expect(element.getAttribute('class')).not.toContain('hiddenRelative');
+  expect(element.getAttribute('class')).not.toContain('hiddenFixed');
+  expect(element.getAttribute('class')).not.toContain('hidden');
 }

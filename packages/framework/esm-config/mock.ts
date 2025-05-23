@@ -1,5 +1,6 @@
+import { vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
-import * as utils from '@openmrs/esm-utils';
+import { getDefaultsFromConfigSchema } from '@openmrs/esm-utils';
 
 export { validators, validator } from './src/index';
 
@@ -21,9 +22,7 @@ export enum Type {
 
 export let configSchema = {};
 
-export const getConfig = jest
-  .fn()
-  .mockImplementation(() => Promise.resolve(utils.getDefaultsFromConfigSchema(configSchema)));
+export const getConfig = vi.fn(() => Promise.resolve(getDefaultsFromConfigSchema(configSchema)));
 
 export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
@@ -33,4 +32,4 @@ export function defineExtensionConfigSchema(extensionName, schema) {
   configSchema = schema;
 }
 
-export const clearConfigErrors = jest.fn();
+export const clearConfigErrors = vi.fn();

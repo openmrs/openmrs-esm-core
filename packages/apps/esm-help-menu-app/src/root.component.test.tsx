@@ -1,4 +1,5 @@
 import React from 'react';
+import { describe, it } from 'vitest';
 import { render } from '@testing-library/react';
 import Root from './root.component';
 

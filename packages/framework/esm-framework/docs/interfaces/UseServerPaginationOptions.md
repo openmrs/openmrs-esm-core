@@ -47,7 +47,7 @@ The configuration object for useSWR or useSWRInfinite
 
 ### fetcher
 
-▸ `Optional` **fetcher**(`key`): `Promise`<[`FetchResponse`](FetchResponse.md)<`R`\>\>
+▸ `Optional` **fetcher**(`key`): `Promise`<`FetchResponse`<`R`\>\>
 
 The fetcher to use. Defaults to openmrsFetch
 
@@ -59,7 +59,7 @@ The fetcher to use. Defaults to openmrsFetch
 
 #### Returns
 
-`Promise`<[`FetchResponse`](FetchResponse.md)<`R`\>\>
+`Promise`<`FetchResponse`<`R`\>\>
 
 #### Defined in
 

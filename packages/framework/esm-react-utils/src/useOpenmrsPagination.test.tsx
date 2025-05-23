@@ -1,5 +1,5 @@
+import { describe, expect, it } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { useOpenmrsPagination, type OpenMRSPaginatedResponse } from './useOpenmrsPagination';
 
 // returns an sequentially increasing int array of specified length starting at the specified start integer.
