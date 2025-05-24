@@ -23,7 +23,7 @@
   "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
   "requiredVersion": "საჭირო ვერსია",
   "resetToDefaultValueButtonText": "ჩამოყრა ნაგულისხმევზე",
-  "toggleImplementerTools": "Toggle Implementer Tools",
+  "toggleImplementerTools": "განმხორციელებლის ხელსაწყოების გადართვა",
   "uiEditor": "ინტერფეისის რედაქტორი",
   "unknownVersion": "უცნობი",
   "updateConfig": "კონფიგურაციის განახლება",
