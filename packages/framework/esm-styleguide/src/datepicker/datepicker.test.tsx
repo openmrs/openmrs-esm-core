@@ -1,5 +1,7 @@
 import React from 'react';
 import type { i18n } from 'i18next';
+import { beforeEach, describe, expect, it } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
 import { OpenmrsDatePicker } from './index';

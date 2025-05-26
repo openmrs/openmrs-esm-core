@@ -1,5 +1,5 @@
 import { Tag } from '@carbon/react';
-import { type Diagnosis } from '@openmrs/esm-api';
+import { type Diagnosis } from '@openmrs/esm-emr-api';
 import { useConfig } from '@openmrs/esm-react-utils';
 import React from 'react';
 import { type StyleguideConfigObject } from '../config-schema';

@@ -4,6 +4,7 @@ export interface ConnectivityChangedEvent {
 
 const connectivityChangedEventName = 'openmrs:connectivity-changed';
 
+/** @internal */
 export function dispatchConnectivityChanged(online: boolean) {
   window.dispatchEvent(new CustomEvent(connectivityChangedEventName, { detail: { online } }));
 }
@@ -88,14 +89,17 @@ export function dispatchNotificationShown(data: ShowNotificationEvent) {
   window.dispatchEvent(new CustomEvent(notificationShownName, { detail: data }));
 }
 
+/** @internal */
 export function dispatchActionableNotificationShown(data: ShowActionableNotificationEvent) {
   window.dispatchEvent(new CustomEvent(actionableNotificationShownName, { detail: data }));
 }
 
+/** @internal */
 export function dispatchSnackbarShown(data: ShowSnackbarEvent) {
   window.dispatchEvent(new CustomEvent(snackbarShownName, { detail: data }));
 }
 
+/** @internal */
 export function dispatchToastShown(data: ShowToastEvent) {
   window.dispatchEvent(new CustomEvent(toastShownName, { detail: data }));
 }

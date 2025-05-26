@@ -56,8 +56,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `primaryColor` | ``"red"`` \| ``"magenta"`` \| ``"purple"`` \| ``"blue"`` \| ``"teal"`` \| ``"cyan"`` \| ``"gray"`` \| ``"orange"`` \| ``"green"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
-| `secondaryColor` | ``"red"`` \| ``"magenta"`` \| ``"purple"`` \| ``"blue"`` \| ``"teal"`` \| ``"cyan"`` \| ``"gray"`` \| ``"orange"`` \| ``"green"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
+| `primaryColor` | ``"blue"`` \| ``"cyan"`` \| ``"gray"`` \| ``"green"`` \| ``"magenta"`` \| ``"purple"`` \| ``"red"`` \| ``"teal"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
+| `secondaryColor` | ``"blue"`` \| ``"cyan"`` \| ``"gray"`` \| ``"green"`` \| ``"magenta"`` \| ``"purple"`` \| ``"red"`` \| ``"teal"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
 
 #### Defined in
 

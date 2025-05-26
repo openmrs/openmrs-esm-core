@@ -188,9 +188,15 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
       <>
         <Header aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')} className={styles.header}>
           {!isDesktop(layout) && !canHide && (
-            <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
+            <HeaderMenuButton
+              aria-label={getCoreTranslation('close', 'Close')}
+              renderMenuIcon={<ArrowLeftIcon />}
+              onClick={() => closeWorkspace()}
+            />
           )}
-          <HeaderName prefix="">{workspaceInstance.titleNode ?? t(workspaceInstance.title)}</HeaderName>
+          <HeaderName prefix="">
+            {workspaceInstance.titleNode ?? (t(workspaceInstance.title) as React.ReactElement)}
+          </HeaderName>
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot
@@ -203,6 +209,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               <>
                 {(canMaximize || isMaximized) && (
                   <HeaderGlobalAction
+                    /* @ts-expect-error */
                     align="bottom"
                     aria-label={
                       isMaximized
@@ -222,6 +229,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
                 )}
                 {canHide && !currentGroupName ? (
                   <HeaderGlobalAction
+                    /* @ts-expect-error */
                     align="bottom-right"
                     aria-label={getCoreTranslation('hide', 'Hide')}
                     label={getCoreTranslation('hide', 'Hide')}
@@ -232,6 +240,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
                   </HeaderGlobalAction>
                 ) : (
                   <HeaderGlobalAction
+                    /* @ts-expect-error */
                     align="bottom-right"
                     aria-label={getCoreTranslation('close', 'Close')}
                     label={getCoreTranslation('close', 'Close')}
@@ -245,6 +254,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             )}
             {layout === 'tablet' && canHide && (
               <HeaderGlobalAction
+                /* @ts-expect-error */
                 align="bottom-right"
                 aria-label={getCoreTranslation('close', 'Close')}
                 label={getCoreTranslation('close', 'Close')}

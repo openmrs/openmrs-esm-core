@@ -1,9 +1,11 @@
-import { type FetchResponse, fhirBaseUrl, openmrsFetch, showNotification, useDebounce } from '@openmrs/esm-framework';
 import { useMemo } from 'react';
-import useSwrImmutable from 'swr/immutable';
 import { useTranslation } from 'react-i18next';
+import useSwrImmutable from 'swr/immutable';
 import useSwrInfinite from 'swr/infinite';
-import { type FHIRLocationResource } from '@openmrs/esm-api/src/types/location-resource';
+import { type FetchResponse, fhirBaseUrl, openmrsFetch } from '@openmrs/esm-api';
+import { type FHIRLocationResource } from '@openmrs/esm-emr-api';
+import { useDebounce } from '@openmrs/esm-react-utils';
+import { showNotification } from '../notifications';
 
 export interface LocationResponse {
   type: string;

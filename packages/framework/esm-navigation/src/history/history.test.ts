@@ -1,9 +1,13 @@
+/**
+ * @vitest-environment jsdom
+ */
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 import merge from 'lodash/merge';
 import { navigate } from '../navigation/navigate';
 import { clearHistory, getHistory, goBackInHistory, setupHistory } from './history';
 
-jest.mock('../navigation/navigate');
-const mockNavigate = navigate as jest.Mock;
+vi.mock('../navigation/navigate');
+const mockNavigate = vi.fn(navigate);
 
 describe('history', () => {
   const originalWindowLocation = window.location;
@@ -12,23 +16,24 @@ describe('history', () => {
     'referrer',
   ) as PropertyDescriptor;
   const mockReferrer = 'https://o3.openmrs.org/openmrs/spa/lalaland';
-  let mockLocationAssign;
+  let mockLocationAssign: Mock<typeof window.location.assign>;
 
   beforeAll(() => {
     delete (window as any).location;
     delete (document as any).referrer;
-    (window as any).location = {
-      assign: jest.fn(),
+    // @ts-expect-error
+    window.location = {
+      assign: vi.fn(),
       href: 'https://o3.openmrs.org/openmrs/spa/chart',
       origin: 'https://o3.openmrs.org',
     };
+    mockLocationAssign = window.location.assign as Mock<typeof window.location.assign>;
     window.getOpenmrsSpaBase = () => 'https://o3.openmrs.org/openmrs/spa';
     Object.defineProperty(document, 'referrer', {
       value: mockReferrer,
       writable: true,
       configurable: true,
     });
-    mockLocationAssign = window.location.assign as jest.Mock;
   });
 
   beforeEach(() => {
