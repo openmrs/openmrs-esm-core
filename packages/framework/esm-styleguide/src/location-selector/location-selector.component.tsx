@@ -38,7 +38,6 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
   }, [defaultLocation, fetchedLocations]);
 
   const handleSearch = (searchString) => {
-    //debounce the search input and call api
     setSearchTerm(searchString);
   };
 
