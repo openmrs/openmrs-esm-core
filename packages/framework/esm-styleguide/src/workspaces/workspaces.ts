@@ -300,6 +300,11 @@ export function launchWorkspace<
   const workspace = getWorkspaceRegistration(name);
   const currentWorkspaceGroup = store.getState().workspaceGroup;
 
+  const openWorkspaces = store.getState().openWorkspaces;
+  if (openWorkspaces.length > 0 && openWorkspaces[0].name === name) {
+    return;
+  }
+
   if (currentWorkspaceGroup && !currentWorkspaceGroup.members?.includes(name)) {
     closeWorkspaceGroup(currentWorkspaceGroup.name, () => {
       launchWorkspace(name, additionalProps);
@@ -345,7 +350,6 @@ export function launchWorkspace<
     });
   }
 
-  const openWorkspaces = store.getState().openWorkspaces;
   const workspaceIndexInOpenWorkspaces = openWorkspaces.findIndex((w) => w.name === name);
   const isWorkspaceAlreadyOpen = workspaceIndexInOpenWorkspaces >= 0;
   const openedWorkspaceWithSameType = openWorkspaces.find((w) => w.type == newWorkspace.type);
@@ -359,7 +363,6 @@ export function launchWorkspace<
     });
   } else if (isWorkspaceAlreadyOpen) {
     const openWorkspace = openWorkspaces[workspaceIndexInOpenWorkspaces];
-    // Only update the title if it hasn't been set by `setTitle`
     if (openWorkspace.title === getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
       openWorkspace.title = getWorkspaceTitle(newWorkspace, newWorkspace.additionalProps);
     }
