@@ -48,6 +48,7 @@ export default function Popup({
       <div className={styles.topBar}>
         <div className={styles.tabs}>
           <ContentSwitcher
+            className={styles.contentSwitcher}
             selectedIndex={activeTab}
             onChange={(switcherItem: SwitcherItem) => {
               setActiveTab(switcherItem.index);
