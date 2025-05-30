@@ -103,6 +103,8 @@ export interface OpenmrsDatePickerProps
   className?: Argument;
   /** The default value (uncontrolled) */
   defaultValue?: DateInputValue;
+  /** Whether the DatePicker is disabled (non-interactive) */
+  isDisabled?: boolean;
   /** Whether the input value is invalid. */
   invalid?: boolean;
   /** Text to show if the input is invalid e.g. an error message */
@@ -607,6 +609,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
       defaultValue: rawDefaultValue,
       invalid,
       invalidText,
+      isDisabled,
       isInvalid: isInvalidRaw,
       label,
       labelText,
@@ -667,8 +670,10 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
               className={classNames('cds--date-picker', 'cds--date-picker--single', {
                 ['cds--date-picker--short']: short,
                 ['cds--date-picker--light']: light,
+                'cds--date-picker--disabled': isDisabled,
               })}
               defaultValue={defaultValue}
+              isDisabled={isDisabled}
               isInvalid={isInvalid}
               maxValue={maxDate}
               minValue={minDate}
@@ -685,6 +690,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                     ref={ref}
                     className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
                       [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
+                      'cds--date-picker--disabled': isDisabled,
                     })}
                   >
                     {(segment) => {
