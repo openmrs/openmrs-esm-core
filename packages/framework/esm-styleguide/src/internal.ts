@@ -1,6 +1,7 @@
 export * from './breakpoints';
 export * from './config-schema';
 export * from './custom-overflow-menu';
+export * from './dashboard-extension';
 export * from './datepicker';
 export * from './diagnosis-tags';
 export * from './error-state';
