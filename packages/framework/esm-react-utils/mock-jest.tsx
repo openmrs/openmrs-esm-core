@@ -140,6 +140,10 @@ export const useExtensionSlot = jest.fn();
 
 export const useForceUpdate = jest.fn();
 
+export const useLeftNav = jest.fn();
+
+export const useLeftNavStore = jest.fn();
+
 // TODO: Remove this in favour of usePrimaryIdentifierCode below
 export const usePrimaryIdentifierResource = jest.fn();
 

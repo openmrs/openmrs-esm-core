@@ -60,7 +60,6 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   return (
     <div>
       <Search
-        autoFocus
         labelText={t('searchForLocation', 'Search for a location')}
         id="search-1"
         placeholder={t('searchForLocation', 'Search for a location')}

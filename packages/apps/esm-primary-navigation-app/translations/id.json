@@ -1,11 +1,11 @@
 {
-  "AppMenuTooltip": "tooltip menu aplikasi",
-  "cancel": "batal",
-  "change": "ubah",
-  "changeLanguage": "ubah bahasa",
-  "changingLanguage": "mengubah bahasa",
-  "notifications": "notifikasi",
-  "userMenu": "menu pengguna",
-  "userMenuOptions": "opsi menu pengguna",
-  "userMenuTooltip": "tooltip menu pengguna"
+  "AppMenuTooltip": "Menu Aplikasi",
+  "cancel": "Batal",
+  "change": "Ubah",
+  "changeLanguage": "Ubah bahasa",
+  "changingLanguage": "Mengubah bahasa",
+  "notifications": "Notifikasi",
+  "userMenu": "Menu pengguna",
+  "userMenuOptions": "Opsi menu pengguna",
+  "userMenuTooltip": "Akun Saya"
 }
