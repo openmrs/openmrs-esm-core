@@ -481,7 +481,8 @@ const DatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, DatePickerProps<Date
   function DatePicker(props, ref) {
     [props, ref] = useContextProps(props, ref, DatePickerContext);
     let { validationBehavior: formValidationBehavior } = useSlottedContext(FormContext) || {};
-    let validationBehavior: typeof props['validationBehavior'] = props.validationBehavior ?? formValidationBehavior ?? 'native';
+    let validationBehavior: (typeof props)['validationBehavior'] =
+      props.validationBehavior ?? formValidationBehavior ?? 'native';
     let state = useDatePickerState({
       ...props,
       validationBehavior,
@@ -684,7 +685,10 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
             >
               <div className="cds--date-picker-container">
                 {(labelText ?? label) && <DatePickerLabel labelText={labelText ?? label} htmlFor={id} />}
-                <Group className={styles.inputGroup}>
+                <Group
+                  className={classNames(styles.inputGroup, { [styles.inputGroupDisabled]: isDisabled })}
+                  isDisabled={isDisabled}
+                >
                   <DatePickerInput
                     id={id}
                     ref={ref}
@@ -701,7 +705,13 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                       );
                     }}
                   </DatePickerInput>
-                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
+                  <Button
+                    className={classNames(styles.flatButton, styles.flatButtonMd, {
+                      'cds--date-picker--disabled': isDisabled,
+                    })}
+                    isDisabled={isDisabled}
+                    aria-disabled={isDisabled}
+                  >
                     <DatePickerIcon />
                   </Button>
                 </Group>
