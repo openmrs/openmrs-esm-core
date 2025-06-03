@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { type ReactNode, Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
@@ -194,9 +194,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               onClick={() => closeWorkspace()}
             />
           )}
-          <HeaderName prefix="">
-            {workspaceInstance.titleNode ?? (t(workspaceInstance.title) as React.ReactElement)}
-          </HeaderName>
+          <HeaderName prefix="">{workspaceInstance.titleNode ?? (t(workspaceInstance.title) as ReactNode)}</HeaderName>
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot
