@@ -1,46 +1,14 @@
 /** @module @category UI */
+import React, { useContext, useEffect } from 'react';
 import { SideNav, type SideNavProps } from '@carbon/react';
-import { ExtensionSlot, useAssignedExtensions, useStore } from '@openmrs/esm-react-utils';
-import { createGlobalStore } from '@openmrs/esm-state';
-import React from 'react';
+import {
+  ComponentContext,
+  ExtensionSlot,
+  useAssignedExtensions,
+  useLeftNavStore,
+  RenderIfValueIsTruthy,
+} from '@openmrs/esm-react-utils';
 import styles from './left-nav.module.scss';
-
-interface LeftNavStore {
-  slotName: string | null;
-  basePath: string;
-  mode: 'normal' | 'collapsed';
-}
-
-const leftNavStore = createGlobalStore<LeftNavStore>('left-nav', {
-  slotName: null,
-  basePath: window.spaBase,
-  mode: 'normal',
-});
-
-interface SetLeftNavParams {
-  name: string;
-  basePath: string;
-
-  /**
-   * In normal mode, the left nav is shown in desktop mode, and collapse into hamburger menu button in tablet mode
-   * In collapsed mode, the left nav is always collapsed, regardless of desktop / tablet mode
-   */
-  mode?: 'normal' | 'collapsed';
-}
-
-export function setLeftNav({ name, basePath, mode }: SetLeftNavParams) {
-  leftNavStore.setState({ slotName: name, basePath, mode: mode ?? 'normal' });
-}
-
-export function unsetLeftNav(name: string) {
-  if (leftNavStore.getState().slotName == name) {
-    leftNavStore.setState({ slotName: null });
-  }
-}
-
-export function useLeftNavStore() {
-  return useStore(leftNavStore);
-}
 
 /**
  * This component renders the left nav in desktop mode. It's also used to render the same
@@ -50,7 +18,7 @@ export function useLeftNavStore() {
  * is deprecated; it simply renders nothing.
  */
 export const LeftNavMenu = React.forwardRef<HTMLElement, SideNavProps>((props, ref) => {
-  const { slotName, basePath } = useLeftNavStore();
+  const { slotName, basePath, componentContext } = useLeftNavStore();
   const currentPath = window.location ?? { pathname: '' };
   const navMenuItems = useAssignedExtensions(slotName ?? '');
 
@@ -58,7 +26,16 @@ export const LeftNavMenu = React.forwardRef<HTMLElement, SideNavProps>((props, r
     return (
       <SideNav ref={ref} expanded aria-label="Left navigation" className={styles.leftNav} {...props}>
         <ExtensionSlot name="global-nav-menu-slot" />
-        {slotName ? <ExtensionSlot name={slotName} state={{ basePath, currentPath }} /> : null}
+        {slotName ? (
+          <RenderIfValueIsTruthy
+            value={componentContext}
+            fallback={<ExtensionSlot name={slotName} state={{ basePath, currentPath }} />}
+          >
+            <ComponentContext.Provider value={componentContext!}>
+              <ExtensionSlot name={slotName} state={{ basePath, currentPath }} />
+            </ComponentContext.Provider>
+          </RenderIfValueIsTruthy>
+        ) : null}
       </SideNav>
     );
   } else {

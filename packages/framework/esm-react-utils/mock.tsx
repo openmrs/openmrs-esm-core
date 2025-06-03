@@ -148,6 +148,10 @@ export const useExtensionSlot = vi.fn();
 
 export const useForceUpdate = vi.fn();
 
+export const useLeftNav = vi.fn();
+
+export const useLeftNavStore = vi.fn();
+
 // TODO: Remove this in favour of usePrimaryIdentifierCode below
 export const usePrimaryIdentifierResource = vi.fn();
 
