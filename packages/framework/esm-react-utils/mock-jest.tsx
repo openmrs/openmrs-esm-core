@@ -119,6 +119,10 @@ export const useOnClickOutside = jest.fn(function useOnClickOutside() {
   return React.useRef();
 });
 
+export const useOnVisible = jest.fn(function useOnVisible() {
+  return React.useRef();
+});
+
 export const useBodyScrollLock = jest.fn();
 
 export const isDesktop = jest.fn(realIsDesktop);
