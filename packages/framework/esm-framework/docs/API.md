@@ -2389,7 +2389,7 @@ ___
 
 ### LeftNavMenu
 
-• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`LeftNavMenuProps` & `RefAttributes`<`HTMLElement`\>\>
 
 This component renders the left nav in desktop mode. It's also used to render the same
 nav when the hamburger menu is clicked on in tablet mode. See side-menu-panel.component.tsx
@@ -2399,7 +2399,7 @@ is deprecated; it simply renders nothing.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L20)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L32)
 
 ___
 

@@ -207,43 +207,27 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               <>
                 {(canMaximize || isMaximized) && (
                   <HeaderGlobalAction
-                    /* @ts-expect-error */
-                    align="bottom"
                     aria-label={
                       isMaximized
                         ? getCoreTranslation('minimize', 'Minimize')
                         : getCoreTranslation('maximize', 'Maximize')
                     }
-                    label={
-                      isMaximized
-                        ? getCoreTranslation('minimize', 'Minimize')
-                        : getCoreTranslation('maximize', 'Maximize')
-                    }
                     onClick={toggleWindowState}
-                    size="lg"
                   >
                     {isMaximized ? <Minimize /> : <Maximize />}
                   </HeaderGlobalAction>
                 )}
                 {canHide && !currentGroupName ? (
                   <HeaderGlobalAction
-                    /* @ts-expect-error */
-                    align="bottom-right"
                     aria-label={getCoreTranslation('hide', 'Hide')}
-                    label={getCoreTranslation('hide', 'Hide')}
                     onClick={() => updateWorkspaceWindowState('hidden')}
-                    size="lg"
                   >
                     <ArrowRightIcon />
                   </HeaderGlobalAction>
                 ) : (
                   <HeaderGlobalAction
-                    /* @ts-expect-error */
-                    align="bottom-right"
                     aria-label={getCoreTranslation('close', 'Close')}
-                    label={getCoreTranslation('close', 'Close')}
                     onClick={() => closeWorkspace?.()}
-                    size="lg"
                   >
                     <CloseIcon />
                   </HeaderGlobalAction>
@@ -251,13 +235,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               </>
             )}
             {layout === 'tablet' && canHide && (
-              <HeaderGlobalAction
-                /* @ts-expect-error */
-                align="bottom-right"
-                aria-label={getCoreTranslation('close', 'Close')}
-                label={getCoreTranslation('close', 'Close')}
-                onClick={() => closeWorkspace?.()}
-              >
+              <HeaderGlobalAction aria-label={getCoreTranslation('close', 'Close')} onClick={() => closeWorkspace?.()}>
                 <DownToBottom />
               </HeaderGlobalAction>
             )}
