@@ -2,10 +2,11 @@ import type {} from '@openmrs/esm-globals';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { type ComponentConfig } from './types';
 
+type LeftNavMode = 'normal' | 'collapsed' | 'hidden';
 export interface LeftNavStore {
   slotName: string | null;
   basePath: string;
-  mode: 'normal' | 'collapsed';
+  mode: LeftNavMode;
   componentContext?: ComponentConfig;
 }
 
@@ -21,9 +22,10 @@ export interface SetLeftNavParams {
   basePath: string;
   /**
    * In normal mode, the left nav is shown in desktop mode, and collapse into hamburger menu button in tablet mode
-   * In collapsed mode, the left nav is always collapsed, regardless of desktop / tablet mode
+   * In collapsed mode, the left nav is always collapsed, regardless of desktop / tablet mode.
+   * In hidden mode, the left nav is not shown at all.
    */
-  mode?: 'normal' | 'collapsed';
+  mode?: LeftNavMode;
   componentContext?: ComponentConfig;
 }
 
