@@ -178,6 +178,15 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
               // Server didn't respond with json
             }
             return response;
+          })
+          .then((response) => {
+            if (response.headers.has('location')) {
+              const location = response.headers.get('location');
+              if (location) {
+                setTimeout(() => navigate({ to: location }), 0);
+              }
+            }
+            return response;
           });
       }
     } else {
@@ -314,6 +323,7 @@ export class OpenmrsFetchError extends Error implements FetchError {
 export interface FetchConfig extends Omit<RequestInit, 'body' | 'headers'> {
   headers?: FetchHeaders;
   body?: FetchBody | string;
+  params?: Record<string, string>;
 }
 
 type ResponseBody = string | FetchResponseJson;

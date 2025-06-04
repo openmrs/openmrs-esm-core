@@ -4,6 +4,8 @@ import ChangePassword from './change-password/change-password.component';
 import LocationPickerView from './location-picker/location-picker-view.component';
 import Login from './login/login.component';
 import RedirectLogout from './redirect-logout/redirect-logout.component';
+import TOTPSetup from './login/totp-setup.component';
+import LoginWithTotp from './login/login-with-totp.component';
 
 const Root: React.FC = () => {
   return (
@@ -14,6 +16,8 @@ const Root: React.FC = () => {
         <Route path="login/location" element={<LocationPickerView />} />
         <Route path="logout" element={<RedirectLogout />} />
         <Route path="change-password" element={<ChangePassword />} />
+        <Route path="login/totp" element={<LoginWithTotp />} />
+        <Route path="totp-setup" element={<TOTPSetup />} />
       </Routes>
     </BrowserRouter>
   );
