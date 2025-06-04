@@ -34,13 +34,7 @@ export function PatientPhoto({ patientUuid, patientName }: PatientPhotoProps) {
   const altText = t('avatarAltText', 'Profile photo unavailable - grey placeholder image');
 
   if (isLoading) {
-    return (
-      <SkeletonIcon
-        className={styles.skeleton}
-        /* @ts-expect-error */
-        role="progressbar"
-      />
-    );
+    return <SkeletonIcon className={styles.skeleton} data-testid="skeleton-icon" />;
   }
 
   if (photo?.imageSrc && !validImageSrc) {

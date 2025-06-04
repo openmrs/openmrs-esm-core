@@ -12,6 +12,7 @@ import {
   useFhirPagination as realUseFhirPagination,
   useFhirInfinite as realUseFhirInfinite,
   useFhirFetchAll as realUseFhirFetchAll,
+  useVisitContextStore as realUseVisitContextStore,
 } from './src/index';
 export { ConfigurableLink } from './src/ConfigurableLink';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
@@ -92,6 +93,8 @@ export const useVisit = jest.fn().mockReturnValue({
   currentVisitIsRetrospective: false,
 });
 
+export const useVisitContextStore = jest.fn(realUseVisitContextStore);
+
 export const useVisitTypes = jest.fn(() => []);
 
 export const useAbortController = jest.fn(() => {
@@ -113,6 +116,10 @@ export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
 export const useOnClickOutside = jest.fn(function useOnClickOutside() {
+  return React.useRef();
+});
+
+export const useOnVisible = jest.fn(function useOnVisible() {
   return React.useRef();
 });
 
@@ -139,6 +146,10 @@ export const useDefineAppContext = jest.fn();
 export const useExtensionSlot = jest.fn();
 
 export const useForceUpdate = jest.fn();
+
+export const useLeftNav = jest.fn();
+
+export const useLeftNavStore = jest.fn();
 
 // TODO: Remove this in favour of usePrimaryIdentifierCode below
 export const usePrimaryIdentifierResource = jest.fn();
