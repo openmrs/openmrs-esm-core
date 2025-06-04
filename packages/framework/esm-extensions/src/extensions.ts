@@ -24,12 +24,15 @@ import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-
 import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
 import { isEqual } from 'lodash-es';
-import { type AssignedExtension, checkStatusFor, type ExtensionSlotState, getExtensionInternalStore } from '.';
+import { checkStatusFor } from './helpers';
 import {
+  type AssignedExtension,
   type ExtensionRegistration,
   type ExtensionSlotInfo,
   type ExtensionInternalStore,
+  type ExtensionSlotState,
   getExtensionStore,
+  getExtensionInternalStore,
   updateInternalExtensionStore,
 } from './store';
 

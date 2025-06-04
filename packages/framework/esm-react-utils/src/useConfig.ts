@@ -1,10 +1,16 @@
 /** @module @category Config */
 import { useContext, useEffect, useMemo, useState } from 'react';
-import type { ConfigStore, ConfigObject, ExtensionsConfigStore } from '@openmrs/esm-config';
-import { getConfigStore, getExtensionsConfigStore, getExtensionConfigFromStore } from '@openmrs/esm-config';
-import type { StoreApi } from 'zustand';
 import { isEqual } from 'lodash-es';
-import type { ExtensionData } from './ComponentContext';
+import type { StoreApi } from 'zustand';
+import {
+  type ConfigStore,
+  type ConfigObject,
+  type ExtensionsConfigStore,
+  getConfigStore,
+  getExtensionsConfigStore,
+  getExtensionConfigFromStore,
+} from '@openmrs/esm-config';
+import { type ExtensionData } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 
 const promises: Record<string, Promise<ConfigObject>> = {};

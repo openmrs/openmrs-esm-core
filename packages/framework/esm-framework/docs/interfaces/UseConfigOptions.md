@@ -19,4 +19,4 @@ absolutely necessary as it can end up making frontend modules coupled to one ano
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L131)
+[packages/framework/esm-react-utils/src/useConfig.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L137)
