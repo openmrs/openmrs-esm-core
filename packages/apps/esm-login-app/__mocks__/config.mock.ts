@@ -22,7 +22,7 @@ export const mockConfig: ConfigSchema = {
   footer: {
     additionalLogos: [],
     version: '3.0.0',
-    showVersion: true,
+    showVersion: false,
   },
   showPasswordOnSeparateScreen: true,
 };

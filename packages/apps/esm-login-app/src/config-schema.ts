@@ -91,7 +91,7 @@ export const configSchema = {
     },
     showVersion: {
       _type: Type.Boolean,
-      _default: true,
+      _default: false,
       _description: 'Whether to display the version information in the footer.',
     },
   },
