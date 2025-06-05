@@ -4,7 +4,7 @@ export const configSchema = {
   logo: {
     src: {
       _type: Type.String,
-      _default: null,
+      _default: '',
       _description: 'A path or URL to an image. Defaults to the OpenMRS SVG sprite.',
       _validators: [validators.isUrl],
     },
@@ -15,7 +15,7 @@ export const configSchema = {
     },
     name: {
       _type: Type.String,
-      _default: null,
+      _default: '',
       _description: 'The organization name displayed when image is absent',
     },
     link: {
