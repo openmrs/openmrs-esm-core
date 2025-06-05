@@ -21,6 +21,12 @@
       "route": "change-password",
       "online": true,
       "offline": true
+    },
+    {
+      "component": "root",
+      "route": "totp-setup",
+      "online": true,
+      "offline": true
     }
   ],
   "extensions": [
@@ -52,6 +58,13 @@
       "online": true,
       "offline": true,
       "order": 1
+    },
+    {
+      "name": "setup-mfa-link",
+      "slot": "user-panel-slot",
+      "component": "setupMfaLink",
+      "online": true,
+      "offline": true
     }
   ],
   "modals": [

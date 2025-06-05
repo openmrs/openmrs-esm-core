@@ -1,0 +1,17 @@
+@use '@carbon/layout';
+
+.setupMfaButton {
+  width: fit-content;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  padding: layout.$spacing-04 !important; // this gets unset in rtl language without !important
+
+  &:hover {
+    color: white;
+  }
+}
+
+.setupMfaText {
+  padding-inline-start: layout.$spacing-03;
+}
