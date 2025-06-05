@@ -64,6 +64,22 @@ export function registerFeatureFlag(flagName: string, label: string, description
   }));
 }
 
+/**
+ * This function removes feature flags from local storage that no longer exist in the current state.
+ */
+export function cleanupObsoleteFeatureFlags() {
+  const flags = featureFlagsStore.getState().flags;
+  Object.keys(localStorage)
+    .filter((key) => key.startsWith('openmrs:feature-flag:'))
+    .forEach((key) => {
+      const flagName = key.replace('openmrs:feature-flag:', '');
+      if (!flags[flagName]) {
+        localStorage.removeItem(key);
+        localStorage.removeItem(`openmrs:feature-flag-meta:${flagName}`);
+      }
+    });
+}
+
 /** Use this function to access the current value of the feature flag
  *
  * If you are using React, use `useFeatureFlag` instead.

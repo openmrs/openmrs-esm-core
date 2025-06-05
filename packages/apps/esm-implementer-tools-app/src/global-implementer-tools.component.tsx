@@ -1,8 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChevronDownIcon, ChevronUpIcon, UserHasAccess, useStore } from '@openmrs/esm-framework';
 import { implementerToolsStore, togglePopup } from './store';
 import styles from './implementer-tools.styles.scss';
-import { useTranslation } from 'react-i18next';
 
 const GlobalImplementerToolsButton: React.FC = () => {
   const { isOpen } = useStore(implementerToolsStore);

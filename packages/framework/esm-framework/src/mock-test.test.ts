@@ -6,12 +6,12 @@
  * API. You can change `xit` to `it` to run the test and see a
  * comparison of the exports of the two modules.
  */
-
+import { describe, expect, it } from 'vitest';
 import * as real from './index';
 import * as mock from '../mock';
 
 describe('@openmrs/esm-framework/mock', () => {
-  xit('should have the same exports as @openmrs/esm-framework', () => {
+  it.skip('should have the same exports as @openmrs/esm-framework', () => {
     expect(new Set(Object.keys(real))).toEqual(new Set(Object.keys(mock)));
   });
 

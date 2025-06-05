@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
 import { Readable } from 'node:stream';
 import { prompt, type Question } from 'inquirer';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
@@ -182,14 +182,14 @@ async function downloadPackage(
   baseDir: string,
   fetchOptions: npmRegistryFetch.Options,
 ): Promise<Buffer> {
-  if (esmVersion.startsWith('file:')) {
+  if (esmVersion && esmVersion.startsWith('file:')) {
     const source = resolve(baseDir, esmVersion.substring(5));
     return readFile(source);
-  } else if (/^https?:\/\//.test(esmVersion)) {
+  } else if (esmVersion && /^https?:\/\//.test(esmVersion)) {
     const response = await axios.get<Buffer>(esmVersion);
     return response.data;
   } else {
-    const packageName = `${esmName}@${esmVersion}`;
+    const packageName = esmVersion ? `${esmName}@${esmVersion}` : esmName;
     const tarManifest = await pacote.manifest(packageName, fetchOptions);
 
     if (!Boolean(tarManifest) || !Boolean(tarManifest._resolved) || !Boolean(tarManifest._integrity)) {
@@ -250,7 +250,7 @@ export async function runAssemble(args: AssembleArgs) {
   const { frontendModules = {}, publicUrl = '.' } = config;
 
   if (args.fresh && existsSync(args.target)) {
-    await new Promise((resolve) => rimraf(args.target, resolve));
+    await rimraf(args.target);
   }
 
   await mkdir(args.target, { recursive: true });

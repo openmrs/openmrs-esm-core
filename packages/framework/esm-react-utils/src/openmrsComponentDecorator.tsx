@@ -3,7 +3,8 @@ import { I18nextProvider } from 'react-i18next';
 import { SWRConfig, type SWRConfiguration } from 'swr';
 import type {} from '@openmrs/esm-globals';
 import { openmrsFetch } from '@openmrs/esm-api';
-import { ComponentContext, type ComponentConfig, type ExtensionData } from './ComponentContext';
+import { type ComponentConfig, type ExtensionData } from '@openmrs/esm-extensions';
+import { ComponentContext } from './ComponentContext';
 
 const defaultOpts = {
   strictMode: true,

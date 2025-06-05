@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
-          node-version: "18"
+          node-version: 20
 
       - name: 💾 Cache dependencies
         id: cache
@@ -46,11 +46,11 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: 🔍 Run lint, tests and typecheck code
-        run: yarn run verify
-
       - name: 🏗️ Run build
         run: yarn turbo run build --color --concurrency=5
+
+      - name: 🔍 Run lint, tests and typecheck code
+        run: yarn run verify --concurrency=5
 
   pre_release:
     runs-on: ubuntu-latest
@@ -66,7 +66,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
-          node-version: "18"
+          node-version: 20
 
       - name: 💾 Cache dependencies
         id: cache
@@ -119,7 +119,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
-          node-version: "18"
+          node-version: 20
 
       - name: 💾 Cache dependencies
         id: cache

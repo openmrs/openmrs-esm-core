@@ -57,6 +57,12 @@ export const ServiceQueuesPictogram = memo(
   }),
 );
 
+export const StockManagementPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function StockManagementPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-stock-management" pictogramProps={props} />;
+  }),
+);
+
 /**
  * This is a utility component that takes an `pictogram` and render it if the sprite for the pictogram
  * is available. The goal is to make it easier to conditionally render configuration-specified pictograms.

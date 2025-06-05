@@ -2,12 +2,12 @@
 #
 # Generates API docs and updates the README TOC
 
-set -e 
+set -e
 set -o pipefail
 
 echo Generating new API docs
 
-npx typedoc src/index.ts
+npx typedoc --tsconfig tsconfig.build.json src/index.ts
 
 # Link back to README at the top; the -i.bak and rm is to support both Mac & Linux.
 # See https://stackoverflow.com/a/22084103/1464495

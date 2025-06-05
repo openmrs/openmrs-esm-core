@@ -2,8 +2,7 @@
 import { Observable } from 'rxjs';
 import { isPlainObject } from 'lodash-es';
 import { getConfig } from '@openmrs/esm-config';
-import { navigate } from '@openmrs/esm-navigation';
-import { clearHistory } from '@openmrs/esm-navigation/src/index';
+import { clearHistory, navigate } from '@openmrs/esm-navigation';
 import type { FetchResponse } from './types';
 
 export const restBaseUrl = '/ws/rest/v1';
@@ -89,7 +88,6 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     throw Error("The second argument to @openmrs/api's openmrsFetch function must be a plain object.");
   }
 
-  // @ts-ignore
   if (!window.openmrsBase) {
     throw Error(
       "@openmrs/api is running in a browser that doesn't have window.openmrsBase, which is provided by openmrs-module-spa's HTML file.",
@@ -190,7 +188,7 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
        */
 
       /*
-       *Redirect to given url when redirect on auth failure is enabled
+       * Redirect to given url when redirect on auth failure is enabled
        */
       const { redirectAuthFailure } = await getConfig('@openmrs/esm-api');
 

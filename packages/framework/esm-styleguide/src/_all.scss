@@ -1,18 +1,20 @@
-@import '@carbon/styles';
+@forward '@carbon/styles' hide $field-01;
+
+@forward './vars';
+
+@forward './components/general';
+@forward './components/canvas';
+@forward './components/colors';
+@forward './components/breadcrumbs';
+@forward './components/main-content';
+@forward './logo/logo';
+@forward './spinner/spinner';
+@forward './notifications/notifications';
+@forward './notifications/actionable-notifications';
+@forward './toasts/toasts';
+@forward './snackbars/snackbars';
+@forward './modals/modals';
+
+@forward './overrides';
+
 @import '@carbon/charts/styles.css';
-@import './vars';
-
-@import './components/general';
-@import './components/canvas';
-@import './components/colors';
-@import './components/breadcrumbs';
-@import './components/main-content';
-@import './logo/logo';
-@import './spinner/spinner';
-@import './notifications/notifications';
-@import './notifications/actionable-notifications';
-@import './toasts/toasts';
-@import './snackbars/snackbars';
-@import './modals/modals';
-
-@import './overrides';

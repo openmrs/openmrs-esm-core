@@ -70,3 +70,12 @@
     fill: theme.$icon-primary;
   }
 }
+
+.contentSwitcher {
+  outline: none;
+
+  :first-child,
+  :last-child {
+    box-shadow: none !important;
+  }
+}

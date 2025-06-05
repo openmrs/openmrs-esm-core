@@ -312,7 +312,7 @@ This ensures that all packages use compatible versions and breaking changes are 
 
 ## Design Patterns
 
-For documentation about our design patterns, please visit our design system documentation website.
+For documentation about our design patterns, please visit our [design system documentation website](https://om.rs/o3ui).
 
 ## Bumping Playwright
 

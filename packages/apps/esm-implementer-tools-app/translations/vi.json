@@ -23,6 +23,7 @@
   "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Đặt lại về mặc định",
+  "toggleImplementerTools": "Toggle Implementer Tools",
   "uiEditor": "UI editor",
   "unknownVersion": "unknown",
   "updateConfig": "Cập nhật cấu hình",

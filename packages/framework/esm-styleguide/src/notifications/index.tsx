@@ -42,7 +42,7 @@ function isNotEmpty(description: React.ReactNode) {
  */
 export function showNotification(notification: NotificationDescriptor) {
   if (notification && isNotEmpty(notification.description)) {
-    if (notification.description instanceof Error) {
+    if ((notification.description as unknown) instanceof Error) {
       notification.description = notification.description.toLocaleString();
     }
 

@@ -1,7 +1,6 @@
 /** @module @category UI */
 import { type FetchResponse, openmrsFetch } from '@openmrs/esm-api';
 import { useCallback } from 'react';
-import { type KeyedMutator } from 'swr';
 import useSWRInfinite, { type SWRInfiniteConfiguration, type SWRInfiniteResponse } from 'swr/infinite';
 import {
   openmrsServerPaginationHandlers,

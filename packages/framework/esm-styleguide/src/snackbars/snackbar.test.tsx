@@ -1,12 +1,16 @@
 import React from 'react';
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { Snackbar } from './snackbar.component';
 
-jest.useFakeTimers();
-
-const mockCloseSnackbar = jest.fn();
+const mockCloseSnackbar = vi.fn();
 
 describe('Snackbar component', () => {
+  beforeAll(() => vi.useFakeTimers({ shouldAdvanceTime: true }));
+  afterEach(vi.runAllTimers);
+  afterAll(vi.useRealTimers);
+
   it('renders a snackbar notification', () => {
     renderSnackbar();
 
@@ -33,21 +37,28 @@ describe('Snackbar component', () => {
     expect(screen.getByText(/error contacting lab system. please try again later/i)).toBeInTheDocument();
   });
 
-  it('automatically dismisses the snackbar after a timeout if autoClose is set to true', async () => {
-    renderSnackbar({
-      snackbar: {
-        autoClose: true,
-        timeoutInMs: 5000,
-        title: 'Order submitted',
-      },
-    });
+  it(
+    'automatically dismisses the snackbar after a timeout if autoClose is set to true',
+    { timeout: 2000 },
+    async () => {
+      renderSnackbar({
+        snackbar: {
+          autoClose: true,
+          timeoutInMs: 500,
+          title: 'Order submitted',
+        },
+      });
 
-    const snackbar = screen.getByRole('alertdialog', { name: /order submitted/i });
-    expect(snackbar).toBeInTheDocument();
+      const snackbar = screen.getByRole('alertdialog', { name: /order submitted/i });
+      expect(snackbar).toBeInTheDocument();
 
-    act(() => jest.advanceTimersByTime(5000));
-    await waitFor(() => expect(mockCloseSnackbar).toHaveBeenCalledTimes(1));
-  });
+      act(() => {
+        vi.advanceTimersByTime(750);
+      });
+
+      await waitFor(() => expect(mockCloseSnackbar).toHaveBeenCalledTimes(1), { timeout: 200 });
+    },
+  );
 
   it('renders an actionable variant of the snackbar if actionButtonLabel is provided', () => {
     renderSnackbar({

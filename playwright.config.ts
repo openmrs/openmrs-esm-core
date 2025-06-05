@@ -1,4 +1,4 @@
-import { devices, PlaywrightTestConfig } from '@playwright/test';
+import { devices, type PlaywrightTestConfig } from '@playwright/test';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -16,7 +16,6 @@ const config: PlaywrightTestConfig = {
   globalSetup: require.resolve('./e2e/core/global-setup'),
   use: {
     baseURL: `${process.env.E2E_BASE_URL}/spa/`,
-    trace: 'retain-on-failure',
     storageState: 'e2e/storageState.json',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',

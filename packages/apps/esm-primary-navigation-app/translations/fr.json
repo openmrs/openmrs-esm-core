@@ -5,5 +5,7 @@
   "changeLanguage": "Changer de langue",
   "changingLanguage": "Changement de langue",
   "notifications": "Notifications",
+  "userMenu": "Menu utilisateur",
+  "userMenuOptions": "Options du menu utilisateur",
   "userMenuTooltip": "Mon compte"
 }

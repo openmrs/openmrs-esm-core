@@ -18,7 +18,7 @@
 
 ### config
 
-• `Readonly` **config**: ``null`` \| `Readonly`<[`ConfigObject`](ConfigObject.md)\>
+• `Readonly` **config**: ``null`` \| `Readonly`<`ConfigObject`\>
 
 The extension's config. Note that this will be `null` until the slot is mounted.
 
