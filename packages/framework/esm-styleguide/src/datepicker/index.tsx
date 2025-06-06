@@ -103,6 +103,8 @@ export interface OpenmrsDatePickerProps
   className?: Argument;
   /** The default value (uncontrolled) */
   defaultValue?: DateInputValue;
+  /** Whether the DatePicker is disabled (non-interactive) */
+  isDisabled?: boolean;
   /** Whether the input value is invalid. */
   invalid?: boolean;
   /** Text to show if the input is invalid e.g. an error message */
@@ -479,7 +481,8 @@ const DatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, DatePickerProps<Date
   function DatePicker(props, ref) {
     [props, ref] = useContextProps(props, ref, DatePickerContext);
     let { validationBehavior: formValidationBehavior } = useSlottedContext(FormContext) || {};
-    let validationBehavior: typeof props['validationBehavior'] = props.validationBehavior ?? formValidationBehavior ?? 'native';
+    let validationBehavior: (typeof props)['validationBehavior'] =
+      props.validationBehavior ?? formValidationBehavior ?? 'native';
     let state = useDatePickerState({
       ...props,
       validationBehavior,
@@ -607,6 +610,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
       defaultValue: rawDefaultValue,
       invalid,
       invalidText,
+      isDisabled,
       isInvalid: isInvalidRaw,
       label,
       labelText,
@@ -667,8 +671,10 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
               className={classNames('cds--date-picker', 'cds--date-picker--single', {
                 ['cds--date-picker--short']: short,
                 ['cds--date-picker--light']: light,
+                'cds--date-picker--disabled': isDisabled,
               })}
               defaultValue={defaultValue}
+              isDisabled={isDisabled}
               isInvalid={isInvalid}
               maxValue={maxDate}
               minValue={minDate}
@@ -679,12 +685,16 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
             >
               <div className="cds--date-picker-container">
                 {(labelText ?? label) && <DatePickerLabel labelText={labelText ?? label} htmlFor={id} />}
-                <Group className={styles.inputGroup}>
+                <Group
+                  className={classNames(styles.inputGroup, { [styles.inputGroupDisabled]: isDisabled })}
+                  isDisabled={isDisabled}
+                >
                   <DatePickerInput
                     id={id}
                     ref={ref}
                     className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
                       [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
+                      'cds--date-picker--disabled': isDisabled,
                     })}
                   >
                     {(segment) => {
@@ -695,7 +705,13 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                       );
                     }}
                   </DatePickerInput>
-                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
+                  <Button
+                    className={classNames(styles.flatButton, styles.flatButtonMd, {
+                      'cds--date-picker--disabled': isDisabled,
+                    })}
+                    isDisabled={isDisabled}
+                    aria-disabled={isDisabled}
+                  >
                     <DatePickerIcon />
                   </Button>
                 </Group>

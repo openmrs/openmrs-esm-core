@@ -117,6 +117,22 @@
   }
 }
 
+.inputGroupDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.inputWrapper.cds--date-picker--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.flatButton.cds--date-picker--disabled,
+.flatButtonMd.cds--date-picker--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .inputWrapper {
   inline-size: 15rem;
   margin-left: layout.$spacing-05;
