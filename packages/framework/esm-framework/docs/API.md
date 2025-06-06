@@ -6663,7 +6663,7 @@ Sets the current left nav context. Must be paired with [unsetLeftNav](API.md#uns
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/left-nav.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L35)
+[packages/framework/esm-extensions/src/left-nav.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L37)
 
 ___
 
@@ -6687,7 +6687,7 @@ Unsets the left nav context if the current context is for the supplied name.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/left-nav.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L44)
+[packages/framework/esm-extensions/src/left-nav.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L46)
 
 ___
 

@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/left-nav.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L7)
+[packages/framework/esm-extensions/src/left-nav.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L8)
 
 ___
 
@@ -29,17 +29,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/left-nav.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L9)
+[packages/framework/esm-extensions/src/left-nav.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L10)
 
 ___
 
 ### mode
 
-• **mode**: ``"normal"`` \| ``"collapsed"``
+• **mode**: `LeftNavMode`
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/left-nav.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L8)
+[packages/framework/esm-extensions/src/left-nav.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L9)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/left-nav.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L6)
+[packages/framework/esm-extensions/src/left-nav.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L7)
