@@ -21,6 +21,7 @@ import {
   Group,
   Popover,
   Provider,
+  Label,
 } from 'react-aria-components';
 import { type ConfigType as DayjsConfigType } from 'dayjs';
 import { useConfig } from '@openmrs/esm-react-utils';
@@ -32,7 +33,6 @@ import { OpenmrsIntlLocaleContext } from './locale-context';
 import { MonthYear } from './MonthYear';
 import { DatePicker } from './DatePicker';
 import { DatePickerInput } from './DatePickerInput';
-import { DatePickerLabel } from './DatePickerLabel';
 import { DatePickerIcon } from './DatePickerIcon';
 import { DateSegment } from './DateSegment';
 import styles from './datepicker.module.scss';
@@ -172,9 +172,9 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
             >
               <div className="cds--date-picker-container">
                 {(labelText ?? label) && (
-                  <DatePickerLabel className={classNames({ 'cds--label--disabled': isDisabled })} htmlFor={id}>
+                  <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })} htmlFor={id}>
                     {labelText ?? label}
-                  </DatePickerLabel>
+                  </Label>
                 )}
                 <Group className={styles.inputGroup}>
                   <DatePickerInput
