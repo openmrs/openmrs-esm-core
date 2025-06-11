@@ -10,10 +10,10 @@
       href="<%= openmrsFavicon %>"
     >
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="importmap-type" content="systemjs-importmap">
+    <meta name="importmap-type" use-injector>
     <%= htmlWebpackPlugin.tags.headTags %>
 <% if (openmrsImportmapDef) { %>
-    <script type="systemjs-importmap"><%= openmrsImportmapDef %></script>
+    <script type="injector-importmap"><%= openmrsImportmapDef %></script>
 <% } else if (openmrsImportmapUrl) { %>
     <link
       rel="preload"
@@ -21,24 +21,24 @@
       as="fetch"
       crossorigin="anonymous"
     >
-    <script type="systemjs-importmap" src="<%= openmrsImportmapUrl %>"></script>
+    <script type="injector-importmap" src="<%= openmrsImportmapUrl %>"></script>
 <% } %>
 <% if (openmrsCoreImportmap) { %>
-  <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
+    <script type="injector-importmap"><%= openmrsCoreImportmap %></script>
 <% } %>
 <% if (openmrsRoutesDef) { %>
-  <script type="openmrs-routes"><%= openmrsRoutesDef %></script>
+    <script type="openmrs-routes"><%= openmrsRoutesDef %></script>
 <% } else if (openmrsRoutesUrl) { %>
-  <link
-    rel="preload"
-    href="<%= openmrsRoutesUrl %>"
-    as="fetch"
-    crossorigin="anonymous"
-  >
-  <script type="openmrs-routes" src="<%= openmrsRoutesUrl %>"></script>
+    <link
+      rel="preload"
+      href="<%= openmrsRoutesUrl %>"
+      as="fetch"
+      crossorigin="anonymous"
+    >
+    <script type="openmrs-routes" src="<%= openmrsRoutesUrl %>"></script>
 <% } %>
 <% if (openmrsCoreRoutes) { %>
-  <script type="openmrs-routes"><%= openmrsCoreRoutes %></script>
+    <script type="openmrs-routes"><%= openmrsCoreRoutes %></script>
 <% } %>
   </head>
   <body>
