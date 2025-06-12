@@ -53,7 +53,7 @@
     "semver": "^7.3.4",
     "single-spa": "^6.0.3",
     "swc-loader": "^0.2.6",
-    "swr": "^2.3.3",
+    "swr": "^2.2.5",
     "webpack": "^5.99.9",
     "webpack-pwa-manifest": "^4.3.0",
     "workbox-core": "^6.1.5",
