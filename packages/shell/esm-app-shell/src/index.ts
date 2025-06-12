@@ -1,5 +1,6 @@
 import '@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css';
 import 'import-map-overrides';
+import '@single-spa/import-map-injector';
 import type { SpaConfig } from '@openmrs/esm-framework/src/internal';
 
 function _createSpaBase(baseUrl: string) {
@@ -67,13 +68,16 @@ function initializeSpa(config: SpaConfig) {
   setupUtils();
   setupPaths(config);
   wireSpaPaths();
-  return Promise.resolve(__webpack_init_sharing__('default')).then(async () => {
-    const { configUrls = [], offline = false } = config;
-    window.offlineEnabled = offline;
 
-    const { run } = await import(/* webpackPreload: true */ './run');
-    return run(configUrls);
-  });
+  return window.importMapInjector.initPromise.then(() =>
+    Promise.resolve(__webpack_init_sharing__('default')).then(async () => {
+      const { configUrls = [], offline = false } = config;
+      window.offlineEnabled = offline;
+
+      const { run } = await import(/* webpackPreload: true */ './run');
+      return run(configUrls);
+    }),
+  );
 }
 
 window.initializeSpa = initializeSpa;

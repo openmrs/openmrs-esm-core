@@ -559,7 +559,7 @@ A definition of an extension as extracted from an app's routes.json
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:171
+packages/framework/esm-globals/dist/types.d.ts:177
 
 ___
 
@@ -589,7 +589,7 @@ A definition of a modal as extracted from an app's routes.json
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:234
+packages/framework/esm-globals/dist/types.d.ts:240
 
 ___
 
@@ -599,7 +599,7 @@ ___
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:392
+packages/framework/esm-globals/dist/types.d.ts:398
 
 ___
 
@@ -612,7 +612,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:388
+packages/framework/esm-globals/dist/types.d.ts:394
 
 ___
 
@@ -624,7 +624,7 @@ A definition of a page extracted from an app's routes.json
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:113
+packages/framework/esm-globals/dist/types.d.ts:119
 
 ___
 
@@ -678,7 +678,7 @@ ___
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:73
+packages/framework/esm-globals/dist/types.d.ts:79
 
 ___
 
@@ -798,7 +798,7 @@ A definition of a workspace as extracted from an app's routes.json
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:264
+packages/framework/esm-globals/dist/types.d.ts:270
 
 ___
 
@@ -808,7 +808,7 @@ ___
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:260
+packages/framework/esm-globals/dist/types.d.ts:266
 
 ___
 

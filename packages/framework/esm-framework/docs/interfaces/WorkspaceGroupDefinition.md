@@ -19,7 +19,7 @@ List of workspace names which are part of the workspace group.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:342
+packages/framework/esm-globals/dist/types.d.ts:348
 
 ___
 
@@ -31,4 +31,4 @@ Name of the workspace group. This is used to launch the workspace group
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:338
+packages/framework/esm-globals/dist/types.d.ts:344
