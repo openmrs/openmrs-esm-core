@@ -8,6 +8,7 @@ export const configSchema = {
       _description:
         "Selects the login mechanism to use. Choices are 'basic' and 'oauth2'. " +
         "For 'oauth2' you'll also need to set the 'loginUrl'",
+      _validators: [validators.oneOf(['basic', 'oauth2'])],
     },
     loginUrl: {
       _type: Type.String,
@@ -52,7 +53,7 @@ export const configSchema = {
   logo: {
     src: {
       _type: Type.String,
-      _default: null,
+      _default: '',
       _description: 'The path or URL to the logo image. If set to null, the default OpenMRS SVG sprite will be used.',
       _validators: [validators.isUrl],
     },
@@ -66,19 +67,16 @@ export const configSchema = {
     additionalLogos: {
       _type: Type.Array,
       _elements: {
-        _type: Type.Object,
-        _properties: {
-          src: {
-            _type: Type.String,
-            _required: true,
-            _description: 'The source URL of the logo image',
-            _validations: [validators.isUrl],
-          },
-          alt: {
-            _type: Type.String,
-            _required: true,
-            _description: 'The alternative text for the logo image',
-          },
+        src: {
+          _type: Type.String,
+          _required: true,
+          _description: 'The source URL of the logo image',
+          _validations: [validators.isUrl],
+        },
+        alt: {
+          _type: Type.String,
+          _required: true,
+          _description: 'The alternative text for the logo image',
         },
       },
       _default: [],
