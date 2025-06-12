@@ -58,6 +58,7 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
   }
 
   const opts = Object.assign({}, defaultOpts, userOpts);
+  const swrConfig = { ...defaultSwrConfig, ...opts.swrConfig };
 
   return function decorateComponent(Comp: ComponentType<T>): ComponentType<T> {
     return class OpenmrsReactComponent extends React.Component<
@@ -103,7 +104,6 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
           // TO-DO have a UX designed for when a catastrophic error occurs
           return <div>An error has occurred. Please try reloading the page.</div>;
         } else {
-          const swrConfig = { ...defaultSwrConfig, ...opts.swrConfig };
           const content = (
             <Suspense fallback={null}>
               <SWRConfig value={swrConfig}>
