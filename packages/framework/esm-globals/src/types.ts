@@ -136,9 +136,9 @@ export type PageDefinition = {
    */
   offline?: boolean;
   /**
-   * Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
+   * If specified, the page will be rendered at the DOM element with this ID.
    */
-  order?: number;
+  rootDomId?: string;
 } & (
   | {
       /**
@@ -174,7 +174,7 @@ export type PageDefinition = {
  * @internal
  * A definition of a page after the app has been registered.
  */
-export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
+export type RegisteredPageDefinition = PageDefinition & AppComponent;
 
 /**
  * A definition of an extension as extracted from an app's routes.json

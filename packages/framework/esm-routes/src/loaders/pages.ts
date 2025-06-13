@@ -112,7 +112,6 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       ) {
         pages.push({
           ...p,
-          order: p.order ?? Number.MAX_SAFE_INTEGER,
           appName,
         });
       } else {
@@ -195,10 +194,6 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
  */
 export function finishRegisteringAllApps() {
   pages.sort((a, b) => {
-    let sort = a.order - b.order;
-    if (sort != 0) {
-      return sort;
-    }
     return a.appName.localeCompare(b.appName, 'en');
   });
 
@@ -215,9 +210,17 @@ export function finishRegisteringAllApps() {
     const index = appIndices.get(page.appName);
 
     const name = `${page.appName}-page-${index}`;
-    const div = document.createElement('div');
-    div.id = `single-spa-application:${name}`;
-    document.body.appendChild(div);
+    if (page.rootDomId) {
+      if (!page.rootDomId.startsWith('single-spa-application:')) {
+        throw new Error(
+          `The rootDomId for page ${name} must start with 'single-spa-application:'. Please fix the routes.json file.`,
+        );
+      }
+    } else {
+      const div = document.createElement('div');
+      div.id = `single-spa-application:${name}`;
+      document.body.appendChild(div);
+    }
     tryRegisterPage(name, page);
   }
 }
