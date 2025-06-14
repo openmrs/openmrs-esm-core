@@ -42,12 +42,10 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
   };
 
   const items = useMemo(() => {
-    const filtered = locations
-      .filter((loc) => loc.resource.name?.toLowerCase().startsWith(searchTerm.toLowerCase()))
-      .map((loc) => ({
-        id: loc.resource.id,
-        name: loc.resource.name,
-      }));
+    const filtered = locations.map((loc) => ({
+      id: loc.resource.id,
+      name: loc.resource.name,
+    }));
     return filtered;
   }, [locations, searchTerm]);
 
@@ -55,23 +53,17 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
     <section data-testid="combo">
       <div className={styles.sectionTitle}>{Locationlabel}</div>
       <div>
-        {locations.length ? (
-          <ComboBox
-            aria-label={comBoxLabel}
-            id="location"
-            invalidText={'Required'}
-            items={items}
-            itemToString={(item) => item?.name || ''}
-            selectedItem={items.find((item) => item.id === selectedLocationUuid)}
-            onChange={({ selectedItem }) => onChange(selectedItem?.id)}
-            onInputChange={(searchTerm) => handleSearch(searchTerm)}
-            titleText={comBoxLabel}
-          />
-        ) : (
-          <div className={styles.emptyState}>
-            <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
-          </div>
-        )}
+        <ComboBox
+          aria-label={comBoxLabel}
+          id="location"
+          invalidText={'Required'}
+          items={items}
+          itemToString={(item) => item?.name || ''}
+          selectedItem={items.find((item) => item.id === selectedLocationUuid)}
+          onChange={({ selectedItem }) => onChange(selectedItem?.id)}
+          onInputChange={(searchTerm) => handleSearch(searchTerm)}
+          titleText={comBoxLabel}
+        />
       </div>
     </section>
   );
