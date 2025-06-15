@@ -16,6 +16,11 @@ export const configSchema = {
       _description: 'The URL to use for an OAuth2 login.',
       _validators: [validators.isUrl],
     },
+    logoutUrl: {
+      _type: Type.String,
+      _description: 'The URL to use for an OAuth2 logout.',
+      _validators: [validators.isUrl],
+    },
   },
   chooseLocation: {
     enabled: {
@@ -114,7 +119,7 @@ export interface ConfigSchema {
   provider: {
     loginUrl: string;
     logoutUrl: string;
-    type: string;
+    type: 'basic' | 'oauth2';
   };
   showPasswordOnSeparateScreen: boolean;
 }

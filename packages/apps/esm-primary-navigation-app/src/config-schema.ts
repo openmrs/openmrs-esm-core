@@ -44,10 +44,10 @@ export const configSchema = {
 
 export type ConfigSchema = {
   logo: {
-    src: string | null;
+    src: string;
     alt: string;
-    name: string | null;
-    link: string | null;
+    name: string;
+    link: string;
   };
   externalRefLinks: { title: string; redirect: string }[];
 };
