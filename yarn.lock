@@ -3525,7 +3525,7 @@ __metadata:
     semver: "npm:^7.3.4"
     single-spa: "npm:^6.0.3"
     swc-loader: "npm:^0.2.6"
-    swr: "npm:^2.3.3"
+    swr: "npm:2.2.5"
     webpack: "npm:^5.99.9"
     webpack-pwa-manifest: "npm:^4.3.0"
     workbox-core: "npm:^6.1.5"
@@ -3874,7 +3874,7 @@ __metadata:
     react-dom: "npm:^18.1.0"
     react-i18next: "npm:^11.18.6"
     rxjs: "npm:^6.5.3"
-    swr: "npm:^2.3.3"
+    swr: "npm:2.2.5"
     webpack: "npm:^5.99.9"
   peerDependencies:
     "@carbon/react": 1.x
@@ -3906,7 +3906,7 @@ __metadata:
     react-i18next: "npm:^11.18.6"
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
-    swr: "npm:^2.3.3"
+    swr: "npm:2.2.5"
     webpack: "npm:^5.99.9"
     zod: "npm:^3.23.8"
   peerDependencies:
@@ -3957,7 +3957,7 @@ __metadata:
     react-i18next: "npm:^11.18.6"
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
-    swr: "npm:^2.3.3"
+    swr: "npm:2.2.5"
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
@@ -4054,7 +4054,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     rxjs: "npm:^6.5.3"
     single-spa-react: "npm:^6.0.2"
-    swr: "npm:^2.3.3"
+    swr: "npm:2.2.5"
     vitest: "npm:^3.1.4"
   peerDependencies:
     "@openmrs/esm-api": 6.x
@@ -4164,7 +4164,7 @@ __metadata:
     rxjs: "npm:^6.5.3"
     sass-embedded: "npm:^1.89.0"
     svgo-loader: "npm:^4.0.0"
-    swr: "npm:^2.3.3"
+    swr: "npm:2.2.5"
     typescript: "npm:^4.7.0"
     vitest: "npm:^3.1.4"
   peerDependencies:
@@ -10970,13 +10970,6 @@ __metadata:
   version: 1.1.2
   resolution: "depd@npm:1.1.2"
   checksum: 10/2ed6966fc14463a9e85451db330ab8ba041efed0b9a1a472dbfc6fbf2f82bab66491915f996b25d8517dddc36c8c74e24c30879b34877f3c4410733444a51d1d
-  languageName: node
-  linkType: hard
-
-"dequal@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "dequal@npm:2.0.3"
-  checksum: 10/6ff05a7561f33603df87c45e389c9ac0a95e3c056be3da1a0c4702149e3a7f6fe5ffbb294478687ba51a9e95f3a60e8b6b9005993acd79c292c7d15f71964b6b
   languageName: node
   linkType: hard
 
@@ -20258,15 +20251,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:^2.3.3":
-  version: 2.3.3
-  resolution: "swr@npm:2.3.3"
+"swr@npm:2.2.5":
+  version: 2.2.5
+  resolution: "swr@npm:2.2.5"
   dependencies:
-    dequal: "npm:^2.0.3"
-    use-sync-external-store: "npm:^1.4.0"
+    client-only: "npm:^0.0.1"
+    use-sync-external-store: "npm:^1.2.0"
   peerDependencies:
-    react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/11cd5d1acbc62cf0e092e0d19f1d67b2e6ecb542602250f3277eb235750cd3285291bae9a8264c1f5b3973890f75234c104a0baf1ac6059aadc700ecba100fcc
+    react: ^16.11.0 || ^17.0.0 || ^18.0.0
+  checksum: 10/f02b3bd5a198a0f62f9a53d7c0528c4a58aa61a43310bea169614b6e873dadb52599e856ef0775405b6aa7409835343da0cf328948aa892aa309bf4b7e7d6902
   languageName: node
   linkType: hard
 
@@ -21301,6 +21294,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10/671e9c190aab9a8374a5d468c6ba17f52c38b6fae970110bc196fc1e2b57204149aea9619be49a1bb5207fb6e51d8afd19c3bcb94afe61813fed039821461dc0
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.2.0":
+  version: 1.5.0
+  resolution: "use-sync-external-store@npm:1.5.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/ddae7c4572511f7f641d6977bd0725340aa7dbeda8250418b54c1a57ec285083d96cf50d1a1acbd6cf729f7a87071b2302c6fbd29310432bf1b21a961a313279
   languageName: node
   linkType: hard
 
