@@ -18,6 +18,7 @@ export const configSchema = {
     },
     logoutUrl: {
       _type: Type.String,
+      _default: '${openmrsSpaBase}/logout',
       _description: 'The URL to use for an OAuth2 logout.',
       _validators: [validators.isUrl],
     },
