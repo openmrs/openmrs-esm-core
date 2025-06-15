@@ -71,7 +71,7 @@ export const configSchema = {
           _type: Type.String,
           _required: true,
           _description: 'The source URL of the logo image',
-          _validations: [validators.isUrl],
+          _validators: [validators.isUrl],
         },
         alt: {
           _type: Type.String,
