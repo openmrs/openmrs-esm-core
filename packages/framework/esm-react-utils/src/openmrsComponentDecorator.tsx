@@ -1,6 +1,6 @@
 import React, { type ComponentType, type ErrorInfo, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { SWRConfig, type SWRConfiguration } from 'swr';
+import { type Cache, SWRConfig, type SWRConfiguration } from 'swr';
 import type {} from '@openmrs/esm-globals';
 import { openmrsFetch } from '@openmrs/esm-api';
 import { type ComponentConfig, type ExtensionData } from '@openmrs/esm-extensions';
@@ -12,8 +12,10 @@ const defaultOpts = {
   disableTranslations: false,
 };
 
+const swrCache: Cache = new Map();
+
 // Read more about the available config options here: https://swr.vercel.app/docs/api#configuration
-const defaultSwrConfig = {
+const defaultSwrConfig: SWRConfiguration = {
   // max number of retries after requests have failed
   errorRetryCount: 3,
   // default fetcher function
@@ -25,6 +27,7 @@ const defaultSwrConfig = {
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
   refreshInterval: 0,
+  provider: () => swrCache,
 };
 
 export interface ComponentDecoratorOptions {
@@ -55,6 +58,7 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
   }
 
   const opts = Object.assign({}, defaultOpts, userOpts);
+  const swrConfig = { ...defaultSwrConfig, ...opts.swrConfig };
 
   return function decorateComponent(Comp: ComponentType<T>): ComponentType<T> {
     return class OpenmrsReactComponent extends React.Component<
@@ -100,7 +104,6 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
           // TO-DO have a UX designed for when a catastrophic error occurs
           return <div>An error has occurred. Please try reloading the page.</div>;
         } else {
-          const swrConfig = { ...defaultSwrConfig, ...opts.swrConfig };
           const content = (
             <Suspense fallback={null}>
               <SWRConfig value={swrConfig}>
