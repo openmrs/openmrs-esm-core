@@ -23,3 +23,4 @@ export * from './spinner';
 export * from './toasts';
 export * from './toasts/toast.component';
 export * from './workspaces';
+export * from './workspaces2';
