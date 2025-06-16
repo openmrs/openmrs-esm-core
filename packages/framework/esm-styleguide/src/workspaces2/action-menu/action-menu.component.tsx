@@ -1,20 +1,16 @@
 /** @module @category Workspace */
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { ComponentContext, ExtensionSlot, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
+import { ExtensionSlot, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import styles from './action-menu.module.scss';
 
 export interface ActionMenuProps {
-  isWithinWorkspace?: boolean;
-  name?: string;
-  actionMenuProps?: Record<string, unknown>;
+  workspaceGroup: string;
 }
 
-export function ActionMenu({ isWithinWorkspace, name, actionMenuProps = {} }: ActionMenuProps) {
+export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);
-  debugger;
-  const { featureName } = useContext(ComponentContext);
   const layout = useLayoutType();
 
   useEffect(() => {
@@ -28,18 +24,17 @@ export function ActionMenu({ isWithinWorkspace, name, actionMenuProps = {} }: Ac
     return () => window.removeEventListener('resize', handleKeyboardVisibilityChange);
   }, [initialHeight]);
 
-  const extensionSlotName = `action-menu-${name && name != 'default' ? name : featureName}-items-slot`;
+  const extensionSlotName = `action-menu-${workspaceGroup}-items-slot`; // TODO: refactor into function;
 
   return (
     <aside
       className={classNames(styles.sideRail, {
-        [styles.withinWorkspace]: isWithinWorkspace,
         [styles.sideRailHidden]: keyboardVisible,
         [styles.sideRailVisible]: !keyboardVisible,
       })}
     >
       <div className={styles.container}>
-        <ExtensionSlot className={styles.chartExtensions} name={extensionSlotName} state={actionMenuProps} />
+        <ExtensionSlot className={styles.chartExtensions} name={extensionSlotName} />
       </div>
     </aside>
   );
