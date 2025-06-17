@@ -8,7 +8,6 @@
 
 - [basePath](DashboardExtensionProps.md#basepath)
 - [icon](DashboardExtensionProps.md#icon)
-- [moduleName](DashboardExtensionProps.md#modulename)
 - [path](DashboardExtensionProps.md#path)
 - [title](DashboardExtensionProps.md#title)
 
@@ -31,16 +30,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L13)
-
-___
-
-### moduleName
-
-• **moduleName**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L14)
 
 ___
 

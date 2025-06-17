@@ -1,9 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter } from 'react-router-dom';
 import { isEmpty } from 'lodash-es';
 import { InlineNotification } from '@carbon/react';
-import { getCoreTranslation, Type, useConfig } from '@openmrs/esm-framework';
+import {
+  ComponentContext,
+  getCoreTranslation,
+  type OpenmrsReactComponentProps,
+  Type,
+  useConfig,
+  openmrsComponentDecorator,
+} from '@openmrs/esm-framework/src/internal';
 import { DashboardExtension } from '@openmrs/esm-styleguide';
 
 export const dashboardConfigSchema = {
@@ -64,14 +71,29 @@ export default function Dashboard({ basePath }: DashboardProps) {
     );
   }
 
+  return <DashboardInternal basePath={basePath} config={config} />;
+}
+
+function DashboardInternal({ basePath, config }: { basePath: string; config: DashboardConfig }) {
+  const componentContext = useContext(ComponentContext);
+
+  const Component = useMemo(
+    () =>
+      openmrsComponentDecorator<OpenmrsReactComponentProps>({
+        moduleName: config.moduleName ?? componentContext.moduleName,
+        featureName: 'dashboard',
+      })(() => <DashboardExtension path={config.path} title={config.title} basePath={basePath} icon={config.icon} />),
+    [config.moduleName, componentContext.moduleName],
+  );
+
   return (
     <BrowserRouter>
-      <DashboardExtension
-        path={config.path}
-        title={config.title}
-        basePath={basePath}
-        icon={config.icon}
-        moduleName={config.moduleName}
+      <Component
+        _extensionContext={{
+          extensionId: componentContext.extension?.extensionId,
+          extensionSlotName: componentContext.extension?.extensionSlotName,
+          extensionSlotModuleName: componentContext.extension?.extensionSlotModuleName,
+        }}
       />
     </BrowserRouter>
   );

@@ -11,11 +11,10 @@ export interface DashboardExtensionProps {
   title: string;
   basePath: string;
   icon: string;
-  moduleName: string;
 }
 
-export const DashboardExtension = ({ path, title, basePath, icon, moduleName }: DashboardExtensionProps) => {
-  const { t } = useTranslation(moduleName);
+export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExtensionProps) => {
+  const { t } = useTranslation();
   const location = useLocation();
 
   const navLink = useMemo(() => decodeURIComponent(last(location.pathname) ?? ''), [location.pathname]);

@@ -5980,7 +5980,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L17)
+[packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L16)
 
 ___
 
