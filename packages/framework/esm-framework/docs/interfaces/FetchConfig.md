@@ -14,6 +14,7 @@
 
 - [body](FetchConfig.md#body)
 - [headers](FetchConfig.md#headers)
+- [params](FetchConfig.md#params)
 
 ### Other Properties
 
@@ -37,7 +38,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L316)
+[packages/framework/esm-api/src/openmrs-fetch.ts:325](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L325)
 
 ___
 
@@ -47,7 +48,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:315](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L315)
+[packages/framework/esm-api/src/openmrs-fetch.ts:324](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L324)
+
+___
+
+### params
+
+• `Optional` **params**: `Record`<`string`, `string`\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/openmrs-fetch.ts:326](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L326)
 
 ___
 
