@@ -31,7 +31,7 @@ describe('PatientPhoto', () => {
 
     render(<PatientPhoto patientUuid={patientUuid} patientName={patientName} />);
 
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByTestId('skeleton-icon')).toBeInTheDocument();
   });
 
   it('renders a placeholder image if the patient photo fails to load', async () => {

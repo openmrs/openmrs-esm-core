@@ -25,6 +25,8 @@ const UserMenuButton: React.FC<MenuButtonProps> = ({ isActivePanel, togglePanel,
             [styles.headerGlobalBarButton]: isActivePanel('userMenu'),
             [styles.activePanel]: !isActivePanel('userMenu'),
           })}
+          // @ts-ignore - `name` is not a valid prop for the HeaderGlobalAction component, but we need the name prop for user onboarding app to work correctly
+          name="User"
           isActive={isActivePanel('userMenu')}
           onClick={() => {
             togglePanel('userMenu');

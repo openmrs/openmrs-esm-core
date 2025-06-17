@@ -130,17 +130,17 @@ async function readConfig(
       for (const pckg of packages) {
         questions.push(
           {
-            name: pckg.name,
+            name: `include:${pckg.name}`,
             message: `Include frontend module "${pckg.name}"?`,
             default: false,
             type: 'confirm',
           },
           {
-            name: pckg.name,
+            name: `version:${pckg.name}`,
             message: `Version for "${pckg.name}"?`,
             default: pckg.version,
             type: 'string',
-            when: (ans) => ans[pckg.name],
+            when: (ans) => ans[`include:${pckg.name}`],
             validate: (input) => {
               if (typeof input !== 'string') {
                 return `Expected a valid SemVer string, got ${typeof input}.`;

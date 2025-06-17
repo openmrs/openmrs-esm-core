@@ -540,18 +540,6 @@ ___
 
 ___
 
-### DateInputValue
-
-Ƭ **DateInputValue**: `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime` \| `DayjsConfigType`
-
-A type for any of the acceptable date formats
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L94)
-
-___
-
 ### DefaultEvaluateReturnType
 
 Ƭ **DefaultEvaluateReturnType**: `string` \| `number` \| `boolean` \| `Date` \| ``null`` \| `undefined`
@@ -1908,7 +1896,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:603](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L603)
+[packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L94)
 
 ___
 
@@ -2390,7 +2378,7 @@ ___
 
 ### LeftNavMenu
 
-• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`LeftNavMenuProps` & `RefAttributes`<`HTMLElement`\>\>
 
 This component renders the left nav in desktop mode. It's also used to render the same
 nav when the hamburger menu is clicked on in tablet mode. See side-menu-panel.component.tsx
@@ -2400,7 +2388,7 @@ is deprecated; it simply renders nothing.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L20)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L32)
 
 ___
 
@@ -6684,7 +6672,7 @@ Sets the current left nav context. Must be paired with [unsetLeftNav](API.md#uns
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/left-nav.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L35)
+[packages/framework/esm-extensions/src/left-nav.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L37)
 
 ___
 
@@ -6708,7 +6696,7 @@ Unsets the left nav context if the current context is for the supplied name.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/left-nav.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L44)
+[packages/framework/esm-extensions/src/left-nav.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L46)
 
 ___
 
