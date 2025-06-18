@@ -14,7 +14,7 @@ export type ExtensionProps = React.HTMLAttributes<HTMLDivElement> & {
  *
  * Renders once for each extension attached to that extension slot.
  *
- * Usage of this component *must* have an ancestor `<ExtensionSlot>` or `<SingularExtensionSlot>`,
+ * Usage of this component *must* have an ancestor `<ExtensionSlot>` or `<SingleExtensionSlot>`,
  * and *must* only be used once within that ancestor.
  */
 export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divProps }) => {

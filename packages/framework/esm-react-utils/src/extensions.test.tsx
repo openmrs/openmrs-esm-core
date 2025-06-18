@@ -18,7 +18,7 @@ import {
   openmrsComponentDecorator,
   useExtensionSlotMeta,
   useRenderableExtensions,
-  SingularExtensionSlot,
+  SingleExtensionSlot,
 } from '.';
 
 describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
@@ -281,7 +281,7 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     expect(await screen.findByText('Spanish hola')).toBeInTheDocument();
   });
 
-  it('renders SingularExtensionSlot properly', async () => {
+  it('renders SingleExtensionSlot properly', async () => {
     const user = userEvent.setup();
 
     function EnglishExtension({ suffix }) {
@@ -298,7 +298,7 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
       const [suffix, toggleSuffix] = useReducer((suffix) => (suffix == '!' ? '?' : '!'), '!');
       return (
         <div>
-          <SingularExtensionSlot extensionId="English#Australian" state={{ suffix }} />
+          <SingleExtensionSlot extensionId="English#Australian" state={{ suffix }} />
           <button onClick={toggleSuffix}>Toggle suffix</button>
         </div>
       );

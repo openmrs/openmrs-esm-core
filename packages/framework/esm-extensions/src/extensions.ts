@@ -257,7 +257,7 @@ function getOrder(
  */
 function getAssignedExtensionsByExtensionIds(slotName: string, extensionIds: string[]): Array<AssignedExtension> {
   const internalState = extensionInternalStore.getState();
-  const extensionStoreState = extensionsConfigStore.getState();
+  const extensionConfigStoreState = extensionsConfigStore.getState();
   const featureFlagState = featureFlagsStore.getState();
   const { session } = sessionStore.getState();
   const isOnline = isOnlineFn();
@@ -268,7 +268,7 @@ function getAssignedExtensionsByExtensionIds(slotName: string, extensionIds: str
   const assignedExtensions: Array<AssignedExtension> = [];
 
   for (let id of extensionIds) {
-    const { config: extensionConfig } = getExtensionConfigFromStore(extensionStoreState, slotName, id);
+    const { config: extensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
 
@@ -341,7 +341,7 @@ export function getAssignedExtensions(slotName: string): Array<AssignedExtension
  * @see AssignedExtension
  * @param extensionId
  */
-export function getSingularAssignedExtension(extensionId: string): AssignedExtension | null {
+export function getSingleAssignedExtension(extensionId: string): AssignedExtension | null {
   const ret = getAssignedExtensionsByExtensionIds('global', [extensionId]);
   return ret.length > 0 ? ret[0] : null;
 }

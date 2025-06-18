@@ -1,6 +1,6 @@
 /** @module @category Extension */
 import React, { useMemo } from 'react';
-import { getSingularAssignedExtension, type AssignedExtension } from '@openmrs/esm-extensions';
+import { getSingleAssignedExtension, type AssignedExtension } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 import { Extension } from './Extension';
 import { useExtensionSlot } from './useExtensionSlot';
@@ -93,23 +93,44 @@ export function ExtensionSlot({
   );
 }
 
-type SingularExtensionSlotProps = Omit<ExtensionSlotProps, 'name' | 'select'> & { extensionId: string };
+type SingleExtensionSlotProps = Omit<ExtensionSlotProps, 'name' | 'select'> & { extensionId: string };
 
 /**
  * A special extension slot, with slot name 'global', that renders only one single extension
  * by its extensionId. The extensionId is the extension name, with an optional `#<string>` suffix
  * used to indicate specific configuration. (For example, given a extension with name 'foo',
  * then 'foo', 'foo#bar', 'foo#baz' are all valid extensionIds)
+ *
+ * @see ExtensionSlot
+ *
+ * @example
+ * Passing a react node as children
+ *
+ * ```tsx
+ * <SingleExtensionSlot extensionId="foo">
+ *   <div style={{ width: 10rem }}>
+ *     <Extension />
+ *   </div>
+ * </SingleExtensionSlot>
+ * ```
+ *
+ * @example
+ * Passing a function as children
+ *
+ * ```tsx
+ * <SingleExtensionSlot extensionId="bar">
+ *   {(extension) => (
+ *     <h1>{extension.name}</h1>
+ *     <div style={{ color: extension.meta.color }}>
+ *       <Extension />
+ *     </div>
+ *   )}
+ * </SingleExtensionSlot>
+ * ```
  */
-export function SingularExtensionSlot({
-  extensionId,
-  children,
-  state,
-  style,
-  ...divProps
-}: SingularExtensionSlotProps) {
-  const singularExtension = getSingularAssignedExtension(extensionId);
-  if (singularExtension == null) {
+export function SingleExtensionSlot({ extensionId, children, state, style, ...divProps }: SingleExtensionSlotProps) {
+  const singleExtension = getSingleAssignedExtension(extensionId);
+  if (singleExtension == null) {
     return null;
   }
 
@@ -118,7 +139,7 @@ export function SingularExtensionSlot({
       {...{
         children,
         state,
-        extensionsToRender: [singularExtension],
+        extensionsToRender: [singleExtension],
         name: 'global',
         style,
         extensionSlotModuleName: '@openmrs/esm-app-shell',

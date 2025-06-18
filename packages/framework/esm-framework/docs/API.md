@@ -99,14 +99,14 @@
 ### Extension Functions
 
 - [ExtensionSlot](API.md#extensionslot)
-- [SingularExtensionSlot](API.md#singularextensionslot)
+- [SingleExtensionSlot](API.md#singleextensionslot)
 - [attach](API.md#attach)
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
 - [getAssignedExtensions](API.md#getassignedextensions)
 - [getExtensionNameFromId](API.md#getextensionnamefromid)
 - [getExtensionStore](API.md#getextensionstore)
-- [getSingularAssignedExtension](API.md#getsingularassignedextension)
+- [getSingleAssignedExtension](API.md#getsingleassignedextension)
 - [renderExtension](API.md#renderextension)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useAssignedExtensions](API.md#useassignedextensions)
@@ -1128,7 +1128,7 @@ an extension slot is rendered.
 
 Renders once for each extension attached to that extension slot.
 
-Usage of this component *must* have an ancestor `<ExtensionSlot>` or `<SingularExtensionSlot>`,
+Usage of this component *must* have an ancestor `<ExtensionSlot>` or `<SingleExtensionSlot>`,
 and *must* only be used once within that ancestor.
 
 #### Defined in
@@ -4439,20 +4439,47 @@ Passing a function as children
 
 ___
 
-### SingularExtensionSlot
+### SingleExtensionSlot
 
-▸ **SingularExtensionSlot**(`__namedParameters`): ``null`` \| `Element`
+▸ **SingleExtensionSlot**(`__namedParameters`): ``null`` \| `Element`
 
 A special extension slot, with slot name 'global', that renders only one single extension
 by its extensionId. The extensionId is the extension name, with an optional `#<string>` suffix
 used to indicate specific configuration. (For example, given a extension with name 'foo',
 then 'foo', 'foo#bar', 'foo#baz' are all valid extensionIds)
 
+**`see`** ExtensionSlot
+
+**`example`**
+Passing a react node as children
+
+```tsx
+<SingleExtensionSlot extensionId="foo">
+  <div style={{ width: 10rem }}>
+    <Extension />
+  </div>
+</SingleExtensionSlot>
+```
+
+**`example`**
+Passing a function as children
+
+```tsx
+<SingleExtensionSlot extensionId="bar">
+  {(extension) => (
+    <h1>{extension.name}</h1>
+    <div style={{ color: extension.meta.color }}>
+      <Extension />
+    </div>
+  )}
+</SingleExtensionSlot>
+```
+
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `SingularExtensionSlotProps` |
+| `__namedParameters` | `SingleExtensionSlotProps` |
 
 #### Returns
 
@@ -4460,7 +4487,7 @@ then 'foo', 'foo#bar', 'foo#baz' are all valid extensionIds)
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L104)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L131)
 
 ___
 
@@ -4618,9 +4645,9 @@ state of the extension system.
 
 ___
 
-### getSingularAssignedExtension
+### getSingleAssignedExtension
 
-▸ **getSingularAssignedExtension**(`extensionId`): [`AssignedExtension`](interfaces/AssignedExtension.md) \| ``null``
+▸ **getSingleAssignedExtension**(`extensionId`): [`AssignedExtension`](interfaces/AssignedExtension.md) \| ``null``
 
 Get an single assigned extension, as if it is assigned to the 'global' extension slot, by extensionId
 
