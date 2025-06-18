@@ -4,6 +4,7 @@
   "change": "შეცვლა",
   "changeLanguage": "ენის შეცვლა",
   "changingLanguage": "მიმდინარეობს ენის შეცვლა",
+  "missingPropertyInDashboardExtension": "Error: Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
   "notifications": "გაფრთხილებები",
   "userMenu": "მომხმარებლის მენიუ",
   "userMenuOptions": "მომხმარებლის მენიუს მორგება",
