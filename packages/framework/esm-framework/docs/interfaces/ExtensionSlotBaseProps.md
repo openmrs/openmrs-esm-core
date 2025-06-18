@@ -6,7 +6,6 @@
 
 ### Extension Properties
 
-- [extensionSlotName](ExtensionSlotBaseProps.md#extensionslotname)
 - [name](ExtensionSlotBaseProps.md#name)
 - [state](ExtensionSlotBaseProps.md#state)
 
@@ -15,18 +14,6 @@
 - [select](ExtensionSlotBaseProps.md#select)
 
 ## Extension Properties
-
-### extensionSlotName
-
-• `Optional` **extensionSlotName**: `string`
-
-**`deprecated`** Use `name`
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L11)
-
-___
 
 ### name
 
@@ -44,7 +31,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L13)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L11)
 
 ## Extension Methods
 
@@ -64,4 +51,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L12)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L10)

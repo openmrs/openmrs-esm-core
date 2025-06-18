@@ -1,10 +1,11 @@
 export {
-  getExtensionNameFromId,
-  registerExtension,
   attach,
   detach,
   detachAll,
   getAssignedExtensions,
+  getExtensionNameFromId,
+  getSingularAssignedExtension,
+  registerExtension,
   registerExtensionSlot,
 } from './extensions';
 export { type LeftNavStore, setLeftNav, unsetLeftNav, type SetLeftNavParams } from './left-nav';
