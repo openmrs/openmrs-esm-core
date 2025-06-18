@@ -55,6 +55,8 @@ export const linkComponent = getSyncLifecycle(genericLinkComponent, {
 
 export const navGroup = getSyncLifecycle(NavGroup, options);
 
+export const dashboard = getAsyncLifecycle(() => import('./components/dashboard/dashboard.component'), options);
+
 export const changeLanguageModal = getAsyncLifecycle(
   () => import('./components/change-language/change-language.modal'),
   options,
