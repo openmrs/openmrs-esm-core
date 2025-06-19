@@ -1,4 +1,4 @@
-import { validators, Type } from '@openmrs/esm-framework';
+import { validators, Type, validator } from '@openmrs/esm-framework';
 
 export const configSchema = {
   provider: {
@@ -35,11 +35,13 @@ export const configSchema = {
       _type: Type.Number,
       _default: 8,
       _description: 'The number of locations displayed in the location picker.',
+      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
     },
     locationsPerRequest: {
       _type: Type.Number,
       _default: 50,
       _description: 'The number of results to fetch in each cycle of infinite scroll.',
+      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
     },
     useLoginLocationTag: {
       _type: Type.Boolean,
@@ -60,7 +62,8 @@ export const configSchema = {
     src: {
       _type: Type.String,
       _default: '',
-      _description: 'The path or URL to the logo image. If set to null, the default OpenMRS SVG sprite will be used.',
+      _description:
+        'The path or URL to the logo image. If set to an empty string, the default OpenMRS SVG sprite will be used.',
       _validators: [validators.isUrl],
     },
     alt: {
@@ -73,6 +76,7 @@ export const configSchema = {
     additionalLogos: {
       _type: Type.Array,
       _elements: {
+        _type: Type.Object,
         src: {
           _type: Type.String,
           _required: true,

@@ -5,13 +5,14 @@ export const configSchema = {
     src: {
       _type: Type.String,
       _default: '',
-      _description: 'A path or URL to an image. Defaults to the OpenMRS SVG sprite.',
+      _description:
+        'The path or URL to the logo image. If set to an empty string, the default OpenMRS SVG sprite will be used.',
       _validators: [validators.isUrl],
     },
     alt: {
       _type: Type.String,
       _default: 'Logo',
-      _description: 'Alt text, shown on hover',
+      _description: 'The alternative text for the logo image, displayed when the image cannot be loaded or on hover.',
     },
     name: {
       _type: Type.String,
@@ -27,6 +28,7 @@ export const configSchema = {
   externalRefLinks: {
     _type: Type.Array,
     _elements: {
+      _type: Type.Object,
       title: {
         _type: Type.String,
         _description: 'Title of the link',
