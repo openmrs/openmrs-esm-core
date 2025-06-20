@@ -10,7 +10,7 @@ const ReleaseNotes = () => {
   return (
     <Link
       className={styles.helpButton}
-      href="https://o3-docs.openmrs.org/docs/changelog"
+      href="https://openmrs.atlassian.net/wiki/spaces/docs/pages/26249097/Releases"
       rel="noopener noreferrer"
       renderIcon={ArrowUpRight}
       target="_blank"
