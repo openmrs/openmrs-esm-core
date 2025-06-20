@@ -1,4 +1,4 @@
-import { validators, Type } from '@openmrs/esm-framework';
+import { validators, Type, validator } from '@openmrs/esm-framework';
 
 export const configSchema = {
   provider: {
@@ -28,6 +28,7 @@ export const configSchema = {
       _type: Type.Number,
       _default: 8,
       _description: 'The number of locations displayed in the location picker.',
+      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Number must be greater than 0')],
     },
     locationsPerRequest: {
       _type: Type.Number,
