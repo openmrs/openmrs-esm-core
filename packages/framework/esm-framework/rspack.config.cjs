@@ -34,7 +34,7 @@ module.exports = (env, argv = {}) => ({
       },
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        use: 'builtin:swc-loader',
+        use: 'swc-loader',
         options: {
           jsc: {
             parser: {
