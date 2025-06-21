@@ -47,6 +47,12 @@ declare global {
      */
     spaVersion: string;
     /**
+     * Globals added by the @single-spa/import-map-injector package.
+     */
+    importMapInjector: {
+      initPromise: Promise<void>;
+    };
+    /**
      * Gets a set of options from the import-map-overrides package.
      */
     importMapOverrides: {

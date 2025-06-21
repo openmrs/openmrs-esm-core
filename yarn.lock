@@ -3508,13 +3508,14 @@ __metadata:
     "@internationalized/date": "npm:^3.8.0"
     "@openmrs/esm-framework": "workspace:*"
     "@openmrs/esm-styleguide": "workspace:*"
+    "@single-spa/import-map-injector": "npm:^2.0.2"
     cross-env: "npm:^7.0.3"
     dayjs: "npm:^1.11.13"
     dexie: "npm:^3.0.3"
     html-webpack-plugin: "npm:^5.5.0"
     i18next: "npm:^21.10.0"
     i18next-browser-languagedetector: "npm:^6.1.8"
-    import-map-overrides: "npm:^3.0.0"
+    import-map-overrides: "npm:^6.0.1"
     lodash-es: "npm:4.17.21"
     mini-css-extract-plugin: "npm:^2.9.1"
     react: "npm:^18.1.0"
@@ -6401,6 +6402,13 @@ __metadata:
   version: 5.6.0
   resolution: "@sindresorhus/is@npm:5.6.0"
   checksum: 10/b077c325acec98e30f7d86df158aaba2e7af2acb9bb6a00fda4b91578539fbff4ecebe9b934e24fec0e6950de3089d89d79ec02d9062476b20ce185be0e01bd6
+  languageName: node
+  linkType: hard
+
+"@single-spa/import-map-injector@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@single-spa/import-map-injector@npm:2.0.2"
+  checksum: 10/b65c2d4d67e3ba80ea3d3def3caa55d6aa2b28e4b8d2cc3e81d95d73f88ca572dc80efb632fed51d8f4dd488d27558a37fa063aeaf5ee6103bfeaa793b66e72a
   languageName: node
   linkType: hard
 
@@ -9917,10 +9925,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.4.1":
-  version: 0.4.2
-  resolution: "cookie@npm:0.4.2"
-  checksum: 10/2e1de9fdedca54881eab3c0477aeb067f281f3155d9cfee9d28dfb252210d09e85e9d175c0a60689661feb9e35e588515352f2456bc1f8e8db4267e05fd70137
+"cookie@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "cookie@npm:1.0.2"
+  checksum: 10/f5817cdc84d8977761b12549eba29435e675e65c7fef172bc31737788cd8adc83796bf8abe6d950554e7987325ad2d9ac2971c5bd8ff0c4f81c145f82e4ab1be
   languageName: node
   linkType: hard
 
@@ -13821,12 +13829,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-map-overrides@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "import-map-overrides@npm:3.0.0"
+"import-map-overrides@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "import-map-overrides@npm:6.0.1"
   dependencies:
-    cookie: "npm:^0.4.1"
-  checksum: 10/c7906c0e20e50a290c0ecd307c57e6107d70f18087fa61280b75e7c51fc8f780eaac0e378ca660a5c6520fae29d6574103139b852fb9e0ed9c127a7c21cf279d
+    cookie: "npm:^1.0.2"
+  checksum: 10/ca7a39dd38ea463bde256adac44ccdc03553ee80aee97a33b844eb02d47847d047f9db915aee2a19a4e907278702b5302c75357d71a836a6c92a7415fdabbece
   languageName: node
   linkType: hard
 

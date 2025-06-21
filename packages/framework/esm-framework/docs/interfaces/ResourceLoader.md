@@ -20,4 +20,4 @@
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:390
+packages/framework/esm-globals/dist/types.d.ts:396

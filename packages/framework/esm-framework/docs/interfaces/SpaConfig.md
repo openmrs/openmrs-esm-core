@@ -24,7 +24,7 @@ The base path or URL for the OpenMRS API / endpoints.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:84
+packages/framework/esm-globals/dist/types.d.ts:90
 
 ___
 
@@ -36,7 +36,7 @@ URLs of configurations to load in the system.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:97
+packages/framework/esm-globals/dist/types.d.ts:103
 
 ___
 
@@ -50,7 +50,7 @@ The environment to use.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:93
+packages/framework/esm-globals/dist/types.d.ts:99
 
 ___
 
@@ -64,7 +64,7 @@ Defines if offline should be supported by installing a service worker.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:102
+packages/framework/esm-globals/dist/types.d.ts:108
 
 ___
 
@@ -76,4 +76,4 @@ The base path for the SPA root path.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:88
+packages/framework/esm-globals/dist/types.d.ts:94

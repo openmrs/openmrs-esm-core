@@ -42,32 +42,41 @@ export async function importDynamic<T = any>(
     maxLoadingTime?: number;
   },
 ): Promise<T> {
-  // default to 10 minutes
-  const maxLoadingTime = !options?.maxLoadingTime || options.maxLoadingTime <= 0 ? 600_000 : options.maxLoadingTime;
+  const maybeContainer = await import(/* webpackIgnore: true */ jsPackage);
+  if (maybeContainer && isFederatedModule(maybeContainer)) {
+    return processContainer<T>(jsPackage, maybeContainer, share);
+  } else {
+    // default to 10 minutes
+    const maxLoadingTime = !options?.maxLoadingTime || options.maxLoadingTime <= 0 ? 600_000 : options.maxLoadingTime;
 
-  let timeout: ReturnType<typeof setTimeout> | undefined = undefined;
-  await Promise.race([
-    preloadImport(jsPackage, options?.importMap),
-    new Promise((_, reject) => {
-      timeout = setTimeout(() => {
-        reject(
-          new Error(`Could not resolve requested script, ${jsPackage}, within ${humanReadableMs(maxLoadingTime)}.`),
-        );
-      }, maxLoadingTime);
-    }),
-  ]);
+    let timeout: ReturnType<typeof setTimeout> | undefined = undefined;
+    await Promise.race([
+      preloadImport(jsPackage, options?.importMap),
+      new Promise((_, reject) => {
+        timeout = setTimeout(() => {
+          reject(
+            new Error(`Could not resolve requested script, ${jsPackage}, within ${humanReadableMs(maxLoadingTime)}.`),
+          );
+        }, maxLoadingTime);
+      }),
+    ]);
 
-  timeout && clearTimeout(timeout);
+    timeout && clearTimeout(timeout);
 
-  const jsPackageSlug = slugify(jsPackage);
+    const jsPackageSlug = slugify(jsPackage);
 
-  const container = window[jsPackageSlug] as unknown;
-  if (!isFederatedModule(container)) {
-    const error = `The global variable ${jsPackageSlug} does not refer to a federated module`;
-    console.error(error);
-    throw new Error(error);
+    const container = window[jsPackageSlug] as unknown;
+    if (!isFederatedModule(container)) {
+      const error = `The global variable ${jsPackageSlug} does not refer to a federated module`;
+      console.error(error);
+      throw new Error(error);
+    }
+
+    return processContainer<T>(jsPackage, container, share);
   }
+}
 
+async function processContainer<T>(jsPackage: string, container: FederatedModule, share: string) {
   container.init(__webpack_share_scopes__.default);
 
   const factory = await container.get(share);
