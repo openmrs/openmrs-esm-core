@@ -35,7 +35,8 @@ const validateBoolean = (value, validators) => {
   return null;
 };
 
-const validateArray = (value, validators) => {
+// For arrays, _elements is the schema for each element
+const validateArray = (value, validators, elementSchema) => {
   if (!Array.isArray(value)) {
     return 'Value must be an array';
   }
@@ -43,16 +44,51 @@ const validateArray = (value, validators) => {
     const result = v(value);
     if (result) return result;
   }
+  if (elementSchema) {
+    for (let i = 0; i < value.length; i++) {
+      const el = value[i];
+      // If _type: Type.Object, schema is the elementSchema itself
+      if (elementSchema._type === Type.Object) {
+        const err = validateObject(el, [], elementSchema);
+        if (err) return `Element ${i}: ${err}`;
+      } else {
+        const elType = elementSchema._type;
+        const elValidators = elementSchema._validators ?? [];
+        const err = validateValue(el, elType, elValidators, elementSchema._elements);
+        if (err) return `Element ${i}: ${err}`;
+      }
+    }
+  }
   return null;
 };
 
-const validateObject = (value, validators) => {
+// For objects, schema is the object itself (no _type: Type.Object, no _properties)
+const validateObject = (value, validators, schema) => {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) {
     return 'Value must be an object';
   }
   for (const v of validators) {
     const result = v(value);
     if (result) return result;
+  }
+  // Validate each property in the schema (skip keys starting with _)
+  for (const key of Object.keys(schema)) {
+    if (key.startsWith('_')) continue;
+    const propSchema = schema[key];
+    const propValue = value[key];
+    // If property is an object (no _type, no _validators), treat as nested object
+    if (propSchema._type === Type.Object) {
+      const err = validateObject(propValue, [], propSchema);
+      if (err) return `Property '${key}': ${err}`;
+    } else if (propSchema._type === Type.Array) {
+      const err = validateArray(propValue, propSchema._validators ?? [], propSchema._elements);
+      if (err) return `Property '${key}': ${err}`;
+    } else {
+      const propType = propSchema._type;
+      const propValidators = propSchema._validators ?? [];
+      const err = validateValue(propValue, propType, propValidators, propSchema._elements);
+      if (err) return `Property '${key}': ${err}`;
+    }
   }
   return null;
 };
@@ -76,7 +112,7 @@ const validatePersonAttributeTypeUuid = (value, validators) => {
   return validateUuid(value, validators);
 };
 
-export const validateValue = (tmpValue, valueType, validators) => {
+export const validateValue = (tmpValue, valueType, validators, elementSchema = undefined) => {
   switch (valueType) {
     case Type.String:
       return validateString(tmpValue, validators);
@@ -85,9 +121,9 @@ export const validateValue = (tmpValue, valueType, validators) => {
     case Type.Boolean:
       return validateBoolean(tmpValue, validators);
     case Type.Array:
-      return validateArray(tmpValue, validators);
+      return validateArray(tmpValue, validators, elementSchema);
     case Type.Object:
-      return validateObject(tmpValue, validators);
+      return validateObject(tmpValue, validators, elementSchema);
     case Type.UUID:
       return validateUuid(tmpValue, validators);
     case Type.ConceptUuid:
