@@ -23,6 +23,7 @@ export const configSchema = {
       _type: Type.String,
       _default: '${openmrsSpaBase}/home',
       _description: 'The link to redirect to when the logo is clicked',
+      _validators: [validators.isUrl],
     },
   },
   externalRefLinks: {
