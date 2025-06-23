@@ -197,7 +197,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.m?(js|ts|tsx)$/,
             exclude: /node_modules(?![\/\\]@openmrs)/,
-            loader: 'builtin:swc-loader',
+            loader: 'swc-loader',
             options: {
               jsc: {
                 parser: {
