@@ -53,8 +53,8 @@ export const configSchema = {
   links: {
     loginSuccess: {
       _type: Type.String,
-      _description: 'The URL to redirect the user to after a successful login.',
       _default: '${openmrsSpaBase}/home',
+      _description: 'The URL to redirect the user to after a successful login.',
       _validators: [validators.isUrl],
     },
   },
