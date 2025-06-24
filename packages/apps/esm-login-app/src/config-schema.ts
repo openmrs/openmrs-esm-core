@@ -8,6 +8,7 @@ export const configSchema = {
       _description:
         "Selects the login mechanism to use. Choices are 'basic' and 'oauth2'. " +
         "For 'oauth2' you'll also need to set the 'loginUrl'",
+      _validators: [validators.oneOf(['basic', 'oauth2'])],
     },
     loginUrl: {
       _type: Type.String,
@@ -34,6 +35,7 @@ export const configSchema = {
       _type: Type.Number,
       _default: 50,
       _description: 'The number of results to fetch in each cycle of infinite scroll.',
+      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Number must be greater than 0')],
     },
     useLoginLocationTag: {
       _type: Type.Boolean,
@@ -68,18 +70,17 @@ export const configSchema = {
       _type: Type.Array,
       _elements: {
         _type: Type.Object,
-        _properties: {
-          src: {
-            _type: Type.String,
-            _required: true,
-            _description: 'The source URL of the logo image',
-            _validations: [validators.isUrl],
-          },
-          alt: {
-            _type: Type.String,
-            _required: true,
-            _description: 'The alternative text for the logo image',
-          },
+        src: {
+          _type: Type.String,
+          // _required: true,
+          _default: '',
+          _description: 'The source URL of the logo image',
+          _validators: [validators.isUrl],
+        },
+        alt: {
+          _type: Type.String,
+          // _required: true,
+          _description: 'The alternative text for the logo image',
         },
       },
       _default: [],
