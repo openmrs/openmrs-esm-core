@@ -1,19 +1,13 @@
-[@openmrs/esm-framework](../API.md) / ImportMap
+[O3 Framework](../API.md) / ImportMap
 
 # Interface: ImportMap
 
-## Table of contents
-
-### Properties
-
-- [imports](ImportMap.md#imports)
+Defined in: packages/framework/esm-globals/dist/types.d.ts:74
 
 ## Properties
 
 ### imports
 
-• **imports**: `Record`<`string`, `string`\>
+> **imports**: `Record`\<`string`, `string`\>
 
-#### Defined in
-
-packages/framework/esm-globals/dist/types.d.ts:75
+Defined in: packages/framework/esm-globals/dist/types.d.ts:75

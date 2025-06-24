@@ -1,221 +1,173 @@
-[@openmrs/esm-framework](../API.md) / Concept
+[O3 Framework](../API.md) / Concept
 
 # Interface: Concept
 
-## Hierarchy
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L4)
+
+Superclass for all Openmrs Resources, with strict typings.
+If the subclass does not have all attributes (including optional ones)
+accounted for, use OpenmrsResource instead.
+
+## Extends
 
 - [`OpenmrsResource`](OpenmrsResource.md)
 
-  ↳ **`Concept`**
+## Indexable
 
-## Table of contents
-
-### Properties
-
-- [answers](Concept.md#answers)
-- [attributes](Concept.md#attributes)
-- [auditInfo](Concept.md#auditinfo)
-- [conceptClass](Concept.md#conceptclass)
-- [datatype](Concept.md#datatype)
-- [descriptions](Concept.md#descriptions)
-- [display](Concept.md#display)
-- [links](Concept.md#links)
-- [mappings](Concept.md#mappings)
-- [name](Concept.md#name)
-- [names](Concept.md#names)
-- [resourceVersion](Concept.md#resourceversion)
-- [retired](Concept.md#retired)
-- [set](Concept.md#set)
-- [setMembers](Concept.md#setmembers)
-- [uuid](Concept.md#uuid)
-- [version](Concept.md#version)
+\[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
-### answers
+### answers?
 
-• `Optional` **answers**: `any`
+> `optional` **answers**: `any`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L15)
 
-[packages/framework/esm-api/src/types/concept-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L15)
+***
 
-___
+### attributes?
 
-### attributes
+> `optional` **attributes**: `any`
 
-• `Optional` **attributes**: `any`
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L17)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/concept-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L17)
+### auditInfo?
 
-___
+> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
 
-### auditInfo
-
-• `Optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[auditInfo](OpenmrsResource.md#auditinfo)
+[`OpenmrsResource`](OpenmrsResource.md).[`auditInfo`](OpenmrsResource.md#auditinfo)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
+### conceptClass?
 
-___
+> `optional` **conceptClass**: [`ConceptClass`](ConceptClass.md)
 
-### conceptClass
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L7)
 
-• `Optional` **conceptClass**: [`ConceptClass`](ConceptClass.md)
+***
 
-#### Defined in
+### datatype?
 
-[packages/framework/esm-api/src/types/concept-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L7)
+> `optional` **datatype**: [`ConceptDatatype`](ConceptDatatype.md)
 
-___
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L6)
 
-### datatype
+***
 
-• `Optional` **datatype**: [`ConceptDatatype`](ConceptDatatype.md)
+### descriptions?
 
-#### Defined in
+> `optional` **descriptions**: [`OpenmrsResource`](OpenmrsResource.md)[]
 
-[packages/framework/esm-api/src/types/concept-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L6)
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L12)
 
-___
+***
 
-### descriptions
+### display?
 
-• `Optional` **descriptions**: [`OpenmrsResource`](OpenmrsResource.md)[]
+> `optional` **display**: `string`
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/concept-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L12)
-
-___
-
-### display
-
-• `Optional` **display**: `string`
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
+[`OpenmrsResource`](OpenmrsResource.md).[`display`](OpenmrsResource.md#display)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+### links?
 
-___
+> `optional` **links**: [`Link`](Link.md)[]
 
-### links
-
-• `Optional` **links**: [`Link`](Link.md)[]
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[links](OpenmrsResource.md#links)
+[`OpenmrsResource`](OpenmrsResource.md).[`links`](OpenmrsResource.md#links)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+### mappings?
 
-___
+> `optional` **mappings**: `any`
 
-### mappings
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L14)
 
-• `Optional` **mappings**: `any`
+***
 
-#### Defined in
+### name?
 
-[packages/framework/esm-api/src/types/concept-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L14)
+> `optional` **name**: [`ConceptName`](ConceptName.md)
 
-___
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L5)
 
-### name
+***
 
-• `Optional` **name**: [`ConceptName`](ConceptName.md)
+### names?
 
-#### Defined in
+> `optional` **names**: [`ConceptName`](ConceptName.md)[]
 
-[packages/framework/esm-api/src/types/concept-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L5)
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L11)
 
-___
+***
 
-### names
+### resourceVersion?
 
-• `Optional` **names**: [`ConceptName`](ConceptName.md)[]
+> `optional` **resourceVersion**: `string`
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/concept-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L11)
-
-___
-
-### resourceVersion
-
-• `Optional` **resourceVersion**: `string`
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[resourceVersion](OpenmrsResource.md#resourceversion)
+[`OpenmrsResource`](OpenmrsResource.md).[`resourceVersion`](OpenmrsResource.md#resourceversion)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+### retired?
 
-___
+> `optional` **retired**: `boolean`
 
-### retired
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L10)
 
-• `Optional` **retired**: `boolean`
+***
 
-#### Defined in
+### set?
 
-[packages/framework/esm-api/src/types/concept-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L10)
+> `optional` **set**: `boolean`
 
-___
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L8)
 
-### set
+***
 
-• `Optional` **set**: `boolean`
+### setMembers?
 
-#### Defined in
+> `optional` **setMembers**: `any`
 
-[packages/framework/esm-api/src/types/concept-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L8)
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L16)
 
-___
-
-### setMembers
-
-• `Optional` **setMembers**: `any`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/concept-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L16)
-
-___
+***
 
 ### uuid
 
-• **uuid**: `string`
+> **uuid**: `string`
+
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
+[`OpenmrsResource`](OpenmrsResource.md).[`uuid`](OpenmrsResource.md#uuid)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+### version?
 
-___
+> `optional` **version**: `string`
 
-### version
-
-• `Optional` **version**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/concept-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L9)
+Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/concept-resource.ts#L9)

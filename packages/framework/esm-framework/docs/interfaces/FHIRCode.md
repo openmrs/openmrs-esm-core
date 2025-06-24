@@ -1,41 +1,29 @@
-[@openmrs/esm-framework](../API.md) / FHIRCode
+[O3 Framework](../API.md) / FHIRCode
 
 # Interface: FHIRCode
 
-## Table of contents
-
-### Properties
-
-- [code](FHIRCode.md#code)
-- [display](FHIRCode.md#display)
-- [system](FHIRCode.md#system)
+Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L28)
 
 ## Properties
 
 ### code
 
-• **code**: `string`
+> **code**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L29)
 
-[packages/framework/esm-emr-api/src/types/fhir-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L29)
+***
 
-___
+### display?
 
-### display
+> `optional` **display**: `string`
 
-• `Optional` **display**: `string`
+Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L31)
 
-#### Defined in
-
-[packages/framework/esm-emr-api/src/types/fhir-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L31)
-
-___
+***
 
 ### system
 
-• **system**: `string`
+> **system**: `string`
 
-#### Defined in
-
-[packages/framework/esm-emr-api/src/types/fhir-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L30)
+Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L30)

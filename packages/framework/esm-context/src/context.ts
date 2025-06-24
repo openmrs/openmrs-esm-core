@@ -51,6 +51,12 @@ export function unregisterContext(namespace: string) {
   });
 }
 
+/**
+ * Returns an _immutable_ version of the state of the namespace as it is currently
+ *
+ * @typeParam T The type of the value stored in the namespace
+ * @param namespace The namespace to load properties from
+ */
 export function getContext<T extends {} = {}>(namespace: string): Readonly<T> | null;
 /**
  * Returns an _immutable_ version of the state of the namespace as it is currently

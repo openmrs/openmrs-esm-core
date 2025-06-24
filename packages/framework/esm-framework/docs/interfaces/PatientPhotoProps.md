@@ -1,30 +1,21 @@
-[@openmrs/esm-framework](../API.md) / PatientPhotoProps
+[O3 Framework](../API.md) / PatientPhotoProps
 
 # Interface: PatientPhotoProps
 
-## Table of contents
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L11)
 
-### UI Properties
-
-- [patientName](PatientPhotoProps.md#patientname)
-- [patientUuid](PatientPhotoProps.md#patientuuid)
-
-## UI Properties
+## Properties
 
 ### patientName
 
-• **patientName**: `string`
+> **patientName**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L12)
 
-[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L12)
-
-___
+***
 
 ### patientUuid
 
-• **patientUuid**: `string`
+> **patientUuid**: `string`
 
-#### Defined in
-
-[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L13)
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L13)

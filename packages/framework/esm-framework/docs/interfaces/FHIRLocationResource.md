@@ -1,30 +1,37 @@
-[@openmrs/esm-framework](../API.md) / FHIRLocationResource
+[O3 Framework](../API.md) / FHIRLocationResource
 
 # Interface: FHIRLocationResource
 
-## Table of contents
-
-### Properties
-
-- [resource](FHIRLocationResource.md#resource)
+Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/location-resource.ts#L35)
 
 ## Properties
 
 ### resource
 
-• **resource**: `Object`
+> **resource**: `object`
 
-#### Type declaration
+Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/location-resource.ts#L36)
 
-| Name | Type |
-| :------ | :------ |
-| `id` | `string` |
-| `meta?` | { `tag?`: { `code`: `string` ; `display`: `string` ; `system`: `string`  }[]  } |
-| `meta.tag?` | { `code`: `string` ; `display`: `string` ; `system`: `string`  }[] |
-| `name` | `string` |
-| `resourceType` | `string` |
-| `status` | ``"active"`` \| ``"inactive"`` |
+#### id
 
-#### Defined in
+> **id**: `string`
 
-[packages/framework/esm-emr-api/src/types/location-resource.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L36)
+#### meta?
+
+> `optional` **meta**: `object`
+
+##### meta.tag?
+
+> `optional` **tag**: `object`[]
+
+#### name
+
+> **name**: `string`
+
+#### resourceType
+
+> **resourceType**: `string`
+
+#### status
+
+> **status**: `"active"` \| `"inactive"`

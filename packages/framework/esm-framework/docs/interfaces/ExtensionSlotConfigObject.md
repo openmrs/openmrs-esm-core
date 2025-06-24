@@ -1,47 +1,35 @@
-[@openmrs/esm-framework](../API.md) / ExtensionSlotConfigObject
+[O3 Framework](../API.md) / ExtensionSlotConfigObject
 
 # Interface: ExtensionSlotConfigObject
 
-## Table of contents
-
-### Properties
-
-- [add](ExtensionSlotConfigObject.md#add)
-- [order](ExtensionSlotConfigObject.md#order)
-- [remove](ExtensionSlotConfigObject.md#remove)
+Defined in: [packages/framework/esm-config/src/types.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L59)
 
 ## Properties
 
-### add
+### add?
 
-• `Optional` **add**: `string`[]
+> `optional` **add**: `string`[]
+
+Defined in: [packages/framework/esm-config/src/types.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L61)
 
 Additional extension IDs to assign to this slot, in addition to those `attach`ed in code.
 
-#### Defined in
+***
 
-[packages/framework/esm-config/src/types.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L61)
+### order?
 
-___
+> `optional` **order**: `string`[]
 
-### order
-
-• `Optional` **order**: `string`[]
+Defined in: [packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L65)
 
 Overrides the default ordering of extensions.
 
-#### Defined in
+***
 
-[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L65)
+### remove?
 
-___
+> `optional` **remove**: `string`[]
 
-### remove
-
-• `Optional` **remove**: `string`[]
+Defined in: [packages/framework/esm-config/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L63)
 
 Extension IDs which were `attach`ed to the slot but which should not be assigned.
-
-#### Defined in
-
-[packages/framework/esm-config/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L63)

@@ -1,32 +1,25 @@
-[@openmrs/esm-framework](../API.md) / OfflinePatientArgs
+[O3 Framework](../API.md) / OfflinePatientArgs
 
-# Interface: OfflinePatientArgs
+# Interface: ~~OfflinePatientArgs~~
 
-**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L28)
 
-## Table of contents
+## Deprecated
 
-### Offline Properties
+Will be removed once all modules have been migrated to the new dynamic offline data API.
 
-- [patientUuid](OfflinePatientArgs.md#patientuuid)
-- [signal](OfflinePatientArgs.md#signal)
+## Properties
 
-## Offline Properties
+### ~~patientUuid~~
 
-### patientUuid
+> **patientUuid**: `string`
 
-• **patientUuid**: `string`
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L29)
 
-#### Defined in
+***
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L29)
+### ~~signal~~
 
-___
+> **signal**: `AbortSignal`
 
-### signal
-
-• **signal**: `AbortSignal`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/offline-patient-data.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L30)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L30)

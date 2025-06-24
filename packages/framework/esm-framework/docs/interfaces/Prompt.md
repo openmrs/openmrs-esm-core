@@ -1,74 +1,53 @@
-[@openmrs/esm-framework](../API.md) / Prompt
+[O3 Framework](../API.md) / Prompt
 
 # Interface: Prompt
 
-## Table of contents
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L91)
 
-### Workspace Properties
-
-- [body](Prompt.md#body)
-- [cancelText](Prompt.md#canceltext)
-- [confirmText](Prompt.md#confirmtext)
-- [title](Prompt.md#title)
-
-### Methods
-
-- [onConfirm](Prompt.md#onconfirm)
-
-## Workspace Properties
+## Properties
 
 ### body
 
-• **body**: `string`
+> **body**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L93)
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L93)
+***
 
-___
+### cancelText?
 
-### cancelText
+> `optional` **cancelText**: `string`
 
-• `Optional` **cancelText**: `string`
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L98)
 
 Defaults to "Cancel"
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L98)
+### confirmText?
 
-___
+> `optional` **confirmText**: `string`
 
-### confirmText
-
-• `Optional` **confirmText**: `string`
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L95)
 
 Defaults to "Confirm"
 
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L95)
-
-___
+***
 
 ### title
 
-• **title**: `string`
+> **title**: `string`
 
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L92)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L92)
 
 ## Methods
 
-### onConfirm
+### onConfirm()
 
-▸ **onConfirm**(): `void`
+> **onConfirm**(): `void`
+
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L96)
 
 #### Returns
 
 `void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L96)

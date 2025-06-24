@@ -1,29 +1,21 @@
-[@openmrs/esm-framework](../API.md) / PatientWithFullResponse
+[O3 Framework](../API.md) / PatientWithFullResponse
 
 # Interface: PatientWithFullResponse
 
-## Hierarchy
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/current-patient.ts#L11)
+
+## Extends
 
 - [`CurrentPatientOptions`](CurrentPatientOptions.md)
 
-  ↳ **`PatientWithFullResponse`**
-
-## Table of contents
-
-### API Properties
-
-- [includeConfig](PatientWithFullResponse.md#includeconfig)
-
-## API Properties
+## Properties
 
 ### includeConfig
 
-• **includeConfig**: ``true``
+> **includeConfig**: `true`
+
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/current-patient.ts#L12)
 
 #### Overrides
 
-[CurrentPatientOptions](CurrentPatientOptions.md).[includeConfig](CurrentPatientOptions.md#includeconfig)
-
-#### Defined in
-
-[packages/framework/esm-emr-api/src/current-patient.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L12)
+[`CurrentPatientOptions`](CurrentPatientOptions.md).[`includeConfig`](CurrentPatientOptions.md#includeconfig)

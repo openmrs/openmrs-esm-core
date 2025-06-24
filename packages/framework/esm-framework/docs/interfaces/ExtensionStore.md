@@ -1,19 +1,13 @@
-[@openmrs/esm-framework](../API.md) / ExtensionStore
+[O3 Framework](../API.md) / ExtensionStore
 
 # Interface: ExtensionStore
 
-## Table of contents
+Defined in: [packages/framework/esm-extensions/src/store.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/store.ts#L63)
 
-### Extension Properties
-
-- [slots](ExtensionStore.md#slots)
-
-## Extension Properties
+## Properties
 
 ### slots
 
-• **slots**: `Record`<`string`, [`ExtensionSlotState`](ExtensionSlotState.md)\>
+> **slots**: `Record`\<`string`, [`ExtensionSlotState`](ExtensionSlotState.md)\>
 
-#### Defined in
-
-[packages/framework/esm-extensions/src/store.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L64)
+Defined in: [packages/framework/esm-extensions/src/store.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/store.ts#L64)

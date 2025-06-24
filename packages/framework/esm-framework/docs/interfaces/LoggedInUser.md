@@ -1,133 +1,131 @@
-[@openmrs/esm-framework](../API.md) / LoggedInUser
+[O3 Framework](../API.md) / LoggedInUser
 
 # Interface: LoggedInUser
 
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L14)
+
 ## Indexable
 
-▪ [anythingElse: `string`]: `any`
-
-## Table of contents
-
-### Properties
-
-- [allowedLocales](LoggedInUser.md#allowedlocales)
-- [display](LoggedInUser.md#display)
-- [locale](LoggedInUser.md#locale)
-- [person](LoggedInUser.md#person)
-- [privileges](LoggedInUser.md#privileges)
-- [retired](LoggedInUser.md#retired)
-- [roles](LoggedInUser.md#roles)
-- [systemId](LoggedInUser.md#systemid)
-- [userProperties](LoggedInUser.md#userproperties)
-- [username](LoggedInUser.md#username)
-- [uuid](LoggedInUser.md#uuid)
+\[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
 ### allowedLocales
 
-• **allowedLocales**: `string`[]
+> **allowedLocales**: `string`[]
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L45)
 
-[packages/framework/esm-api/src/types/user-resource.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L45)
-
-___
+***
 
 ### display
 
-• **display**: `string`
+> **display**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L16)
 
-[packages/framework/esm-api/src/types/user-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L16)
-
-___
+***
 
 ### locale
 
-• **locale**: `string`
+> **locale**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L44)
 
-[packages/framework/esm-api/src/types/user-resource.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L44)
-
-___
+***
 
 ### person
 
-• **person**: [`Person`](Person.md)
+> **person**: [`Person`](Person.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L40)
 
-[packages/framework/esm-api/src/types/user-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L40)
-
-___
+***
 
 ### privileges
 
-• **privileges**: [`Privilege`](Privilege.md)[]
+> **privileges**: [`Privilege`](Privilege.md)[]
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L41)
 
-[packages/framework/esm-api/src/types/user-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L41)
-
-___
+***
 
 ### retired
 
-• **retired**: `boolean`
+> **retired**: `boolean`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L43)
 
-[packages/framework/esm-api/src/types/user-resource.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L43)
-
-___
+***
 
 ### roles
 
-• **roles**: [`Role`](Role.md)[]
+> **roles**: [`Role`](Role.md)[]
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L42)
 
-[packages/framework/esm-api/src/types/user-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L42)
-
-___
+***
 
 ### systemId
 
-• **systemId**: `string`
+> **systemId**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L18)
 
-[packages/framework/esm-api/src/types/user-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L18)
-
-___
-
-### userProperties
-
-• **userProperties**: ``null`` \| { `[key: string]`: `string` \| `undefined`; `defaultLocation?`: `string` ; `patientsVisited?`: `string` ; `starredPatientLists?`: `string`  }
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/user-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L19)
-
-___
+***
 
 ### username
 
-• **username**: `string`
+> **username**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L17)
 
-[packages/framework/esm-api/src/types/user-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L17)
+***
 
-___
+### userProperties
+
+> **userProperties**: `null` \| \{[`key`: `string`]: `undefined` \| `string`; `defaultLocation?`: `string`; `patientsVisited?`: `string`; `starredPatientLists?`: `string`; \}
+
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L19)
+
+#### Type declaration
+
+`null`
+
+\{[`key`: `string`]: `undefined` \| `string`; `defaultLocation?`: `string`; `patientsVisited?`: `string`; `starredPatientLists?`: `string`; \}
+
+#### Index Signature
+
+\[`key`: `string`\]: `undefined` \| `string`
+
+#### defaultLocation?
+
+> `optional` **defaultLocation**: `string`
+
+The UUID of the location the user has set preference to use for next logins
+
+#### patientsVisited?
+
+> `optional` **patientsVisited**: `string`
+
+The UUIDs of patients the user has visited
+Separated by commas
+To get the array, do `user.userProperties.patientsVisited.split(',')`
+To store the array, do `patientsVisited: patientsVisited.join(',')`
+
+#### starredPatientLists?
+
+> `optional` **starredPatientLists**: `string`
+
+The UUIDs of patient lists the user has starred
+Separated by commas
+To get the array, do `user.userProperties.starredPatientLists.split(',')`
+To store the array, perform `starredPatientLists: starredPatientLists.join(',')`
+
+***
 
 ### uuid
 
-• **uuid**: `string`
+> **uuid**: `string`
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/user-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L15)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L15)

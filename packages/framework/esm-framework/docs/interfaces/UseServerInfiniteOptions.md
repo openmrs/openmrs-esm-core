@@ -1,72 +1,55 @@
-[@openmrs/esm-framework](../API.md) / UseServerInfiniteOptions
+[O3 Framework](../API.md) / UseServerInfiniteOptions
 
-# Interface: UseServerInfiniteOptions<R\>
+# Interface: UseServerInfiniteOptions\<R\>
 
-## Type parameters
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L14)
 
-| Name |
-| :------ |
-| `R` |
+## Extended by
 
-## Hierarchy
+- [`UseServerFetchAllOptions`](UseServerFetchAllOptions.md)
 
-- **`UseServerInfiniteOptions`**
+## Type Parameters
 
-  ↳ [`UseServerFetchAllOptions`](UseServerFetchAllOptions.md)
+### R
 
-## Table of contents
+`R`
 
-### UI Properties
+## Properties
 
-- [immutable](UseServerInfiniteOptions.md#immutable)
-- [swrInfiniteConfig](UseServerInfiniteOptions.md#swrinfiniteconfig)
+### fetcher()?
 
-### UI Methods
+> `optional` **fetcher**: (`key`) => `Promise`\<`FetchResponse`\<`R`\>\>
 
-- [fetcher](UseServerInfiniteOptions.md#fetcher)
-
-## UI Properties
-
-### immutable
-
-• `Optional` **immutable**: `boolean`
-
-If true, sets these options in swrInfintieConfig to false:
-revalidateIfStale, revalidateOnFocus, revalidateOnReconnect
-This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L25)
-
-___
-
-### swrInfiniteConfig
-
-• `Optional` **swrInfiniteConfig**: `SWRInfiniteConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L27)
-
-## UI Methods
-
-### fetcher
-
-▸ `Optional` **fetcher**(`key`): `Promise`<`FetchResponse`<`R`\>\>
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L18)
 
 The fetcher to use. Defaults to openmrsFetch
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `key` | `string` |
+##### key
+
+`string`
 
 #### Returns
 
-`Promise`<`FetchResponse`<`R`\>\>
+`Promise`\<`FetchResponse`\<`R`\>\>
 
-#### Defined in
+***
 
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L18)
+### immutable?
+
+> `optional` **immutable**: `boolean`
+
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L25)
+
+If true, sets these options in swrInfintieConfig to false:
+revalidateIfStale, revalidateOnFocus, revalidateOnReconnect
+This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
+
+***
+
+### swrInfiniteConfig?
+
+> `optional` **swrInfiniteConfig**: `SWRInfiniteConfiguration`\<`any`, `any`, `BareFetcher`\<`any`\>\>
+
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L27)
