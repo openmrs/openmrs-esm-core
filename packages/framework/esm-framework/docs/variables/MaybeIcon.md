@@ -4,7 +4,7 @@
 
 > `const` **MaybeIcon**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<`object` & [`IconProps`](../type-aliases/IconProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:762](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/icons/icons.tsx#L762)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:762](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/icons/icons.tsx#L762)
 
 This is a utility component that takes an `icon` and renders it if the sprite for the icon
 is available. The goal is to make it easier to conditionally render configuration-specified icons.

@@ -2,7 +2,7 @@
 
 # Interface: ActionableNotificationDescriptor
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L9)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L9)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 > **actionButtonLabel**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L10)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L10)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 > `optional` **critical**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L16)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L16)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 > `optional` **kind**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L15)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L15)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 > **onActionButtonClick**: () => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L11)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L11)
 
 #### Returns
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 > `optional` **onClose**: () => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L12)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L12)
 
 #### Returns
 
@@ -58,7 +58,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 > `optional` **progressActionLabel**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L17)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L17)
 
 ***
 
@@ -66,7 +66,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 > **subtitle**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L13)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L13)
 
 ***
 
@@ -74,4 +74,4 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 > `optional` **title**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L14)
+Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L14)

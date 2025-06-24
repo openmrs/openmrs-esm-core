@@ -4,7 +4,7 @@
 
 > **showNotification**(`notification`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/notifications/index.tsx#L43)
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/notifications/index.tsx#L43)
 
 Displays an inline notification in the UI.
 

@@ -2,9 +2,9 @@
 
 # Function: updateVisit()
 
-> **updateVisit**(`uuid`, `payload`, `abortController`): `Promise`\<`FetchResponse`\<`any`\>\>
+> **updateVisit**(`uuid`, `payload`, `abortController`): `Promise`\<`FetchResponse`\<[`Visit`](../interfaces/Visit.md)\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L82)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L92)
 
 ## Parameters
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:82](https://githu
 
 ### payload
 
-`Partial`
+[`UpdateVisitPayload`](../type-aliases/UpdateVisitPayload.md)
 
 ### abortController
 
@@ -22,4 +22,4 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:82](https://githu
 
 ## Returns
 
-`Promise`\<`FetchResponse`\<`any`\>\>
+`Promise`\<`FetchResponse`\<[`Visit`](../interfaces/Visit.md)\>\>

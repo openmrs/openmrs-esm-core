@@ -4,7 +4,7 @@
 
 > **usePatient**(`patientUuid?`): `object`
 
-Defined in: [packages/framework/esm-react-utils/src/usePatient.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/usePatient.ts#L19)
+Defined in: [packages/framework/esm-react-utils/src/usePatient.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/usePatient.ts#L19)
 
 This React hook returns a patient object. If the `patientUuid` is provided
 as a parameter, then the patient for that UUID is returned. If the parameter

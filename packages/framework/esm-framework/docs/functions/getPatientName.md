@@ -4,7 +4,7 @@
 
 > **getPatientName**(`patient`): `string`
 
-Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:13
+Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:12
 
 Gets the formatted display name for a patient.
 

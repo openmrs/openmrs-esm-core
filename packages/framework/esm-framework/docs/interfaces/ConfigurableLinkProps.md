@@ -2,7 +2,7 @@
 
 # Interface: ConfigurableLinkProps
 
-Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L37)
+Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L37)
 
 ## Extends
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:37](htt
 
 > `optional` **onBeforeNavigate**: (`event`) => `void`
 
-Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L43)
+Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L43)
 
 A callback to be called just before navigation occurs
 
@@ -34,7 +34,7 @@ A callback to be called just before navigation occurs
 
 > `optional` **templateParams**: `TemplateParams`
 
-Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L41)
+Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L41)
 
 A dictionary of values to interpolate into the URL, in addition to the default keys `openmrsBase` and `openmrsSpaBase`.
 
@@ -44,6 +44,6 @@ A dictionary of values to interpolate into the URL, in addition to the default k
 
 > **to**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L39)
+Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L39)
 
 The target path or URL. Supports interpolation. See [[navigate]]

@@ -2,7 +2,7 @@
 
 # Interface: ConfigObject
 
-Defined in: [packages/framework/esm-config/src/types.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L28)
+Defined in: [packages/framework/esm-config/src/types.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L28)
 
 ## Indexable
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:28](https://github.com/o
 
 > `optional` **Display conditions**: [`DisplayConditionsConfigObject`](DisplayConditionsConfigObject.md)
 
-Defined in: [packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L31)
+Defined in: [packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L31)
 
 Options that control when this extension is displayed
 
@@ -24,4 +24,4 @@ Options that control when this extension is displayed
 
 > `optional` **Translation overrides**: `Record`\<`string`, `Record`\<`string`, `string`\>\>
 
-Defined in: [packages/framework/esm-config/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-config/src/types.ts#L32)
+Defined in: [packages/framework/esm-config/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L32)

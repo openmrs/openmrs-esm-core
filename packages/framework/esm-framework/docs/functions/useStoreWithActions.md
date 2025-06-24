@@ -2,15 +2,19 @@
 
 # Function: useStoreWithActions()
 
-> **useStoreWithActions**\<`T`\>(`store`, `actions`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)
+> **useStoreWithActions**\<`T`, `A`\>(`store`, `actions`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useStore.ts#L54)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useStore.ts#L87)
 
 ## Type Parameters
 
 ### T
 
 `T`
+
+### A
+
+`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`T`\>
 
 ## Parameters
 
@@ -22,8 +26,8 @@ A zustand store
 
 ### actions
 
-[`Actions`](../type-aliases/Actions.md)\<`T`\>
+`A`
 
 ## Returns
 
-`T` & [`BoundActions`](../type-aliases/BoundActions.md)
+`T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>

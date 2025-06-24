@@ -25,6 +25,15 @@ export enum VisitStatus {
 export interface VisitStoreState {
   patientUuid: string | null;
   manuallySetVisitUuid: string | null;
+
+  /**
+   * Stores a record of SWR mutate callbacks that should be called when
+   * the Visit with the specified uuid is modified. The callbacks are keyed
+   * by unique component IDs.
+   */
+  mutateVisitCallbacks: {
+    [componentId: string]: () => void;
+  };
 }
 
 export const defaultVisitCustomRepresentation =
@@ -39,9 +48,10 @@ export const defaultVisitCustomRepresentation =
   'attributes:(uuid,display,attributeType:(name,datatypeClassname,uuid),value),' +
   'location:(uuid,name,display))';
 
-const initialState = getVisitLocalStorage() || {
+const initialState: VisitStoreState = getVisitSessionStorage() || {
   patientUuid: null,
   manuallySetVisitUuid: null,
+  mutateVisitCallbacks: {},
 };
 
 export function getVisitStore() {
@@ -53,16 +63,16 @@ export function setCurrentVisit(patientUuid: string, visitUuid: string) {
 }
 
 getVisitStore().subscribe((state) => {
-  setVisitLocalStorage(state);
+  setVisitSessionStorage(state);
 });
 
-function setVisitLocalStorage(value: VisitStoreState) {
-  localStorage.setItem('openmrs:visitStoreState', JSON.stringify(value));
+function setVisitSessionStorage(value: VisitStoreState) {
+  sessionStorage.setItem('openmrs:visitStoreState', JSON.stringify(value));
 }
 
-function getVisitLocalStorage(): VisitStoreState | null {
+function getVisitSessionStorage(): VisitStoreState | null {
   try {
-    return JSON.parse(localStorage.getItem('openmrs:visitStoreState') || 'null');
+    return JSON.parse(sessionStorage.getItem('openmrs:visitStoreState') || 'null');
   } catch (e) {
     return null;
   }
@@ -79,7 +89,11 @@ export function saveVisit(payload: NewVisitPayload, abortController: AbortContro
   });
 }
 
-export function updateVisit(uuid: string, payload: UpdateVisitPayload, abortController: AbortController) {
+export function updateVisit(
+  uuid: string,
+  payload: UpdateVisitPayload,
+  abortController: AbortController,
+): Promise<FetchResponse<Visit>> {
   return openmrsFetch(`${restBaseUrl}/visit/${uuid}`, {
     signal: abortController.signal,
     method: 'POST',

@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-implementer-tools-app",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "license": "MPL-2.0",
   "description": "The admin interface for OpenMRS Frontend",
   "browser": "dist/openmrs-esm-implementer-tools-app.js",
@@ -38,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.80.1",
+    "@carbon/react": "^1.83.0",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
@@ -59,7 +59,7 @@
     "react-dom": "^18.1.0",
     "react-i18next": "^11.18.6",
     "rxjs": "^6.5.3",
-    "swr": "^2.2.5",
-    "webpack": "^5.88.0"
+    "swr": "2.2.5",
+    "webpack": "^5.99.9"
   }
 }

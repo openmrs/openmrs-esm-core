@@ -1,4 +1,8 @@
-import { rspack, type Configuration as RspackConfiguration } from '@rspack/core';
+import {
+  rspack,
+  type Configuration as RspackConfiguration,
+  type DevServer as RspackDevServerConfiguration,
+} from '@rspack/core';
 import { RspackDevServer } from '@rspack/dev-server';
 import { dirname } from 'node:path';
 import webpack, { type Configuration as WebpackConfiguration } from 'webpack';
@@ -25,7 +29,7 @@ function loadConfig(configPath: string): WebpackConfiguration | RspackConfigurat
   return content;
 }
 
-function debugWebpack(configPath: string, port: number, useRspack: boolean = false) {
+function startDevServer(configPath: string, port: number, useRspack: boolean = false) {
   const config = loadConfig(configPath);
 
   const devServerOptions = {
@@ -38,11 +42,11 @@ function debugWebpack(configPath: string, port: number, useRspack: boolean = fal
   if (!useRspack) {
     const compiler = webpack(config as WebpackConfiguration);
 
-    server = new WebpackDevServer(devServerOptions, compiler);
+    server = new WebpackDevServer(devServerOptions as WebpackDevServer.Configuration, compiler);
   } else {
     const compiler = rspack(config as RspackConfiguration);
 
-    server = new RspackDevServer(devServerOptions, compiler);
+    server = new RspackDevServer(devServerOptions as RspackDevServerConfiguration, compiler);
   }
 
   server.startCallback(() => {
@@ -51,5 +55,5 @@ function debugWebpack(configPath: string, port: number, useRspack: boolean = fal
 }
 
 process.on('message', ({ source, port, useRspack }: { source: string; port: number; useRspack: boolean }) =>
-  debugWebpack(source, port, useRspack),
+  startDevServer(source, port, useRspack),
 );

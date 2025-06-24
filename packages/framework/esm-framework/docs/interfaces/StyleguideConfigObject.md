@@ -2,7 +2,7 @@
 
 # Interface: StyleguideConfigObject
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L3)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L3)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:3](https://g
 
 > **Brand color #1**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L4)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L4)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:4](https://g
 
 > **Brand color #2**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L5)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L5)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:5](https://g
 
 > **Brand color #3**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L6)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L6)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:6](https://g
 
 > **diagnosisTags**: `object`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L18)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L18)
 
 #### primaryColor
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:18](https://
 
 > **excludePatientIdentifierCodeTypes**: `object`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L7)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L7)
 
 #### uuids
 
@@ -62,7 +62,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:7](https://g
 
 > **implementationName**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L10)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L10)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:10](https://
 
 > **patientPhotoConceptUuid**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L11)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L11)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:11](https://
 
 > **preferredCalendar**: `object`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L12)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L12)
 
 #### Index Signature
 
@@ -90,7 +90,7 @@ Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:12](https://
 
 > **preferredDateLocale**: `object`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/config-schema.ts#L15)
+Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L15)
 
 #### Index Signature
 

@@ -2,7 +2,7 @@
 
 # Class: OpenmrsFetchError
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:301](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/openmrs-fetch.ts#L301)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:301](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L301)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:301](https://github
 
 > **new OpenmrsFetchError**(`url`, `response`, `responseBody`, `requestStacktrace`): `OpenmrsFetchError`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:302](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/openmrs-fetch.ts#L302)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:302](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L302)
 
 #### Parameters
 
@@ -120,7 +120,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 > **response**: `Response`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:310](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/openmrs-fetch.ts#L310)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:310](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L310)
 
 #### Implementation of
 
@@ -132,7 +132,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:310](https://github
 
 > **responseBody**: `null` \| `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md)
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/openmrs-fetch.ts#L311)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L311)
 
 #### Implementation of
 

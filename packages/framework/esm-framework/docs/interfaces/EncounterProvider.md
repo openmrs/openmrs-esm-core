@@ -2,7 +2,7 @@
 
 # Interface: EncounterProvider
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L27)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L27)
 
 ## Extends
 
@@ -42,7 +42,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
 
 > `optional` **encounterRole**: [`EncounterRole`](EncounterRole.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L29)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L29)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 > `optional` **provider**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L28)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L28)
 
 ***
 

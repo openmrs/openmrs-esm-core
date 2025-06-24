@@ -130,17 +130,17 @@ async function readConfig(
       for (const pckg of packages) {
         questions.push(
           {
-            name: pckg.name,
+            name: `include:${pckg.name}`,
             message: `Include frontend module "${pckg.name}"?`,
             default: false,
             type: 'confirm',
           },
           {
-            name: pckg.name,
+            name: `version:${pckg.name}`,
             message: `Version for "${pckg.name}"?`,
             default: pckg.version,
             type: 'string',
-            when: (ans) => ans[pckg.name],
+            when: (ans) => ans[`include:${pckg.name}`],
             validate: (input) => {
               if (typeof input !== 'string') {
                 return `Expected a valid SemVer string, got ${typeof input}.`;
@@ -182,14 +182,14 @@ async function downloadPackage(
   baseDir: string,
   fetchOptions: npmRegistryFetch.Options,
 ): Promise<Buffer> {
-  if (esmVersion.startsWith('file:')) {
+  if (esmVersion && esmVersion.startsWith('file:')) {
     const source = resolve(baseDir, esmVersion.substring(5));
     return readFile(source);
-  } else if (/^https?:\/\//.test(esmVersion)) {
+  } else if (esmVersion && /^https?:\/\//.test(esmVersion)) {
     const response = await axios.get<Buffer>(esmVersion);
     return response.data;
   } else {
-    const packageName = `${esmName}@${esmVersion}`;
+    const packageName = esmVersion ? `${esmName}@${esmVersion}` : esmName;
     const tarManifest = await pacote.manifest(packageName, fetchOptions);
 
     if (!Boolean(tarManifest) || !Boolean(tarManifest._resolved) || !Boolean(tarManifest._integrity)) {

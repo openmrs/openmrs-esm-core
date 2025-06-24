@@ -4,7 +4,7 @@
 
 > **formattedName**(`name`): `string`
 
-Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:23
+Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:22
 
 ## Parameters
 

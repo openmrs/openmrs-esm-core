@@ -1,3 +1,5 @@
+@forward '@carbon/styles' hide $field-01;
+
 @forward './vars';
 
 @forward './components/general';
@@ -15,5 +17,4 @@
 
 @forward './overrides';
 
-@import '@carbon/styles/css/styles.css';
 @import '@carbon/charts/styles.css';

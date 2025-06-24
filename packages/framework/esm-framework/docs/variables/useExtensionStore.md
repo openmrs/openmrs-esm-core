@@ -2,9 +2,9 @@
 
 # Variable: useExtensionStore()
 
-> `const` **useExtensionStore**: \{(): `ExtensionStore`; (`actions`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md); (`actions?`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md); \}
+> `const` **useExtensionStore**: \{(): `ExtensionStore`; \<`A`\>(`actions`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>; \<`A`\>(`actions?`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>; \}
 
-Defined in: [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+Defined in: [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ## Call Signature
 
@@ -16,28 +16,40 @@ Defined in: [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](http
 
 ## Call Signature
 
-> (`actions`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)
+> \<`A`\>(`actions`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>
+
+### Type Parameters
+
+#### A
+
+`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`ExtensionStore`\>
 
 ### Parameters
 
 #### actions
 
-[`Actions`](../type-aliases/Actions.md)\<`ExtensionStore`\>
+`A`
 
 ### Returns
 
-`ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)
+`ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>
 
 ## Call Signature
 
-> (`actions?`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)
+> \<`A`\>(`actions?`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>
+
+### Type Parameters
+
+#### A
+
+`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`ExtensionStore`\>
 
 ### Parameters
 
 #### actions?
 
-[`Actions`](../type-aliases/Actions.md)\<`ExtensionStore`\>
+`A`
 
 ### Returns
 
-`ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)
+`ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>

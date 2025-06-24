@@ -2,7 +2,7 @@
 
 # Interface: OmrsServiceWorkerMessage\<MessageTypeTypeIdentifier\>
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-offline/src/service-worker-messaging.ts#L25)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/service-worker-messaging.ts#L25)
 
 ## Extended by
 
@@ -22,4 +22,4 @@ Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:25](
 
 > **type**: `MessageTypeTypeIdentifier`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)

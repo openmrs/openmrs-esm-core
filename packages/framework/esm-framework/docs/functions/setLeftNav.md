@@ -1,17 +1,23 @@
 [O3 Framework](../API.md) / setLeftNav
 
-# Function: setLeftNav()
+# Function: ~~setLeftNav()~~
 
 > **setLeftNav**(`__namedParameters`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L37)
+
+Sets the current left nav context. Must be paired with [unsetLeftNav](unsetLeftNav.md).
 
 ## Parameters
 
 ### \_\_namedParameters
 
-`SetLeftNavParams`
+[`SetLeftNavParams`](../interfaces/SetLeftNavParams.md)
 
 ## Returns
 
 `void`
+
+## Deprecated
+
+Please use [useLeftNav](useLeftNav.md) instead. This function will be made internal in a future release.

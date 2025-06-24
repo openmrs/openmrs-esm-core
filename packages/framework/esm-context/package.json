@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-context",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "license": "MPL-2.0",
   "description": "Utilities for managing the current execution context",
   "type": "module",
@@ -55,8 +55,8 @@
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
-    "@swc/cli": "^0.6.0",
-    "@swc/core": "^1.11.18",
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
     "concurrently": "^9.1.2",
     "rimraf": "^6.0.1"
   }

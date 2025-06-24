@@ -1,10 +1,12 @@
 [O3 Framework](../API.md) / unsetLeftNav
 
-# Function: unsetLeftNav()
+# Function: ~~unsetLeftNav()~~
 
 > **unsetLeftNav**(`name`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/left-nav/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/left-nav/index.tsx#L35)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L46)
+
+Unsets the left nav context if the current context is for the supplied name.
 
 ## Parameters
 
@@ -15,3 +17,7 @@ Defined in: [packages/framework/esm-styleguide/src/left-nav/index.tsx:35](https:
 ## Returns
 
 `void`
+
+## Deprecated
+
+Please use [useLeftNav](useLeftNav.md) instead. This function will be made internal in a future release.

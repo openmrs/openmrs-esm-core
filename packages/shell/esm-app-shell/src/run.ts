@@ -1,7 +1,9 @@
 import { start, triggerAppChange } from 'single-spa';
+import { type CalendarIdentifier } from '@internationalized/date';
 import {
   activateOfflineCapability,
   canAccessStorage,
+  cleanupObsoleteFeatureFlags,
   dispatchConnectivityChanged,
   dispatchPrecacheStaticDependencies,
   finishRegisteringAllApps,
@@ -202,7 +204,7 @@ async function runShell() {
       const { preferredCalendar } = await getConfig<StyleguideConfigObject>('@openmrs/esm-styleguide');
 
       for (const entry of Object.entries(preferredCalendar)) {
-        registerDefaultCalendar(entry[0], entry[1]);
+        registerDefaultCalendar(entry[0], entry[1] as CalendarIdentifier);
       }
     })
     .then(() => start());
@@ -431,6 +433,7 @@ export function run(configUrls: Array<string>) {
       .catch(handleInitFailure)
       .then(closeLoading)
       .then(offlineEnabled ? setupOffline : undefined)
-      .then(registerOptionalDependencyHandler);
+      .then(registerOptionalDependencyHandler)
+      .then(cleanupObsoleteFeatureFlags);
   });
 }

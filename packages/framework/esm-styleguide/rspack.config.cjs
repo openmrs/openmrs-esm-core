@@ -6,7 +6,7 @@ const { resolve } = require('node:path');
 const { peerDependencies } = require('./package.json');
 
 module.exports = (env, argv = {}) => ({
-  entry: [resolve(__dirname, 'src/index.ts'), resolve(__dirname, 'src/_all.scss')],
+  entry: [resolve(__dirname, 'src/internal.ts'), resolve(__dirname, 'src/_all.scss')],
   output: {
     filename: 'openmrs-esm-styleguide.js',
     chunkFilename: '[name].js',
@@ -38,7 +38,7 @@ module.exports = (env, argv = {}) => ({
       },
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        use: 'builtin:swc-loader',
+        use: 'swc-loader',
         options: {
           jsc: {
             parser: {
@@ -76,7 +76,7 @@ module.exports = (env, argv = {}) => ({
   },
   watch: false,
   externalsType: 'module',
-  externals: Object.keys(peerDependencies || {}),
+  externals: [...Object.keys(peerDependencies || {}),],
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
   },

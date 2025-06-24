@@ -4,7 +4,7 @@
 
 > **updateContext**\<`T`\>(`namespace`, `update`): `void`
 
-Defined in: [packages/framework/esm-context/src/context.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-context/src/context.ts#L84)
+Defined in: [packages/framework/esm-context/src/context.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-context/src/context.ts#L84)
 
 Updates a namespace in the global context. If the namespace does not exist, it is registered.
 

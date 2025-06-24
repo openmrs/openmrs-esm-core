@@ -4,7 +4,7 @@
 
 > **formatPatientName**(`name`): `string`
 
-Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:21
+Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:20
 
 Get a formatted display string for an FHIR name.
 

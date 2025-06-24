@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceContainerProps
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L15)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L15)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspac
 
 > `optional` **actionMenuProps**: `Record`\<`string`, `unknown`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L20)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L20)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspac
 
 > `optional` **additionalWorkspaceProps**: `object`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L19)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L19)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspac
 
 > **contextKey**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L16)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L16)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspac
 
 > `optional` **overlay**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L17)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L17)
 
 ***
 
@@ -42,4 +42,4 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspac
 
 > `optional` **showSiderailAndBottomNav**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L18)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L18)

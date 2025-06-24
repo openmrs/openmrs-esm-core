@@ -4,7 +4,7 @@
 
 > **launchWorkspaceGroup**(`groupName`, `args`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:210](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L210)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:210](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L210)
 
 Launches a workspace group with the specified name and configuration.
 If there are any open workspaces, it will first close them before launching the new workspace group.

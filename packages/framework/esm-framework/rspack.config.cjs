@@ -6,7 +6,7 @@ const { resolve } = require('node:path');
 const { peerDependencies } = require('./package.json');
 
 module.exports = (env, argv = {}) => ({
-  entry: [resolve(__dirname, 'src/index.ts')],
+  entry: [resolve(__dirname, 'src/internal.ts')],
   output: {
     filename: 'openmrs-esm-framework.js',
     chunkFilename: '[name].js',
@@ -34,7 +34,7 @@ module.exports = (env, argv = {}) => ({
       },
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        use: 'builtin:swc-loader',
+        use: 'swc-loader',
         options: {
           jsc: {
             parser: {

@@ -2,7 +2,7 @@
 
 # Interface: ExtensionData
 
-Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ComponentContext.ts#L3)
+Defined in: [packages/framework/esm-extensions/src/types.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L1)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:3](https
 
 > **extensionId**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ComponentContext.ts#L6)
+Defined in: [packages/framework/esm-extensions/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L4)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:6](https
 
 > **extensionSlotModuleName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ComponentContext.ts#L5)
+Defined in: [packages/framework/esm-extensions/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L3)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:5](https
 
 > **extensionSlotName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ComponentContext.ts#L4)
+Defined in: [packages/framework/esm-extensions/src/types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L2)

@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-core",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "private": true,
   "workspaces": [
     "packages/apps/*",
@@ -27,8 +27,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.50.1",
-    "@swc/core": "^1.11.18",
-    "@swc/jest": "^0.2.37",
+    "@swc/core": "^1.11.29",
+    "@swc/jest": "^0.2.38",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
@@ -60,13 +60,13 @@
     "prettier": "^3.1.0",
     "swc-loader": "^0.2.6",
     "timezone-mock": "^1.2.2",
-    "turbo": "^2.4.2",
+    "turbo": "^2.5.2",
     "typescript": "^5.8.3",
-    "webpack": "^5.88.0"
+    "webpack": "^5.99.9"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix --max-warnings 0",
     "*.{css,scss,ts,tsx}": "prettier --write --list-different"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.9.2"
 }

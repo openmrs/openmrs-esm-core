@@ -4,8 +4,9 @@
   "change": "שינוי",
   "changeLanguage": "Change language",
   "changingLanguage": "Changing language",
+  "missingPropertyInDashboardExtension": "Error: Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
   "notifications": "התראות",
-  "userMenu": "User menu",
-  "userMenuOptions": "User menu options",
+  "userMenu": "תפריט משתמש",
+  "userMenuOptions": "אפשרויות תפריט משתמש",
   "userMenuTooltip": "My Account"
 }

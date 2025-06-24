@@ -2,7 +2,7 @@
 
 # Interface: BreadcrumbRegistration
 
-Defined in: [packages/framework/esm-navigation/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-navigation/src/types.ts#L32)
+Defined in: [packages/framework/esm-navigation/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-navigation/src/types.ts#L32)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-navigation/src/types.ts:32](https://github.c
 
 > **matcher**: `RegExp`
 
-Defined in: [packages/framework/esm-navigation/src/types.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-navigation/src/types.ts#L33)
+Defined in: [packages/framework/esm-navigation/src/types.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-navigation/src/types.ts#L33)
 
 ***
 
@@ -18,4 +18,4 @@ Defined in: [packages/framework/esm-navigation/src/types.ts:33](https://github.c
 
 > **settings**: [`BreadcrumbSettings`](BreadcrumbSettings.md)
 
-Defined in: [packages/framework/esm-navigation/src/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-navigation/src/types.ts#L34)
+Defined in: [packages/framework/esm-navigation/src/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-navigation/src/types.ts#L34)

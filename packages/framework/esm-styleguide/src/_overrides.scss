@@ -123,6 +123,7 @@
 
     &::after {
       background-color: colors.$blue-10;
+      box-shadow: none !important;
     }
 
     &::before {
@@ -133,6 +134,41 @@
       border: 0 !important;
     }
   }
+}
+
+.cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:first-child {
+  box-shadow: none !important;
+}
+
+.cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:last-child {
+  box-shadow: none !important;
+}
+
+.cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:first-child .cds--content-switcher-btn {
+  box-shadow: none !important;
+}
+
+.cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:last-child .cds--content-switcher-btn {
+  box-shadow: none !important;
+}
+
+.cds--content-switcher-popover--selected:has(+ .cds--content-switcher-popover__wrapper .cds--content-switcher-btn:hover)
+  .cds--content-switcher-btn::before,
+.cds--content-switcher-popover__wrapper:hover
+  + .cds--content-switcher-popover__wrapper
+  .cds--content-switcher--selected::before {
+  border-bottom: none !important;
+  border-top: none !important;
+}
+
+.cds--content-switcher-btn.cds--content-switcher--selected:has(+ .cds--content-switcher-btn:hover)::before {
+  border-bottom: none !important;
+  border-top: none !important;
+}
+
+.cds--content-switcher-btn:hover + .cds--content-switcher-btn.cds--content-switcher--selected::before {
+  border-bottom: none !important;
+  border-top: none !important;
 }
 
 .cds--content-switcher--icon-only
@@ -241,7 +277,7 @@
   border-bottom: 1px solid $ui-03;
 }
 
-/* Misc */
+/* Buttons */
 .cds--btn--primary,
 .cds--btn--primary:active,
 .cds--btn--tertiary:hover,
@@ -270,6 +306,12 @@
   color: $ui-02;
 }
 
+// Override right padding applied to icon-only ghost buttons
+.cds--btn--ghost.cds--btn--icon-only {
+  padding-right: 0 !important;
+}
+
+/* Overflow menu */
 .cds--overflow-menu--flip {
   &.cds--overflow-menu-options {
     background-color: $openmrs-background-grey;
@@ -290,6 +332,7 @@
   }
 }
 
+/* Pagination */
 .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
   &::after {
     @include brand-03(background-color);
@@ -301,6 +344,7 @@
   outline: 2px solid var(--brand-03);
 }
 
+/* Data table overflow menu */
 .cds--data-table--xs .cds--overflow-menu {
   height: layout.$spacing-07;
 }
@@ -368,6 +412,7 @@
   margin-inline: layout.$spacing-03;
 }
 
+/* RTL overrides */
 html[dir='rtl'] {
   .cds--header {
     & > a:first-child {
@@ -414,6 +459,9 @@ html[dir='rtl'] {
   }
 
   .cds--btn--ghost.cds--btn--icon-only {
+    // Override left padding applied to icon-only ghost buttons
+    padding-left: 0 !important;
+
     svg {
       margin: unset;
     }

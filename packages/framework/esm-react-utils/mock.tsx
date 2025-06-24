@@ -13,6 +13,7 @@ import {
   useFhirPagination as realUseFhirPagination,
   useFhirInfinite as realUseFhirInfinite,
   useFhirFetchAll as realUseFhirFetchAll,
+  useVisitContextStore as realUseVisitContextStore,
 } from './src/index';
 export { ConfigurableLink } from './src/ConfigurableLink';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
@@ -93,6 +94,8 @@ export const useVisit = vi.fn(() => ({
   currentVisitIsRetrospective: false,
 }));
 
+export const useVisitContextStore = vi.fn(realUseVisitContextStore);
+
 export const useVisitTypes = vi.fn(() => []);
 
 export const useAbortController = vi.fn(() => {
@@ -114,6 +117,10 @@ export const useOpenmrsSWR = vi.fn((key: string | Array<any>) => {
 export const useDebounce = vi.fn((value) => value);
 
 export const useOnClickOutside = vi.fn(function useOnClickOutside() {
+  return React.useRef();
+});
+
+export const useOnVisible = vi.fn(function useOnVisible() {
   return React.useRef();
 });
 
@@ -140,6 +147,10 @@ export const useDefineAppContext = vi.fn();
 export const useExtensionSlot = vi.fn();
 
 export const useForceUpdate = vi.fn();
+
+export const useLeftNav = vi.fn();
+
+export const useLeftNavStore = vi.fn();
 
 // TODO: Remove this in favour of usePrimaryIdentifierCode below
 export const usePrimaryIdentifierResource = vi.fn();

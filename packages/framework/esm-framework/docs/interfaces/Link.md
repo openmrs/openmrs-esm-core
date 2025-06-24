@@ -2,7 +2,7 @@
 
 # Interface: Link
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/openmrs-resource.ts#L20)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L20)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:20](https:
 
 > **rel**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/openmrs-resource.ts#L21)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L21)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:21](https:
 
 > `optional` **resourceAlias**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/openmrs-resource.ts#L23)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L23)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:23](https:
 
 > **uri**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/openmrs-resource.ts#L22)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L22)

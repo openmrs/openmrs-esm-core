@@ -4,7 +4,7 @@
 
 > **openmrsFetch**\<`T`\>(`path`, `fetchInit`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`T`\>\>
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/openmrs-fetch.ts#L82)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L82)
 
 The openmrsFetch function is a wrapper around the
 [browser's built-in fetch function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch),

@@ -4,7 +4,7 @@
 
 > **evaluateAsNumberAsync**(`expression`, `variables`): `Promise`\<`number`\>
 
-Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:218](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-expression-evaluator/src/evaluator.ts#L218)
+Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:218](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-expression-evaluator/src/evaluator.ts#L218)
 
 `evaluateAsNumberAsync()` is a variant of [()](evaluateAsync.md) which only supports number results. Useful
 if valid expression must return numeric values.

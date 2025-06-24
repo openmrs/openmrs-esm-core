@@ -2,7 +2,7 @@
 
 # Interface: VisitStoreState
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L25)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L25)
 
 ## Properties
 
@@ -10,7 +10,23 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://githu
 
 > **manuallySetVisitUuid**: `null` \| `string`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
+
+***
+
+### mutateVisitCallbacks
+
+> **mutateVisitCallbacks**: `object`
+
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L34)
+
+Stores a record of SWR mutate callbacks that should be called when
+the Visit with the specified uuid is modified. The callbacks are keyed
+by unique component IDs.
+
+#### Index Signature
+
+\[`componentId`: `string`\]: () => `void`
 
 ***
 
@@ -18,4 +34,4 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://githu
 
 > **patientUuid**: `null` \| `string`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L26)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L26)

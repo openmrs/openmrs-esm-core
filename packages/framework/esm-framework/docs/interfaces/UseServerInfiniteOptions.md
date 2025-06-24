@@ -2,7 +2,7 @@
 
 # Interface: UseServerInfiniteOptions\<R\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L15)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L14)
 
 ## Extended by
 
@@ -20,7 +20,7 @@ Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:15](ht
 
 > `optional` **fetcher**: (`key`) => `Promise`\<`FetchResponse`\<`R`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L19)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L18)
 
 The fetcher to use. Defaults to openmrsFetch
 
@@ -40,7 +40,7 @@ The fetcher to use. Defaults to openmrsFetch
 
 > `optional` **immutable**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L26)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L25)
 
 If true, sets these options in swrInfintieConfig to false:
 revalidateIfStale, revalidateOnFocus, revalidateOnReconnect
@@ -52,4 +52,4 @@ This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
 
 > `optional` **swrInfiniteConfig**: `SWRInfiniteConfiguration`\<`any`, `any`, `BareFetcher`\<`any`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L28)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L27)

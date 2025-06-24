@@ -4,6 +4,6 @@
 
 > `const` **OpenmrsDatePicker**: `ForwardRefExoticComponent`\<[`OpenmrsDatePickerProps`](../interfaces/OpenmrsDatePickerProps.md) & `RefAttributes`\<`HTMLDivElement`\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:598](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L598)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:94](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L94)
 
 A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.

@@ -2,7 +2,7 @@
 
 # Interface: UsePatientPhotoResult
 
-Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L7)
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L7)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto
 
 > **data**: `null` \| \{ `dateTime`: `string`; `imageSrc`: `string`; \}
 
-Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L8)
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L8)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto
 
 > `optional` **error**: `Error`
 
-Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L9)
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L9)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto
 
 > **isLoading**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L10)
+Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L10)

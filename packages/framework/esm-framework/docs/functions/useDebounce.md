@@ -4,7 +4,7 @@
 
 > **useDebounce**\<`T`\>(`value`, `delay`): `T`
 
-Defined in: [packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
+Defined in: [packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
 
 This hook debounces a state variable. That state variable can then be used as the
 value of a controlled input, while the return value of this hook is used for making

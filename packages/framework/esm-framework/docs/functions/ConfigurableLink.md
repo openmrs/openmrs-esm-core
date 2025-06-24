@@ -4,7 +4,7 @@
 
 > **ConfigurableLink**(`__namedParameters`): `Element`
 
-Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:49](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L49)
+Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:49](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L49)
 
 A React link component which calls [[navigate]] when clicked
 

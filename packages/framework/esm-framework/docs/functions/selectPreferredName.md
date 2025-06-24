@@ -4,7 +4,7 @@
 
 > **selectPreferredName**(`patient`, ...`preferredNames`): `undefined` \| `HumanName`
 
-Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:42
+Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:41
 
 Select the preferred name from the collection of names associated with a patient.
 

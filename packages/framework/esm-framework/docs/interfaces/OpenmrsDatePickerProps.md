@@ -2,7 +2,7 @@
 
 # Interface: OpenmrsDatePickerProps
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:98](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L98)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:46](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L46)
 
 Properties for the OpenmrsDatePicker
 
@@ -72,7 +72,7 @@ Identifies the element (or elements) that labels the current element.
 
 > `optional` **autoFocus**: `boolean`
 
-Defined in: node\_modules/@react-types/shared/src/events.d.ts:120
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:128
 
 Whether the element should receive focus on render.
 
@@ -100,7 +100,7 @@ The children of the component. A function may be provided to alter the children 
 
 > `optional` **className**: `Argument`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L102)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:50](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L50)
 
 Any CSS classes to add to the outer div of the date picker
 
@@ -122,9 +122,9 @@ Whether the overlay is open by default (uncontrolled).
 
 ### defaultValue?
 
-> `optional` **defaultValue**: [`DateInputValue`](../type-aliases/DateInputValue.md)
+> `optional` **defaultValue**: `DateInputValue`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:104](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L104)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:52](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L52)
 
 The default value (uncontrolled)
 
@@ -210,7 +210,7 @@ The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/d
 
 > `optional` **invalid**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:106](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L106)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L54)
 
 Whether the input value is invalid.
 
@@ -220,7 +220,7 @@ Whether the input value is invalid.
 
 > `optional` **invalidText**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:108](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L108)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:56](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L56)
 
 Text to show if the input is invalid e.g. an error message
 
@@ -324,7 +324,7 @@ Whether user input is required on the input before form submission.
 
 > `optional` **label**: `string` \| `ReactElement`\<`any`, `string` \| `JSXElementConstructor`\<`any`\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:113](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L113)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:61](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L61)
 
 The label for this DatePicker element
 
@@ -338,7 +338,7 @@ Use labelText instead
 
 > `optional` **labelText**: `string` \| `ReactElement`\<`any`, `string` \| `JSXElementConstructor`\<`any`\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:115](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L115)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:63](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L63)
 
 The label for this DatePicker element.
 
@@ -348,7 +348,7 @@ The label for this DatePicker element.
 
 > `optional` **light**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:117](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L117)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:65](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L65)
 
 'true' to use the light version.
 
@@ -356,9 +356,9 @@ Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:117](htt
 
 ### maxDate?
 
-> `optional` **maxDate**: [`DateInputValue`](../type-aliases/DateInputValue.md)
+> `optional` **maxDate**: `DateInputValue`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:119](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L119)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L67)
 
 The latest date it is possible to select
 
@@ -380,9 +380,9 @@ The maximum allowed date that a user may select.
 
 ### minDate?
 
-> `optional` **minDate**: [`DateInputValue`](../type-aliases/DateInputValue.md)
+> `optional` **minDate**: `DateInputValue`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:121](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L121)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L69)
 
 The earliest date it is possible to select
 
@@ -420,7 +420,7 @@ The name of the input element, used when submitting an HTML form. See [MDN](http
 
 > `optional` **onBlur**: (`e`) => `void`
 
-Defined in: node\_modules/@react-types/shared/src/events.d.ts:85
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:87
 
 Handler that is called when the element loses focus.
 
@@ -444,7 +444,7 @@ Handler that is called when the element loses focus.
 
 > `optional` **onChange**: (`value`) => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:123](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L123)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L71)
 
 Handler that is called when the value changes.
 
@@ -464,7 +464,7 @@ Handler that is called when the value changes.
 
 > `optional` **onChangeRaw**: (`value`) => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:125](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L125)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:73](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L73)
 
 Handler that is called when the value changes. Note that this provides types from @internationalized/date.
 
@@ -484,7 +484,7 @@ Handler that is called when the value changes. Note that this provides types fro
 
 > `optional` **onFocus**: (`e`) => `void`
 
-Defined in: node\_modules/@react-types/shared/src/events.d.ts:83
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:85
 
 Handler that is called when the element receives focus.
 
@@ -508,7 +508,7 @@ Handler that is called when the element receives focus.
 
 > `optional` **onFocusChange**: (`isFocused`) => `void`
 
-Defined in: node\_modules/@react-types/shared/src/events.d.ts:87
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:89
 
 Handler that is called when the element's focus status changes.
 
@@ -532,7 +532,7 @@ Handler that is called when the element's focus status changes.
 
 > `optional` **onKeyDown**: (`e`) => `void`
 
-Defined in: node\_modules/@react-types/shared/src/events.d.ts:76
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:78
 
 Handler that is called when a key is pressed.
 
@@ -556,7 +556,7 @@ Handler that is called when a key is pressed.
 
 > `optional` **onKeyUp**: (`e`) => `void`
 
-Defined in: node\_modules/@react-types/shared/src/events.d.ts:78
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:80
 
 Handler that is called when a key is released.
 
@@ -638,7 +638,7 @@ A placeholder date that influences the format of the placeholder shown when no v
 
 > `optional` **short**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:129](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L129)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:77](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L77)
 
 'true' to use the short version.
 
@@ -683,7 +683,7 @@ By default, this is determined by the user's locale.
 
 > `optional` **size**: `"sm"` \| `"md"` \| `"lg"`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:127](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L127)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:75](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L75)
 
 Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option
 
@@ -769,8 +769,8 @@ or invalid via ARIA.
 
 ### value?
 
-> `optional` **value**: [`DateInputValue`](../type-aliases/DateInputValue.md)
+> `optional` **value**: `DateInputValue`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/index.tsx:131](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-styleguide/src/datepicker/index.tsx#L131)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:79](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L79)
 
 The value (controlled)

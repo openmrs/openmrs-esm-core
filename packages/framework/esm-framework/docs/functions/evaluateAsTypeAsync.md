@@ -4,7 +4,7 @@
 
 > **evaluateAsTypeAsync**\<`T`\>(`expression`, `variables`, `typePredicate`): `Promise`\<`T`\>
 
-Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:277](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-expression-evaluator/src/evaluator.ts#L277)
+Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:277](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-expression-evaluator/src/evaluator.ts#L277)
 
 `evaluateAsTypeAsync()` is a type-safe version of [()](evaluateAsync.md) which returns a result if the result
 passes a custom type predicate. The main use-case for this is to narrow the return types allowed based on

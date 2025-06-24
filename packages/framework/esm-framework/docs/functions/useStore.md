@@ -4,19 +4,15 @@
 
 ## Call Signature
 
-> **useStore**\<`T`, `U`\>(`store`): `T`
+> **useStore**\<`T`\>(`store`): `T`
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useStore.ts#L35)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useStore.ts#L53)
 
 ### Type Parameters
 
 #### T
 
 `T`
-
-#### U
-
-`U`
 
 ### Parameters
 
@@ -32,7 +28,7 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:35](https://gith
 
 > **useStore**\<`T`, `U`\>(`store`, `select`): `U`
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useStore.ts#L36)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useStore.ts#L54)
 
 ### Type Parameters
 
@@ -60,9 +56,9 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:36](https://gith
 
 ## Call Signature
 
-> **useStore**\<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)
+> **useStore**\<`T`, `U`, `A`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useStore.ts#L37)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useStore.ts#L55)
 
 ### Type Parameters
 
@@ -73,6 +69,10 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:37](https://gith
 #### U
 
 `U`
+
+#### A
+
+`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`T`\>
 
 ### Parameters
 
@@ -86,17 +86,17 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:37](https://gith
 
 #### actions
 
-[`Actions`](../type-aliases/Actions.md)\<`T`\>
+`A`
 
 ### Returns
 
-`T` & [`BoundActions`](../type-aliases/BoundActions.md)
+`T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
 
 ## Call Signature
 
-> **useStore**\<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](../type-aliases/BoundActions.md)
+> **useStore**\<`T`, `U`, `A`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-react-utils/src/useStore.ts#L38)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useStore.ts#L60)
 
 ### Type Parameters
 
@@ -107,6 +107,10 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:38](https://gith
 #### U
 
 `U`
+
+#### A
+
+`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`T`\>
 
 ### Parameters
 
@@ -120,8 +124,8 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:38](https://gith
 
 #### actions
 
-[`Actions`](../type-aliases/Actions.md)\<`T`\>
+`A`
 
 ### Returns
 
-`U` & [`BoundActions`](../type-aliases/BoundActions.md)
+`U` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>

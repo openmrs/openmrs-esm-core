@@ -2,7 +2,7 @@
 
 # Enumeration: VisitMode
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L14)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L14)
 
 ## Enumeration Members
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:14](https://githu
 
 > **EDITVISIT**: `"editVisit"`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L16)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L16)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:16](https://githu
 
 > **LOADING**: `"loadingVisit"`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L17)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L17)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:17](https://githu
 
 > **NEWVISIT**: `"startVisit"`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-emr-api/src/visit-utils.ts#L15)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L15)

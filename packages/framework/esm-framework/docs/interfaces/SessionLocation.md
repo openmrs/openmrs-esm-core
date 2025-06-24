@@ -2,7 +2,7 @@
 
 # Interface: SessionLocation
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/user-resource.ts#L49)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L49)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:49](https://g
 
 > **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/user-resource.ts#L51)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L51)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:51](https://g
 
 > **links**: `any`[]
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/user-resource.ts#L52)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L52)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:52](https://g
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/85cde3ce59cd3d29230c98040a3f53525e808725/packages/framework/esm-api/src/types/user-resource.ts#L50)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/user-resource.ts#L50)

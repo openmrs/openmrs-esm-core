@@ -4,7 +4,7 @@
 
 > **displayName**(`patient`): `string`
 
-Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:15
+Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:14
 
 ## Parameters
 
