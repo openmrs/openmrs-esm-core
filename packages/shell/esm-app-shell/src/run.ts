@@ -25,7 +25,7 @@ import {
   renderLoadingSpinner,
   renderSnackbars,
   renderToasts,
-  renderWorkspacesAndActionMenu,
+  renderWorkspaceWindowsAndMenu,
   restBaseUrl,
   setupApiModule,
   setupHistory,
@@ -293,7 +293,7 @@ function showToasts() {
 }
 
 function showWorkspacesAndActionMenu() {
-  renderWorkspacesAndActionMenu(document.querySelector('#omrs-workspace-container'));
+  renderWorkspaceWindowsAndMenu(document.querySelector('#omrs-workspace-container'));
 }
 
 function showSnackbars() {

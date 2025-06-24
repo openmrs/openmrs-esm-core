@@ -24,7 +24,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
     return () => window.removeEventListener('resize', handleKeyboardVisibilityChange);
   }, [initialHeight]);
 
-  const extensionSlotName = `action-menu-${workspaceGroup}-items-slot`; // TODO: refactor into function;
+  const extensionSlotName = `action-menu-${workspaceGroup}-items-slot`; // TODO: refactor into function
 
   return (
     <aside
