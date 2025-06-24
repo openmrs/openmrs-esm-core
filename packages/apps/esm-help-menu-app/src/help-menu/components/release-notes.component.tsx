@@ -10,7 +10,7 @@ const ReleaseNotes = () => {
   return (
     <Link
       className={styles.helpButton}
-      href="https://openmrs.atlassian.net/wiki/spaces/docs/pages/26249097/Releases"
+      href="https://openmrs.atlassian.net/wiki/spaces/docs/pages/203030542/OpenMRS+RefApp+Release+Notes"
       rel="noopener noreferrer"
       renderIcon={ArrowUpRight}
       target="_blank"
