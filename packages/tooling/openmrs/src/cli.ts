@@ -414,4 +414,4 @@ yargs
   )
   .help()
   .demandCommand()
-  .strict().argv;
+  .strict();

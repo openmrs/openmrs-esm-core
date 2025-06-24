@@ -281,7 +281,10 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
       if (state.loaded && state.config) {
         const config = omit(['Display conditions', 'Translation overrides'], state.config);
         resolve(config as T);
-        unsubscribe && unsubscribe();
+
+        if (unsubscribe) {
+          unsubscribe();
+        }
       }
     }
     update(store.getState());
@@ -302,7 +305,10 @@ export function getTranslationOverrides(
         if (state.translationOverridesLoaded && state.config) {
           const translationOverrides = state.config['Translation overrides'] ?? {};
           resolve(translationOverrides);
-          unsubscribe && unsubscribe();
+
+          if (unsubscribe) {
+            unsubscribe();
+          }
         }
       }
       update(configStore.getState());
@@ -318,7 +324,10 @@ export function getTranslationOverrides(
           if (state.loaded && state.config) {
             const translationOverrides = state.config['Translation overrides'] ?? {};
             resolve(translationOverrides);
-            unsubscribe && unsubscribe();
+
+            if (unsubscribe) {
+              unsubscribe();
+            }
           }
         }
         update(configStore.getState());
@@ -715,6 +724,7 @@ function runAllValidatorsInConfigTree(schema: ConfigSchema, config: ConfigObject
  */
 function checkType(keyPath: string, _type: Type | undefined, value: any) {
   if (_type) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const validator: Record<string, Function> = {
       Array: isArray,
       Boolean: isBoolean,
@@ -735,6 +745,7 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
  * Runs validators, logging errors.
  * @returns true if all pass, false otherwise.
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function runValidators(keyPath: string, validators: Array<Function> | undefined, value: any) {
   let returnValue = true;
   if (validators) {
@@ -811,7 +822,7 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   return config;
 };
 
-function hasObjectSchema(elementsSchema: Object | undefined): elementsSchema is ConfigSchema {
+function hasObjectSchema(elementsSchema: unknown): elementsSchema is ConfigSchema {
   return (
     !!elementsSchema && Object.keys(elementsSchema).filter((e) => !['_default', '_validators'].includes(e)).length > 0
   );

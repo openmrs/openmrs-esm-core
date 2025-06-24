@@ -34,7 +34,9 @@ import { shallowEqual } from '@openmrs/esm-utils';
  *   the namespace value.
  * @returns A function which can be used to update the state associated with the namespace
  */
-export function useDefineAppContext<T extends {}>(namespace: string, value?: T) {
+export function useDefineAppContext<
+  T extends Record<string | symbol | number, unknown> = Record<string | symbol | number, any>,
+>(namespace: string, value?: T) {
   const previousValue = useRef<T>(value ?? ({} as T));
   const updateFunction = useRef((update: (state: T) => T) => updateContext<T>(namespace, update));
 

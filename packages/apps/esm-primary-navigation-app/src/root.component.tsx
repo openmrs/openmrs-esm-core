@@ -3,9 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar/navbar.component';
 import styles from './root.scss';
 
-export interface RootProps {}
-
-const Root: React.FC<RootProps> = () => {
+const Root: React.FC = () => {
   return (
     <BrowserRouter basename={window.getOpenmrsSpaBase()}>
       <Routes>

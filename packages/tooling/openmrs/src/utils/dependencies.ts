@@ -3,6 +3,7 @@ import { existsSync, readFileSync, statSync } from 'node:fs';
 import { inc } from 'semver';
 
 export function getSharedDependencies() {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require('@openmrs/esm-app-shell/dependencies.json');
 }
 
