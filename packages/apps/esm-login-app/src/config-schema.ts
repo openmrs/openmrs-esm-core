@@ -13,13 +13,13 @@ export const configSchema = {
     loginUrl: {
       _type: Type.String,
       _default: '${openmrsSpaBase}/login',
-      _description: 'The URL to use for an OAuth2 login.',
+      _description: 'The URL to use to login. This is only needed if you are using OAuth2.',
       _validators: [validators.isUrl],
     },
     logoutUrl: {
       _type: Type.String,
       _default: '${openmrsSpaBase}/logout',
-      _description: 'The URL to use for an OAuth2 logout.',
+      _description: 'The URL to use to login. This is only needed if you are using OAuth2.',
       _validators: [validators.isUrl],
     },
   },
