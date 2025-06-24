@@ -1,29 +1,41 @@
-[O3 Framework](../API.md) / ExtensionData
+[@openmrs/esm-framework](../API.md) / ExtensionData
 
 # Interface: ExtensionData
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L1)
+## Table of contents
+
+### Properties
+
+- [extensionId](ExtensionData.md#extensionid)
+- [extensionSlotModuleName](ExtensionData.md#extensionslotmodulename)
+- [extensionSlotName](ExtensionData.md#extensionslotname)
 
 ## Properties
 
 ### extensionId
 
-> **extensionId**: `string`
+• **extensionId**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L4)
+#### Defined in
 
-***
+[packages/framework/esm-extensions/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L4)
+
+___
 
 ### extensionSlotModuleName
 
-> **extensionSlotModuleName**: `string`
+• **extensionSlotModuleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L3)
+#### Defined in
 
-***
+[packages/framework/esm-extensions/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L3)
+
+___
 
 ### extensionSlotName
 
-> **extensionSlotName**: `string`
+• **extensionSlotName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L2)
+#### Defined in
+
+[packages/framework/esm-extensions/src/types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L2)

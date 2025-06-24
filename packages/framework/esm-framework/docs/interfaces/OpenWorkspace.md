@@ -1,174 +1,210 @@
-[O3 Framework](../API.md) / OpenWorkspace
+[@openmrs/esm-framework](../API.md) / OpenWorkspace
 
 # Interface: OpenWorkspace
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L113)
+## Hierarchy
 
-The default parameters received by all workspaces
+- `WorkspaceRegistration`
 
-## Extends
+- [`DefaultWorkspaceProps`](DefaultWorkspaceProps.md)
 
-- `WorkspaceRegistration`.[`DefaultWorkspaceProps`](DefaultWorkspaceProps.md)
+  ↳ **`OpenWorkspace`**
 
-## Properties
+## Table of contents
 
-### additionalProps
+### Other Properties
 
-> **additionalProps**: `object`
+- [canHide](OpenWorkspace.md#canhide)
+- [canMaximize](OpenWorkspace.md#canmaximize)
+- [groups](OpenWorkspace.md#groups)
+- [moduleName](OpenWorkspace.md#modulename)
+- [name](OpenWorkspace.md#name)
+- [preferredWindowSize](OpenWorkspace.md#preferredwindowsize)
+- [title](OpenWorkspace.md#title)
+- [titleNode](OpenWorkspace.md#titlenode)
+- [type](OpenWorkspace.md#type)
+- [width](OpenWorkspace.md#width)
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L114)
+### Workspace Properties
 
-***
+- [additionalProps](OpenWorkspace.md#additionalprops)
+- [currentWorkspaceGroup](OpenWorkspace.md#currentworkspacegroup)
+
+### Methods
+
+- [closeWorkspace](OpenWorkspace.md#closeworkspace)
+- [closeWorkspaceWithSavedChanges](OpenWorkspace.md#closeworkspacewithsavedchanges)
+- [load](OpenWorkspace.md#load)
+- [promptBeforeClosing](OpenWorkspace.md#promptbeforeclosing)
+- [setTitle](OpenWorkspace.md#settitle)
+
+## Other Properties
 
 ### canHide
 
-> **canHide**: `boolean`
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:10
+• **canHide**: `boolean`
 
 #### Inherited from
 
-`WorkspaceRegistration.canHide`
+WorkspaceRegistration.canHide
 
-***
+#### Defined in
+
+packages/framework/esm-extensions/dist/workspaces.d.ts:10
+
+___
 
 ### canMaximize
 
-> **canMaximize**: `boolean`
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:11
+• **canMaximize**: `boolean`
 
 #### Inherited from
 
-`WorkspaceRegistration.canMaximize`
+WorkspaceRegistration.canMaximize
 
-***
+#### Defined in
 
-### currentWorkspaceGroup?
+packages/framework/esm-extensions/dist/workspaces.d.ts:11
 
-> `optional` **currentWorkspaceGroup**: `string`
-
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L115)
-
-***
+___
 
 ### groups
 
-> **groups**: `string`[]
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:18
+• **groups**: `string`[]
 
 #### Inherited from
 
-`WorkspaceRegistration.groups`
+WorkspaceRegistration.groups
 
-***
+#### Defined in
 
-### load()
+packages/framework/esm-extensions/dist/workspaces.d.ts:18
 
-> **load**: () => `Promise`\<`object` & `LifeCycles`\>
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:14
-
-#### Returns
-
-`Promise`\<`object` & `LifeCycles`\>
-
-#### Inherited from
-
-`WorkspaceRegistration.load`
-
-***
+___
 
 ### moduleName
 
-> **moduleName**: `string`
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:17
+• **moduleName**: `string`
 
 #### Inherited from
 
-`WorkspaceRegistration.moduleName`
+WorkspaceRegistration.moduleName
 
-***
+#### Defined in
+
+packages/framework/esm-extensions/dist/workspaces.d.ts:17
+
+___
 
 ### name
 
-> **name**: `string`
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:6
+• **name**: `string`
 
 #### Inherited from
 
-`WorkspaceRegistration.name`
+WorkspaceRegistration.name
 
-***
+#### Defined in
+
+packages/framework/esm-extensions/dist/workspaces.d.ts:6
+
+___
 
 ### preferredWindowSize
 
-> **preferredWindowSize**: [`WorkspaceWindowState`](../type-aliases/WorkspaceWindowState.md)
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:13
+• **preferredWindowSize**: [`WorkspaceWindowState`](../API.md#workspacewindowstate)
 
 #### Inherited from
 
-`WorkspaceRegistration.preferredWindowSize`
+WorkspaceRegistration.preferredWindowSize
 
-***
+#### Defined in
+
+packages/framework/esm-extensions/dist/workspaces.d.ts:13
+
+___
 
 ### title
 
-> **title**: `string`
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:7
+• **title**: `string`
 
 #### Inherited from
 
-`WorkspaceRegistration.title`
+WorkspaceRegistration.title
 
-***
+#### Defined in
 
-### titleNode?
+packages/framework/esm-extensions/dist/workspaces.d.ts:7
 
-> `optional` **titleNode**: `ReactNode`
+___
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:8
+### titleNode
+
+• `Optional` **titleNode**: `ReactNode`
 
 #### Inherited from
 
-`WorkspaceRegistration.titleNode`
+WorkspaceRegistration.titleNode
 
-***
+#### Defined in
+
+packages/framework/esm-extensions/dist/workspaces.d.ts:8
+
+___
 
 ### type
 
-> **type**: `string`
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:9
+• **type**: `string`
 
 #### Inherited from
 
-`WorkspaceRegistration.type`
+WorkspaceRegistration.type
 
-***
+#### Defined in
+
+packages/framework/esm-extensions/dist/workspaces.d.ts:9
+
+___
 
 ### width
 
-> **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:12
+• **width**: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``
 
 #### Inherited from
 
-`WorkspaceRegistration.width`
+WorkspaceRegistration.width
+
+#### Defined in
+
+packages/framework/esm-extensions/dist/workspaces.d.ts:12
+
+___
+
+## Workspace Properties
+
+### additionalProps
+
+• **additionalProps**: `object`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L114)
+
+___
+
+### currentWorkspaceGroup
+
+• `Optional` **currentWorkspaceGroup**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L115)
 
 ## Methods
 
-### closeWorkspace()
+### closeWorkspace
 
-> **closeWorkspace**(`closeWorkspaceOptions?`): `void`
-
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L49)
+▸ **closeWorkspace**(`closeWorkspaceOptions?`): `void`
 
 Call this function to close the workspace. This function will prompt the user
 if there are any unsaved changes to workspace.
@@ -178,9 +214,9 @@ closed, given the user forcefully closes the workspace.
 
 #### Parameters
 
-##### closeWorkspaceOptions?
-
-[`CloseWorkspaceOptions`](CloseWorkspaceOptions.md)
+| Name | Type |
+| :------ | :------ |
+| `closeWorkspaceOptions?` | [`CloseWorkspaceOptions`](CloseWorkspaceOptions.md) |
 
 #### Returns
 
@@ -188,24 +224,26 @@ closed, given the user forcefully closes the workspace.
 
 #### Inherited from
 
-[`DefaultWorkspaceProps`](DefaultWorkspaceProps.md).[`closeWorkspace`](DefaultWorkspaceProps.md#closeworkspace)
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[closeWorkspace](DefaultWorkspaceProps.md#closeworkspace)
 
-***
+#### Defined in
 
-### closeWorkspaceWithSavedChanges()
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L49)
 
-> **closeWorkspaceWithSavedChanges**(`closeWorkspaceOptions?`): `void`
+___
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L59)
+### closeWorkspaceWithSavedChanges
+
+▸ **closeWorkspaceWithSavedChanges**(`closeWorkspaceOptions?`): `void`
 
 Call this function to close the workspace after the form is saved. This function
 will directly close the workspace without any prompt
 
 #### Parameters
 
-##### closeWorkspaceOptions?
-
-[`CloseWorkspaceOptions`](CloseWorkspaceOptions.md)
+| Name | Type |
+| :------ | :------ |
+| `closeWorkspaceOptions?` | [`CloseWorkspaceOptions`](CloseWorkspaceOptions.md) |
 
 #### Returns
 
@@ -213,24 +251,44 @@ will directly close the workspace without any prompt
 
 #### Inherited from
 
-[`DefaultWorkspaceProps`](DefaultWorkspaceProps.md).[`closeWorkspaceWithSavedChanges`](DefaultWorkspaceProps.md#closeworkspacewithsavedchanges)
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[closeWorkspaceWithSavedChanges](DefaultWorkspaceProps.md#closeworkspacewithsavedchanges)
 
-***
+#### Defined in
 
-### promptBeforeClosing()
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L59)
 
-> **promptBeforeClosing**(`testFcn`): `void`
+___
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L54)
+### load
+
+▸ **load**(): `Promise`<{ `default?`: `LifeCycles`<{}\>  } & `LifeCycles`<{}\>\>
+
+#### Returns
+
+`Promise`<{ `default?`: `LifeCycles`<{}\>  } & `LifeCycles`<{}\>\>
+
+#### Inherited from
+
+WorkspaceRegistration.load
+
+#### Defined in
+
+packages/framework/esm-extensions/dist/workspaces.d.ts:14
+
+___
+
+### promptBeforeClosing
+
+▸ **promptBeforeClosing**(`testFcn`): `void`
 
 Call this with a no-args function that returns true if the user should be prompted before
 this workspace is closed; e.g. if there is unsaved data.
 
 #### Parameters
 
-##### testFcn
-
-() => `boolean`
+| Name | Type |
+| :------ | :------ |
+| `testFcn` | () => `boolean` |
 
 #### Returns
 
@@ -238,15 +296,17 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Inherited from
 
-[`DefaultWorkspaceProps`](DefaultWorkspaceProps.md).[`promptBeforeClosing`](DefaultWorkspaceProps.md#promptbeforeclosing)
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[promptBeforeClosing](DefaultWorkspaceProps.md#promptbeforeclosing)
 
-***
+#### Defined in
 
-### setTitle()
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L54)
 
-> **setTitle**(`title`, `titleNode?`): `void`
+___
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L74)
+### setTitle
+
+▸ **setTitle**(`title`, `titleNode?`): `void`
 
 Use this to set the workspace title if it needs to be set dynamically.
 
@@ -257,20 +317,10 @@ title needs to be set dynamically.
 
 #### Parameters
 
-##### title
-
-`string`
-
-The title to set. If using titleNode, set this to a human-readable string
-       which will identify the workspace in notifications and other places.
-
-##### titleNode?
-
-`ReactNode`
-
-A React object to put in the workspace header in place of the title. This
-       is useful for displaying custom elements in the header. Note that custom header
-       elements can also be attached to the workspace header extension slots.
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `title` | `string` | The title to set. If using titleNode, set this to a human-readable string        which will identify the workspace in notifications and other places. |
+| `titleNode?` | `ReactNode` | A React object to put in the workspace header in place of the title. This        is useful for displaying custom elements in the header. Note that custom header        elements can also be attached to the workspace header extension slots. |
 
 #### Returns
 
@@ -278,4 +328,8 @@ A React object to put in the workspace header in place of the title. This
 
 #### Inherited from
 
-[`DefaultWorkspaceProps`](DefaultWorkspaceProps.md).[`setTitle`](DefaultWorkspaceProps.md#settitle)
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[setTitle](DefaultWorkspaceProps.md#settitle)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L74)

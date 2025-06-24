@@ -1,113 +1,49 @@
-[O3 Framework](../API.md) / FHIRResource
+[@openmrs/esm-framework](../API.md) / FHIRResource
 
 # Interface: FHIRResource
 
-Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L1)
+## Table of contents
+
+### Properties
+
+- [resource](FHIRResource.md#resource)
 
 ## Properties
 
 ### resource
 
-> **resource**: `object`
+• **resource**: `Object`
 
-Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L2)
+#### Type declaration
 
-#### code
+| Name | Type |
+| :------ | :------ |
+| `code` | { `coding`: [`FHIRCode`](FHIRCode.md)[]  } |
+| `code.coding` | [`FHIRCode`](FHIRCode.md)[] |
+| `effectiveDateTime` | `Date` |
+| `encounter` | { `reference`: `string` ; `type`: `string`  } |
+| `encounter.reference` | `string` |
+| `encounter.type` | `string` |
+| `id` | `string` |
+| `issued` | `Date` |
+| `referenceRange` | `any` |
+| `resourceType` | `string` |
+| `status` | `string` |
+| `subject` | { `display`: `string` ; `identifier`: { `id`: `string` ; `system`: `string` ; `use`: `string` ; `value`: `string`  } ; `reference`: `string` ; `type`: `string`  } |
+| `subject.display` | `string` |
+| `subject.identifier` | { `id`: `string` ; `system`: `string` ; `use`: `string` ; `value`: `string`  } |
+| `subject.identifier.id` | `string` |
+| `subject.identifier.system` | `string` |
+| `subject.identifier.use` | `string` |
+| `subject.identifier.value` | `string` |
+| `subject.reference` | `string` |
+| `subject.type` | `string` |
+| `valueCodeableConcept` | { `coding`: [`FHIRCode`](FHIRCode.md)[]  } |
+| `valueCodeableConcept.coding` | [`FHIRCode`](FHIRCode.md)[] |
+| `valueQuantity` | { `value`: `number`  } |
+| `valueQuantity.value` | `number` |
+| `valueString` | `string` |
 
-> **code**: `object`
+#### Defined in
 
-##### code.coding
-
-> **coding**: [`FHIRCode`](FHIRCode.md)[]
-
-#### effectiveDateTime
-
-> **effectiveDateTime**: `Date`
-
-#### encounter
-
-> **encounter**: `object`
-
-##### encounter.reference
-
-> **reference**: `string`
-
-##### encounter.type
-
-> **type**: `string`
-
-#### id
-
-> **id**: `string`
-
-#### issued
-
-> **issued**: `Date`
-
-#### referenceRange
-
-> **referenceRange**: `any`
-
-#### resourceType
-
-> **resourceType**: `string`
-
-#### status
-
-> **status**: `string`
-
-#### subject
-
-> **subject**: `object`
-
-##### subject.display
-
-> **display**: `string`
-
-##### subject.identifier
-
-> **identifier**: `object`
-
-##### subject.identifier.id
-
-> **id**: `string`
-
-##### subject.identifier.system
-
-> **system**: `string`
-
-##### subject.identifier.use
-
-> **use**: `string`
-
-##### subject.identifier.value
-
-> **value**: `string`
-
-##### subject.reference
-
-> **reference**: `string`
-
-##### subject.type
-
-> **type**: `string`
-
-#### valueCodeableConcept
-
-> **valueCodeableConcept**: `object`
-
-##### valueCodeableConcept.coding
-
-> **coding**: [`FHIRCode`](FHIRCode.md)[]
-
-#### valueQuantity
-
-> **valueQuantity**: `object`
-
-##### valueQuantity.value
-
-> **value**: `number`
-
-#### valueString
-
-> **valueString**: `string`
+[packages/framework/esm-emr-api/src/types/fhir-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L2)

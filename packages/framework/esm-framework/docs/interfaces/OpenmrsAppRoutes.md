@@ -1,103 +1,133 @@
-[O3 Framework](../API.md) / OpenmrsAppRoutes
+[@openmrs/esm-framework](../API.md) / OpenmrsAppRoutes
 
 # Interface: OpenmrsAppRoutes
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:356
-
 This interface describes the format of the routes provided by an app
+
+## Table of contents
+
+### Properties
+
+- [backendDependencies](OpenmrsAppRoutes.md#backenddependencies)
+- [extensions](OpenmrsAppRoutes.md#extensions)
+- [featureFlags](OpenmrsAppRoutes.md#featureflags)
+- [modals](OpenmrsAppRoutes.md#modals)
+- [optionalBackendDependencies](OpenmrsAppRoutes.md#optionalbackenddependencies)
+- [pages](OpenmrsAppRoutes.md#pages)
+- [version](OpenmrsAppRoutes.md#version)
+- [workspaceGroups](OpenmrsAppRoutes.md#workspacegroups)
+- [workspaces](OpenmrsAppRoutes.md#workspaces)
 
 ## Properties
 
-### backendDependencies?
+### backendDependencies
 
-> `optional` **backendDependencies**: `Record`\<`string`, `string`\>
-
-Defined in: packages/framework/esm-globals/dist/types.d.ts:360
+• `Optional` **backendDependencies**: `Record`<`string`, `string`\>
 
 A list of backend modules necessary for this frontend module and the corresponding required versions.
 
-***
+#### Defined in
 
-### extensions?
+packages/framework/esm-globals/dist/types.d.ts:360
 
-> `optional` **extensions**: [`ExtensionDefinition`](../type-aliases/ExtensionDefinition.md)[]
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:374
+### extensions
+
+• `Optional` **extensions**: [`ExtensionDefinition`](../API.md#extensiondefinition)[]
 
 An array of all extensions supported by this frontend module. Extensions can be mounted in extension slots, either via declarations in this file or configuration.
 
-***
+#### Defined in
 
-### featureFlags?
+packages/framework/esm-globals/dist/types.d.ts:374
 
-> `optional` **featureFlags**: [`FeatureFlagDefinition`](FeatureFlagDefinition.md)[]
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:376
+### featureFlags
+
+• `Optional` **featureFlags**: [`FeatureFlagDefinition`](FeatureFlagDefinition.md)[]
 
 An array of all feature flags for any beta-stage features this module provides.
 
-***
+#### Defined in
 
-### modals?
+packages/framework/esm-globals/dist/types.d.ts:376
 
-> `optional` **modals**: [`ModalDefinition`](../type-aliases/ModalDefinition.md)[]
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:378
+### modals
+
+• `Optional` **modals**: [`ModalDefinition`](../API.md#modaldefinition)[]
 
 An array of all modals supported by this frontend module. Modals can be launched by name.
 
-***
+#### Defined in
 
-### optionalBackendDependencies?
+packages/framework/esm-globals/dist/types.d.ts:378
 
-> `optional` **optionalBackendDependencies**: `object`
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:362
+### optionalBackendDependencies
+
+• `Optional` **optionalBackendDependencies**: `Object`
 
 A list of backend modules that may enable optional functionality in this frontend module if available and the corresponding required versions.
 
-#### Index Signature
+#### Index signature
 
-\[`key`: `string`\]: `string` \| \{ `feature?`: [`FeatureFlagDefinition`](FeatureFlagDefinition.md); `version`: `string`; \}
+▪ [key: `string`]: `string` \| { `feature?`: [`FeatureFlagDefinition`](FeatureFlagDefinition.md) ; `version`: `string`  }
 
 The name of the backend dependency and either the required version or an object describing the required version
 
-***
+#### Defined in
 
-### pages?
+packages/framework/esm-globals/dist/types.d.ts:362
 
-> `optional` **pages**: [`PageDefinition`](../type-aliases/PageDefinition.md)[]
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:372
+### pages
+
+• `Optional` **pages**: [`PageDefinition`](../API.md#pagedefinition)[]
 
 An array of all pages supported by this frontend module. Pages are automatically mounted based on a route.
 
-***
+#### Defined in
 
-### version?
+packages/framework/esm-globals/dist/types.d.ts:372
 
-> `optional` **version**: `string`
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:358
+### version
+
+• `Optional` **version**: `string`
 
 The version of this frontend module.
 
-***
+#### Defined in
 
-### workspaceGroups?
+packages/framework/esm-globals/dist/types.d.ts:358
 
-> `optional` **workspaceGroups**: [`WorkspaceGroupDefinition`](WorkspaceGroupDefinition.md)[]
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:382
+### workspaceGroups
+
+• `Optional` **workspaceGroups**: [`WorkspaceGroupDefinition`](WorkspaceGroupDefinition.md)[]
 
 An array of all workspace groups supported by this frontend module.
 
-***
+#### Defined in
 
-### workspaces?
+packages/framework/esm-globals/dist/types.d.ts:382
 
-> `optional` **workspaces**: [`WorkspaceDefinition`](../type-aliases/WorkspaceDefinition.md)[]
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:380
+### workspaces
+
+• `Optional` **workspaces**: [`WorkspaceDefinition`](../API.md#workspacedefinition)[]
 
 An array of all workspaces supported by this frontend module. Workspaces can be launched by name.
+
+#### Defined in
+
+packages/framework/esm-globals/dist/types.d.ts:380

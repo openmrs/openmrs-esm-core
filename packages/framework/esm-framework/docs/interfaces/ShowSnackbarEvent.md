@@ -1,73 +1,103 @@
-[O3 Framework](../API.md) / ShowSnackbarEvent
+[@openmrs/esm-framework](../API.md) / ShowSnackbarEvent
 
 # Interface: ShowSnackbarEvent
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:40
+## Table of contents
+
+### Properties
+
+- [actionButtonLabel](ShowSnackbarEvent.md#actionbuttonlabel)
+- [isLowContrast](ShowSnackbarEvent.md#islowcontrast)
+- [kind](ShowSnackbarEvent.md#kind)
+- [progressActionLabel](ShowSnackbarEvent.md#progressactionlabel)
+- [subtitle](ShowSnackbarEvent.md#subtitle)
+- [timeoutInMs](ShowSnackbarEvent.md#timeoutinms)
+- [title](ShowSnackbarEvent.md#title)
+
+### Methods
+
+- [onActionButtonClick](ShowSnackbarEvent.md#onactionbuttonclick)
 
 ## Properties
 
-### actionButtonLabel?
+### actionButtonLabel
 
-> `optional` **actionButtonLabel**: `any`
+• `Optional` **actionButtonLabel**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:44
+#### Defined in
 
-***
+packages/framework/esm-globals/dist/events.d.ts:44
 
-### isLowContrast?
+___
 
-> `optional` **isLowContrast**: `boolean`
+### isLowContrast
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:47
+• `Optional` **isLowContrast**: `boolean`
 
-***
+#### Defined in
 
-### kind?
+packages/framework/esm-globals/dist/events.d.ts:47
 
-> `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
+___
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:42
+### kind
 
-***
+• `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
 
-### onActionButtonClick()?
+#### Defined in
 
-> `optional` **onActionButtonClick**: () => `void`
+packages/framework/esm-globals/dist/events.d.ts:42
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:45
+___
+
+### progressActionLabel
+
+• `Optional` **progressActionLabel**: `string`
+
+#### Defined in
+
+packages/framework/esm-globals/dist/events.d.ts:46
+
+___
+
+### subtitle
+
+• `Optional` **subtitle**: `any`
+
+#### Defined in
+
+packages/framework/esm-globals/dist/events.d.ts:41
+
+___
+
+### timeoutInMs
+
+• `Optional` **timeoutInMs**: `number`
+
+#### Defined in
+
+packages/framework/esm-globals/dist/events.d.ts:48
+
+___
+
+### title
+
+• **title**: `string`
+
+#### Defined in
+
+packages/framework/esm-globals/dist/events.d.ts:43
+
+## Methods
+
+### onActionButtonClick
+
+▸ `Optional` **onActionButtonClick**(): `void`
 
 #### Returns
 
 `void`
 
-***
+#### Defined in
 
-### progressActionLabel?
-
-> `optional` **progressActionLabel**: `string`
-
-Defined in: packages/framework/esm-globals/dist/events.d.ts:46
-
-***
-
-### subtitle?
-
-> `optional` **subtitle**: `any`
-
-Defined in: packages/framework/esm-globals/dist/events.d.ts:41
-
-***
-
-### timeoutInMs?
-
-> `optional` **timeoutInMs**: `number`
-
-Defined in: packages/framework/esm-globals/dist/events.d.ts:48
-
-***
-
-### title
-
-> **title**: `string`
-
-Defined in: packages/framework/esm-globals/dist/events.d.ts:43
+packages/framework/esm-globals/dist/events.d.ts:45

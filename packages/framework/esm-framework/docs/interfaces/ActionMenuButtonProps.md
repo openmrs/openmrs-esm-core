@@ -1,67 +1,91 @@
-[O3 Framework](../API.md) / ActionMenuButtonProps
+[@openmrs/esm-framework](../API.md) / ActionMenuButtonProps
 
 # Interface: ActionMenuButtonProps
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L29)
+## Table of contents
 
-## Properties
+### Workspace Properties
 
-### getIcon()
+- [iconDescription](ActionMenuButtonProps.md#icondescription)
+- [label](ActionMenuButtonProps.md#label)
+- [tagContent](ActionMenuButtonProps.md#tagcontent)
+- [type](ActionMenuButtonProps.md#type)
 
-> **getIcon**: (`props`) => `Element`
+### Workspace Methods
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L30)
+- [getIcon](ActionMenuButtonProps.md#geticon)
+- [handler](ActionMenuButtonProps.md#handler)
+
+## Workspace Properties
+
+### iconDescription
+
+• **iconDescription**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L32)
+
+___
+
+### label
+
+• **label**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L31)
+
+___
+
+### tagContent
+
+• `Optional` **tagContent**: `ReactNode`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L35)
+
+___
+
+### type
+
+• **type**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L34)
+
+## Workspace Methods
+
+### getIcon
+
+▸ **getIcon**(`props`): `Element`
 
 #### Parameters
 
-##### props
-
-`object`
+| Name | Type |
+| :------ | :------ |
+| `props` | `object` |
 
 #### Returns
 
 `Element`
 
-***
+#### Defined in
 
-### handler()
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L30)
 
-> **handler**: () => `void`
+___
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L33)
+### handler
+
+▸ **handler**(): `void`
 
 #### Returns
 
 `void`
 
-***
+#### Defined in
 
-### iconDescription
-
-> **iconDescription**: `string`
-
-Defined in: [packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L32)
-
-***
-
-### label
-
-> **label**: `string`
-
-Defined in: [packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L31)
-
-***
-
-### tagContent?
-
-> `optional` **tagContent**: `ReactNode`
-
-Defined in: [packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L35)
-
-***
-
-### type
-
-> **type**: `string`
-
-Defined in: [packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:34](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L34)
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L33)

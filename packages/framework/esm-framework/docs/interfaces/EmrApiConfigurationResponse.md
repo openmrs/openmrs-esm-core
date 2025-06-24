@@ -1,489 +1,596 @@
-[O3 Framework](../API.md) / EmrApiConfigurationResponse
+[@openmrs/esm-framework](../API.md) / EmrApiConfigurationResponse
 
 # Interface: EmrApiConfigurationResponse
-
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L18)
 
 Add other properties as needed. Maintain alphabetical order. Keep in lockstep with the customRepresentation below.
 
 For all available configuration constants and global property keys, see:
 
-## See
+**`see`** https://github.com/openmrs/openmrs-module-emrapi/blob/master/api/src/main/java/org/openmrs/module/emrapi/EmrApiConstants.java
+
+## Table of contents
 
-https://github.com/openmrs/openmrs-module-emrapi/blob/master/api/src/main/java/org/openmrs/module/emrapi/EmrApiConstants.java
+### API Properties
 
-## Properties
+- [admissionDecisionConcept](EmrApiConfigurationResponse.md#admissiondecisionconcept)
+- [admissionEncounterType](EmrApiConfigurationResponse.md#admissionencountertype)
+- [admissionForm](EmrApiConfigurationResponse.md#admissionform)
+- [atFacilityVisitType](EmrApiConfigurationResponse.md#atfacilityvisittype)
+- [bedAssignmentEncounterType](EmrApiConfigurationResponse.md#bedassignmentencountertype)
+- [cancelADTRequestEncounterType](EmrApiConfigurationResponse.md#canceladtrequestencountertype)
+- [checkInClerkEncounterRole](EmrApiConfigurationResponse.md#checkinclerkencounterrole)
+- [checkInEncounterType](EmrApiConfigurationResponse.md#checkinencountertype)
+- [clinicianEncounterRole](EmrApiConfigurationResponse.md#clinicianencounterrole)
+- [conceptSourcesForDiagnosisSearch](EmrApiConfigurationResponse.md#conceptsourcesfordiagnosissearch)
+- [consultEncounterType](EmrApiConfigurationResponse.md#consultencountertype)
+- [consultFreeTextCommentsConcept](EmrApiConfigurationResponse.md#consultfreetextcommentsconcept)
+- [denyAdmissionConcept](EmrApiConfigurationResponse.md#denyadmissionconcept)
+- [diagnosisMetadata](EmrApiConfigurationResponse.md#diagnosismetadata)
+- [diagnosisSets](EmrApiConfigurationResponse.md#diagnosissets)
+- [dischargeForm](EmrApiConfigurationResponse.md#dischargeform)
+- [dispositionDescriptor](EmrApiConfigurationResponse.md#dispositiondescriptor)
+- [dispositions](EmrApiConfigurationResponse.md#dispositions)
+- [emrApiConceptSource](EmrApiConfigurationResponse.md#emrapiconceptsource)
+- [exitFromInpatientEncounterType](EmrApiConfigurationResponse.md#exitfrominpatientencountertype)
+- [extraPatientIdentifierTypes](EmrApiConfigurationResponse.md#extrapatientidentifiertypes)
+- [fullPrivilegeLevel](EmrApiConfigurationResponse.md#fullprivilegelevel)
+- [highPrivilegeLevel](EmrApiConfigurationResponse.md#highprivilegelevel)
+- [identifierTypesToSearch](EmrApiConfigurationResponse.md#identifiertypestosearch)
+- [inpatientNoteEncounterType](EmrApiConfigurationResponse.md#inpatientnoteencountertype)
+- [lastViewedPatientSizeLimit](EmrApiConfigurationResponse.md#lastviewedpatientsizelimit)
+- [metadataSourceName](EmrApiConfigurationResponse.md#metadatasourcename)
+- [motherChildRelationshipType](EmrApiConfigurationResponse.md#motherchildrelationshiptype)
+- [narrowerThanConceptMapType](EmrApiConfigurationResponse.md#narrowerthanconceptmaptype)
+- [nonDiagnosisConceptSets](EmrApiConfigurationResponse.md#nondiagnosisconceptsets)
+- [orderingProviderEncounterRole](EmrApiConfigurationResponse.md#orderingproviderencounterrole)
+- [patientDiedConcept](EmrApiConfigurationResponse.md#patientdiedconcept)
+- [personImageDirectory](EmrApiConfigurationResponse.md#personimagedirectory)
+- [primaryIdentifierType](EmrApiConfigurationResponse.md#primaryidentifiertype)
+- [sameAsConceptMapType](EmrApiConfigurationResponse.md#sameasconceptmaptype)
+- [supportsAdmissionLocationTag](EmrApiConfigurationResponse.md#supportsadmissionlocationtag)
+- [supportsLoginLocationTag](EmrApiConfigurationResponse.md#supportsloginlocationtag)
+- [supportsTransferLocationTag](EmrApiConfigurationResponse.md#supportstransferlocationtag)
+- [supportsVisitsLocationTag](EmrApiConfigurationResponse.md#supportsvisitslocationtag)
+- [suppressedDiagnosisConcepts](EmrApiConfigurationResponse.md#suppresseddiagnosisconcepts)
+- [telephoneAttributeType](EmrApiConfigurationResponse.md#telephoneattributetype)
+- [testPatientPersonAttributeType](EmrApiConfigurationResponse.md#testpatientpersonattributetype)
+- [transferForm](EmrApiConfigurationResponse.md#transferform)
+- [transferRequestEncounterType](EmrApiConfigurationResponse.md#transferrequestencountertype)
+- [transferWithinHospitalEncounterType](EmrApiConfigurationResponse.md#transferwithinhospitalencountertype)
+- [unknownCauseOfDeathConcept](EmrApiConfigurationResponse.md#unknowncauseofdeathconcept)
+- [unknownLocation](EmrApiConfigurationResponse.md#unknownlocation)
+- [unknownPatientPersonAttributeType](EmrApiConfigurationResponse.md#unknownpatientpersonattributetype)
+- [unknownProvider](EmrApiConfigurationResponse.md#unknownprovider)
+- [visitAssignmentHandlerAdjustEncounterTimeOfDayIfNecessary](EmrApiConfigurationResponse.md#visitassignmenthandleradjustencountertimeofdayifnecessary)
+- [visitExpireHours](EmrApiConfigurationResponse.md#visitexpirehours)
+- [visitNoteEncounterType](EmrApiConfigurationResponse.md#visitnoteencountertype)
 
-### admissionDecisionConcept?
+## API Properties
 
-> `optional` **admissionDecisionConcept**: `OpenmrsResource`
+### admissionDecisionConcept
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L19)
+• `Optional` **admissionDecisionConcept**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### admissionEncounterType?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L19)
 
-> `optional` **admissionEncounterType**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L20)
+### admissionEncounterType
 
-***
+• `Optional` **admissionEncounterType**: `OpenmrsResource`
 
-### admissionForm?
+#### Defined in
 
-> `optional` **admissionForm**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L20)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L21)
+___
 
-***
+### admissionForm
 
-### atFacilityVisitType?
+• `Optional` **admissionForm**: `OpenmrsResource`
 
-> `optional` **atFacilityVisitType**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L22)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L21)
 
-***
+___
 
-### bedAssignmentEncounterType?
+### atFacilityVisitType
 
-> `optional` **bedAssignmentEncounterType**: `OpenmrsResource`
+• `Optional` **atFacilityVisitType**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L23)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L22)
 
-### cancelADTRequestEncounterType?
+___
 
-> `optional` **cancelADTRequestEncounterType**: `OpenmrsResource`
+### bedAssignmentEncounterType
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L24)
+• `Optional` **bedAssignmentEncounterType**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### checkInClerkEncounterRole?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L23)
 
-> `optional` **checkInClerkEncounterRole**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L25)
+### cancelADTRequestEncounterType
 
-***
+• `Optional` **cancelADTRequestEncounterType**: `OpenmrsResource`
 
-### checkInEncounterType?
+#### Defined in
 
-> `optional` **checkInEncounterType**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L24)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L26)
+___
 
-***
+### checkInClerkEncounterRole
 
-### clinicianEncounterRole?
+• `Optional` **checkInClerkEncounterRole**: `OpenmrsResource`
 
-> `optional` **clinicianEncounterRole**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L27)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L25)
 
-***
+___
 
-### conceptSourcesForDiagnosisSearch?
+### checkInEncounterType
 
-> `optional` **conceptSourcesForDiagnosisSearch**: `OpenmrsResource`
+• `Optional` **checkInEncounterType**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L28)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L26)
 
-### consultEncounterType?
+___
 
-> `optional` **consultEncounterType**: `OpenmrsResource`
+### clinicianEncounterRole
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L29)
+• `Optional` **clinicianEncounterRole**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### consultFreeTextCommentsConcept?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L27)
 
-> `optional` **consultFreeTextCommentsConcept**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L30)
+### conceptSourcesForDiagnosisSearch
 
-***
+• `Optional` **conceptSourcesForDiagnosisSearch**: `OpenmrsResource`
 
-### denyAdmissionConcept?
+#### Defined in
 
-> `optional` **denyAdmissionConcept**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L28)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L31)
+___
 
-***
+### consultEncounterType
 
-### diagnosisMetadata?
+• `Optional` **consultEncounterType**: `OpenmrsResource`
 
-> `optional` **diagnosisMetadata**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L32)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L29)
 
-***
+___
 
-### diagnosisSets?
+### consultFreeTextCommentsConcept
 
-> `optional` **diagnosisSets**: `OpenmrsResource`
+• `Optional` **consultFreeTextCommentsConcept**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L33)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L30)
 
-### dischargeForm?
+___
 
-> `optional` **dischargeForm**: `OpenmrsResource`
+### denyAdmissionConcept
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L34)
+• `Optional` **denyAdmissionConcept**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### dispositionDescriptor?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L31)
 
-> `optional` **dispositionDescriptor**: `object`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L35)
+### diagnosisMetadata
 
-#### admissionLocationConcept?
+• `Optional` **diagnosisMetadata**: `OpenmrsResource`
 
-> `optional` **admissionLocationConcept**: `OpenmrsResource`
+#### Defined in
 
-#### dateOfDeathConcept?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L32)
 
-> `optional` **dateOfDeathConcept**: `OpenmrsResource`
+___
 
-#### dispositionConcept?
+### diagnosisSets
 
-> `optional` **dispositionConcept**: `OpenmrsResource`
+• `Optional` **diagnosisSets**: `OpenmrsResource`
 
-#### dispositionSetConcept?
+#### Defined in
 
-> `optional` **dispositionSetConcept**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L33)
 
-#### internalTransferLocationConcept?
+___
 
-> `optional` **internalTransferLocationConcept**: `OpenmrsResource`
+### dischargeForm
 
-***
+• `Optional` **dischargeForm**: `OpenmrsResource`
 
-### dispositions?
+#### Defined in
 
-> `optional` **dispositions**: `object`[]
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L34)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L42)
+___
 
-#### actions?
+### dispositionDescriptor
 
-> `optional` **actions**: \[\]
+• `Optional` **dispositionDescriptor**: `Object`
 
-#### additionalObs?
+#### Type declaration
 
-> `optional` **additionalObs**: `null`
+| Name | Type |
+| :------ | :------ |
+| `admissionLocationConcept?` | `OpenmrsResource` |
+| `dateOfDeathConcept?` | `OpenmrsResource` |
+| `dispositionConcept?` | `OpenmrsResource` |
+| `dispositionSetConcept?` | `OpenmrsResource` |
+| `internalTransferLocationConcept?` | `OpenmrsResource` |
 
-#### careSettingTypes?
+#### Defined in
 
-> `optional` **careSettingTypes**: \[`"OUTPATIENT"`\]
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L35)
 
-#### conceptCode?
+___
 
-> `optional` **conceptCode**: `string`
+### dispositions
 
-#### encounterTypes?
+• `Optional` **dispositions**: { `actions?`: [] ; `additionalObs?`: ``null`` ; `careSettingTypes?`: [``"OUTPATIENT"``] ; `conceptCode?`: `string` ; `encounterTypes?`: ``null`` ; `excludedEncounterTypes?`: `string`[] ; `keepsVisitOpen?`: ``null`` ; `name?`: `string` ; `type?`: `DispositionType` ; `uuid?`: `string`  }[]
 
-> `optional` **encounterTypes**: `null`
+#### Defined in
 
-#### excludedEncounterTypes?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L42)
 
-> `optional` **excludedEncounterTypes**: `string`[]
+___
 
-#### keepsVisitOpen?
+### emrApiConceptSource
 
-> `optional` **keepsVisitOpen**: `null`
+• `Optional` **emrApiConceptSource**: `OpenmrsResource`
 
-#### name?
+#### Defined in
 
-> `optional` **name**: `string`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L54)
 
-#### type?
+___
 
-> `optional` **type**: `DispositionType`
+### exitFromInpatientEncounterType
 
-#### uuid?
+• `Optional` **exitFromInpatientEncounterType**: `OpenmrsResource`
 
-> `optional` **uuid**: `string`
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L55)
 
-### emrApiConceptSource?
+___
 
-> `optional` **emrApiConceptSource**: `OpenmrsResource`
+### extraPatientIdentifierTypes
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L54)
+• `Optional` **extraPatientIdentifierTypes**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### exitFromInpatientEncounterType?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L56)
 
-> `optional` **exitFromInpatientEncounterType**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L55)
+### fullPrivilegeLevel
 
-***
+• `Optional` **fullPrivilegeLevel**: `OpenmrsResource`
 
-### extraPatientIdentifierTypes?
+#### Defined in
 
-> `optional` **extraPatientIdentifierTypes**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L57)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L56)
+___
 
-***
+### highPrivilegeLevel
 
-### fullPrivilegeLevel?
+• `Optional` **highPrivilegeLevel**: `OpenmrsResource`
 
-> `optional` **fullPrivilegeLevel**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L57)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L58)
 
-***
+___
 
-### highPrivilegeLevel?
+### identifierTypesToSearch
 
-> `optional` **highPrivilegeLevel**: `OpenmrsResource`
+• `Optional` **identifierTypesToSearch**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L58)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L59)
 
-### identifierTypesToSearch?
+___
 
-> `optional` **identifierTypesToSearch**: `OpenmrsResource`
+### inpatientNoteEncounterType
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L59)
+• `Optional` **inpatientNoteEncounterType**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### inpatientNoteEncounterType?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L60)
 
-> `optional` **inpatientNoteEncounterType**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L60)
+### lastViewedPatientSizeLimit
 
-***
+• `Optional` **lastViewedPatientSizeLimit**: `OpenmrsResource`
 
-### lastViewedPatientSizeLimit?
+#### Defined in
 
-> `optional` **lastViewedPatientSizeLimit**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L61)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L61)
+___
 
-***
+### metadataSourceName
 
-### metadataSourceName?
+• `Optional` **metadataSourceName**: `OpenmrsResource`
 
-> `optional` **metadataSourceName**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L62)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L62)
 
-***
+___
 
-### motherChildRelationshipType?
+### motherChildRelationshipType
 
-> `optional` **motherChildRelationshipType**: `OpenmrsResource`
+• `Optional` **motherChildRelationshipType**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L63)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L63)
 
-### narrowerThanConceptMapType?
+___
 
-> `optional` **narrowerThanConceptMapType**: `OpenmrsResource`
+### narrowerThanConceptMapType
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L64)
+• `Optional` **narrowerThanConceptMapType**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### nonDiagnosisConceptSets?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L64)
 
-> `optional` **nonDiagnosisConceptSets**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L65)
+### nonDiagnosisConceptSets
 
-***
+• `Optional` **nonDiagnosisConceptSets**: `OpenmrsResource`
 
-### orderingProviderEncounterRole?
+#### Defined in
 
-> `optional` **orderingProviderEncounterRole**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L65)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L66)
+___
 
-***
+### orderingProviderEncounterRole
 
-### patientDiedConcept?
+• `Optional` **orderingProviderEncounterRole**: `OpenmrsResource`
 
-> `optional` **patientDiedConcept**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L67)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L66)
 
-***
+___
 
-### personImageDirectory?
+### patientDiedConcept
 
-> `optional` **personImageDirectory**: `OpenmrsResource`
+• `Optional` **patientDiedConcept**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L68)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L67)
 
-### primaryIdentifierType?
+___
 
-> `optional` **primaryIdentifierType**: `OpenmrsResource`
+### personImageDirectory
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L69)
+• `Optional` **personImageDirectory**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### sameAsConceptMapType?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L68)
 
-> `optional` **sameAsConceptMapType**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L70)
+### primaryIdentifierType
 
-***
+• `Optional` **primaryIdentifierType**: `OpenmrsResource`
 
-### supportsAdmissionLocationTag?
+#### Defined in
 
-> `optional` **supportsAdmissionLocationTag**: `LocationTag`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L69)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L72)
+___
 
-***
+### sameAsConceptMapType
 
-### supportsLoginLocationTag?
+• `Optional` **sameAsConceptMapType**: `OpenmrsResource`
 
-> `optional` **supportsLoginLocationTag**: `LocationTag`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L73)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L70)
 
-***
+___
 
-### supportsTransferLocationTag?
+### supportsAdmissionLocationTag
 
-> `optional` **supportsTransferLocationTag**: `LocationTag`
+• `Optional` **supportsAdmissionLocationTag**: `LocationTag`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L74)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L72)
 
-### supportsVisitsLocationTag?
+___
 
-> `optional` **supportsVisitsLocationTag**: `LocationTag`
+### supportsLoginLocationTag
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L75)
+• `Optional` **supportsLoginLocationTag**: `LocationTag`
 
-***
+#### Defined in
 
-### suppressedDiagnosisConcepts?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L73)
 
-> `optional` **suppressedDiagnosisConcepts**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L71)
+### supportsTransferLocationTag
 
-***
+• `Optional` **supportsTransferLocationTag**: `LocationTag`
 
-### telephoneAttributeType?
+#### Defined in
 
-> `optional` **telephoneAttributeType**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L74)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L76)
+___
 
-***
+### supportsVisitsLocationTag
 
-### testPatientPersonAttributeType?
+• `Optional` **supportsVisitsLocationTag**: `LocationTag`
 
-> `optional` **testPatientPersonAttributeType**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L77)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L75)
 
-***
+___
 
-### transferForm?
+### suppressedDiagnosisConcepts
 
-> `optional` **transferForm**: `OpenmrsResource`
+• `Optional` **suppressedDiagnosisConcepts**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L78)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L71)
 
-### transferRequestEncounterType?
+___
 
-> `optional` **transferRequestEncounterType**: `OpenmrsResource`
+### telephoneAttributeType
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L79)
+• `Optional` **telephoneAttributeType**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### transferWithinHospitalEncounterType?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L76)
 
-> `optional` **transferWithinHospitalEncounterType**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L80)
+### testPatientPersonAttributeType
 
-***
+• `Optional` **testPatientPersonAttributeType**: `OpenmrsResource`
 
-### unknownCauseOfDeathConcept?
+#### Defined in
 
-> `optional` **unknownCauseOfDeathConcept**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L77)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L81)
+___
 
-***
+### transferForm
 
-### unknownLocation?
+• `Optional` **transferForm**: `OpenmrsResource`
 
-> `optional` **unknownLocation**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L82)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L78)
 
-***
+___
 
-### unknownPatientPersonAttributeType?
+### transferRequestEncounterType
 
-> `optional` **unknownPatientPersonAttributeType**: `OpenmrsResource`
+• `Optional` **transferRequestEncounterType**: `OpenmrsResource`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L83)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L79)
 
-### unknownProvider?
+___
 
-> `optional` **unknownProvider**: `OpenmrsResource`
+### transferWithinHospitalEncounterType
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L84)
+• `Optional` **transferWithinHospitalEncounterType**: `OpenmrsResource`
 
-***
+#### Defined in
 
-### visitAssignmentHandlerAdjustEncounterTimeOfDayIfNecessary?
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L80)
 
-> `optional` **visitAssignmentHandlerAdjustEncounterTimeOfDayIfNecessary**: `OpenmrsResource`
+___
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L85)
+### unknownCauseOfDeathConcept
 
-***
+• `Optional` **unknownCauseOfDeathConcept**: `OpenmrsResource`
 
-### visitExpireHours?
+#### Defined in
 
-> `optional` **visitExpireHours**: `OpenmrsResource`
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L81)
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L86)
+___
 
-***
+### unknownLocation
 
-### visitNoteEncounterType?
+• `Optional` **unknownLocation**: `OpenmrsResource`
 
-> `optional` **visitNoteEncounterType**: `OpenmrsResource`
+#### Defined in
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L87)
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L82)
+
+___
+
+### unknownPatientPersonAttributeType
+
+• `Optional` **unknownPatientPersonAttributeType**: `OpenmrsResource`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L83)
+
+___
+
+### unknownProvider
+
+• `Optional` **unknownProvider**: `OpenmrsResource`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L84)
+
+___
+
+### visitAssignmentHandlerAdjustEncounterTimeOfDayIfNecessary
+
+• `Optional` **visitAssignmentHandlerAdjustEncounterTimeOfDayIfNecessary**: `OpenmrsResource`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L85)
+
+___
+
+### visitExpireHours
+
+• `Optional` **visitExpireHours**: `OpenmrsResource`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L86)
+
+___
+
+### visitNoteEncounterType
+
+• `Optional` **visitNoteEncounterType**: `OpenmrsResource`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useEmrConfiguration.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L87)

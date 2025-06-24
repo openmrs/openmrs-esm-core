@@ -1,45 +1,63 @@
-[O3 Framework](../API.md) / WorkspaceContainerProps
+[@openmrs/esm-framework](../API.md) / WorkspaceContainerProps
 
 # Interface: WorkspaceContainerProps
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L15)
+## Table of contents
+
+### Properties
+
+- [actionMenuProps](WorkspaceContainerProps.md#actionmenuprops)
+- [additionalWorkspaceProps](WorkspaceContainerProps.md#additionalworkspaceprops)
+- [contextKey](WorkspaceContainerProps.md#contextkey)
+- [overlay](WorkspaceContainerProps.md#overlay)
+- [showSiderailAndBottomNav](WorkspaceContainerProps.md#showsiderailandbottomnav)
 
 ## Properties
 
-### actionMenuProps?
+### actionMenuProps
 
-> `optional` **actionMenuProps**: `Record`\<`string`, `unknown`\>
+• `Optional` **actionMenuProps**: `Record`<`string`, `unknown`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L20)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L20)
 
-### additionalWorkspaceProps?
+___
 
-> `optional` **additionalWorkspaceProps**: `object`
+### additionalWorkspaceProps
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L19)
+• `Optional` **additionalWorkspaceProps**: `object`
 
-***
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L19)
+
+___
 
 ### contextKey
 
-> **contextKey**: `string`
+• **contextKey**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L16)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L16)
 
-### overlay?
+___
 
-> `optional` **overlay**: `boolean`
+### overlay
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L17)
+• `Optional` **overlay**: `boolean`
 
-***
+#### Defined in
 
-### showSiderailAndBottomNav?
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L17)
 
-> `optional` **showSiderailAndBottomNav**: `boolean`
+___
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L18)
+### showSiderailAndBottomNav
+
+• `Optional` **showSiderailAndBottomNav**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L18)

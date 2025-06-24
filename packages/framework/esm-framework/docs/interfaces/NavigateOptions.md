@@ -1,21 +1,30 @@
-[O3 Framework](../API.md) / NavigateOptions
+[@openmrs/esm-framework](../API.md) / NavigateOptions
 
 # Interface: NavigateOptions
 
-Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-navigation/src/navigation/navigate.ts#L12)
+## Table of contents
 
-## Properties
+### Navigation Properties
 
-### templateParams?
+- [templateParams](NavigateOptions.md#templateparams)
+- [to](NavigateOptions.md#to)
 
-> `optional` **templateParams**: [`TemplateParams`](../type-aliases/TemplateParams.md)
+## Navigation Properties
 
-Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-navigation/src/navigation/navigate.ts#L14)
+### templateParams
 
-***
+• `Optional` **templateParams**: [`TemplateParams`](../API.md#templateparams)
+
+#### Defined in
+
+[packages/framework/esm-navigation/src/navigation/navigate.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L14)
+
+___
 
 ### to
 
-> **to**: `string`
+• **to**: `string`
 
-Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-navigation/src/navigation/navigate.ts#L13)
+#### Defined in
+
+[packages/framework/esm-navigation/src/navigation/navigate.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L13)

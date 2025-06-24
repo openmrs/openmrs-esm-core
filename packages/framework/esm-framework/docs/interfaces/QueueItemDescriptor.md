@@ -1,50 +1,57 @@
-[O3 Framework](../API.md) / QueueItemDescriptor
+[@openmrs/esm-framework](../API.md) / QueueItemDescriptor
 
 # Interface: QueueItemDescriptor
-
-Defined in: [packages/framework/esm-offline/src/sync.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/sync.ts#L31)
 
 Contains information about the sync item which has been provided externally by the caller
 who added the item to the queue.
 This information is all optional, but, when provided while enqueuing the item, can be used in other
 locations to better represent the sync item, e.g. in the UI.
 
-## Properties
+## Table of contents
 
-### dependencies?
+### Offline Properties
 
-> `optional` **dependencies**: `object`[]
+- [dependencies](QueueItemDescriptor.md#dependencies)
+- [displayName](QueueItemDescriptor.md#displayname)
+- [id](QueueItemDescriptor.md#id)
+- [patientUuid](QueueItemDescriptor.md#patientuuid)
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/sync.ts#L33)
+## Offline Properties
 
-#### id
+### dependencies
 
-> **id**: `string`
+• `Optional` **dependencies**: { `id`: `string` ; `type`: `string`  }[]
 
-#### type
+#### Defined in
 
-> **type**: `string`
+[packages/framework/esm-offline/src/sync.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L33)
 
-***
+___
 
-### displayName?
+### displayName
 
-> `optional` **displayName**: `string`
+• `Optional` **displayName**: `string`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/sync.ts#L38)
+#### Defined in
 
-***
+[packages/framework/esm-offline/src/sync.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L38)
 
-### id?
+___
 
-> `optional` **id**: `string`
+### id
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/sync.ts#L32)
+• `Optional` **id**: `string`
 
-***
+#### Defined in
 
-### patientUuid?
+[packages/framework/esm-offline/src/sync.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L32)
 
-> `optional` **patientUuid**: `string`
+___
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/sync.ts#L37)
+### patientUuid
+
+• `Optional` **patientUuid**: `string`
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L37)

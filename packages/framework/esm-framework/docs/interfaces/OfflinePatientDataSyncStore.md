@@ -1,25 +1,32 @@
-[O3 Framework](../API.md) / OfflinePatientDataSyncStore
+[@openmrs/esm-framework](../API.md) / OfflinePatientDataSyncStore
 
-# Interface: ~~OfflinePatientDataSyncStore~~
+# Interface: OfflinePatientDataSyncStore
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L6)
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
 
-## Deprecated
+## Table of contents
 
-Will be removed once all modules have been migrated to the new dynamic offline data API.
+### Offline Properties
 
-## Properties
+- [handlers](OfflinePatientDataSyncStore.md#handlers)
+- [offlinePatientDataSyncState](OfflinePatientDataSyncStore.md#offlinepatientdatasyncstate)
 
-### ~~handlers~~
+## Offline Properties
 
-> **handlers**: `Record`\<`string`, [`OfflinePatientDataSyncHandler`](OfflinePatientDataSyncHandler.md)\>
+### handlers
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L8)
+• **handlers**: `Record`<`string`, [`OfflinePatientDataSyncHandler`](OfflinePatientDataSyncHandler.md)\>
 
-***
+#### Defined in
 
-### ~~offlinePatientDataSyncState~~
+[packages/framework/esm-offline/src/offline-patient-data.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L8)
 
-> **offlinePatientDataSyncState**: `Record`\<`string`, [`OfflinePatientDataSyncState`](OfflinePatientDataSyncState.md)\>
+___
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L7)
+### offlinePatientDataSyncState
+
+• **offlinePatientDataSyncState**: `Record`<`string`, [`OfflinePatientDataSyncState`](OfflinePatientDataSyncState.md)\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/offline-patient-data.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L7)

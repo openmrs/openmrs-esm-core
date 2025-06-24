@@ -1,153 +1,199 @@
-[O3 Framework](../API.md) / PersonName
+[@openmrs/esm-framework](../API.md) / PersonName
 
 # Interface: PersonName
 
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L29)
-
-Superclass for all Openmrs Resources, with strict typings.
-If the subclass does not have all attributes (including optional ones)
-accounted for, use OpenmrsResource instead.
-
-## Extends
+## Hierarchy
 
 - [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
 
+  ↳ **`PersonName`**
+
+## Table of contents
+
+### Properties
+
+- [auditInfo](PersonName.md#auditinfo)
+- [degree](PersonName.md#degree)
+- [display](PersonName.md#display)
+- [familyName](PersonName.md#familyname)
+- [familyName2](PersonName.md#familyname2)
+- [familyNamePrefix](PersonName.md#familynameprefix)
+- [familyNameSuffix](PersonName.md#familynamesuffix)
+- [givenName](PersonName.md#givenname)
+- [links](PersonName.md#links)
+- [middleName](PersonName.md#middlename)
+- [preferred](PersonName.md#preferred)
+- [prefix](PersonName.md#prefix)
+- [resourceVersion](PersonName.md#resourceversion)
+- [uuid](PersonName.md#uuid)
+- [voided](PersonName.md#voided)
+
 ## Properties
 
-### auditInfo?
+### auditInfo
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
-
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
+• `Optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
 
 #### Inherited from
 
-[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`auditInfo`](OpenmrsResourceStrict.md#auditinfo)
+[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[auditInfo](OpenmrsResourceStrict.md#auditinfo)
 
-***
+#### Defined in
 
-### degree?
+[packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
-> `optional` **degree**: `string`
+___
 
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L38)
+### degree
 
-***
+• `Optional` **degree**: `string`
 
-### display?
+#### Defined in
 
-> `optional` **display**: `string`
+[packages/framework/esm-api/src/types/person-resource.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L38)
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+___
 
-#### Inherited from
+### display
 
-[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`display`](OpenmrsResourceStrict.md#display)
-
-***
-
-### familyName?
-
-> `optional` **familyName**: `string`
-
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L32)
-
-***
-
-### familyName2?
-
-> `optional` **familyName2**: `string`
-
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L33)
-
-***
-
-### familyNamePrefix?
-
-> `optional` **familyNamePrefix**: `string`
-
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L36)
-
-***
-
-### familyNameSuffix?
-
-> `optional` **familyNameSuffix**: `string`
-
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L37)
-
-***
-
-### givenName?
-
-> `optional` **givenName**: `string`
-
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L30)
-
-***
-
-### links?
-
-> `optional` **links**: [`Link`](Link.md)[]
-
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+• `Optional` **display**: `string`
 
 #### Inherited from
 
-[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`links`](OpenmrsResourceStrict.md#links)
+[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[display](OpenmrsResourceStrict.md#display)
 
-***
+#### Defined in
 
-### middleName?
+[packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
-> `optional` **middleName**: `string`
+___
 
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L31)
+### familyName
 
-***
+• `Optional` **familyName**: `string`
 
-### preferred?
+#### Defined in
 
-> `optional` **preferred**: `boolean`
+[packages/framework/esm-api/src/types/person-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L32)
 
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L34)
+___
 
-***
+### familyName2
 
-### prefix?
+• `Optional` **familyName2**: `string`
 
-> `optional` **prefix**: `string`
+#### Defined in
 
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L35)
+[packages/framework/esm-api/src/types/person-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L33)
 
-***
+___
 
-### resourceVersion?
+### familyNamePrefix
 
-> `optional` **resourceVersion**: `string`
+• `Optional` **familyNamePrefix**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L36)
+
+___
+
+### familyNameSuffix
+
+• `Optional` **familyNameSuffix**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L37)
+
+___
+
+### givenName
+
+• `Optional` **givenName**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L30)
+
+___
+
+### links
+
+• `Optional` **links**: [`Link`](Link.md)[]
 
 #### Inherited from
 
-[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`resourceVersion`](OpenmrsResourceStrict.md#resourceversion)
+[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[links](OpenmrsResourceStrict.md#links)
 
-***
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+
+___
+
+### middleName
+
+• `Optional` **middleName**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L31)
+
+___
+
+### preferred
+
+• `Optional` **preferred**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L34)
+
+___
+
+### prefix
+
+• `Optional` **prefix**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L35)
+
+___
+
+### resourceVersion
+
+• `Optional` **resourceVersion**: `string`
+
+#### Inherited from
+
+[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[resourceVersion](OpenmrsResourceStrict.md#resourceversion)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+
+___
 
 ### uuid
 
-> **uuid**: `string`
-
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+• **uuid**: `string`
 
 #### Inherited from
 
-[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`uuid`](OpenmrsResourceStrict.md#uuid)
+[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[uuid](OpenmrsResourceStrict.md#uuid)
 
-***
+#### Defined in
 
-### voided?
+[packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
 
-> `optional` **voided**: `boolean`
+___
 
-Defined in: [packages/framework/esm-api/src/types/person-resource.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/person-resource.ts#L39)
+### voided
+
+• `Optional` **voided**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L39)

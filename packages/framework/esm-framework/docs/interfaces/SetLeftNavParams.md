@@ -1,41 +1,56 @@
-[O3 Framework](../API.md) / SetLeftNavParams
+[@openmrs/esm-framework](../API.md) / SetLeftNavParams
 
 # Interface: SetLeftNavParams
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L20)
+## Table of contents
+
+### Properties
+
+- [basePath](SetLeftNavParams.md#basepath)
+- [componentContext](SetLeftNavParams.md#componentcontext)
+- [mode](SetLeftNavParams.md#mode)
+- [name](SetLeftNavParams.md#name)
 
 ## Properties
 
 ### basePath
 
-> **basePath**: `string`
+• **basePath**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L22)
+#### Defined in
 
-***
+[packages/framework/esm-extensions/src/left-nav.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L22)
 
-### componentContext?
+___
 
-> `optional` **componentContext**: [`ComponentConfig`](ComponentConfig.md)
+### componentContext
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L29)
+• `Optional` **componentContext**: [`ComponentConfig`](ComponentConfig.md)
 
-***
+#### Defined in
 
-### mode?
+[packages/framework/esm-extensions/src/left-nav.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L29)
 
-> `optional` **mode**: `LeftNavMode`
+___
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L28)
+### mode
+
+• `Optional` **mode**: `LeftNavMode`
 
 In normal mode, the left nav is shown in desktop mode, and collapse into hamburger menu button in tablet mode
 In collapsed mode, the left nav is always collapsed, regardless of desktop / tablet mode.
 In hidden mode, the left nav is not shown at all.
 
-***
+#### Defined in
+
+[packages/framework/esm-extensions/src/left-nav.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L28)
+
+___
 
 ### name
 
-> **name**: `string`
+• **name**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L21)
+#### Defined in
+
+[packages/framework/esm-extensions/src/left-nav.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L21)

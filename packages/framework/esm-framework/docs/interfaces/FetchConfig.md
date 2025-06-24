@@ -1,191 +1,228 @@
-[O3 Framework](../API.md) / FetchConfig
+[@openmrs/esm-framework](../API.md) / FetchConfig
 
 # Interface: FetchConfig
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:314](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L314)
+## Hierarchy
 
-## Extends
+- `Omit`<`RequestInit`, ``"body"`` \| ``"headers"``\>
 
-- `Omit`\<`RequestInit`, `"body"` \| `"headers"`\>
+  ↳ **`FetchConfig`**
 
-## Properties
+## Table of contents
 
-### body?
+### API Properties
 
-> `optional` **body**: `string` \| `FetchBody`
+- [body](FetchConfig.md#body)
+- [headers](FetchConfig.md#headers)
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L316)
+### Other Properties
 
-***
+- [cache](FetchConfig.md#cache)
+- [credentials](FetchConfig.md#credentials)
+- [integrity](FetchConfig.md#integrity)
+- [keepalive](FetchConfig.md#keepalive)
+- [method](FetchConfig.md#method)
+- [mode](FetchConfig.md#mode)
+- [redirect](FetchConfig.md#redirect)
+- [referrer](FetchConfig.md#referrer)
+- [referrerPolicy](FetchConfig.md#referrerpolicy)
+- [signal](FetchConfig.md#signal)
+- [window](FetchConfig.md#window)
 
-### cache?
+## API Properties
 
-> `optional` **cache**: `RequestCache`
+### body
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1924
+• `Optional` **body**: `string` \| `FetchBody`
+
+#### Defined in
+
+[packages/framework/esm-api/src/openmrs-fetch.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L316)
+
+___
+
+### headers
+
+• `Optional` **headers**: [`FetchHeaders`](FetchHeaders.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/openmrs-fetch.ts:315](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L315)
+
+___
+
+## Other Properties
+
+### cache
+
+• `Optional` **cache**: `RequestCache`
 
 A string indicating how the request will interact with the browser's cache to set request's cache.
 
 #### Inherited from
 
-`Omit.cache`
+Omit.cache
 
-***
+#### Defined in
 
-### credentials?
+node_modules/typescript/lib/lib.dom.d.ts:1593
 
-> `optional` **credentials**: `RequestCredentials`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1926
+### credentials
+
+• `Optional` **credentials**: `RequestCredentials`
 
 A string indicating whether credentials will be sent with the request always, never, or only when sent to a same-origin URL. Sets request's credentials.
 
 #### Inherited from
 
-`Omit.credentials`
+Omit.credentials
 
-***
+#### Defined in
 
-### headers?
+node_modules/typescript/lib/lib.dom.d.ts:1595
 
-> `optional` **headers**: [`FetchHeaders`](FetchHeaders.md)
+___
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:315](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L315)
+### integrity
 
-***
-
-### integrity?
-
-> `optional` **integrity**: `string`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1930
+• `Optional` **integrity**: `string`
 
 A cryptographic hash of the resource to be fetched by request. Sets request's integrity.
 
 #### Inherited from
 
-`Omit.integrity`
+Omit.integrity
 
-***
+#### Defined in
 
-### keepalive?
+node_modules/typescript/lib/lib.dom.d.ts:1599
 
-> `optional` **keepalive**: `boolean`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1932
+### keepalive
+
+• `Optional` **keepalive**: `boolean`
 
 A boolean to set request's keepalive.
 
 #### Inherited from
 
-`Omit.keepalive`
+Omit.keepalive
 
-***
+#### Defined in
 
-### method?
+node_modules/typescript/lib/lib.dom.d.ts:1601
 
-> `optional` **method**: `string`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1934
+### method
+
+• `Optional` **method**: `string`
 
 A string to set request's method.
 
 #### Inherited from
 
-`Omit.method`
+Omit.method
 
-***
+#### Defined in
 
-### mode?
+node_modules/typescript/lib/lib.dom.d.ts:1603
 
-> `optional` **mode**: `RequestMode`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1936
+### mode
+
+• `Optional` **mode**: `RequestMode`
 
 A string to indicate whether the request will use CORS, or will be restricted to same-origin URLs. Sets request's mode.
 
 #### Inherited from
 
-`Omit.mode`
+Omit.mode
 
-***
+#### Defined in
 
-### priority?
+node_modules/typescript/lib/lib.dom.d.ts:1605
 
-> `optional` **priority**: `RequestPriority`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1937
+### redirect
 
-#### Inherited from
-
-`Omit.priority`
-
-***
-
-### redirect?
-
-> `optional` **redirect**: `RequestRedirect`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1939
+• `Optional` **redirect**: `RequestRedirect`
 
 A string indicating whether request follows redirects, results in an error upon encountering a redirect, or returns the redirect (in an opaque fashion). Sets request's redirect.
 
 #### Inherited from
 
-`Omit.redirect`
+Omit.redirect
 
-***
+#### Defined in
 
-### referrer?
+node_modules/typescript/lib/lib.dom.d.ts:1607
 
-> `optional` **referrer**: `string`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1941
+### referrer
+
+• `Optional` **referrer**: `string`
 
 A string whose value is a same-origin URL, "about:client", or the empty string, to set request's referrer.
 
 #### Inherited from
 
-`Omit.referrer`
+Omit.referrer
 
-***
+#### Defined in
 
-### referrerPolicy?
+node_modules/typescript/lib/lib.dom.d.ts:1609
 
-> `optional` **referrerPolicy**: `ReferrerPolicy`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1943
+### referrerPolicy
+
+• `Optional` **referrerPolicy**: `ReferrerPolicy`
 
 A referrer policy to set request's referrerPolicy.
 
 #### Inherited from
 
-`Omit.referrerPolicy`
+Omit.referrerPolicy
 
-***
+#### Defined in
 
-### signal?
+node_modules/typescript/lib/lib.dom.d.ts:1611
 
-> `optional` **signal**: `null` \| `AbortSignal`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1945
+### signal
+
+• `Optional` **signal**: ``null`` \| `AbortSignal`
 
 An AbortSignal to set request's signal.
 
 #### Inherited from
 
-`Omit.signal`
+Omit.signal
 
-***
+#### Defined in
 
-### window?
+node_modules/typescript/lib/lib.dom.d.ts:1613
 
-> `optional` **window**: `null`
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1947
+### window
+
+• `Optional` **window**: ``null``
 
 Can only be null. Used to disassociate request from any Window.
 
 #### Inherited from
 
-`Omit.window`
+Omit.window
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:1615

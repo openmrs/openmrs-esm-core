@@ -1,214 +1,218 @@
-[O3 Framework](../API.md) / LoggedInUserFetchResponse
+[@openmrs/esm-framework](../API.md) / LoggedInUserFetchResponse
 
 # Interface: LoggedInUserFetchResponse
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/fetch.ts#L7)
-
-## Extends
+## Hierarchy
 
 - [`FetchResponse`](FetchResponse.md)
+
+  ↳ **`LoggedInUserFetchResponse`**
+
+## Table of contents
+
+### Properties
+
+- [body](LoggedInUserFetchResponse.md#body)
+- [bodyUsed](LoggedInUserFetchResponse.md#bodyused)
+- [data](LoggedInUserFetchResponse.md#data)
+- [headers](LoggedInUserFetchResponse.md#headers)
+- [ok](LoggedInUserFetchResponse.md#ok)
+- [redirected](LoggedInUserFetchResponse.md#redirected)
+- [status](LoggedInUserFetchResponse.md#status)
+- [statusText](LoggedInUserFetchResponse.md#statustext)
+- [type](LoggedInUserFetchResponse.md#type)
+- [url](LoggedInUserFetchResponse.md#url)
+
+### Methods
+
+- [arrayBuffer](LoggedInUserFetchResponse.md#arraybuffer)
+- [blob](LoggedInUserFetchResponse.md#blob)
+- [clone](LoggedInUserFetchResponse.md#clone)
+- [formData](LoggedInUserFetchResponse.md#formdata)
+- [json](LoggedInUserFetchResponse.md#json)
+- [text](LoggedInUserFetchResponse.md#text)
 
 ## Properties
 
 ### body
 
-> `readonly` **body**: `null` \| `ReadableStream`\<`Uint8Array`\<`ArrayBufferLike`\>\>
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3534
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/body)
+• `Readonly` **body**: ``null`` \| `ReadableStream`<`Uint8Array`\>
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`body`](FetchResponse.md#body)
+[FetchResponse](FetchResponse.md).[body](FetchResponse.md#body)
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2587
+
+___
 
 ### bodyUsed
 
-> `readonly` **bodyUsed**: `boolean`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3536
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bodyUsed)
+• `Readonly` **bodyUsed**: `boolean`
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`bodyUsed`](FetchResponse.md#bodyused)
+[FetchResponse](FetchResponse.md).[bodyUsed](FetchResponse.md#bodyused)
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2588
+
+___
 
 ### data
 
-> **data**: [`Session`](Session.md)
-
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/fetch.ts#L8)
+• **data**: [`Session`](Session.md)
 
 #### Overrides
 
-[`FetchResponse`](FetchResponse.md).[`data`](FetchResponse.md#data)
+[FetchResponse](FetchResponse.md).[data](FetchResponse.md#data)
 
-***
+#### Defined in
+
+[packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L8)
+
+___
 
 ### headers
 
-> `readonly` **headers**: `Headers`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19881
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/headers)
+• `Readonly` **headers**: `Headers`
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`headers`](FetchResponse.md#headers)
+[FetchResponse](FetchResponse.md).[headers](FetchResponse.md#headers)
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11772
+
+___
 
 ### ok
 
-> `readonly` **ok**: `boolean`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19883
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/ok)
+• `Readonly` **ok**: `boolean`
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`ok`](FetchResponse.md#ok)
+[FetchResponse](FetchResponse.md).[ok](FetchResponse.md#ok)
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11773
+
+___
 
 ### redirected
 
-> `readonly` **redirected**: `boolean`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19885
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/redirected)
+• `Readonly` **redirected**: `boolean`
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`redirected`](FetchResponse.md#redirected)
+[FetchResponse](FetchResponse.md).[redirected](FetchResponse.md#redirected)
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11774
+
+___
 
 ### status
 
-> `readonly` **status**: `number`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19887
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/status)
+• `Readonly` **status**: `number`
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`status`](FetchResponse.md#status)
+[FetchResponse](FetchResponse.md).[status](FetchResponse.md#status)
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11775
+
+___
 
 ### statusText
 
-> `readonly` **statusText**: `string`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19889
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/statusText)
+• `Readonly` **statusText**: `string`
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`statusText`](FetchResponse.md#statustext)
+[FetchResponse](FetchResponse.md).[statusText](FetchResponse.md#statustext)
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11776
+
+___
 
 ### type
 
-> `readonly` **type**: `ResponseType`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19891
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/type)
+• `Readonly` **type**: `ResponseType`
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`type`](FetchResponse.md#type)
+[FetchResponse](FetchResponse.md).[type](FetchResponse.md#type)
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11777
+
+___
 
 ### url
 
-> `readonly` **url**: `string`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19893
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/url)
+• `Readonly` **url**: `string`
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`url`](FetchResponse.md#url)
+[FetchResponse](FetchResponse.md).[url](FetchResponse.md#url)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11778
 
 ## Methods
 
-### arrayBuffer()
+### arrayBuffer
 
-> **arrayBuffer**(): `Promise`\<`ArrayBuffer`\>
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3538
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/arrayBuffer)
+▸ **arrayBuffer**(): `Promise`<`ArrayBuffer`\>
 
 #### Returns
 
-`Promise`\<`ArrayBuffer`\>
+`Promise`<`ArrayBuffer`\>
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`arrayBuffer`](FetchResponse.md#arraybuffer)
+[FetchResponse](FetchResponse.md).[arrayBuffer](FetchResponse.md#arraybuffer)
 
-***
+#### Defined in
 
-### blob()
+node_modules/typescript/lib/lib.dom.d.ts:2589
 
-> **blob**(): `Promise`\<`Blob`\>
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3540
+### blob
 
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/blob)
+▸ **blob**(): `Promise`<`Blob`\>
 
 #### Returns
 
-`Promise`\<`Blob`\>
+`Promise`<`Blob`\>
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`blob`](FetchResponse.md#blob)
+[FetchResponse](FetchResponse.md).[blob](FetchResponse.md#blob)
 
-***
+#### Defined in
 
-### bytes()
+node_modules/typescript/lib/lib.dom.d.ts:2590
 
-> **bytes**(): `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3542
+### clone
 
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bytes)
-
-#### Returns
-
-`Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
-
-#### Inherited from
-
-[`FetchResponse`](FetchResponse.md).[`bytes`](FetchResponse.md#bytes)
-
-***
-
-### clone()
-
-> **clone**(): `Response`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19895
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/clone)
+▸ **clone**(): `Response`
 
 #### Returns
 
@@ -216,58 +220,62 @@ Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19895
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`clone`](FetchResponse.md#clone)
+[FetchResponse](FetchResponse.md).[clone](FetchResponse.md#clone)
 
-***
+#### Defined in
 
-### formData()
+node_modules/typescript/lib/lib.dom.d.ts:11779
 
-> **formData**(): `Promise`\<`FormData`\>
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3544
+### formData
 
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/formData)
-
-#### Returns
-
-`Promise`\<`FormData`\>
-
-#### Inherited from
-
-[`FetchResponse`](FetchResponse.md).[`formData`](FetchResponse.md#formdata)
-
-***
-
-### json()
-
-> **json**(): `Promise`\<`any`\>
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3546
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/json)
+▸ **formData**(): `Promise`<`FormData`\>
 
 #### Returns
 
-`Promise`\<`any`\>
+`Promise`<`FormData`\>
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`json`](FetchResponse.md#json)
+[FetchResponse](FetchResponse.md).[formData](FetchResponse.md#formdata)
 
-***
+#### Defined in
 
-### text()
+node_modules/typescript/lib/lib.dom.d.ts:2591
 
-> **text**(): `Promise`\<`string`\>
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3548
+### json
 
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/text)
+▸ **json**(): `Promise`<`any`\>
 
 #### Returns
 
-`Promise`\<`string`\>
+`Promise`<`any`\>
 
 #### Inherited from
 
-[`FetchResponse`](FetchResponse.md).[`text`](FetchResponse.md#text)
+[FetchResponse](FetchResponse.md).[json](FetchResponse.md#json)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2592
+
+___
+
+### text
+
+▸ **text**(): `Promise`<`string`\>
+
+#### Returns
+
+`Promise`<`string`\>
+
+#### Inherited from
+
+[FetchResponse](FetchResponse.md).[text](FetchResponse.md#text)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2593

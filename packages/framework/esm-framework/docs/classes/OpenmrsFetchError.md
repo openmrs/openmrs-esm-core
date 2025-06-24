@@ -1,186 +1,211 @@
-[O3 Framework](../API.md) / OpenmrsFetchError
+[@openmrs/esm-framework](../API.md) / OpenmrsFetchError
 
 # Class: OpenmrsFetchError
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:301](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L301)
-
-## Extends
+## Hierarchy
 
 - `Error`
+
+  ↳ **`OpenmrsFetchError`**
 
 ## Implements
 
 - [`FetchError`](../interfaces/FetchError.md)
 
-## Constructors
+## Table of contents
 
-### Constructor
+### API Constructors
 
-> **new OpenmrsFetchError**(`url`, `response`, `responseBody`, `requestStacktrace`): `OpenmrsFetchError`
+- [constructor](OpenmrsFetchError.md#constructor)
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:302](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L302)
+### API Properties
+
+- [response](OpenmrsFetchError.md#response)
+- [responseBody](OpenmrsFetchError.md#responsebody)
+
+### Other Properties
+
+- [cause](OpenmrsFetchError.md#cause)
+- [message](OpenmrsFetchError.md#message)
+- [name](OpenmrsFetchError.md#name)
+- [stack](OpenmrsFetchError.md#stack)
+- [prepareStackTrace](OpenmrsFetchError.md#preparestacktrace)
+- [stackTraceLimit](OpenmrsFetchError.md#stacktracelimit)
+
+### Methods
+
+- [captureStackTrace](OpenmrsFetchError.md#capturestacktrace)
+
+## API Constructors
+
+### constructor
+
+• **new OpenmrsFetchError**(`url`, `response`, `responseBody`, `requestStacktrace`)
 
 #### Parameters
 
-##### url
-
-`string`
-
-##### response
-
-`Response`
-
-##### responseBody
-
-`null` | `ResponseBody`
-
-##### requestStacktrace
-
-`Error`
-
-#### Returns
-
-`OpenmrsFetchError`
+| Name | Type |
+| :------ | :------ |
+| `url` | `string` |
+| `response` | `Response` |
+| `responseBody` | ``null`` \| `ResponseBody` |
+| `requestStacktrace` | `Error` |
 
 #### Overrides
 
-`Error.constructor`
+Error.constructor
 
-## Properties
+#### Defined in
 
-### cause?
+[packages/framework/esm-api/src/openmrs-fetch.ts:302](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L302)
 
-> `optional` **cause**: `unknown`
-
-Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
-
-#### Inherited from
-
-`Error.cause`
-
-***
-
-### message
-
-> **message**: `string`
-
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
-
-#### Inherited from
-
-`Error.message`
-
-***
-
-### name
-
-> **name**: `string`
-
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
-
-#### Inherited from
-
-`Error.name`
-
-***
-
-### prepareStackTrace()?
-
-> `static` `optional` **prepareStackTrace**: (`err`, `stackTraces`) => `any`
-
-Defined in: node\_modules/@types/node/globals.d.ts:11
-
-Optional override for formatting stack traces
-
-#### Parameters
-
-##### err
-
-`Error`
-
-##### stackTraces
-
-`CallSite`[]
-
-#### Returns
-
-`any`
-
-#### See
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-
-#### Inherited from
-
-`Error.prepareStackTrace`
-
-***
+## API Properties
 
 ### response
 
-> **response**: `Response`
-
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:310](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L310)
+• **response**: `Response`
 
 #### Implementation of
 
-[`FetchError`](../interfaces/FetchError.md).[`response`](../interfaces/FetchError.md#response)
+[FetchError](../interfaces/FetchError.md).[response](../interfaces/FetchError.md#response)
 
-***
+#### Defined in
+
+[packages/framework/esm-api/src/openmrs-fetch.ts:310](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L310)
+
+___
 
 ### responseBody
 
-> **responseBody**: `null` \| `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md)
-
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L311)
+• **responseBody**: ``null`` \| `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md)
 
 #### Implementation of
 
-[`FetchError`](../interfaces/FetchError.md).[`responseBody`](../interfaces/FetchError.md#responsebody)
+[FetchError](../interfaces/FetchError.md).[responseBody](../interfaces/FetchError.md#responsebody)
 
-***
+#### Defined in
 
-### stack?
+[packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L311)
 
-> `optional` **stack**: `string`
+___
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
+## Other Properties
+
+### cause
+
+• `Optional` **cause**: `unknown`
 
 #### Inherited from
 
-`Error.stack`
+Error.cause
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.es2022.error.d.ts:26
+
+___
+
+### message
+
+• **message**: `string`
+
+#### Inherited from
+
+Error.message
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:1054
+
+___
+
+### name
+
+• **name**: `string`
+
+#### Inherited from
+
+Error.name
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:1053
+
+___
+
+### stack
+
+• `Optional` **stack**: `string`
+
+#### Inherited from
+
+Error.stack
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:1055
+
+___
+
+### prepareStackTrace
+
+▪ `Static` `Optional` **prepareStackTrace**: (`err`: `Error`, `stackTraces`: `CallSite`[]) => `any`
+
+#### Type declaration
+
+▸ (`err`, `stackTraces`): `any`
+
+Optional override for formatting stack traces
+
+**`see`** https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `err` | `Error` |
+| `stackTraces` | `CallSite`[] |
+
+##### Returns
+
+`any`
+
+#### Inherited from
+
+Error.prepareStackTrace
+
+#### Defined in
+
+node_modules/@types/node/globals.d.ts:11
+
+___
 
 ### stackTraceLimit
 
-> `static` **stackTraceLimit**: `number`
-
-Defined in: node\_modules/@types/node/globals.d.ts:13
+▪ `Static` **stackTraceLimit**: `number`
 
 #### Inherited from
 
-`Error.stackTraceLimit`
+Error.stackTraceLimit
+
+#### Defined in
+
+node_modules/@types/node/globals.d.ts:13
 
 ## Methods
 
-### captureStackTrace()
+### captureStackTrace
 
-> `static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
-
-Defined in: node\_modules/@types/node/globals.d.ts:4
+▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 
 #### Parameters
 
-##### targetObject
-
-`object`
-
-##### constructorOpt?
-
-`Function`
+| Name | Type |
+| :------ | :------ |
+| `targetObject` | `object` |
+| `constructorOpt?` | `Function` |
 
 #### Returns
 
@@ -188,4 +213,8 @@ Create .stack property on a target object
 
 #### Inherited from
 
-`Error.captureStackTrace`
+Error.captureStackTrace
+
+#### Defined in
+
+node_modules/@types/node/globals.d.ts:4

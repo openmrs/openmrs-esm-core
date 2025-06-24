@@ -1,51 +1,66 @@
-[O3 Framework](../API.md) / UseServerPaginationOptions
+[@openmrs/esm-framework](../API.md) / UseServerPaginationOptions
 
-# Interface: UseServerPaginationOptions\<R\>
+# Interface: UseServerPaginationOptions<R\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L13)
+## Type parameters
 
-## Type Parameters
+| Name |
+| :------ |
+| `R` |
 
-### R
+## Table of contents
 
-`R`
+### UI Properties
 
-## Properties
+- [immutable](UseServerPaginationOptions.md#immutable)
+- [swrConfig](UseServerPaginationOptions.md#swrconfig)
 
-### fetcher()?
+### UI Methods
 
-> `optional` **fetcher**: (`key`) => `Promise`\<`FetchResponse`\<`R`\>\>
+- [fetcher](UseServerPaginationOptions.md#fetcher)
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L22)
+## UI Properties
+
+### immutable
+
+• `Optional` **immutable**: `boolean`
+
+Whether to use useSWR or useSWRInfinite to fetch data
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L17)
+
+___
+
+### swrConfig
+
+• `Optional` **swrConfig**: `SWRConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>
+
+The configuration object for useSWR or useSWRInfinite
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L27)
+
+## UI Methods
+
+### fetcher
+
+▸ `Optional` **fetcher**(`key`): `Promise`<`FetchResponse`<`R`\>\>
 
 The fetcher to use. Defaults to openmrsFetch
 
 #### Parameters
 
-##### key
-
-`string`
+| Name | Type |
+| :------ | :------ |
+| `key` | `string` |
 
 #### Returns
 
-`Promise`\<`FetchResponse`\<`R`\>\>
+`Promise`<`FetchResponse`<`R`\>\>
 
-***
+#### Defined in
 
-### immutable?
-
-> `optional` **immutable**: `boolean`
-
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L17)
-
-Whether to use useSWR or useSWRInfinite to fetch data
-
-***
-
-### swrConfig?
-
-> `optional` **swrConfig**: `SWRConfiguration`
-
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L27)
-
-The configuration object for useSWR or useSWRInfinite
+[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L22)

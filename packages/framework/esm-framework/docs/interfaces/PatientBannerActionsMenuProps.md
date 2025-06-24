@@ -1,40 +1,55 @@
-[O3 Framework](../API.md) / PatientBannerActionsMenuProps
+[@openmrs/esm-framework](../API.md) / PatientBannerActionsMenuProps
 
 # Interface: PatientBannerActionsMenuProps
 
-Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L9)
+## Table of contents
 
-## Properties
+### UI Properties
+
+- [actionsSlotName](PatientBannerActionsMenuProps.md#actionsslotname)
+- [additionalActionsSlotState](PatientBannerActionsMenuProps.md#additionalactionsslotstate)
+- [patient](PatientBannerActionsMenuProps.md#patient)
+- [patientUuid](PatientBannerActionsMenuProps.md#patientuuid)
+
+## UI Properties
 
 ### actionsSlotName
 
-> **actionsSlotName**: `string`
+• **actionsSlotName**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L12)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L12)
 
-### additionalActionsSlotState?
+___
 
-> `optional` **additionalActionsSlotState**: `object`
+### additionalActionsSlotState
 
-Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L17)
+• `Optional` **additionalActionsSlotState**: `object`
 
 Parts of the actions slot extension state that don't really make sense go in this object,
 so as to keep the PatientBannerActionsMenu API clean.
 
-***
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L17)
+
+___
 
 ### patient
 
-> **patient**: `Patient`
+• **patient**: `Patient`
 
-Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L10)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L10)
+
+___
 
 ### patientUuid
 
-> **patientUuid**: `string`
+• **patientUuid**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L11)
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L11)

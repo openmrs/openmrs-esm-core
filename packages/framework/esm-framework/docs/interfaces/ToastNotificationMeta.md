@@ -1,76 +1,113 @@
-[O3 Framework](../API.md) / ToastNotificationMeta
+[@openmrs/esm-framework](../API.md) / ToastNotificationMeta
 
 # Interface: ToastNotificationMeta
 
-Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L19)
-
-## Extends
+## Hierarchy
 
 - [`ToastDescriptor`](ToastDescriptor.md)
 
-## Properties
+  ↳ **`ToastNotificationMeta`**
 
-### actionButtonLabel?
+## Table of contents
 
-> `optional` **actionButtonLabel**: `string`
+### UI Properties
 
-Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L13)
+- [actionButtonLabel](ToastNotificationMeta.md#actionbuttonlabel)
+- [critical](ToastNotificationMeta.md#critical)
+- [description](ToastNotificationMeta.md#description)
+- [id](ToastNotificationMeta.md#id)
+- [kind](ToastNotificationMeta.md#kind)
+- [title](ToastNotificationMeta.md#title)
+
+### UI Methods
+
+- [onActionButtonClick](ToastNotificationMeta.md#onactionbuttonclick)
+
+## UI Properties
+
+### actionButtonLabel
+
+• `Optional` **actionButtonLabel**: `string`
 
 #### Inherited from
 
-[`ToastDescriptor`](ToastDescriptor.md).[`actionButtonLabel`](ToastDescriptor.md#actionbuttonlabel)
+[ToastDescriptor](ToastDescriptor.md).[actionButtonLabel](ToastDescriptor.md#actionbuttonlabel)
 
-***
+#### Defined in
 
-### critical?
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L13)
 
-> `optional` **critical**: `boolean`
+___
 
-Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L15)
+### critical
+
+• `Optional` **critical**: `boolean`
 
 #### Inherited from
 
-[`ToastDescriptor`](ToastDescriptor.md).[`critical`](ToastDescriptor.md#critical)
+[ToastDescriptor](ToastDescriptor.md).[critical](ToastDescriptor.md#critical)
 
-***
+#### Defined in
+
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L15)
+
+___
 
 ### description
 
-> **description**: `ReactNode`
-
-Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L11)
+• **description**: `ReactNode`
 
 #### Inherited from
 
-[`ToastDescriptor`](ToastDescriptor.md).[`description`](ToastDescriptor.md#description)
+[ToastDescriptor](ToastDescriptor.md).[description](ToastDescriptor.md#description)
 
-***
+#### Defined in
+
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L11)
+
+___
 
 ### id
 
-> **id**: `number`
+• **id**: `number`
 
-Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L20)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L20)
 
-### kind?
+___
 
-> `optional` **kind**: [`ToastType`](../type-aliases/ToastType.md)
+### kind
 
-Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L14)
+• `Optional` **kind**: [`ToastType`](../API.md#toasttype)
 
 #### Inherited from
 
-[`ToastDescriptor`](ToastDescriptor.md).[`kind`](ToastDescriptor.md#kind)
+[ToastDescriptor](ToastDescriptor.md).[kind](ToastDescriptor.md#kind)
 
-***
+#### Defined in
 
-### onActionButtonClick()?
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L14)
 
-> `optional` **onActionButtonClick**: () => `void`
+___
 
-Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L12)
+### title
+
+• `Optional` **title**: `string`
+
+#### Inherited from
+
+[ToastDescriptor](ToastDescriptor.md).[title](ToastDescriptor.md#title)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L16)
+
+## UI Methods
+
+### onActionButtonClick
+
+▸ `Optional` **onActionButtonClick**(): `void`
 
 #### Returns
 
@@ -78,16 +115,8 @@ Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:12
 
 #### Inherited from
 
-[`ToastDescriptor`](ToastDescriptor.md).[`onActionButtonClick`](ToastDescriptor.md#onactionbuttonclick)
+[ToastDescriptor](ToastDescriptor.md).[onActionButtonClick](ToastDescriptor.md#onactionbuttonclick)
 
-***
+#### Defined in
 
-### title?
-
-> `optional` **title**: `string`
-
-Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L16)
-
-#### Inherited from
-
-[`ToastDescriptor`](ToastDescriptor.md).[`title`](ToastDescriptor.md#title)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L12)

@@ -1,60 +1,78 @@
-[O3 Framework](../API.md) / DynamicOfflineData
+[@openmrs/esm-framework](../API.md) / DynamicOfflineData
 
 # Interface: DynamicOfflineData
 
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/dynamic-offline-data.ts#L44)
-
 Represents the registration of a single dynamic offline data entry.
 
-## Properties
+## Table of contents
 
-### id?
+### Offline Properties
 
-> `optional` **id**: `number`
+- [id](DynamicOfflineData.md#id)
+- [identifier](DynamicOfflineData.md#identifier)
+- [syncState](DynamicOfflineData.md#syncstate)
+- [type](DynamicOfflineData.md#type)
+- [users](DynamicOfflineData.md#users)
 
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/dynamic-offline-data.ts#L48)
+## Offline Properties
+
+### id
+
+• `Optional` **id**: `number`
 
 The internal ID of the data entry, as assigned by the IndexedDB where it is stored.
 
-***
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L48)
+
+___
 
 ### identifier
 
-> **identifier**: `string`
-
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/dynamic-offline-data.ts#L58)
+• **identifier**: `string`
 
 The externally provided identifier of the data entry.
 This is typically the ID of the resource as assigned by a remote API.
 
-***
+#### Defined in
 
-### syncState?
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L58)
 
-> `optional` **syncState**: [`DynamicOfflineDataSyncState`](DynamicOfflineDataSyncState.md)
+___
 
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/dynamic-offline-data.ts#L67)
+### syncState
+
+• `Optional` **syncState**: [`DynamicOfflineDataSyncState`](DynamicOfflineDataSyncState.md)
 
 If this entry has already been synced, returns the result of that last sync attempt.
 Otherwise this is `undefined`.
 
-***
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L67)
+
+___
 
 ### type
 
-> **type**: `string`
-
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/dynamic-offline-data.ts#L53)
+• **type**: `string`
 
 The underlying type used for categorizing the data entry.
 Examples could be `"patient"` or `"form"`.
 
-***
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L53)
+
+___
 
 ### users
 
-> **users**: `string`[]
-
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/dynamic-offline-data.ts#L62)
+• **users**: `string`[]
 
 The UUIDs of the users who need this data entry available offline.
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L62)

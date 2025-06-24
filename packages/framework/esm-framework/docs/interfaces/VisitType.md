@@ -1,29 +1,41 @@
-[O3 Framework](../API.md) / VisitType
+[@openmrs/esm-framework](../API.md) / VisitType
 
 # Interface: VisitType
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L39)
+## Table of contents
+
+### Properties
+
+- [display](VisitType.md#display)
+- [name](VisitType.md#name)
+- [uuid](VisitType.md#uuid)
 
 ## Properties
 
 ### display
 
-> **display**: `string`
+• **display**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L41)
+#### Defined in
 
-***
+[packages/framework/esm-emr-api/src/types/visit-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L41)
 
-### name?
+___
 
-> `optional` **name**: `string`
+### name
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L42)
+• `Optional` **name**: `string`
 
-***
+#### Defined in
+
+[packages/framework/esm-emr-api/src/types/visit-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L42)
+
+___
 
 ### uuid
 
-> **uuid**: `string`
+• **uuid**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L40)
+#### Defined in
+
+[packages/framework/esm-emr-api/src/types/visit-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L40)

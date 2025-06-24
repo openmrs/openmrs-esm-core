@@ -1,69 +1,79 @@
-[O3 Framework](../API.md) / SpaConfig
+[@openmrs/esm-framework](../API.md) / SpaConfig
 
 # Interface: SpaConfig
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:80
-
 The configuration passed to the app shell initialization function
+
+## Table of contents
+
+### Properties
+
+- [apiUrl](SpaConfig.md#apiurl)
+- [configUrls](SpaConfig.md#configurls)
+- [env](SpaConfig.md#env)
+- [offline](SpaConfig.md#offline)
+- [spaPath](SpaConfig.md#spapath)
 
 ## Properties
 
 ### apiUrl
 
-> **apiUrl**: `string`
-
-Defined in: packages/framework/esm-globals/dist/types.d.ts:84
+• **apiUrl**: `string`
 
 The base path or URL for the OpenMRS API / endpoints.
 
-***
+#### Defined in
 
-### configUrls?
+packages/framework/esm-globals/dist/types.d.ts:84
 
-> `optional` **configUrls**: `string`[]
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:97
+### configUrls
+
+• `Optional` **configUrls**: `string`[]
 
 URLs of configurations to load in the system.
 
-***
+#### Defined in
 
-### env?
+packages/framework/esm-globals/dist/types.d.ts:97
 
-> `optional` **env**: [`SpaEnvironment`](../type-aliases/SpaEnvironment.md)
+___
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:93
+### env
+
+• `Optional` **env**: [`SpaEnvironment`](../API.md#spaenvironment)
 
 The environment to use.
 
-#### Default
+**`default`** production
 
-```ts
-production
-```
+#### Defined in
 
-***
+packages/framework/esm-globals/dist/types.d.ts:93
 
-### offline?
+___
 
-> `optional` **offline**: `boolean`
+### offline
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:102
+• `Optional` **offline**: `boolean`
 
 Defines if offline should be supported by installing a service worker.
 
-#### Default
+**`default`** true
 
-```ts
-true
-```
+#### Defined in
 
-***
+packages/framework/esm-globals/dist/types.d.ts:102
+
+___
 
 ### spaPath
 
-> **spaPath**: `string`
-
-Defined in: packages/framework/esm-globals/dist/types.d.ts:88
+• **spaPath**: `string`
 
 The base path for the SPA root path.
+
+#### Defined in
+
+packages/framework/esm-globals/dist/types.d.ts:88

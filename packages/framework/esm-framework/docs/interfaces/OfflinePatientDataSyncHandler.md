@@ -1,35 +1,45 @@
-[O3 Framework](../API.md) / OfflinePatientDataSyncHandler
+[@openmrs/esm-framework](../API.md) / OfflinePatientDataSyncHandler
 
-# Interface: ~~OfflinePatientDataSyncHandler~~
+# Interface: OfflinePatientDataSyncHandler
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L22)
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
 
-## Deprecated
+## Table of contents
 
-Will be removed once all modules have been migrated to the new dynamic offline data API.
+### Offline Properties
 
-## Properties
+- [displayName](OfflinePatientDataSyncHandler.md#displayname)
 
-### ~~displayName~~
+### Methods
 
-> `readonly` **displayName**: `string`
+- [onOfflinePatientAdded](OfflinePatientDataSyncHandler.md#onofflinepatientadded)
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L23)
+## Offline Properties
+
+### displayName
+
+• `Readonly` **displayName**: `string`
+
+#### Defined in
+
+[packages/framework/esm-offline/src/offline-patient-data.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L23)
 
 ## Methods
 
-### ~~onOfflinePatientAdded()~~
+### onOfflinePatientAdded
 
-> **onOfflinePatientAdded**(`args`): `Promise`\<`void`\>
-
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L24)
+▸ **onOfflinePatientAdded**(`args`): `Promise`<`void`\>
 
 #### Parameters
 
-##### args
-
-[`OfflinePatientArgs`](OfflinePatientArgs.md)
+| Name | Type |
+| :------ | :------ |
+| `args` | [`OfflinePatientArgs`](OfflinePatientArgs.md) |
 
 #### Returns
 
-`Promise`\<`void`\>
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/offline-patient-data.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L24)

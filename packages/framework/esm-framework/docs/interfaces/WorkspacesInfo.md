@@ -1,57 +1,71 @@
-[O3 Framework](../API.md) / WorkspacesInfo
+[@openmrs/esm-framework](../API.md) / WorkspacesInfo
 
 # Interface: WorkspacesInfo
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:535](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L535)
+## Table of contents
 
-## Properties
+### Workspace Properties
+
+- [active](WorkspacesInfo.md#active)
+- [prompt](WorkspacesInfo.md#prompt)
+- [workspaceGroup](WorkspacesInfo.md#workspacegroup)
+- [workspaceWindowState](WorkspacesInfo.md#workspacewindowstate)
+- [workspaces](WorkspacesInfo.md#workspaces)
+
+## Workspace Properties
 
 ### active
 
-> **active**: `boolean`
+• **active**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:536](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L536)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:536](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L536)
+
+___
 
 ### prompt
 
-> **prompt**: `null` \| [`Prompt`](Prompt.md)
+• **prompt**: ``null`` \| [`Prompt`](Prompt.md)
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:537](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L537)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:537](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L537)
 
-### workspaceGroup?
+___
 
-> `optional` **workspaceGroup**: `object`
+### workspaceGroup
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:540](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L540)
+• `Optional` **workspaceGroup**: `Object`
 
-#### cleanup?
+#### Type declaration
 
-> `optional` **cleanup**: `Function`
+| Name | Type |
+| :------ | :------ |
+| `cleanup?` | `Function` |
+| `members` | `string`[] |
+| `name` | `string` |
 
-#### members
+#### Defined in
 
-> **members**: `string`[]
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:540](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L540)
 
-#### name
-
-> **name**: `string`
-
-***
-
-### workspaces
-
-> **workspaces**: [`OpenWorkspace`](OpenWorkspace.md)[]
-
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:539](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L539)
-
-***
+___
 
 ### workspaceWindowState
 
-> **workspaceWindowState**: [`WorkspaceWindowState`](../type-aliases/WorkspaceWindowState.md)
+• **workspaceWindowState**: [`WorkspaceWindowState`](../API.md#workspacewindowstate)
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:538](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L538)
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:538](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L538)
+
+___
+
+### workspaces
+
+• **workspaces**: [`OpenWorkspace`](OpenWorkspace.md)[]
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:539](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L539)

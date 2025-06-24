@@ -1,29 +1,40 @@
-[O3 Framework](../API.md) / OnImportMapChangedMessage
+[@openmrs/esm-framework](../API.md) / OnImportMapChangedMessage
 
 # Interface: OnImportMapChangedMessage
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/service-worker-messaging.ts#L29)
+## Hierarchy
 
-## Extends
+- [`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md)<``"onImportMapChanged"``\>
 
-- [`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md)\<`"onImportMapChanged"`\>
+  ↳ **`OnImportMapChangedMessage`**
 
-## Properties
+## Table of contents
+
+### Offline Properties
+
+- [importMap](OnImportMapChangedMessage.md#importmap)
+- [type](OnImportMapChangedMessage.md#type)
+
+## Offline Properties
 
 ### importMap
 
-> **importMap**: [`ImportMap`](ImportMap.md)
+• **importMap**: [`ImportMap`](ImportMap.md)
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/service-worker-messaging.ts#L30)
+#### Defined in
 
-***
+[packages/framework/esm-offline/src/service-worker-messaging.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L30)
+
+___
 
 ### type
 
-> **type**: `"onImportMapChanged"`
-
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+• **type**: ``"onImportMapChanged"``
 
 #### Inherited from
 
-[`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md).[`type`](OmrsServiceWorkerMessage.md#type)
+[OmrsServiceWorkerMessage](OmrsServiceWorkerMessage.md).[type](OmrsServiceWorkerMessage.md#type)
+
+#### Defined in
+
+[packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)

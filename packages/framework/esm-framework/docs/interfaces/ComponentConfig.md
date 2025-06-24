@@ -1,29 +1,41 @@
-[O3 Framework](../API.md) / ComponentConfig
+[@openmrs/esm-framework](../API.md) / ComponentConfig
 
 # Interface: ComponentConfig
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L7)
+## Table of contents
+
+### Properties
+
+- [extension](ComponentConfig.md#extension)
+- [featureName](ComponentConfig.md#featurename)
+- [moduleName](ComponentConfig.md#modulename)
 
 ## Properties
 
-### extension?
+### extension
 
-> `optional` **extension**: [`ExtensionData`](ExtensionData.md)
+• `Optional` **extension**: [`ExtensionData`](ExtensionData.md)
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L10)
+#### Defined in
 
-***
+[packages/framework/esm-extensions/src/types.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L10)
+
+___
 
 ### featureName
 
-> **featureName**: `string`
+• **featureName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L9)
+#### Defined in
 
-***
+[packages/framework/esm-extensions/src/types.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L9)
+
+___
 
 ### moduleName
 
-> **moduleName**: `string`
+• **moduleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/types.ts#L8)
+#### Defined in
+
+[packages/framework/esm-extensions/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L8)

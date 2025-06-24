@@ -1,61 +1,85 @@
-[O3 Framework](../API.md) / UploadedFile
+[@openmrs/esm-framework](../API.md) / UploadedFile
 
 # Interface: UploadedFile
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/attachments-types.ts#L1)
+## Table of contents
+
+### Properties
+
+- [base64Content](UploadedFile.md#base64content)
+- [capturedFromWebcam](UploadedFile.md#capturedfromwebcam)
+- [file](UploadedFile.md#file)
+- [fileDescription](UploadedFile.md#filedescription)
+- [fileName](UploadedFile.md#filename)
+- [fileType](UploadedFile.md#filetype)
+- [status](UploadedFile.md#status)
 
 ## Properties
 
 ### base64Content
 
-> **base64Content**: `string`
+• **base64Content**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/attachments-types.ts#L3)
+#### Defined in
 
-***
+[packages/framework/esm-emr-api/src/types/attachments-types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L3)
 
-### capturedFromWebcam?
+___
 
-> `optional` **capturedFromWebcam**: `boolean`
+### capturedFromWebcam
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/attachments-types.ts#L8)
+• `Optional` **capturedFromWebcam**: `boolean`
 
-***
+#### Defined in
 
-### file?
+[packages/framework/esm-emr-api/src/types/attachments-types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L8)
 
-> `optional` **file**: `File`
+___
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/attachments-types.ts#L2)
+### file
 
-***
+• `Optional` **file**: `File`
+
+#### Defined in
+
+[packages/framework/esm-emr-api/src/types/attachments-types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L2)
+
+___
 
 ### fileDescription
 
-> **fileDescription**: `string`
+• **fileDescription**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/attachments-types.ts#L6)
+#### Defined in
 
-***
+[packages/framework/esm-emr-api/src/types/attachments-types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L6)
+
+___
 
 ### fileName
 
-> **fileName**: `string`
+• **fileName**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/attachments-types.ts#L4)
+#### Defined in
 
-***
+[packages/framework/esm-emr-api/src/types/attachments-types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L4)
+
+___
 
 ### fileType
 
-> **fileType**: `string`
+• **fileType**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/attachments-types.ts#L5)
+#### Defined in
 
-***
+[packages/framework/esm-emr-api/src/types/attachments-types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L5)
 
-### status?
+___
 
-> `optional` **status**: `"uploading"` \| `"complete"`
+### status
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/attachments-types.ts#L7)
+• `Optional` **status**: ``"uploading"`` \| ``"complete"``
+
+#### Defined in
+
+[packages/framework/esm-emr-api/src/types/attachments-types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L7)

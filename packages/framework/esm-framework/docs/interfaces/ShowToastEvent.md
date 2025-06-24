@@ -1,49 +1,70 @@
-[O3 Framework](../API.md) / ShowToastEvent
+[@openmrs/esm-framework](../API.md) / ShowToastEvent
 
 # Interface: ShowToastEvent
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:32
+## Table of contents
+
+### Properties
+
+- [actionButtonLabel](ShowToastEvent.md#actionbuttonlabel)
+- [description](ShowToastEvent.md#description)
+- [kind](ShowToastEvent.md#kind)
+- [title](ShowToastEvent.md#title)
+
+### Methods
+
+- [onActionButtonClick](ShowToastEvent.md#onactionbuttonclick)
 
 ## Properties
 
-### actionButtonLabel?
+### actionButtonLabel
 
-> `optional` **actionButtonLabel**: `any`
+• `Optional` **actionButtonLabel**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:36
+#### Defined in
 
-***
+packages/framework/esm-globals/dist/events.d.ts:36
+
+___
 
 ### description
 
-> **description**: `any`
+• **description**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:33
+#### Defined in
 
-***
+packages/framework/esm-globals/dist/events.d.ts:33
 
-### kind?
+___
 
-> `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
+### kind
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:34
+• `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
 
-***
+#### Defined in
 
-### onActionButtonClick()?
+packages/framework/esm-globals/dist/events.d.ts:34
 
-> `optional` **onActionButtonClick**: () => `void`
+___
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:37
+### title
+
+• `Optional` **title**: `string`
+
+#### Defined in
+
+packages/framework/esm-globals/dist/events.d.ts:35
+
+## Methods
+
+### onActionButtonClick
+
+▸ `Optional` **onActionButtonClick**(): `void`
 
 #### Returns
 
 `void`
 
-***
+#### Defined in
 
-### title?
-
-> `optional` **title**: `string`
-
-Defined in: packages/framework/esm-globals/dist/events.d.ts:35
+packages/framework/esm-globals/dist/events.d.ts:37

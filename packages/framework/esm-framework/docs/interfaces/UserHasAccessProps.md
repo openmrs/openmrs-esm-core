@@ -1,29 +1,41 @@
-[O3 Framework](../API.md) / UserHasAccessProps
+[@openmrs/esm-framework](../API.md) / UserHasAccessProps
 
 # Interface: UserHasAccessProps
 
-Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L6)
+## Table of contents
 
-## Properties
+### API Properties
 
-### children?
+- [children](UserHasAccessProps.md#children)
+- [fallback](UserHasAccessProps.md#fallback)
+- [privilege](UserHasAccessProps.md#privilege)
 
-> `optional` **children**: `ReactNode`
+## API Properties
 
-Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L9)
+### children
 
-***
+• `Optional` **children**: `ReactNode`
 
-### fallback?
+#### Defined in
 
-> `optional` **fallback**: `ReactNode`
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L9)
 
-Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L8)
+___
 
-***
+### fallback
+
+• `Optional` **fallback**: `ReactNode`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L8)
+
+___
 
 ### privilege
 
-> **privilege**: `string` \| `string`[]
+• **privilege**: `string` \| `string`[]
 
-Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L7)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L7)

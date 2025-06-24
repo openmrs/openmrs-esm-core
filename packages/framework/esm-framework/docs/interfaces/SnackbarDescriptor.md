@@ -1,85 +1,120 @@
-[O3 Framework](../API.md) / SnackbarDescriptor
+[@openmrs/esm-framework](../API.md) / SnackbarDescriptor
 
 # Interface: SnackbarDescriptor
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L13)
+## Hierarchy
 
-## Extended by
+- **`SnackbarDescriptor`**
 
-- [`SnackbarMeta`](SnackbarMeta.md)
+  ↳ [`SnackbarMeta`](SnackbarMeta.md)
 
-## Properties
+## Table of contents
 
-### actionButtonLabel?
+### UI Properties
 
-> `optional` **actionButtonLabel**: `string`
+- [actionButtonLabel](SnackbarDescriptor.md#actionbuttonlabel)
+- [autoClose](SnackbarDescriptor.md#autoclose)
+- [isLowContrast](SnackbarDescriptor.md#islowcontrast)
+- [kind](SnackbarDescriptor.md#kind)
+- [progressActionLabel](SnackbarDescriptor.md#progressactionlabel)
+- [subtitle](SnackbarDescriptor.md#subtitle)
+- [timeoutInMs](SnackbarDescriptor.md#timeoutinms)
+- [title](SnackbarDescriptor.md#title)
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L14)
+### UI Methods
 
-***
+- [onActionButtonClick](SnackbarDescriptor.md#onactionbuttonclick)
 
-### autoClose?
+## UI Properties
 
-> `optional` **autoClose**: `boolean`
+### actionButtonLabel
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
+• `Optional` **actionButtonLabel**: `string`
 
-***
+#### Defined in
 
-### isLowContrast?
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L14)
 
-> `optional` **isLowContrast**: `boolean`
+___
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L15)
+### autoClose
 
-***
+• `Optional` **autoClose**: `boolean`
 
-### kind?
+#### Defined in
 
-> `optional` **kind**: `string`
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L16)
+___
 
-***
+### isLowContrast
 
-### onActionButtonClick()?
+• `Optional` **isLowContrast**: `boolean`
 
-> `optional` **onActionButtonClick**: () => `void`
+#### Defined in
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L17)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L15)
+
+___
+
+### kind
+
+• `Optional` **kind**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L16)
+
+___
+
+### progressActionLabel
+
+• `Optional` **progressActionLabel**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L18)
+
+___
+
+### subtitle
+
+• `Optional` **subtitle**: `ReactNode`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L19)
+
+___
+
+### timeoutInMs
+
+• `Optional` **timeoutInMs**: `number`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L20)
+
+___
+
+### title
+
+• **title**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L22)
+
+## UI Methods
+
+### onActionButtonClick
+
+▸ `Optional` **onActionButtonClick**(): `void`
 
 #### Returns
 
 `void`
 
-***
+#### Defined in
 
-### progressActionLabel?
-
-> `optional` **progressActionLabel**: `string`
-
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L18)
-
-***
-
-### subtitle?
-
-> `optional` **subtitle**: `ReactNode`
-
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L19)
-
-***
-
-### timeoutInMs?
-
-> `optional` **timeoutInMs**: `number`
-
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L20)
-
-***
-
-### title
-
-> **title**: `string`
-
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L22)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L17)

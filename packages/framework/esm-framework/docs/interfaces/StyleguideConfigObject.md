@@ -1,97 +1,128 @@
-[O3 Framework](../API.md) / StyleguideConfigObject
+[@openmrs/esm-framework](../API.md) / StyleguideConfigObject
 
 # Interface: StyleguideConfigObject
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L3)
+## Table of contents
+
+### Properties
+
+- [Brand color #1](StyleguideConfigObject.md#brand color #1)
+- [Brand color #2](StyleguideConfigObject.md#brand color #2)
+- [Brand color #3](StyleguideConfigObject.md#brand color #3)
+- [diagnosisTags](StyleguideConfigObject.md#diagnosistags)
+- [excludePatientIdentifierCodeTypes](StyleguideConfigObject.md#excludepatientidentifiercodetypes)
+- [implementationName](StyleguideConfigObject.md#implementationname)
+- [patientPhotoConceptUuid](StyleguideConfigObject.md#patientphotoconceptuuid)
+- [preferredCalendar](StyleguideConfigObject.md#preferredcalendar)
+- [preferredDateLocale](StyleguideConfigObject.md#preferreddatelocale)
 
 ## Properties
 
 ### Brand color #1
 
-> **Brand color #1**: `string`
+• **Brand color #1**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L4)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/config-schema.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L4)
+
+___
 
 ### Brand color #2
 
-> **Brand color #2**: `string`
+• **Brand color #2**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L5)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/config-schema.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L5)
+
+___
 
 ### Brand color #3
 
-> **Brand color #3**: `string`
+• **Brand color #3**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L6)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/config-schema.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L6)
+
+___
 
 ### diagnosisTags
 
-> **diagnosisTags**: `object`
+• **diagnosisTags**: `Object`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L18)
+#### Type declaration
 
-#### primaryColor
+| Name | Type |
+| :------ | :------ |
+| `primaryColor` | ``"blue"`` \| ``"cyan"`` \| ``"gray"`` \| ``"green"`` \| ``"magenta"`` \| ``"purple"`` \| ``"red"`` \| ``"teal"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
+| `secondaryColor` | ``"blue"`` \| ``"cyan"`` \| ``"gray"`` \| ``"green"`` \| ``"magenta"`` \| ``"purple"`` \| ``"red"`` \| ``"teal"`` \| ``"warm-gray"`` \| ``"cool-gray"`` \| ``"high-contrast"`` \| ``"outline"`` |
 
-> **primaryColor**: `"blue"` \| `"cyan"` \| `"gray"` \| `"green"` \| `"magenta"` \| `"purple"` \| `"red"` \| `"teal"` \| `"warm-gray"` \| `"cool-gray"` \| `"high-contrast"` \| `"outline"`
+#### Defined in
 
-#### secondaryColor
+[packages/framework/esm-styleguide/src/config-schema.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L18)
 
-> **secondaryColor**: `"blue"` \| `"cyan"` \| `"gray"` \| `"green"` \| `"magenta"` \| `"purple"` \| `"red"` \| `"teal"` \| `"warm-gray"` \| `"cool-gray"` \| `"high-contrast"` \| `"outline"`
-
-***
+___
 
 ### excludePatientIdentifierCodeTypes
 
-> **excludePatientIdentifierCodeTypes**: `object`
+• **excludePatientIdentifierCodeTypes**: `Object`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L7)
+#### Type declaration
 
-#### uuids
+| Name | Type |
+| :------ | :------ |
+| `uuids` | `string`[] |
 
-> **uuids**: `string`[]
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L7)
+
+___
 
 ### implementationName
 
-> **implementationName**: `string`
+• **implementationName**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L10)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/config-schema.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L10)
+
+___
 
 ### patientPhotoConceptUuid
 
-> **patientPhotoConceptUuid**: `string`
+• **patientPhotoConceptUuid**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L11)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/config-schema.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L11)
+
+___
 
 ### preferredCalendar
 
-> **preferredCalendar**: `object`
+• **preferredCalendar**: `Object`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L12)
+#### Index signature
 
-#### Index Signature
+▪ [key: `string`]: `string`
 
-\[`key`: `string`\]: `string`
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L12)
+
+___
 
 ### preferredDateLocale
 
-> **preferredDateLocale**: `object`
+• **preferredDateLocale**: `Object`
 
-Defined in: [packages/framework/esm-styleguide/src/config-schema.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/config-schema.ts#L15)
+#### Index signature
 
-#### Index Signature
+▪ [key: `string`]: `string`
 
-\[`key`: `string`\]: `string`
+#### Defined in
+
+[packages/framework/esm-styleguide/src/config-schema.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L15)

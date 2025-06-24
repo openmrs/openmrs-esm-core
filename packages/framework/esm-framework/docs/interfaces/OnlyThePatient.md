@@ -1,21 +1,29 @@
-[O3 Framework](../API.md) / OnlyThePatient
+[@openmrs/esm-framework](../API.md) / OnlyThePatient
 
 # Interface: OnlyThePatient
 
-Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/current-patient.ts#L15)
-
-## Extends
+## Hierarchy
 
 - [`CurrentPatientOptions`](CurrentPatientOptions.md)
 
-## Properties
+  ↳ **`OnlyThePatient`**
+
+## Table of contents
+
+### API Properties
+
+- [includeConfig](OnlyThePatient.md#includeconfig)
+
+## API Properties
 
 ### includeConfig
 
-> **includeConfig**: `false`
-
-Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/current-patient.ts#L16)
+• **includeConfig**: ``false``
 
 #### Overrides
 
-[`CurrentPatientOptions`](CurrentPatientOptions.md).[`includeConfig`](CurrentPatientOptions.md#includeconfig)
+[CurrentPatientOptions](CurrentPatientOptions.md).[includeConfig](CurrentPatientOptions.md#includeconfig)
+
+#### Defined in
+
+[packages/framework/esm-emr-api/src/current-patient.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L16)

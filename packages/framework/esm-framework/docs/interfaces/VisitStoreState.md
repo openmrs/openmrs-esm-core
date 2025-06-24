@@ -1,37 +1,49 @@
-[O3 Framework](../API.md) / VisitStoreState
+[@openmrs/esm-framework](../API.md) / VisitStoreState
 
 # Interface: VisitStoreState
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L25)
+## Table of contents
 
-## Properties
+### API Properties
+
+- [manuallySetVisitUuid](VisitStoreState.md#manuallysetvisituuid)
+- [mutateVisitCallbacks](VisitStoreState.md#mutatevisitcallbacks)
+- [patientUuid](VisitStoreState.md#patientuuid)
+
+## API Properties
 
 ### manuallySetVisitUuid
 
-> **manuallySetVisitUuid**: `null` \| `string`
+• **manuallySetVisitUuid**: ``null`` \| `string`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
+#### Defined in
 
-***
+[packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
+
+___
 
 ### mutateVisitCallbacks
 
-> **mutateVisitCallbacks**: `object`
-
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L34)
+• **mutateVisitCallbacks**: `Object`
 
 Stores a record of SWR mutate callbacks that should be called when
 the Visit with the specified uuid is modified. The callbacks are keyed
 by unique component IDs.
 
-#### Index Signature
+#### Index signature
 
-\[`componentId`: `string`\]: () => `void`
+▪ [componentId: `string`]: () => `void`
 
-***
+#### Defined in
+
+[packages/framework/esm-emr-api/src/visit-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L34)
+
+___
 
 ### patientUuid
 
-> **patientUuid**: `null` \| `string`
+• **patientUuid**: ``null`` \| `string`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/visit-utils.ts#L26)
+#### Defined in
+
+[packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L26)

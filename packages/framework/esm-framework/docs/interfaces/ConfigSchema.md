@@ -1,33 +1,45 @@
-[O3 Framework](../API.md) / ConfigSchema
+[@openmrs/esm-framework](../API.md) / ConfigSchema
 
 # Interface: ConfigSchema
 
-Defined in: [packages/framework/esm-config/src/types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L17)
-
 ## Indexable
 
-\[`key`: `string`\]: `ConfigSchema` \| [`ConfigValue`](../type-aliases/ConfigValue.md)
+▪ [key: `string`]: [`ConfigSchema`](ConfigSchema.md) \| [`ConfigValue`](../API.md#configvalue)
+
+## Table of contents
+
+### Properties
+
+- [\_elements](ConfigSchema.md#_elements)
+- [\_type](ConfigSchema.md#_type)
+- [\_validators](ConfigSchema.md#_validators)
 
 ## Properties
 
-### \_elements?
+### \_elements
 
-> `optional` **\_elements**: `ConfigSchema`
+• `Optional` **\_elements**: [`ConfigSchema`](ConfigSchema.md)
 
-Defined in: [packages/framework/esm-config/src/types.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L21)
+#### Defined in
 
-***
+[packages/framework/esm-config/src/types.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L21)
 
-### \_type?
+___
 
-> `optional` **\_type**: [`Type`](../enumerations/Type.md)
+### \_type
 
-Defined in: [packages/framework/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L19)
+• `Optional` **\_type**: [`Type`](../enums/Type.md)
 
-***
+#### Defined in
 
-### \_validators?
+[packages/framework/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L19)
 
-> `optional` **\_validators**: [`Validator`](../type-aliases/Validator.md)[]
+___
 
-Defined in: [packages/framework/esm-config/src/types.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L20)
+### \_validators
+
+• `Optional` **\_validators**: [`Validator`](../API.md#validator)[]
+
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L20)

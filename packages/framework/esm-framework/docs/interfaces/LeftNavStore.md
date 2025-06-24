@@ -1,37 +1,52 @@
-[O3 Framework](../API.md) / LeftNavStore
+[@openmrs/esm-framework](../API.md) / LeftNavStore
 
 # Interface: LeftNavStore
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L6)
+## Table of contents
+
+### Properties
+
+- [basePath](LeftNavStore.md#basepath)
+- [componentContext](LeftNavStore.md#componentcontext)
+- [mode](LeftNavStore.md#mode)
+- [slotName](LeftNavStore.md#slotname)
 
 ## Properties
 
 ### basePath
 
-> **basePath**: `string`
+• **basePath**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L8)
+#### Defined in
 
-***
+[packages/framework/esm-extensions/src/left-nav.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L8)
 
-### componentContext?
+___
 
-> `optional` **componentContext**: [`ComponentConfig`](ComponentConfig.md)
+### componentContext
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L10)
+• `Optional` **componentContext**: [`ComponentConfig`](ComponentConfig.md)
 
-***
+#### Defined in
+
+[packages/framework/esm-extensions/src/left-nav.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L10)
+
+___
 
 ### mode
 
-> **mode**: `LeftNavMode`
+• **mode**: `LeftNavMode`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L9)
+#### Defined in
 
-***
+[packages/framework/esm-extensions/src/left-nav.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L9)
+
+___
 
 ### slotName
 
-> **slotName**: `null` \| `string`
+• **slotName**: ``null`` \| `string`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L7)
+#### Defined in
+
+[packages/framework/esm-extensions/src/left-nav.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L7)

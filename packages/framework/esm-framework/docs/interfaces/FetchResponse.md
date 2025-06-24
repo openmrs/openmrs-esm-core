@@ -1,220 +1,222 @@
-[O3 Framework](../API.md) / FetchResponse
+[@openmrs/esm-framework](../API.md) / FetchResponse
 
-# Interface: FetchResponse\<T\>
+# Interface: FetchResponse<T\>
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/fetch.ts#L3)
+## Type parameters
 
-## Extends
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+
+## Hierarchy
 
 - `Response`
 
-## Extended by
+  ↳ **`FetchResponse`**
 
-- [`LoggedInUserFetchResponse`](LoggedInUserFetchResponse.md)
+  ↳↳ [`LoggedInUserFetchResponse`](LoggedInUserFetchResponse.md)
 
-## Type Parameters
+## Table of contents
 
-### T
+### Properties
 
-`T` = `any`
+- [body](FetchResponse.md#body)
+- [bodyUsed](FetchResponse.md#bodyused)
+- [data](FetchResponse.md#data)
+- [headers](FetchResponse.md#headers)
+- [ok](FetchResponse.md#ok)
+- [redirected](FetchResponse.md#redirected)
+- [status](FetchResponse.md#status)
+- [statusText](FetchResponse.md#statustext)
+- [type](FetchResponse.md#type)
+- [url](FetchResponse.md#url)
+
+### Methods
+
+- [arrayBuffer](FetchResponse.md#arraybuffer)
+- [blob](FetchResponse.md#blob)
+- [clone](FetchResponse.md#clone)
+- [formData](FetchResponse.md#formdata)
+- [json](FetchResponse.md#json)
+- [text](FetchResponse.md#text)
 
 ## Properties
 
 ### body
 
-> `readonly` **body**: `null` \| `ReadableStream`\<`Uint8Array`\<`ArrayBufferLike`\>\>
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3534
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/body)
+• `Readonly` **body**: ``null`` \| `ReadableStream`<`Uint8Array`\>
 
 #### Inherited from
 
-`Response.body`
+Response.body
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2587
+
+___
 
 ### bodyUsed
 
-> `readonly` **bodyUsed**: `boolean`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3536
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bodyUsed)
+• `Readonly` **bodyUsed**: `boolean`
 
 #### Inherited from
 
-`Response.bodyUsed`
+Response.bodyUsed
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2588
+
+___
 
 ### data
 
-> **data**: `T`
+• **data**: `T`
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/types/fetch.ts#L4)
+#### Defined in
 
-***
+[packages/framework/esm-api/src/types/fetch.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L4)
+
+___
 
 ### headers
 
-> `readonly` **headers**: `Headers`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19881
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/headers)
+• `Readonly` **headers**: `Headers`
 
 #### Inherited from
 
-`Response.headers`
+Response.headers
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11772
+
+___
 
 ### ok
 
-> `readonly` **ok**: `boolean`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19883
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/ok)
+• `Readonly` **ok**: `boolean`
 
 #### Inherited from
 
-`Response.ok`
+Response.ok
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11773
+
+___
 
 ### redirected
 
-> `readonly` **redirected**: `boolean`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19885
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/redirected)
+• `Readonly` **redirected**: `boolean`
 
 #### Inherited from
 
-`Response.redirected`
+Response.redirected
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11774
+
+___
 
 ### status
 
-> `readonly` **status**: `number`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19887
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/status)
+• `Readonly` **status**: `number`
 
 #### Inherited from
 
-`Response.status`
+Response.status
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11775
+
+___
 
 ### statusText
 
-> `readonly` **statusText**: `string`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19889
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/statusText)
+• `Readonly` **statusText**: `string`
 
 #### Inherited from
 
-`Response.statusText`
+Response.statusText
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11776
+
+___
 
 ### type
 
-> `readonly` **type**: `ResponseType`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19891
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/type)
+• `Readonly` **type**: `ResponseType`
 
 #### Inherited from
 
-`Response.type`
+Response.type
 
-***
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11777
+
+___
 
 ### url
 
-> `readonly` **url**: `string`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19893
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/url)
+• `Readonly` **url**: `string`
 
 #### Inherited from
 
-`Response.url`
+Response.url
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:11778
 
 ## Methods
 
-### arrayBuffer()
+### arrayBuffer
 
-> **arrayBuffer**(): `Promise`\<`ArrayBuffer`\>
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3538
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/arrayBuffer)
+▸ **arrayBuffer**(): `Promise`<`ArrayBuffer`\>
 
 #### Returns
 
-`Promise`\<`ArrayBuffer`\>
+`Promise`<`ArrayBuffer`\>
 
 #### Inherited from
 
-`Response.arrayBuffer`
+Response.arrayBuffer
 
-***
+#### Defined in
 
-### blob()
+node_modules/typescript/lib/lib.dom.d.ts:2589
 
-> **blob**(): `Promise`\<`Blob`\>
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3540
+### blob
 
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/blob)
+▸ **blob**(): `Promise`<`Blob`\>
 
 #### Returns
 
-`Promise`\<`Blob`\>
+`Promise`<`Blob`\>
 
 #### Inherited from
 
-`Response.blob`
+Response.blob
 
-***
+#### Defined in
 
-### bytes()
+node_modules/typescript/lib/lib.dom.d.ts:2590
 
-> **bytes**(): `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3542
+### clone
 
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bytes)
-
-#### Returns
-
-`Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
-
-#### Inherited from
-
-`Response.bytes`
-
-***
-
-### clone()
-
-> **clone**(): `Response`
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19895
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/clone)
+▸ **clone**(): `Response`
 
 #### Returns
 
@@ -222,58 +224,62 @@ Defined in: node\_modules/typescript/lib/lib.dom.d.ts:19895
 
 #### Inherited from
 
-`Response.clone`
+Response.clone
 
-***
+#### Defined in
 
-### formData()
+node_modules/typescript/lib/lib.dom.d.ts:11779
 
-> **formData**(): `Promise`\<`FormData`\>
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3544
+### formData
 
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/formData)
-
-#### Returns
-
-`Promise`\<`FormData`\>
-
-#### Inherited from
-
-`Response.formData`
-
-***
-
-### json()
-
-> **json**(): `Promise`\<`any`\>
-
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3546
-
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/json)
+▸ **formData**(): `Promise`<`FormData`\>
 
 #### Returns
 
-`Promise`\<`any`\>
+`Promise`<`FormData`\>
 
 #### Inherited from
 
-`Response.json`
+Response.formData
 
-***
+#### Defined in
 
-### text()
+node_modules/typescript/lib/lib.dom.d.ts:2591
 
-> **text**(): `Promise`\<`string`\>
+___
 
-Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3548
+### json
 
-[MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/text)
+▸ **json**(): `Promise`<`any`\>
 
 #### Returns
 
-`Promise`\<`string`\>
+`Promise`<`any`\>
 
 #### Inherited from
 
-`Response.text`
+Response.json
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2592
+
+___
+
+### text
+
+▸ **text**(): `Promise`<`string`\>
+
+#### Returns
+
+`Promise`<`string`\>
+
+#### Inherited from
+
+Response.text
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2593

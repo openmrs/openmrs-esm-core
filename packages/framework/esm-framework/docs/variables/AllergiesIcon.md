@@ -1,7 +1,0 @@
-[O3 Framework](../API.md) / AllergiesIcon
-
-# Variable: AllergiesIcon
-
-> `const` **AllergiesIcon**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`IconProps`](../type-aliases/IconProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\> = `WarningIcon`
-
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:727](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/icons/icons.tsx#L727)

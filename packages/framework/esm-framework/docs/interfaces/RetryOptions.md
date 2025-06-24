@@ -1,82 +1,83 @@
-[O3 Framework](../API.md) / RetryOptions
+[@openmrs/esm-framework](../API.md) / RetryOptions
 
 # Interface: RetryOptions
 
-Defined in: packages/framework/esm-utils/dist/retry.d.ts:5
+Options for configuring the behavior of the [retry](../API.md#retry) function.
 
-Options for configuring the behavior of the [retry](../functions/retry.md) function.
+## Table of contents
+
+### Methods
+
+- [getDelay](RetryOptions.md#getdelay)
+- [onError](RetryOptions.md#onerror)
+- [shouldRetry](RetryOptions.md#shouldretry)
 
 ## Methods
 
-### getDelay()?
+### getDelay
 
-> `optional` **getDelay**(`attempt`): `number`
-
-Defined in: packages/framework/esm-utils/dist/retry.d.ts:17
+▸ `Optional` **getDelay**(`attempt`): `number`
 
 Calculates the next delay (in milliseconds) before a retry attempt.
 Returning a value for the inital attempt (`0`) delays the initial function invocation.
 
 #### Parameters
 
-##### attempt
-
-`number`
-
-The current (zero-based) retry attempt. `0` indicates the initial attempt.
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `attempt` | `number` | The current (zero-based) retry attempt. `0` indicates the initial attempt. |
 
 #### Returns
 
 `number`
 
-***
+#### Defined in
 
-### onError()?
+packages/framework/esm-utils/dist/retry.d.ts:17
 
-> `optional` **onError**(`e`, `attempt`): `void`
+___
 
-Defined in: packages/framework/esm-utils/dist/retry.d.ts:24
+### onError
+
+▸ `Optional` **onError**(`e`, `attempt`): `void`
 
 Called when invoking the function resulted in an error.
 Allows running side-effects on errors, e.g. logging.
 
 #### Parameters
 
-##### e
-
-`any`
-
-The error thrown by the function.
-
-##### attempt
-
-`number`
-
-The current (zero-based) retry attempt. `0` indicates the initial attempt.
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `e` | `any` | The error thrown by the function. |
+| `attempt` | `number` | The current (zero-based) retry attempt. `0` indicates the initial attempt. |
 
 #### Returns
 
 `void`
 
-***
+#### Defined in
 
-### shouldRetry()?
+packages/framework/esm-utils/dist/retry.d.ts:24
 
-> `optional` **shouldRetry**(`attempt`): `any`
+___
 
-Defined in: packages/framework/esm-utils/dist/retry.d.ts:11
+### shouldRetry
+
+▸ `Optional` **shouldRetry**(`attempt`): `any`
 
 Determines whether the retry function should retry executing the function after it failed
 with an error on the current attempt.
 
 #### Parameters
 
-##### attempt
-
-`number`
-
-The current (zero-based) retry attempt. `0` indicates the initial attempt.
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `attempt` | `number` | The current (zero-based) retry attempt. `0` indicates the initial attempt. |
 
 #### Returns
 
 `any`
+
+#### Defined in
+
+packages/framework/esm-utils/dist/retry.d.ts:11

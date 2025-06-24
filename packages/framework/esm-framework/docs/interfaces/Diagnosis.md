@@ -1,165 +1,189 @@
-[O3 Framework](../API.md) / Diagnosis
+[@openmrs/esm-framework](../API.md) / Diagnosis
 
 # Interface: Diagnosis
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L6)
-
-## Extends
+## Hierarchy
 
 - `OpenmrsResource`
 
-## Indexable
+  ↳ **`Diagnosis`**
 
-\[`anythingElse`: `string`\]: `any`
+## Table of contents
+
+### Properties
+
+- [auditInfo](Diagnosis.md#auditinfo)
+- [certainty](Diagnosis.md#certainty)
+- [diagnosis](Diagnosis.md#diagnosis)
+- [display](Diagnosis.md#display)
+- [encounter](Diagnosis.md#encounter)
+- [formFieldNamespace](Diagnosis.md#formfieldnamespace)
+- [formFieldPath](Diagnosis.md#formfieldpath)
+- [links](Diagnosis.md#links)
+- [patient](Diagnosis.md#patient)
+- [rank](Diagnosis.md#rank)
+- [resourceVersion](Diagnosis.md#resourceversion)
+- [uuid](Diagnosis.md#uuid)
+- [voided](Diagnosis.md#voided)
 
 ## Properties
 
-### auditInfo?
+### auditInfo
 
-> `optional` **auditInfo**: `AuditInfo`
-
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
+• `Optional` **auditInfo**: `AuditInfo`
 
 #### Inherited from
 
-`OpenmrsResource.auditInfo`
+OpenmrsResource.auditInfo
 
-***
+#### Defined in
 
-### certainty?
+packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
 
-> `optional` **certainty**: `string`
+___
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L19)
+### certainty
 
-***
+• `Optional` **certainty**: `string`
 
-### diagnosis?
+#### Defined in
 
-> `optional` **diagnosis**: `object`
+[packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L19)
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L7)
+___
 
-#### coded?
+### diagnosis
 
-> `optional` **coded**: `object`
+• `Optional` **diagnosis**: `Object`
 
-##### coded.conceptClass?
+#### Type declaration
 
-> `optional` **conceptClass**: `ConceptClass`
+| Name | Type |
+| :------ | :------ |
+| `coded?` | { `conceptClass?`: `ConceptClass` ; `datatype?`: `OpenmrsResource` ; `display?`: `string` ; `name?`: `Concept` ; `uuid`: `string`  } |
+| `coded.conceptClass?` | `ConceptClass` |
+| `coded.datatype?` | `OpenmrsResource` |
+| `coded.display?` | `string` |
+| `coded.name?` | `Concept` |
+| `coded.uuid` | `string` |
+| `nonCoded?` | `string` |
 
-##### coded.datatype?
+#### Defined in
 
-> `optional` **datatype**: `OpenmrsResource`
+[packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L7)
 
-##### coded.display?
+___
 
-> `optional` **display**: `string`
+### display
 
-##### coded.name?
-
-> `optional` **name**: `Concept`
-
-##### coded.uuid
-
-> **uuid**: `string`
-
-#### nonCoded?
-
-> `optional` **nonCoded**: `string`
-
-***
-
-### display?
-
-> `optional` **display**: `string`
-
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
+• `Optional` **display**: `string`
 
 #### Inherited from
 
-`OpenmrsResource.display`
+OpenmrsResource.display
 
-***
+#### Defined in
 
-### encounter?
+packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
 
-> `optional` **encounter**: [`Encounter`](Encounter.md)
+___
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L18)
+### encounter
 
-***
+• `Optional` **encounter**: [`Encounter`](Encounter.md)
 
-### formFieldNamespace?
+#### Defined in
 
-> `optional` **formFieldNamespace**: `string`
+[packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L18)
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L21)
+___
 
-***
+### formFieldNamespace
 
-### formFieldPath?
+• `Optional` **formFieldNamespace**: `string`
 
-> `optional` **formFieldPath**: `string`
+#### Defined in
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L22)
+[packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L21)
 
-***
+___
 
-### links?
+### formFieldPath
 
-> `optional` **links**: `Link`[]
+• `Optional` **formFieldPath**: `string`
 
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
+#### Defined in
 
-#### Inherited from
+[packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L22)
 
-`OpenmrsResource.links`
+___
 
-***
+### links
 
-### patient?
-
-> `optional` **patient**: [`Patient`](Patient.md)
-
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L17)
-
-***
-
-### rank?
-
-> `optional` **rank**: `number`
-
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L20)
-
-***
-
-### resourceVersion?
-
-> `optional` **resourceVersion**: `string`
-
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
+• `Optional` **links**: `Link`[]
 
 #### Inherited from
 
-`OpenmrsResource.resourceVersion`
+OpenmrsResource.links
 
-***
+#### Defined in
+
+packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
+
+___
+
+### patient
+
+• `Optional` **patient**: [`Patient`](Patient.md)
+
+#### Defined in
+
+[packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L17)
+
+___
+
+### rank
+
+• `Optional` **rank**: `number`
+
+#### Defined in
+
+[packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L20)
+
+___
+
+### resourceVersion
+
+• `Optional` **resourceVersion**: `string`
+
+#### Inherited from
+
+OpenmrsResource.resourceVersion
+
+#### Defined in
+
+packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
+
+___
 
 ### uuid
 
-> **uuid**: `string`
-
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
+• **uuid**: `string`
 
 #### Inherited from
 
-`OpenmrsResource.uuid`
+OpenmrsResource.uuid
 
-***
+#### Defined in
 
-### voided?
+packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
 
-> `optional` **voided**: `boolean`
+___
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L23)
+### voided
+
+• `Optional` **voided**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L23)

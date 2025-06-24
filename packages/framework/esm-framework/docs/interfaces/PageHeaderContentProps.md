@@ -1,29 +1,41 @@
-[O3 Framework](../API.md) / PageHeaderContentProps
+[@openmrs/esm-framework](../API.md) / PageHeaderContentProps
 
 # Interface: PageHeaderContentProps
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L9)
+## Table of contents
 
-## Properties
+### UI Properties
 
-### className?
+- [className](PageHeaderContentProps.md#classname)
+- [illustration](PageHeaderContentProps.md#illustration)
+- [title](PageHeaderContentProps.md#title)
 
-> `optional` **className**: `string`
+## UI Properties
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L12)
+### className
 
-***
+• `Optional` **className**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L12)
+
+___
 
 ### illustration
 
-> **illustration**: `ReactElement`
+• **illustration**: `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L11)
+#### Defined in
 
-***
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L11)
+
+___
 
 ### title
 
-> **title**: `string` \| `Element`
+• **title**: `string` \| `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L10)
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L10)

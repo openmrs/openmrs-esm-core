@@ -1,27 +1,36 @@
-[O3 Framework](../API.md) / ConfigObject
+[@openmrs/esm-framework](../API.md) / ConfigObject
 
 # Interface: ConfigObject
 
-Defined in: [packages/framework/esm-config/src/types.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L28)
-
 ## Indexable
 
-\[`key`: `string`\]: `any`
+▪ [key: `string`]: `any`
+
+## Table of contents
+
+### Properties
+
+- [Display conditions](ConfigObject.md#display conditions)
+- [Translation overrides](ConfigObject.md#translation overrides)
 
 ## Properties
 
-### Display conditions?
+### Display conditions
 
-> `optional` **Display conditions**: [`DisplayConditionsConfigObject`](DisplayConditionsConfigObject.md)
-
-Defined in: [packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L31)
+• `Optional` **Display conditions**: [`DisplayConditionsConfigObject`](DisplayConditionsConfigObject.md)
 
 Options that control when this extension is displayed
 
-***
+#### Defined in
 
-### Translation overrides?
+[packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L31)
 
-> `optional` **Translation overrides**: `Record`\<`string`, `Record`\<`string`, `string`\>\>
+___
 
-Defined in: [packages/framework/esm-config/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L32)
+### Translation overrides
+
+• `Optional` **Translation overrides**: `Record`<`string`, `Record`<`string`, `string`\>\>
+
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L32)

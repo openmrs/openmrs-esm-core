@@ -1,57 +1,81 @@
-[O3 Framework](../API.md) / ShowActionableNotificationEvent
+[@openmrs/esm-framework](../API.md) / ShowActionableNotificationEvent
 
 # Interface: ShowActionableNotificationEvent
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:23
+## Table of contents
+
+### Properties
+
+- [actionButtonLabel](ShowActionableNotificationEvent.md#actionbuttonlabel)
+- [kind](ShowActionableNotificationEvent.md#kind)
+- [progressActionLabel](ShowActionableNotificationEvent.md#progressactionlabel)
+- [subtitle](ShowActionableNotificationEvent.md#subtitle)
+- [title](ShowActionableNotificationEvent.md#title)
+
+### Methods
+
+- [onActionButtonClick](ShowActionableNotificationEvent.md#onactionbuttonclick)
 
 ## Properties
 
 ### actionButtonLabel
 
-> **actionButtonLabel**: `any`
+• **actionButtonLabel**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:27
+#### Defined in
 
-***
+packages/framework/esm-globals/dist/events.d.ts:27
 
-### kind?
+___
 
-> `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
+### kind
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:25
+• `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
 
-***
+#### Defined in
 
-### onActionButtonClick()
+packages/framework/esm-globals/dist/events.d.ts:25
 
-> **onActionButtonClick**: () => `void`
+___
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:28
+### progressActionLabel
+
+• `Optional` **progressActionLabel**: `string`
+
+#### Defined in
+
+packages/framework/esm-globals/dist/events.d.ts:29
+
+___
+
+### subtitle
+
+• **subtitle**: `any`
+
+#### Defined in
+
+packages/framework/esm-globals/dist/events.d.ts:24
+
+___
+
+### title
+
+• `Optional` **title**: `string`
+
+#### Defined in
+
+packages/framework/esm-globals/dist/events.d.ts:26
+
+## Methods
+
+### onActionButtonClick
+
+▸ **onActionButtonClick**(): `void`
 
 #### Returns
 
 `void`
 
-***
+#### Defined in
 
-### progressActionLabel?
-
-> `optional` **progressActionLabel**: `string`
-
-Defined in: packages/framework/esm-globals/dist/events.d.ts:29
-
-***
-
-### subtitle
-
-> **subtitle**: `any`
-
-Defined in: packages/framework/esm-globals/dist/events.d.ts:24
-
-***
-
-### title?
-
-> `optional` **title**: `string`
-
-Defined in: packages/framework/esm-globals/dist/events.d.ts:26
+packages/framework/esm-globals/dist/events.d.ts:28

@@ -1,37 +1,52 @@
-[O3 Framework](../API.md) / ExtensionSlotConfig
+[@openmrs/esm-framework](../API.md) / ExtensionSlotConfig
 
 # Interface: ExtensionSlotConfig
 
-Defined in: [packages/framework/esm-config/src/types.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L48)
+## Table of contents
+
+### Properties
+
+- [add](ExtensionSlotConfig.md#add)
+- [configure](ExtensionSlotConfig.md#configure)
+- [order](ExtensionSlotConfig.md#order)
+- [remove](ExtensionSlotConfig.md#remove)
 
 ## Properties
 
-### add?
+### add
 
-> `optional` **add**: `string`[]
+• `Optional` **add**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L49)
+#### Defined in
 
-***
+[packages/framework/esm-config/src/types.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L49)
 
-### configure?
+___
 
-> `optional` **configure**: [`ExtensionSlotConfigureValueObject`](ExtensionSlotConfigureValueObject.md)
+### configure
 
-Defined in: [packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L52)
+• `Optional` **configure**: [`ExtensionSlotConfigureValueObject`](ExtensionSlotConfigureValueObject.md)
 
-***
+#### Defined in
 
-### order?
+[packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L52)
 
-> `optional` **order**: `string`[]
+___
 
-Defined in: [packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L51)
+### order
 
-***
+• `Optional` **order**: `string`[]
 
-### remove?
+#### Defined in
 
-> `optional` **remove**: `string`[]
+[packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L51)
 
-Defined in: [packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L50)
+___
+
+### remove
+
+• `Optional` **remove**: `string`[]
+
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L50)

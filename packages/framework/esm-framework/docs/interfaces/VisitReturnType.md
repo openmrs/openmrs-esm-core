@@ -1,65 +1,92 @@
-[O3 Framework](../API.md) / VisitReturnType
+[@openmrs/esm-framework](../API.md) / VisitReturnType
 
 # Interface: VisitReturnType
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useVisit.ts#L12)
+## Table of contents
 
-## Properties
+### API Properties
+
+- [activeVisit](VisitReturnType.md#activevisit)
+- [currentVisit](VisitReturnType.md#currentvisit)
+- [currentVisitIsRetrospective](VisitReturnType.md#currentvisitisretrospective)
+- [error](VisitReturnType.md#error)
+- [isLoading](VisitReturnType.md#isloading)
+- [isValidating](VisitReturnType.md#isvalidating)
+
+### API Methods
+
+- [mutate](VisitReturnType.md#mutate)
+
+## API Properties
 
 ### activeVisit
 
-> **activeVisit**: `null` \| `Visit`
+• **activeVisit**: ``null`` \| `Visit`
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useVisit.ts#L16)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useVisit.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L16)
+
+___
 
 ### currentVisit
 
-> **currentVisit**: `null` \| `Visit`
+• **currentVisit**: ``null`` \| `Visit`
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useVisit.ts#L17)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useVisit.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L17)
+
+___
 
 ### currentVisitIsRetrospective
 
-> **currentVisitIsRetrospective**: `boolean`
+• **currentVisitIsRetrospective**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useVisit.ts#L18)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useVisit.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L18)
+
+___
 
 ### error
 
-> **error**: `Error`
+• **error**: `Error`
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useVisit.ts#L13)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useVisit.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L13)
+
+___
 
 ### isLoading
 
-> **isLoading**: `boolean`
+• **isLoading**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useVisit.ts#L19)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useVisit.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L19)
+
+___
 
 ### isValidating
 
-> **isValidating**: `boolean`
+• **isValidating**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useVisit.ts#L15)
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/useVisit.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L15)
 
-### mutate()
+## API Methods
 
-> **mutate**: () => `void`
+### mutate
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useVisit.ts#L14)
+▸ **mutate**(): `void`
 
 #### Returns
 
 `void`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useVisit.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L14)

@@ -1,61 +1,83 @@
-[O3 Framework](../API.md) / OfflinePatientDataSyncState
+[@openmrs/esm-framework](../API.md) / OfflinePatientDataSyncState
 
-# Interface: ~~OfflinePatientDataSyncState~~
+# Interface: OfflinePatientDataSyncState
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L12)
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
 
-## Deprecated
+## Table of contents
 
-Will be removed once all modules have been migrated to the new dynamic offline data API.
+### Offline Properties
 
-## Properties
+- [errors](OfflinePatientDataSyncState.md#errors)
+- [failedHandlers](OfflinePatientDataSyncState.md#failedhandlers)
+- [syncedHandlers](OfflinePatientDataSyncState.md#syncedhandlers)
+- [syncingHandlers](OfflinePatientDataSyncState.md#syncinghandlers)
+- [timestamp](OfflinePatientDataSyncState.md#timestamp)
 
-### ~~errors~~
+### Methods
 
-> `readonly` **errors**: `Record`\<`string`, `string`\>
+- [abort](OfflinePatientDataSyncState.md#abort)
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L17)
+## Offline Properties
 
-***
+### errors
 
-### ~~failedHandlers~~
+• `Readonly` **errors**: `Record`<`string`, `string`\>
 
-> `readonly` **failedHandlers**: `string`[]
+#### Defined in
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L16)
+[packages/framework/esm-offline/src/offline-patient-data.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L17)
 
-***
+___
 
-### ~~syncedHandlers~~
+### failedHandlers
 
-> `readonly` **syncedHandlers**: `string`[]
+• `Readonly` **failedHandlers**: `string`[]
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L15)
+#### Defined in
 
-***
+[packages/framework/esm-offline/src/offline-patient-data.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L16)
 
-### ~~syncingHandlers~~
+___
 
-> `readonly` **syncingHandlers**: `string`[]
+### syncedHandlers
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L14)
+• `Readonly` **syncedHandlers**: `string`[]
 
-***
+#### Defined in
 
-### ~~timestamp~~
+[packages/framework/esm-offline/src/offline-patient-data.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L15)
 
-> `readonly` **timestamp**: `Date`
+___
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L13)
+### syncingHandlers
+
+• `Readonly` **syncingHandlers**: `string`[]
+
+#### Defined in
+
+[packages/framework/esm-offline/src/offline-patient-data.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L14)
+
+___
+
+### timestamp
+
+• `Readonly` **timestamp**: `Date`
+
+#### Defined in
+
+[packages/framework/esm-offline/src/offline-patient-data.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L13)
 
 ## Methods
 
-### ~~abort()~~
+### abort
 
-> **abort**(): `boolean`
-
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/offline-patient-data.ts#L18)
+▸ **abort**(): `boolean`
 
 #### Returns
 
 `boolean`
+
+#### Defined in
+
+[packages/framework/esm-offline/src/offline-patient-data.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L18)

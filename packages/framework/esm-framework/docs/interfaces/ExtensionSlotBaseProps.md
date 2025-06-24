@@ -1,67 +1,67 @@
-[O3 Framework](../API.md) / ExtensionSlotBaseProps
+[@openmrs/esm-framework](../API.md) / ExtensionSlotBaseProps
 
 # Interface: ExtensionSlotBaseProps
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L8)
+## Table of contents
 
-## Extended by
+### Extension Properties
 
-- [`ExtensionSlotProps`](ExtensionSlotProps.md)
+- [extensionSlotName](ExtensionSlotBaseProps.md#extensionslotname)
+- [name](ExtensionSlotBaseProps.md#name)
+- [state](ExtensionSlotBaseProps.md#state)
 
-## Properties
+### Extension Methods
 
-### ~~extensionSlotName?~~
+- [select](ExtensionSlotBaseProps.md#select)
 
-> `optional` **extensionSlotName**: `string`
+## Extension Properties
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L15)
+### extensionSlotName
 
-The name of the extension slot
+• `Optional` **extensionSlotName**: `string`
 
-#### Deprecated
+**`deprecated`** Use `name`
 
-Use `name`
+#### Defined in
 
-***
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L11)
+
+___
 
 ### name
 
-> **name**: `string`
+• **name**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L10)
+#### Defined in
 
-The name of the extension slot
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L9)
 
-***
+___
 
-### select()?
+### state
 
-> `optional` **select**: (`extensions`) => `AssignedExtension`[]
+• `Optional` **state**: `Record`<`string`, `unknown`\>
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
+#### Defined in
 
-An optional function for filtering or otherwise modifying
-  the list of extensions that will be rendered.
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L13)
+
+## Extension Methods
+
+### select
+
+▸ `Optional` **select**(`extensions`): `AssignedExtension`[]
 
 #### Parameters
 
-##### extensions
-
-`AssignedExtension`[]
+| Name | Type |
+| :------ | :------ |
+| `extensions` | `AssignedExtension`[] |
 
 #### Returns
 
 `AssignedExtension`[]
 
-***
+#### Defined in
 
-### state?
-
-> `optional` **state**: `Record`\<`string` \| `number` \| `symbol`, `unknown`\>
-
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L27)
-
-Only works if no children are provided*. Passes data
-  through as props to the extensions that are mounted here. If `ExtensionSlot`
-  has children, you must pass the state through the `state` param of the
-  `Extension` component.
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L12)
