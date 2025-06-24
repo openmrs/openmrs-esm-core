@@ -28,7 +28,7 @@ A list of backend modules necessary for this frontend module and the correspondi
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:360
+packages/framework/esm-globals/dist/types.d.ts:366
 
 ___
 
@@ -40,7 +40,7 @@ An array of all extensions supported by this frontend module. Extensions can be 
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:374
+packages/framework/esm-globals/dist/types.d.ts:380
 
 ___
 
@@ -52,7 +52,7 @@ An array of all feature flags for any beta-stage features this module provides.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:376
+packages/framework/esm-globals/dist/types.d.ts:382
 
 ___
 
@@ -64,7 +64,7 @@ An array of all modals supported by this frontend module. Modals can be launched
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:378
+packages/framework/esm-globals/dist/types.d.ts:384
 
 ___
 
@@ -82,7 +82,7 @@ The name of the backend dependency and either the required version or an object 
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:362
+packages/framework/esm-globals/dist/types.d.ts:368
 
 ___
 
@@ -94,7 +94,7 @@ An array of all pages supported by this frontend module. Pages are automatically
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:372
+packages/framework/esm-globals/dist/types.d.ts:378
 
 ___
 
@@ -106,7 +106,7 @@ The version of this frontend module.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:358
+packages/framework/esm-globals/dist/types.d.ts:364
 
 ___
 
@@ -118,7 +118,7 @@ An array of all workspace groups supported by this frontend module.
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:382
+packages/framework/esm-globals/dist/types.d.ts:388
 
 ___
 
@@ -130,4 +130,4 @@ An array of all workspaces supported by this frontend module. Workspaces can be 
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:380
+packages/framework/esm-globals/dist/types.d.ts:386

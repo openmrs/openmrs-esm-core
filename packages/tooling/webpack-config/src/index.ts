@@ -192,6 +192,9 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       path: resolve(root, outDir),
       hashFunction: 'xxhash64',
     },
+    experiments: {
+      outputModule: true,
+    },
     module: {
       rules: [
         merge(
@@ -289,7 +292,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         // Look in the `esm-dynamic-loading` framework package for an explanation of how modules
         // get loaded into the application.
         name,
-        library: { type: 'var', name: slugify(name) },
+        library: { type: 'module' },
         filename,
         exposes: {
           './start': srcFile,

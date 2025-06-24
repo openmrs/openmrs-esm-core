@@ -198,9 +198,15 @@ module.exports = (env, argv = []) => {
           },
           /**
            * @param {Response} proxyRes
+           * @param {Request} req
+           * @param {Response} res
            */
-          onProxyRes(proxyRes) {
+          onProxyRes(proxyRes, req) {
             proxyRes.headers && delete proxyRes.headers['content-security-policy'];
+
+            if (req.url.endsWith('importmap.json')) {
+              proxyRes.headers['content-type'] = 'application/importmap+json';
+            }
           },
           /**
            * @param {string} path
@@ -225,7 +231,7 @@ module.exports = (env, argv = []) => {
       ignored: ['.git', 'test-results'],
     },
     mode,
-    devtool: isProd ? 'hidden-nosources-source-map' : 'eval-source-map',
+    devtool: isProd ? 'hidden-nosources-source-map' : 'source-map',
     module: {
       rules: [
         {

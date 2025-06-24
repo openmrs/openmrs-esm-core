@@ -16,4 +16,4 @@
 
 #### Defined in
 
-packages/framework/esm-globals/dist/types.d.ts:75
+packages/framework/esm-globals/dist/types.d.ts:81
