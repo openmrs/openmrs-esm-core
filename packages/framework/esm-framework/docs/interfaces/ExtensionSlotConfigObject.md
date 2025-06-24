@@ -2,7 +2,7 @@
 
 # Interface: ExtensionSlotConfigObject
 
-Defined in: [packages/framework/esm-config/src/types.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L59)
+Defined in: [packages/framework/esm-config/src/types.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L59)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:59](https://github.com/o
 
 > `optional` **add**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L61)
+Defined in: [packages/framework/esm-config/src/types.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L61)
 
 Additional extension IDs to assign to this slot, in addition to those `attach`ed in code.
 
@@ -20,7 +20,7 @@ Additional extension IDs to assign to this slot, in addition to those `attach`ed
 
 > `optional` **order**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L65)
+Defined in: [packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L65)
 
 Overrides the default ordering of extensions.
 
@@ -30,6 +30,6 @@ Overrides the default ordering of extensions.
 
 > `optional` **remove**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L63)
+Defined in: [packages/framework/esm-config/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L63)
 
 Extension IDs which were `attach`ed to the slot but which should not be assigned.

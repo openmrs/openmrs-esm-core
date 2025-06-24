@@ -2,7 +2,7 @@
 
 # Interface: Visit
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L20)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L20)
 
 ## Indexable
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:20](http
 
 > `optional` **attributes**: `OpenmrsResource`[]
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L29)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L29)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:29](http
 
 > `optional` **display**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L22)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L22)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:22](http
 
 > `optional` **encounters**: [`Encounter`](Encounter.md)[]
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L23)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L23)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:23](http
 
 > `optional` **location**: `Location`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L26)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L26)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:26](http
 
 > `optional` **patient**: [`Patient`](Patient.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L24)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L24)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:24](http
 
 > **startDatetime**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L27)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L27)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:27](http
 
 > `optional` **stopDatetime**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L28)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L28)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:28](http
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L21)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L21)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:21](http
 
 > **visitType**: [`VisitType`](VisitType.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-emr-api/src/types/visit-resource.ts#L25)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L25)

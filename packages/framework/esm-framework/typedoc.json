@@ -16,6 +16,7 @@
   "readme": "none",
   "excludeInternal": true,
   "entryFileName": "API.md",
+  "gitRevision": "main",
   "hidePageHeader": true,
   "sort": ["alphabetical"]
 }

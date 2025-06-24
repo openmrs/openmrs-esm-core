@@ -4,7 +4,7 @@
 
 > **getConfig**\<`T`\>(`moduleName`): `Promise`\<`T`\>
 
-Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:277](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/module-config/module-config.ts#L277)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:277](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L277)
 
 A promise-based way to access the config as soon as it is fully loaded.
 If it is already loaded, resolves the config in its present state.

@@ -4,7 +4,7 @@
 
 > **getContext**\<`T`\>(`namespace`): `null` \| `Readonly`\<`T`\>
 
-Defined in: [packages/framework/esm-context/src/context.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-context/src/context.ts#L60)
+Defined in: [packages/framework/esm-context/src/context.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L62)
 
 Returns an _immutable_ version of the state of the namespace as it is currently
 
@@ -12,7 +12,7 @@ Returns an _immutable_ version of the state of the namespace as it is currently
 
 ### T
 
-`T` *extends* `object` = \{ \}
+`T` *extends* `Record`\<`string` \| `number` \| `symbol`, `unknown`\> = `Record`\<`string` \| `number` \| `symbol`, `any`\>
 
 The type of the value stored in the namespace
 

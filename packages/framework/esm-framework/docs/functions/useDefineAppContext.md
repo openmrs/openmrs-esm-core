@@ -4,7 +4,7 @@
 
 > **useDefineAppContext**\<`T`\>(`namespace`, `value?`): (`update`) => `void`
 
-Defined in: [packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
+Defined in: [packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
 
 This hook is used to register a namespace in the AppContext. The component that registers the
 namespace is responsible for updating the value associated with the namespace. The namespace
@@ -14,7 +14,7 @@ will be automatically removed when the component using this hook is unmounted.
 
 ### T
 
-`T` *extends* `object`
+`T` *extends* `Record`\<`string` \| `number` \| `symbol`, `unknown`\> = `Record`\<`string` \| `number` \| `symbol`, `any`\>
 
 The type of the value of the namespace
 

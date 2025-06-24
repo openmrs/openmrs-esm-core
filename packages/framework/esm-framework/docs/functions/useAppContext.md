@@ -4,7 +4,7 @@
 
 > **useAppContext**\<`T`\>(`namespace`): `undefined` \| `Readonly`\<`T`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
+Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
 
 This hook is used to access a namespace within the overall AppContext, so that a component can
 use any shared contextual values. A selector may be provided to further restrict the properties
@@ -14,7 +14,7 @@ returned from the namespace.
 
 ### T
 
-`T` *extends* `object` = \{ \}
+`T` *extends* `Record`\<`string` \| `number` \| `symbol`, `unknown`\> = `Record`\<`string` \| `number` \| `symbol`, `any`\>
 
 The type of the value stored in the namespace
 

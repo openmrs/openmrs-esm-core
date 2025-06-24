@@ -4,7 +4,7 @@
 
 > **useFhirInfinite**\<`T`\>(`url`, `options`): `UseServerInfiniteReturnObject`\<`T`, `Bundle`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
+Defined in: [packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
 
 Fhir REST endpoints that return a list of objects, are server-side paginated.
 The server limits the max number of results being returned, and multiple requests are needed to get the full data set

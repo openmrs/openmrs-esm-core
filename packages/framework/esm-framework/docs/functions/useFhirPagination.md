@@ -4,7 +4,7 @@
 
 > **useFhirPagination**\<`T`\>(`url`, `pageSize`, `options`): `object`
 
-Defined in: [packages/framework/esm-react-utils/src/useFhirPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/useFhirPagination.ts#L27)
+Defined in: [packages/framework/esm-react-utils/src/useFhirPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L27)
 
 Fhir REST endpoints that return a list of objects, are server-side paginated.
 The server limits the max number of results being returned, and multiple requests are needed to get the full data set

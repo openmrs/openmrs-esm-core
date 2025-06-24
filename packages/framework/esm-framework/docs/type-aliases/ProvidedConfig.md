@@ -4,7 +4,7 @@
 
 > **ProvidedConfig** = `object`
 
-Defined in: [packages/framework/esm-config/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L68)
+Defined in: [packages/framework/esm-config/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L68)
 
 ## Properties
 
@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:68](https://github.com/o
 
 > **config**: [`Config`](../interfaces/Config.md)
 
-Defined in: [packages/framework/esm-config/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L70)
+Defined in: [packages/framework/esm-config/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L70)
 
 ***
 
@@ -20,4 +20,4 @@ Defined in: [packages/framework/esm-config/src/types.ts:70](https://github.com/o
 
 > **source**: `string`
 
-Defined in: [packages/framework/esm-config/src/types.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L69)
+Defined in: [packages/framework/esm-config/src/types.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L69)

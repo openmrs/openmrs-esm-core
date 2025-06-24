@@ -4,7 +4,7 @@
 
 > **registerContext**\<`T`\>(`namespace`, `initialValue`): `void`
 
-Defined in: [packages/framework/esm-context/src/context.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-context/src/context.ts#L29)
+Defined in: [packages/framework/esm-context/src/context.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L29)
 
 Used by callers to register a new namespace in the application context. Attempting to register
 an already-registered namespace will display a warning and make no modifications to the state.
@@ -13,7 +13,7 @@ an already-registered namespace will display a warning and make no modifications
 
 ### T
 
-`T` *extends* `object` = \{ \}
+`T` *extends* `Record`\<`string` \| `number` \| `symbol`, `unknown`\> = `Record`\<`string` \| `number` \| `symbol`, `any`\>
 
 ## Parameters
 

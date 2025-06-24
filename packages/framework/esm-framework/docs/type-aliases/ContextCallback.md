@@ -4,13 +4,13 @@
 
 > **ContextCallback**\<`T`\> = (`state`) => `void`
 
-Defined in: [packages/framework/esm-context/src/context.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-context/src/context.ts#L95)
+Defined in: [packages/framework/esm-context/src/context.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L101)
 
 ## Type Parameters
 
 ### T
 
-`T` *extends* `object` = \{ \}
+`T` *extends* `Record`\<`string` \| `symbol` \| `number`, `unknown`\> = `Record`\<`string` \| `symbol` \| `number`, `any`\>
 
 ## Parameters
 

@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceRegistration
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L9)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L9)
 
 See [[WorkspaceDefinition]] for more information about these properties
 
@@ -12,7 +12,7 @@ See [[WorkspaceDefinition]] for more information about these properties
 
 > **canHide**: `boolean`
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L14)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L14)
 
 ***
 
@@ -20,7 +20,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:14](https://git
 
 > **canMaximize**: `boolean`
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L15)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L15)
 
 ***
 
@@ -28,7 +28,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:15](https://git
 
 > **groups**: `string`[]
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L20)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:20](https://git
 
 > **load**: () => `Promise`\<`object` & `LifeCycles`\>
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L18)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
 
 #### Returns
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:18](https://git
 
 > **moduleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L19)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:19](https://git
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L10)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L10)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:10](https://git
 
 > **preferredWindowSize**: [`WorkspaceWindowState`](../type-aliases/WorkspaceWindowState.md)
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L17)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:17](https://git
 
 > **title**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L11)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L11)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:11](https://git
 
 > `optional` **titleNode**: `ReactNode`
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L12)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L12)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:12](https://git
 
 > **type**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L13)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L13)
 
 ***
 
@@ -96,4 +96,4 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:13](https://git
 
 > **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
 
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/workspaces.ts#L16)
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L16)

@@ -4,7 +4,7 @@
 
 > **setLeftNav**(`__namedParameters`): `void`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-extensions/src/left-nav.ts#L37)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L37)
 
 Sets the current left nav context. Must be paired with [unsetLeftNav](unsetLeftNav.md).
 

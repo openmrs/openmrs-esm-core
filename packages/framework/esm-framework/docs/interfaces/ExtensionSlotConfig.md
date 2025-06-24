@@ -2,7 +2,7 @@
 
 # Interface: ExtensionSlotConfig
 
-Defined in: [packages/framework/esm-config/src/types.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L48)
+Defined in: [packages/framework/esm-config/src/types.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L48)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:48](https://github.com/o
 
 > `optional` **add**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L49)
+Defined in: [packages/framework/esm-config/src/types.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L49)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:49](https://github.com/o
 
 > `optional` **configure**: [`ExtensionSlotConfigureValueObject`](ExtensionSlotConfigureValueObject.md)
 
-Defined in: [packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L52)
+Defined in: [packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L52)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:52](https://github.com/o
 
 > `optional` **order**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L51)
+Defined in: [packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L51)
 
 ***
 
@@ -34,4 +34,4 @@ Defined in: [packages/framework/esm-config/src/types.ts:51](https://github.com/o
 
 > `optional` **remove**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-config/src/types.ts#L50)
+Defined in: [packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L50)

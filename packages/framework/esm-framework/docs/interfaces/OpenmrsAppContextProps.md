@@ -2,13 +2,13 @@
 
 # Interface: OpenmrsAppContextProps\<T\>
 
-Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L4)
+Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L4)
 
 ## Type Parameters
 
 ### T
 
-`T` = `unknown`
+`T` *extends* `Record`\<`string` \| `symbol` \| `number`, `unknown`\> = `Record`\<`string` \| `symbol` \| `number`, `any`\>
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:4](https:/
 
 > **namespace**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L6)
+Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L8)
 
 the namespace that this component defines
 
@@ -26,6 +26,6 @@ the namespace that this component defines
 
 > `optional` **value**: `T`
 
-Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L8)
+Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L10)
 
 used to control the value associated with the namespace

@@ -4,7 +4,7 @@
 
 > **makeUrl**(`path`): `string`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-api/src/openmrs-fetch.ts#L22)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L22)
 
 Append `path` to the OpenMRS SPA base.
 

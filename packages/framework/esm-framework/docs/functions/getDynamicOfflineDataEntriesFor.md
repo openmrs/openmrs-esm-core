@@ -4,7 +4,7 @@
 
 > **getDynamicOfflineDataEntriesFor**\<`T`\>(`userId`, `type?`): `Promise`\<`T`[]\>
 
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:139](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/dynamic-offline-data.ts#L139)
+Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:139](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L139)
 
 Returns all [DynamicOfflineData](../interfaces/DynamicOfflineData.md) entries which registered for the given user.
 Optionally returns only entries of a given type.

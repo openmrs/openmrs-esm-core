@@ -4,7 +4,7 @@
 
 > **setupOfflineSync**\<`T`\>(`type`, `dependsOn`, `process`, `options`): `void`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:365](https://github.com/openmrs/openmrs-esm-core/blob/18d2874f03a33a6ab8295af0e87ac97fdd150718/packages/framework/esm-offline/src/sync.ts#L365)
+Defined in: [packages/framework/esm-offline/src/sync.ts:365](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L365)
 
 Registers a new synchronization handler which is able to synchronize data of a specific type.
 
