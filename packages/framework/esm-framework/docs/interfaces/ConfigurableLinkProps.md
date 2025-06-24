@@ -382,7 +382,7 @@ ___
 
 ### aria-autocomplete
 
-• `Optional` **aria-autocomplete**: ``"none"`` \| ``"list"`` \| ``"both"`` \| ``"inline"``
+• `Optional` **aria-autocomplete**: ``"none"`` \| ``"list"`` \| ``"inline"`` \| ``"both"``
 
 Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be
 presented if they are made.
@@ -645,7 +645,7 @@ ___
 
 ### aria-dropeffect
 
-• `Optional` **aria-dropeffect**: ``"link"`` \| ``"copy"`` \| ``"none"`` \| ``"move"`` \| ``"execute"`` \| ``"popup"``
+• `Optional` **aria-dropeffect**: ``"link"`` \| ``"copy"`` \| ``"none"`` \| ``"execute"`` \| ``"move"`` \| ``"popup"``
 
 Indicates what functions can be performed when a dragged object is released on the drop target.
 
@@ -1022,7 +1022,7 @@ ___
 
 ### aria-relevant
 
-• `Optional` **aria-relevant**: ``"text"`` \| ``"all"`` \| ``"additions"`` \| ``"additions removals"`` \| ``"additions text"`` \| ``"removals"`` \| ``"removals additions"`` \| ``"removals text"`` \| ``"text additions"`` \| ``"text removals"``
+• `Optional` **aria-relevant**: ``"text"`` \| ``"additions"`` \| ``"additions removals"`` \| ``"additions text"`` \| ``"all"`` \| ``"removals"`` \| ``"removals additions"`` \| ``"removals text"`` \| ``"text additions"`` \| ``"text removals"``
 
 Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
 

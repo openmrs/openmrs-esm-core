@@ -99,12 +99,14 @@
 ### Extension Functions
 
 - [ExtensionSlot](API.md#extensionslot)
+- [SingleExtensionSlot](API.md#singleextensionslot)
 - [attach](API.md#attach)
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
 - [getAssignedExtensions](API.md#getassignedextensions)
 - [getExtensionNameFromId](API.md#getextensionnamefromid)
 - [getExtensionStore](API.md#getextensionstore)
+- [getSingleAssignedExtension](API.md#getsingleassignedextension)
 - [renderExtension](API.md#renderextension)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useAssignedExtensions](API.md#useassignedextensions)
@@ -436,11 +438,11 @@ ___
 
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: `AssignedExtension`, `state?`: `Record`<`string`, `unknown`\>) => `React.ReactNode`  }
+Ƭ **ExtensionSlotProps**: [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: `AssignedExtension`, `state?`: `Record`<`string`, `unknown`\>) => `React.ReactNode`  }
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L24)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L14)
 
 ___
 
@@ -1127,8 +1129,8 @@ an extension slot is rendered.
 
 Renders once for each extension attached to that extension slot.
 
-Usage of this component *must* have an ancestor `<ExtensionSlot>`,
-and *must* only be used once within that `<ExtensionSlot>`.
+Usage of this component *must* have an ancestor `<ExtensionSlot>` or `<SingleExtensionSlot>`,
+and *must* only be used once within that ancestor.
 
 #### Defined in
 
@@ -4434,7 +4436,59 @@ Passing a function as children
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L81)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L71)
+
+___
+
+### SingleExtensionSlot
+
+▸ **SingleExtensionSlot**(`__namedParameters`): ``null`` \| `Element`
+
+A special extension slot, with slot name 'global', that renders only one single extension
+by its extensionId. The extensionId is the extension name, with an optional `#<string>` suffix
+used to indicate specific configuration. (For example, given a extension with name 'foo',
+then 'foo', 'foo#bar', 'foo#baz' are all valid extensionIds)
+
+**`see`** ExtensionSlot
+
+**`example`**
+Passing a react node as children
+
+```tsx
+<SingleExtensionSlot extensionId="foo">
+  <div style={{ width: 10rem }}>
+    <Extension />
+  </div>
+</SingleExtensionSlot>
+```
+
+**`example`**
+Passing a function as children
+
+```tsx
+<SingleExtensionSlot extensionId="bar">
+  {(extension) => (
+    <h1>{extension.name}</h1>
+    <div style={{ color: extension.meta.color }}>
+      <Extension />
+    </div>
+  )}
+</SingleExtensionSlot>
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `SingleExtensionSlotProps` |
+
+#### Returns
+
+``null`` \| `Element`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L131)
 
 ___
 
@@ -4468,7 +4522,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L215)
+[packages/framework/esm-extensions/src/extensions.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L142)
 
 ___
 
@@ -4491,7 +4545,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:248](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L248)
+[packages/framework/esm-extensions/src/extensions.ts:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L175)
 
 ___
 
@@ -4513,7 +4567,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:272](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L272)
+[packages/framework/esm-extensions/src/extensions.ts:199](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L199)
 
 ___
 
@@ -4521,7 +4575,9 @@ ___
 
 ▸ **getAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
 
-Gets the list of extensions assigned to a given slot
+Gets the list of AssignedExtensions for a given slot
+
+**`see`** AssignedExtension
 
 #### Parameters
 
@@ -4537,7 +4593,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:399](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L399)
+[packages/framework/esm-extensions/src/extensions.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L334)
 
 ___
 
@@ -4569,7 +4625,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L163)
+[packages/framework/esm-extensions/src/extensions.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L90)
 
 ___
 
@@ -4586,7 +4642,31 @@ state of the extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L125)
+[packages/framework/esm-extensions/src/store.ts:135](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L135)
+
+___
+
+### getSingleAssignedExtension
+
+▸ **getSingleAssignedExtension**(`extensionId`): [`AssignedExtension`](interfaces/AssignedExtension.md) \| ``null``
+
+Get an single assigned extension, as if it is assigned to the 'global' extension slot, by extensionId
+
+**`see`** AssignedExtension
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionId` | `string` |
+
+#### Returns
+
+[`AssignedExtension`](interfaces/AssignedExtension.md) \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:344](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L344)
 
 ___
 
