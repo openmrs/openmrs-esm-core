@@ -52,6 +52,18 @@
       "online": true,
       "offline": true,
       "order": 1
+    },
+    {
+      "name": "workspace-test-nav-button",
+      "component": "workspaceTestActionButton",
+      "slot": "action-menu-workspace-group-test-items-slot",
+      "order": 1
+    },
+    {
+      "name": "workspace-test-2-nav-button",
+      "component": "workspaceTest2ActionButton",
+      "slot": "action-menu-workspace-group-test-items-slot",
+      "order": 2
     }
   ],
   "modals": [
@@ -59,5 +71,30 @@
       "name": "change-password-modal",
       "component": "changePasswordModal"
     }
+  ],
+  "workspaces": [
+    {
+      "name": "workspace-test",
+      "component": "workspaceTest",
+      "type": "workspace-test",
+      "title": "Workspace Test",
+      "canHide": true
+    },
+    {
+      "name": "workspace-test-2",
+      "component": "workspaceTest",
+      "type": "workspace-test-2",
+      "title": "Workspace Test 2",
+      "canHide": true
+    }
+  ],
+  "workspaceGroups": [
+    {
+      "name": "workspace-group-test",
+      "members": [
+        "workspace-test",
+        "workspace-test-2"
+      ]
+    } 
   ]
 }
