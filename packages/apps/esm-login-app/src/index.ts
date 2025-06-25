@@ -1,11 +1,10 @@
 import { defineConfigSchema, getAsyncLifecycle, getSyncLifecycle } from '@openmrs/esm-framework';
-import { configSchema, workspaceGroupConfig } from './config-schema';
+import { configSchema } from './config-schema';
 import changeLocationLinkComponent from './change-location-link/change-location-link.extension';
 import changePasswordLinkComponent from './change-password/change-password-link.extension';
 import locationPickerComponent from './location-picker/location-picker-view.component';
 import logoutButtonComponent from './logout/logout.extension';
 import rootComponent from './root.component';
-import { registerWorkspaceGroups } from '@openmrs/esm-framework';
 
 const moduleName = '@openmrs/esm-login-app';
 
@@ -18,8 +17,6 @@ export const importTranslation = require.context('../translations', false, /.jso
 
 export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
-
-  registerWorkspaceGroups(workspaceGroupConfig);
 }
 
 export const root = getSyncLifecycle(rootComponent, options);

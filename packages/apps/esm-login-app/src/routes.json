@@ -88,13 +88,29 @@
       "canHide": true
     }
   ],
-  "workspaceGroups": [
+  "workspaceGroups2": [
     {
-      "name": "workspace-group-test",
-      "members": [
-        "workspace-test",
-        "workspace-test-2"
+      "groupName": "workspace-group-test",
+      "windows": [
+        {
+          "windowName": "window1",
+          "canHide": true,
+          "canMaximize": true,
+          "overlay": false,
+          "workspaces": [
+            "workspace-test"
+          ]
+        },
+        {
+          "windowName": "window2",
+          "canHide": true,
+          "canMaximize": true,
+          "overlay": false,
+          "workspaces": [
+            "workspace-test-2"
+          ]
+        }
       ]
-    } 
+    }
   ]
 }

@@ -362,6 +362,18 @@ export interface WorkspaceGroupDefinition {
   members?: Array<string>;
 }
 
+export interface WorkspaceGroupDefinition2 {
+    groupName: string;
+    windows: Array<WorkspaceWindowDefinition2>;
+}
+export interface WorkspaceWindowDefinition2 {
+    windowName: string;
+    canHide?: boolean;
+    canMaximize?: boolean;
+    overlay?: boolean;
+    workspaces: Array<string>;
+}
+
 /**
  * A definition of a feature flag extracted from the routes.json
  */
@@ -404,6 +416,8 @@ export interface OpenmrsAppRoutes {
   workspaces?: Array<WorkspaceDefinition>;
   /** An array of all workspace groups supported by this frontend module. */
   workspaceGroups?: Array<WorkspaceGroupDefinition>;
+
+  workspaceGroups2?: Array<WorkspaceGroupDefinition2>;
 }
 
 /**

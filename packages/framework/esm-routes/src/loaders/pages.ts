@@ -1,7 +1,7 @@
 import { type ActivityFn, pathToActiveWhen, registerApplication } from 'single-spa';
 import { registerModuleWithConfigSystem } from '@openmrs/esm-config';
 import {
-  type WorkspaceGroupDefinition,
+  WorkspaceGroupDefinition,
   type ExtensionDefinition,
   type FeatureFlagDefinition,
   type ModalDefinition,
@@ -9,6 +9,7 @@ import {
   type RegisteredPageDefinition,
   type RouteDefinition,
   type WorkspaceDefinition,
+  type WorkspaceGroupDefinition2,
 } from '@openmrs/esm-globals';
 import { getFeatureFlag } from '@openmrs/esm-feature-flags';
 import { routeRegex } from './helpers';
@@ -19,6 +20,7 @@ import {
   tryRegisterModal,
   tryRegisterWorkspace,
   tryRegisterWorkspaceGroup,
+  tryRegisterWorkspaceGroups2,
 } from './components';
 
 // this is the global holder of all pages registered in the app
@@ -101,6 +103,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];
     const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
     const availableWorkspaceGroups: Array<WorkspaceGroupDefinition> = routes.workspaceGroups ?? [];
+    const availableWorkspaceGroups2: Array<WorkspaceGroupDefinition2> = routes.workspaceGroups2 ?? [];
     const availableFeatureFlags: Array<FeatureFlagDefinition> = routes.featureFlags ?? [];
 
     routes.pages?.forEach((p) => {
@@ -159,7 +162,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         );
       }
     });
-
+    
     availableWorkspaceGroups.forEach((workspaceGroup) => {
       if (workspaceGroup && typeof workspaceGroup === 'object' && Object.hasOwn(workspaceGroup, 'name')) {
         tryRegisterWorkspaceGroup(appName, workspaceGroup);
@@ -170,6 +173,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         );
       }
     });
+    tryRegisterWorkspaceGroups2(availableWorkspaceGroups2);
 
     availableFeatureFlags.forEach((featureFlag) => {
       if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'flagName')) {

@@ -6,7 +6,8 @@ import { getCoreTranslation } from '@openmrs/esm-translations';
 import classNames from 'classnames';
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../icons';
 import styles from './workspace2.module.scss';
-import { getOpenedWindowIndexByWorkspace, getWindowByWorkspace, useWorkspace2Store } from './store';
+import { getOpenedWindowIndexByWorkspace, getWindowByWorkspace } from '@openmrs/esm-extensions';
+import { useWorkspace2Store } from './workspace2';
 interface Workspace2Props {
   workspaceName: string;
   title: ReactNode;

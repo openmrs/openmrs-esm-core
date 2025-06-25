@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getCoreTranslation } from "@openmrs/esm-translations";
 import { InlineLoading } from "@carbon/react";
-import { getWorkspaceRegistration } from "@openmrs/esm-extensions";
+import { getWorkspaceRegistration, OpenedWindow } from "@openmrs/esm-extensions";
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
-import { OpenedWindow, useWorkspace2Store } from "./store";
+import { useWorkspace2Store } from "./workspace2";
 
 interface WorkspaceWindowProps {
   window: OpenedWindow;

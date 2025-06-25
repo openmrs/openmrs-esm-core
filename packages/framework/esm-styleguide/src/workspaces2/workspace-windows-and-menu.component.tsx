@@ -3,7 +3,7 @@ import { ComponentContext, useAssignedExtensions } from "@openmrs/esm-react-util
 import { createRoot } from "react-dom/client";
 import { ActionMenu } from './action-menu/action-menu.component';
 import ActiveWorkspaceWindow from "./active-workspace-window.component";
-import { useWorkspace2Store } from "./store";
+import { useWorkspace2Store } from "./workspace2";
 
 export function renderWorkspaceWindowsAndMenu(target: HTMLElement | null) {
   if (target) {

@@ -1,4 +1,5 @@
-import { getOpenedWindowIndexByWorkspace, getWindowByWorkspace, workspace2Store, WorkspaceStoreState2 } from "./store";
+import { getOpenedWindowIndexByWorkspace, getWindowByWorkspace, workspace2Store, WorkspaceStoreState2 } from "@openmrs/esm-extensions";
+import { useStoreWithActions, type Actions } from "@openmrs/esm-react-utils";
 
 export function launchWorkspaceGroup2(groupName: string, props?: Record<string, any>) {
   workspace2Store.setState(state => ({
@@ -16,34 +17,6 @@ export function closeWorkspaceGroup2() {
     openedGroup: null,
     openedGroupModuleName: null
   }))
-}
-
-export interface WorkspaceGroupConfig {
-  groupName: string;
-  windows: Array<WorkspaceWindowConfig>;
-}
-
-export interface WorkspaceWindowConfig {
-  windowName: string;
-  canHide?: boolean;
-  canMaximize?: boolean;
-  overlay?: boolean;
-  workspaces: Array<string>;
-}
-
-export function registerWorkspaceGroups(workspaceGroupConfigs: Array<WorkspaceGroupConfig>) {
-  const map : Record<string, WorkspaceGroupConfig> = {};
-  for(const config of workspaceGroupConfigs) {
-    map[config.groupName] = config;
-  }
-  // TODO: verify
-  workspace2Store.setState(state => ({
-    ...state,
-    registeredGroups: {
-      ...state.registeredGroups,
-      ...map
-    }
-  }));
 }
 
 workspace2Store.subscribe((state) => {
@@ -109,4 +82,53 @@ export async function launchWorkspace2(workspaceName: string, props: Record<stri
       ]
     })
   }
+}
+
+
+const workspace2StoreActions = {
+  setWindowMaximized(state: WorkspaceStoreState2, windowName: string, maximized: boolean) {
+    const openedWindowIndex = state.openedWindows.findIndex(a => a.windowName === windowName);
+    const openedWindows = [...state.openedWindows];
+    const currentWindow = {...openedWindows[openedWindowIndex], maximized};
+    
+    openedWindows[openedWindowIndex] = currentWindow;
+    
+    return {
+      ...state,
+      openedWindows,
+    };
+  },
+  setWindowHidden(state: WorkspaceStoreState2, windowName: string, hidden: boolean) {
+    const openedWindowIndex = state.openedWindows.findIndex(a => a.windowName === windowName);
+    const openedWindows = [...state.openedWindows];
+    const currentWindow = {...openedWindows[openedWindowIndex], hidden};
+    
+    openedWindows[openedWindowIndex] = currentWindow;
+    
+    return {
+      ...state,
+      openedWindows,
+    };
+  },
+  closeWorkspace(state, workspaceName: string) {
+    const openedWindowIndex = getOpenedWindowIndexByWorkspace(state, workspaceName);
+    if (openedWindowIndex < 0) {
+      return state; // no-op if the window does not exist
+    }
+    
+    const window = {...state.openedWindows[openedWindowIndex]};
+    const workspaceIndex = window.workspaces.findIndex((w) => w === workspaceName);
+    const openedWindows = [...state.openedWindows];
+    window.workspaces = window.workspaces.slice(0, workspaceIndex);
+    openedWindows[openedWindowIndex] = window;
+    
+    return {
+      ...state,
+      openedWindows,
+    };
+  }
+} satisfies Actions<WorkspaceStoreState2>;
+
+export function useWorkspace2Store() {
+  return useStoreWithActions(workspace2Store, workspace2StoreActions);
 }
