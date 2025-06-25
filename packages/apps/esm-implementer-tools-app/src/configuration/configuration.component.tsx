@@ -60,9 +60,7 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({ isConfigToolbarOp
   />
 );
 
-export interface ConfigurationProps {}
-
-export const Configuration: React.FC<ConfigurationProps> = () => {
+export const Configuration: React.FC = () => {
   const { t } = useTranslation();
   const {
     isUIEditorEnabled,

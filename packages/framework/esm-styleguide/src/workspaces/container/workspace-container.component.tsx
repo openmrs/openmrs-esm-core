@@ -165,7 +165,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
   const { featureName } = useContext(ComponentContext);
 
   const toggleWindowState = useCallback(() => {
-    isMaximized ? updateWorkspaceWindowState('normal') : updateWorkspaceWindowState('maximized');
+    updateWorkspaceWindowState(isMaximized ? 'normal' : 'maximized');
   }, [isMaximized]);
 
   const {

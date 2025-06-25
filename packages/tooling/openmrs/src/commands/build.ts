@@ -53,6 +53,7 @@ function addConfigFilesFromPaths(configPaths: Array<string>, targetDir: string) 
 }
 
 export async function runBuild(args: BuildArgs) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const webpack: WebpackExport = require('webpack');
   const buildConfig = loadBuildConfig(args.buildConfig);
   const configUrls = buildConfig.configUrls || args.configUrls;
@@ -135,12 +136,13 @@ export async function runBuild(args: BuildArgs) {
       if (err || stats?.hasErrors()) {
         reject(err ?? new Error(stats?.compilation.errors.toString()));
       } else {
-        stats &&
+        if (stats) {
           console.log(
             stats.toString({
               colors: true,
             }),
           );
+        }
 
         addConfigFilesFromPaths(buildConfig.configPaths || args.configPaths, args.target);
 

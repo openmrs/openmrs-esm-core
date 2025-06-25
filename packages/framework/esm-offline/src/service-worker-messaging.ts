@@ -30,6 +30,7 @@ export interface OnImportMapChangedMessage extends OmrsServiceWorkerMessage<'onI
   importMap: ImportMap;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ClearDynamicRoutesMessage extends OmrsServiceWorkerMessage<'clearDynamicRoutes'> {}
 
 export interface RegisterDynamicRouteMessage extends OmrsServiceWorkerMessage<'registerDynamicRoute'> {

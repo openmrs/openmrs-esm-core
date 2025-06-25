@@ -1,36 +1,50 @@
-[@openmrs/esm-framework](../API.md) / UseServerFetchAllOptions
+[O3 Framework](../API.md) / UseServerFetchAllOptions
 
-# Interface: UseServerFetchAllOptions<R\>
+# Interface: UseServerFetchAllOptions\<R\>
 
-## Type parameters
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L14)
 
-| Name |
-| :------ |
-| `R` |
+## Extends
 
-## Hierarchy
+- [`UseServerInfiniteOptions`](UseServerInfiniteOptions.md)\<`R`\>
 
-- [`UseServerInfiniteOptions`](UseServerInfiniteOptions.md)<`R`\>
+## Type Parameters
 
-  ↳ **`UseServerFetchAllOptions`**
+### R
 
-## Table of contents
+`R`
 
-### UI Properties
+## Properties
 
-- [immutable](UseServerFetchAllOptions.md#immutable)
-- [partialData](UseServerFetchAllOptions.md#partialdata)
-- [swrInfiniteConfig](UseServerFetchAllOptions.md#swrinfiniteconfig)
+### fetcher()?
 
-### UI Methods
+> `optional` **fetcher**: (`key`) => `Promise`\<`FetchResponse`\<`R`\>\>
 
-- [fetcher](UseServerFetchAllOptions.md#fetcher)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L18)
 
-## UI Properties
+The fetcher to use. Defaults to openmrsFetch
 
-### immutable
+#### Parameters
 
-• `Optional` **immutable**: `boolean`
+##### key
+
+`string`
+
+#### Returns
+
+`Promise`\<`FetchResponse`\<`R`\>\>
+
+#### Inherited from
+
+[`UseServerInfiniteOptions`](UseServerInfiniteOptions.md).[`fetcher`](UseServerInfiniteOptions.md#fetcher)
+
+***
+
+### immutable?
+
+> `optional` **immutable**: `boolean`
+
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L25)
 
 If true, sets these options in swrInfintieConfig to false:
 revalidateIfStale, revalidateOnFocus, revalidateOnReconnect
@@ -38,63 +52,29 @@ This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
 
 #### Inherited from
 
-[UseServerInfiniteOptions](UseServerInfiniteOptions.md).[immutable](UseServerInfiniteOptions.md#immutable)
+[`UseServerInfiniteOptions`](UseServerInfiniteOptions.md).[`immutable`](UseServerInfiniteOptions.md#immutable)
 
-#### Defined in
+***
 
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L25)
+### partialData?
 
-___
+> `optional` **partialData**: `boolean`
 
-### partialData
-
-• `Optional` **partialData**: `boolean`
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L21)
 
 If true, the data of any page is returned as soon as they are fetched.
 This is useful when you want to display data as soon as possible, even if not all pages are fetched.
 If false, the returned data will be undefined until all pages are fetched. This is useful when you want to
 display all data at once or reduce the number of re-renders (to avoid confusing users).
 
-#### Defined in
+***
 
-[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L21)
+### swrInfiniteConfig?
 
-___
+> `optional` **swrInfiniteConfig**: `SWRInfiniteConfiguration`\<`any`, `any`, `BareFetcher`\<`any`\>\>
 
-### swrInfiniteConfig
-
-• `Optional` **swrInfiniteConfig**: `SWRInfiniteConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L27)
 
 #### Inherited from
 
-[UseServerInfiniteOptions](UseServerInfiniteOptions.md).[swrInfiniteConfig](UseServerInfiniteOptions.md#swrinfiniteconfig)
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L27)
-
-## UI Methods
-
-### fetcher
-
-▸ `Optional` **fetcher**(`key`): `Promise`<`FetchResponse`<`R`\>\>
-
-The fetcher to use. Defaults to openmrsFetch
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `key` | `string` |
-
-#### Returns
-
-`Promise`<`FetchResponse`<`R`\>\>
-
-#### Inherited from
-
-[UseServerInfiniteOptions](UseServerInfiniteOptions.md).[fetcher](UseServerInfiniteOptions.md#fetcher)
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L18)
+[`UseServerInfiniteOptions`](UseServerInfiniteOptions.md).[`swrInfiniteConfig`](UseServerInfiniteOptions.md#swrinfiniteconfig)
