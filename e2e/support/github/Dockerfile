@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.3
-FROM --platform=$BUILDPLATFORM node:20-alpine as dev
+FROM --platform=$BUILDPLATFORM node:22-alpine as dev
 
 ARG APP_SHELL_VERSION=next
 
@@ -13,7 +13,6 @@ ARG CACHE_BUST
 RUN yarn install
 RUN node packages/tooling/openmrs/dist/cli.js assemble --manifest --mode config --config spa-assemble-config.json --target /app/spa
 RUN node packages/tooling/openmrs/dist/cli.js build --target /app/spa
-RUN ls -al /app/spa
 
 FROM --platform=$BUILDPLATFORM openmrs/openmrs-reference-application-3-frontend:nightly as frontend
 # clear out the already installed files
