@@ -13,6 +13,8 @@ ARG CACHE_BUST
 RUN yarn install
 RUN node packages/tooling/openmrs/dist/cli.js assemble --manifest --mode config --config spa-assemble-config.json --target /app/spa
 RUN node packages/tooling/openmrs/dist/cli.js build --target /app/spa
+RUN ls -al /app
+RUN ls -al /app/spa
 
 FROM --platform=$BUILDPLATFORM openmrs/openmrs-reference-application-3-frontend:nightly as frontend
 # clear out the already installed files
