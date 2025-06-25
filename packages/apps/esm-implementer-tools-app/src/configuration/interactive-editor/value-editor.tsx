@@ -28,7 +28,6 @@ export function ValueEditor({ element, customType, path, handleSave, handleClose
   const valueType = customType ?? element._type;
   const validators = element._validators ?? [];
 
-  // Determine the schema to pass for validation
   let elementSchema: any = undefined;
   if (valueType === (Type as any).Object) {
     elementSchema = element;
@@ -64,7 +63,7 @@ export function ValueEditor({ element, customType, path, handleSave, handleClose
   return (
     <div ref={ref} style={{ display: 'inherit' }}>
       <ValueEditorField element={element} path={path} value={tmpValue} onChange={setTmpValue} valueType={valueType} />
-      {error && <div style={{ color: 'red', marginTop: 8 }}>{error}</div>}
+      {error && <div className={styles.errorMessage}>{error}</div>}
       <div className={styles.valueEditorButtons}>
         <Button renderIcon={(props) => <SaveIcon {...props} size={16} />} kind="primary" onClick={handleSaveClick}>
           {t('saveValueButtonText', 'Save')}

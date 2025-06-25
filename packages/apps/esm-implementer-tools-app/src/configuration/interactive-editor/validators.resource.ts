@@ -1,6 +1,4 @@
-import { Type, validator } from '@openmrs/esm-framework';
-
-const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+import { Type } from '@openmrs/esm-framework';
 
 const validateString = (value, validators) => {
   if (typeof value !== 'string') {
@@ -35,7 +33,6 @@ const validateBoolean = (value, validators) => {
   return null;
 };
 
-// For arrays, _elements is the schema for each element
 const validateArray = (value, validators, elementSchema) => {
   if (!Array.isArray(value)) {
     return 'Value must be an array';
@@ -46,23 +43,21 @@ const validateArray = (value, validators, elementSchema) => {
   }
   if (elementSchema) {
     for (let i = 0; i < value.length; i++) {
-      const el = value[i];
-      // If _type: Type.Object, schema is the elementSchema itself
+      const element = value[i];
       if (elementSchema._type === Type.Object) {
-        const err = validateObject(el, [], elementSchema);
-        if (err) return `Element ${i}: ${err}`;
+        const err = validateObject(element, [], elementSchema);
+        if (err) return err;
       } else {
-        const elType = elementSchema._type;
-        const elValidators = elementSchema._validators ?? [];
-        const err = validateValue(el, elType, elValidators, elementSchema._elements);
-        if (err) return `Element ${i}: ${err}`;
+        const elementType = elementSchema._type;
+        const elementValidators = elementSchema._validators ?? [];
+        const err = validateValue(element, elementType, elementValidators, elementSchema._elements);
+        if (err) return err;
       }
     }
   }
   return null;
 };
 
-// For objects, schema is the object itself (no _type: Type.Object, no _properties)
 const validateObject = (value, validators, schema) => {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) {
     return 'Value must be an object';
@@ -71,22 +66,22 @@ const validateObject = (value, validators, schema) => {
     const result = v(value);
     if (result) return result;
   }
-  // Validate each property in the schema (skip keys starting with _)
   for (const key of Object.keys(schema)) {
     if (key.startsWith('_')) continue;
     const propSchema = schema[key];
     const propValue = value[key];
-    // If property is an object (no _type, no _validators), treat as nested object
-    if (propSchema._type === Type.Object) {
-      const err = validateObject(propValue, [], propSchema);
-      if (err) return `Property '${key}': ${err}`;
-    } else if (propSchema._type === Type.Array) {
-      const err = validateArray(propValue, propSchema._validators ?? [], propSchema._elements);
-      if (err) return `Property '${key}': ${err}`;
+    if (propSchema._type) {
+      if (propSchema._type === Type.Array) {
+        const err = validateArray(propValue, propSchema._validators ?? [], propSchema._elements);
+        if (err) return `Property '${key}': ${err}`;
+      } else {
+        const propType = propSchema._type;
+        const propValidators = propSchema._validators ?? [];
+        const err = validateValue(propValue, propType, propValidators, propSchema._elements);
+        if (err) return `Property '${key}': ${err}`;
+      }
     } else {
-      const propType = propSchema._type;
-      const propValidators = propSchema._validators ?? [];
-      const err = validateValue(propValue, propType, propValidators, propSchema._elements);
+      const err = validateObject(propValue, [], propSchema);
       if (err) return `Property '${key}': ${err}`;
     }
   }
@@ -94,7 +89,7 @@ const validateObject = (value, validators, schema) => {
 };
 
 const validateUuid = (value, validators) => {
-  if (typeof value !== 'string' || !UUID_REGEX.test(value)) {
+  if (typeof value !== 'string' || /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)) {
     return 'Value must be a valid UUID string';
   }
   for (const v of validators) {
@@ -102,14 +97,6 @@ const validateUuid = (value, validators) => {
     if (result) return result;
   }
   return null;
-};
-
-const validateConceptUuid = (value, validators) => {
-  return validateUuid(value, validators);
-};
-
-const validatePersonAttributeTypeUuid = (value, validators) => {
-  return validateUuid(value, validators);
 };
 
 export const validateValue = (tmpValue, valueType, validators, elementSchema = undefined) => {
@@ -127,9 +114,11 @@ export const validateValue = (tmpValue, valueType, validators, elementSchema = u
     case Type.UUID:
       return validateUuid(tmpValue, validators);
     case Type.ConceptUuid:
-      return validateConceptUuid(tmpValue, validators);
+      return validateUuid(tmpValue, validators);
     case Type.PersonAttributeTypeUuid:
-      return validatePersonAttributeTypeUuid(tmpValue, validators);
+      return validateUuid(tmpValue, validators);
+    case Type.PatientIdentifierTypeUuid:
+      return validateUuid(tmpValue, validators);
     default:
       return null;
   }
