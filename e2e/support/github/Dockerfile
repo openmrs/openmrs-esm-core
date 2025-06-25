@@ -3,7 +3,7 @@ FROM --platform=$BUILDPLATFORM node:22-alpine as dev
 
 ARG APP_SHELL_VERSION=next
 
-RUN mkdir -p /app
+RUN mkdir -p /app/spa
 WORKDIR /app
 
 COPY . .
