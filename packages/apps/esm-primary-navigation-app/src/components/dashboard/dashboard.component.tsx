@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useContext, useMemo } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { isEmpty } from 'lodash-es';
-import { InlineNotification } from '@carbon/react';
 import {
   ComponentContext,
-  getCoreTranslation,
   type OpenmrsReactComponentProps,
   Type,
   useConfig,
   openmrsComponentDecorator,
+  getCoreTranslation,
 } from '@openmrs/esm-framework/src/internal';
 import { DashboardExtension } from '@openmrs/esm-styleguide';
+import { InlineNotification } from '@carbon/react';
+import { useTranslation } from 'react-i18next';
 
 export const dashboardConfigSchema = {
   title: {
@@ -45,45 +44,20 @@ export interface DashboardConfig {
 
 interface DashboardProps {
   basePath: string;
+  moduleName?: string;
 }
 
-export default function Dashboard({ basePath }: DashboardProps) {
-  const { t } = useTranslation();
-  const config = useConfig<DashboardConfig>();
-
-  useEffect(() => {
-    if (!config.moduleName || isEmpty(config.moduleName)) {
-      console.error("Config schema for the dashboard extension is missing the property 'moduleName'");
-    }
-  }, [config.moduleName]);
-
-  if (!config.path || isEmpty(config.path)) {
-    console.error("Config schema for the dashboard extension is missing the property 'path'");
-    return (
-      <InlineNotification
-        kind="error"
-        subtitle={t(
-          'missingPropertyInDashboardExtension',
-          `Error: Cannot render the dashboard extension without the property "path" being set in the configuration schema`,
-        )}
-        title={getCoreTranslation('error')}
-      />
-    );
-  }
-
-  return <DashboardInternal basePath={basePath} config={config} />;
-}
-
-function DashboardInternal({ basePath, config }: { basePath: string; config: DashboardConfig }) {
+export default function Dashboard({ basePath, moduleName }: DashboardProps) {
   const componentContext = useContext(ComponentContext);
+  const module = moduleName ?? componentContext.moduleName;
 
   const Component = useMemo(
     () =>
       openmrsComponentDecorator<OpenmrsReactComponentProps>({
-        moduleName: config.moduleName ?? componentContext.moduleName,
+        moduleName: module,
         featureName: 'dashboard',
-      })(() => <DashboardExtension path={config.path} title={config.title} basePath={basePath} icon={config.icon} />),
-    [config.moduleName, componentContext.moduleName],
+      })(() => <DashboardInternal basePath={basePath} />),
+    [componentContext.moduleName],
   );
 
   return (
@@ -92,9 +66,30 @@ function DashboardInternal({ basePath, config }: { basePath: string; config: Das
         _extensionContext={{
           extensionId: componentContext.extension?.extensionId,
           extensionSlotName: componentContext.extension?.extensionSlotName,
-          extensionSlotModuleName: componentContext.extension?.extensionSlotModuleName,
+          extensionSlotModuleName: module,
         }}
       />
     </BrowserRouter>
   );
+}
+
+// t('noPathInDashboardExtension', 'Cannot render the dashboard extension without the property "path" being set in the configuration schema')
+function DashboardInternal({ basePath }: { basePath: string }) {
+  const { t } = useTranslation('@openmrs/esm-primary-navigation-app');
+  const config = useConfig<DashboardConfig>();
+
+  if (!config.path) {
+    return (
+      <InlineNotification
+        kind="error"
+        subtitle={t(
+          'noPathInDashboardExtension',
+          `Cannot render the dashboard extension without the property "path" being set in the configuration schema`,
+        )}
+        title={getCoreTranslation('error')}
+      />
+    );
+  }
+
+  return <DashboardExtension path={config.path} title={config.title} basePath={basePath} icon={config.icon} />;
 }
