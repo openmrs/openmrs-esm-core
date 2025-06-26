@@ -77,7 +77,7 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
 
   useEffect(() => {
     // if an active visit is created and there is no visit in context, set the context to the active visit
-    if (manuallySetVisitUuid == null && !activeIsValidating && activeVisit) {
+    if (!activeIsValidating && activeVisit && (visitStorePatientUuid != patientUuid || manuallySetVisitUuid == null)) {
       setVisitContext(activeVisit);
     }
     if (!retroIsValidating) {
@@ -94,12 +94,12 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
       }
       previousCurrentVisit.current = currentVisit;
     }
-  }, [currentVisit, manuallySetVisitUuid, activeVisit, activeIsValidating, retroIsValidating]);
+  }, [currentVisit, manuallySetVisitUuid, activeVisit, activeIsValidating, retroIsValidating, visitStorePatientUuid]);
 
   const mutateVisit = useCallback(() => {
     activeMutate();
     retroMutate();
-  }, [activeVisit, currentVisit, activeMutate, retroMutate]);
+  }, [activeMutate, retroMutate]);
 
   useVisitContextStore(mutateVisit);
 
