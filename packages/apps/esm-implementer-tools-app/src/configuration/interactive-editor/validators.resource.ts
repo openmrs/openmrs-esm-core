@@ -89,7 +89,12 @@ const validateObject = (value, validators, schema) => {
 };
 
 const validateUuid = (value, validators) => {
-  if (typeof value !== 'string' || /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)) {
+  if (
+    typeof value !== 'string' ||
+    !/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|[0-9A-Za-z]{11,36})$/i.test(
+      value,
+    )
+  ) {
     return 'Value must be a valid UUID string';
   }
   for (const v of validators) {
