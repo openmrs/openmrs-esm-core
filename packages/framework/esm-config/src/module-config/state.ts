@@ -1,4 +1,3 @@
-/** @module @category Config */
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
 import { shallowEqual } from '@openmrs/esm-utils';
 import { type StoreApi } from 'zustand';

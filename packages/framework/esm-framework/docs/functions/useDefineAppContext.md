@@ -14,7 +14,7 @@ will be automatically removed when the component using this hook is unmounted.
 
 ### T
 
-`T` *extends* `Record`\<`string` \| `number` \| `symbol`, `unknown`\> = `Record`\<`string` \| `number` \| `symbol`, `any`\>
+`T` *extends* `object` = `object`
 
 The type of the value of the namespace
 

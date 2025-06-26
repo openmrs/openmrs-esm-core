@@ -24,7 +24,7 @@ export interface ExtensionSlotBaseProps {
    *   has children, you must pass the state through the `state` param of the
    *   `Extension` component.
    */
-  state?: Record<string | number | symbol, unknown>;
+  state?: Record<string | symbol | number, unknown>;
 }
 
 export interface ExtensionSlotProps

@@ -14,7 +14,7 @@ const availableStores: Record<string, StoreEntity> = {};
 // spaEnv isn't available immediately. Wait a bit before making stores available
 // on window in development mode.
 setTimeout(() => {
-  if (window.spaEnv === 'development') {
+  if (window && window.spaEnv === 'development') {
     window['stores'] = availableStores;
   }
 }, 1000);

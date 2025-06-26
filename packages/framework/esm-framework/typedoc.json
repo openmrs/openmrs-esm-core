@@ -13,6 +13,7 @@
     "typedoc-plugin-markdown",
     "typedoc-plugin-no-inherit"
   ],
+  "basePath": "../../../",
   "readme": "none",
   "excludeInternal": true,
   "entryFileName": "API.md",
