@@ -97,7 +97,11 @@
     "happy-dom": "^17.4.7",
     "sass-embedded": "^1.89.0",
     "svgo-loader": "^4.0.0",
-    "typescript": "^4.7.0",
+    "typedoc": "^0.28.5",
+    "typedoc-plugin-file-categories": "workspace:*",
+    "typedoc-plugin-markdown": "^4.6.3",
+    "typedoc-plugin-no-inherit": "^1.6.1",
+    "typescript": "^5.8.3",
     "vitest": "^3.1.4"
   }
 }

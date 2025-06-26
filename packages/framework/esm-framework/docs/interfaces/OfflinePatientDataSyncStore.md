@@ -1,32 +1,25 @@
-[@openmrs/esm-framework](../API.md) / OfflinePatientDataSyncStore
+[O3 Framework](../API.md) / OfflinePatientDataSyncStore
 
-# Interface: OfflinePatientDataSyncStore
+# Interface: ~~OfflinePatientDataSyncStore~~
 
-**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L6)
 
-## Table of contents
+## Deprecated
 
-### Offline Properties
+Will be removed once all modules have been migrated to the new dynamic offline data API.
 
-- [handlers](OfflinePatientDataSyncStore.md#handlers)
-- [offlinePatientDataSyncState](OfflinePatientDataSyncStore.md#offlinepatientdatasyncstate)
+## Properties
 
-## Offline Properties
+### ~~handlers~~
 
-### handlers
+> **handlers**: `Record`\<`string`, [`OfflinePatientDataSyncHandler`](OfflinePatientDataSyncHandler.md)\>
 
-• **handlers**: `Record`<`string`, [`OfflinePatientDataSyncHandler`](OfflinePatientDataSyncHandler.md)\>
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L8)
 
-#### Defined in
+***
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L8)
+### ~~offlinePatientDataSyncState~~
 
-___
+> **offlinePatientDataSyncState**: `Record`\<`string`, [`OfflinePatientDataSyncState`](OfflinePatientDataSyncState.md)\>
 
-### offlinePatientDataSyncState
-
-• **offlinePatientDataSyncState**: `Record`<`string`, [`OfflinePatientDataSyncState`](OfflinePatientDataSyncState.md)\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/offline-patient-data.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L7)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L7)

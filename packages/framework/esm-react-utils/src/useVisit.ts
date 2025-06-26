@@ -83,7 +83,13 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     if (!retroIsValidating) {
       // if the current visit happened to be active but it just got ended (inactive), remove the
       // visit from context
-      if (previousCurrentVisit.current && currentVisit && previousCurrentVisit.current.uuid === currentVisit.uuid && !previousCurrentVisit.current.stopDatetime && currentVisit.stopDatetime) {
+      if (
+        previousCurrentVisit.current &&
+        currentVisit &&
+        previousCurrentVisit.current.uuid === currentVisit.uuid &&
+        !previousCurrentVisit.current.stopDatetime &&
+        currentVisit.stopDatetime
+      ) {
         setVisitContext(null);
       }
       previousCurrentVisit.current = currentVisit;
