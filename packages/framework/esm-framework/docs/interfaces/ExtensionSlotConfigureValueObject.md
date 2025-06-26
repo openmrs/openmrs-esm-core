@@ -2,7 +2,7 @@
 
 # Interface: ExtensionSlotConfigureValueObject
 
-Defined in: [packages/framework/esm-config/src/types.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L55)
+Defined in: [packages/framework/esm-config/src/types.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L58)
 
 ## Indexable
 

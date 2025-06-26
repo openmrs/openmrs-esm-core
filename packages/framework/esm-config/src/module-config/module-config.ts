@@ -1,6 +1,6 @@
 /** @module @category Config */
 import { clone, reduce, mergeDeepRight, equals, omit } from 'ramda';
-import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject } from '../types';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig } from '../types';
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
 import { validator } from '../validators/validator';
@@ -440,7 +440,7 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
 function getExtensionSlotConfigs(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
-): Record<string, ExtensionSlotConfigObject> {
+): Record<string, ExtensionSlotConfig> {
   const allConfigs = mergeConfigs(getProvidedConfigs(configState, tempConfigState));
   const slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>> = Object.keys(allConfigs).reduce(
     (obj, key) => {

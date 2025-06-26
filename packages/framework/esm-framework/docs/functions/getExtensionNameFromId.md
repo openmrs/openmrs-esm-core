@@ -4,7 +4,7 @@
 
 > **getExtensionNameFromId**(`extensionId`): `string`
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L163)
+Defined in: [packages/framework/esm-extensions/src/extensions.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L164)
 
 Given an extension ID, which is a string uniquely identifying
 an instance of an extension within an extension slot, this

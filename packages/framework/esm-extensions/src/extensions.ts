@@ -11,11 +11,12 @@
 import { type Session, type SessionStore, sessionStore, userHasAccess } from '@openmrs/esm-api';
 import {
   type ExtensionsConfigStore,
-  type ExtensionSlotConfigObject,
+  type ExtensionSlotConfig,
   type ExtensionSlotsConfigStore,
   getExtensionConfigFromStore,
   getExtensionsConfigStore,
   getExtensionSlotConfig,
+  getExtensionConfigFromExtensionSlotStore,
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
@@ -23,7 +24,7 @@ import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
 import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
-import { isEqual } from 'lodash-es';
+import { isEqual, merge } from 'lodash-es';
 import { checkStatusFor } from './helpers';
 import {
   type AssignedExtension,
@@ -322,7 +323,7 @@ function getOrder(
 function getAssignedExtensionsFromSlotData(
   slotName: string,
   internalState: ExtensionInternalStore,
-  config: ExtensionSlotConfigObject,
+  config: ExtensionSlotConfig,
   extensionConfigStoreState: ExtensionsConfigStore,
   enabledFeatureFlags: Array<string>,
   isOnline: boolean,
@@ -333,7 +334,10 @@ function getAssignedExtensionsFromSlotData(
   const extensions: Array<AssignedExtension> = [];
 
   for (let id of assignedIds) {
-    const { config: extensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
+    const { config: rawExtensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
+    const rawExtensionSlotExtensionConfig = getExtensionConfigFromExtensionSlotStore(config, slotName, id);
+    const extensionConfig = merge(rawExtensionConfig, rawExtensionSlotExtensionConfig);
+
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
 
@@ -418,7 +422,7 @@ export function getAssignedExtensions(slotName: string): Array<AssignedExtension
   );
 }
 
-function calculateAssignedIds(config: ExtensionSlotConfigObject, attachedIds: Array<string>) {
+function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<string>) {
   const addedIds = config.add || [];
   const removedIds = config.remove || [];
   const idOrder = config.order || [];
