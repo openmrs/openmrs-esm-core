@@ -1,5 +1,4 @@
 import { validators, Type, validator } from '@openmrs/esm-framework';
-import { WorkspaceGroupConfig } from '@openmrs/esm-styleguide';
 
 export const configSchema = {
   provider: {
@@ -129,29 +128,3 @@ export interface ConfigSchema {
   };
   showPasswordOnSeparateScreen: boolean;
 }
-
-export const workspaceGroupConfig : WorkspaceGroupConfig[] = [
-  {
-    groupName: 'workspace-group-test',
-    windows: [
-      {
-        windowName: 'action1',
-        canHide: true,
-        canMaximize: true,
-        overlay: false,
-        workspaces: [
-          "workspace-test"
-        ]
-      },
-      {
-        windowName: 'action2',
-        canHide: true,
-        canMaximize: true,
-        overlay: false,
-        workspaces: [
-          "workspace-test-2",
-        ]
-      },
-    ]
-  }
-]

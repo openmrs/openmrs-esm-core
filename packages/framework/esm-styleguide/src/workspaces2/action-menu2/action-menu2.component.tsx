@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { ExtensionSlot, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import styles from './action-menu.module.scss';
+import styles from './action-menu2.module.scss';
 
 export interface ActionMenuProps {
   workspaceGroup: string;

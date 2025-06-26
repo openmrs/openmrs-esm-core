@@ -1,7 +1,7 @@
 import React from "react";
 import { ComponentContext, useAssignedExtensions } from "@openmrs/esm-react-utils";
 import { createRoot } from "react-dom/client";
-import { ActionMenu } from './action-menu/action-menu.component';
+import { ActionMenu } from './action-menu2/action-menu2.component';
 import ActiveWorkspaceWindow from "./active-workspace-window.component";
 import { useWorkspace2Store } from "./workspace2";
 
