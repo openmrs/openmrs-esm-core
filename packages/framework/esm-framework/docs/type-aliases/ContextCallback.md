@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-context/src/context.ts:101](https://github.c
 
 ### T
 
-`T` *extends* `Record`\<`string` \| `symbol` \| `number`, `unknown`\> = `Record`\<`string` \| `symbol` \| `number`, `any`\>
+`T` *extends* `NonNullable`\<`object`\> = `NonNullable`\<`object`\>
 
 ## Parameters
 
