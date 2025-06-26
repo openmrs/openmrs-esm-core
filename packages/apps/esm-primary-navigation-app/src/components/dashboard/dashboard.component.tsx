@@ -1,16 +1,16 @@
 import React, { useContext, useMemo } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { InlineNotification } from '@carbon/react';
 import {
   ComponentContext,
-  type OpenmrsReactComponentProps,
-  Type,
+  DashboardExtension,
+  getCoreTranslation,
   useConfig,
   openmrsComponentDecorator,
-  getCoreTranslation,
+  type OpenmrsReactComponentProps,
+  Type,
 } from '@openmrs/esm-framework/src/internal';
-import { DashboardExtension } from '@openmrs/esm-styleguide';
-import { InlineNotification } from '@carbon/react';
-import { useTranslation } from 'react-i18next';
 
 export const dashboardConfigSchema = {
   title: {

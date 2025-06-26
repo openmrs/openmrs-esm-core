@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionItem } from '@carbon/react';
-import {  } from '@openmrs/esm-framework';
 import { ComponentContext, ExtensionSlot, useConfig, Type } from '@openmrs/esm-framework/src/internal';
 
 export const navGroupFeatureName = 'Nav Group';
@@ -43,7 +42,10 @@ export function NavGroup({ basePath }: NavGroupProps) {
   return (
     <Accordion>
       <AccordionItem open={isExpanded} title={t(title)}>
-        <ExtensionSlot name={slotName ?? `nav-group-${title}`} state={{ basePath, moduleName: componentContext.extension?.extensionSlotModuleName }} />
+        <ExtensionSlot
+          name={slotName ?? `nav-group-${title}`}
+          state={{ basePath, moduleName: componentContext.extension?.extensionSlotModuleName }}
+        />
       </AccordionItem>
     </Accordion>
   );
