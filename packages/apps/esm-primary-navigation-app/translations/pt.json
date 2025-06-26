@@ -4,7 +4,7 @@
   "change": "Alterar",
   "changeLanguage": "Alterar língua",
   "changingLanguage": "Alterando língua",
-  "missingPropertyInDashboardExtension": "Error: Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
+  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
   "notifications": "Notificações",
   "userMenu": "User menu",
   "userMenuOptions": "User menu options",
