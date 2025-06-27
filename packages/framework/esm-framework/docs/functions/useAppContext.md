@@ -14,7 +14,7 @@ returned from the namespace.
 
 ### T
 
-`T` *extends* `Record`\<`string` \| `number` \| `symbol`, `unknown`\> = `Record`\<`string` \| `number` \| `symbol`, `any`\>
+`T` *extends* `object` = `object`
 
 The type of the value stored in the namespace
 

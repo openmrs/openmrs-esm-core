@@ -1,9 +1,7 @@
 /** @module @category Context */
 import { useDefineAppContext } from './useDefineAppContext';
 
-export interface OpenmrsAppContextProps<
-  T extends Record<string | symbol | number, unknown> = Record<string | symbol | number, any>,
-> {
+export interface OpenmrsAppContextProps<T extends NonNullable<object> = NonNullable<object>> {
   /** the namespace that this component defines */
   namespace: string;
   /** used to control the value associated with the namespace */
@@ -23,9 +21,10 @@ export interface OpenmrsAppContextProps<
  * context component, the `OpenmrsAppContext` is inherently global in scope. That means that _all applications_
  * will see the values that you set for the namespace if they load the value of the namespace.
  */
-export function OpenmrsAppContext<
-  T extends Record<string | symbol | number, unknown> = Record<string | symbol | number, any>,
->({ namespace, value }: OpenmrsAppContextProps<T>) {
+export function OpenmrsAppContext<T extends NonNullable<object> = NonNullable<object>>({
+  namespace,
+  value,
+}: OpenmrsAppContextProps<T>) {
   useDefineAppContext<T>(namespace, value);
 
   return null;
