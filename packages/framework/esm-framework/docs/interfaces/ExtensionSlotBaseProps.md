@@ -1,23 +1,23 @@
-[@openmrs/esm-framework](../API.md) / ExtensionSlotBaseProps
+[O3 Framework](../API.md) / ExtensionSlotBaseProps
 
 # Interface: ExtensionSlotBaseProps
 
-## Table of contents
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L8)
 
-### Extension Properties
+## Extended by
 
 - [name](ExtensionSlotBaseProps.md#name)
 - [state](ExtensionSlotBaseProps.md#state)
 
-### Extension Methods
+## Properties
 
-- [select](ExtensionSlotBaseProps.md#select)
+### ~~extensionSlotName?~~
 
 ## Extension Properties
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
 
 #### Defined in
 
@@ -41,9 +41,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `extensions` | `AssignedExtension`[] |
+##### extensions
+
+`AssignedExtension`[]
 
 #### Returns
 

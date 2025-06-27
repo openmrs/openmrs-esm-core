@@ -1,34 +1,30 @@
-[@openmrs/esm-framework](../API.md) / ConnectedExtension
+[O3 Framework](../API.md) / ConnectedExtension
 
-# Interface: ConnectedExtension
+# Interface: ~~ConnectedExtension~~
 
-**`deprecated`** replaced with AssignedExtension
+Defined in: [packages/framework/esm-extensions/src/store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L85)
 
-## Table of contents
+## Deprecated
 
-### Extension Properties
+replaced with AssignedExtension
 
-- [config](ConnectedExtension.md#config)
-- [id](ConnectedExtension.md#id)
-- [meta](ConnectedExtension.md#meta)
-- [moduleName](ConnectedExtension.md#modulename)
-- [name](ConnectedExtension.md#name)
+## Properties
 
-## Extension Properties
+### ~~config~~
 
-### config
+> `readonly` **config**: `null` \| `Readonly`\<`ConfigObject`\>
 
-• `Readonly` **config**: ``null`` \| `Readonly`<`ConfigObject`\>
+Defined in: [packages/framework/esm-extensions/src/store.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L91)
 
 The extension's config. Note that this will be `null` until the slot is mounted.
 
-#### Defined in
+***
 
 [packages/framework/esm-extensions/src/store.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L101)
 
-___
+> `readonly` **id**: `string`
 
-### id
+Defined in: [packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)
 
 • `Readonly` **id**: `string`
 
@@ -46,21 +42,21 @@ ___
 
 [packages/framework/esm-extensions/src/store.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L99)
 
-___
+***
 
-### moduleName
+### ~~moduleName~~
 
-• `Readonly` **moduleName**: `string`
+> `readonly` **moduleName**: `string`
 
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L98)
 
-___
+***
 
-### name
+### ~~name~~
 
-• `Readonly` **name**: `string`
+> `readonly` **name**: `string`
 
 #### Defined in
 

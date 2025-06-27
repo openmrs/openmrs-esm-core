@@ -8,8 +8,8 @@ import styles from './object-editor.styles.scss';
 
 interface ObjectEditorProps {
   element: ConfigValueDescriptor;
-  valueObject: Object;
-  setValue: (value: Object) => void;
+  valueObject: Record<string | symbol | number, any>;
+  setValue: (value: Record<string | symbol | number, any>) => void;
 }
 
 export function ObjectEditor({ element, valueObject, setValue }: ObjectEditorProps) {

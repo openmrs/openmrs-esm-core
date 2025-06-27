@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { HeaderPanel, Switcher, SwitcherDivider } from '@carbon/react';
+import { HeaderPanel, type HeaderPanelProps, Switcher, SwitcherDivider } from '@carbon/react';
 import { ExtensionSlot, useOnClickOutside } from '@openmrs/esm-framework';
 import styles from './user-menu-panel.scss';
 
@@ -19,11 +19,7 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({ expanded, hidePanel }) =>
 
   return (
     <div ref={userMenuRef} style={{ display: 'inline' }}>
-      <HeaderPanel
-        className={styles.headerPanel}
-        expanded={expanded}
-        aria-label={t('userMenu', 'User menu')}
-      >
+      <HeaderPanel className={styles.headerPanel} expanded={expanded} aria-label={t('userMenu', 'User menu')}>
         <Switcher className={styles.userPanelSwitcher} aria-label={t('userMenuOptions', 'User menu options')}>
           <ExtensionSlot className={styles.fullWidth} name="user-panel-slot" />
           <SwitcherDivider className={styles.divider} aria-hidden="true" />

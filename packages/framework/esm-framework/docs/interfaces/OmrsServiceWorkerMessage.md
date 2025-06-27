@@ -1,35 +1,25 @@
-[@openmrs/esm-framework](../API.md) / OmrsServiceWorkerMessage
+[O3 Framework](../API.md) / OmrsServiceWorkerMessage
 
-# Interface: OmrsServiceWorkerMessage<MessageTypeTypeIdentifier\>
+# Interface: OmrsServiceWorkerMessage\<MessageTypeTypeIdentifier\>
 
-## Type parameters
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L25)
 
-| Name | Type |
-| :------ | :------ |
-| `MessageTypeTypeIdentifier` | extends `string` |
+## Extended by
 
-## Hierarchy
+- [`OnImportMapChangedMessage`](OnImportMapChangedMessage.md)
+- [`ClearDynamicRoutesMessage`](ClearDynamicRoutesMessage.md)
+- [`RegisterDynamicRouteMessage`](RegisterDynamicRouteMessage.md)
 
-- **`OmrsServiceWorkerMessage`**
+## Type Parameters
 
-  ↳ [`OnImportMapChangedMessage`](OnImportMapChangedMessage.md)
+### MessageTypeTypeIdentifier
 
-  ↳ [`ClearDynamicRoutesMessage`](ClearDynamicRoutesMessage.md)
+`MessageTypeTypeIdentifier` *extends* `string`
 
-  ↳ [`RegisterDynamicRouteMessage`](RegisterDynamicRouteMessage.md)
-
-## Table of contents
-
-### Offline Properties
-
-- [type](OmrsServiceWorkerMessage.md#type)
-
-## Offline Properties
+## Properties
 
 ### type
 
-• **type**: `MessageTypeTypeIdentifier`
+> **type**: `MessageTypeTypeIdentifier`
 
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)

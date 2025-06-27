@@ -1,52 +1,43 @@
-[@openmrs/esm-framework](../API.md) / ExtensionSlotConfig
+[O3 Framework](../API.md) / ExtensionSlotConfig
 
 # Interface: ExtensionSlotConfig
 
-## Table of contents
-
-### Properties
-
-- [add](ExtensionSlotConfig.md#add)
-- [configure](ExtensionSlotConfig.md#configure)
-- [order](ExtensionSlotConfig.md#order)
-- [remove](ExtensionSlotConfig.md#remove)
+Defined in: [packages/framework/esm-config/src/types.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L48)
 
 ## Properties
 
-### add
+### add?
 
-• `Optional` **add**: `string`[]
+> `optional` **add**: `string`[]
 
-#### Defined in
+Defined in: [packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L50)
 
-[packages/framework/esm-config/src/types.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L49)
+Additional extension IDs to assign to this slot, in addition to those `attach`ed in code.
 
-___
+***
 
-### configure
+### configure?
 
-• `Optional` **configure**: [`ExtensionSlotConfigureValueObject`](ExtensionSlotConfigureValueObject.md)
+> `optional` **configure**: [`ExtensionSlotConfigureValueObject`](ExtensionSlotConfigureValueObject.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-config/src/types.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L55)
 
-[packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L52)
+***
 
-___
+### order?
 
-### order
+> `optional` **order**: `string`[]
 
-• `Optional` **order**: `string`[]
+Defined in: [packages/framework/esm-config/src/types.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L54)
 
-#### Defined in
+Overrides the default ordering of extensions.
 
-[packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L51)
+***
 
-___
+### remove?
 
-### remove
+> `optional` **remove**: `string`[]
 
-• `Optional` **remove**: `string`[]
+Defined in: [packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L52)
 
-#### Defined in
-
-[packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L50)
+Extension IDs which were `attach`ed to the slot but which should not be assigned.

@@ -11,11 +11,12 @@
 import { type Session, type SessionStore, sessionStore, userHasAccess } from '@openmrs/esm-api';
 import {
   type ExtensionsConfigStore,
-  type ExtensionSlotConfigObject,
+  type ExtensionSlotConfig,
   type ExtensionSlotsConfigStore,
   getExtensionConfigFromStore,
   getExtensionsConfigStore,
   getExtensionSlotConfig,
+  getExtensionConfigFromExtensionSlotStore,
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
@@ -23,7 +24,7 @@ import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
 import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
-import { isEqual } from 'lodash-es';
+import { isEqual, merge } from 'lodash-es';
 import { checkStatusFor } from './helpers';
 import {
   type AssignedExtension,
@@ -261,6 +262,7 @@ function getAssignedExtensionsByExtensionIds(slotName: string, extensionIds: str
   const featureFlagState = featureFlagsStore.getState();
   const { session } = sessionStore.getState();
   const isOnline = isOnlineFn();
+  const { config: slotConfig } = getExtensionSlotConfig(slotName);
   const enabledFeatureFlags = Object.entries(featureFlagState.flags)
     .filter(([, { enabled }]) => enabled)
     .map(([name]) => name);
@@ -268,7 +270,10 @@ function getAssignedExtensionsByExtensionIds(slotName: string, extensionIds: str
   const assignedExtensions: Array<AssignedExtension> = [];
 
   for (let id of extensionIds) {
-    const { config: extensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
+    const { config: rawExtensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
+    const rawExtensionSlotExtensionConfig = getExtensionConfigFromExtensionSlotStore(slotConfig, slotName, id);
+    const extensionConfig = merge(rawExtensionConfig, rawExtensionSlotExtensionConfig);
+
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
 
@@ -360,7 +365,6 @@ function getExtensionIds(slotName: string) {
   const { config } = getExtensionSlotConfig(slotName);
 
   const attachedIds = internalState.slots[slotName].attachedIds;
-
   const addedIds = config.add || [];
   const removedIds = config.remove || [];
   const idOrder = config.order || [];

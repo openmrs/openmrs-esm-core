@@ -1,140 +1,101 @@
-[@openmrs/esm-framework](../API.md) / AuditInfo
+[O3 Framework](../API.md) / AuditInfo
 
 # Interface: AuditInfo
 
-## Table of contents
-
-### Properties
-
-- [changedBy](AuditInfo.md#changedby)
-- [creator](AuditInfo.md#creator)
-- [dateChanged](AuditInfo.md#datechanged)
-- [dateCreated](AuditInfo.md#datecreated)
-- [dateVoided](AuditInfo.md#datevoided)
-- [datedRetired](AuditInfo.md#datedretired)
-- [retireReason](AuditInfo.md#retirereason)
-- [retired](AuditInfo.md#retired)
-- [retiredBy](AuditInfo.md#retiredby)
-- [voidReason](AuditInfo.md#voidreason)
-- [voided](AuditInfo.md#voided)
-- [voidedBy](AuditInfo.md#voidedby)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L26)
 
 ## Properties
 
-### changedBy
+### changedBy?
 
-• `Optional` **changedBy**: [`User`](User.md)
+> `optional` **changedBy**: [`User`](User.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L30)
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L30)
+***
 
-___
+### creator?
 
-### creator
+> `optional` **creator**: [`User`](User.md)
 
-• `Optional` **creator**: [`User`](User.md)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L28)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L28)
+### dateChanged?
 
-___
+> `optional` **dateChanged**: `string`
 
-### dateChanged
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L29)
 
-• `Optional` **dateChanged**: `string`
+***
 
-#### Defined in
+### dateCreated?
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L29)
+> `optional` **dateCreated**: `string`
 
-___
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L27)
 
-### dateCreated
+***
 
-• `Optional` **dateCreated**: `string`
+### datedRetired?
 
-#### Defined in
+> `optional` **datedRetired**: `string`
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L27)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L36)
 
-___
+***
 
-### dateVoided
+### dateVoided?
 
-• `Optional` **dateVoided**: `string`
+> `optional` **dateVoided**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L32)
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L32)
+***
 
-___
+### retired?
 
-### datedRetired
+> `optional` **retired**: `boolean`
 
-• `Optional` **datedRetired**: `string`
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L35)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L36)
+### retiredBy?
 
-___
+> `optional` **retiredBy**: [`User`](User.md)
 
-### retireReason
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L37)
 
-• `Optional` **retireReason**: `string`
+***
 
-#### Defined in
+### retireReason?
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L38)
+> `optional` **retireReason**: `string`
 
-___
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L38)
 
-### retired
+***
 
-• `Optional` **retired**: `boolean`
+### voided?
 
-#### Defined in
+> `optional` **voided**: `boolean`
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L35)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L31)
 
-___
+***
 
-### retiredBy
+### voidedBy?
 
-• `Optional` **retiredBy**: [`User`](User.md)
+> `optional` **voidedBy**: [`User`](User.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L33)
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L37)
+***
 
-___
+### voidReason?
 
-### voidReason
+> `optional` **voidReason**: `string`
 
-• `Optional` **voidReason**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L34)
-
-___
-
-### voided
-
-• `Optional` **voided**: `boolean`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L31)
-
-___
-
-### voidedBy
-
-• `Optional` **voidedBy**: [`User`](User.md)
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L33)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L34)

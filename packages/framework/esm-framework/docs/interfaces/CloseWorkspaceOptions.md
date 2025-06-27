@@ -1,54 +1,47 @@
-[@openmrs/esm-framework](../API.md) / CloseWorkspaceOptions
+[O3 Framework](../API.md) / CloseWorkspaceOptions
 
 # Interface: CloseWorkspaceOptions
 
-## Table of contents
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L15)
 
-### Workspace Properties
+## Properties
 
-- [closeWorkspaceGroup](CloseWorkspaceOptions.md#closeworkspacegroup)
-- [ignoreChanges](CloseWorkspaceOptions.md#ignorechanges)
+### closeWorkspaceGroup?
 
-### Workspace Methods
+> `optional` **closeWorkspaceGroup**: `boolean`
 
-- [onWorkspaceClose](CloseWorkspaceOptions.md#onworkspaceclose)
-
-## Workspace Properties
-
-### closeWorkspaceGroup
-
-• `Optional` **closeWorkspaceGroup**: `boolean`
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L37)
 
 Controls whether the workspace group should be closed and store to be
 cleared when this workspace is closed.
 Defaults to true except when opening a new workspace of the same group.
 
-**`default`** true
+#### Default
 
-#### Defined in
+```ts
+true
+```
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L37)
+***
 
-___
+### ignoreChanges?
 
-### ignoreChanges
+> `optional` **ignoreChanges**: `boolean`
 
-• `Optional` **ignoreChanges**: `boolean`
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L22)
 
 Whether to close the workspace ignoring all the changes present in the workspace.
 
 If ignoreChanges is true, the user will not be prompted to save changes before closing
 even if the `testFcn` passed to `promptBeforeClosing` returns `true`.
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L22)
+### onWorkspaceClose()?
 
-## Workspace Methods
+> `optional` **onWorkspaceClose**: () => `void`
 
-### onWorkspaceClose
-
-▸ `Optional` **onWorkspaceClose**(): `void`
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L29)
 
 If you want to take an action after the workspace is closed, you can pass your function as
 `onWorkspaceClose`. This function will be called only after the workspace is closed, given
@@ -59,7 +52,3 @@ that the user might be shown a prompt.
 `void`
 
 void
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L29)

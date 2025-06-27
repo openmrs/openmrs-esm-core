@@ -1,19 +1,13 @@
-[@openmrs/esm-framework](../API.md) / ConnectivityChangedEvent
+[O3 Framework](../API.md) / ConnectivityChangedEvent
 
 # Interface: ConnectivityChangedEvent
 
-## Table of contents
-
-### Properties
-
-- [online](ConnectivityChangedEvent.md#online)
+Defined in: packages/framework/esm-globals/dist/events.d.ts:1
 
 ## Properties
 
 ### online
 
-• **online**: `boolean`
+> **online**: `boolean`
 
-#### Defined in
-
-packages/framework/esm-globals/dist/events.d.ts:2
+Defined in: packages/framework/esm-globals/dist/events.d.ts:2

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / AssignedExtension
+[O3 Framework](../API.md) / AssignedExtension
 
 # Interface: AssignedExtension
 
@@ -24,11 +24,13 @@ should be rendered for a particular extension slot, due to all of the following:
 - [offline](AssignedExtension.md#offline)
 - [online](AssignedExtension.md#online)
 
-## Extension Properties
+## Properties
 
 ### config
 
-• `Readonly` **config**: ``null`` \| `Readonly`<`ConfigObject`\>
+> `readonly` **config**: `null` \| `Readonly`\<`ConfigObject`\>
+
+Defined in: [packages/framework/esm-extensions/src/store.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L78)
 
 The extension's config. Note that this will be `null` until the slot is mounted.
 
@@ -46,13 +48,13 @@ ___
 
 [packages/framework/esm-extensions/src/store.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L91)
 
-___
+***
 
 ### id
 
-• `Readonly` **id**: `string`
+> `readonly` **id**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/store.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L73)
 
 [packages/framework/esm-extensions/src/store.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L83)
 
@@ -60,9 +62,9 @@ ___
 
 ### meta
 
-• `Readonly` **meta**: `Readonly`<[`ExtensionMeta`](ExtensionMeta.md)\>
+> `readonly` **meta**: `Readonly`\<[`ExtensionMeta`](ExtensionMeta.md)\>
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L76)
 
 [packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)
 
@@ -70,9 +72,9 @@ ___
 
 ### moduleName
 
-• `Readonly` **moduleName**: `string`
+> `readonly` **moduleName**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L75)
 
 [packages/framework/esm-extensions/src/store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L85)
 
@@ -80,27 +82,27 @@ ___
 
 ### name
 
-• `Readonly` **name**: `string`
+> `readonly` **name**: `string`
 
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L84)
 
-___
+***
 
-### offline
+### offline?
 
-• `Optional` `Readonly` **offline**: `boolean` \| `object`
+> `readonly` `optional` **offline**: `boolean` \| `object`
 
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L90)
 
-___
+***
 
-### online
+### online?
 
-• `Optional` `Readonly` **online**: `boolean` \| `object`
+> `readonly` `optional` **online**: `boolean` \| `object`
 
 #### Defined in
 

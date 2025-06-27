@@ -3,9 +3,7 @@ import { ConnectionSignalOff } from '@carbon/react/icons';
 import { subscribeConnectivity } from '@openmrs/esm-framework';
 import styles from './offline-banner.scss';
 
-export interface OfflineBannerProps {}
-
-const OfflineBanner: React.FC<OfflineBannerProps> = () => {
+const OfflineBanner: React.FC = () => {
   const lastUpdated = useLastUpdated();
 
   return (

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / ConfigurableLinkProps
+[O3 Framework](../API.md) / ConfigurableLinkProps
 
 # Interface: ConfigurableLinkProps
 

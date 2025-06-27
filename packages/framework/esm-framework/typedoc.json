@@ -1,9 +1,23 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "out": "docs",
+  "name": "O3 Framework",
+  "entryPoints": ["./src/index.ts"],
+  "outputs": [
+    {
+      "name": "markdown",
+      "path": "./docs"
+    }
+  ],
+  "plugin": [
+    "typedoc-plugin-file-categories",
+    "typedoc-plugin-markdown",
+    "typedoc-plugin-no-inherit"
+  ],
+  "basePath": "../../../",
   "readme": "none",
   "excludeInternal": true,
+  "entryFileName": "API.md",
   "gitRevision": "main",
-  "entryPoints": ["./src/index.ts"],
-  "entryDocument": "API.md"
+  "hidePageHeader": true,
+  "sort": ["alphabetical"]
 }

@@ -5,7 +5,7 @@ import { createStore } from 'zustand/vanilla';
 import { registerGlobalStore } from '@openmrs/esm-state';
 
 interface OpenmrsAppContext {
-  [namespace: string]: unknown;
+  [namespace: string]: NonNullable<object>;
 }
 
 /**
@@ -26,7 +26,10 @@ const nothing = Object();
  * @param namespace the namespace to register
  * @param initialValue the initial value of the namespace
  */
-export function registerContext<T extends {} = {}>(namespace: string, initialValue: T = nothing) {
+export function registerContext<T extends NonNullable<object> = NonNullable<object>>(
+  namespace: string,
+  initialValue: T = nothing,
+) {
   contextStore.setState((state) => {
     if (namespace in state) {
       throw new Error(
@@ -51,7 +54,13 @@ export function unregisterContext(namespace: string) {
   });
 }
 
-export function getContext<T extends {} = {}>(namespace: string): Readonly<T> | null;
+/**
+ * Returns an _immutable_ version of the state of the namespace as it is currently
+ *
+ * @typeParam T The type of the value stored in the namespace
+ * @param namespace The namespace to load properties from
+ */
+export function getContext<T extends NonNullable<object> = NonNullable<object>>(namespace: string): Readonly<T> | null;
 /**
  * Returns an _immutable_ version of the state of the namespace as it is currently
  *
@@ -60,7 +69,7 @@ export function getContext<T extends {} = {}>(namespace: string): Readonly<T> | 
  * @param namespace The namespace to load properties from
  * @param selector An optional function which extracts the relevant part of the state
  */
-export function getContext<T extends {} = {}, U extends {} = T>(
+export function getContext<T extends NonNullable<object> = NonNullable<object>, U extends NonNullable<object> = T>(
   namespace: string,
   selector: (state: Readonly<T>) => U = (state) => state as unknown as U,
 ): Readonly<U> | null {
@@ -75,7 +84,10 @@ export function getContext<T extends {} = {}, U extends {} = T>(
 /**
  * Updates a namespace in the global context. If the namespace does not exist, it is registered.
  */
-export function updateContext<T extends {} = {}>(namespace: string, update: (state: T) => T) {
+export function updateContext<T extends NonNullable<object> = NonNullable<object>>(
+  namespace: string,
+  update: (state: T) => T,
+) {
   contextStore.setState((state) => {
     if (!(namespace in state)) {
       state[namespace] = {};
@@ -86,7 +98,9 @@ export function updateContext<T extends {} = {}>(namespace: string, update: (sta
   });
 }
 
-export type ContextCallback<T extends {} = {}> = (state: Readonly<T> | null | undefined) => void;
+export type ContextCallback<T extends NonNullable<object> = NonNullable<object>> = (
+  state: Readonly<T> | null | undefined,
+) => void;
 
 /**
  * Subscribes to updates of a given namespace. Note that the returned object is immutable.
@@ -95,7 +109,10 @@ export type ContextCallback<T extends {} = {}> = (state: Readonly<T> | null | un
  * @param callback a function invoked with the current context whenever
  * @returns A function to unsubscribe from the context
  */
-export function subscribeToContext<T extends {} = {}>(namespace: string, callback: ContextCallback<T>) {
+export function subscribeToContext<T extends NonNullable<object> = NonNullable<object>>(
+  namespace: string,
+  callback: ContextCallback<T>,
+) {
   let previous = getContext<T>(namespace);
 
   // set initial value

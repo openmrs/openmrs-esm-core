@@ -1,29 +1,21 @@
-[@openmrs/esm-framework](../API.md) / ClearDynamicRoutesMessage
+[O3 Framework](../API.md) / ClearDynamicRoutesMessage
 
 # Interface: ClearDynamicRoutesMessage
 
-## Hierarchy
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L34)
 
-- [`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md)<``"clearDynamicRoutes"``\>
+## Extends
 
-  ↳ **`ClearDynamicRoutesMessage`**
+- [`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md)\<`"clearDynamicRoutes"`\>
 
-## Table of contents
-
-### Offline Properties
-
-- [type](ClearDynamicRoutesMessage.md#type)
-
-## Offline Properties
+## Properties
 
 ### type
 
-• **type**: ``"clearDynamicRoutes"``
+> **type**: `"clearDynamicRoutes"`
+
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
 
 #### Inherited from
 
-[OmrsServiceWorkerMessage](OmrsServiceWorkerMessage.md).[type](OmrsServiceWorkerMessage.md#type)
-
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+[`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md).[`type`](OmrsServiceWorkerMessage.md#type)

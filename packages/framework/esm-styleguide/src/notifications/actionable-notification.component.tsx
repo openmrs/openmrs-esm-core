@@ -8,8 +8,8 @@ export interface ActionableNotificationProps {
 
 export interface ActionableNotificationDescriptor {
   actionButtonLabel: string;
-  onActionButtonClick: () => void;
-  onClose?: () => void;
+  onActionButtonClick(): void;
+  onClose?(): void;
   subtitle: string;
   title?: string;
   kind?: ActionableNotificationType | string;
@@ -40,7 +40,9 @@ export const ActionableNotificationComponent: React.FC<ActionableNotificationPro
 
   const handleActionClick = () => {
     onActionButtonClick();
-    progressActionLabel && setActionText(progressActionLabel);
+    if (progressActionLabel) {
+      setActionText(progressActionLabel);
+    }
   };
 
   return (
