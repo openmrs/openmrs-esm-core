@@ -4,7 +4,7 @@ import { Button } from '@carbon/react';
 import { CloseIcon, SaveIcon, Type } from '@openmrs/esm-framework';
 import type { ConfigValueDescriptor } from './editable-value.component';
 import { ValueEditorField } from './value-editors/value-editor-field';
-import styles from './value-editor.scss';
+import styles from './value-editor.styles.scss';
 import { validateValue } from './validators.resource';
 
 export type CustomValueType = 'add' | 'remove' | 'order' | 'configure';
