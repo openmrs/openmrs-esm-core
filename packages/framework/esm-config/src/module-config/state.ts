@@ -1,8 +1,7 @@
-/** @module @category Config */
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
 import { shallowEqual } from '@openmrs/esm-utils';
 import { type StoreApi } from 'zustand';
-import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfigObject, ProvidedConfig } from '../types';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ProvidedConfig } from '../types';
 
 /**
  * Internal store
@@ -123,7 +122,7 @@ export function getConfigStore(moduleName: string) {
 export interface ExtensionSlotsConfigStore {
   slots: {
     [slotName: string]: {
-      config: ExtensionSlotConfigObject;
+      config: ExtensionSlotConfig;
       loaded: boolean;
     };
   };
@@ -233,6 +232,16 @@ export function getExtensionConfig(
 export function getExtensionConfigFromStore(state: ExtensionsConfigStore, slotName: string, extensionId: string) {
   const extensionConfig = state.configs[slotName]?.[extensionId];
   return extensionConfig ?? { loaded: false, config: null };
+}
+
+/** @internal */
+export function getExtensionConfigFromExtensionSlotStore(
+  state: ExtensionSlotConfig,
+  slotName: string,
+  extensionId: string,
+) {
+  const extensionConfig = state.configure?.[extensionId];
+  return extensionConfig ?? null;
 }
 
 /**

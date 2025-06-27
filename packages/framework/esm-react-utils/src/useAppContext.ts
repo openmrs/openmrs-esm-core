@@ -23,9 +23,9 @@ import { shallowEqual } from '@openmrs/esm-utils';
  * @typeParam T The type of the value stored in the namespace
  * @param namespace The namespace to load properties from
  */
-export function useAppContext<
-  T extends Record<string | symbol | number, unknown> = Record<string | symbol | number, any>,
->(namespace: string): Readonly<T> | undefined;
+export function useAppContext<T extends NonNullable<object> = NonNullable<object>>(
+  namespace: string,
+): Readonly<T> | undefined;
 
 /**
  * This hook is used to access a namespace within the overall AppContext, so that a component can
@@ -49,10 +49,7 @@ export function useAppContext<
  * @param namespace The namespace to load properties from
  * @param selector An optional function which extracts the relevant part of the state
  */
-export function useAppContext<
-  T extends Record<string | symbol | number, unknown> = Record<string | symbol | number, any>,
-  U = T,
->(
+export function useAppContext<T extends NonNullable<object> = NonNullable<object>, U = T>(
   namespace: string,
   selector: (state: Readonly<T> | null) => Readonly<U> = (state) => (state ?? {}) as Readonly<U>,
 ): Readonly<U> | undefined {

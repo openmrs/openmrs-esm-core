@@ -13,7 +13,7 @@ an already-registered namespace will display a warning and make no modifications
 
 ### T
 
-`T` *extends* `Record`\<`string` \| `number` \| `symbol`, `unknown`\> = `Record`\<`string` \| `number` \| `symbol`, `any`\>
+`T` *extends* `object` = `object`
 
 ## Parameters
 

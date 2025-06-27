@@ -1,6 +1,6 @@
 /** @module @category Extension */
 import { isEqual } from 'lodash-es';
-import type { ConfigExtensionStoreElement, ConfigObject, ExtensionSlotConfigObject } from '@openmrs/esm-config';
+import type { ConfigExtensionStoreElement, ConfigObject, ExtensionSlotConfig } from '@openmrs/esm-config';
 import { configExtensionStore } from '@openmrs/esm-config';
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
 import { type LifeCycles } from 'single-spa';
@@ -57,7 +57,7 @@ export interface ExtensionSlotInfo {
    */
   attachedIds: Array<string>;
   /** The configuration provided for this slot. `null` if not yet loaded. */
-  config: ExtensionSlotConfigObject | null;
+  config: Omit<ExtensionSlotConfig, 'configuration'> | null;
 }
 
 export interface ExtensionStore {

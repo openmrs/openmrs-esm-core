@@ -228,41 +228,12 @@
 
 ## Config
 
-### ConfigStore
-
-Defined in: /Users/ibacher/Documents/openmrs/openmrs-esm-core/packages/framework/esm-config/src/module-config/state.ts:99
-
-**`Internal`**
-
-Output configs
-
-Each module has its own stores for its config and its extension slots' configs.
-
-#### config
-
-> **config**: `null` \| [`ConfigObject`](interfaces/ConfigObject.md)
-
-Defined in: /Users/ibacher/Documents/openmrs/openmrs-esm-core/packages/framework/esm-config/src/module-config/state.ts:100
-
-#### loaded
-
-> **loaded**: `boolean`
-
-Defined in: /Users/ibacher/Documents/openmrs/openmrs-esm-core/packages/framework/esm-config/src/module-config/state.ts:101
-
-#### translationOverridesLoaded
-
-> **translationOverridesLoaded**: `boolean`
-
-Defined in: /Users/ibacher/Documents/openmrs/openmrs-esm-core/packages/framework/esm-config/src/module-config/state.ts:102
-
-***
-
-### getConfigStore
-
-> **getConfigStore**: 
-
-Defined in: /Users/ibacher/Documents/openmrs/openmrs-esm-core/packages/framework/esm-config/src/module-config/state.ts:114
+- [useConfig](functions/useConfig.md)
+- [UseConfigOptions](interfaces/UseConfigOptions.md)
+- [defineConfigSchema](functions/defineConfigSchema.md)
+- [defineExtensionConfigSchema](functions/defineExtensionConfigSchema.md)
+- [provide](functions/provide.md)
+- [getConfig](functions/getConfig.md)
 
 ## Feature Flags
 
