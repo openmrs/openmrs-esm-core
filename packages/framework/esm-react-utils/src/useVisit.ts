@@ -76,8 +76,8 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
   const previousCurrentVisit = useRef<Visit | null>(null);
 
   useEffect(() => {
-    // if an active visit is created and either there is no visit in context or we've switched to a different patient, set the context to the active visit
-    if (!activeIsValidating && activeVisit && (visitStorePatientUuid != patientUuid || manuallySetVisitUuid == null)) {
+    // if an active visit is created for the visit store patient and they have no visit in context, set the context to the active visit
+    if (!activeIsValidating && activeVisit && visitStorePatientUuid === patientUuid && manuallySetVisitUuid === null) {
       setVisitContext(activeVisit);
     }
     if (!retroIsValidating) {
