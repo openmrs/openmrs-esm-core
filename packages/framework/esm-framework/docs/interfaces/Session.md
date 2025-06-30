@@ -1,92 +1,69 @@
-[@openmrs/esm-framework](../API.md) / Session
+[O3 Framework](../API.md) / Session
 
 # Interface: Session
 
-## Table of contents
-
-### Properties
-
-- [allowedLocales](Session.md#allowedlocales)
-- [authenticated](Session.md#authenticated)
-- [currentProvider](Session.md#currentprovider)
-- [locale](Session.md#locale)
-- [sessionId](Session.md#sessionid)
-- [sessionLocation](Session.md#sessionlocation)
-- [user](Session.md#user)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L4)
 
 ## Properties
 
-### allowedLocales
+### allowedLocales?
 
-• `Optional` **allowedLocales**: `string`[]
+> `optional` **allowedLocales**: `string`[]
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L5)
 
-[packages/framework/esm-api/src/types/user-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L5)
-
-___
+***
 
 ### authenticated
 
-• **authenticated**: `boolean`
+> **authenticated**: `boolean`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L6)
 
-[packages/framework/esm-api/src/types/user-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L6)
+***
 
-___
+### currentProvider?
 
-### currentProvider
+> `optional` **currentProvider**: `object`
 
-• `Optional` **currentProvider**: `Object`
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L10)
 
-#### Type declaration
+#### identifier
 
-| Name | Type |
-| :------ | :------ |
-| `identifier` | `string` |
-| `uuid` | `string` |
+> **identifier**: `string`
 
-#### Defined in
+#### uuid
 
-[packages/framework/esm-api/src/types/user-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L10)
+> **uuid**: `string`
 
-___
+***
 
-### locale
+### locale?
 
-• `Optional` **locale**: `string`
+> `optional` **locale**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L7)
 
-[packages/framework/esm-api/src/types/user-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L7)
-
-___
+***
 
 ### sessionId
 
-• **sessionId**: `string`
+> **sessionId**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L8)
 
-[packages/framework/esm-api/src/types/user-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L8)
+***
 
-___
+### sessionLocation?
 
-### sessionLocation
+> `optional` **sessionLocation**: [`SessionLocation`](SessionLocation.md)
 
-• `Optional` **sessionLocation**: [`SessionLocation`](SessionLocation.md)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L11)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/user-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L11)
+### user?
 
-___
+> `optional` **user**: [`LoggedInUser`](LoggedInUser.md)
 
-### user
-
-• `Optional` **user**: [`LoggedInUser`](LoggedInUser.md)
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/user-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L9)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L9)

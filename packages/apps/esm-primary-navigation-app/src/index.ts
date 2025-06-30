@@ -15,6 +15,7 @@ import userPanelComponent from './components/user-panel-switcher-item/user-panel
 import changeLanguageLinkComponent from './components/change-language/change-language-link.extension';
 import offlineBannerComponent from './components/offline-banner/offline-banner.component';
 import { NavGroup, navGroupConfigSchema } from './components/nav-group/nav-group.component';
+import { dashboardConfigSchema } from './components/dashboard/dashboard.component';
 import genericLinkComponent, { genericLinkConfigSchema } from './components/generic-link/generic-link.component';
 import UserMenuButton from './components/navbar/user-menu-button.component';
 import AppMenuButton from './components/navbar/app-menu-button.component';
@@ -29,7 +30,8 @@ const options = {
 export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
   defineExtensionConfigSchema('link', genericLinkConfigSchema);
-  defineExtensionConfigSchema('global-nav-group', navGroupConfigSchema);
+  defineExtensionConfigSchema('nav-group', navGroupConfigSchema);
+  defineExtensionConfigSchema('dashboard', dashboardConfigSchema);
 
   setupOfflineSync(userPropertyChange, [], syncUserLanguagePreference);
 }

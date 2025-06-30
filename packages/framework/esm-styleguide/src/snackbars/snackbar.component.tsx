@@ -61,7 +61,9 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
   const handleActionClick = () => {
     onActionButtonClick();
     onCloseSnackbar();
-    progressActionLabel && setActionText(progressActionLabel);
+    if (progressActionLabel) {
+      setActionText(progressActionLabel);
+    }
   };
 
   useEffect(() => {

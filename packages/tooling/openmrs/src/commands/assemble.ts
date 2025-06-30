@@ -93,7 +93,9 @@ async function readConfig(
         // be added back by providing another config override
         if (Array.isArray(newConfig.frontendModuleExcludes)) {
           newConfig.frontendModuleExcludes.forEach((exclude) => {
-            typeof exclude === 'string' && config.frontendModules[exclude] && delete config.frontendModules[exclude];
+            if (typeof exclude === 'string' && config.frontendModules[exclude]) {
+              delete config.frontendModules[exclude];
+            }
           });
         }
 
@@ -239,6 +241,7 @@ export async function runAssemble(args: AssembleArgs) {
   };
 
   const versionManifest = {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     coreVersion: require(resolve(__dirname, '..', '..', 'package.json')).version,
     frontendModules: {},
   };

@@ -1,41 +1,29 @@
-[@openmrs/esm-framework](../API.md) / Privilege
+[O3 Framework](../API.md) / Privilege
 
 # Interface: Privilege
 
-## Table of contents
-
-### Properties
-
-- [display](Privilege.md#display)
-- [links](Privilege.md#links)
-- [uuid](Privilege.md#uuid)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L55)
 
 ## Properties
 
 ### display
 
-• **display**: `string`
+> **display**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L57)
 
-[packages/framework/esm-api/src/types/user-resource.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L57)
+***
 
-___
+### links?
 
-### links
+> `optional` **links**: `any`[]
 
-• `Optional` **links**: `any`[]
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L58)
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/user-resource.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L58)
-
-___
+***
 
 ### uuid
 
-• **uuid**: `string`
+> **uuid**: `string`
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/user-resource.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L56)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L56)

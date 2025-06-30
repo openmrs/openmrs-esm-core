@@ -14,7 +14,9 @@ export interface DebugArgs {
 }
 
 export function runDebug(args: DebugArgs) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const webpack = require('webpack');
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const WebpackDevServer = require('webpack-dev-server');
 
   const config = loadWebpackConfig({

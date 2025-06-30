@@ -199,6 +199,7 @@ export async function runProject(
       continue;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const project = require(projectFile);
     const startup = project['openmrs:develop'];
 

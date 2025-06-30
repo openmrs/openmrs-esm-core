@@ -33,7 +33,7 @@ let lastFetchTimeMillis = 0;
  * Subsequent values will be produced whenever the user object is
  * updated.
  *
- * @param options An object with `includeAuthStatus` boolean
+ * @param opts An object with `includeAuthStatus` boolean
  *   property that defaults to `false`. When `includeAuthStatus` is set
  *   to `true`, the entire response object from the API will be provided.
  *   When `includeAuthStatus` is set to `false`, only the `user` property
@@ -199,14 +199,17 @@ export function userHasAccess(
 }
 
 export function getLoggedInUser() {
-  let user;
-  let unsubscribe;
+  let user: LoggedInUser;
+  let unsubscribe: () => void;
   return new Promise<LoggedInUser>((res) => {
     const handler = (state: SessionStore) => {
       if (state.loaded && state.session.user) {
         user = state.session.user;
         res(state.session.user);
-        unsubscribe && unsubscribe();
+
+        if (unsubscribe) {
+          unsubscribe();
+        }
       }
     };
     handler(sessionStore.getState());
