@@ -7,7 +7,6 @@ import {
   CalendarGrid,
   DateInput,
   DateRangePicker,
-  DateSegment,
   Dialog,
   Group,
   Heading,
@@ -15,10 +14,12 @@ import {
   Popover,
   RangeCalendar,
 } from 'react-aria-components';
+import { DateSegment } from './DateSegment';
+import styles from './datepicker.module.scss';
 
 type AriaDateRange = { start: CalendarDate; end: CalendarDate };
 
-interface DateRangePickerFieldProps {
+interface OpenmrsDateRangePickerProps {
   label?: string;
   className?: string;
   value?: [Date, Date];
@@ -39,8 +40,8 @@ function toNativeDate(cd: CalendarDate): Date {
   return new Date(cd.year, cd.month - 1, cd.day);
 }
 
-export const DateRangePickerField: React.FC<DateRangePickerFieldProps> = ({
-  label = 'Trip dates',
+export const OpenmrsDateRangePicker: React.FC<OpenmrsDateRangePickerProps> = ({
+  label = '',
   className = '',
   value,
   onChange,
@@ -68,50 +69,57 @@ export const DateRangePickerField: React.FC<DateRangePickerFieldProps> = ({
   const maxValue = max ? toCalendarDate(max) : undefined;
 
   return (
-    <DateRangePicker
-      className={classNames(
-        'bx--form-item',
-        'bx--date-picker',
-        'bx--date-picker--range',
-        {
-          'bx--date-picker--light': true,
-          'bx--date-picker--disabled': disabled,
-        },
-        className,
-      )}
-      value={internalValue}
-      onChange={handleChange}
-      minValue={minValue}
-      maxValue={maxValue}
-      isDisabled={disabled}
-      isReadOnly={readOnly}
-      autoFocus={autoFocus}
-      isRequired={required}
-    >
-      <Label>{label}</Label>
+    <div className={classNames('cds--form-item', className)}>
+      <DateRangePicker
+        className={classNames('cds--date-picker', 'cds--date-picker--range', {
+          'cds--date-picker--light': true,
+          'cds--date-picker--disabled': disabled,
+        })}
+        value={internalValue}
+        onChange={handleChange}
+        minValue={minValue}
+        maxValue={maxValue}
+        isDisabled={disabled}
+        isReadOnly={readOnly}
+        autoFocus={autoFocus}
+        isRequired={required}
+      >
+        {(label || label === '') && (
+          <Label className={classNames('cds--label', { 'cds--label--disabled': disabled })}>{label}</Label>
+        )}
 
-      <Group className="react-aria-Group">
-        <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
+        <Group className={styles.inputGroup}>
+          <DateInput slot="start" className={styles.inputWrapper}>
+            {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
+          </DateInput>
+          <span aria-hidden="true">–</span>
+          <DateInput slot="end" className={styles.inputWrapper}>
+            {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
+          </DateInput>
+          <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>▼</Button>
+        </Group>
 
-        <span aria-hidden="true">–</span>
-
-        <DateInput slot="end">{(segment) => <DateSegment segment={segment} />}</DateInput>
-
-        <Button className="react-aria-Button">▼</Button>
-      </Group>
-
-      <Popover className="react-aria-Popover" data-trigger="DateRangePicker">
-        <Dialog>
-          <RangeCalendar minValue={minValue} maxValue={maxValue}>
-            <header className="flex justify-between items-center">
-              <Button slot="previous">◀</Button>
-              <Heading />
-              <Button slot="next">▶</Button>
-            </header>
-            <CalendarGrid>{(date) => <CalendarCell date={date} />}</CalendarGrid>
-          </RangeCalendar>
-        </Dialog>
-      </Popover>
-    </DateRangePicker>
+        <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
+          <Dialog className={styles.dialog}>
+            <RangeCalendar minValue={minValue} maxValue={maxValue} className="cds--date-picker__calendar">
+              <header className={styles.header}>
+                <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
+                  ◀
+                </Button>
+                <Heading className={styles.monthYear} />
+                <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
+                  ▶
+                </Button>
+              </header>
+              <CalendarGrid className={styles.calendarGrid}>
+                {(date) => (
+                  <CalendarCell key={date.toString()} className={classNames('cds--date-picker__day')} date={date} />
+                )}
+              </CalendarGrid>
+            </RangeCalendar>
+          </Dialog>
+        </Popover>
+      </DateRangePicker>
+    </div>
   );
 };
