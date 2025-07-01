@@ -4,9 +4,7 @@ import { last } from 'lodash-es';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { ConfigurableLink, MaybeIcon } from '@openmrs/esm-framework';
-import { InlineNotification } from '@carbon/react';
-import { getCoreTranslation } from '@openmrs/esm-translations';
-import styles from './dashboard.scss';
+import styles from './dashboard.module.scss';
 
 export interface DashboardExtensionProps {
   path: string;

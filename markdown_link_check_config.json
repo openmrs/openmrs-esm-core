@@ -11,5 +11,8 @@
     {
       "pattern": "^https://dev3.openmrs.org"
     }
-  ]
+  ],
+  "retryOn429": true,
+  "retryCount": 3,
+  "retryDelay": 1000
 }
