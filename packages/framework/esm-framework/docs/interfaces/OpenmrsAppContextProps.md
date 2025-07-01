@@ -1,40 +1,31 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsAppContextProps
+[O3 Framework](../API.md) / OpenmrsAppContextProps
 
-# Interface: OpenmrsAppContextProps<T\>
+# Interface: OpenmrsAppContextProps\<T\>
 
-## Type parameters
+Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L4)
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
+## Type Parameters
 
-## Table of contents
+### T
 
-### Context Properties
+`T` *extends* `NonNullable`\<`object`\> = `NonNullable`\<`object`\>
 
-- [namespace](OpenmrsAppContextProps.md#namespace)
-- [value](OpenmrsAppContextProps.md#value)
-
-## Context Properties
+## Properties
 
 ### namespace
 
-• **namespace**: `string`
+> **namespace**: `string`
+
+Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L6)
 
 the namespace that this component defines
 
-#### Defined in
+***
 
-[packages/framework/esm-react-utils/src/OpenmrsContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L6)
+### value?
 
-___
+> `optional` **value**: `T`
 
-### value
-
-• `Optional` **value**: `T`
+Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L8)
 
 used to control the value associated with the namespace
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/OpenmrsContext.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L8)

@@ -1,41 +1,29 @@
-[@openmrs/esm-framework](../API.md) / ComponentConfig
+[O3 Framework](../API.md) / ComponentConfig
 
 # Interface: ComponentConfig
 
-## Table of contents
-
-### Properties
-
-- [extension](ComponentConfig.md#extension)
-- [featureName](ComponentConfig.md#featurename)
-- [moduleName](ComponentConfig.md#modulename)
+Defined in: [packages/framework/esm-extensions/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L7)
 
 ## Properties
 
-### extension
+### extension?
 
-• `Optional` **extension**: [`ExtensionData`](ExtensionData.md)
+> `optional` **extension**: [`ExtensionData`](ExtensionData.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/types.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L10)
 
-[packages/framework/esm-extensions/src/types.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L10)
-
-___
+***
 
 ### featureName
 
-• **featureName**: `string`
+> **featureName**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/types.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L9)
 
-[packages/framework/esm-extensions/src/types.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L9)
-
-___
+***
 
 ### moduleName
 
-• **moduleName**: `string`
+> **moduleName**: `string`
 
-#### Defined in
-
-[packages/framework/esm-extensions/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L8)
+Defined in: [packages/framework/esm-extensions/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L8)

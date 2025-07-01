@@ -1,30 +1,21 @@
-[@openmrs/esm-framework](../API.md) / BreadcrumbRegistration
+[O3 Framework](../API.md) / BreadcrumbRegistration
 
 # Interface: BreadcrumbRegistration
 
-## Table of contents
+Defined in: [packages/framework/esm-navigation/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L32)
 
-### Breadcrumb Properties
-
-- [matcher](BreadcrumbRegistration.md#matcher)
-- [settings](BreadcrumbRegistration.md#settings)
-
-## Breadcrumb Properties
+## Properties
 
 ### matcher
 
-• **matcher**: `RegExp`
+> **matcher**: `RegExp`
 
-#### Defined in
+Defined in: [packages/framework/esm-navigation/src/types.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L33)
 
-[packages/framework/esm-navigation/src/types.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L33)
-
-___
+***
 
 ### settings
 
-• **settings**: [`BreadcrumbSettings`](BreadcrumbSettings.md)
+> **settings**: [`BreadcrumbSettings`](BreadcrumbSettings.md)
 
-#### Defined in
-
-[packages/framework/esm-navigation/src/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L34)
+Defined in: [packages/framework/esm-navigation/src/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L34)

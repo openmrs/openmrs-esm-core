@@ -63,6 +63,7 @@ const { ModuleFederationPlugin } = container;
 
 function getFrameworkVersion() {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { version } = require('@openmrs/esm-framework/package.json');
     return `^${version}`;
   } catch {
@@ -152,6 +153,7 @@ export const optimizationConfig: Partial<OpenmrsRspackConfig['optimization']> = 
 
 export default (env: Record<string, string>, argv: Record<string, string> = {}) => {
   const root = process.cwd();
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { name, version, peerDependencies, browser, main, types } = require(resolve(root, 'package.json'));
   // this typing is provably incorrect, but actually works
   const mode = (argv.mode || process.env.NODE_ENV || 'development') as OpenmrsRspackConfig['mode'];
@@ -197,7 +199,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.m?(js|ts|tsx)$/,
             exclude: /node_modules(?![\/\\]@openmrs)/,
-            loader: 'builtin:swc-loader',
+            loader: 'swc-loader',
             options: {
               jsc: {
                 parser: {
@@ -304,6 +306,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
               import: 'swr/',
               shareKey: 'swr/',
               shareScope: 'default',
+              // eslint-disable-next-line @typescript-eslint/no-require-imports
               version: require('swr/package.json').version,
             };
           } else {

@@ -4,6 +4,7 @@
   "change": "Change",
   "changeLanguage": "Change language",
   "changingLanguage": "Changing language",
+  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
   "notifications": "Notifications",
   "userMenu": "User menu",
   "userMenuOptions": "User menu options",

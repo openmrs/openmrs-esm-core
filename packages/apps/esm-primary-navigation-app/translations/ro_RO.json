@@ -1,11 +1,12 @@
 {
-  "AppMenuTooltip": "App Menu",
-  "cancel": "Cancel",
-  "change": "Change",
-  "changeLanguage": "Change language",
-  "changingLanguage": "Changing language",
-  "notifications": "Notifications",
-  "userMenu": "User menu",
-  "userMenuOptions": "User menu options",
-  "userMenuTooltip": "My Account"
+  "AppMenuTooltip": "Meniu aplicație",
+  "cancel": "Anulează",
+  "change": "Schimbă",
+  "changeLanguage": "Schimbă limba",
+  "changingLanguage": "Se schimbă limba",
+  "noPathInDashboardExtension": "Nu se poate reda extensia tabloului de bord fără ca proprietatea \"path\" să fie setată în schema de configurare",
+  "notifications": "Notificări",
+  "userMenu": "Meniul utilizatorului",
+  "userMenuOptions": "Opțiuni meniu utilizator",
+  "userMenuTooltip": "Contul meu"
 }

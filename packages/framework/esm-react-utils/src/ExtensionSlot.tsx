@@ -6,25 +6,32 @@ import { Extension } from './Extension';
 import { useExtensionSlot } from './useExtensionSlot';
 
 export interface ExtensionSlotBaseProps {
+  /** The name of the extension slot */
   name: string;
-  /** @deprecated Use `name` */
+  /**
+   * The name of the extension slot
+   * @deprecated Use `name`
+   */
   extensionSlotName?: string;
+  /**
+   * An optional function for filtering or otherwise modifying
+   *   the list of extensions that will be rendered.
+   */
   select?: (extensions: Array<AssignedExtension>) => Array<AssignedExtension>;
-  state?: Record<string, unknown>;
+  /**
+   *Only works if no children are provided*. Passes data
+   *   through as props to the extensions that are mounted here. If `ExtensionSlot`
+   *   has children, you must pass the state through the `state` param of the
+   *   `Extension` component.
+   */
+  state?: Record<string | symbol | number, unknown>;
 }
 
-export interface OldExtensionSlotBaseProps {
-  name?: string;
-  /** @deprecated Use `name` */
-  extensionSlotName: string;
-  select?: (extensions: Array<AssignedExtension>) => Array<AssignedExtension>;
-  state?: Record<string, unknown>;
+export interface ExtensionSlotProps
+  extends ExtensionSlotBaseProps,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+  children?: React.ReactNode | ((extension: AssignedExtension, state?: Record<string, unknown>) => React.ReactNode);
 }
-
-export type ExtensionSlotProps = (OldExtensionSlotBaseProps | ExtensionSlotBaseProps) &
-  Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
-    children?: React.ReactNode | ((extension: AssignedExtension, state?: Record<string, unknown>) => React.ReactNode);
-  };
 
 function defaultSelect(extensions: Array<AssignedExtension>) {
   return extensions;
@@ -34,23 +41,6 @@ function defaultSelect(extensions: Array<AssignedExtension>) {
  * An [extension slot](https://o3-docs.openmrs.org/docs/extension-system).
  * A place with a name. Extensions that get connected to that name
  * will be rendered into this.
- *
- * @param props.name The name of the extension slot
- * @param props.select An optional function for filtering or otherwise modifying
- *   the list of extensions that will be rendered.
- * @param props.state *Only works if no children are provided*. Passes data
- *   through as props to the extensions that are mounted here. If `ExtensionSlot`
- *   has children, you must pass the state through the `state` param of the
- *   `Extension` component.
- * @param props.children There are two different ways to use `ExtensionSlot`
- *   children.
- *  - Passing a `ReactNode`, the "normal" way. The child must contain the component
- *     `Extension`. Whatever is passed as the child will be rendered once per extension.
- *     See the first example below.
- *  - Passing a function, the "render props" way. The child must be a function
- *     which takes a [[ConnectedExtension]] as argument and returns a `ReactNode`.
- *     the resulting react node must contain the component `Extension`. It will
- *     be run for each extension. See the second example below.
  *
  * @example
  * Passing a react node as children
