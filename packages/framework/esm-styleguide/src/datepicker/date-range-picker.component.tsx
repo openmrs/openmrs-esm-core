@@ -1,6 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
-import { parseDate, type CalendarDate } from '@internationalized/date';
+import {
+  parseDate,
+  type CalendarDate,
+  createCalendar,
+  getLocalTimeZone,
+  toCalendar,
+  today,
+} from '@internationalized/date';
 import {
   Button,
   CalendarCell,
@@ -16,8 +23,8 @@ import {
 } from 'react-aria-components';
 import { DateSegment } from './DateSegment';
 import styles from './datepicker.module.scss';
-import { ChevronLeftIcon, ChevronRightIcon } from '../icons';
-import { Calendar } from '@carbon/react/icons';
+import { ChevronLeftIcon, ChevronRightIcon, CalendarIcon } from '../icons';
+import { getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
 
 type AriaDateRange = { start: CalendarDate; end: CalendarDate };
 
@@ -70,6 +77,11 @@ export const OpenmrsDateRangePicker: React.FC<OpenmrsDateRangePickerProps> = ({
   const minValue = min ? toCalendarDate(min) : undefined;
   const maxValue = max ? toCalendarDate(max) : undefined;
 
+  const locale = getLocale();
+  const calendarId = getDefaultCalendar(locale);
+  const calendar = calendarId ? createCalendar(calendarId) : undefined;
+  const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
+
   return (
     <div className={classNames('cds--form-item', className)}>
       <DateRangePicker
@@ -98,8 +110,12 @@ export const OpenmrsDateRangePicker: React.FC<OpenmrsDateRangePickerProps> = ({
           <DateInput slot="end" className={styles.inputWrapper}>
             {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
           </DateInput>
-          <Button className={classNames(styles.flatButton, styles.flatButtonMd)} aria-label="Open calendar">
-            <Calendar />
+          <Button
+            slot="trigger"
+            className={classNames(styles.flatButton, styles.flatButtonMd)}
+            aria-label="Open calendar"
+          >
+            <CalendarIcon aria-hidden="true" />
           </Button>
         </Group>
 
@@ -125,10 +141,15 @@ export const OpenmrsDateRangePicker: React.FC<OpenmrsDateRangePickerProps> = ({
                   <ChevronRightIcon size={16} />
                 </Button>
               </header>
-
               <CalendarGrid className={styles.calendarGrid}>
                 {(date) => (
-                  <CalendarCell key={date.toString()} className={classNames('cds--date-picker__day')} date={date} />
+                  <CalendarCell
+                    key={date.toString()}
+                    className={classNames('cds--date-picker__day', {
+                      [styles.today]: today_.compare(date) === 0,
+                    })}
+                    date={date}
+                  />
                 )}
               </CalendarGrid>
             </RangeCalendar>
