@@ -16,6 +16,8 @@ import {
 } from 'react-aria-components';
 import { DateSegment } from './DateSegment';
 import styles from './datepicker.module.scss';
+import { ChevronLeftIcon, ChevronRightIcon } from '../icons';
+import { Calendar } from '@carbon/react/icons';
 
 type AriaDateRange = { start: CalendarDate; end: CalendarDate };
 
@@ -96,21 +98,34 @@ export const OpenmrsDateRangePicker: React.FC<OpenmrsDateRangePickerProps> = ({
           <DateInput slot="end" className={styles.inputWrapper}>
             {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
           </DateInput>
-          <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>▼</Button>
+          <Button className={classNames(styles.flatButton, styles.flatButtonMd)} aria-label="Open calendar">
+            <Calendar />
+          </Button>
         </Group>
 
         <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
           <Dialog className={styles.dialog}>
             <RangeCalendar minValue={minValue} maxValue={maxValue} className="cds--date-picker__calendar">
-              <header className={styles.header}>
-                <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
-                  ◀
+              <header className={classNames(styles.header, 'cds--date-picker__calendar-header')}>
+                <Button
+                  className={classNames(styles.flatButton, styles.flatButtonMd, 'cds--date-picker__control')}
+                  slot="previous"
+                  aria-label="Previous month"
+                >
+                  <ChevronLeftIcon size={16} />
                 </Button>
-                <Heading className={styles.monthYear} />
-                <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
-                  ▶
+
+                <Heading className={classNames(styles.monthYear, 'cds--date-picker__month')}></Heading>
+
+                <Button
+                  className={classNames(styles.flatButton, styles.flatButtonMd, 'cds--date-picker__control')}
+                  slot="next"
+                  aria-label="Next month"
+                >
+                  <ChevronRightIcon size={16} />
                 </Button>
               </header>
+
               <CalendarGrid className={styles.calendarGrid}>
                 {(date) => (
                   <CalendarCell key={date.toString()} className={classNames('cds--date-picker__day')} date={date} />
