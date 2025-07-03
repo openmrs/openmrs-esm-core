@@ -49,7 +49,7 @@ interface DashboardProps {
 
 export default function Dashboard({ basePath, moduleName }: DashboardProps) {
   const componentContext = useContext(ComponentContext);
-  const module = moduleName ?? componentContext.moduleName;
+  const module = moduleName ?? componentContext.extension?.extensionSlotModuleName ?? componentContext.moduleName;
 
   const Component = useMemo(
     () =>
