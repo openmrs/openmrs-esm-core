@@ -48,6 +48,7 @@ export default function JsonEditor({ height }: JsonEditorProps) {
         key={key}
         mode="json"
         onChange={(v) => setEditorValue(v)}
+        setOptions={{ useWorker: false }}
         showGutter
         showPrintMargin={false}
         tabSize={2}
