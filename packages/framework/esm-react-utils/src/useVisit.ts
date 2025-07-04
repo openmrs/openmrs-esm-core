@@ -109,7 +109,7 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     isValidating: activeIsValidating || retroIsValidating,
     activeVisit,
     currentVisit,
-    currentVisitIsRetrospective: Boolean(retrospectiveVisitUuid),
+    currentVisitIsRetrospective: Boolean(currentVisit?.stopDatetime),
     isLoading: Boolean((!activeData || (retrospectiveVisitUuid && !retroData)) && (!activeError || !retroError)),
   };
 }
