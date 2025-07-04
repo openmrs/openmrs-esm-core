@@ -115,7 +115,7 @@ export const OpenmrsDateRangePicker: React.FC<OpenmrsDateRangePickerProps> = ({
             className={classNames(styles.flatButton, styles.flatButtonMd)}
             aria-label="Open calendar"
           >
-            <CalendarIcon aria-hidden="true" />
+            <CalendarIcon aria-hidden="true" size={16} />
           </Button>
         </Group>
 
