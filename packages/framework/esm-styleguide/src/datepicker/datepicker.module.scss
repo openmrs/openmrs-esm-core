@@ -127,11 +127,10 @@
   }
 }
 
-.inputWrapper {
-  inline-size: 15rem;
-  margin-left: layout.$spacing-05;
-  min-width: layout.$spacing-13;
-  max-width: 15rem;
+
+  .inputWrapper{
+  margin: 0;
+  padding: 0.25rem 0.5rem;
 
   & .inputSegment {
     caret-color: var(--cds-text-primary);
@@ -149,6 +148,8 @@
       animation: cursor-blink 1s step-end infinite;
     }
   }
+
+
 
   /*
    * These next two style rules try to render the read-only parts of the date in the disabled color
