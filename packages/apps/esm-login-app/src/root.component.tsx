@@ -25,62 +25,75 @@ const Root: React.FC = () => {
     <div>
       <h1>Workspace Test</h1>
       <div>
-        <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspaceGroup2('workspace-group-test');
+        <h3>Group A</h3>
+        <div>
+        <Button kind="ghost" onClick={() => {
+          launchWorkspaceGroup2('workspace-group-test', {groupContext: "groupA"});
         }}>
-          Open Workspace Group
+          Open Workspace Group A
         </Button>
         
-        <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
+        <Button kind="ghost" onClick={() => {
           closeWorkspaceGroup2();
         }}>
           Close Workspace Group
         </Button>
       </div>
-      <div>
-        <h3>Group Context A</h3>
         <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test', {context: "context1", workspaceGroupContext: "groupA" });
+          launchWorkspace2('workspace-test', {groupContext: "groupA"}, {windowContext: "context1", icon: "pen"});
         }}>
           context1
         </Button>
         <Button kind="ghost" renderIcon={props => <MotherIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test-2', {context: "context1", workspaceGroupContext: "groupA" });
+          launchWorkspace2('workspace-test-2', {groupContext: "groupA"}, {windowContext: "context1", icon: "mother"});
         }}>
           context1
         </Button>
         <br/>
         <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test', {context: "context2", workspaceGroupContext: "groupA" });
+          launchWorkspace2('workspace-test', {groupContext: "groupA"}, {windowContext: "context2", icon: "pen"});
         }}>
           context2
         </Button>
         <Button kind="ghost" renderIcon={props => <MotherIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test-2', {context: "context2", workspaceGroupContext: "groupA" });
+          launchWorkspace2('workspace-test-2', {groupContext: "groupA"}, {windowContext: "context2", icon: "mother"});
         }}>
           context2
         </Button>
       </div>
       <div>
-        <h3>Group Context B</h3>
+        <h3>Group B</h3>
+        <div>
+        <Button kind="ghost" onClick={() => {
+          launchWorkspaceGroup2('workspace-group-test', {groupContext: "groupB"});
+        }}>
+          Open Workspace Group B
+        </Button>
+        
+        <Button kind="ghost" onClick={() => {
+          closeWorkspaceGroup2();
+        }}>
+          Close Workspace Group
+        </Button>
+      </div>
         <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test', {context: "context1", workspaceGroupContext: "groupB" });
+          launchWorkspace2('workspace-test', {groupContext: "groupB"}, {windowContext: "context1", icon: "pen"});
         }}>
           context1
         </Button>
         <Button kind="ghost" renderIcon={props => <MotherIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test-2', {context: "context1", workspaceGroupContext: "groupB" });
+          launchWorkspace2('workspace-test-2', {groupContext: "groupB"}, {windowContext: "context1",  icon: "mother"});
         }}>
           context1
         </Button>
         <br/>
         <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test', {context: "context2", workspaceGroupContext: "groupB" });
+          launchWorkspace2('workspace-test', {groupContext: "groupB"}, {windowContext: "context2", icon: "pen"});
         }}>
           context2
         </Button>
         <Button kind="ghost" renderIcon={props => <MotherIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test-2', {context: "context2", workspaceGroupContext: "groupB" });
+          launchWorkspace2('workspace-test-2', {groupContext: "groupB"}, {windowContext: "context2", icon: "mother"});
         }}>
           context2
         </Button>

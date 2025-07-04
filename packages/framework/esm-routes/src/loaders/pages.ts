@@ -173,7 +173,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         );
       }
     });
-    tryRegisterWorkspaceGroups2(availableWorkspaceGroups2);
+    tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
 
     availableFeatureFlags.forEach((featureFlag) => {
       if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'flagName')) {

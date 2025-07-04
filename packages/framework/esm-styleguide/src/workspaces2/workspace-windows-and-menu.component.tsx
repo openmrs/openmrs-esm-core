@@ -1,5 +1,4 @@
 import React from "react";
-import { ComponentContext, useAssignedExtensions } from "@openmrs/esm-react-utils";
 import { createRoot } from "react-dom/client";
 import { ActionMenu } from './action-menu2/action-menu2.component';
 import ActiveWorkspaceWindow from "./active-workspace-window.component";
@@ -14,15 +13,12 @@ export function renderWorkspaceWindowsAndMenu(target: HTMLElement | null) {
 
 function WorkspaceWindowsAndMenu() {
   const {openedGroup, openedWindows} = useWorkspace2Store();
-  const slotName = `action-menu-${openedGroup?.groupName}-items-slot`; // TODO: refactor into function
-  const actionMenuItems = useAssignedExtensions(slotName);
   
   // TODO: check which workspace group is open 
   if(!openedGroup) {
     return null;
   }
 
-  const showMenu = actionMenuItems.length > 0;
   return (
     <>
       {openedWindows.map(window => {
@@ -30,16 +26,7 @@ function WorkspaceWindowsAndMenu() {
           <ActiveWorkspaceWindow window={window} />
         );
       })}
-      <ComponentContext.Provider
-        value={{
-          featureName: 'workspaces2',
-          moduleName: openedGroup.groupName, // TODO?
-        }}>
-        {
-          showMenu &&
-          <ActionMenu workspaceGroup={openedGroup.groupName} />
-        }
-      </ComponentContext.Provider>
+      <ActionMenu workspaceGroup={openedGroup.groupName} />
     </>
   );
 }

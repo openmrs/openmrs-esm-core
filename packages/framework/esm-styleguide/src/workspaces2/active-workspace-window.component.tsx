@@ -5,7 +5,7 @@ import { getWorkspaceRegistration, OpenedWindow } from "@openmrs/esm-extensions"
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import { useWorkspace2Store } from "./workspace2";
-import { getLoader } from '@openmrs/esm-routes';
+import { Workspace2DefinitionProps } from "./workspace2.component";
 
 interface WorkspaceWindowProps {
   window: OpenedWindow;
@@ -14,11 +14,11 @@ interface WorkspaceWindowProps {
  * Renders an opened workspace window. 
  */
 const ActiveWorkspaceWindow : React.FC<WorkspaceWindowProps> = ({window}) => {
-  const {hidden, workspaces, props: workspaceWindowProps} = window;
+  const {hidden, workspaces, props: windowProps} = window;
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
 
   const workspace = getWorkspaceRegistration(workspaces[workspaces.length -1]);
-  const {openedGroup} = useWorkspace2Store();
+  const {openedGroup, closeWorkspace} = useWorkspace2Store();
 
   useEffect(() => {
     let active = true;
@@ -33,18 +33,19 @@ const ActiveWorkspaceWindow : React.FC<WorkspaceWindowProps> = ({window}) => {
     };
   }, [workspace]);
 
-  const props = useMemo(
+  const props : Workspace2DefinitionProps = useMemo(
     () =>
       workspace && {
         // closeWorkspace: workspace.closeWorkspace,
         // closeWorkspaceWithSavedChanges: workspace.closeWorkspaceWithSavedChanges,
         // promptBeforeClosing: workspace.promptBeforeClosing,
         // setTitle: workspace.setTitle,
-        workspaceGroupProps: openedGroup?.props,
-        workspaceWindowProps,
+        closeWorkspace: () => closeWorkspace(workspace.name),
+        groupProps: openedGroup?.props ?? {},
+        windowProps: windowProps,
         workspaceName: workspace.name,
       },
-    [workspace, openedGroup, workspaceWindowProps],
+    [workspace, openedGroup, windowProps],
   );
 
   if(hidden) {
@@ -56,27 +57,6 @@ const ActiveWorkspaceWindow : React.FC<WorkspaceWindowProps> = ({window}) => {
   ) : (
     <InlineLoading /*className={styles.loader}*/ description={`${getCoreTranslation('loading')} ...`} />
   );
-}
-
-function ReactParcel(appName: string, componentName: string, props: Record<string, any>) {
-  
-  const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
-  useEffect(() => {
-    let active = true;
-    getLoader(appName, componentName)().then((lifecycle) => {
-      if (active) {
-        setLifecycle(lifecycle);
-      }
-    });
-    
-    return () => {
-      active = false;
-    };
-  }, [appName, componentName]);
-
-  return lifecycle ? 
-    <Parcel config={lifecycle} mountParcel={mountRootParcel} {...props} />
-    : <InlineLoading description={`${getCoreTranslation('loading')} ...`} />;
 }
 
 export default ActiveWorkspaceWindow;

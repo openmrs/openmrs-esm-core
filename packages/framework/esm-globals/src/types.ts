@@ -364,10 +364,12 @@ export interface WorkspaceGroupDefinition {
 
 export interface WorkspaceGroupDefinition2 {
     groupName: string;
+    moduleName: string;
     windows: Array<WorkspaceWindowDefinition2>;
 }
 export interface WorkspaceWindowDefinition2 {
     windowName: string;
+    icon: string;
     canHide?: boolean;
     canMaximize?: boolean;
     overlay?: boolean;

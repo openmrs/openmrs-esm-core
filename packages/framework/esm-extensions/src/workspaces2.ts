@@ -14,7 +14,7 @@ export interface WorkspaceStoreState2 {
     groupName: string;
     props: Record<string, any>;
   } | null;
-  openedWindows: Array<OpenedWindow>; // most recently opened action at index 0, each element has a unique actionName
+  openedWindows: Array<OpenedWindow>; // most recently opened action at the end of array, each element has a unique actionName
 }
 
 const initialState: WorkspaceStoreState2 = {
@@ -39,11 +39,22 @@ export function getWindowByWorkspace(storeState: WorkspaceStoreState2, workspace
   return null;
 }
 
+// given a window name, return the group that the window belongs to
+export function getGroupByWindow(storeState: WorkspaceStoreState2, windowName: string) {
+  const {registeredGroups} = storeState;
+  for(const group of Object.values(registeredGroups)) {
+    if(group.windows.some(window => window.windowName === windowName)) {
+      return group;
+    }
+  }
+  return null;
+}
+
 export function getOpenedWindowIndexByWorkspace(storeState: WorkspaceStoreState2, workspaceName: string) {
   return storeState.openedWindows.findIndex(a => a.workspaces.includes(workspaceName));
 }
 
-export function registerWorkspaceGroups2(workspaceGroupConfigs: Array<WorkspaceGroupDefinition2>) {
+export function registerWorkspaceGroups2(appName: string, workspaceGroupConfigs: Array<WorkspaceGroupDefinition2>) {
   const map : Record<string, WorkspaceGroupDefinition2> = {};
   for(const config of workspaceGroupConfigs) {
     map[config.groupName] = config;

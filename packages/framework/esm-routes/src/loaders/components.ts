@@ -233,8 +233,8 @@ To fix this, ensure that you define the "name" field inside the workspace defini
   });
 }
 
-export function tryRegisterWorkspaceGroups2(workspaceGroups: Array<WorkspaceGroupDefinition2>) {
-  registerWorkspaceGroups2(workspaceGroups);
+export function tryRegisterWorkspaceGroups2(appName: string, workspaceGroups: Array<WorkspaceGroupDefinition2>) {
+  registerWorkspaceGroups2(appName, workspaceGroups);
 }
 
 /**

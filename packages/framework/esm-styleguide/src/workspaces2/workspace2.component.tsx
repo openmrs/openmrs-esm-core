@@ -14,23 +14,40 @@ interface Workspace2Props {
   children: ReactNode;
 }
 
+export interface Workspace2DefinitionProps<GroupProps extends Record<string, any> = {}, WindowProps extends Record<string, any> = {}> {
+  workspaceName: string;
+  closeWorkspace(): void;
+  groupProps: GroupProps;
+  windowProps: WindowProps;
+}
+
+export type Workspace2Definition<WindowProps extends Record<string, any>, GroupProps extends Record<string, any>> = 
+  React.FC<Workspace2DefinitionProps<WindowProps, GroupProps>>;
+
 export const Workspace2 : React.FC<Workspace2Props> = ({workspaceName, title, children}) => {
   const layout = useLayoutType();
-  const {setWindowMaximized, setWindowHidden, closeWorkspace, ...state} = useWorkspace2Store();
-  const {openedWindows, openedGroup} = state;
-  const slotName = `action-menu-${openedGroup?.groupName}-items-slot`; // TODO: refactor into function
-  const actionMenuItems = useAssignedExtensions(slotName);
+  const {setWindowMaximized, hideWindow, closeWorkspace, ...state} = useWorkspace2Store();
+  const {openedWindows, openedGroup, registeredGroups} = state;
+  
+  const openedWindowIndex = getOpenedWindowIndexByWorkspace(state, workspaceName);
+  
+  if(openedWindowIndex < 0 || openedGroup == null) {
+    return null;
+  }
+
+  const group = registeredGroups[openedGroup!.groupName];
+  const icons = group.windows.filter(window => window.icon).map(window => window.icon);;
   
   const window = getWindowByWorkspace(state, workspaceName)!;
   const { canHide, canMaximize } = window;
-  const openedWindowIndex = getOpenedWindowIndexByWorkspace(state, workspaceName);
+
   const openedWindow = openedWindows[openedWindowIndex];
   const { maximized } = openedWindow;
 
   return (
     <div className={classNames(
       styles.workspaceFixedContainer,
-      actionMenuItems.length > 0 ? styles.workspaceContainerWithActionMenu : styles.workspaceContainerWithoutActionMenu
+      icons.length > 0 ? styles.workspaceContainerWithActionMenu : styles.workspaceContainerWithoutActionMenu
     )}>
       <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
         {!isDesktop(layout) && !canHide && (
@@ -66,7 +83,7 @@ export const Workspace2 : React.FC<Workspace2Props> = ({workspaceName, title, ch
               {canHide ? (
                 <HeaderGlobalAction
                   aria-label={getCoreTranslation('hide')}
-                  onClick={() => setWindowHidden(window.windowName, true)}
+                  onClick={() => hideWindow(window.windowName)}
                 >
                   <ArrowRightIcon />
                 </HeaderGlobalAction>
