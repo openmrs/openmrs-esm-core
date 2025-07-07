@@ -300,12 +300,19 @@ yargs.command(
         default: 'production',
         describe: 'The environment to build for. e.g., development, production.',
         type: 'string',
+      })
+      .option('asset', {
+        default: [],
+        describe:
+          'The path to CSS or HTML assets to copy into the build directory and include in <link> and <script> tags in generated HTML. Can be used multiple times.',
+        type: 'array',
       }),
   async (args) =>
     runCommand('runBuild', {
       ...args,
       configUrls: args['config-url'],
       configPaths: args['config-path'],
+      assets: args['asset'],
     }),
 );
 
