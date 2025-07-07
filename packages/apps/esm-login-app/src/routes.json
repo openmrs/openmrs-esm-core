@@ -60,7 +60,7 @@
     },
     {
       "name": "workspace-test-2-nav-button",
-      "component": "workspaceTest2ActionButton",
+      "component": "workspaceTestActionButton2",
       "order": 2
     }
   ],

@@ -16,7 +16,7 @@ interface Workspace2Props {
 
 export interface Workspace2DefinitionProps<GroupProps extends Record<string, any> = {}, WindowProps extends Record<string, any> = {}> {
   workspaceName: string;
-  closeWorkspace(): void;
+  closeWorkspace(): Promise<void>;
   groupProps: GroupProps;
   windowProps: WindowProps;
 }
@@ -38,9 +38,12 @@ export const Workspace2 : React.FC<Workspace2Props> = ({workspaceName, title, ch
   const group = registeredGroups[openedGroup!.groupName];
   const icons = group.windows.filter(window => window.icon).map(window => window.icon);;
   
-  const window = getWindowByWorkspace(state, workspaceName)!;
-  const { canHide, canMaximize } = window;
+  const window = getWindowByWorkspace(state, workspaceName);
+  if(!window) {
+    return null;
+  }
 
+  const { canHide, canMaximize } = window;
   const openedWindow = openedWindows[openedWindowIndex];
   const { maximized } = openedWindow;
 

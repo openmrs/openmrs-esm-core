@@ -40,12 +40,18 @@ const ActiveWorkspaceWindow : React.FC<WorkspaceWindowProps> = ({window}) => {
         // closeWorkspaceWithSavedChanges: workspace.closeWorkspaceWithSavedChanges,
         // promptBeforeClosing: workspace.promptBeforeClosing,
         // setTitle: workspace.setTitle,
-        closeWorkspace: () => closeWorkspace(workspace.name),
+        closeWorkspace: async () => {
+          // TOOD: prompt for unsaved changes with better UI
+          const discardUnsavedChanges = await confirm("Yo, close workspace?");
+          if(discardUnsavedChanges) {
+            closeWorkspace(workspace.name)
+          }
+        },
         groupProps: openedGroup?.props ?? {},
         windowProps: windowProps,
         workspaceName: workspace.name,
       },
-    [workspace, openedGroup, windowProps],
+    [workspace, closeWorkspace, openedGroup, windowProps],
   );
 
   if(hidden) {

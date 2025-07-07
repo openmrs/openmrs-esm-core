@@ -37,8 +37,8 @@ export const workspaceTestActionButton = getAsyncLifecycle(
     featureName: 'workspace-test-button',
   },
 );
-export const workspaceTest2ActionButton = getAsyncLifecycle(
-  () => import('./workspace-test/workspace-test-2-nav-button.component'),
+export const workspaceTestActionButton2 = getAsyncLifecycle(
+  () => import('./workspace-test/workspace-test-nav-button-2.component'),
   {
     ...options,
     featureName: 'workspace-test-2-button',

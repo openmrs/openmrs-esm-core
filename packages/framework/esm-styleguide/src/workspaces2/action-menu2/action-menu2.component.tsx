@@ -3,11 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import styles from './action-menu2.module.scss';
-import { InlineLoading } from '@carbon/react';
-import { getCoreTranslation } from '@openmrs/esm-translations';
-import { getLoader } from '@openmrs/esm-routes';
-import Parcel from 'single-spa-react/parcel';
-import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import { useWorkspace2Store } from '../workspace2';
 import { SingleExtensionSlot } from '@openmrs/esm-react-utils';
 

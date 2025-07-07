@@ -57,9 +57,15 @@ export async function launchWorkspace2<
 
   const {openedGroup} = storeState;
   const {windowName} = window;
-  const openedWindowIndex  = getOpenedWindowIndexByWorkspace(storeState, workspaceName);
   const group = getGroupByWindow(storeState, windowName);
+  if(!group) {
+    throw new Error();
+  }
+
+  const openedWindowIndex  = getOpenedWindowIndexByWorkspace(storeState, workspaceName);
   const isWindowAlreadyOpened = openedWindowIndex >= 0;
+
+
 
   // if current opened group is not the same as the requested group, or if the group props are different, then prompt for unsaved changes
   if(openedGroup && (openedGroup.groupName !== group?.groupName || !areEqualShallow(openedGroup.props, groupProps))) {
@@ -69,12 +75,11 @@ export async function launchWorkspace2<
       workspace2Store.setState({
       ...storeState,
       openedGroup: {
-        groupName: group?.groupName!,
-        props: groupProps!
+        groupName: group.groupName,
+        props: groupProps
       },
       openedWindows: [
-        ...storeState.openedWindows,
-        
+        // discard all opened windows, open a new one with the requested workspace
         // most recently opened action appended to the end
         {
           windowName: windowName,
@@ -88,12 +93,12 @@ export async function launchWorkspace2<
     }
   }
   else if(isWindowAlreadyOpened) {
-    const groupProps = storeState.openedGroup?.props;
+    const groupProps = storeState.openedGroup?.props ?? {};
     const {workspaces, props: currentWindowProps} = storeState.openedWindows[openedWindowIndex];
 
     // if invoking already opened workspace with same props
     if(workspaces.includes(workspaceName) && areEqualShallow(currentWindowProps, windowProps)) {
-      // restore the window if it is hidden or not the most rencently opened one
+      // restore the window if it is hidden or not the most recently opened one
       const workspace = storeState.openedWindows[openedWindowIndex];
       if(workspace.hidden || openedWindowIndex !== storeState.openedWindows.length - 1) {
         workspace2Store.setState(workspace2StoreActions.restoreWindow(storeState, windowName));
@@ -107,8 +112,8 @@ export async function launchWorkspace2<
         workspace2Store.setState({
           ...storeState,
           openedGroup: {
-            groupName: group?.groupName!,
-            props: groupProps!
+            groupName: group.groupName,
+            props: groupProps
           },
           openedWindows: [
             ...storeState.openedWindows.filter((_, i) => i !== openedWindowIndex),
@@ -128,8 +133,8 @@ export async function launchWorkspace2<
     workspace2Store.setState({
       ...storeState,
       openedGroup: {
-        groupName: group?.groupName!,
-        props: groupProps!
+        groupName: group.groupName,
+        props: groupProps
       },
       openedWindows: [
         ...storeState.openedWindows,
@@ -147,17 +152,17 @@ export async function launchWorkspace2<
 }
 
 function areEqualShallow(a, b) {
-    for(var key in a) {
-        if(!(key in b) || a[key] !== b[key]) {
-            return false;
-        }
+  for(var key in a) {
+    if(!(key in b) || a[key] !== b[key]) {
+      return false;
     }
-    for(var key in b) {
-        if(!(key in a) || a[key] !== b[key]) {
-            return false;
-        }
+  }
+  for(var key in b) {
+    if(!(key in a) || a[key] !== b[key]) {
+      return false;
     }
-    return true;
+  }
+  return true;
 }
 
 

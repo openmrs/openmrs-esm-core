@@ -1,9 +1,10 @@
 import React, { type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActionMenuButton2, MotherIcon } from '@openmrs/esm-framework';
+import { ActionMenuButton2, MotherIcon, useWorkspace2Store } from '@openmrs/esm-framework';
 
 const WorkspaceTestNavButton: React.FC = () => {
   const { t } = useTranslation();
+  const {openedGroup} = useWorkspace2Store();
   
   return (
     <ActionMenuButton2
@@ -12,7 +13,7 @@ const WorkspaceTestNavButton: React.FC = () => {
       windowName={'window2'} 
       workspaceToLaunch={{
         workspaceName: 'workspace-test-2',
-        groupProps: {groupContext: "groupA"},
+        groupProps: openedGroup?.props ?? {groupContext: "groupA"},
         windowProps: {windowContext: "context1", icon: "mother"},
       }}
     />

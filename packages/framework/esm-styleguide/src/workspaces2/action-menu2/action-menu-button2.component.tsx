@@ -8,16 +8,16 @@ import { launchWorkspace2, useWorkspace2Store } from '../workspace2';
 
 interface TagsProps {
   getIcon: (props: object) => JSX.Element;
-  formOpenInTheBackground: boolean;
-  tagContent?: string | React.ReactNode;
+  isWindowHidden: boolean;
+  tagContent?: React.ReactNode;
 }
 
-function Tags({ getIcon, formOpenInTheBackground, tagContent }: TagsProps) {
+function Tags({ getIcon, isWindowHidden: isWindowHidden, tagContent }: TagsProps) {
   return (
     <>
       {getIcon({ size: 16 })}
 
-      {formOpenInTheBackground ? (
+      {isWindowHidden ? (
         <span className={styles.interruptedTag}>!</span>
       ) : (
         <span className={styles.countTag}>{tagContent}</span>
@@ -36,14 +36,37 @@ export interface ActionMenuButtonProps2 {
     groupProps: Record<string, any>;
     windowProps: Record<string, any>;
   }
+
+  /**
+   * An optional callback function to run before launching the workspace.
+   * If provided, the workspace will only be launched if this function returns true.
+   * This can be used to perform checks or prompt the user before launching the workspace.
+   * Note that this function does not run if the action button's window is already opened;
+   * it will just restore (unhide) the window.
+   * 
+   */
+  onBeforeWorkspaceLaunch?: () => Promise<boolean>;
 }
 
+/**
+ * The ActionMenuButton2 component is used to render a button in the action menu of a workspace group.
+ * The button is associated with a specific workspace window, defined in routes.json of the app with the button.
+ * When one or more workspaces within the window are opened, the button will be highlighted. 
+ * If the window is hidden, either `tagContent` (if defined) or an exclamation mark will be displayed
+ * on top of the icon.
+ * 
+ * The button can be clicked to either:
+ * 1. restore the window if it is opened with at least one workspace and is hidden; or
+ * 2. If the window is not opened, launch a workspace from within that window.
+ * 
+ */
 export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   icon: getIcon,
   label,
   tagContent,
   windowName,
-  workspaceToLaunch
+  workspaceToLaunch,
+  onBeforeWorkspaceLaunch
 }) => {
   const layout = useLayoutType();
   const { openedWindows, restoreWindow } = useWorkspace2Store();
@@ -52,14 +75,17 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   const isWindowHidden = window?.hidden ?? false;
   const isMostRecentlyOpened = openedWindows[openedWindows.length - 1]?.windowName === windowName;
 
-  const onClick = () => {
+  const onClick = async () => {
     if(isWindowOpened) {
       if(isWindowHidden || !isMostRecentlyOpened) {
         restoreWindow(window.windowName)
       }
     } else {
-      const {workspaceName, groupProps, windowProps} = workspaceToLaunch;
-      launchWorkspace2(workspaceName, groupProps, windowProps);
+      const shouldLaunch = await (onBeforeWorkspaceLaunch?.() ?? true);
+      if (shouldLaunch) {
+        const {workspaceName, groupProps, windowProps} = workspaceToLaunch;
+        launchWorkspace2(workspaceName, groupProps, windowProps);
+      }
     }
   }
 
@@ -75,7 +101,7 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
         size="md"
       >
         <span className={styles.elementContainer}>
-          <Tags formOpenInTheBackground={isWindowHidden} getIcon={getIcon} tagContent={tagContent} />
+          <Tags isWindowHidden={isWindowHidden} getIcon={getIcon} tagContent={tagContent} />
         </span>
         <span>{label}</span>
       </Button>
@@ -96,7 +122,7 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
       size="md"
     >
       <div className={styles.elementContainer}>
-        <Tags formOpenInTheBackground={isWindowHidden} getIcon={getIcon} tagContent={tagContent} />
+        <Tags isWindowHidden={isWindowHidden} getIcon={getIcon} tagContent={tagContent} />
       </div>
     </IconButton>
   );
