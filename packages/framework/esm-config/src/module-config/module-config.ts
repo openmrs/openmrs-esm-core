@@ -74,9 +74,6 @@ temporaryConfigStore.subscribe((tempConfigState) => {
   computeExtensionConfigs(configInternalStore.getState(), configExtensionStore.getState(), tempConfigState);
 });
 
-/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
-let displayedValidationMessages = new Set<string>();
-
 function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
   for (let moduleName of Object.keys(state.schemas)) {
     // At this point the schema could be either just the implicit schema or the actually
@@ -831,6 +828,8 @@ function hasObjectSchema(elementsSchema: unknown): elementsSchema is ConfigSchem
 function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
+/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
+let displayedValidationMessages = new Set<string>();
 
 function logError(keyPath: string, message: string) {
   const key = `${keyPath}:::${message}`;
