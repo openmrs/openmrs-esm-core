@@ -89,13 +89,13 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "@rspack/cli": "^1.3.11",
-    "@rspack/core": "^1.3.11",
+    "@rspack/cli": "^1.4.5",
+    "@rspack/core": "^1.4.5",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
     "happy-dom": "^17.4.7",
-    "sass-embedded": "^1.89.0",
+    "sass-embedded": "^1.89.2",
     "svgo-loader": "^4.0.0",
     "typedoc": "^0.28.5",
     "typedoc-plugin-file-categories": "workspace:*",

@@ -12,9 +12,9 @@
     "debug": "npm run serve",
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode=development",
-    "analyze": "webpack --mode=production --env analyze=true",
+    "build": "rspack --mode=production",
+    "build:development": "rspack --mode=development",
+    "analyze": "rspack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
@@ -47,13 +47,15 @@
   "devDependencies": {
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/webpack-config": "workspace:*",
+    "@rspack/cli": "^1.4.5",
+    "@rspack/core": "^1.4.5",
     "cross-env": "^7.0.3",
     "happy-dom": "^17.4.7",
+    "openmrs": "workspace:*",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "^11.18.6",
-    "vitest": "^3.1.4",
-    "webpack": "^5.99.9"
+    "vitest": "^3.1.4"
   },
   "dependencies": {
     "@carbon/react": "^1.83.0",
