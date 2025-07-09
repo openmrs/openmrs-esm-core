@@ -12,6 +12,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="importmap-type" content="systemjs-importmap">
     <%= htmlWebpackPlugin.tags.headTags %>
+<% if (openmrsExtraAssets && openmrsExtraAssets.length) { %>
+<% openmrsExtraAssets.forEach(function(asset) { %>
+<% if (asset.endsWith('.css')) { %>
+    <link rel="stylesheet" href="<%= openmrsPublicPath %>/<%= asset %>">
+<% } %>
+<% }); %>
+<% } %>
 <% if (openmrsImportmapDef) { %>
     <script type="systemjs-importmap"><%= openmrsImportmapDef %></script>
 <% } else if (openmrsImportmapUrl) { %>
@@ -43,6 +50,13 @@
   </head>
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>
+<% if (openmrsExtraAssets && openmrsExtraAssets.length) { %>
+<% openmrsExtraAssets.forEach(function(asset) { %>
+<% if (asset.endsWith('.js')) { %>
+    <script src="<%= openmrsPublicPath %>/<%= asset %>"></script>
+<% } %>
+<% }); %>
+<% } %>
     <div class="omrs-toasts-container"></div>
     <div class="omrs-inline-notifications-container"></div>
     <div class="omrs-actionable-notifications-container"></div>

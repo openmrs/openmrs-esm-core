@@ -105,7 +105,6 @@ updates:
           - "webpack-stats-plugin"
           - "webpack-pwa-manifest"
           - "html-webpack-plugin"
-          - "html-webpack-tags-plugin"
           - "mini-css-extract-plugin"
           - "copy-webpack-plugin"
           - "clean-webpack-plugin"

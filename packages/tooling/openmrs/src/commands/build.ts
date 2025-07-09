@@ -1,9 +1,9 @@
+import type rspack from '@rspack/core';
 import { copyFileSync, existsSync, readdirSync, readFileSync, statSync } from 'fs';
-import { checkImportmapJson, checkRoutesJson, getImportMap, getRoutes, loadWebpackConfig, logInfo } from '../utils';
-import { basename, join, parse, resolve } from 'node:path';
-import type { webpack } from 'webpack';
+import { basename, join, parse, resolve } from 'path';
+import { checkImportmapJson, checkRoutesJson, getImportMap, getRoutes, loadBundlerConfig, logInfo } from '../utils';
 
-type WebpackExport = typeof webpack;
+type RspackExport = typeof rspack;
 
 /* eslint-disable no-console */
 
@@ -56,7 +56,7 @@ function addConfigFilesFromPaths(configPaths: Array<string>, targetDir: string) 
 
 export async function runBuild(args: BuildArgs) {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const webpack: WebpackExport = require('webpack');
+  const rspack: RspackExport = require('@rspack/core');
   const buildConfig = loadBuildConfig(args.buildConfig);
   const configUrls = buildConfig.configUrls || args.configUrls;
   for (let configPath of buildConfig.configPaths || args.configPaths) {
@@ -110,7 +110,7 @@ export async function runBuild(args: BuildArgs) {
     }
   }
 
-  const config = loadWebpackConfig({
+  const config = loadBundlerConfig({
     importmap: importMap,
     routes,
     env: buildConfig.env || args.env,
@@ -126,7 +126,7 @@ export async function runBuild(args: BuildArgs) {
 
   logInfo(`Running build process ...`);
 
-  const compiler = webpack({
+  const compiler = rspack({
     ...config,
     output: {
       ...config.output,
