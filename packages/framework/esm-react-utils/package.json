@@ -91,7 +91,7 @@
     "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
     "@swc/cli": "^0.7.7",
-    "@swc/core": "^1.11.29",
+    "@swc/core": "^1.12.11",
     "@vitest/coverage-v8": "^4.0.7",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",

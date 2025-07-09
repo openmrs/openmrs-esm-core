@@ -6,12 +6,12 @@
   "scripts": {
     "start": "yarn run watch",
     "test": "jest --passWithNoTests --color",
-    "watch": "cross-env OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" OMRS_OFFLINE=\"disable\" webpack serve --mode development",
-    "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"disable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" webpack serve --mode development",
-    "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"production\" webpack --mode production",
-    "build:development": "cross-env OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" webpack --mode development",
+    "watch": "cross-env OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" OMRS_OFFLINE=\"disable\" rspack serve --mode development",
+    "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"disable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack serve --mode development",
+    "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"production\" rspack --mode production",
+    "build:development": "cross-env OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack --mode development",
     "build": "yarn run build:production && yarn run build:development",
-    "analyze": "webpack --mode=production --env analyze=true",
+    "analyze": "rspack --mode=production --env analyze=true",
     "lint": "eslint src --ext ts,tsx"
   },
   "keywords": [
@@ -37,6 +37,8 @@
     "@internationalized/date": "^3.8.0",
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/esm-styleguide": "workspace:*",
+    "@rspack/cli": "^1.4.5",
+    "@rspack/core": "^1.4.5",
     "dayjs": "^1.11.13",
     "dexie": "^3.0.3",
     "html-webpack-plugin": "^5.5.0",
@@ -53,14 +55,7 @@
     "semver": "^7.3.4",
     "single-spa": "^6.0.3",
     "swc-loader": "^0.2.6",
-    "swr": "2.2.5",
-    "webpack": "^5.99.9",
-    "webpack-pwa-manifest": "^4.3.0",
-    "workbox-core": "^6.1.5",
-    "workbox-routing": "^6.1.5",
-    "workbox-strategies": "^6.1.5",
-    "workbox-webpack-plugin": "^6.1.5",
-    "workbox-window": "^6.1.5"
+    "swr": "2.2.5"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"

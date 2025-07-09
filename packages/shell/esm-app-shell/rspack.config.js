@@ -1,12 +1,9 @@
+const { CssExtractRspackPlugin, CopyRspackPlugin, DefinePlugin, container } = require('@rspack/core');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const { InjectManifest } = require('workbox-webpack-plugin');
-const { DefinePlugin, container } = require('webpack');
 const { basename, dirname, resolve } = require('path');
 const { readdirSync, statSync, readFileSync } = require('fs');
 const semver = require('semver');
@@ -19,7 +16,7 @@ const frameworkVersion = require('@openmrs/esm-framework/package.json').version;
 const timestamp = getTimestamp();
 const production = 'production';
 const allowedSuffixes = ['-app', '-widgets'];
-const { ModuleFederationPlugin } = container;
+const { ModuleFederationPluginV1: ModuleFederationPlugin } = container;
 
 const openmrsAddCookie = process.env.OMRS_ADD_COOKIE;
 const openmrsApiUrl = removeTrailingSlash(process.env.OMRS_API_URL || '/openmrs');
@@ -239,7 +236,7 @@ module.exports = (env, argv = []) => {
           test: /openmrs-esm-styleguide\.css$/,
           use: [
             isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              ? { loader: require.resolve(CssExtractRspackPlugin.loader) }
               : { loader: require.resolve('style-loader') },
             { loader: require.resolve('css-loader') },
           ],
@@ -249,7 +246,7 @@ module.exports = (env, argv = []) => {
           exclude: [/openmrs-esm-styleguide\.css$/],
           use: [
             isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              ? { loader: require.resolve(CssExtractRspackPlugin.loader) }
               : { loader: require.resolve('style-loader') },
             { loader: require.resolve('css-loader') },
           ],
@@ -258,7 +255,7 @@ module.exports = (env, argv = []) => {
           test: /\.s[ac]ss$/,
           use: [
             isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              ? { loader: require.resolve(CssExtractRspackPlugin.loader) }
               : { loader: require.resolve('style-loader') },
             { loader: require.resolve('css-loader') },
             {
@@ -279,7 +276,7 @@ module.exports = (env, argv = []) => {
           test: /\.(j|t)sx?$/,
           use: [
             {
-              loader: 'swc-loader',
+              loader: 'builtin:swc-loader',
             },
           ],
         },
@@ -340,12 +337,12 @@ module.exports = (env, argv = []) => {
       }),
       new HtmlWebpackTagsPlugin({ tags: openmrsJsCssAssets.map(fileName => 'assets/' + basename(fileName)) }),
       new WebpackPwaManifest({
-        name: 'OpenMRS',
-        short_name: 'OpenMRS',
+        name: openmrsPageTitle,
+        short_name: openmrsPageTitle,
         publicPath: openmrsPublicPath,
         description: 'Open source Health IT by and for the entire planet, starting with the developing world.',
         background_color: '#ffffff',
-        theme_color: '#000000',
+        theme_color: '#005d5d',
         icons: [
           {
             src: resolve(__dirname, 'src/assets/logo-512.png'),
@@ -353,7 +350,7 @@ module.exports = (env, argv = []) => {
           },
         ],
       }),
-      new CopyWebpackPlugin({
+      new CopyRspackPlugin({
         patterns: [{ from: resolve(__dirname, 'src/assets') }, ...appPatterns, ...assetsPatterns],
       }),
       new ModuleFederationPlugin({
@@ -403,7 +400,7 @@ module.exports = (env, argv = []) => {
         }, {}),
       }),
       isProd &&
-        new MiniCssExtractPlugin({
+        new CssExtractRspackPlugin({
           filename: 'openmrs.[contenthash].css',
           ignoreOrder: true,
         }),
@@ -415,23 +412,6 @@ module.exports = (env, argv = []) => {
       new BundleAnalyzerPlugin({
         analyzerMode: env?.analyze ? 'static' : 'disabled',
       }),
-      openmrsOffline
-        ? new InjectManifest({
-            swSrc: resolve(__dirname, './src/service-worker/index.ts'),
-            swDest: 'service-worker.js',
-            maximumFileSizeToCacheInBytes: mode === production ? undefined : Number.MAX_SAFE_INTEGER,
-            additionalManifestEntries: [
-              { url: openmrsImportmapUrl, revision: null },
-              { url: openmrsRoutesUrl, revision: null },
-            ],
-          })
-        : new InjectManifest({
-            swSrc: resolve(__dirname, './src/service-worker/noop.ts'),
-            swDest: 'service-worker.js',
-            // this is a no-op service worker, so we don't want to cache anything
-            maximumFileSizeToCacheInBytes: 0,
-            exclude: [/.*/],
-          }),
     ].filter(Boolean),
     ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };

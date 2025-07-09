@@ -13,9 +13,9 @@
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode=development",
-    "analyze": "webpack --mode=production --env analyze=true",
+    "build": "rspack --mode=production",
+    "build:development": "rspack --mode=development",
+    "analyze": "rspack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx",
     "extract-translations": "i18next 'src/**/*.tsx' --config='../../../tools/i18next-parser.config.js'"
@@ -49,14 +49,15 @@
   "devDependencies": {
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/webpack-config": "workspace:*",
-    "@vitest/coverage-v8": "^4.0.7",
+    "@rspack/cli": "^1.4.5",
+    "@rspack/core": "^1.4.5",
     "cross-env": "^7.0.3",
     "happy-dom": "^17.4.7",
+    "openmrs": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
-    "vitest": "^4.0.7",
-    "webpack": "^5.99.9"
+    "vitest": "^4.0.7"
   },
   "dependencies": {
     "@carbon/react": "^1.92.1",

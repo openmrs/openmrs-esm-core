@@ -12,9 +12,9 @@
     "debug": "npm run serve",
     "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
     "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode=development",
-    "analyze": "webpack --mode=production --env analyze=true",
+    "build": "rspack --mode=production",
+    "build:development": "rspack --mode=development",
+    "analyze": "rspack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx",
     "extract-translations": "i18next 'src/**/*.tsx' 'src/**/*.ts' '!src/**/*.test.tsx' '!src/**/*.test.ts' --config='../../../tools/i18next-parser.config.js'"
@@ -53,13 +53,15 @@
   "devDependencies": {
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/webpack-config": "workspace:*",
+    "@rspack/cli": "^1.4.5",
+    "@rspack/core": "^1.4.5",
     "ace-builds": "^1.43.3",
+    "openmrs": "workspace:*",
     "react": "^18.3.1",
     "react-ace": "^14.0.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
     "rxjs": "^6.5.3",
-    "swr": "2.2.5",
-    "webpack": "^5.99.9"
+    "swr": "2.2.5"
   }
 }
