@@ -1,4 +1,4 @@
-import { getGroupByWindow, getOpenedWindowIndexByWorkspace, getWindowByWorkspace, workspace2Store, WorkspaceStoreState2 } from "@openmrs/esm-extensions";
+import { getGroupByWindowName, getOpenedWindowIndexByWorkspace, getWindowByWorkspaceName, workspace2Store, WorkspaceStoreState2 } from "@openmrs/esm-extensions";
 import { useStoreWithActions, type Actions } from "@openmrs/esm-react-utils";
 
 export async function launchWorkspaceGroup2<GroupProps extends Record<string, any>>(groupName: string, groupProps: GroupProps) {
@@ -50,32 +50,30 @@ export async function launchWorkspace2<
     WindowProps extends Record<string, any>>(workspaceName: string, groupProps: GroupProp, windowProps: WindowProps) {
   const storeState = workspace2Store.getState();
   
-  const window = getWindowByWorkspace(storeState, workspaceName);
+  const window = getWindowByWorkspaceName(workspaceName);
   if(!window) {
     throw new Error();
   }
 
   const {openedGroup} = storeState;
-  const {windowName} = window;
-  const group = getGroupByWindow(storeState, windowName);
+  const {name: windowName} = window;
+  const group = getGroupByWindowName(windowName);
   if(!group) {
     throw new Error();
   }
 
-  const openedWindowIndex  = getOpenedWindowIndexByWorkspace(storeState, workspaceName);
+  const openedWindowIndex  = getOpenedWindowIndexByWorkspace(workspaceName);
   const isWindowAlreadyOpened = openedWindowIndex >= 0;
 
-
-
   // if current opened group is not the same as the requested group, or if the group props are different, then prompt for unsaved changes
-  if(openedGroup && (openedGroup.groupName !== group?.groupName || !areEqualShallow(openedGroup.props, groupProps))) {
+  if(openedGroup && (openedGroup.groupName !== group?.name || !areEqualShallow(openedGroup.props, groupProps))) {
     // prompt for unsaved changes with better UI
     const discardUnsavedChanges = await confirm("Yo, switch group context?");
     if(discardUnsavedChanges) {
       workspace2Store.setState({
       ...storeState,
       openedGroup: {
-        groupName: group.groupName,
+        groupName: group.name,
         props: groupProps
       },
       openedWindows: [
@@ -112,7 +110,7 @@ export async function launchWorkspace2<
         workspace2Store.setState({
           ...storeState,
           openedGroup: {
-            groupName: group.groupName,
+            groupName: group.name,
             props: groupProps
           },
           openedWindows: [
@@ -133,7 +131,7 @@ export async function launchWorkspace2<
     workspace2Store.setState({
       ...storeState,
       openedGroup: {
-        groupName: group.groupName,
+        groupName: group.name,
         props: groupProps
       },
       openedWindows: [
@@ -202,7 +200,7 @@ const workspace2StoreActions = {
     
   },
   closeWorkspace(state, workspaceName: string) {
-    const openedWindowIndex = getOpenedWindowIndexByWorkspace(state, workspaceName);
+    const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
     if (openedWindowIndex < 0) {
       return state; // no-op if the window does not exist
     }

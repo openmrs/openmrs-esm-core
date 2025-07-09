@@ -86,31 +86,41 @@
       "canHide": true
     }
   ],
+  "workspaces2": [
+    {
+      "name": "workspace-test",
+      "component": "workspaceTest",
+      "window": "window1"
+    },
+    {
+      "name": "workspace-test-2",
+      "component": "workspaceTest",
+      "window": "window2"
+    }
+  ],
+  "workspaceWindows2": [
+    {
+      "name": "window1",
+      "icon": "workspace-test-nav-button",
+      "canHide": true,
+      "canMaximize": true,
+      "overlay": false,
+      "group": "workspace-group-test",
+      "order": 1
+    },
+    {
+      "name": "window2",
+      "icon": "workspace-test-2-nav-button",
+      "canHide": true,
+      "canMaximize": true,
+      "overlay": false,
+      "group": "workspace-group-test",
+      "order": 2
+    }
+  ],
   "workspaceGroups2": [
     {
-      "groupName": "workspace-group-test",
-      "windows": [
-        {
-          "windowName": "window1",
-          "icon": "workspace-test-nav-button",
-          "canHide": true,
-          "canMaximize": true,
-          "overlay": false,
-          "workspaces": [
-            "workspace-test"
-          ]
-        },
-        {
-          "windowName": "window2",
-          "icon": "workspace-test-2-nav-button",
-          "canHide": true,
-          "canMaximize": true,
-          "overlay": false,
-          "workspaces": [
-            "workspace-test-2"
-          ]
-        }
-      ]
+      "name": "workspace-group-test"
     }
   ]
 }

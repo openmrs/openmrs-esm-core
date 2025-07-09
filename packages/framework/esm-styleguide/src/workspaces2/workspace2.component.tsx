@@ -1,12 +1,12 @@
 import React, { type ReactNode } from 'react';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
-import { isDesktop, useAssignedExtensions, useLayoutType } from '@openmrs/esm-react-utils';
+import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import classNames from 'classnames';
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../icons';
 import styles from './workspace2.module.scss';
-import { getOpenedWindowIndexByWorkspace, getWindowByWorkspace } from '@openmrs/esm-extensions';
+import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { useWorkspace2Store } from './workspace2';
 interface Workspace2Props {
   workspaceName: string;
@@ -27,18 +27,22 @@ export type Workspace2Definition<WindowProps extends Record<string, any>, GroupP
 export const Workspace2 : React.FC<Workspace2Props> = ({workspaceName, title, children}) => {
   const layout = useLayoutType();
   const {setWindowMaximized, hideWindow, closeWorkspace, ...state} = useWorkspace2Store();
-  const {openedWindows, openedGroup, registeredGroups} = state;
+  const {openedWindows, openedGroup, registeredGroupsByName, registeredWindowsByGroupName, registeredWindowsByName, registeredWorkspacesByName} = state;
   
-  const openedWindowIndex = getOpenedWindowIndexByWorkspace(state, workspaceName);
+  const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
   
   if(openedWindowIndex < 0 || openedGroup == null) {
     return null;
   }
 
-  const group = registeredGroups[openedGroup!.groupName];
-  const icons = group.windows.filter(window => window.icon).map(window => window.icon);;
-  
-  const window = getWindowByWorkspace(state, workspaceName);
+  const group = registeredGroupsByName[openedGroup!.groupName];
+  if(!group) {
+    return null;
+  }
+  const icons = registeredWindowsByGroupName[group.name].filter(window => window.icon).map(window => window.icon);;
+  const workspace = registeredWorkspacesByName[workspaceName];
+  const windowName = workspace.window;
+  const window = registeredWindowsByName[windowName];
   if(!window) {
     return null;
   }
@@ -78,7 +82,7 @@ export const Workspace2 : React.FC<Workspace2Props> = ({workspaceName, title, ch
                       ? getCoreTranslation('minimize')
                       : getCoreTranslation('maximize')
                   }
-                  onClick={() => setWindowMaximized(window.windowName, !maximized)}
+                  onClick={() => setWindowMaximized(windowName, !maximized)}
                 >
                   {maximized ? <Minimize /> : <Maximize />}
                 </HeaderGlobalAction>
@@ -86,7 +90,7 @@ export const Workspace2 : React.FC<Workspace2Props> = ({workspaceName, title, ch
               {canHide ? (
                 <HeaderGlobalAction
                   aria-label={getCoreTranslation('hide')}
-                  onClick={() => hideWindow(window.windowName)}
+                  onClick={() => hideWindow(windowName)}
                 >
                   <ArrowRightIcon />
                 </HeaderGlobalAction>

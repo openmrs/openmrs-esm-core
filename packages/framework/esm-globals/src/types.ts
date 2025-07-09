@@ -363,18 +363,26 @@ export interface WorkspaceGroupDefinition {
 }
 
 export interface WorkspaceGroupDefinition2 {
-    groupName: string;
-    moduleName: string;
-    windows: Array<WorkspaceWindowDefinition2>;
+    name: string;
+    // close button?
 }
+
 export interface WorkspaceWindowDefinition2 {
-    windowName: string;
-    icon: string;
-    canHide?: boolean;
-    canMaximize?: boolean;
-    overlay?: boolean;
-    workspaces: Array<string>;
+    name: string;
+    icon?: string,
+    canHide: boolean,
+    canMaximize: boolean,
+    overlay: boolean,
+    group: string
+    order?: number;
 }
+
+export interface WorkspaceDefinition2 {
+  name: string;
+  component: string;
+  window: string;
+}
+
 
 /**
  * A definition of a feature flag extracted from the routes.json
@@ -420,6 +428,10 @@ export interface OpenmrsAppRoutes {
   workspaceGroups?: Array<WorkspaceGroupDefinition>;
 
   workspaceGroups2?: Array<WorkspaceGroupDefinition2>;
+
+  workspaceWindows2?: Array<WorkspaceWindowDefinition2>;
+
+  workspaces2?: Array<WorkspaceDefinition2>;
 }
 
 /**

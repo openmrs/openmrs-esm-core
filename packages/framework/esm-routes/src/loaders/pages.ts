@@ -9,7 +9,6 @@ import {
   type RegisteredPageDefinition,
   type RouteDefinition,
   type WorkspaceDefinition,
-  type WorkspaceGroupDefinition2,
 } from '@openmrs/esm-globals';
 import { getFeatureFlag } from '@openmrs/esm-feature-flags';
 import { routeRegex } from './helpers';
@@ -19,8 +18,10 @@ import {
   tryRegisterFeatureFlag,
   tryRegisterModal,
   tryRegisterWorkspace,
+  tryRegisterWorkspace2,
   tryRegisterWorkspaceGroup,
   tryRegisterWorkspaceGroups2,
+  tryRegisterWorkspaceWindows2,
 } from './components';
 
 // this is the global holder of all pages registered in the app
@@ -103,8 +104,10 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];
     const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
     const availableWorkspaceGroups: Array<WorkspaceGroupDefinition> = routes.workspaceGroups ?? [];
-    const availableWorkspaceGroups2: Array<WorkspaceGroupDefinition2> = routes.workspaceGroups2 ?? [];
     const availableFeatureFlags: Array<FeatureFlagDefinition> = routes.featureFlags ?? [];
+    const availableWorkspaceGroups2 = routes.workspaceGroups2 ?? [];
+    const availableWorkspaceWindows2 = routes.workspaceWindows2 ?? [];
+    const availableWorkspaces2 = routes.workspaces2 ?? [];
 
     routes.pages?.forEach((p) => {
       if (
@@ -174,6 +177,10 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       }
     });
     tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
+    
+    tryRegisterWorkspaceWindows2(availableWorkspaceWindows2);
+    
+    tryRegisterWorkspace2(availableWorkspaces2);
 
     availableFeatureFlags.forEach((featureFlag) => {
       if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'flagName')) {

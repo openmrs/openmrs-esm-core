@@ -6,6 +6,8 @@ import {
   registerWorkspace,
   registerWorkspaceGroup,
   registerWorkspaceGroups2,
+  registerWorkspaces2,
+  registerWorkspaceWindows2,
 } from '@openmrs/esm-extensions';
 import {
   type FeatureFlagDefinition,
@@ -14,6 +16,8 @@ import {
   type WorkspaceDefinition,
   type WorkspaceGroupDefinition,
   WorkspaceGroupDefinition2,
+  WorkspaceDefinition2,
+  WorkspaceWindowDefinition2,
 } from '@openmrs/esm-globals';
 import { getLoader } from './app';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
@@ -234,7 +238,15 @@ To fix this, ensure that you define the "name" field inside the workspace defini
 }
 
 export function tryRegisterWorkspaceGroups2(appName: string, workspaceGroups: Array<WorkspaceGroupDefinition2>) {
-  registerWorkspaceGroups2(appName, workspaceGroups);
+  registerWorkspaceGroups2(workspaceGroups);
+}
+
+export function tryRegisterWorkspace2(workspaces: Array<WorkspaceDefinition2>) {
+  registerWorkspaces2(workspaces);
+}
+
+export function tryRegisterWorkspaceWindows2(workspaceWindows: Array<WorkspaceWindowDefinition2>) {
+  registerWorkspaceWindows2(workspaceWindows);
 }
 
 /**

@@ -14,8 +14,8 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);
   const layout = useLayoutType();
-  const { registeredGroups } = useWorkspace2Store();
-  const group = registeredGroups[workspaceGroup];
+  const { registeredGroupsByName, registeredWindowsByGroupName } = useWorkspace2Store();
+  const group = registeredGroupsByName[workspaceGroup];
 
   useEffect(() => {
     const handleKeyboardVisibilityChange = () => {
@@ -28,7 +28,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
     return () => window.removeEventListener('resize', handleKeyboardVisibilityChange);
   }, [initialHeight]);
 
-  const icons = group.windows.filter(window => window.icon).map(window => window.icon);
+  const icons = registeredWindowsByGroupName[workspaceGroup].filter(window => window.icon).map(window => window.icon);
 
   if(icons.length === 0) {
     return null; // No icons to display
@@ -38,7 +38,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
     <ComponentContext.Provider
       value={{
         featureName: 'workspaces2',
-        moduleName: group.groupName, // TODO?
+        moduleName: group.name, // TODO?
       }}>
       <aside
         className={classNames(styles.sideRail, {
@@ -47,7 +47,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
         })}
       >
         <div className={styles.container}>
-          {icons.map(icon => <SingleExtensionSlot key={icon} extensionId={icon} />)}
+          {icons.map(icon => icon && <SingleExtensionSlot key={icon} extensionId={icon} />)}
         </div>
       </aside>
     </ComponentContext.Provider>
