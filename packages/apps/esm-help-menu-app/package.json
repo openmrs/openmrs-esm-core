@@ -8,7 +8,7 @@
   "source": true,
   "scripts": {
     "start": "openmrs develop",
-    "serve": "webpack serve --mode=development",
+    "serve": "rspack serve --mode=development",
     "debug": "npm run serve",
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
@@ -48,7 +48,6 @@
   },
   "devDependencies": {
     "@openmrs/esm-framework": "workspace:*",
-    "@openmrs/webpack-config": "workspace:*",
     "@rspack/cli": "^1.4.5",
     "@rspack/core": "^1.4.5",
     "cross-env": "^7.0.3",
