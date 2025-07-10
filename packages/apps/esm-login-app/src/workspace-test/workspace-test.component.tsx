@@ -16,7 +16,7 @@ const WorkspaceTest : Workspace2Definition<WorkspaceTestGroupProps, WorkspaceWin
   // props.promptBeforeClosing(() => true);
   const iconComponent = windowProps.icon == 'pen' ? <PenIcon size={32} /> : <MotherIcon size={32} />;
   return (
-    <Workspace2 workspaceName={props.workspaceName} title={'hello'}>
+    <Workspace2 title={'hello'}>
       <div style={{padding: '20px'}}>
         {iconComponent}
         <h2>Group Context: {groupProps.groupContext}</h2>

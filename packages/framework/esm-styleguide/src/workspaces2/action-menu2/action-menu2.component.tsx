@@ -35,22 +35,16 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
   }
 
   return (
-    <ComponentContext.Provider
-      value={{
-        featureName: 'workspaces2',
-        moduleName: group.name, // TODO?
-      }}>
-      <aside
-        className={classNames(styles.sideRail, {
-          [styles.sideRailHidden]: keyboardVisible,
-          [styles.sideRailVisible]: !keyboardVisible,
-        })}
-      >
-        <div className={styles.container}>
-          {icons.map(icon => icon && <SingleExtensionSlot key={icon} extensionId={icon} />)}
-        </div>
-      </aside>
-    </ComponentContext.Provider>
+    <aside
+      className={classNames(styles.sideRail, {
+        [styles.sideRailHidden]: keyboardVisible,
+        [styles.sideRailVisible]: !keyboardVisible,
+      })}
+    >
+      <div className={styles.container}>
+        {icons.map(icon => icon && <SingleExtensionSlot key={icon} extensionId={icon} />)}
+      </div>
+    </aside>
   );
 }
 

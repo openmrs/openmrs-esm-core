@@ -23,7 +23,7 @@ function WorkspaceWindowsAndMenu() {
     <>
       {openedWindows.map(window => {
         return (
-          <ActiveWorkspaceWindow window={window} />
+          <ActiveWorkspaceWindow key={window.windowName} window={window} />
         );
       })}
       <ActionMenu workspaceGroup={openedGroup.groupName} />

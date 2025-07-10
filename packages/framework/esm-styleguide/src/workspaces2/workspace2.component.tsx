@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react';
+import React, { useContext, type ReactNode } from 'react';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
@@ -8,8 +8,8 @@ import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../icons';
 import styles from './workspace2.module.scss';
 import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { useWorkspace2Store } from './workspace2';
+import { SingleSpaContext } from "single-spa-react";
 interface Workspace2Props {
-  workspaceName: string;
   title: ReactNode;
   children: ReactNode;
 }
@@ -24,9 +24,10 @@ export interface Workspace2DefinitionProps<GroupProps extends Record<string, any
 export type Workspace2Definition<WindowProps extends Record<string, any>, GroupProps extends Record<string, any>> = 
   React.FC<Workspace2DefinitionProps<WindowProps, GroupProps>>;
 
-export const Workspace2 : React.FC<Workspace2Props> = ({workspaceName, title, children}) => {
+export const Workspace2 : React.FC<Workspace2Props> = ({title, children}) => {
   const layout = useLayoutType();
   const {setWindowMaximized, hideWindow, closeWorkspace, ...state} = useWorkspace2Store();
+  const { workspaceName } = useContext(SingleSpaContext);
   const {openedWindows, openedGroup, registeredGroupsByName, registeredWindowsByGroupName, registeredWindowsByName, registeredWorkspacesByName} = state;
   
   const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
