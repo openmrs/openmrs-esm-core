@@ -60,7 +60,7 @@
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
     "@swc/cli": "^0.7.7",
-    "@swc/core": "^1.11.29",
+    "@swc/core": "^1.12.11",
     "@types/lodash-es": "^4.17.12",
     "@types/semver": "^7.3.4",
     "concurrently": "^9.1.2",

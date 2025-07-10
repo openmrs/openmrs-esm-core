@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.50.1",
-    "@swc/core": "^1.11.29",
+    "@swc/core": "^1.12.11",
     "@swc/jest": "^0.2.38",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.1.5",
