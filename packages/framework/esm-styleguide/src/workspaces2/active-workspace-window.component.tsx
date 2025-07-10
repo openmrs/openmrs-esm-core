@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getCoreTranslation } from "@openmrs/esm-translations";
 import { InlineLoading } from "@carbon/react";
-import { getWorkspaceRegistration, OpenedWindow } from "@openmrs/esm-extensions";
+import { getWorkspaceRegistration, OpenedWindow, workspace2Store } from "@openmrs/esm-extensions";
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import { useWorkspace2Store } from "./workspace2";
@@ -16,15 +16,21 @@ interface WorkspaceWindowProps {
 const ActiveWorkspaceWindow : React.FC<WorkspaceWindowProps> = ({window}) => {
   const {hidden, workspaces, props: windowProps} = window;
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
+  const {registeredWorkspacesByName} = workspace2Store.getState();
+  
+  // only the leaf workspace should be shown; parent workspaces are "covered" 
+  // TODO: I think we still need to render each workspace, even if they are not shown,
+  //      if we want to preserve the react states within each workspace component 
+  const leafWorkspaceName = workspaces[workspaces.length -1];
 
-  const workspace = getWorkspaceRegistration(workspaces[workspaces.length -1]);
+  const workspace = registeredWorkspacesByName[leafWorkspaceName];
   const {openedGroup, closeWorkspace} = useWorkspace2Store();
 
   useEffect(() => {
     let active = true;
-    workspace.load().then(({ default: result, ...lifecycle }) => {
+    workspace.load().then((lifecycle) => {
       if (active) {
-        setLifecycle(result ?? lifecycle);
+        setLifecycle(lifecycle);
       }
     });
     

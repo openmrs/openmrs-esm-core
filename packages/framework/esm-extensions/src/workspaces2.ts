@@ -1,5 +1,6 @@
 import { WorkspaceDefinition2, WorkspaceGroupDefinition2, WorkspaceWindowDefinition2 } from "@openmrs/esm-globals";
 import { createGlobalStore } from "@openmrs/esm-state";
+import { LifeCycles } from "single-spa";
 
 export interface OpenedWindow {
   windowName: string;
@@ -11,7 +12,7 @@ export interface OpenedWindow {
 export interface WorkspaceStoreState2 {
   registeredGroupsByName: Record<string, WorkspaceGroupDefinition2>;
   registeredWindowsByName: Record<string, WorkspaceWindowDefinition2>; 
-  registeredWorkspacesByName: Record<string, WorkspaceDefinition2>;
+  registeredWorkspacesByName: Record<string, WorkspaceDefinition2 & {load(): Promise<LifeCycles>}>;
   registeredWindowsByGroupName: Record<string, Array<WorkspaceWindowDefinition2>>;
   registeredWorkspacesByWindowName: Record<string, Array<WorkspaceDefinition2>>;
   openedGroup: {
@@ -75,8 +76,8 @@ export function getOpenedWindowIndexByWorkspace(workspaceName: string) {
 export function registerWorkspaceGroups2(workspaceGroupConfigs: Array<WorkspaceGroupDefinition2>) {
   const {registeredGroupsByName} = workspace2Store.getState();
   const newRegisteredGroupsByName = {...registeredGroupsByName}
-  for(const config of workspaceGroupConfigs) {
-    newRegisteredGroupsByName[config.name] = config;
+  for(const groupConfig of workspaceGroupConfigs) {
+    newRegisteredGroupsByName[groupConfig.name] = groupConfig;
   }
 
   workspace2Store.setState({
@@ -88,12 +89,12 @@ export function registerWorkspaceWindows2(workspaceWindowConfigs: Array<Workspac
   const {registeredWindowsByGroupName, registeredWindowsByName} = workspace2Store.getState();
   const newRegisteredWindowsByName = {...registeredWindowsByName};
   const newRegisteredWindowsByGroupName = {...registeredWindowsByGroupName};
-  for(const config of workspaceWindowConfigs) {
-    newRegisteredWindowsByName[config.name] = config;
-    if(!newRegisteredWindowsByGroupName[config.group]) {
-      newRegisteredWindowsByGroupName[config.group] = [];
+  for(const windowConfig of workspaceWindowConfigs) {
+    newRegisteredWindowsByName[windowConfig.name] = windowConfig;
+    if(!newRegisteredWindowsByGroupName[windowConfig.group]) {
+      newRegisteredWindowsByGroupName[windowConfig.group] = [];
     }
-    newRegisteredWindowsByGroupName[config.group].push(config);
+    newRegisteredWindowsByGroupName[windowConfig.group].push(windowConfig);
   }
 
   workspace2Store.setState({
@@ -102,16 +103,17 @@ export function registerWorkspaceWindows2(workspaceWindowConfigs: Array<Workspac
   });
 }
 
-export function registerWorkspaces2(workspaceConfigs: Array<WorkspaceDefinition2>) {
+export function registerWorkspaces2(loader: (componentName: string) => () => Promise<LifeCycles>, workspaceConfigs: Array<WorkspaceDefinition2>) {
   const {registeredWorkspacesByName, registeredWorkspacesByWindowName} = workspace2Store.getState();
   const newRegisteredWorkspacesByName = {...registeredWorkspacesByName};
   const newRegisteredWorkspacesByWindowName = {...registeredWorkspacesByWindowName};
-  for(const config of workspaceConfigs) {
-    newRegisteredWorkspacesByName[config.name] = config;
-    if(!newRegisteredWorkspacesByWindowName[config.window]) {
-      newRegisteredWorkspacesByWindowName[config.window] = [];
+  for(const workspaceConfig of workspaceConfigs) {
+    const workspaceConfigWithLoader = {...workspaceConfig, load: loader(workspaceConfig.component)};
+    newRegisteredWorkspacesByName[workspaceConfig.name] = workspaceConfigWithLoader;
+    if(!newRegisteredWorkspacesByWindowName[workspaceConfig.window]) {
+      newRegisteredWorkspacesByWindowName[workspaceConfig.window] = [];
     }
-    newRegisteredWorkspacesByWindowName[config.window].push(config);
+    newRegisteredWorkspacesByWindowName[workspaceConfig.window].push(workspaceConfigWithLoader);
   }
 
   workspace2Store.setState({

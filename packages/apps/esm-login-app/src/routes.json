@@ -70,22 +70,6 @@
       "component": "changePasswordModal"
     }
   ],
-  "workspaces": [
-    {
-      "name": "workspace-test",
-      "component": "workspaceTest",
-      "type": "workspace-test",
-      "title": "Workspace Test",
-      "canHide": true
-    },
-    {
-      "name": "workspace-test-2",
-      "component": "workspaceTest",
-      "type": "workspace-test-2",
-      "title": "Workspace Test 2",
-      "canHide": true
-    }
-  ],
   "workspaces2": [
     {
       "name": "workspace-test",

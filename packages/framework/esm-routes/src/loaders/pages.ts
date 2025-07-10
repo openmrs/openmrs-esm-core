@@ -180,7 +180,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     
     tryRegisterWorkspaceWindows2(availableWorkspaceWindows2);
     
-    tryRegisterWorkspace2(availableWorkspaces2);
+    tryRegisterWorkspace2(appName, availableWorkspaces2);
 
     availableFeatureFlags.forEach((featureFlag) => {
       if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'flagName')) {

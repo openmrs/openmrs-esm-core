@@ -241,8 +241,9 @@ export function tryRegisterWorkspaceGroups2(appName: string, workspaceGroups: Ar
   registerWorkspaceGroups2(workspaceGroups);
 }
 
-export function tryRegisterWorkspace2(workspaces: Array<WorkspaceDefinition2>) {
-  registerWorkspaces2(workspaces);
+export function tryRegisterWorkspace2(appName: string, workspaces: Array<WorkspaceDefinition2>) {
+  const loader = (componentName: string) => getLoader(appName, componentName);
+  registerWorkspaces2(loader, workspaces);
 }
 
 export function tryRegisterWorkspaceWindows2(workspaceWindows: Array<WorkspaceWindowDefinition2>) {
