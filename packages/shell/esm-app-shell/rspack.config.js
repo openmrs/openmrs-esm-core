@@ -92,7 +92,7 @@ function escapeRegExp(string) {
 /**
  * @param {Record<string, string>} env
  * @param {Array<string>} argv
- * @returns {import("webpack").Configuration}
+ * @returns {import("@rspack/core").Configuration}
  */
 module.exports = (env, argv = []) => {
   const mode = argv.mode || process.env.NODE_ENV || production;

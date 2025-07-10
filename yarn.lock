@@ -3674,7 +3674,6 @@ __metadata:
   dependencies:
     "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
-    "@openmrs/webpack-config": "workspace:*"
     "@rspack/cli": "npm:^1.4.5"
     "@rspack/core": "npm:^1.4.5"
     cross-env: "npm:^7.0.3"
@@ -3890,7 +3889,6 @@ __metadata:
   dependencies:
     "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
-    "@openmrs/webpack-config": "workspace:*"
     "@rspack/cli": "npm:^1.4.5"
     "@rspack/core": "npm:^1.4.5"
     cross-env: "npm:^7.0.3"
@@ -3917,7 +3915,6 @@ __metadata:
   dependencies:
     "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
-    "@openmrs/webpack-config": "workspace:*"
     "@rspack/cli": "npm:^1.4.5"
     "@rspack/core": "npm:^1.4.5"
     ace-builds: "npm:^1.4.14"
@@ -3947,7 +3944,6 @@ __metadata:
     "@carbon/react": "npm:^1.83.0"
     "@hookform/resolvers": "npm:^3.6.0"
     "@openmrs/esm-framework": "workspace:*"
-    "@openmrs/webpack-config": "workspace:*"
     "@rspack/cli": "npm:^1.4.5"
     "@rspack/core": "npm:^1.4.5"
     cross-env: "npm:^7.0.3"
@@ -3961,7 +3957,6 @@ __metadata:
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
     swr: "npm:2.2.5"
-    webpack: "npm:^5.99.9"
     zod: "npm:^3.23.8"
   peerDependencies:
     "@carbon/react": 1.x
@@ -4002,7 +3997,6 @@ __metadata:
     "@carbon/icons-react": "npm:^11.58.0"
     "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
-    "@openmrs/webpack-config": "workspace:*"
     "@rspack/cli": "npm:^1.4.5"
     "@rspack/core": "npm:^1.4.5"
     "@types/lodash-es": "npm:^4.17.12"
@@ -4061,7 +4055,6 @@ __metadata:
   dependencies:
     "@carbon/react": "npm:^1.83.0"
     "@openmrs/esm-framework": "workspace:*"
-    "@openmrs/webpack-config": "workspace:*"
     "@rspack/cli": "npm:^1.4.5"
     "@rspack/core": "npm:^1.4.5"
     jest: "npm:^29.7.0"
