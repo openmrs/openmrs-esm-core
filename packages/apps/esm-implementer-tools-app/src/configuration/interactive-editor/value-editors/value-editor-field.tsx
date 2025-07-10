@@ -18,10 +18,20 @@ export interface ValueEditorFieldProps {
   path?: Array<string>;
   valueType?: ValueType;
   value: any;
+  invalid?: boolean;
+  invalidText?: string | null;
   onChange: (value: any) => void;
 }
 
-export function ValueEditorField({ element, path, valueType, value, onChange }: ValueEditorFieldProps) {
+export function ValueEditorField({
+  element,
+  path,
+  valueType,
+  value,
+  invalid,
+  invalidText,
+  onChange,
+}: ValueEditorFieldProps) {
   const [id] = useState(uniqueId('value-editor-'));
 
   if (valueType === 'remove' && !path) {

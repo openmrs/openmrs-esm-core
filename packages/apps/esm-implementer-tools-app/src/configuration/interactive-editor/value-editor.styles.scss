@@ -2,11 +2,6 @@
 @use '@carbon/layout';
 @use '@carbon/styles/scss/components/button';
 
-.errorMessage {
-  color: colors.$red-60;
-  margin-top: layout.$spacing-03;
-}
-
 .valueEditorButtons {
   margin-top: layout.$spacing-03;
 
