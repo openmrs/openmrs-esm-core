@@ -16,7 +16,9 @@ import isToday from 'dayjs/plugin/isToday.js';
 import objectSupport from 'dayjs/plugin/objectSupport.js';
 import utc from 'dayjs/plugin/utc.js';
 import { isNil, omit } from 'lodash-es';
+import '@formatjs/intl-durationformat/polyfill';
 import { getLocale } from '../';
+import type { DurationFormatOptions, DurationInput } from '@formatjs/intl-durationformat/src/types';
 
 dayjs.extend(isToday);
 dayjs.extend(utc);
@@ -412,4 +414,16 @@ export function convertToLocaleCalendar(
   const localCalendarName = getDefaultCalendar(locale_);
 
   return localCalendarName ? toCalendar(date, createCalendar(localCalendarName)) : date;
+}
+
+/**
+ * Formats the input duration according to the current locale.
+ *
+ * @param duration The duration to format (DurationInput object).
+ * @param options Optional options for formatting.
+ * @returns The formatted duration string.
+ */
+export function formatDuration(duration: DurationInput, options?: DurationFormatOptions) {
+  const formatter = new (Intl as any).DurationFormat(getLocale(), options);
+  return formatter.format(duration);
 }
