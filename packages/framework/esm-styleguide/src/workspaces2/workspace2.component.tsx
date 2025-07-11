@@ -14,15 +14,22 @@ interface Workspace2Props {
   children: ReactNode;
 }
 
-export interface Workspace2DefinitionProps<GroupProps extends Record<string, any> = {}, WindowProps extends Record<string, any> = {}> {
+export interface Workspace2DefinitionProps<
+    WorkspaceProps extends Record<string, any> = {},
+    WindowProps extends Record<string, any> = {},
+    GroupProps extends Record<string, any> = {}> {
   workspaceName: string;
   closeWorkspace(): Promise<void>;
-  groupProps: GroupProps;
-  windowProps: WindowProps;
+  workspaceProps: WorkspaceProps | null;
+  windowProps: WindowProps | null; 
+  groupProps: GroupProps | null;
 }
 
-export type Workspace2Definition<WindowProps extends Record<string, any>, GroupProps extends Record<string, any>> = 
-  React.FC<Workspace2DefinitionProps<WindowProps, GroupProps>>;
+export type Workspace2Definition<
+  WorkspaceProps extends Record<string, any>,
+  WindowProps extends Record<string, any>,
+  GroupProps extends Record<string, any>
+> = React.FC<Workspace2DefinitionProps<WorkspaceProps, WindowProps, GroupProps>>;
 
 export const Workspace2 : React.FC<Workspace2Props> = ({title, children}) => {
   const layout = useLayoutType();

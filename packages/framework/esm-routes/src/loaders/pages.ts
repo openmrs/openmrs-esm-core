@@ -177,9 +177,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       }
     });
     tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
-    
     tryRegisterWorkspaceWindows2(availableWorkspaceWindows2);
-    
     tryRegisterWorkspace2(appName, availableWorkspaces2);
 
     availableFeatureFlags.forEach((featureFlag) => {

@@ -10,7 +10,7 @@ interface WorkspaceWindowProps {
   icon: "pen" | "mother";
 }
 
-const WorkspaceTest : Workspace2Definition<WorkspaceTestGroupProps, WorkspaceWindowProps> = (props) => {
+const WorkspaceTest : Workspace2Definition<{}, WorkspaceWindowProps, WorkspaceTestGroupProps> = (props) => {
   console.log(">>>workspaceProps", props);
   const {closeWorkspace, groupProps, windowProps} = props;
   // props.promptBeforeClosing(() => true);

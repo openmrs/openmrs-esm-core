@@ -33,8 +33,9 @@ export interface ActionMenuButtonProps2 {
   windowName: string;
   workspaceToLaunch: {
     workspaceName: string;
-    groupProps: Record<string, any>;
-    windowProps: Record<string, any>;
+    workspaceProps: Record<string, any>;
+    windowProps?: Record<string, any>;
+    groupProps?: Record<string, any>;
   }
 
   /**
@@ -83,8 +84,8 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
     } else {
       const shouldLaunch = await (onBeforeWorkspaceLaunch?.() ?? true);
       if (shouldLaunch) {
-        const {workspaceName, groupProps, windowProps} = workspaceToLaunch;
-        launchWorkspace2(workspaceName, groupProps, windowProps);
+        const {workspaceName, workspaceProps, groupProps, windowProps} = workspaceToLaunch;
+        launchWorkspace2(workspaceName, workspaceProps, windowProps, groupProps);
       }
     }
   }

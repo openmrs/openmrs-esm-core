@@ -1,9 +1,9 @@
 import { getGroupByWindowName, getOpenedWindowIndexByWorkspace, getWindowByWorkspaceName, workspace2Store, WorkspaceStoreState2 } from "@openmrs/esm-extensions";
 import { useStoreWithActions, type Actions } from "@openmrs/esm-react-utils";
 
-export async function launchWorkspaceGroup2<GroupProps extends Record<string, any>>(groupName: string, groupProps: GroupProps) {
+export async function launchWorkspaceGroup2<GroupProps extends Record<string, any>>(groupName: string, groupProps: GroupProps | null) {
   const {openedGroup} = workspace2Store.getState();
-  if(openedGroup && (openedGroup.groupName !== groupName || !areEqualShallow(openedGroup.props, groupProps))) {
+  if(openedGroup && (openedGroup.groupName !== groupName || !arePropsCompatible(openedGroup.props, groupProps))) {
     // prompt for unsaved changes with better UI
     const discardUnsavedChanges = await confirm("Yo, switch group context?");
     if(!discardUnsavedChanges) {
@@ -15,7 +15,7 @@ export async function launchWorkspaceGroup2<GroupProps extends Record<string, an
     ...state,
     openedGroup: {
       groupName,
-      props: groupProps ?? {}
+      props: groupProps
     },
     openedWindows: []
   }))
@@ -45,9 +45,16 @@ workspace2Store.subscribe((state) => {
   console.log(">>> workspace2Store state changed", state);
 })
 
+// note that this will *never* result in child workspaces
 export async function launchWorkspace2<
-    GroupProp extends Record<string, any>,
-    WindowProps extends Record<string, any>>(workspaceName: string, groupProps: GroupProp, windowProps: WindowProps) {
+    WorkspaceProps extends Record<string, any>,
+    WindowProps extends Record<string, any>,
+    GroupProp extends Record<string, any>,>(
+      workspaceName: string,
+      workspaceProps: WorkspaceProps,
+      windowProps: WindowProps | null = null,
+      groupProps: GroupProp | null = null, 
+  ) {
   const storeState = workspace2Store.getState();
   
   const window = getWindowByWorkspaceName(workspaceName);
@@ -66,7 +73,7 @@ export async function launchWorkspace2<
   const isWindowAlreadyOpened = openedWindowIndex >= 0;
 
   // if current opened group is not the same as the requested group, or if the group props are different, then prompt for unsaved changes
-  if(openedGroup && (openedGroup.groupName !== group?.name || !areEqualShallow(openedGroup.props, groupProps))) {
+  if(openedGroup && (openedGroup.groupName !== group?.name || !arePropsCompatible(openedGroup.props, groupProps))) {
     // prompt for unsaved changes with better UI
     const discardUnsavedChanges = await confirm("Yo, switch group context?");
     if(discardUnsavedChanges) {
@@ -81,7 +88,7 @@ export async function launchWorkspace2<
         // most recently opened action appended to the end
         {
           windowName: windowName,
-          workspaces: [workspaceName], // root workspace at index 0
+          openedWorkspaces: [{workspaceName: workspaceName, props: workspaceProps}], // root workspace at index 0
           props: windowProps,
           maximized: false,
           hidden: false
@@ -91,19 +98,49 @@ export async function launchWorkspace2<
     }
   }
   else if(isWindowAlreadyOpened) {
+    const openedWindow = storeState.openedWindows[openedWindowIndex];
     const groupProps = storeState.openedGroup?.props ?? {};
-    const {workspaces, props: currentWindowProps} = storeState.openedWindows[openedWindowIndex];
+    const {openedWorkspaces} = openedWindow;
 
-    // if invoking already opened workspace with same props
-    if(workspaces.includes(workspaceName) && areEqualShallow(currentWindowProps, windowProps)) {
-      // restore the window if it is hidden or not the most recently opened one
-      const workspace = storeState.openedWindows[openedWindowIndex];
-      if(workspace.hidden || openedWindowIndex !== storeState.openedWindows.length - 1) {
-        workspace2Store.setState(workspace2StoreActions.restoreWindow(storeState, windowName));
+    if(arePropsCompatible(openedWindow.props, windowProps)) {
+      
+      // this case is tricky, this results in restoring the window is if:
+      // 1. the workspace is opened (but not necessarily as a leaf workspace)
+      // 2. the props of the opened workspace is same as workspace props (from the function input)
+      //
+      // Otherwise, we close all workspaces in this window, and open this newly requested one
+      const openedWorkspace = openedWorkspaces.find(w => w.workspaceName === workspaceName);
+      if(openedWorkspace && arePropsCompatible(openedWorkspace.props, workspaceProps)) {
+        // restore the window if it is hidden or not the most recently opened one
+        if(openedWindow.hidden || openedWindowIndex !== storeState.openedWindows.length - 1) {
+          workspace2Store.setState(workspace2StoreActions.restoreWindow(storeState, windowName));
+        }
+      } else {
+        const discardUnsavedChanges = await confirm("Yo, switch workspace context (and close other workspaces in window)?");
+        if(discardUnsavedChanges) {
+          workspace2Store.setState({
+            ...storeState,
+            openedGroup: {
+              groupName: group.name,
+              props: storeState?.openedGroup?.props ?? groupProps
+            },
+            openedWindows: [
+              ...storeState.openedWindows.filter((_, i) => i !== openedWindowIndex),
+              // most recently opened workspace at the end of the array
+              {
+                windowName: windowName,
+                openedWorkspaces: [{workspaceName: workspaceName, props: workspaceProps}],
+                props: openedWindow?.props ?? windowProps,
+                maximized: false,
+                hidden: false
+              }, 
+            ]
+          })
+        }
       }
     } else {
       // TODO: prompt for unsaved changes with better UI
-      const discardUnsavedChanges = await confirm("Yo, switch window context?");;
+      const discardUnsavedChanges = await confirm("Yo, switch window context?");
       if(discardUnsavedChanges) {
         // discard the openedWindows element at openedWindowIndex
         // and create a new one with the requested workspace opened
@@ -111,14 +148,14 @@ export async function launchWorkspace2<
           ...storeState,
           openedGroup: {
             groupName: group.name,
-            props: groupProps
+            props: storeState?.openedGroup?.props ?? groupProps ?? groupProps
           },
           openedWindows: [
             ...storeState.openedWindows.filter((_, i) => i !== openedWindowIndex),
             // most recently opened workspace at the end of the array
             {
               windowName: windowName,
-              workspaces: [workspaceName],
+              openedWorkspaces: [{workspaceName: workspaceName, props: workspaceProps}],
               props: windowProps,
               maximized: false,
               hidden: false
@@ -139,7 +176,7 @@ export async function launchWorkspace2<
         // most recently opened workspace at the end of the array
         {
           windowName: windowName,
-          workspaces: [workspaceName], // root workspace at index 0
+          openedWorkspaces: [{workspaceName: workspaceName, props: workspaceProps}], // root workspace at index 0
           props: windowProps,
           maximized: false,
           hidden: false
@@ -149,12 +186,29 @@ export async function launchWorkspace2<
   }
 }
 
-function areEqualShallow(a, b) {
+/**
+ * When we launch a workspace, we may pass in workspace / windows / group props. If the workspace or 
+ * window or group is currently opened, we have to check whether the current props are compatible with 
+ * the passed in props. 2 props A and B are compatible if:
+ *   either one is nullish (because this indicates that the caller does not care about prop incompatibility)
+ *   neither is nullish, and A and B are shallow equal.
+ * @param a props
+ * @param b props
+ * @returns whether props a and b are compatible
+ */
+function arePropsCompatible(a: Record<string, any> | null, b: Record<string, any> | null) {
+  if(a == null || b == null) {
+    return true;
+  }
+
+  // check that every prop in a is also in b, and they are equal
   for(var key in a) {
     if(!(key in b) || a[key] !== b[key]) {
       return false;
     }
   }
+
+  // check that every prop in b is also in a, and they are equal
   for(var key in b) {
     if(!(key in a) || a[key] !== b[key]) {
       return false;
@@ -206,12 +260,12 @@ const workspace2StoreActions = {
     }
     
     const window = {...state.openedWindows[openedWindowIndex]};
-    const workspaceIndex = window.workspaces.findIndex((w) => w === workspaceName);
+    const workspaceIndex = window.openedWorkspaces.findIndex((w) => w.workspaceName === workspaceName);
     const openedWindows = [...state.openedWindows];
     // close all child workspaces as well
-    window.workspaces = window.workspaces.slice(0, workspaceIndex);
+    window.openedWorkspaces = window.openedWorkspaces.slice(0, workspaceIndex);
 
-    if(window.workspaces.length === 0) {
+    if(window.openedWorkspaces.length === 0) {
       // if no workspaces left, remove the window
       openedWindows.splice(openedWindowIndex, 1);
     } else {
