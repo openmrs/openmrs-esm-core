@@ -1,14 +1,13 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 .omrs-loading-spinner {
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 100;
   > .cds--inline-loading {
     width: auto;
   }
