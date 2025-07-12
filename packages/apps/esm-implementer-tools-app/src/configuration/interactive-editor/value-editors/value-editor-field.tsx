@@ -19,9 +19,10 @@ export interface ValueEditorFieldProps {
   valueType?: ValueType;
   value: any;
   onChange: (value: any) => void;
+  error?: string | null;
 }
 
-export function ValueEditorField({ element, path, valueType, value, onChange }: ValueEditorFieldProps) {
+export function ValueEditorField({ element, path, valueType, value, onChange, error }: ValueEditorFieldProps) {
   const [id] = useState(uniqueId('value-editor-'));
 
   if (valueType === 'remove' && !path) {
@@ -31,7 +32,15 @@ export function ValueEditorField({ element, path, valueType, value, onChange }: 
   return valueType === Type.Array ? (
     <ArrayEditor element={element} valueArray={value} setValue={onChange} />
   ) : valueType === Type.Boolean ? (
-    <Checkbox id={id} checked={value} hideLabel labelText="" onChange={(event, { checked, id }) => onChange(checked)} />
+    <Checkbox
+      id={id}
+      checked={value}
+      invalid={Boolean(error)}
+      invalidText={error}
+      hideLabel
+      labelText=""
+      onChange={(event, { checked, id }) => onChange(checked)}
+    />
   ) : valueType === Type.ConceptUuid ? (
     <ConceptSearchBox value={value} setConcept={(concept) => onChange(concept.uuid)} />
   ) : valueType === Type.PersonAttributeTypeUuid ? (
@@ -45,11 +54,20 @@ export function ValueEditorField({ element, path, valueType, value, onChange }: 
     <NumberInput
       id={id}
       value={value}
+      invalid={Boolean(error)}
+      invalidText={error}
       onChange={(_, { value }) => onChange(value ? (typeof value === 'string' ? parseInt(value) : value) : 0)}
       hideSteppers
     />
   ) : valueType === Type.String || valueType === Type.UUID ? (
-    <TextInput id={id} value={value} labelText="" onChange={(e) => onChange(e.target.value)} />
+    <TextInput
+      id={id}
+      value={value}
+      invalid={Boolean(error)}
+      invalidText={error}
+      labelText=""
+      onChange={(e) => onChange(e.target.value)}
+    />
   ) : valueType === 'add' ? (
     <ExtensionSlotAdd value={value ?? element._value} setValue={onChange} />
   ) : valueType === 'remove' && path ? (
