@@ -19,7 +19,23 @@ export interface Workspace2DefinitionProps<
     WindowProps extends Record<string, any> = {},
     GroupProps extends Record<string, any> = {}> {
   workspaceName: string;
-  closeWorkspace(): Promise<void>;
+
+  /**
+   * This function launches a child workspace. Unlike `launchWorkspace()`, this function is meant
+   * to be called from the a workspace, and it does not allow passing it (or changing)
+   * the window props or group props
+   * @param workspaceName 
+   * @param workspaceProps 
+   */
+  launchChildWorkspace<Props extends Record<string, any>>(workspaceName: string, workspaceProps: Props): void;
+
+  /**
+   * closes the current workspace, along with its children. If `closeWindow` is true, all workspaces
+   * within the window (thus, including the workspace's parents) will be closed as well
+   * @param closeWindow 
+   */
+  closeWorkspace(closeWindow?: boolean): Promise<void>;
+
   workspaceProps: WorkspaceProps | null;
   windowProps: WindowProps | null; 
   groupProps: GroupProps | null;
@@ -50,19 +66,28 @@ export const Workspace2 : React.FC<Workspace2Props> = ({title, children}) => {
   const icons = registeredWindowsByGroupName[group.name].filter(window => window.icon).map(window => window.icon);;
   const workspace = registeredWorkspacesByName[workspaceName];
   const windowName = workspace.window;
-  const window = registeredWindowsByName[windowName];
-  if(!window) {
+  const windowConfig = registeredWindowsByName[windowName];
+  if(!windowConfig) {
     return null;
   }
 
-  const { canHide, canMaximize } = window;
+  const { canHide, canMaximize } = windowConfig;
   const openedWindow = openedWindows[openedWindowIndex];
   const { maximized } = openedWindow;
+  const width = windowConfig?.width ?? 'narrow';
 
+  if(openedWindow.hidden) {
+    return null;
+  }
   return (
     <div className={classNames(
       styles.workspaceFixedContainer,
-      icons.length > 0 ? styles.workspaceContainerWithActionMenu : styles.workspaceContainerWithoutActionMenu
+      icons.length > 0 ? styles.workspaceContainerWithActionMenu : styles.workspaceContainerWithoutActionMenu,
+      {
+        [styles.narrowWorkspace]: width === 'narrow',
+        [styles.widerWorkspace]: width === 'wider',
+        [styles.extraWideWorkspace]: width === 'extra-wide',
+      }
     )}>
       <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
         {!isDesktop(layout) && !canHide && (

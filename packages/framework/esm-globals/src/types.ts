@@ -363,18 +363,19 @@ export interface WorkspaceGroupDefinition {
 }
 
 export interface WorkspaceGroupDefinition2 {
-    name: string;
-    // close button?
+  name: string;
+  // close button?
 }
 
 export interface WorkspaceWindowDefinition2 {
-    name: string;
-    icon?: string,
-    canHide: boolean,
-    canMaximize: boolean,
-    overlay: boolean,
-    group: string
-    order?: number;
+  name: string;
+  icon?: string,
+  canHide: boolean,
+  canMaximize: boolean,
+  overlay: boolean,
+  group: string
+  order?: number;
+  width?: 'narrow' | 'wider' | 'extra-wide'; 
 }
 
 export interface WorkspaceDefinition2 {

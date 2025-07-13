@@ -80,6 +80,16 @@
       "name": "workspace-test-2",
       "component": "workspaceTest",
       "window": "window2"
+    },
+    {
+      "name": "workspace-test-child",
+      "component": "workspaceTestChild",
+      "window": "window1"
+    },
+    {
+      "name": "workspace-test-child-2",
+      "component": "workspaceTestChild",
+      "window": "window2"
     }
   ],
   "workspaceWindows2": [

@@ -31,25 +31,25 @@ const Root: React.FC = () => {
         </Button>
       </div>
         <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test', {} ,{windowContext: "context1", icon: "pen"}, {groupContext: "A"});
+          launchWorkspace2('workspace-test', {} ,{windowContext: "X", icon: "pen"}, {groupContext: "A"});
         }}>
-          context1
+          Context X
         </Button>
         <Button kind="ghost" renderIcon={props => <MotherIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test-2', {}, {windowContext: "context1", icon: "mother"}, {groupContext: "A"}, );
+          launchWorkspace2('workspace-test-2', {}, {windowContext: "X", icon: "mother"}, {groupContext: "A"}, );
         }}>
-          context1
+          Context X
         </Button>
         <br/>
         <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test', {}, {windowContext: "context2", icon: "pen"}, {groupContext: "A"});
+          launchWorkspace2('workspace-test', {}, {windowContext: "Y", icon: "pen"}, {groupContext: "A"});
         }}>
-          context2
+          Context Y
         </Button>
         <Button kind="ghost" renderIcon={props => <MotherIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test-2', {}, {windowContext: "context2", icon: "mother"}, {groupContext: "A"});
+          launchWorkspace2('workspace-test-2', {}, {windowContext: "Y", icon: "mother"}, {groupContext: "A"});
         }}>
-          context2
+          Context Y
         </Button>
       </div>
       <div>
@@ -68,25 +68,25 @@ const Root: React.FC = () => {
         </Button>
       </div>
         <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test', {}, {windowContext: "context1", icon: "pen"}, {groupContext: "B"});
+          launchWorkspace2('workspace-test', {}, {windowContext: "X", icon: "pen"}, {groupContext: "B"});
         }}>
-          context1
+          Context X
         </Button>
         <Button kind="ghost" renderIcon={props => <MotherIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test-2', {}, {windowContext: "context1",  icon: "mother"}, {groupContext: "B"});
+          launchWorkspace2('workspace-test-2', {}, {windowContext: "X",  icon: "mother"}, {groupContext: "B"});
         }}>
-          context1
+          Context X
         </Button>
         <br/>
         <Button kind="ghost" renderIcon={props => <PenIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test', {}, {windowContext: "context2", icon: "pen"}, {groupContext: "B"});
+          launchWorkspace2('workspace-test', {}, {windowContext: "Y", icon: "pen"}, {groupContext: "B"});
         }}>
-          context2
+          Context Y
         </Button>
         <Button kind="ghost" renderIcon={props => <MotherIcon {...props} />} onClick={() => {
-          launchWorkspace2('workspace-test-2', {}, {windowContext: "context2", icon: "mother"}, {groupContext: "B"});
+          launchWorkspace2('workspace-test-2', {}, {windowContext: "Y", icon: "mother"}, {groupContext: "B"});
         }}>
-          context2
+          Context Y
         </Button>
       </div>
       {/* <WorkspaceContainer showSiderailAndBottomNav={true} contextKey={'login'} /> */}

@@ -30,6 +30,10 @@ export const workspaceTest = getAsyncLifecycle(() => import('./workspace-test/wo
   ...options,
   featureName: 'workspace-test',
 });
+export const workspaceTestChild = getAsyncLifecycle(() => import('./workspace-test/workspace-test-child.component'), {
+  ...options,
+  featureName: 'workspace-test-child',
+});
 export const workspaceTestActionButton = getAsyncLifecycle(
   () => import('./workspace-test/workspace-test-nav-button.component'),
   {

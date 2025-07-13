@@ -1,72 +1,80 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getCoreTranslation } from "@openmrs/esm-translations";
 import { InlineLoading } from "@carbon/react";
-import { OpenedWindow, workspace2Store } from "@openmrs/esm-extensions";
+import { OpenedWindow, OpenedWorkspace, workspace2Store } from "@openmrs/esm-extensions";
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import { useWorkspace2Store } from "./workspace2";
 import { Workspace2DefinitionProps } from "./workspace2.component";
 
 interface WorkspaceWindowProps {
-  window: OpenedWindow;
+  openedWindow: OpenedWindow;
 }
 /**
  * Renders an opened workspace window. 
  */
-const ActiveWorkspaceWindow : React.FC<WorkspaceWindowProps> = ({window}) => {
-  const {hidden, openedWorkspaces, props: windowProps} = window;
-  const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
+const ActiveWorkspaceWindow : React.FC<WorkspaceWindowProps> = ({openedWindow}) => {
+  const {openedWorkspaces} = openedWindow;
+  const [lifeCycles, setLifeCycles] = useState<ParcelConfig[]>();
   const {registeredWorkspacesByName} = workspace2Store.getState();
   
-  // only the leaf workspace should be shown; parent workspaces are "covered" 
-  // TODO: I think we still need to render each workspace, even if they are not shown,
-  //      if we want to preserve the react states within each workspace component 
-  const leafOpenedWorkspace = openedWorkspaces[openedWorkspaces.length -1];
-
-  const workspace = registeredWorkspacesByName[leafOpenedWorkspace.workspaceName];
-  const {openedGroup, closeWorkspace} = useWorkspace2Store();
-
   useEffect(() => {
-    let active = true;
-    workspace.load().then((lifecycle) => {
-      if (active) {
-        setLifecycle(lifecycle);
-      }
-    });
-    
-    return () => {
-      active = false;
-    };
-  }, [workspace]);
+    Promise.all(openedWorkspaces.map(openedWorkspace => {
+      const workspaceRegistration = registeredWorkspacesByName[openedWorkspace.workspaceName];
+      return workspaceRegistration.load();
+    })).then(setLifeCycles)
+  }, [openedWorkspaces]);
+
+  return openedWorkspaces.map((openedWorkspace, i) => (
+    <ActiveWorkspace 
+      key={openedWorkspace.workspaceName}
+      openedWorkspace={openedWorkspace}
+      openedWindow={openedWindow}
+      lifeCycle={lifeCycles?.[i]}
+    />
+  ));
+}
+
+interface ActiveWorkspaceProps {
+  lifeCycle: ParcelConfig | undefined;
+  openedWorkspace: OpenedWorkspace;
+  openedWindow: OpenedWindow
+}
+
+const ActiveWorkspace : React.FC<ActiveWorkspaceProps> = ({lifeCycle, openedWorkspace, openedWindow}) => {
+  
+  const {openedGroup, closeWorkspace, openChildWorkspace} = useWorkspace2Store();
 
   const props : Workspace2DefinitionProps = useMemo(
     () =>
-      workspace && {
-        // closeWorkspace: workspace.closeWorkspace,
-        // closeWorkspaceWithSavedChanges: workspace.closeWorkspaceWithSavedChanges,
-        // promptBeforeClosing: workspace.promptBeforeClosing,
-        // setTitle: workspace.setTitle,
-        closeWorkspace: async () => {
-          // TOOD: prompt for unsaved changes with better UI
-          const discardUnsavedChanges = await confirm("Yo, close workspace?");
-          if(discardUnsavedChanges) {
-            closeWorkspace(workspace.name)
+      openedWorkspace && {
+        closeWorkspace: async (closeWindow?: boolean) => {
+          if(closeWindow) {
+            // TOOD: prompt for unsaved changes with better UI
+            const discardUnsavedChanges = await confirm("Yo, close all workspaces in window?");
+            if(discardUnsavedChanges) {
+              closeWorkspace(openedWindow.openedWorkspaces[0].workspaceName);
+            }
+
+          } else {
+            // TOOD: prompt for unsaved changes with better UI
+            const discardUnsavedChanges = await confirm("Yo, close workspace?");
+            if(discardUnsavedChanges) {
+              closeWorkspace(openedWorkspace.workspaceName)
+            }
           }
         },
-        workspaceName: workspace.name,
-        workspaceProps: leafOpenedWorkspace.props,
-        windowProps: windowProps,
+        launchChildWorkspace: openChildWorkspace,
+        workspaceName: openedWorkspace.workspaceName,
+        workspaceProps: openedWorkspace.props,
+        windowProps: openedWindow.props,
         groupProps: openedGroup?.props ?? null,
       },
-    [workspace, closeWorkspace, openedGroup, windowProps],
+    [openedWorkspace, closeWorkspace, openedGroup, openedWindow],
   );
 
-  if(hidden) {
-    return null;
-  }
-
-  return lifecycle ? (
-    <Parcel key={workspace.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
+  return lifeCycle ? (
+    <Parcel key={openedWorkspace.workspaceName} config={lifeCycle} mountParcel={mountRootParcel} {...props} />
   ) : (
     <InlineLoading /*className={styles.loader}*/ description={`${getCoreTranslation('loading')} ...`} />
   );

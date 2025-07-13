@@ -262,7 +262,7 @@ const workspace2StoreActions = {
     const window = {...state.openedWindows[openedWindowIndex]};
     const workspaceIndex = window.openedWorkspaces.findIndex((w) => w.workspaceName === workspaceName);
     const openedWindows = [...state.openedWindows];
-    // close all child workspaces as well
+    // close all children of the input workspace as well
     window.openedWorkspaces = window.openedWorkspaces.slice(0, workspaceIndex);
 
     if(window.openedWorkspaces.length === 0) {
@@ -277,6 +277,28 @@ const workspace2StoreActions = {
       ...state,
       openedWindows,
     };
+  },
+  openChildWorkspace(state, workspaceName: string, workspaceProps: Record<string, any>) {
+    const workspace = state.registeredWorkspacesByName[workspaceName];
+    if(!workspace) {
+      throw new Error(`No workspace named "${workspaceName}" registered`);
+    }
+    // as the request workspace should be a child workspace, the corresponding window
+    // to contain the workspace should already be opened 
+    const openedWindowIndex = state.openedWindows.findIndex(window => window.windowName === workspace.window);
+    if(openedWindowIndex == -1) {
+      throw new Error(`Cannot open child workspace ${workspaceName} as window ${workspace.window} is not opened`);
+    }
+ 
+    return {
+      openedWindows: state.openedWindows.map((w, i) => {
+        if(i == openedWindowIndex) {
+          return {...w, openedWorkspaces: [...w.openedWorkspaces, {workspaceName, props: workspaceProps}]};
+        } else {
+          return w;
+        }
+      })
+    }
   }
 } satisfies Actions<WorkspaceStoreState2>;
 

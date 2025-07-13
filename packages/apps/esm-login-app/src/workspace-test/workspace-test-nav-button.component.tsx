@@ -14,7 +14,7 @@ const WorkspaceTestNavButton: React.FC = () => {
       workspaceToLaunch={{
         workspaceName: 'workspace-test',
         workspaceProps: {},
-        windowProps: {windowContext: "context1", icon: "pen"},
+        windowProps: {windowContext: "X", icon: "pen"},
         groupProps: openedGroup?.props ?? {groupContext: "groupA"},
       }}
     />

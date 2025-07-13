@@ -237,17 +237,17 @@ To fix this, ensure that you define the "name" field inside the workspace defini
   });
 }
 
-export function tryRegisterWorkspaceGroups2(appName: string, workspaceGroups: Array<WorkspaceGroupDefinition2>) {
-  registerWorkspaceGroups2(workspaceGroups);
+export function tryRegisterWorkspaceGroups2(appName: string, workspaceGroupDefs: Array<WorkspaceGroupDefinition2>) {
+  registerWorkspaceGroups2(workspaceGroupDefs);
 }
 
-export function tryRegisterWorkspace2(appName: string, workspaces: Array<WorkspaceDefinition2>) {
+export function tryRegisterWorkspace2(appName: string, workspaceDefs: Array<WorkspaceDefinition2>) {
   const loader = (componentName: string) => getLoader(appName, componentName);
-  registerWorkspaces2(loader, workspaces);
+  registerWorkspaces2(loader, workspaceDefs);
 }
 
-export function tryRegisterWorkspaceWindows2(workspaceWindows: Array<WorkspaceWindowDefinition2>) {
-  registerWorkspaceWindows2(workspaceWindows);
+export function tryRegisterWorkspaceWindows2(workspaceWindowDefs: Array<WorkspaceWindowDefinition2>) {
+  registerWorkspaceWindows2(workspaceWindowDefs);
 }
 
 /**
