@@ -64,17 +64,17 @@ export const Workspace2 : React.FC<Workspace2Props> = ({title, children}) => {
     return null;
   }
   const icons = registeredWindowsByGroupName[group.name].filter(window => window.icon).map(window => window.icon);;
-  const workspace = registeredWorkspacesByName[workspaceName];
-  const windowName = workspace.window;
-  const windowConfig = registeredWindowsByName[windowName];
-  if(!windowConfig) {
+  const workspaceDef = registeredWorkspacesByName[workspaceName];
+  const windowName = workspaceDef.window;
+  const windowDef = registeredWindowsByName[windowName];
+  if(!windowDef) {
     return null;
   }
 
-  const { canHide, canMaximize } = windowConfig;
+  const { canHide, canMaximize } = windowDef;
   const openedWindow = openedWindows[openedWindowIndex];
   const { maximized } = openedWindow;
-  const width = windowConfig?.width ?? 'narrow';
+  const width = windowDef?.width ?? 'narrow';
 
   if(openedWindow.hidden) {
     return null;
