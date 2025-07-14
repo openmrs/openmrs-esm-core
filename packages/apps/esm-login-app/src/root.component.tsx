@@ -50,7 +50,7 @@ const Root: React.FC = () => {
             //
             // When calling `launchWorkspace2`, we need to also pass in the workspace props. While not required, 
             // we can also passed in the window props (shared by other workspaces in the window) and the group props
-            // (shared by all windows and their workspaces). Omitting the windows props or the group props means the caller
+            // (shared by all windows and their workspaces). Omitting the windows props or the group props*** means the caller
             // explicitly does not care what the current window props and group props are, and that they may be set 
             // by other actions (like calling `launchWorkspace2` on a different workspace with those props passed in)
             // at a later time.
@@ -71,6 +71,12 @@ const Root: React.FC = () => {
             // To do so, we need to call `launchChildWorkspace` instead.
             //
             // ** 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
+            //
+            // *** Omitting windows or group props is useful for workspaces that don't have ties to the window or group "context" (props).
+            // For example, in the patient chart, the visit notes / clinical forms / order basket action menu button all share
+            // a "group context" of the current visit. However, the "patient list" action menu button does not need to share that group
+            // context, so opening that workspace should not need to cause other workspaces / windows / groups to potentially close.
+            // The "patient search" workspace in the queues and ward apps is another example of such workspace. 
             launchWorkspace2('workspace-test', {}, { windowContext: 'X', icon: 'pen' }, { groupContext: 'A' });
           }}
         >
