@@ -9,7 +9,7 @@
       "routeRegex": "^(?!(?:login|change-password)/?)",
       "online": true,
       "offline": true,
-      "roomDomId": "single-spa-application:esm-primary-navigation-app"
+      "rootDomId": "single-spa-application:esm-primary-navigation-app"
     },
     {
       "component": "redirect",

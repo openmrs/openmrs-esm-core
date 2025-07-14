@@ -1,13 +1,30 @@
 import { getGroupByWindowName, getOpenedWindowIndexByWorkspace, getWindowByWorkspaceName, workspace2Store, WorkspaceStoreState2 } from "@openmrs/esm-extensions";
 import { useStoreWithActions, type Actions } from "@openmrs/esm-react-utils";
 
-export async function launchWorkspaceGroup2<GroupProps extends Record<string, any>>(groupName: string, groupProps: GroupProps | null) {
+/**
+ * Attempts to launch the specified workspace group with the given group props. Note that only one workspace group
+ * may be opened at any given time. If a workspace group is already opened, calling `launchWorkspaceGroup2` with 
+ * either a different group name, or same group name but different group props, will result in prompting for unsaved
+ * changes. If the user confirms, the opened group, along with its windows (and their workspaces), is closed, and
+ * the requested group is immediately opened.
+ * @param groupName 
+ * @param groupProps 
+ * @returns a Promise that resolves to true if the specified workspace group with the specified group props 
+ *  is successfully opened, or that it already is opened.
+ */
+export async function launchWorkspaceGroup2<GroupProps extends Record<string, any>>(groupName: string, groupProps: GroupProps | null): Promise<boolean> {
   const {openedGroup} = workspace2Store.getState();
-  if(openedGroup && (openedGroup.groupName !== groupName || !arePropsCompatible(openedGroup.props, groupProps))) {
-    // prompt for unsaved changes with better UI
-    const discardUnsavedChanges = await confirm("Yo, switch group context?");
-    if(!discardUnsavedChanges) {
-      return; 
+  if(openedGroup) {
+    if(openedGroup.groupName !== groupName || !arePropsCompatible(openedGroup.props, groupProps)) {
+      // prompt for unsaved changes with better UI
+      const discardUnsavedChanges = await confirm("Yo, switch group context?");
+      if(!discardUnsavedChanges) {
+        return false; 
+      }
+      // else, go outside the loop and open the new group with no openedWindows
+    } else {
+      // no-op, group with group props is already opened
+      return true;
     }
   }
 
@@ -19,8 +36,15 @@ export async function launchWorkspaceGroup2<GroupProps extends Record<string, an
     },
     openedWindows: []
   }))
+
+  return true;
 }
 
+/**
+ * 
+ * @returns a Promise that resolves to true if there is no opened group to begin with or we successfully closed 
+ * the opened group; false otherwise.  
+ */
 export async function closeWorkspaceGroup2() {
   const state = workspace2Store.getState();
   const {openedGroup, openedWindows} = state;
@@ -30,7 +54,7 @@ export async function closeWorkspaceGroup2() {
       // prompt for unsaved changes with better UI
       const discardUnsavedChanges = await confirm("Yo, close group?");
       if(!discardUnsavedChanges) {
-        return;
+        return false;
       }
     }
     workspace2Store.setState(state => ({
@@ -38,7 +62,11 @@ export async function closeWorkspaceGroup2() {
       openedGroup: null,
       openedWindows: []
     }))
+    return true;
   }
+
+  // no openedGroup with being with, return true
+  return true;
 }
 
 workspace2Store.subscribe((state) => {
@@ -54,47 +82,53 @@ export async function launchWorkspace2<
       workspaceProps: WorkspaceProps,
       windowProps: WindowProps | null = null,
       groupProps: GroupProp | null = null, 
-  ) {
+  ): Promise<boolean> {
   const storeState = workspace2Store.getState();
   
-  const window = getWindowByWorkspaceName(workspaceName);
-  if(!window) {
-    throw new Error();
+  if(!storeState.registeredWorkspacesByName[workspaceName]) {
+    throw new Error(`Unable to launch workspace ${workspaceName}. Workspace is not registered`);
+  }
+  const windowDef = getWindowByWorkspaceName(workspaceName);
+  if(!windowDef) {
+    throw new Error(`Unable to launch workspace ${workspaceName}. Workspace is not registerd to a workspace window`);
   }
 
   const {openedGroup} = storeState;
-  const {name: windowName} = window;
-  const group = getGroupByWindowName(windowName);
-  if(!group) {
-    throw new Error();
+  const {name: windowName} = windowDef;
+  const groupDef = getGroupByWindowName(windowName);
+  if(!groupDef) {
+    throw new Error(`Unable to launch workspace ${workspaceName}. Workspace window ${windowDef.name} is not registerd to a workspace group`);
   }
 
   const openedWindowIndex  = getOpenedWindowIndexByWorkspace(workspaceName);
   const isWindowAlreadyOpened = openedWindowIndex >= 0;
 
   // if current opened group is not the same as the requested group, or if the group props are different, then prompt for unsaved changes
-  if(openedGroup && (openedGroup.groupName !== group?.name || !arePropsCompatible(openedGroup.props, groupProps))) {
+  if(openedGroup && (openedGroup.groupName !== groupDef.name || !arePropsCompatible(openedGroup.props, groupProps))) {
     // prompt for unsaved changes with better UI
     const discardUnsavedChanges = await confirm("Yo, switch group context?");
     if(discardUnsavedChanges) {
       workspace2Store.setState({
-      ...storeState,
-      openedGroup: {
-        groupName: group.name,
-        props: groupProps
-      },
-      openedWindows: [
-        // discard all opened windows, open a new one with the requested workspace
-        // most recently opened action appended to the end
-        {
-          windowName: windowName,
-          openedWorkspaces: [{workspaceName: workspaceName, props: workspaceProps}], // root workspace at index 0
-          props: windowProps,
-          maximized: false,
-          hidden: false
+        ...storeState,
+        openedGroup: {
+          groupName: groupDef.name,
+          props: groupProps
         },
-      ]
-    })
+        openedWindows: [
+          // discard all opened windows, open a new one with the requested workspace
+          // most recently opened action appended to the end
+          {
+            windowName: windowName,
+            openedWorkspaces: [{workspaceName: workspaceName, props: workspaceProps}], // root workspace at index 0
+            props: windowProps,
+            maximized: false,
+            hidden: false
+          },
+        ]
+      })
+      return true;
+    } else {
+      return false;
     }
   }
   else if(isWindowAlreadyOpened) {
@@ -115,13 +149,14 @@ export async function launchWorkspace2<
         if(openedWindow.hidden || openedWindowIndex !== storeState.openedWindows.length - 1) {
           workspace2Store.setState(workspace2StoreActions.restoreWindow(storeState, windowName));
         }
+        return true;
       } else {
         const discardUnsavedChanges = await confirm("Yo, switch workspace context (and close other workspaces in window)?");
         if(discardUnsavedChanges) {
           workspace2Store.setState({
             ...storeState,
             openedGroup: {
-              groupName: group.name,
+              groupName: groupDef.name,
               props: storeState?.openedGroup?.props ?? groupProps
             },
             openedWindows: [
@@ -135,7 +170,10 @@ export async function launchWorkspace2<
                 hidden: false
               }, 
             ]
-          })
+          });
+          return true;
+        } else {
+          return false;
         }
       }
     } else {
@@ -147,7 +185,7 @@ export async function launchWorkspace2<
         workspace2Store.setState({
           ...storeState,
           openedGroup: {
-            groupName: group.name,
+            groupName: groupDef.name,
             props: storeState?.openedGroup?.props ?? groupProps ?? groupProps
           },
           openedWindows: [
@@ -161,14 +199,17 @@ export async function launchWorkspace2<
               hidden: false
             }, 
           ]
-        })
+        });
+        return true;
+      } else {
+        return false;
       }
     }
   } else {
     workspace2Store.setState({
       ...storeState,
       openedGroup: {
-        groupName: group.name,
+        groupName: groupDef.name,
         props: groupProps
       },
       openedWindows: [
@@ -183,6 +224,7 @@ export async function launchWorkspace2<
         }
       ]
     })
+    return true;
   }
 }
 
@@ -278,22 +320,35 @@ const workspace2StoreActions = {
       openedWindows,
     };
   },
-  openChildWorkspace(state, workspaceName: string, workspaceProps: Record<string, any>) {
-    const workspace = state.registeredWorkspacesByName[workspaceName];
-    if(!workspace) {
-      throw new Error(`No workspace named "${workspaceName}" registered`);
+  openChildWorkspace(state, parentWorkspaceName: string, childWorkspaceName: string, childWorkspaceProps: Record<string, any>) {
+    const childWorkspaceDef = state.registeredWorkspacesByName[childWorkspaceName];
+    if(!childWorkspaceDef) {
+      throw new Error(`No workspace named "${childWorkspaceName}" registered`);
     }
+    const parentWorkspaceDef = state.registeredWorkspacesByName[parentWorkspaceName];
+    if(!parentWorkspaceDef) {
+      throw new Error(`No workspace named "${parentWorkspaceName}" registered`);
+    }
+    if(parentWorkspaceDef.window !== childWorkspaceDef.window) {
+      throw new Error(`Child workspace ${childWorkspaceName} does not belong to the same workspace window as parent workspace ${parentWorkspaceName}`);
+    }
+
     // as the request workspace should be a child workspace, the corresponding window
     // to contain the workspace should already be opened 
-    const openedWindowIndex = state.openedWindows.findIndex(window => window.windowName === workspace.window);
+    const openedWindowIndex = state.openedWindows.findIndex(window => window.windowName === childWorkspaceDef.window);
     if(openedWindowIndex == -1) {
-      throw new Error(`Cannot open child workspace ${workspaceName} as window ${workspace.window} is not opened`);
+      throw new Error(`Cannot open child workspace ${childWorkspaceName} as window ${childWorkspaceDef.window} is not opened`);
+    }
+    const openedWindow = state.openedWindows[openedWindowIndex];
+    const { openedWorkspaces } = openedWindow; 
+    if(openedWorkspaces[openedWorkspaces.length - 1].workspaceName !== parentWorkspaceName) {
+      throw new Error(`Cannot open child workspace ${childWorkspaceName} from parent workspace ${parentWorkspaceName} as the parent is not the most recently opened workspace within the workspace window`);
     }
  
     return {
       openedWindows: state.openedWindows.map((w, i) => {
         if(i == openedWindowIndex) {
-          return {...w, openedWorkspaces: [...w.openedWorkspaces, {workspaceName, props: workspaceProps}]};
+          return {...w, openedWorkspaces: [...w.openedWorkspaces, {workspaceName: childWorkspaceName, props: childWorkspaceProps}]};
         } else {
           return w;
         }

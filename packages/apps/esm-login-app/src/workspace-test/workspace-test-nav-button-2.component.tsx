@@ -10,7 +10,6 @@ const WorkspaceTestNavButton: React.FC = () => {
     <ActionMenuButton2
       icon={(props: ComponentProps<typeof MotherIcon>) => <MotherIcon {...props} />}
       label={t('workspaceTest2', 'Workspace Test 2')} 
-      windowName={'window2'} 
       workspaceToLaunch={{
         workspaceName: 'workspace-test-2',
         workspaceProps: {},

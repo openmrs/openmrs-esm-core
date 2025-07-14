@@ -364,7 +364,8 @@ export interface WorkspaceGroupDefinition {
 
 export interface WorkspaceGroupDefinition2 {
   name: string;
-  // close button?
+  // add config for close button to close group?
+  // add config for overlay mode? (or should that go in the Window instead?)
 }
 
 export interface WorkspaceWindowDefinition2 {

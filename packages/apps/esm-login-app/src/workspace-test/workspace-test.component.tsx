@@ -31,8 +31,19 @@ const WorkspaceTest : Workspace2Definition<{}, WorkspaceWindowProps, WorkspaceTe
           <input type="text" value={textboxValue} onChange={e => setTextboxValue(e.target.value)} />
         </div>
         <br />
-        <div><button onClick={() => launchChildWorkspace(childWorkspacename, {asdf: "asdf"})}>Launch Child Workspace</button></div>
-        <div><button onClick={() => closeWorkspace()}>Close Workspace</button></div>
+        <div><button onClick={() => {
+          // Unlike `launchWorkspace2`, this function launches a child workspace (from within the parent workspace).
+          // The parent workspace must not have an existing child workspace.
+          // Note that this function only takes in workspace props from the child workspace, and 
+          // does not take in window props and group props. No unsaved changes prompt can
+          // result from calling this function. 
+          launchChildWorkspace(childWorkspacename, {asdf: "asdf"})
+        }}>Launch Child Workspace</button></div>
+        <div><button onClick={() => {
+          // Closes the current workspace. If it contains child workspaces, those will be closed as well.
+          // Not shown here, but `closeWorkspace(true)` allows you to close *all* workspace within the window.
+          closeWorkspace()
+        }}>Close Workspace</button></div>
       </div>
     </Workspace2>
   );

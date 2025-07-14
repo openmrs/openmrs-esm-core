@@ -1,14 +1,14 @@
 import React, { useContext, type ReactNode } from 'react';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
+import { SingleSpaContext } from "single-spa-react";
 import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
+import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import classNames from 'classnames';
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../icons';
 import styles from './workspace2.module.scss';
-import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { useWorkspace2Store } from './workspace2';
-import { SingleSpaContext } from "single-spa-react";
 interface Workspace2Props {
   title: ReactNode;
   children: ReactNode;
@@ -30,11 +30,11 @@ export interface Workspace2DefinitionProps<
   launchChildWorkspace<Props extends Record<string, any>>(workspaceName: string, workspaceProps: Props): void;
 
   /**
-   * closes the current workspace, along with its children. If `closeWindow` is true, all workspaces
-   * within the window (thus, including the workspace's parents) will be closed as well
-   * @param closeWindow 
+   * closes the current workspace, along with its children. 
+   * @param closeWindow If true, the workspace's window, along with all workspaces within it, will be closed as well
+   * @returns a Promise that resolves to true if the workspace is closed, false otherwise.
    */
-  closeWorkspace(closeWindow?: boolean): Promise<void>;
+  closeWorkspace(closeWindow?: boolean): Promise<boolean>;
 
   workspaceProps: WorkspaceProps | null;
   windowProps: WindowProps | null; 

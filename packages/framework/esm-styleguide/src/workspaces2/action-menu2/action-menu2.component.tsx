@@ -5,6 +5,7 @@ import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-u
 import styles from './action-menu2.module.scss';
 import { useWorkspace2Store } from '../workspace2';
 import { SingleExtensionSlot } from '@openmrs/esm-react-utils';
+import { WorkspaceWindowDefinition2 } from '@openmrs/esm-globals';
 
 export interface ActionMenuProps {
   workspaceGroup: string;
@@ -14,8 +15,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);
   const layout = useLayoutType();
-  const { registeredGroupsByName, registeredWindowsByGroupName } = useWorkspace2Store();
-  const group = registeredGroupsByName[workspaceGroup];
+  const { registeredWindowsByGroupName } = useWorkspace2Store();
 
   useEffect(() => {
     const handleKeyboardVisibilityChange = () => {
@@ -28,9 +28,12 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
     return () => window.removeEventListener('resize', handleKeyboardVisibilityChange);
   }, [initialHeight]);
 
-  const icons = registeredWindowsByGroupName[workspaceGroup].filter(window => window.icon).map(window => window.icon);
+  const windowsWithIcons = registeredWindowsByGroupName[workspaceGroup].filter(
+    (window): window is (WorkspaceWindowDefinition2 & { icon: string }) => 
+      window.icon !== undefined
+  );
 
-  if(icons.length === 0) {
+  if(windowsWithIcons.length === 0) {
     return null; // No icons to display
   }
 
@@ -42,7 +45,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
       })}
     >
       <div className={styles.container}>
-        {icons.map(icon => icon && <SingleExtensionSlot key={icon} extensionId={icon} />)}
+        {windowsWithIcons.map(window => <SingleExtensionSlot key={window.icon} extensionId={window.icon} state={{windowName: window.name}} />)}
       </div>
     </aside>
   );

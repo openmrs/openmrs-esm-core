@@ -1,11 +1,12 @@
 /** @module @category Workspace */
-import React from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { Button, IconButton } from '@carbon/react';
 import { useLayoutType } from '@openmrs/esm-react-utils';
+import { SingleSpaContext } from "single-spa-react";
+import { type OpenedWindow } from '@openmrs/esm-extensions';
 import styles from './action-menu-button2.module.scss';
 import { launchWorkspace2, useWorkspace2Store } from '../workspace2';
-import { type OpenedWindow } from '@openmrs/esm-extensions';
 
 interface TagsProps {
   getIcon: (props: object) => JSX.Element;
@@ -31,7 +32,6 @@ export interface ActionMenuButtonProps2 {
   icon: (props: object) => JSX.Element;
   label: string;
   tagContent?: string | React.ReactNode;
-  windowName: string;
   workspaceToLaunch: {
     workspaceName: string;
     workspaceProps: Record<string, any>;
@@ -66,12 +66,12 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   icon: getIcon,
   label,
   tagContent,
-  windowName,
   workspaceToLaunch,
   onBeforeWorkspaceLaunch,
 }) => {
   const layout = useLayoutType();
   const { openedWindows, restoreWindow } = useWorkspace2Store();
+  const { windowName } = useContext(SingleSpaContext);
   const window = openedWindows.find((w) => w.windowName === windowName);
   const isWindowOpened = window != null;
   const isWindowHidden = window?.hidden ?? false;

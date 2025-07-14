@@ -54,17 +54,24 @@ const ActiveWorkspace : React.FC<ActiveWorkspaceProps> = ({lifeCycle, openedWork
             const discardUnsavedChanges = await confirm("Yo, close all workspaces in window?");
             if(discardUnsavedChanges) {
               closeWorkspace(openedWindow.openedWorkspaces[0].workspaceName);
+              return true;
             }
+            return false;
 
           } else {
             // TOOD: prompt for unsaved changes with better UI
             const discardUnsavedChanges = await confirm("Yo, close workspace?");
             if(discardUnsavedChanges) {
-              closeWorkspace(openedWorkspace.workspaceName)
+              closeWorkspace(openedWorkspace.workspaceName);
+              return true;
             }
+            return false;
           }
         },
-        launchChildWorkspace: openChildWorkspace,
+        launchChildWorkspace: async (childWorkspaceName, childWorkspaceProps) => {
+          const parentWorkspaceName = openedWorkspace.workspaceName;
+          openChildWorkspace(parentWorkspaceName, childWorkspaceName, childWorkspaceProps);
+        },
         workspaceName: openedWorkspace.workspaceName,
         workspaceProps: openedWorkspace.props,
         windowProps: openedWindow.props,
