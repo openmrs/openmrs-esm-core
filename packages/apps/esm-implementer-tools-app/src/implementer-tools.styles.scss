@@ -3,6 +3,22 @@
 @use '@carbon/react/scss/theme';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
+:root[data-carbon-theme='g90'] {
+  @include theme.theme(themes.$g90);
+}
+
+:root[data-carbon-theme='g100'] {
+  @include theme.theme(themes.$g100);
+}
+
+:root[data-carbon-theme='white'] {
+  @include theme.theme(themes.$white);
+}
+
+:root[data-carbon-theme='g10'] {
+  @include theme.theme(themes.$g10);
+}
+
 .toolStyles {
   background-color: transparent;
 }
