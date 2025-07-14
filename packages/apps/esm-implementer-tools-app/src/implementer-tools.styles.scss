@@ -11,14 +11,6 @@
   @include theme.theme(themes.$g100);
 }
 
-:root[data-carbon-theme='white'] {
-  @include theme.theme(themes.$white);
-}
-
-:root[data-carbon-theme='g10'] {
-  @include theme.theme(themes.$g10);
-}
-
 .toolStyles {
   background-color: transparent;
 }
