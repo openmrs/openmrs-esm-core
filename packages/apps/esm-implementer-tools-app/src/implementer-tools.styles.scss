@@ -7,10 +7,6 @@
   @include theme.theme(themes.$g90);
 }
 
-:root[data-carbon-theme='g100'] {
-  @include theme.theme(themes.$g100);
-}
-
 .toolStyles {
   background-color: transparent;
 }
