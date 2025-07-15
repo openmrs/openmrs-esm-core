@@ -9,6 +9,7 @@ vi.mock('@openmrs/esm-api', async () => ({
 }));
 vi.mock('@openmrs/esm-react-utils', () => import('@openmrs/esm-react-utils/mock'));
 vi.mock('@openmrs/esm-translations', () => import('@openmrs/esm-translations/mock'));
+vi.mock('@openmrs/esm-dynamic-loading', () => import('@openmrs/esm-dynamic-loading/mock'));
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string, fallback?: string) => fallback ?? key,

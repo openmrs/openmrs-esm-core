@@ -5,6 +5,7 @@ import { render, screen } from '@testing-library/react';
 import { mountRootParcel } from 'single-spa';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { getWorkspaceGroupStore } from '../workspaces';
+import { loadParcel } from '@openmrs/esm-dynamic-loading';
 
 const mockFn = vi.fn();
 
@@ -15,16 +16,21 @@ vi.mock('single-spa-react/parcel', () => ({
   }),
 }));
 
+vi.mock('@openmrs/esm-dynamic-loading', () => ({
+  loadParcel: vi.fn(),
+}));
+
 describe('WorkspaceRenderer', () => {
   it('should render workspace', async () => {
     const mockCloseWorkspace = vi.fn();
     const mockCloseWorkspaceWithSavedChanges = vi.fn();
     const mockPromptBeforeClosing = vi.fn();
     const mockSetTitle = vi.fn();
-    const mockLoadFn = vi.fn().mockImplementation(() => Promise.resolve({ default: 'file-content' }));
+
+    vi.mocked(loadParcel).mockImplementation(() => Promise.resolve({ default: 'file-content' } as any));
 
     getWorkspaceGroupStore('test-sidebar-store')?.setState({
-      // Testing that the workspace group state should be overrided by additionalProps
+      // Testing that the workspace group state should be overrode by additionalProps
       foo: false,
       workspaceGroupStore: {},
     });
@@ -34,7 +40,8 @@ describe('WorkspaceRenderer', () => {
         workspace={{
           closeWorkspace: mockCloseWorkspace,
           name: 'workspace-name',
-          load: mockLoadFn,
+          component: 'workspace-name',
+          moduleName: 'workspace-module',
           title: 'Workspace title',
           closeWorkspaceWithSavedChanges: mockCloseWorkspaceWithSavedChanges,
           promptBeforeClosing: mockPromptBeforeClosing,
@@ -48,12 +55,12 @@ describe('WorkspaceRenderer', () => {
     );
 
     expect(screen.getByText('Loading ...')).toBeInTheDocument();
-    expect(mockLoadFn).toHaveBeenCalled();
+    expect(loadParcel).toHaveBeenCalled();
 
     await screen.findByTestId('mocked-parcel');
 
     expect(mockFn).toHaveBeenCalledWith({
-      config: 'file-content',
+      config: { default: 'file-content' },
       mountParcel: mountRootParcel,
       closeWorkspace: mockCloseWorkspace,
       closeWorkspaceWithSavedChanges: mockCloseWorkspaceWithSavedChanges,
