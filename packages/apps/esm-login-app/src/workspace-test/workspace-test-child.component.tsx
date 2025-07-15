@@ -5,7 +5,6 @@ import { WorkspaceTestGroupProps, WorkspaceWindowProps } from './workspace-test.
 
 const WorkspaceTestChild : Workspace2Definition<{asdf: string}, WorkspaceWindowProps, WorkspaceTestGroupProps> = (props) => {
   const {closeWorkspace, groupProps, windowProps, workspaceProps} = props;
-  // props.promptBeforeClosing(() => true);
   const iconComponent = windowProps.icon == 'pen' ? <PenIcon size={32} /> : <MotherIcon size={32} />;
   return (
     <Workspace2 title={'hello'}>

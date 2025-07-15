@@ -16,8 +16,9 @@ const WorkspaceTest : Workspace2Definition<{}, WorkspaceWindowProps, WorkspaceTe
   const [textboxValue, setTextboxValue] = useState<string>();
 
   const childWorkspacename = workspaceName == 'workspace-test' ? "workspace-test-child" : "workspace-test-child-2";
-  // props.promptBeforeClosing(() => true);
   const iconComponent = windowProps.icon == 'pen' ? <PenIcon size={32} /> : <MotherIcon size={32} />;
+
+  // TODO: add `hasUnsavedChanges: boolean` as a prop to <Workspace2>
   return (
     <Workspace2 title={'hello'}>
       <div style={{padding: '20px'}}>
