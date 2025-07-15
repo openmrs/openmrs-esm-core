@@ -114,9 +114,9 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
                     <I18nextProvider
                       i18n={window.i18next}
                       defaultNS={
-                        this.props._extensionContext
-                          ? `${opts.moduleName}___${this.props._extensionContext.extensionSlotName}___${this.props._extensionContext.extensionId}`
-                          : opts.moduleName
+                        this.state.config.extension
+                          ? `${this.state.config.moduleName}___${this.state.config.extension.extensionSlotName}___${this.state.config.extension.extensionId}`
+                          : this.state.config.moduleName
                       }
                     >
                       <Comp {...this.props} />
