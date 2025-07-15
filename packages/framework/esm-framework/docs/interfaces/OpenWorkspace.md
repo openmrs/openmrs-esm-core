@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:114]
 
 > **canHide**: `boolean`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:10
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:9
 
 #### Inherited from
 
@@ -36,11 +36,23 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:10
 
 > **canMaximize**: `boolean`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:11
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:10
 
 #### Inherited from
 
 `WorkspaceRegistration.canMaximize`
+
+***
+
+### component
+
+> **component**: `string`
+
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:13
+
+#### Inherited from
+
+`WorkspaceRegistration.component`
 
 ***
 
@@ -56,7 +68,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115]
 
 > **groups**: `string`[]
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:18
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:15
 
 #### Inherited from
 
@@ -64,27 +76,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:18
 
 ***
 
-### load()
-
-> **load**: () => `Promise`\<`object` & `LifeCycles`\>
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:14
-
-#### Returns
-
-`Promise`\<`object` & `LifeCycles`\>
-
-#### Inherited from
-
-`WorkspaceRegistration.load`
-
-***
-
 ### moduleName
 
 > **moduleName**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:17
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:14
 
 #### Inherited from
 
@@ -96,7 +92,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:17
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:6
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:5
 
 #### Inherited from
 
@@ -108,7 +104,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:6
 
 > **preferredWindowSize**: [`WorkspaceWindowState`](../type-aliases/WorkspaceWindowState.md)
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:13
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:12
 
 #### Inherited from
 
@@ -120,7 +116,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:13
 
 > **title**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:7
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:6
 
 #### Inherited from
 
@@ -132,7 +128,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:7
 
 > `optional` **titleNode**: `ReactNode`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:8
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:7
 
 #### Inherited from
 
@@ -144,7 +140,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:8
 
 > **type**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:9
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:8
 
 #### Inherited from
 
@@ -156,7 +152,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:9
 
 > **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:12
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:11
 
 #### Inherited from
 

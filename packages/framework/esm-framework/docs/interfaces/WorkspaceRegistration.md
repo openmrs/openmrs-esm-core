@@ -24,23 +24,19 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:15](https://git
 
 ***
 
+### component
+
+> **component**: `string`
+
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+
+***
+
 ### groups
 
 > **groups**: `string`[]
 
 Defined in: [packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
-
-***
-
-### load()
-
-> **load**: () => `Promise`\<`object` & `LifeCycles`\>
-
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
-
-#### Returns
-
-`Promise`\<`object` & `LifeCycles`\>
 
 ***
 

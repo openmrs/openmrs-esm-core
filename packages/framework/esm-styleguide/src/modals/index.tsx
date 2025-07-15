@@ -3,6 +3,7 @@ import { mountRootParcel, type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { getModalRegistration } from '@openmrs/esm-extensions';
 import { reportError } from '@openmrs/esm-error-handling';
+import { loadParcel } from '@openmrs/esm-dynamic-loading';
 
 type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
 type ModalSize = 'xs' | 'sm' | 'md' | 'lg';
@@ -59,13 +60,13 @@ async function renderModalIntoDOM(
       throw Error(`No modal named '${modalName}' has been registered.`);
     }
 
-    const { load } = modalRegistration;
+    const { component, moduleName } = modalRegistration;
 
-    const { default: result, ...lifecycle } = await load();
+    const lifecycle = await loadParcel(moduleName, component);
     const id = parcelCount++;
     parcel = mountRootParcel(
       {
-        ...(result ?? lifecycle),
+        ...lifecycle,
         name: `${modalName}-${id}`,
       },
       {
