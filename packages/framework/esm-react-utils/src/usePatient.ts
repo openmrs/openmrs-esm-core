@@ -1,7 +1,7 @@
 /** @module @category API */
 import { useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
-import { fetchCurrentPatient } from '@openmrs/esm-api';
+import { fetchCurrentPatient } from '@openmrs/esm-emr-api';
 
 export type NullablePatient = fhir.Patient | null;
 

@@ -1,7 +1,7 @@
 module.exports = {
   clearMocks: true,
   transform: {
-    '^.+\\.tsx?$': ['@swc/jest'],
+    '^.+\\.m?[jt]sx?$': ['@swc/jest'],
   },
   globals: {
     System: {},
@@ -11,7 +11,7 @@ module.exports = {
     '^lodash-es$': 'lodash',
     '^lodash-es/(.*)$': 'lodash/$1',
     '\\.(s?css)$': 'identity-obj-proxy',
-    '@openmrs/esm-framework': '@openmrs/esm-framework/mock.tsx',
+    '@openmrs/esm-framework': '@openmrs/esm-framework/mock',
     dexie: require.resolve('dexie'),
   },
   testEnvironment: 'jsdom',

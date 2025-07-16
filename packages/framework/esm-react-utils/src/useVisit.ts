@@ -1,10 +1,10 @@
 /** @module @category API */
-import { restBaseUrl, type Visit } from '@openmrs/esm-api';
-import { defaultVisitCustomRepresentation, getVisitStore, openmrsFetch } from '@openmrs/esm-api';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import useSWR from 'swr';
 import dayjs from 'dayjs';
-import isToday from 'dayjs/plugin/isToday';
-import { useCallback, useEffect, useMemo } from 'react';
+import isToday from 'dayjs/plugin/isToday.js';
+import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
+import { defaultVisitCustomRepresentation, type Visit } from '@openmrs/esm-emr-api';
 import { useVisitContextStore } from './useVisitContextStore';
 
 dayjs.extend(isToday);
@@ -52,7 +52,7 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     mutate: activeMutate,
     isValidating: activeIsValidating,
   } = useSWR<{
-    data: Visit | { results: Array<Visit> };
+    data: { results: Array<Visit> };
   }>(patientUuid ? `${restBaseUrl}/visit${activeVisitUrlSuffix}` : null, openmrsFetch);
 
   const {
@@ -61,7 +61,7 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     mutate: retroMutate,
     isValidating: retroIsValidating,
   } = useSWR<{
-    data: Visit | { results: Array<Visit> };
+    data: Visit;
   }>(patientUuid && retrospectiveVisitUuid ? `${restBaseUrl}/visit${retrospectiveVisitUrlSuffix}` : null, openmrsFetch);
 
   const activeVisit = useMemo(
@@ -70,20 +70,36 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
   );
 
   const currentVisit = useMemo(
-    () => (retrospectiveVisitUuid ? retroData?.data : activeVisit ?? null),
-    [retroData, activeVisit, retrospectiveVisitUuid],
+    () => (retrospectiveVisitUuid && retroData ? retroData.data : null),
+    [retroData, retrospectiveVisitUuid],
   );
+  const previousCurrentVisit = useRef<Visit | null>(null);
 
   useEffect(() => {
-    if (currentVisit && currentVisit.uuid !== manuallySetVisitUuid) {
-      setVisitContext(currentVisit);
+    // if an active visit is created for the visit store patient and they have no visit in context, set the context to the active visit
+    if (!activeIsValidating && activeVisit && visitStorePatientUuid === patientUuid && manuallySetVisitUuid === null) {
+      setVisitContext(activeVisit);
     }
-  }, [currentVisit, manuallySetVisitUuid]);
+    if (!retroIsValidating) {
+      // if the current visit happened to be active but it just got ended (inactive), remove the
+      // visit from context
+      if (
+        previousCurrentVisit.current &&
+        currentVisit &&
+        previousCurrentVisit.current.uuid === currentVisit.uuid &&
+        !previousCurrentVisit.current.stopDatetime &&
+        currentVisit.stopDatetime
+      ) {
+        setVisitContext(null);
+      }
+      previousCurrentVisit.current = currentVisit;
+    }
+  }, [currentVisit, manuallySetVisitUuid, activeVisit, activeIsValidating, retroIsValidating, visitStorePatientUuid]);
 
   const mutateVisit = useCallback(() => {
     activeMutate();
     retroMutate();
-  }, [activeVisit, currentVisit, activeMutate, retroMutate]);
+  }, [activeMutate, retroMutate]);
 
   useVisitContextStore(mutateVisit);
 

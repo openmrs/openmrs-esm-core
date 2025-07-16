@@ -8,8 +8,8 @@ export interface ActionableNotificationProps {
 
 export interface ActionableNotificationDescriptor {
   actionButtonLabel: string;
-  onActionButtonClick: () => void;
-  onClose?: () => void;
+  onActionButtonClick(): void;
+  onClose?(): void;
   subtitle: string;
   title?: string;
   kind?: ActionableNotificationType | string;
@@ -32,6 +32,7 @@ export const ActionableNotificationComponent: React.FC<ActionableNotificationPro
     title,
     critical,
     progressActionLabel,
+    id,
     ...props
   } = notification;
 
@@ -39,12 +40,14 @@ export const ActionableNotificationComponent: React.FC<ActionableNotificationPro
 
   const handleActionClick = () => {
     onActionButtonClick();
-    progressActionLabel && setActionText(progressActionLabel);
+    if (progressActionLabel) {
+      setActionText(progressActionLabel);
+    }
   };
 
   return (
     <ActionableNotification
-      kind={kind || 'info'}
+      kind={(kind as ActionableNotificationType) || 'info'}
       actionButtonLabel={actionText}
       ariaLabel="Closes actionable notification"
       onActionButtonClick={handleActionClick}

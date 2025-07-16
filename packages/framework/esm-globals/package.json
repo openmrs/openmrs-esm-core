@@ -2,14 +2,24 @@
   "name": "@openmrs/esm-globals",
   "version": "6.3.0",
   "license": "MPL-2.0",
-  "browser": "dist/openmrs-esm-globals.js",
-  "main": "src/index.ts",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./src/public": {
+      "types": "./src/public.ts",
+      "default": "./dist/public.js"
+    }
+  },
   "source": true,
   "scripts": {
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode development",
-    "analyze": "webpack --mode=production --env analyze=true",
-    "typescript": "tsc",
+    "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "typescript": "tsc --project tsconfig.build.json",
     "lint": "eslint src --ext ts,tsx"
   },
   "keywords": [
@@ -40,6 +50,10 @@
     "single-spa": "6.x"
   },
   "devDependencies": {
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
+    "concurrently": "^9.1.2",
+    "rimraf": "^6.0.1",
     "single-spa": "^6.0.3"
   }
 }

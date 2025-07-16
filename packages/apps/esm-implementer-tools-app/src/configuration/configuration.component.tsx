@@ -60,9 +60,7 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({ isConfigToolbarOp
   />
 );
 
-export interface ConfigurationProps {}
-
-export const Configuration: React.FC<ConfigurationProps> = () => {
+export const Configuration: React.FC = () => {
   const { t } = useTranslation();
   const {
     isUIEditorEnabled,
@@ -166,7 +164,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   kind="secondary"
                   iconDescription="Download config"
                   renderIcon={(props) => <DownloadIcon size={16} {...props} />}
-                  onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+                  onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                     if ((event.target as HTMLAnchorElement).id != 'downloadConfigBtn')
                       document.getElementById('downloadConfigBtn')?.click();
                   }}

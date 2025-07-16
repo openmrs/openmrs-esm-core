@@ -1,122 +1,93 @@
-[@openmrs/esm-framework](../API.md) / Patient
+[O3 Framework](../API.md) / Patient
 
 # Interface: Patient
 
-## Hierarchy
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L15)
 
-- [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
+## Extends
 
-  ↳ **`Patient`**
-
-## Table of contents
-
-### Properties
-
-- [auditInfo](Patient.md#auditinfo)
-- [display](Patient.md#display)
-- [identifiers](Patient.md#identifiers)
-- [links](Patient.md#links)
-- [person](Patient.md#person)
-- [resourceVersion](Patient.md#resourceversion)
-- [uuid](Patient.md#uuid)
-- [voided](Patient.md#voided)
+- `OpenmrsResourceStrict`
 
 ## Properties
 
-### auditInfo
+### auditInfo?
 
-• `Optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo**: `AuditInfo`
 
-#### Inherited from
-
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[auditInfo](OpenmrsResourceStrict.md#auditinfo)
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
-
-___
-
-### display
-
-• `Optional` **display**: `string`
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[display](OpenmrsResourceStrict.md#display)
+`OpenmrsResourceStrict.auditInfo`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+### display?
 
-___
+> `optional` **display**: `string`
 
-### identifiers
-
-• `Optional` **identifiers**: [`PatientIdentifier`](PatientIdentifier.md)[]
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/patient-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L17)
-
-___
-
-### links
-
-• `Optional` **links**: [`Link`](Link.md)[]
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[links](OpenmrsResourceStrict.md#links)
+`OpenmrsResourceStrict.display`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+### identifiers?
 
-___
+> `optional` **identifiers**: [`PatientIdentifier`](PatientIdentifier.md)[]
 
-### person
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L16)
 
-• `Optional` **person**: [`Person`](Person.md)
+***
 
-#### Defined in
+### links?
 
-[packages/framework/esm-api/src/types/patient-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L18)
+> `optional` **links**: `Link`[]
 
-___
-
-### resourceVersion
-
-• `Optional` **resourceVersion**: `string`
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[resourceVersion](OpenmrsResourceStrict.md#resourceversion)
+`OpenmrsResourceStrict.links`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+### person?
 
-___
+> `optional` **person**: `Person`
+
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L17)
+
+***
+
+### resourceVersion?
+
+> `optional` **resourceVersion**: `string`
+
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
+
+#### Inherited from
+
+`OpenmrsResourceStrict.resourceVersion`
+
+***
 
 ### uuid
 
-• **uuid**: `string`
+> **uuid**: `string`
+
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[uuid](OpenmrsResourceStrict.md#uuid)
+`OpenmrsResourceStrict.uuid`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+### voided?
 
-___
+> `optional` **voided**: `boolean`
 
-### voided
-
-• `Optional` **voided**: `boolean`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/patient-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L19)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L18)

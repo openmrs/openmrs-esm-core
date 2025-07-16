@@ -2,17 +2,39 @@
   "name": "@openmrs/esm-framework",
   "version": "6.3.0",
   "license": "MPL-2.0",
-  "browser": "dist/openmrs-esm-framework.js",
-  "main": "src/index.ts",
+  "type": "module",
+  "module": "dist/openmrs-esm-framework.js",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./src/internal": {
+      "types": "./src/internal.ts",
+      "default": "./src/internal.ts"
+    },
+    "./package.json": {
+      "default": "./package.json"
+    },
+    "./mock": {
+      "import": "./mock.tsx",
+      "require": "./mock-jest.tsx"
+    },
+    "./mock.tsx": {
+      "import": "./mock.tsx",
+      "require": "./mock-jest.tsx"
+    }
+  },
   "source": true,
   "scripts": {
     "document": "../../../document.sh esm-framework",
-    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
-    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode development",
-    "analyze": "webpack --mode=production --env analyze=true",
-    "typescript": "tsc",
+    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
+    "test:watch": "cross-env TZ=UTC vitest watch",
+    "build": "concurrently \"rspack --mode=production\" \"tsc --project tsconfig.build.json\"",
+    "build:development": "concurrently \"rspack --mode=development\" \"tsc --project tsconfig.build.json\"",
+    "analyze": "rspack --mode=production --env analyze=true",
+    "typescript": "tsc --project tsconfig.build.json",
     "lint": "eslint src --ext ts,tsx"
   },
   "keywords": [
@@ -41,6 +63,7 @@
     "@openmrs/esm-config": "workspace:*",
     "@openmrs/esm-context": "workspace:*",
     "@openmrs/esm-dynamic-loading": "workspace:*",
+    "@openmrs/esm-emr-api": "workspace:*",
     "@openmrs/esm-error-handling": "workspace:*",
     "@openmrs/esm-expression-evaluator": "workspace:*",
     "@openmrs/esm-extensions": "workspace:*",
@@ -53,8 +76,7 @@
     "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-styleguide": "workspace:*",
     "@openmrs/esm-translations": "workspace:*",
-    "@openmrs/esm-utils": "workspace:*",
-    "dayjs": "^1.10.7"
+    "@openmrs/esm-utils": "workspace:*"
   },
   "peerDependencies": {
     "dayjs": "1.x",
@@ -67,10 +89,19 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
-    "jest-cli": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
+    "@rspack/cli": "^1.3.11",
+    "@rspack/core": "^1.3.11",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "dayjs": "^1.11.13",
+    "happy-dom": "^17.4.7",
+    "sass-embedded": "^1.89.0",
     "svgo-loader": "^4.0.0",
-    "webpack": "^5.88.0"
+    "typedoc": "^0.28.5",
+    "typedoc-plugin-file-categories": "workspace:*",
+    "typedoc-plugin-markdown": "^4.6.3",
+    "typedoc-plugin-no-inherit": "^1.6.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
   }
 }

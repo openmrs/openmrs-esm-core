@@ -1,0 +1,76 @@
+{
+  "name": "@openmrs/esm-emr-api",
+  "version": "6.2.0",
+  "license": "MPL-2.0",
+  "description": "The javascript module for interacting with the OpenMRS API",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./src/public": {
+      "types": "./src/public.ts",
+      "default": "./dist/public.js"
+    },
+    "./mock": {
+      "import": "./mock.ts",
+      "require": "./mock-jest.ts"
+    }
+  },
+  "source": true,
+  "scripts": {
+    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
+    "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
+    "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "typescript": "tsc --project tsconfig.build.json",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
+  "directories": {
+    "lib": "dist",
+    "src": "src"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@types/fhir": "0.0.31",
+    "lodash-es": "^4.17.21"
+  },
+  "peerDependencies": {
+    "@openmrs/esm-api": "6.x",
+    "@openmrs/esm-offline": "6.x",
+    "@openmrs/esm-state": "6.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-api": "workspace:*",
+    "@openmrs/esm-offline": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "happy-dom": "^17.4.7",
+    "rimraf": "^6.0.1",
+    "rxjs": "^6.5.3",
+    "vitest": "^3.1.4"
+  }
+}

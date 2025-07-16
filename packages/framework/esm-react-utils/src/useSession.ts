@@ -51,8 +51,10 @@ export function useSession(): Session {
           if (loaded) {
             resolve(newSession);
             session = newSession;
-            unsubscribe.current && unsubscribe.current();
-            unsubscribe.current = undefined;
+            if (unsubscribe.current) {
+              unsubscribe.current();
+              unsubscribe.current = undefined;
+            }
           }
         };
         handleNewSession(getSessionStore().getState());
@@ -94,8 +96,10 @@ export function useSession(): Session {
       });
     }
     return () => {
-      unsubscribe.current && unsubscribe.current();
-      unsubscribe.current = undefined;
+      if (unsubscribe.current) {
+        unsubscribe.current();
+        unsubscribe.current = undefined;
+      }
     };
   }, []);
 

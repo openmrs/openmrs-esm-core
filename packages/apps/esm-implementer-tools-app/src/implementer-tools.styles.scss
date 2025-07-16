@@ -36,4 +36,8 @@
 
 .darkTheme {
   @include theme.theme(themes.$g90);
+
+  :global(.cds--content-switcher-btn.cds--content-switcher--selected) {
+    background-color: $ui-01;
+  }
 }

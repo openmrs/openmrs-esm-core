@@ -1,276 +1,209 @@
-[@openmrs/esm-framework](../API.md) / Obs
+[O3 Framework](../API.md) / Obs
 
 # Interface: Obs
 
-## Hierarchy
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L5)
 
-- [`OpenmrsResource`](OpenmrsResource.md)
+## Extends
 
-  ↳ **`Obs`**
+- `OpenmrsResource`
 
-## Table of contents
+## Indexable
 
-### Properties
-
-- [accessionNumber](Obs.md#accessionnumber)
-- [auditInfo](Obs.md#auditinfo)
-- [comment](Obs.md#comment)
-- [concept](Obs.md#concept)
-- [display](Obs.md#display)
-- [encounter](Obs.md#encounter)
-- [formFilePath](Obs.md#formfilepath)
-- [formFiledNamespace](Obs.md#formfilednamespace)
-- [groupMembers](Obs.md#groupmembers)
-- [interpretation](Obs.md#interpretation)
-- [links](Obs.md#links)
-- [location](Obs.md#location)
-- [obsDatetime](Obs.md#obsdatetime)
-- [obsGroup](Obs.md#obsgroup)
-- [order](Obs.md#order)
-- [person](Obs.md#person)
-- [resourceVersion](Obs.md#resourceversion)
-- [status](Obs.md#status)
-- [uuid](Obs.md#uuid)
-- [value](Obs.md#value)
-- [valueCodedName](Obs.md#valuecodedname)
-- [valueModifier](Obs.md#valuemodifier)
+\[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
-### accessionNumber
+### accessionNumber?
 
-• `Optional` **accessionNumber**: `string`
+> `optional` **accessionNumber**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L9)
 
-[packages/framework/esm-api/src/types/obs-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L11)
+***
 
-___
+### auditInfo?
 
-### auditInfo
+> `optional` **auditInfo**: `AuditInfo`
 
-• `Optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
-
-#### Inherited from
-
-[OpenmrsResource](OpenmrsResource.md).[auditInfo](OpenmrsResource.md#auditinfo)
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
-
-___
-
-### comment
-
-• `Optional` **comment**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/obs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L15)
-
-___
-
-### concept
-
-• `Optional` **concept**: [`Concept`](Concept.md)
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/obs-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L8)
-
-___
-
-### display
-
-• `Optional` **display**: `string`
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
+`OpenmrsResource.auditInfo`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+### comment?
 
-___
+> `optional` **comment**: `string`
 
-### encounter
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L13)
 
-• `Optional` **encounter**: [`Encounter`](Encounter.md)
+***
 
-#### Defined in
+### concept?
 
-[packages/framework/esm-api/src/types/obs-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L18)
+> `optional` **concept**: `Concept`
 
-___
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L6)
 
-### formFilePath
+***
 
-• `Optional` **formFilePath**: `string`
+### display?
 
-#### Defined in
+> `optional` **display**: `string`
 
-[packages/framework/esm-api/src/types/obs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L21)
-
-___
-
-### formFiledNamespace
-
-• `Optional` **formFiledNamespace**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/obs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L22)
-
-___
-
-### groupMembers
-
-• `Optional` **groupMembers**: [`Obs`](Obs.md)[]
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/obs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L14)
-
-___
-
-### interpretation
-
-• `Optional` **interpretation**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/obs-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L24)
-
-___
-
-### links
-
-• `Optional` **links**: [`Link`](Link.md)[]
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[links](OpenmrsResource.md#links)
+`OpenmrsResource.display`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+### encounter?
 
-___
+> `optional` **encounter**: [`Encounter`](Encounter.md)
 
-### location
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L16)
 
-• `Optional` **location**: `Location`
+***
 
-#### Defined in
+### formFiledNamespace?
 
-[packages/framework/esm-api/src/types/obs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L16)
+> `optional` **formFiledNamespace**: `string`
 
-___
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L20)
 
-### obsDatetime
+***
 
-• `Optional` **obsDatetime**: `string`
+### formFilePath?
 
-#### Defined in
+> `optional` **formFilePath**: `string`
 
-[packages/framework/esm-api/src/types/obs-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L10)
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L19)
 
-___
+***
 
-### obsGroup
+### groupMembers?
 
-• `Optional` **obsGroup**: [`Obs`](Obs.md)
+> `optional` **groupMembers**: `Obs`[]
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L12)
 
-[packages/framework/esm-api/src/types/obs-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L12)
+***
 
-___
+### interpretation?
 
-### order
+> `optional` **interpretation**: `string`
 
-• `Optional` **order**: [`OpenmrsResource`](OpenmrsResource.md)
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L22)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/obs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L17)
+### links?
 
-___
+> `optional` **links**: `Link`[]
 
-### person
-
-• `Optional` **person**: [`Person`](Person.md)
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/obs-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L9)
-
-___
-
-### resourceVersion
-
-• `Optional` **resourceVersion**: `string`
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[resourceVersion](OpenmrsResource.md#resourceversion)
+`OpenmrsResource.links`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+### location?
 
-___
+> `optional` **location**: [`Location`](Location.md)
 
-### status
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L14)
 
-• `Optional` **status**: ``"PRELIMINARY"`` \| ``"FINAL"`` \| ``"AMENDED"``
+***
 
-#### Defined in
+### obsDatetime?
 
-[packages/framework/esm-api/src/types/obs-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L23)
+> `optional` **obsDatetime**: `string`
 
-___
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L8)
+
+***
+
+### obsGroup?
+
+> `optional` **obsGroup**: `Obs`
+
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L10)
+
+***
+
+### order?
+
+> `optional` **order**: `OpenmrsResource`
+
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L15)
+
+***
+
+### person?
+
+> `optional` **person**: `Person`
+
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L7)
+
+***
+
+### resourceVersion?
+
+> `optional` **resourceVersion**: `string`
+
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
+
+#### Inherited from
+
+`OpenmrsResource.resourceVersion`
+
+***
+
+### status?
+
+> `optional` **status**: `"PRELIMINARY"` \| `"FINAL"` \| `"AMENDED"`
+
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L21)
+
+***
 
 ### uuid
 
-• **uuid**: `string`
+> **uuid**: `string`
+
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
+`OpenmrsResource.uuid`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+### value?
 
-___
+> `optional` **value**: `string` \| `number` \| `boolean` \| `OpenmrsResource`
 
-### value
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L17)
 
-• `Optional` **value**: `string` \| `number` \| `boolean` \| [`OpenmrsResource`](OpenmrsResource.md)
+***
 
-#### Defined in
+### valueCodedName?
 
-[packages/framework/esm-api/src/types/obs-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L19)
+> `optional` **valueCodedName**: `OpenmrsResource`
 
-___
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L11)
 
-### valueCodedName
+***
 
-• `Optional` **valueCodedName**: [`OpenmrsResource`](OpenmrsResource.md)
+### valueModifier?
 
-#### Defined in
+> `optional` **valueModifier**: `string`
 
-[packages/framework/esm-api/src/types/obs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L13)
-
-___
-
-### valueModifier
-
-• `Optional` **valueModifier**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/obs-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/obs-resource.ts#L20)
+Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L18)

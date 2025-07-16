@@ -4,6 +4,7 @@ export interface ConnectivityChangedEvent {
 
 const connectivityChangedEventName = 'openmrs:connectivity-changed';
 
+/** @internal */
 export function dispatchConnectivityChanged(online: boolean) {
   window.dispatchEvent(new CustomEvent(connectivityChangedEventName, { detail: { online } }));
 }
@@ -25,6 +26,7 @@ export function subscribeConnectivity(cb: (ev: ConnectivityChangedEvent) => void
   return subscribeConnectivityChanged(cb);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PrecacheStaticDependenciesEvent {}
 
 const precacheStaticDependenciesEventName = 'openmrs:precache-static-dependencies';
@@ -88,14 +90,17 @@ export function dispatchNotificationShown(data: ShowNotificationEvent) {
   window.dispatchEvent(new CustomEvent(notificationShownName, { detail: data }));
 }
 
+/** @internal */
 export function dispatchActionableNotificationShown(data: ShowActionableNotificationEvent) {
   window.dispatchEvent(new CustomEvent(actionableNotificationShownName, { detail: data }));
 }
 
+/** @internal */
 export function dispatchSnackbarShown(data: ShowSnackbarEvent) {
   window.dispatchEvent(new CustomEvent(snackbarShownName, { detail: data }));
 }
 
+/** @internal */
 export function dispatchToastShown(data: ShowToastEvent) {
   window.dispatchEvent(new CustomEvent(toastShownName, { detail: data }));
 }

@@ -1,62 +1,45 @@
-[@openmrs/esm-framework](../API.md) / RegisterDynamicRouteMessage
+[O3 Framework](../API.md) / RegisterDynamicRouteMessage
 
 # Interface: RegisterDynamicRouteMessage
 
-## Hierarchy
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L36)
 
-- [`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md)<``"registerDynamicRoute"``\>
+## Extends
 
-  ↳ **`RegisterDynamicRouteMessage`**
+- [`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md)\<`"registerDynamicRoute"`\>
 
-## Table of contents
+## Properties
 
-### Offline Properties
+### pattern?
 
-- [pattern](RegisterDynamicRouteMessage.md#pattern)
-- [strategy](RegisterDynamicRouteMessage.md#strategy)
-- [type](RegisterDynamicRouteMessage.md#type)
-- [url](RegisterDynamicRouteMessage.md#url)
+> `optional` **pattern**: `string`
 
-## Offline Properties
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L37)
 
-### pattern
+***
 
-• `Optional` **pattern**: `string`
+### strategy?
 
-#### Defined in
+> `optional` **strategy**: [`OmrsOfflineCachingStrategy`](../type-aliases/OmrsOfflineCachingStrategy.md)
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L36)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L39)
 
-___
-
-### strategy
-
-• `Optional` **strategy**: [`OmrsOfflineCachingStrategy`](../API.md#omrsofflinecachingstrategy)
-
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker-messaging.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L38)
-
-___
+***
 
 ### type
 
-• **type**: ``"registerDynamicRoute"``
+> **type**: `"registerDynamicRoute"`
+
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
 
 #### Inherited from
 
-[OmrsServiceWorkerMessage](OmrsServiceWorkerMessage.md).[type](OmrsServiceWorkerMessage.md#type)
+[`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md).[`type`](OmrsServiceWorkerMessage.md#type)
 
-#### Defined in
+***
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+### url?
 
-___
+> `optional` **url**: `string`
 
-### url
-
-• `Optional` **url**: `string`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker-messaging.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L37)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L38)

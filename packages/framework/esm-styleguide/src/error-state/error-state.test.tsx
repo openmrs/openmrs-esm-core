@@ -1,9 +1,11 @@
 import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import { useLayoutType } from '@openmrs/esm-react-utils';
 import { ErrorState } from '.';
 
-const mockUseLayoutType = jest.mocked(useLayoutType);
+const mockUseLayoutType = vi.mocked(useLayoutType);
 
 describe('ErrorState', () => {
   it('renders an error state widget card', () => {
@@ -29,7 +31,7 @@ describe('ErrorState', () => {
 
     render(<ErrorState headerTitle="test" error={{}} />);
     // eslint-disable-next-line testing-library/no-node-access
-    expect(screen.getByRole('heading').parentElement).toHaveClass('tabletHeading');
+    expect(screen.getByRole('heading').parentElement?.getAttribute('class')).toContain('tabletHeading');
   });
 
   it('should render desktop layout when layout type is not tablet', () => {
@@ -37,7 +39,7 @@ describe('ErrorState', () => {
 
     render(<ErrorState headerTitle="test" error={{}} />);
     // eslint-disable-next-line testing-library/no-node-access
-    expect(screen.getByRole('heading').parentElement).toHaveClass('desktopHeading');
+    expect(screen.getByRole('heading').parentElement?.getAttribute('class')).toContain('desktopHeading');
   });
 
   it('should handle error with partial response data', () => {

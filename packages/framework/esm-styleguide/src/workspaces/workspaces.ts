@@ -3,7 +3,6 @@ import { useMemo, type ReactNode } from 'react';
 import {
   getWorkspaceGroupRegistration,
   getWorkspaceRegistration,
-  WorkspaceGroupRegistration,
   type WorkspaceRegistration,
 } from '@openmrs/esm-extensions';
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
@@ -107,7 +106,7 @@ export interface WorkspaceStoreState {
   workspaceGroup?: {
     name: string;
     members: Array<string>;
-    cleanup?: Function;
+    cleanup?(): void;
   };
 }
 
@@ -182,12 +181,12 @@ function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: () => void)
 }
 
 interface LaunchWorkspaceGroupArg {
-  state: object;
-  onWorkspaceGroupLaunch?: Function;
-  workspaceGroupCleanup?: Function;
+  state: Record<string | symbol | number, any>;
+  onWorkspaceGroupLaunch?(): void;
+  workspaceGroupCleanup?(): void;
   workspaceToLaunch?: {
     name: string;
-    additionalProps?: object;
+    additionalProps?: Record<string | symbol | number, any>;
   };
 }
 

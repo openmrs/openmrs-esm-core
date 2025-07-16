@@ -1,10 +1,12 @@
-import { getVisitStore, type Visit, type VisitStoreState } from '@openmrs/esm-api';
-import { useStoreWithActions } from './useStore';
 import { useEffect, useId } from 'react';
+import { getVisitStore, type Visit, type VisitStoreState } from '@openmrs/esm-emr-api';
+import { type Actions, useStoreWithActions } from './useStore';
 
-// TODO: add better typing with `satisfies` keyword when we upgrade typescript
 const visitContextStoreActions = {
-  setVisitContext(_: VisitStoreState, newSelectedVisit: Visit) {
+  setVisitContext(_: VisitStoreState, newSelectedVisit: Visit | null) {
+    if (newSelectedVisit == null) {
+      return { manuallySetVisitUuid: null };
+    }
     return {
       manuallySetVisitUuid: newSelectedVisit.uuid,
       patientUuid: newSelectedVisit.patient?.uuid,
@@ -16,7 +18,7 @@ const visitContextStoreActions = {
     }
     return {};
   },
-};
+} satisfies Actions<VisitStoreState>;
 
 /**
  * A hook to return the visit context store and corresponding actions.

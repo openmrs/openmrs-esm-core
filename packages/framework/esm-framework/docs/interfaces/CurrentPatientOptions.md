@@ -1,27 +1,18 @@
-[@openmrs/esm-framework](../API.md) / CurrentPatientOptions
+[O3 Framework](../API.md) / CurrentPatientOptions
 
 # Interface: CurrentPatientOptions
 
-## Hierarchy
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L7)
 
-- **`CurrentPatientOptions`**
+## Extended by
 
-  ↳ [`PatientWithFullResponse`](PatientWithFullResponse.md)
+- [`PatientWithFullResponse`](PatientWithFullResponse.md)
+- [`OnlyThePatient`](OnlyThePatient.md)
 
-  ↳ [`OnlyThePatient`](OnlyThePatient.md)
+## Properties
 
-## Table of contents
+### includeConfig?
 
-### API Properties
+> `optional` **includeConfig**: `boolean`
 
-- [includeConfig](CurrentPatientOptions.md#includeconfig)
-
-## API Properties
-
-### includeConfig
-
-• `Optional` **includeConfig**: `boolean`
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L9)
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L8)

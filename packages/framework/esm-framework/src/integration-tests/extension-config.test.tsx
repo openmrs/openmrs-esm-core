@@ -1,5 +1,7 @@
 /* eslint-disable */
 import React from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
@@ -21,12 +23,12 @@ import {
   getExtensionSlotsConfigStore,
 } from '../../../esm-config/src';
 
-jest.mock('@openmrs/esm-api', () => {
-  const original = jest.requireActual('@openmrs/esm-api');
+vi.mock('@openmrs/esm-api', async () => {
+  const original = await import('@openmrs/esm-api');
   return {
     ...original,
     sessionStore: mockSessionStore,
-    refetchCurrentUser: jest.fn(),
+    refetchCurrentUser: vi.fn(),
   };
 });
 
@@ -38,7 +40,7 @@ describe('Interaction between configuration and extension systems', () => {
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
   });
 
-  test('Config should add, order, and remove extensions within slots', async () => {
+  it('Config should add, order, and remove extensions within slots', async () => {
     const promise = Promise.resolve();
     registerSimpleExtension('Fred', 'esm-flintstone');
     registerSimpleExtension('Wilma', 'esm-flintstone');
@@ -84,7 +86,7 @@ describe('Interaction between configuration and extension systems', () => {
     });
   });
 
-  test("Extensions should recieve config from module and from 'configure' key", async () => {
+  it("Extensions should recieve config from module and from 'configure' key", async () => {
     const promise = Promise.resolve();
     registerSimpleExtension('Pebbles', 'esm-flintstone', true);
     defineConfigSchema('esm-flintstone', {
@@ -134,7 +136,7 @@ describe('Interaction between configuration and extension systems', () => {
     });
   });
 
-  test('Should be possible to attach the same extension twice with different configurations', async () => {
+  it('Should be possible to attach the same extension twice with different configurations', async () => {
     const promise = Promise.resolve();
 
     registerSimpleExtension('pet', 'esm-characters', true);
@@ -185,7 +187,7 @@ describe('Interaction between configuration and extension systems', () => {
     });
   });
 
-  test('Slot config should update with temporary config', async () => {
+  it('Slot config should update with temporary config', async () => {
     const promise = Promise.resolve();
     registerSimpleExtension('Pearl', 'esm-slaghoople');
     attach('A slot', 'Pearl');
@@ -221,7 +223,7 @@ describe('Interaction between configuration and extension systems', () => {
     await waitFor(() => expect(screen.queryByText('Pearl')).not.toBeInTheDocument());
   });
 
-  test('Extension config should update with temporary config', async () => {
+  it('Extension config should update with temporary config', async () => {
     const promise = Promise.resolve();
     registerSimpleExtension('Mr. Slate', 'esm-flintstone', true);
     attach('A slot', 'Mr. Slate');
@@ -261,7 +263,7 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   // TODO restore this test
-  test.skip('Extension config should be available in extension store', async () => {
+  it.skip('Extension config should be available in extension store', async () => {
     const promise = Promise.resolve();
     registerSimpleExtension('Bamm-Bamm', 'esm-flintstone', false);
     attach('A slot', 'Bamm-Bamm');
@@ -312,7 +314,7 @@ describe('Interaction between configuration and extension systems', () => {
     expect(screen.getByText(/clothes/)).toHaveTextContent(/tiger/);
   });
 
-  test('should not show extension when user lacks configured privilege', async () => {
+  it('should not show extension when user lacks configured privilege', async () => {
     const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,
@@ -377,7 +379,7 @@ describe('Interaction between configuration and extension systems', () => {
     expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
   });
 
-  test('should show extension when user has configured privilege', async () => {
+  it('should show extension when user has configured privilege', async () => {
     const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,
@@ -435,7 +437,7 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   // TODO This test fails on CI but not locally
-  test.skip('should only show extensions users have default privilege for', async () => {
+  it.skip('should only show extensions users have default privilege for', async () => {
     const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,

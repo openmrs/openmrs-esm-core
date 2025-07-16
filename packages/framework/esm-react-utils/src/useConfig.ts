@@ -1,10 +1,16 @@
 /** @module @category Config */
 import { useContext, useEffect, useMemo, useState } from 'react';
-import type { ConfigStore, ConfigObject, ExtensionsConfigStore } from '@openmrs/esm-config';
-import { getConfigStore, getExtensionsConfigStore, getExtensionConfigFromStore } from '@openmrs/esm-config';
+import { isEqual } from 'lodash-es';
 import type { StoreApi } from 'zustand';
-import isEqual from 'lodash-es/isEqual';
-import type { ExtensionData } from './ComponentContext';
+import {
+  type ConfigStore,
+  type ConfigObject,
+  type ExtensionsConfigStore,
+  getConfigStore,
+  getExtensionsConfigStore,
+  getExtensionConfigFromStore,
+} from '@openmrs/esm-config';
+import { type ExtensionData } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 
 const promises: Record<string, Promise<ConfigObject>> = {};
@@ -125,7 +131,7 @@ function useNormalConfig(moduleName: string) {
   return state;
 }
 
-interface UseConfigOptions {
+export interface UseConfigOptions {
   /** An external module to load the configuration from. This option should only be used if
       absolutely necessary as it can end up making frontend modules coupled to one another. */
   externalModuleName?: string;

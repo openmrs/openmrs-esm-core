@@ -46,23 +46,17 @@ export interface DisplayConditionsConfigObject {
 export type ConfigValue = string | number | boolean | void | Array<any> | object;
 
 export interface ExtensionSlotConfig {
-  add?: Array<string>;
-  remove?: Array<string>;
-  order?: Array<string>;
-  configure?: ExtensionSlotConfigureValueObject;
-}
-
-export interface ExtensionSlotConfigureValueObject {
-  [key: string]: object;
-}
-
-export interface ExtensionSlotConfigObject {
   /** Additional extension IDs to assign to this slot, in addition to those `attach`ed in code. */
   add?: Array<string>;
   /** Extension IDs which were `attach`ed to the slot but which should not be assigned. */
   remove?: Array<string>;
   /** Overrides the default ordering of extensions. */
   order?: Array<string>;
+  configure?: ExtensionSlotConfigureValueObject;
+}
+
+export interface ExtensionSlotConfigureValueObject {
+  [key: string]: object;
 }
 
 export type ProvidedConfig = {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { type ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -129,7 +129,7 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
                   labelText={t('offlinePatientsTableSearchLabel', 'Search this list')}
                   placeholder={t('offlinePatientsTableSearchPlaceholder', 'Search this list')}
                   size={toolbarItemSize}
-                  onChange={onInputChange}
+                  onChange={(e) => onInputChange(e as ChangeEvent<HTMLInputElement>)}
                 />
               </Layer>
             )}

@@ -1,18 +1,21 @@
 import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { PatientPhoto } from './patient-photo.component';
 import { usePatientPhoto } from './usePatientPhoto';
 
-const mockUsePatientPhoto = jest.mocked(usePatientPhoto);
+const mockUsePatientPhoto = vi.mocked(usePatientPhoto);
 
-jest.mock('./usePatientPhoto', () => ({
-  usePatientPhoto: jest.fn(),
+vi.mock('./usePatientPhoto', () => ({
+  usePatientPhoto: vi.fn(),
 }));
 
-jest.mock('geopattern', () => ({
-  generate: jest.fn().mockReturnValue({
-    toDataUri: jest.fn().mockReturnValue('https://example.com'),
-  }),
+vi.mock('geopattern', () => ({
+  default: {
+    generate: vi.fn().mockReturnValue({
+      toDataUri: vi.fn().mockReturnValue('https://example.com'),
+    }),
+  },
 }));
 
 const patientUuid = 'test-patient-uuid';
@@ -28,7 +31,7 @@ describe('PatientPhoto', () => {
 
     render(<PatientPhoto patientUuid={patientUuid} patientName={patientName} />);
 
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByTestId('skeleton-icon')).toBeInTheDocument();
   });
 
   it('renders a placeholder image if the patient photo fails to load', async () => {
@@ -74,15 +77,13 @@ describe('PatientPhoto', () => {
 
     render(<PatientPhoto patientUuid={patientUuid} patientName={patientName} />);
 
-    const altText = 'Profile photo unavailable - grey placeholder image';
-
     // Wait for the image to "load"
-    await screen.findByAltText(altText);
+    await screen.findByAltText('Profile photo unavailable - grey placeholder image');
 
-    const avatarImage = screen.getByRole('img', { name: altText });
+    const avatarImage = screen.getByRole('img', { name: 'Profile photo unavailable - grey placeholder image' });
     expect(avatarImage).toBeInTheDocument();
     expect(avatarImage).toHaveAttribute('src', 'valid-image.jpg');
-    expect(avatarImage).toHaveAttribute('alt', altText);
+    expect(avatarImage).toHaveAttribute('alt', 'Profile photo unavailable - grey placeholder image');
 
     // Restore the original Image constructor
     window.Image = originalImage;

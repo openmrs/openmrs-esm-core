@@ -1,74 +1,65 @@
-[@openmrs/esm-framework](../API.md) / NotificationDescriptor
+[O3 Framework](../API.md) / NotificationDescriptor
 
 # Interface: NotificationDescriptor
 
-## Table of contents
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L9)
 
-### UI Properties
+## Properties
 
-- [action](NotificationDescriptor.md#action)
-- [critical](NotificationDescriptor.md#critical)
-- [description](NotificationDescriptor.md#description)
-- [kind](NotificationDescriptor.md#kind)
-- [millis](NotificationDescriptor.md#millis)
-- [title](NotificationDescriptor.md#title)
+### action?
 
-## UI Properties
+> `optional` **action**: `string`
 
-### action
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L11)
 
-• `Optional` **action**: `ReactNode`
+***
 
-#### Defined in
+### critical?
 
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L11)
+> `optional` **critical**: `boolean`
 
-___
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L13)
 
-### critical
-
-• `Optional` **critical**: `boolean`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L13)
-
-___
+***
 
 ### description
 
-• **description**: `ReactNode`
+> **description**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L10)
 
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L10)
+***
 
-___
+### kind?
 
-### kind
+> `optional` **kind**: [`InlineNotificationType`](../type-aliases/InlineNotificationType.md)
 
-• `Optional` **kind**: [`InlineNotificationType`](../API.md#inlinenotificationtype)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L12)
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L12)
+### millis?
 
-___
+> `optional` **millis**: `number`
 
-### millis
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L14)
 
-• `Optional` **millis**: `number`
+***
 
-#### Defined in
+### onAction()?
 
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L14)
+> `optional` **onAction**: () => `void`
 
-___
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L16)
 
-### title
+#### Returns
 
-• `Optional` **title**: `string`
+`void`
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L15)
+### title?
+
+> `optional` **title**: `string`
+
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L15)

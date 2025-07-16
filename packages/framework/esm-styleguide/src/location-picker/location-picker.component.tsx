@@ -60,12 +60,10 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   return (
     <div>
       <Search
-        autoFocus
         labelText={t('searchForLocation', 'Search for a location')}
         id="search-1"
         placeholder={t('searchForLocation', 'Search for a location')}
         onChange={(event) => search(event.target.value)}
-        name="searchForLocation"
         size="lg"
       />
       <div className={styles.searchResults}>
@@ -84,7 +82,7 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
                 <RadioButtonGroup
                   name="loginLocations"
                   onChange={(ev) => {
-                    onChange(ev.toString());
+                    onChange(ev?.toString());
                   }}
                   orientation="vertical"
                   valueSelected={selectedLocationUuid}

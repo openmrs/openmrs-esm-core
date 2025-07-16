@@ -3,15 +3,22 @@
   "version": "6.3.0",
   "license": "MPL-2.0",
   "description": "An ES module to help with error handling",
-  "browser": "dist/openmrs-esm-error-handling.js",
-  "main": "src/index.ts",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "source": true,
   "scripts": {
-    "test": "jest --passWithNoTests --color",
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode development",
-    "analyze": "webpack --mode=production --env analyze=true",
-    "typescript": "tsc",
+    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
+    "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
+    "build": "rimraf dist && swc --strip-leading-paths src -d dist && tsc --project tsconfig.build.json",
+    "build:development": "rimraf dist && swc --strip-leading-paths src -d dist && tsc --project tsconfig.build.json",
+    "typescript": "tsc --project tsconfig.build.json",
     "lint": "eslint src --ext ts,tsx"
   },
   "keywords": [
@@ -40,6 +47,12 @@
     "@openmrs/esm-globals": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "workspace:*"
+    "@openmrs/esm-globals": "workspace:*",
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
+    "cross-env": "^7.0.3",
+    "happy-dom": "^17.4.7",
+    "rimraf": "^6.0.1",
+    "vitest": "^3.1.4"
   }
 }

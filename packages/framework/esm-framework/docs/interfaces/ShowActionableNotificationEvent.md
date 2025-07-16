@@ -1,81 +1,57 @@
-[@openmrs/esm-framework](../API.md) / ShowActionableNotificationEvent
+[O3 Framework](../API.md) / ShowActionableNotificationEvent
 
 # Interface: ShowActionableNotificationEvent
 
-## Table of contents
-
-### Properties
-
-- [actionButtonLabel](ShowActionableNotificationEvent.md#actionbuttonlabel)
-- [kind](ShowActionableNotificationEvent.md#kind)
-- [progressActionLabel](ShowActionableNotificationEvent.md#progressactionlabel)
-- [subtitle](ShowActionableNotificationEvent.md#subtitle)
-- [title](ShowActionableNotificationEvent.md#title)
-
-### Methods
-
-- [onActionButtonClick](ShowActionableNotificationEvent.md#onactionbuttonclick)
+Defined in: packages/framework/esm-globals/dist/events.d.ts:23
 
 ## Properties
 
 ### actionButtonLabel
 
-• **actionButtonLabel**: `any`
+> **actionButtonLabel**: `any`
 
-#### Defined in
+Defined in: packages/framework/esm-globals/dist/events.d.ts:27
 
-[packages/framework/esm-globals/src/events.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L56)
+***
 
-___
+### kind?
 
-### kind
+> `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
-• `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
+Defined in: packages/framework/esm-globals/dist/events.d.ts:25
 
-#### Defined in
+***
 
-[packages/framework/esm-globals/src/events.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L54)
+### onActionButtonClick()
 
-___
+> **onActionButtonClick**: () => `void`
 
-### progressActionLabel
-
-• `Optional` **progressActionLabel**: `string`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L58)
-
-___
-
-### subtitle
-
-• **subtitle**: `any`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L53)
-
-___
-
-### title
-
-• `Optional` **title**: `string`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L55)
-
-## Methods
-
-### onActionButtonClick
-
-▸ **onActionButtonClick**(): `void`
+Defined in: packages/framework/esm-globals/dist/events.d.ts:28
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[packages/framework/esm-globals/src/events.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L57)
+### progressActionLabel?
+
+> `optional` **progressActionLabel**: `string`
+
+Defined in: packages/framework/esm-globals/dist/events.d.ts:29
+
+***
+
+### subtitle
+
+> **subtitle**: `any`
+
+Defined in: packages/framework/esm-globals/dist/events.d.ts:24
+
+***
+
+### title?
+
+> `optional` **title**: `string`
+
+Defined in: packages/framework/esm-globals/dist/events.d.ts:26

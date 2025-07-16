@@ -1,11 +1,12 @@
 {
-  "AppMenuTooltip": "App Menu",
-  "cancel": "Cancel",
-  "change": "Change",
-  "changeLanguage": "Change language",
-  "changingLanguage": "Changing language",
-  "notifications": "Notifications",
-  "userMenu": "User menu",
-  "userMenuOptions": "User menu options",
-  "userMenuTooltip": "My Account"
+  "AppMenuTooltip": "Menu Aplikasi",
+  "cancel": "Batal",
+  "change": "Ubah",
+  "changeLanguage": "Ubah bahasa",
+  "changingLanguage": "Mengubah bahasa",
+  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
+  "notifications": "Notifikasi",
+  "userMenu": "Menu pengguna",
+  "userMenuOptions": "Opsi menu pengguna",
+  "userMenuTooltip": "Akun Saya"
 }

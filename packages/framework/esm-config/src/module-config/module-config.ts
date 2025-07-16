@@ -1,6 +1,6 @@
 /** @module @category Config */
 import { clone, reduce, mergeDeepRight, equals, omit } from 'ramda';
-import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject } from '../types';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig } from '../types';
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
 import { validator } from '../validators/validator';
@@ -278,7 +278,10 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
       if (state.loaded && state.config) {
         const config = omit(['Display conditions', 'Translation overrides'], state.config);
         resolve(config as T);
-        unsubscribe && unsubscribe();
+
+        if (unsubscribe) {
+          unsubscribe();
+        }
       }
     }
     update(store.getState());
@@ -299,7 +302,10 @@ export function getTranslationOverrides(
         if (state.translationOverridesLoaded && state.config) {
           const translationOverrides = state.config['Translation overrides'] ?? {};
           resolve(translationOverrides);
-          unsubscribe && unsubscribe();
+
+          if (unsubscribe) {
+            unsubscribe();
+          }
         }
       }
       update(configStore.getState());
@@ -315,7 +321,10 @@ export function getTranslationOverrides(
           if (state.loaded && state.config) {
             const translationOverrides = state.config['Translation overrides'] ?? {};
             resolve(translationOverrides);
-            unsubscribe && unsubscribe();
+
+            if (unsubscribe) {
+              unsubscribe();
+            }
           }
         }
         update(configStore.getState());
@@ -428,7 +437,7 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
 function getExtensionSlotConfigs(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
-): Record<string, ExtensionSlotConfigObject> {
+): Record<string, ExtensionSlotConfig> {
   const allConfigs = mergeConfigs(getProvidedConfigs(configState, tempConfigState));
   const slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>> = Object.keys(allConfigs).reduce(
     (obj, key) => {
@@ -712,6 +721,7 @@ function runAllValidatorsInConfigTree(schema: ConfigSchema, config: ConfigObject
  */
 function checkType(keyPath: string, _type: Type | undefined, value: any) {
   if (_type) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const validator: Record<string, Function> = {
       Array: isArray,
       Boolean: isBoolean,
@@ -732,6 +742,7 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
  * Runs validators, logging errors.
  * @returns true if all pass, false otherwise.
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function runValidators(keyPath: string, validators: Array<Function> | undefined, value: any) {
   let returnValue = true;
   if (validators) {
@@ -808,7 +819,7 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   return config;
 };
 
-function hasObjectSchema(elementsSchema: Object | undefined): elementsSchema is ConfigSchema {
+function hasObjectSchema(elementsSchema: unknown): elementsSchema is ConfigSchema {
   return (
     !!elementsSchema && Object.keys(elementsSchema).filter((e) => !['_default', '_validators'].includes(e)).length > 0
   );
@@ -817,12 +828,16 @@ function hasObjectSchema(elementsSchema: Object | undefined): elementsSchema is 
 function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
-
 /** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
-const displayedValidationMessages = new Set<string>();
+let displayedValidationMessages = new Set<string>();
 
 function logError(keyPath: string, message: string) {
   const key = `${keyPath}:::${message}`;
+  // technically, this should not be possible, but because of how things wind-up transpiled, this isn't impossible
+  if (!displayedValidationMessages) {
+    displayedValidationMessages = new Set<string>();
+  }
+
   if (!displayedValidationMessages.has(key)) {
     console.error(message);
     displayedValidationMessages.add(key);

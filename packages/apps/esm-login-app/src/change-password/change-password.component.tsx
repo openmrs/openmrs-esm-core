@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
+import { Controller, FieldError, useForm, type SubmitHandler } from 'react-hook-form';
 import { Button, Form, PasswordInput, InlineLoading, Tile } from '@carbon/react';
 import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
@@ -87,7 +87,14 @@ const ChangePassword: React.FC = () => {
               <PasswordInput
                 id="oldPassword"
                 invalid={!!errors?.oldPassword}
-                invalidText={errors?.oldPassword?.message}
+                invalidText={
+                  (errors &&
+                    errors.oldPassword &&
+                    errors.oldPassword.message &&
+                    typeof errors.oldPassword.message === 'string' &&
+                    errors.oldPassword.message) ??
+                  ''
+                }
                 labelText={t('oldPassword', 'Old password')}
                 onChange={onChange}
                 value={value}
@@ -101,7 +108,14 @@ const ChangePassword: React.FC = () => {
               <PasswordInput
                 id="newPassword"
                 invalid={!!errors?.newPassword}
-                invalidText={errors?.newPassword?.message}
+                invalidText={
+                  (errors &&
+                    errors.newPassword &&
+                    errors.newPassword.message &&
+                    typeof errors.newPassword.message === 'string' &&
+                    errors.newPassword.message) ??
+                  ''
+                }
                 labelText={t('newPassword', 'New password')}
                 onChange={onChange}
                 value={value}
@@ -115,7 +129,14 @@ const ChangePassword: React.FC = () => {
               <PasswordInput
                 id="passwordConfirmation"
                 invalid={!!errors?.passwordConfirmation}
-                invalidText={errors?.passwordConfirmation?.message}
+                invalidText={
+                  (errors &&
+                    errors.passwordConfirmation &&
+                    errors.passwordConfirmation.message &&
+                    typeof errors.passwordConfirmation.message === 'string' &&
+                    errors.passwordConfirmation.message) ??
+                  ''
+                }
                 labelText={t('confirmPassword', 'Confirm new password')}
                 onChange={onChange}
                 value={value}

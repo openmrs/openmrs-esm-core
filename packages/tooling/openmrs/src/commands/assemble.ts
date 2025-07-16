@@ -1,9 +1,9 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
 import { Readable } from 'node:stream';
 import { prompt, type Question } from 'inquirer';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
@@ -93,7 +93,9 @@ async function readConfig(
         // be added back by providing another config override
         if (Array.isArray(newConfig.frontendModuleExcludes)) {
           newConfig.frontendModuleExcludes.forEach((exclude) => {
-            typeof exclude === 'string' && config.frontendModules[exclude] && delete config.frontendModules[exclude];
+            if (typeof exclude === 'string' && config.frontendModules[exclude]) {
+              delete config.frontendModules[exclude];
+            }
           });
         }
 
@@ -130,17 +132,17 @@ async function readConfig(
       for (const pckg of packages) {
         questions.push(
           {
-            name: pckg.name,
+            name: `include:${pckg.name}`,
             message: `Include frontend module "${pckg.name}"?`,
             default: false,
             type: 'confirm',
           },
           {
-            name: pckg.name,
+            name: `version:${pckg.name}`,
             message: `Version for "${pckg.name}"?`,
             default: pckg.version,
             type: 'string',
-            when: (ans) => ans[pckg.name],
+            when: (ans) => ans[`include:${pckg.name}`],
             validate: (input) => {
               if (typeof input !== 'string') {
                 return `Expected a valid SemVer string, got ${typeof input}.`;
@@ -182,14 +184,14 @@ async function downloadPackage(
   baseDir: string,
   fetchOptions: npmRegistryFetch.Options,
 ): Promise<Buffer> {
-  if (esmVersion.startsWith('file:')) {
+  if (esmVersion && esmVersion.startsWith('file:')) {
     const source = resolve(baseDir, esmVersion.substring(5));
     return readFile(source);
-  } else if (/^https?:\/\//.test(esmVersion)) {
+  } else if (esmVersion && /^https?:\/\//.test(esmVersion)) {
     const response = await axios.get<Buffer>(esmVersion);
     return response.data;
   } else {
-    const packageName = `${esmName}@${esmVersion}`;
+    const packageName = esmVersion ? `${esmName}@${esmVersion}` : esmName;
     const tarManifest = await pacote.manifest(packageName, fetchOptions);
 
     if (!Boolean(tarManifest) || !Boolean(tarManifest._resolved) || !Boolean(tarManifest._integrity)) {
@@ -239,6 +241,7 @@ export async function runAssemble(args: AssembleArgs) {
   };
 
   const versionManifest = {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     coreVersion: require(resolve(__dirname, '..', '..', 'package.json')).version,
     frontendModules: {},
   };
@@ -250,7 +253,7 @@ export async function runAssemble(args: AssembleArgs) {
   const { frontendModules = {}, publicUrl = '.' } = config;
 
   if (args.fresh && existsSync(args.target)) {
-    await new Promise((resolve) => rimraf(args.target, resolve));
+    await rimraf(args.target);
   }
 
   await mkdir(args.target, { recursive: true });
@@ -302,9 +305,9 @@ export async function runAssemble(args: AssembleArgs) {
   }
 
   if (args.configFiles && args.configFiles.length > 0) {
-    const assembledConfig = args.configFiles.reduce(async (merged, file) => {
+    const assembledConfig = args.configFiles.reduce((merged, file) => {
       try {
-        const config = JSON.parse(await readFile(file, 'utf8'));
+        const config = JSON.parse(readFileSync(file, 'utf8'));
         return merge(merged, config);
       } catch (e) {
         logWarn(`Error while processing config file ${file}: ${e}`);

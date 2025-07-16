@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { HeaderPanel } from '@carbon/react';
+import { HeaderPanel, type HeaderPanelProps } from '@carbon/react';
 import { ExtensionSlot } from '@openmrs/esm-framework';
 import styles from './notifications-menu.panel.scss';
 

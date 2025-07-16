@@ -1,5 +1,6 @@
-import { Diagnosis } from '@openmrs/esm-api';
 import React from 'react';
+import { vi } from 'vitest';
+import { type Diagnosis } from '@openmrs/esm-emr-api';
 
 /* Please keep these stubs in alphabetical order for readability */
 
@@ -96,6 +97,7 @@ export const HomePictogram = () => <span>HomePictogram</span>;
 export const LaboratoryPictogram = () => <span>LaboratoryPictogramPictogram</span>;
 export const PatientListsPictogram = () => <span>PatientListsPictogram</span>;
 export const ServiceQueuesPictogram = () => <span>ServiceQueuesPictogramPictogram</span>;
+export const StockManagementPictogram = () => <span>StockManagementPictogram</span>;
 
 // Misc stubs
 export const MaybeIcon = ({ icon }) => <span>{icon}</span>;
@@ -105,7 +107,7 @@ export { PageHeader, PageHeaderContent } from './src/page-header/page-header.com
 
 export const OpenmrsDatePicker = () => <span>OpenmrsDatePicker</span>;
 
-export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
+export const LocationPicker = vi.fn(({ onChange, selectedLocationUuid }) => {
   const locations = [
     {
       uuid: 'uuid_1',
@@ -134,11 +136,11 @@ export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   );
 });
 
-export const DiagnosisTags = jest.fn(({ diagnoses }) => (
+export const DiagnosisTags = vi.fn(({ diagnoses }: { diagnoses: Array<Diagnosis> }) => (
   <>
     {diagnoses.map((d) => (
       <span key={d.uuid}>{d.display}</span>
     ))}
   </>
 ));
-export const useLeftNavStore = jest.fn();
+export const useLeftNavStore = vi.fn();

@@ -1,102 +1,79 @@
-[@openmrs/esm-framework](../API.md) / SyncItem
+[O3 Framework](../API.md) / SyncItem
 
-# Interface: SyncItem<T\>
+# Interface: SyncItem\<T\>
+
+Defined in: [packages/framework/esm-offline/src/sync.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L12)
 
 Defines an item queued up in the offline synchronization queue.
 A `SyncItem` contains both meta information about the item in the sync queue, as well as the
 actual data to be synchronized (i.e. the item's `content`).
 
-## Type parameters
+## Type Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `any` |
+### T
 
-## Table of contents
+`T` = `any`
 
-### Offline Properties
-
-- [content](SyncItem.md#content)
-- [createdOn](SyncItem.md#createdon)
-- [descriptor](SyncItem.md#descriptor)
-- [id](SyncItem.md#id)
-- [lastError](SyncItem.md#lasterror)
-- [type](SyncItem.md#type)
-- [userId](SyncItem.md#userid)
-
-## Offline Properties
+## Properties
 
 ### content
 
-• **content**: `T`
+> **content**: `T`
 
-#### Defined in
+Defined in: [packages/framework/esm-offline/src/sync.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L16)
 
-[packages/framework/esm-offline/src/sync.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L16)
-
-___
+***
 
 ### createdOn
 
-• **createdOn**: `Date`
+> **createdOn**: `Date`
 
-#### Defined in
+Defined in: [packages/framework/esm-offline/src/sync.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L17)
 
-[packages/framework/esm-offline/src/sync.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L17)
-
-___
+***
 
 ### descriptor
 
-• **descriptor**: [`QueueItemDescriptor`](QueueItemDescriptor.md)
+> **descriptor**: [`QueueItemDescriptor`](QueueItemDescriptor.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-offline/src/sync.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L18)
 
-[packages/framework/esm-offline/src/sync.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L18)
+***
 
-___
+### id?
 
-### id
+> `optional` **id**: `number`
 
-• `Optional` **id**: `number`
+Defined in: [packages/framework/esm-offline/src/sync.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L13)
 
-#### Defined in
+***
 
-[packages/framework/esm-offline/src/sync.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L13)
+### lastError?
 
-___
+> `optional` **lastError**: `object`
 
-### lastError
+Defined in: [packages/framework/esm-offline/src/sync.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L19)
 
-• `Optional` **lastError**: `Object`
+#### message?
 
-#### Type declaration
+> `optional` **message**: `string`
 
-| Name | Type |
-| :------ | :------ |
-| `message?` | `string` |
-| `name?` | `string` |
+#### name?
 
-#### Defined in
+> `optional` **name**: `string`
 
-[packages/framework/esm-offline/src/sync.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L19)
-
-___
+***
 
 ### type
 
-• **type**: `string`
+> **type**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-offline/src/sync.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L15)
 
-[packages/framework/esm-offline/src/sync.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L15)
-
-___
+***
 
 ### userId
 
-• **userId**: `string`
+> **userId**: `string`
 
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L14)
+Defined in: [packages/framework/esm-offline/src/sync.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L14)

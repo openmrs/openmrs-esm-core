@@ -1,49 +1,37 @@
-[@openmrs/esm-framework](../API.md) / FeatureFlagDefinition
+[O3 Framework](../API.md) / FeatureFlagDefinition
 
 # Interface: FeatureFlagDefinition
 
+Defined in: packages/framework/esm-globals/dist/types.d.ts:347
+
 A definition of a feature flag extracted from the routes.json
-
-## Table of contents
-
-### Properties
-
-- [description](FeatureFlagDefinition.md#description)
-- [flagName](FeatureFlagDefinition.md#flagname)
-- [label](FeatureFlagDefinition.md#label)
 
 ## Properties
 
 ### description
 
-• **description**: `string`
+> **description**: `string`
+
+Defined in: packages/framework/esm-globals/dist/types.d.ts:353
 
 An explanation of what the flag does, which will be displayed in the Implementer Tools
 
-#### Defined in
-
-[packages/framework/esm-globals/src/types.ts:374](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L374)
-
-___
+***
 
 ### flagName
 
-• **flagName**: `string`
+> **flagName**: `string`
+
+Defined in: packages/framework/esm-globals/dist/types.d.ts:349
 
 A code-friendly name for the flag, which will be used to reference it in code
 
-#### Defined in
-
-[packages/framework/esm-globals/src/types.ts:370](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L370)
-
-___
+***
 
 ### label
 
-• **label**: `string`
+> **label**: `string`
+
+Defined in: packages/framework/esm-globals/dist/types.d.ts:351
 
 A human-friendly name which will be displayed in the Implementer Tools
-
-#### Defined in
-
-[packages/framework/esm-globals/src/types.ts:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L372)
