@@ -69,6 +69,8 @@ yarn
 yarn setup
 ```
 
+> **Warning:** The `yarn setup` command can be resource-intensive. If your system hangs or you encounter resource-related issues, you can skip this step and instead run `yarn build --concurrency 1` to build the project with limited concurrency. After the build completes, you can proceed to start the server.
+
 ### Building
 
 To build all packages in the repository, run the following command:
