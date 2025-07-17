@@ -1,4 +1,4 @@
-import { util } from 'webpack';
+import { util } from '@rspack/core';
 
 export function trimEnd(text: string, chr: string): string {
   while (text.endsWith(chr)) {

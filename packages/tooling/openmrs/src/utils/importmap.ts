@@ -1,8 +1,8 @@
 import axios from 'axios';
 import glob from 'glob';
-import { URL } from 'node:url';
-import { basename, resolve } from 'node:path';
-import { existsSync, readFileSync } from 'node:fs';
+import { URL } from 'url';
+import { basename, resolve } from 'path';
+import { existsSync, readFileSync } from 'fs';
 import { exec } from 'child_process';
 import { logFail, logInfo, logWarn } from './logger';
 import { startDevServer } from './devserver';
@@ -144,7 +144,7 @@ async function matchAny(baseDir: string, patterns: Array<string>) {
   return matches;
 }
 
-const defaultConfigPath = resolve(__dirname, '..', '..', 'default-webpack-config.js');
+const defaultConfigPath = resolve(__dirname, '..', '..', 'default-rspack-config.js');
 
 function runProjectDevServer(
   configPath: string,
