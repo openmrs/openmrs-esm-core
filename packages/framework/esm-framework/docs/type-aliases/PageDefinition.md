@@ -4,7 +4,7 @@
 
 > **PageDefinition** = `object` & \{ `route`: `string` \| `boolean`; `routeRegex?`: `never`; \} \| \{ `route?`: `never`; `routeRegex`: `string`; \}
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:113
+Defined in: packages/framework/esm-globals/dist/types.d.ts:112
 
 A definition of a page extracted from an app's routes.json
 

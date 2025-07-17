@@ -15,5 +15,6 @@ vi.mock('@openmrs/esm-navigation', async () => {
     navigate: vi.fn(),
   };
 });
+vi.mock('@openmrs/esm-dynamic-loading', () => import('@openmrs/esm-dynamic-loading/mock'));
 
 afterEach(cleanup);

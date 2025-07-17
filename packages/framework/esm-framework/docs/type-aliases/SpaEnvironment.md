@@ -4,4 +4,4 @@
 
 > **SpaEnvironment** = `"production"` \| `"development"` \| `"test"`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:73
+Defined in: packages/framework/esm-globals/dist/types.d.ts:72

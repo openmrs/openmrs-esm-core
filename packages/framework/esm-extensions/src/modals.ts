@@ -1,11 +1,10 @@
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { LifeCycles } from 'single-spa';
 import { getExtensionRegistration } from '.';
 
 /** @internal */
 export interface ModalRegistration {
   name: string;
-  load(): Promise<{ default?: LifeCycles } & LifeCycles>;
+  component: string;
   moduleName: string;
 }
 
@@ -34,7 +33,7 @@ export function getModalRegistration(modalName: string): ModalRegistration | und
     if (extensionRegistration) {
       modalRegistration = {
         name: modalName,
-        load: extensionRegistration.load,
+        component: extensionRegistration.component,
         moduleName: extensionRegistration.moduleName,
       };
       console.warn(

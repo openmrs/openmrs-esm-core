@@ -5,6 +5,8 @@ import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
+
+import { loadParcel } from '@openmrs/esm-dynamic-loading';
 import {
   attach,
   getExtensionNameFromId,
@@ -20,9 +22,26 @@ import {
   useRenderableExtensions,
 } from '.';
 
+type ParcelRegistry = {
+  [moduleName: string]: {
+    [componentName: string]: any;
+  };
+};
+let mockParcelRegistry: ParcelRegistry = {};
+const mockedLoadParcel = vi.mocked(loadParcel);
+
 describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   beforeEach(() => {
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
+    mockParcelRegistry = {};
+    mockedLoadParcel.mockClear();
+    mockedLoadParcel.mockImplementation((moduleName, componentName) => {
+      const lifecycleFunction = mockParcelRegistry[moduleName]?.[componentName];
+      if (lifecycleFunction && typeof lifecycleFunction === 'function') {
+        return lifecycleFunction();
+      }
+      return Promise.resolve(undefined);
+    });
   });
 
   it('Extension receives state changes passed through (not using <Extension>)', async () => {
@@ -292,12 +311,15 @@ function registerSimpleExtension(
   registerExtension({
     name,
     moduleName,
-    load: getSyncLifecycle(Component ?? SimpleComponent, {
-      moduleName,
-      featureName: moduleName,
-      disableTranslations: true,
-    }),
+    component: name,
     meta,
     featureFlag,
+  });
+
+  mockParcelRegistry[moduleName] ??= {};
+  mockParcelRegistry[moduleName][name] = getSyncLifecycle(Component ?? SimpleComponent, {
+    moduleName,
+    featureName: moduleName,
+    disableTranslations: true,
   });
 }

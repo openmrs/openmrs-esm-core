@@ -23,6 +23,8 @@ import {
   getExtensionSlotsConfigStore,
 } from '../../../esm-config/src';
 
+import { loadParcel } from '@openmrs/esm-dynamic-loading';
+
 vi.mock('@openmrs/esm-api', async () => {
   const original = await import('@openmrs/esm-api');
   return {
@@ -32,12 +34,29 @@ vi.mock('@openmrs/esm-api', async () => {
   };
 });
 
+type ParcelRegistry = {
+  [moduleName: string]: {
+    [componentName: string]: any;
+  };
+};
+let mockParcelRegistry: ParcelRegistry = {};
+const mockedLoadParcel = vi.mocked(loadParcel);
+
 describe('Interaction between configuration and extension systems', () => {
   beforeEach(() => {
     temporaryConfigStore.setState({ config: {} });
     configInternalStore.setState({ providedConfigs: [], schemas: {} });
     getExtensionSlotsConfigStore().setState({ slots: {} });
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
+    mockParcelRegistry = {};
+    mockedLoadParcel.mockClear();
+    mockedLoadParcel.mockImplementation((moduleName, componentName) => {
+      const lifecycleFunction = mockParcelRegistry[moduleName]?.[componentName];
+      if (lifecycleFunction && typeof lifecycleFunction === 'function') {
+        return lifecycleFunction();
+      }
+      return Promise.resolve(undefined);
+    });
   });
 
   it('Config should add, order, and remove extensions within slots', async () => {
@@ -514,12 +533,15 @@ async function registerSimpleExtension(
   registerExtension({
     name,
     moduleName,
-    load: getSyncLifecycle(takesConfig ? ConfigurableComponent : SimpleComponent, {
-      moduleName,
-      featureName: moduleName,
-      disableTranslations: true,
-    }),
+    component: name,
     meta: {},
     privileges,
+  });
+
+  mockParcelRegistry[moduleName] ??= {};
+  mockParcelRegistry[moduleName][name] = getSyncLifecycle(takesConfig ? ConfigurableComponent : SimpleComponent, {
+    moduleName,
+    featureName: moduleName,
+    disableTranslations: true,
   });
 }

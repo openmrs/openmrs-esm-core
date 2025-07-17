@@ -3,6 +3,7 @@ import { mountRootParcel, type Parcel, type ParcelConfig } from 'single-spa';
 import { getExtensionNameFromId, getExtensionRegistration } from './extensions';
 import { checkStatus } from './helpers';
 import { updateInternalExtensionStore } from './store';
+import { loadParcel } from '@openmrs/esm-dynamic-loading';
 
 export interface CancelLoading {
   (): void;
@@ -32,7 +33,7 @@ export async function renderExtension(
       throw Error(`Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`);
     }
 
-    const { load, meta, moduleName, online, offline } = extensionRegistration;
+    const { meta, moduleName, online, offline, component } = extensionRegistration;
 
     if (checkStatus(online, offline)) {
       updateInternalExtensionStore((state) => {
@@ -54,11 +55,11 @@ export async function renderExtension(
         };
       });
 
-      const { default: result, ...lifecycle } = await load();
+      const lifecycle = await loadParcel(moduleName, component);
       const id = parcelCount++;
       parcel = mountRootParcel(
         renderFunction({
-          ...(result ?? lifecycle),
+          ...lifecycle,
           name: `${extensionSlotName}/${extensionName}-${id}`,
         }),
         {
