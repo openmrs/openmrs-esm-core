@@ -8,7 +8,7 @@ interface DateRangeInputGroupProps {
 }
 
 export function DateRangeInputGroup({ children }: DateRangeInputGroupProps) {
-  let state = useContext(DateRangePickerStateContext);
+  const state = useContext(DateRangePickerStateContext);
   const boundaryRef = useOnClickOutside<HTMLDivElement>(() => state?.close());
   return (
     <Group className={styles.inputGroup} ref={boundaryRef}>

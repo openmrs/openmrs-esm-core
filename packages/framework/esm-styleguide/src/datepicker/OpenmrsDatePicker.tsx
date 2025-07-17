@@ -126,7 +126,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
       }
 
       return locale;
-    }, []);
+    }, [window.i18next.language]);
 
     const calendar = useMemo(() => {
       const cal = getDefaultCalendar(locale);
