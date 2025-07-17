@@ -1,0 +1,41 @@
+@use '@carbon/styles/scss/theme';
+@use '../datepicker.module.scss' as *;
+
+.dateInputWrapper {
+  @extend .inputWrapper;
+  min-width: unset;
+  margin: 0px;
+}
+
+.pickerButton {
+  margin-inline-start: 2rem;
+}
+
+.startInput {
+  margin-left: 1rem;
+  inline-size: 5rem;
+}
+
+.endInput {
+  inline-size: 6.5rem;
+}
+
+.separator {
+  margin-inline: 0.5rem;
+}
+
+.inputGroup:has([data-placeholder]) > .separator > span {
+  color: theme.$text-disabled;
+}
+
+:global([dir='rtl']) {
+  .startInput {
+    margin-left: 0;
+    inline-size: 5rem;
+  }
+
+  .endInput {
+    padding-right: 0;
+    inline-size: 6.5rem;
+  }
+}

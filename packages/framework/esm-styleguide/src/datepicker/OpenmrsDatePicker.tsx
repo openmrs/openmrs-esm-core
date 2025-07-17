@@ -84,7 +84,7 @@ const defaultProps: OpenmrsDatePickerProps = {
   size: 'md',
 };
 
-function I18nWrapper(props: I18nProviderProps): JSX.Element {
+export function I18nWrapper(props: I18nProviderProps): JSX.Element {
   return React.createElement(I18nProvider as (props: I18nProviderProps) => JSX.Element, props);
 }
 
@@ -126,7 +126,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
       }
 
       return locale;
-    }, []);
+    }, [window.i18next.language]);
 
     const calendar = useMemo(() => {
       const cal = getDefaultCalendar(locale);
