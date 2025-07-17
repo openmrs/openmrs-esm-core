@@ -9,14 +9,13 @@
       "routeRegex": "^(?!(?:login|change-password)/?)",
       "online": true,
       "offline": true,
-      "order": 0
+      "rootDomId": "single-spa-application:esm-primary-navigation-app"
     },
     {
       "component": "redirect",
       "routeRegex": "^$",
       "online": true,
-      "offline": true,
-      "order": 0
+      "offline": true
     }
   ],
   "extensions": [

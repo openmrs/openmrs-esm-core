@@ -18,6 +18,7 @@ import {
   openmrsComponentDecorator,
   useExtensionSlotMeta,
   useRenderableExtensions,
+  SingleExtensionSlot,
 } from '.';
 
 describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
@@ -278,6 +279,37 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     render(<App />);
 
     expect(await screen.findByText('Spanish hola')).toBeInTheDocument();
+  });
+
+  it('renders SingleExtensionSlot properly', async () => {
+    const user = userEvent.setup();
+
+    function EnglishExtension({ suffix }) {
+      return <div>English{suffix}</div>;
+    }
+
+    registerSimpleExtension('English', 'esm-languages-app', EnglishExtension);
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-languages-app',
+      featureName: 'Languages',
+      disableTranslations: true,
+    })(() => {
+      const [suffix, toggleSuffix] = useReducer((suffix) => (suffix == '!' ? '?' : '!'), '!');
+      return (
+        <div>
+          <SingleExtensionSlot extensionId="English#Australian" state={{ suffix }} />
+          <button onClick={toggleSuffix}>Toggle suffix</button>
+        </div>
+      );
+    });
+
+    render(<App />);
+
+    expect(await screen.findByText(/English/)).toBeInTheDocument();
+    expect(screen.getByText(/English/)).toHaveTextContent('English!');
+    await user.click(screen.getByText('Toggle suffix'));
+    expect(screen.getByText(/English/)).toHaveTextContent('English?');
   });
 });
 

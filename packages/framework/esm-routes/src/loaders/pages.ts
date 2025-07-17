@@ -1,7 +1,7 @@
 import { type ActivityFn, pathToActiveWhen, registerApplication } from 'single-spa';
 import { registerModuleWithConfigSystem } from '@openmrs/esm-config';
 import {
-  type WorkspaceGroupDefinition,
+  WorkspaceGroupDefinition,
   type ExtensionDefinition,
   type FeatureFlagDefinition,
   type ModalDefinition,
@@ -18,7 +18,10 @@ import {
   tryRegisterFeatureFlag,
   tryRegisterModal,
   tryRegisterWorkspace,
+  tryRegisterWorkspace2,
   tryRegisterWorkspaceGroup,
+  tryRegisterWorkspaceGroups2,
+  tryRegisterWorkspaceWindows2,
 } from './components';
 
 // this is the global holder of all pages registered in the app
@@ -102,6 +105,9 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
     const availableWorkspaceGroups: Array<WorkspaceGroupDefinition> = routes.workspaceGroups ?? [];
     const availableFeatureFlags: Array<FeatureFlagDefinition> = routes.featureFlags ?? [];
+    const availableWorkspaceGroups2 = routes.workspaceGroups2 ?? [];
+    const availableWorkspaceWindows2 = routes.workspaceWindows2 ?? [];
+    const availableWorkspaces2 = routes.workspaces2 ?? [];
 
     routes.pages?.forEach((p) => {
       if (
@@ -112,7 +118,6 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       ) {
         pages.push({
           ...p,
-          order: p.order ?? Number.MAX_SAFE_INTEGER,
           appName,
         });
       } else {
@@ -160,7 +165,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         );
       }
     });
-
+    
     availableWorkspaceGroups.forEach((workspaceGroup) => {
       if (workspaceGroup && typeof workspaceGroup === 'object' && Object.hasOwn(workspaceGroup, 'name')) {
         tryRegisterWorkspaceGroup(appName, workspaceGroup);
@@ -171,6 +176,9 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         );
       }
     });
+    tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
+    tryRegisterWorkspaceWindows2(availableWorkspaceWindows2);
+    tryRegisterWorkspace2(appName, availableWorkspaces2);
 
     availableFeatureFlags.forEach((featureFlag) => {
       if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'flagName')) {
@@ -195,10 +203,6 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
  */
 export function finishRegisteringAllApps() {
   pages.sort((a, b) => {
-    let sort = a.order - b.order;
-    if (sort != 0) {
-      return sort;
-    }
     return a.appName.localeCompare(b.appName, 'en');
   });
 
@@ -215,9 +219,17 @@ export function finishRegisteringAllApps() {
     const index = appIndices.get(page.appName);
 
     const name = `${page.appName}-page-${index}`;
-    const div = document.createElement('div');
-    div.id = `single-spa-application:${name}`;
-    document.body.appendChild(div);
+    if (page.rootDomId) {
+      if (!page.rootDomId.startsWith('single-spa-application:')) {
+        throw new Error(
+          `The rootDomId for page ${name} must start with 'single-spa-application:'. Please fix the routes.json file.`,
+        );
+      }
+    } else {
+      const div = document.createElement('div');
+      div.id = `single-spa-application:${name}`;
+      document.body.appendChild(div);
+    }
     tryRegisterPage(name, page);
   }
 }

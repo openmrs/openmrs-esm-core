@@ -136,9 +136,9 @@ export type PageDefinition = {
    */
   offline?: boolean;
   /**
-   * Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
+   * If specified, the page will be rendered at the DOM element with this ID.
    */
-  order?: number;
+  rootDomId?: string;
 } & (
   | {
       /**
@@ -174,7 +174,7 @@ export type PageDefinition = {
  * @internal
  * A definition of a page after the app has been registered.
  */
-export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
+export type RegisteredPageDefinition = PageDefinition & AppComponent;
 
 /**
  * A definition of an extension as extracted from an app's routes.json
@@ -362,6 +362,30 @@ export interface WorkspaceGroupDefinition {
   members?: Array<string>;
 }
 
+export interface WorkspaceGroupDefinition2 {
+  name: string;
+  // add config for close button to close group?
+  // add config for overlay mode? (or should that go in the Window instead?)
+}
+
+export interface WorkspaceWindowDefinition2 {
+  name: string;
+  icon?: string,
+  canHide: boolean,
+  canMaximize: boolean,
+  overlay: boolean,
+  group: string
+  order?: number;
+  width?: 'narrow' | 'wider' | 'extra-wide'; 
+}
+
+export interface WorkspaceDefinition2 {
+  name: string;
+  component: string;
+  window: string;
+}
+
+
 /**
  * A definition of a feature flag extracted from the routes.json
  */
@@ -404,6 +428,12 @@ export interface OpenmrsAppRoutes {
   workspaces?: Array<WorkspaceDefinition>;
   /** An array of all workspace groups supported by this frontend module. */
   workspaceGroups?: Array<WorkspaceGroupDefinition>;
+
+  workspaceGroups2?: Array<WorkspaceGroupDefinition2>;
+
+  workspaceWindows2?: Array<WorkspaceWindowDefinition2>;
+
+  workspaces2?: Array<WorkspaceDefinition2>;
 }
 
 /**
