@@ -19,6 +19,7 @@ export interface ExtensionRegistration {
   readonly offline?: boolean;
   readonly privileges?: string | Array<string>;
   readonly featureFlag?: string;
+  readonly displayExpression?: string;
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {
@@ -90,6 +91,22 @@ export interface ConnectedExtension {
   /** The extension's config. Note that this will be `null` until the slot is mounted. */
   readonly config: Readonly<ConfigObject> | null;
 }
+
+export interface ExtensionExpressionContextStore {
+  [key: string]: any;
+}
+
+const extensionExpressionContextStore = createGlobalStore<ExtensionExpressionContextStore>(
+  'extensionExpressionContext',
+  {},
+);
+
+/**
+ * This returns a store that modules can use to provide context data
+ * for extension display expressions.
+ */
+export const getExtensionExpressionContextStore = () =>
+  getGlobalStore<ExtensionExpressionContextStore>('extensionExpressionContext', {});
 
 const extensionInternalStore = createGlobalStore<ExtensionInternalStore>('extensionsInternal', {
   slots: {},

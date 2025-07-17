@@ -77,6 +77,7 @@ supported, so the extension will not be loaded.`,
       online: extension.online ?? true,
       offline: extension.offline ?? false,
       featureFlag: extension.featureFlag,
+      displayExpression: extension.displayExpression,
     });
   }
 

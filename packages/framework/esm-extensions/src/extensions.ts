@@ -1,5 +1,4 @@
-/** @module @category Extension */
-/*
+/** @module @category Extension*
  * We have the following extension modes:
  *
  * - attached (set via code in form of: attach, detach, ...)
@@ -8,7 +7,9 @@
  * - connected (computed from assigned using connectivity and online / offline)
  */
 
-import { type Session, type SessionStore, sessionStore, userHasAccess } from '@openmrs/esm-api';
+/* eslint-disable no-console */
+
+import { type Session, type SessionStore, sessionStore, userHasAccess, openmrsFetch } from '@openmrs/esm-api';
 import {
   type ExtensionsConfigStore,
   type ExtensionSlotConfig,
@@ -26,6 +27,7 @@ import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
 import { isEqual, merge } from 'lodash-es';
 import { checkStatusFor } from './helpers';
+
 import {
   type AssignedExtension,
   type ExtensionRegistration,
@@ -35,12 +37,14 @@ import {
   getExtensionStore,
   getExtensionInternalStore,
   updateInternalExtensionStore,
+  getExtensionExpressionContextStore,
 } from './store';
 
 const extensionInternalStore = getExtensionInternalStore();
 const extensionStore = getExtensionStore();
 const slotsConfigStore = getExtensionSlotsConfigStore();
 const extensionsConfigStore = getExtensionsConfigStore();
+const extensionExpressionContextStore = getExtensionExpressionContextStore();
 
 // Keep the output store updated
 function updateExtensionOutputStore(
@@ -49,6 +53,7 @@ function updateExtensionOutputStore(
   extensionsConfigStore: ExtensionsConfigStore,
   featureFlagStore: FeatureFlagsStore,
   sessionStore: SessionStore,
+  extensionExpressionContext: any,
 ) {
   const slots: Record<string, ExtensionSlotState> = {};
 
@@ -67,6 +72,7 @@ function updateExtensionOutputStore(
       enabledFeatureFlags,
       isOnline,
       sessionStore.session,
+      extensionExpressionContext,
     );
     slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
   }
@@ -83,6 +89,7 @@ extensionInternalStore.subscribe((internalStore) => {
     extensionsConfigStore.getState(),
     featureFlagsStore.getState(),
     sessionStore.getState(),
+    extensionExpressionContextStore.getState(),
   );
 });
 
@@ -93,6 +100,7 @@ slotsConfigStore.subscribe((slotConfigs) => {
     extensionsConfigStore.getState(),
     featureFlagsStore.getState(),
     sessionStore.getState(),
+    extensionExpressionContextStore.getState(),
   );
 });
 
@@ -103,6 +111,7 @@ extensionsConfigStore.subscribe((extensionConfigs) => {
     extensionConfigs,
     featureFlagsStore.getState(),
     sessionStore.getState(),
+    extensionExpressionContextStore.getState(),
   );
 });
 
@@ -113,6 +122,7 @@ featureFlagsStore.subscribe((featureFlagStore) => {
     extensionsConfigStore.getState(),
     featureFlagStore,
     sessionStore.getState(),
+    extensionExpressionContextStore.getState(),
   );
 });
 
@@ -123,6 +133,18 @@ sessionStore.subscribe((session) => {
     extensionsConfigStore.getState(),
     featureFlagsStore.getState(),
     session,
+    extensionExpressionContextStore.getState(),
+  );
+});
+
+extensionExpressionContextStore.subscribe((context) => {
+  updateExtensionOutputStore(
+    extensionInternalStore.getState(),
+    slotsConfigStore.getState(),
+    extensionsConfigStore.getState(),
+    featureFlagsStore.getState(),
+    sessionStore.getState(),
+    context,
   );
 });
 
@@ -133,11 +155,98 @@ function updateOutputStoreToCurrent() {
     extensionsConfigStore.getState(),
     featureFlagsStore.getState(),
     sessionStore.getState(),
+    extensionExpressionContextStore.getState(),
   );
 }
 
 updateOutputStoreToCurrent();
 subscribeConnectivityChanged(updateOutputStoreToCurrent);
+
+// Automatic patient context management
+let currentPatientUuid: string | null = null;
+let patientDataCache: { [uuid: string]: any } = {};
+
+async function fetchPatientData(patientUuid: string) {
+  // Check cache first
+  if (patientDataCache[patientUuid]) {
+    return patientDataCache[patientUuid];
+  }
+
+  try {
+    const response = await openmrsFetch(`/ws/rest/v1/patient/${patientUuid}`);
+    const patientData = response.data;
+
+    // Cache the result
+    patientDataCache[patientUuid] = patientData;
+
+    return patientData;
+  } catch (error) {
+    return null;
+  }
+}
+
+function updatePatientContext() {
+  const patientUuid = getPatientUuidFromUrl();
+
+  if (patientUuid !== currentPatientUuid) {
+    currentPatientUuid = patientUuid;
+
+    if (patientUuid) {
+      // Fetch patient data and update context
+      fetchPatientData(patientUuid).then((patientData) => {
+        // Only update if we're still on the same patient page
+        if (patientData && currentPatientUuid === patientUuid) {
+          const currentContext = extensionExpressionContextStore.getState();
+          const newContext: any = {
+            ...currentContext,
+            patient: patientData,
+            patientUuid: patientUuid,
+          };
+
+          extensionExpressionContextStore.setState(newContext);
+        }
+      });
+    } else {
+      // Clear patient context when not on patient page
+      const currentContext = extensionExpressionContextStore.getState();
+      const newContext = { ...currentContext };
+      delete newContext.patient;
+      delete newContext.patientUuid;
+      extensionExpressionContextStore.setState(newContext);
+    }
+  }
+}
+
+// Update patient context on URL changes
+function handleUrlChange() {
+  updatePatientContext();
+  updateOutputStoreToCurrent();
+}
+
+// Listen for URL changes
+window.addEventListener('popstate', handleUrlChange);
+
+// Override pushState and replaceState to detect programmatic navigation
+const originalPushState = history.pushState;
+const originalReplaceState = history.replaceState;
+
+history.pushState = function (...args) {
+  originalPushState.apply(history, args);
+  setTimeout(handleUrlChange, 0);
+};
+
+history.replaceState = function (...args) {
+  originalReplaceState.apply(history, args);
+  setTimeout(handleUrlChange, 0);
+};
+
+// Initial setup
+updatePatientContext();
+
+function getPatientUuidFromUrl() {
+  const match = /\/patient\/([a-zA-Z0-9\-]+)\/?/.exec(location.pathname);
+  return match && match[1];
+}
 
 function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
   return {
@@ -328,6 +437,7 @@ function getAssignedExtensionsFromSlotData(
   enabledFeatureFlags: Array<string>,
   isOnline: boolean,
   session: Session | null,
+  extensionExpressionContext: any,
 ): Array<AssignedExtension> {
   const attachedIds = internalState.slots[slotName].attachedIds;
   const assignedIds = calculateAssignedIds(config, attachedIds);
@@ -357,15 +467,34 @@ function getAssignedExtensionsFromSlotData(
         }
       }
 
-      const displayConditionExpression = extensionConfig?.['Display conditions']?.expression ?? null;
+      const displayConditionExpression =
+        extensionConfig?.['Display expression']?.expression ??
+        (typeof extension.displayExpression === 'string'
+          ? extension.displayExpression
+          : (extension.displayExpression as any)?.expression) ??
+        null;
+
       if (displayConditionExpression !== null) {
+        // Handle case where displayConditionExpression is still an object
+        let expressionString = displayConditionExpression;
+        if (typeof displayConditionExpression === 'object' && displayConditionExpression?.expression) {
+          expressionString = displayConditionExpression.expression;
+        }
+
         try {
-          if (!evaluateAsBoolean(displayConditionExpression, { session })) {
+          // Get patient UUID from URL and add to evaluation context
+          const patientUuid = getPatientUuidFromUrl();
+          let evaluationContext: any = { ...extensionExpressionContext, session };
+
+          if (patientUuid) {
+            evaluationContext = { ...extensionExpressionContext, session, patientUuid };
+          }
+          const result = evaluateAsBoolean(expressionString, evaluationContext);
+          // if the expression evaluates to false, we do not display the extension
+          if (!result) {
             continue;
           }
-        } catch (e) {
-          console.error(`Error while evaluating expression ${displayConditionExpression}`, e);
-          // if the expression has an error, we do not display the extension
+        } catch (error) {
           continue;
         }
       }
@@ -406,6 +535,7 @@ export function getAssignedExtensions(slotName: string): Array<AssignedExtension
   const extensionStoreState = extensionsConfigStore.getState();
   const featureFlagState = featureFlagsStore.getState();
   const sessionState = sessionStore.getState();
+  const extensionExpressionContext = extensionExpressionContextStore.getState();
   const isOnline = isOnlineFn();
   const enabledFeatureFlags = Object.entries(featureFlagState.flags)
     .filter(([, { enabled }]) => enabled)
@@ -419,6 +549,7 @@ export function getAssignedExtensions(slotName: string): Array<AssignedExtension
     enabledFeatureFlags,
     isOnline,
     sessionState.session,
+    extensionExpressionContext,
   );
 }
 
