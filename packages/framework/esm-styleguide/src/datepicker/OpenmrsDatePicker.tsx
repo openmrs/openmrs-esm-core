@@ -84,7 +84,7 @@ const defaultProps: OpenmrsDatePickerProps = {
   size: 'md',
 };
 
-function I18nWrapper(props: I18nProviderProps): JSX.Element {
+export function I18nWrapper(props: I18nProviderProps): JSX.Element {
   return React.createElement(I18nProvider as (props: I18nProviderProps) => JSX.Element, props);
 }
 
