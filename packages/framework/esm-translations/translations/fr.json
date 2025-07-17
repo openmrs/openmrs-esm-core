@@ -57,7 +57,7 @@
   "stateProvince": "État",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Inconnu",
-  "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
+  "unsavedChangesInWorkspace": "Il se peut que des modifications non enregistrées aient été apportées à « {{NomEspace}} ». Veuillez les enregistrer avant d'ouvrir un autre espace de travail.",
   "unsavedChangesTitleText": "Modifications non enregistrés",
   "workspaceHeader": "En-tête de l'espace de travail"
 }
