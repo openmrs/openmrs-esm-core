@@ -304,7 +304,7 @@ yargs.command(
       .option('asset', {
         default: [],
         describe:
-          'The path to CSS or HTML assets to copy into the build directory and include in <link> and <script> tags in generated HTML. Can be used multiple times.',
+          'The path to CSS or JS assets to copy into the build directory and include in <link> and <script> tags in generated HTML. Can be used multiple times.',
         type: 'array',
       }),
   async (args) =>

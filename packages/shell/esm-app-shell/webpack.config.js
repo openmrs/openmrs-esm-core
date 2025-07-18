@@ -40,7 +40,7 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || '')
   .filter((url) => url.length > 0)
   .map((url) => JSON.stringify(url))
   .join(', ');
-const openmrsHtmlCssAssets = (process.env.OMRS_HTML_CSS_ASSETS || '')
+const openmrsHtmlCssAssets = (process.env.OMRS_JS_CSS_ASSETS || '')
   .split(';')
   .filter((filePath) => filePath.length > 0);
 
@@ -141,9 +141,7 @@ module.exports = (env, argv = []) => {
     });
   }
 
-  openmrsHtmlCssAssets.forEach(asset => {
-    appPatterns.push({from: asset, to: dirname(asset) });
-  })
+  const assetsPatterns = openmrsHtmlCssAssets.map(asset => ({from: asset, to: dirname(asset)}));
 
   return {
     entry: resolve(__dirname, 'src/index.ts'),
@@ -356,7 +354,7 @@ module.exports = (env, argv = []) => {
         ],
       }),
       new CopyWebpackPlugin({
-        patterns: [{ from: resolve(__dirname, 'src/assets') }, ...appPatterns],
+        patterns: [{ from: resolve(__dirname, 'src/assets') }, ...appPatterns, ...assetsPatterns],
       }),
       new ModuleFederationPlugin({
         name,

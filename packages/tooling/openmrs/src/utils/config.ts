@@ -90,7 +90,7 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
   }
 
   if (Array.isArray(options.assets)) {
-    variables.OMRS_HTML_CSS_ASSETS = options.assets.join(';');
+    variables.OMRS_JS_CSS_ASSETS = options.assets.join(';');
   }
 
   setEnvVariables(variables);
