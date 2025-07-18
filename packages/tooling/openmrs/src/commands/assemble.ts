@@ -1,5 +1,5 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
 import { Readable } from 'node:stream';
 import { prompt, type Question } from 'inquirer';
@@ -93,7 +93,9 @@ async function readConfig(
         // be added back by providing another config override
         if (Array.isArray(newConfig.frontendModuleExcludes)) {
           newConfig.frontendModuleExcludes.forEach((exclude) => {
-            typeof exclude === 'string' && config.frontendModules[exclude] && delete config.frontendModules[exclude];
+            if (typeof exclude === 'string' && config.frontendModules[exclude]) {
+              delete config.frontendModules[exclude];
+            }
           });
         }
 
@@ -239,6 +241,7 @@ export async function runAssemble(args: AssembleArgs) {
   };
 
   const versionManifest = {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     coreVersion: require(resolve(__dirname, '..', '..', 'package.json')).version,
     frontendModules: {},
   };
@@ -302,9 +305,9 @@ export async function runAssemble(args: AssembleArgs) {
   }
 
   if (args.configFiles && args.configFiles.length > 0) {
-    const assembledConfig = args.configFiles.reduce(async (merged, file) => {
+    const assembledConfig = args.configFiles.reduce((merged, file) => {
       try {
-        const config = JSON.parse(await readFile(file, 'utf8'));
+        const config = JSON.parse(readFileSync(file, 'utf8'));
         return merge(merged, config);
       } catch (e) {
         logWarn(`Error while processing config file ${file}: ${e}`);

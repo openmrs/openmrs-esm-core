@@ -1,63 +1,45 @@
-[@openmrs/esm-framework](../API.md) / ShowNotificationEvent
+[O3 Framework](../API.md) / ShowNotificationEvent
 
 # Interface: ShowNotificationEvent
 
-## Table of contents
-
-### Properties
-
-- [action](ShowNotificationEvent.md#action)
-- [description](ShowNotificationEvent.md#description)
-- [kind](ShowNotificationEvent.md#kind)
-- [millis](ShowNotificationEvent.md#millis)
-- [title](ShowNotificationEvent.md#title)
+Defined in: packages/framework/esm-globals/dist/events.d.ts:16
 
 ## Properties
 
-### action
+### action?
 
-• `Optional` **action**: `any`
+> `optional` **action**: `any`
 
-#### Defined in
+Defined in: packages/framework/esm-globals/dist/events.d.ts:20
 
-packages/framework/esm-globals/dist/events.d.ts:20
-
-___
+***
 
 ### description
 
-• **description**: `any`
+> **description**: `any`
 
-#### Defined in
+Defined in: packages/framework/esm-globals/dist/events.d.ts:17
 
-packages/framework/esm-globals/dist/events.d.ts:17
+***
 
-___
+### kind?
 
-### kind
+> `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
-• `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
+Defined in: packages/framework/esm-globals/dist/events.d.ts:18
 
-#### Defined in
+***
 
-packages/framework/esm-globals/dist/events.d.ts:18
+### millis?
 
-___
+> `optional` **millis**: `number`
 
-### millis
+Defined in: packages/framework/esm-globals/dist/events.d.ts:21
 
-• `Optional` **millis**: `number`
+***
 
-#### Defined in
+### title?
 
-packages/framework/esm-globals/dist/events.d.ts:21
+> `optional` **title**: `string`
 
-___
-
-### title
-
-• `Optional` **title**: `string`
-
-#### Defined in
-
-packages/framework/esm-globals/dist/events.d.ts:19
+Defined in: packages/framework/esm-globals/dist/events.d.ts:19

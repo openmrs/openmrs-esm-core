@@ -1,40 +1,29 @@
-[@openmrs/esm-framework](../API.md) / OnImportMapChangedMessage
+[O3 Framework](../API.md) / OnImportMapChangedMessage
 
 # Interface: OnImportMapChangedMessage
 
-## Hierarchy
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L29)
 
-- [`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md)<``"onImportMapChanged"``\>
+## Extends
 
-  ↳ **`OnImportMapChangedMessage`**
+- [`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md)\<`"onImportMapChanged"`\>
 
-## Table of contents
-
-### Offline Properties
-
-- [importMap](OnImportMapChangedMessage.md#importmap)
-- [type](OnImportMapChangedMessage.md#type)
-
-## Offline Properties
+## Properties
 
 ### importMap
 
-• **importMap**: [`ImportMap`](ImportMap.md)
+> **importMap**: [`ImportMap`](ImportMap.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L30)
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L30)
-
-___
+***
 
 ### type
 
-• **type**: ``"onImportMapChanged"``
+> **type**: `"onImportMapChanged"`
+
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
 
 #### Inherited from
 
-[OmrsServiceWorkerMessage](OmrsServiceWorkerMessage.md).[type](OmrsServiceWorkerMessage.md#type)
-
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+[`OmrsServiceWorkerMessage`](OmrsServiceWorkerMessage.md).[`type`](OmrsServiceWorkerMessage.md#type)

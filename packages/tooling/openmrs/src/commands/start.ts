@@ -43,6 +43,7 @@ export function runStart(args: StartArgs) {
     logInfo(`SPA available at ${pageUrl}`);
 
     if (open) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const open = require('open');
 
       open(pageUrl, { wait: false }).catch(() => {

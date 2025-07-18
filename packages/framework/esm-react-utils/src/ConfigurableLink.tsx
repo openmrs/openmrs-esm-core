@@ -35,19 +35,16 @@ function handleClick(
  * @noInheritDoc
  */
 export interface ConfigurableLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  /** The target path or URL. Supports interpolation. See [[navigate]] */
   to: string;
+  /** A dictionary of values to interpolate into the URL, in addition to the default keys `openmrsBase` and `openmrsSpaBase`. */
   templateParams?: TemplateParams;
+  /** A callback to be called just before navigation occurs */
   onBeforeNavigate?: (event: MouseEvent) => void;
 }
 
 /**
  * A React link component which calls [[navigate]] when clicked
- *
- * @param to The target path or URL. Supports interpolation. See [[navigate]]
- * @param templateParams: A dictionary of values to interpolate into the URL, in addition to the default keys `openmrsBase` and `openmrsSpaBase`.
- * @param onBeforeNavigate A callback to be called just before navigation occurs
- * @param children Inline elements within the link
- * @param otherProps Any other valid props for an <a> tag except `href` and `onClick`
  */
 export function ConfigurableLink({
   to,

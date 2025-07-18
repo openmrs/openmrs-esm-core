@@ -57,7 +57,9 @@ export async function importDynamic<T = any>(
     }),
   ]);
 
-  timeout && clearTimeout(timeout);
+  if (timeout) {
+    clearTimeout(timeout);
+  }
 
   const jsPackageSlug = slugify(jsPackage);
 
@@ -209,7 +211,7 @@ function loadScript(
   reject: (reason?: any) => void,
 ) {
   const scriptElement = document.head.querySelector(`script[src="${url}"]`);
-  let scriptLoading: Set<String> = window[OPENMRS_SCRIPT_LOADING];
+  let scriptLoading: Set<string> = window[OPENMRS_SCRIPT_LOADING];
   if (!scriptLoading) {
     scriptLoading = window[OPENMRS_SCRIPT_LOADING] = new Set([]);
   }
@@ -233,8 +235,14 @@ function loadScript(
     finishScriptLoading = () => {
       clearTimeout(loadTimeout);
       scriptLoading.delete(url);
-      loadFn && element.removeEventListener('load', loadFn);
-      errFn && element.removeEventListener('error', errFn);
+
+      if (loadFn) {
+        element.removeEventListener('load', loadFn);
+      }
+
+      if (errFn) {
+        element.removeEventListener('error', errFn);
+      }
     };
 
     loadFn = () => {
@@ -258,8 +266,13 @@ function loadScript(
       let loadFn: () => void, errFn: (ev: ErrorEvent) => void, finishScriptLoading: () => void;
 
       finishScriptLoading = () => {
-        loadFn && scriptElement.removeEventListener('load', loadFn);
-        errFn && scriptElement.removeEventListener('error', errFn);
+        if (loadFn) {
+          scriptElement.removeEventListener('load', loadFn);
+        }
+
+        if (errFn) {
+          scriptElement.removeEventListener('error', errFn);
+        }
       };
 
       loadFn = () => {
