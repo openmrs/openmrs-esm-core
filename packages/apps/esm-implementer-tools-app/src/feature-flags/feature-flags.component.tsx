@@ -9,6 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  Theme,
   Toggle,
 } from '@carbon/react';
 import { useStore } from '@openmrs/esm-framework';
@@ -51,49 +52,51 @@ export function FeatureFlags() {
   }, [flags]);
 
   return (
-    <div className={styles.container}>
-      <DataTable rows={[]} headers={headers}>
-        {({ headers, getTableProps, getHeaderProps }) => (
-          <TableContainer title="">
-            <Table {...getTableProps()}>
-              <TableHead>
-                <TableRow>
-                  {headers.map((header) => (
-                    <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
+    <Theme theme="g90">
+      <div className={styles.container}>
+        <DataTable rows={[]} headers={headers}>
+          {({ headers, getTableProps, getHeaderProps }) => (
+            <TableContainer title="">
+              <Table {...getTableProps()}>
+                <TableHead>
+                  <TableRow>
+                    {headers.map((header) => (
+                      <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((flag) => (
+                    <Fragment key={flag.name}>
+                      <TableRow>
+                        <TableCell>
+                          <div id={`flag-label-${flag.name}`} className={styles.header}>
+                            {flag.label}
+                          </div>
+                          <div className={styles.helper}>{flag.name}</div>
+                        </TableCell>
+                        <TableCell>
+                          <span>{flag.description}</span>
+                        </TableCell>
+                        <TableCell>
+                          <Toggle
+                            id={`feature-flag-${flag.name}-toggle`}
+                            aria-labelledby={`flag-label-${flag.name}`}
+                            labelText="" // using aria-labelledby instead
+                            hideLabel={true}
+                            toggled={flag.enabled}
+                            onToggle={() => setFeatureFlag(flag.name, !flag.enabled)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    </Fragment>
                   ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((flag) => (
-                  <Fragment key={flag.name}>
-                    <TableRow>
-                      <TableCell>
-                        <div id={`flag-label-${flag.name}`} className={styles.header}>
-                          {flag.label}
-                        </div>
-                        <div className={styles.helper}>{flag.name}</div>
-                      </TableCell>
-                      <TableCell>
-                        <span>{flag.description}</span>
-                      </TableCell>
-                      <TableCell>
-                        <Toggle
-                          id={`feature-flag-${flag.name}-toggle`}
-                          aria-labelledby={`flag-label-${flag.name}`}
-                          labelText="" // using aria-labelledby instead
-                          hideLabel={true}
-                          toggled={flag.enabled}
-                          onToggle={() => setFeatureFlag(flag.name, !flag.enabled)}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  </Fragment>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </DataTable>
-    </div>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </DataTable>
+      </div>
+    </Theme>
   );
 }

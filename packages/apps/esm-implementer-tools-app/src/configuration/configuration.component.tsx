@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Column, FlexGrid, Row, TextInput, Toggle } from '@carbon/react';
+import { Button, Column, FlexGrid, Row, TextInput, Theme, Toggle } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { cloneDeep, isEmpty } from 'lodash-es';
 import type { Config } from '@openmrs/esm-framework/src/internal';
@@ -116,7 +116,7 @@ export const Configuration: React.FC = () => {
 
   const mainContentHeight = isConfigToolbarOpen ? 'calc(50vh - 7rem)' : 'calc(50vh - 2rem)';
   return (
-    <>
+    <Theme theme="g90">
       <div className={styles.tools}>
         <div className={styles.toggleToolbarButton}>
           <OpenOrCloseButton isConfigToolbarOpen={isConfigToolbarOpen} toggleIsToolbarOpen={toggleIsToolbarOpen} />
@@ -197,6 +197,6 @@ export const Configuration: React.FC = () => {
           </>
         )}
       </div>
-    </>
+    </Theme>
   );
 };
