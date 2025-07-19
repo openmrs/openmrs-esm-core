@@ -4,7 +4,7 @@
 
 > **getDefaultCalendar**(`locale`): `undefined` \| `CalendarIdentifier`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:48
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:50
 
 Retrieves the default calendar for the specified locale if any.
 

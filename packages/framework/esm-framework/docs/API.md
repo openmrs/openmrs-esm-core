@@ -269,6 +269,7 @@
 - [formatTime](functions/formatTime.md)
 - [formatDatetime](functions/formatDatetime.md)
 - [convertToLocaleCalendar](functions/convertToLocaleCalendar.md)
+- [formatDuration](functions/formatDuration.md)
 
 ## Dynamic Loading
 
