@@ -4,7 +4,7 @@
 
 > **isOmrsDateToday**(`date`): `boolean`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:18
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:17
 
 ## Parameters
 

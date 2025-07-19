@@ -4,4 +4,4 @@
 
 > **FormatDateMode** = `"standard"` \| `"wide"`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:51
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:50

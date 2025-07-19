@@ -4,7 +4,7 @@
 
 > **toOmrsIsoString**(`date`, `toUTC?`): `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:27
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:26
 
 Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
