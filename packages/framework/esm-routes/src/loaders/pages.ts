@@ -19,7 +19,7 @@ import {
   tryRegisterWorkspace,
   tryRegisterWorkspaceGroup,
 } from './components';
-import { loadParcel } from '@openmrs/esm-dynamic-loading';
+import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 
 // this is the global holder of all pages registered in the app
 const pages: Array<RegisteredPageDefinition> = [];
@@ -257,6 +257,6 @@ To fix this, ensure that you define the "component" field inside the page defini
   }
 
   const activityFn = wrapPageActivityFn(getActivityFn(route), page);
-  const loader = () => loadParcel(page.appName, page.component);
+  const loader = () => loadLifeCycles(page.appName, page.component);
   registerApplication(appName, loader, activityFn);
 }

@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 
-import { loadParcel } from '@openmrs/esm-dynamic-loading';
+import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 import {
   attach,
   getExtensionNameFromId,
@@ -28,14 +28,14 @@ type ParcelRegistry = {
   };
 };
 let mockParcelRegistry: ParcelRegistry = {};
-const mockedLoadParcel = vi.mocked(loadParcel);
+const mockedLoadLifeCycles = vi.mocked(loadLifeCycles);
 
 describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   beforeEach(() => {
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
     mockParcelRegistry = {};
-    mockedLoadParcel.mockClear();
-    mockedLoadParcel.mockImplementation((moduleName, componentName) => {
+    mockedLoadLifeCycles.mockClear();
+    mockedLoadLifeCycles.mockImplementation((moduleName, componentName) => {
       const lifecycleFunction = mockParcelRegistry[moduleName]?.[componentName];
       if (lifecycleFunction && typeof lifecycleFunction === 'function') {
         return lifecycleFunction();

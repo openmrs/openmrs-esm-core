@@ -3663,6 +3663,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-dynamic-loading@workspace:packages/framework/esm-dynamic-loading"
   dependencies:
+    "@openmrs/esm-config": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-translations": "workspace:*"
     "@swc/cli": "npm:^0.7.7"

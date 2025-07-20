@@ -23,7 +23,7 @@ import {
   getExtensionSlotsConfigStore,
 } from '../../../esm-config/src';
 
-import { loadParcel } from '@openmrs/esm-dynamic-loading';
+import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 
 vi.mock('@openmrs/esm-api', async () => {
   const original = await import('@openmrs/esm-api');
@@ -40,7 +40,7 @@ type ParcelRegistry = {
   };
 };
 let mockParcelRegistry: ParcelRegistry = {};
-const mockedLoadParcel = vi.mocked(loadParcel);
+const mockedLoadLifeCycles = vi.mocked(loadLifeCycles);
 
 describe('Interaction between configuration and extension systems', () => {
   beforeEach(() => {
@@ -49,8 +49,8 @@ describe('Interaction between configuration and extension systems', () => {
     getExtensionSlotsConfigStore().setState({ slots: {} });
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
     mockParcelRegistry = {};
-    mockedLoadParcel.mockClear();
-    mockedLoadParcel.mockImplementation((moduleName, componentName) => {
+    mockedLoadLifeCycles.mockClear();
+    mockedLoadLifeCycles.mockImplementation((moduleName, componentName) => {
       const lifecycleFunction = mockParcelRegistry[moduleName]?.[componentName];
       if (lifecycleFunction && typeof lifecycleFunction === 'function') {
         return lifecycleFunction();

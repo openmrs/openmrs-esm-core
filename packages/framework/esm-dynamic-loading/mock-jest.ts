@@ -1,3 +1,3 @@
 import { jest } from '@jest/globals';
 
-export const loadParcel = jest.fn();
+export const loadLifeCycles = jest.fn();

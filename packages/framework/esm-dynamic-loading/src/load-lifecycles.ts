@@ -17,7 +17,7 @@ type Module = Omit<Record<string, () => LifeCycles | Promise<LifeCycles>>, 'star
 const initializedApps = new Map<string, Promise<unknown>>();
 
 /**
- * This function loads a single-spa parcel from the given app. The parcel should be
+ * This function loads a single-spa Lifecycles from the given app. The Lifecycles should be
  * created using `getAsyncLifecycle()` or `getSyncLifecycle()` and exported in the app's
  * index.ts file.
  * The function is lazy and ensures that the appropriate module is loaded,
@@ -32,7 +32,7 @@ const initializedApps = new Map<string, Promise<unknown>>();
  * or omitted to implicitly use routesAppName
  *
  */
-export async function loadParcel(routesAppName: string, fullComponentName: string): Promise<LifeCycles> {
+export async function loadLifeCycles(routesAppName: string, fullComponentName: string): Promise<LifeCycles> {
   const poundIndex = fullComponentName.indexOf('#');
   const isNamespaced = poundIndex >= 0;
   const appName = isNamespaced ? fullComponentName.substring(0, poundIndex) : routesAppName;

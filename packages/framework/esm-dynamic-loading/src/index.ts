@@ -1,2 +1,2 @@
 export * from './dynamic-loading';
-export * from './load-parcel';
+export * from './load-lifecycles';

@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react';
 import { mountRootParcel } from 'single-spa';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { getWorkspaceGroupStore } from '../workspaces';
-import { loadParcel } from '@openmrs/esm-dynamic-loading';
+import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 
 const mockFn = vi.fn();
 
@@ -16,10 +16,6 @@ vi.mock('single-spa-react/parcel', () => ({
   }),
 }));
 
-vi.mock('@openmrs/esm-dynamic-loading', () => ({
-  loadParcel: vi.fn(),
-}));
-
 describe('WorkspaceRenderer', () => {
   it('should render workspace', async () => {
     const mockCloseWorkspace = vi.fn();
@@ -27,7 +23,7 @@ describe('WorkspaceRenderer', () => {
     const mockPromptBeforeClosing = vi.fn();
     const mockSetTitle = vi.fn();
 
-    vi.mocked(loadParcel).mockImplementation(() => Promise.resolve({ default: 'file-content' } as any));
+    vi.mocked(loadLifeCycles).mockImplementation(() => Promise.resolve({ default: 'file-content' } as any));
 
     getWorkspaceGroupStore('test-sidebar-store')?.setState({
       // Testing that the workspace group state should be overrode by additionalProps
@@ -55,7 +51,7 @@ describe('WorkspaceRenderer', () => {
     );
 
     expect(screen.getByText('Loading ...')).toBeInTheDocument();
-    expect(loadParcel).toHaveBeenCalled();
+    expect(loadLifeCycles).toHaveBeenCalled();
 
     await screen.findByTestId('mocked-parcel');
 

@@ -3,7 +3,7 @@ import { mountRootParcel, type Parcel, type ParcelConfig } from 'single-spa';
 import { getExtensionNameFromId, getExtensionRegistration } from './extensions';
 import { checkStatus } from './helpers';
 import { updateInternalExtensionStore } from './store';
-import { loadParcel } from '@openmrs/esm-dynamic-loading';
+import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 
 export interface CancelLoading {
   (): void;
@@ -55,7 +55,7 @@ export async function renderExtension(
         };
       });
 
-      const lifecycle = await loadParcel(moduleName, component);
+      const lifecycle = await loadLifeCycles(moduleName, component);
       const id = parcelCount++;
       parcel = mountRootParcel(
         renderFunction({
