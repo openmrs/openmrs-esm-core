@@ -45,6 +45,16 @@ describe('OpenmrsDateRangePicker', () => {
     expect(text).toBe('يوم/شهر/سنة–يوم/شهر/سنة');
   });
 
+  it('should render RTL layout for Amharic locale', () => {
+    window.i18next = { language: 'am' } as i18n;
+
+    render(<OpenmrsDateRangePicker aria-label="datepicker" />);
+    const input = screen.getByLabelText('datepicker');
+    const text = input.textContent?.replace(/\u200F/g, '');
+
+    expect(text).toBe('ቀቀ/ሚሜ/ዓዓዓዓ–ቀቀ/ሚሜ/ዓዓዓዓ');
+  });
+
   it('should display prefilled date range from form value', () => {
     render(
       <OpenmrsDateRangePicker

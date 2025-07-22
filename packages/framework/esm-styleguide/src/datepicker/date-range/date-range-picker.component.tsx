@@ -170,28 +170,34 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                 )}
 
                 <DateRangeInputGroup>
-                  <DateInput
-                    className={classNames(
-                      'cds--date-picker-input__wrapper',
-                      styles.startInput,
-                      styles.dateInputWrapper,
-                    )}
-                    slot="start"
-                  >
-                    {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
-                  </DateInput>
-                  <div className={styles.separator}>
-                    <span aria-hidden="true" data-readonly>
-                      –
-                    </span>
+                  <div className={styles.inputsWrapper}>
+                    <DateInput
+                      className={classNames(
+                        'cds--date-picker-input__wrapper',
+                        styles.startInput,
+                        styles.dateInputWrapper,
+                      )}
+                      slot="start"
+                    >
+                      {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
+                    </DateInput>
+                    <div className={styles.separator}>
+                      <span aria-hidden="true" data-readonly>
+                        –
+                      </span>
+                    </div>
+                    <DateInput
+                      className={classNames(
+                        'cds--date-picker-input__wrapper',
+                        styles.endInput,
+                        styles.dateInputWrapper,
+                      )}
+                      slot="end"
+                    >
+                      {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
+                    </DateInput>
                   </div>
-                  <DateInput
-                    className={classNames('cds--date-picker-input__wrapper', styles.endInput, styles.dateInputWrapper)}
-                    slot="end"
-                  >
-                    {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
-                  </DateInput>
-                  <Button className={classNames(styles.pickerButton, styles.flatButton, styles.flatButtonMd)}>
+                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
                     <DateRangePickerIcon />
                   </Button>
                 </DateRangeInputGroup>
