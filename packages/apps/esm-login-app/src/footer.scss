@@ -11,11 +11,13 @@
   flex-wrap: wrap;
   gap: layout.$spacing-05;
   width: 100%;
+  filter: grayscale(100%);
+  opacity: 80%;
 }
 
 .logosContainer {
   display: flex;
-  max-height: layout.$spacing-07;
+  max-height: layout.$layout-07;
   justify-content: flex-end;
   flex-direction: row;
   gap: layout.$spacing-03;
@@ -85,7 +87,7 @@
 }
 
 .poweredByLogo {
-  height: layout.$spacing-07;
+  height: layout.$layout-04;
   width: auto;
   max-width: layout.$spacing-12;
   border-collapse: collapse;
