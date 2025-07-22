@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
@@ -109,6 +109,36 @@ export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange, isIn
     {isInvalid && <span>{invalidText}</span>}
   </>
 ));
+
+export const OpenmrsDateRangePicker = jest.fn(({ id, labelText, value = [], onChange, isInvalid, invalidText }) => {
+  const [inputValue, setInputValue] = useState(() => {
+    const [start, end] = value;
+    const formattedStart = start ? dayjs(start).format('DD/MM/YYYY') : 'dd/mm/yyyy';
+    const formattedEnd = end ? dayjs(end).format('DD/MM/YYYY') : 'dd/mm/yyyy';
+    return `${formattedStart}–${formattedEnd}`;
+  });
+
+  const handleChange = (e) => {
+    const raw = e.target.value;
+    setInputValue(raw);
+
+    const [startStr, endStr] = raw.split('–');
+    const start = dayjs(startStr, 'DD/MM/YYYY', true);
+    const end = dayjs(endStr, 'DD/MM/YYYY', true);
+
+    if (start.isValid() && end.isValid()) {
+      onChange?.([start.toDate(), end.toDate()]);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor={id}>{labelText}</label>
+      <input id={id} type="text" value={inputValue} onChange={handleChange} />
+      {isInvalid && <span>{invalidText}</span>}
+    </div>
+  );
+});
 
 /* esm-utils */
 export {

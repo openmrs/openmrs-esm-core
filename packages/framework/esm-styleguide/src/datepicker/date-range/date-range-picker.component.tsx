@@ -19,19 +19,15 @@ import {
 import { DateSegment } from '../DateSegment';
 import styles from './date-range-picker.module.scss';
 import { MonthYear } from '../MonthYear';
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  getDefaultCalendar,
-  getLocale,
-  useConfig,
-  type StyleguideConfigObject,
-} from '@openmrs/esm-framework';
 import { OpenmrsIntlLocaleContext } from '../locale-context';
 import { type DateInputValue, I18nWrapper } from '../OpenmrsDatePicker';
 import { DateRangePickerIcon } from './date-range-icon.component';
 import { dateToInternationalizedDate, internationalizedDateToDate } from '../utils';
 import { DateRangeInputGroup } from './date-range-input-group.component';
+import { ChevronLeftIcon, ChevronRightIcon } from '../../icons';
+import { useConfig } from '@openmrs/esm-react-utils';
+import { getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
+import { type StyleguideConfigObject } from '../../config-schema';
 
 export interface OpenmrsDateRangePickerProps
   extends Omit<DateRangePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'> {
@@ -199,7 +195,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                     <DateRangePickerIcon />
                   </Button>
                 </DateRangeInputGroup>
-                {invalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
+                {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
                 <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
                   <Dialog className={styles.dialog}>
                     <RangeCalendar minValue={minDate} maxValue={maxDate} className="cds--date-picker__calendar">
