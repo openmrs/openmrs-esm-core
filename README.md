@@ -69,9 +69,13 @@ yarn
 yarn setup
 ```
 
-> **Warning:** The `yarn setup` command can be resource-intensive. If your system hangs or you encounter resource-related issues, you can skip this step and instead run `yarn build --concurrency 1` to build the project with limited concurrency.
+> **Note:** If `yarn setup` fails or causes system resource issues, use this alternative instead:
 >
-> **Note:** Whether you use `yarn setup` or the alternative `yarn build --concurrency 1` command, you do **not** need to run the build step again. You can proceed directly to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
+> ```sh
+> yarn build --concurrency 1
+> ```
+>
+> Both commands build all the packages - once either completes successfully, you can proceed to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
 
 ### Building
 
