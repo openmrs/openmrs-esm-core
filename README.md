@@ -69,7 +69,9 @@ yarn
 yarn setup
 ```
 
-> **Warning:** The `yarn setup` command can be resource-intensive. If your system hangs or you encounter resource-related issues, you can skip this step and instead run `yarn build --concurrency 1` to build the project with limited concurrency. After the build completes, you can proceed to start the server.
+> **Warning:** The `yarn setup` command can be resource-intensive. If your system hangs or you encounter resource-related issues, you can skip this step and instead run `yarn build --concurrency 1` to build the project with limited concurrency.
+>
+> **Note:** Whether you use `yarn setup` or the alternative `yarn build --concurrency 1` command, you do **not** need to run the build step again. You can proceed directly to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
 
 ### Building
 
