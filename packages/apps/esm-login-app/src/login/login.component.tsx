@@ -21,7 +21,12 @@ export interface LoginReferrer {
 }
 
 const Login: React.FC = () => {
-  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+  const {
+    showPasswordOnSeparateScreen,
+    provider: loginProvider,
+    links: loginLinks,
+    backgroundImage,
+  } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -37,6 +42,16 @@ const Login: React.FC = () => {
   const [showPasswordField, setShowPasswordField] = useState(false);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
+
+  // Create container style with background image if configured
+  const containerStyle = backgroundImage
+    ? {
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'right',
+        backgroundSize: '40% 100%',
+      }
+    : {};
 
   useEffect(() => {
     if (!user) {
@@ -137,7 +152,7 @@ const Login: React.FC = () => {
 
   if (!loginProvider || loginProvider.type === 'basic') {
     return (
-      <div className={styles.container}>
+      <div className={styles.container} style={containerStyle}>
         <Tile className={styles.loginCard}>
           {errorMessage && (
             <div className={styles.errorMessage}>
@@ -234,7 +249,7 @@ const Login: React.FC = () => {
             </div>
           </form>
         </Tile>
-        <Footer/>
+        <Footer />
       </div>
     );
   }

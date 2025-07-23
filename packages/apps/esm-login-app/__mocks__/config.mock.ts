@@ -23,4 +23,5 @@ export const mockConfig: ConfigSchema = {
     additionalLogos: [],
   },
   showPasswordOnSeparateScreen: true,
+  backgroundImage: '',
 };

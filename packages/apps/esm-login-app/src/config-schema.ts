@@ -99,6 +99,13 @@ export const configSchema = {
     _description:
       'Whether to show the password field on a separate screen. If false, the password field will be shown on the same screen.',
   },
+  backgroundImage: {
+    _type: Type.String,
+    _default: '/openmrs/spa/login-background_en.png',
+    _description:
+      'The URL or path to the background image for the login page. If empty, no background image will be displayed.',
+    _validators: [validators.isUrl],
+  },
 };
 
 export interface ConfigSchema {
@@ -127,4 +134,5 @@ export interface ConfigSchema {
     type: 'basic' | 'oauth2';
   };
   showPasswordOnSeparateScreen: boolean;
+  backgroundImage: string;
 }
