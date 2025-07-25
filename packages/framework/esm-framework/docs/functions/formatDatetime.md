@@ -4,7 +4,7 @@
 
 > **formatDatetime**(`date`, `options?`): `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:141
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:140
 
 Formats the input into a string showing the date and time, according
 to the current locale. The `mode` parameter is as described for

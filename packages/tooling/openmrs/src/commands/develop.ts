@@ -48,16 +48,15 @@ export async function runDevelop(args: DevelopArgs) {
   const index = resolve(source, 'index.html');
   const indexContent = readFileSync(index, 'utf8')
     .replace(
-      RegExp('<script>[\\s\\S]+</script>'),
-      `
-    <script>
-        initializeSpa({
-          apiUrl: ${JSON.stringify(apiUrl)},
-          spaPath: ${JSON.stringify(spaPath)},
-          env: "development",
-          offline: ${supportOffline},
-          configUrls: ${JSON.stringify([...configUrls, ...localConfigUrls])},
-        });
+      /<script>initializeSpa\([\s\S\n]*<\/script>/m,
+      `<script>
+      initializeSpa({
+        apiUrl: ${JSON.stringify(apiUrl)},
+        spaPath: ${JSON.stringify(spaPath)},
+        env: "development",
+        offline: ${supportOffline},
+        configUrls: ${JSON.stringify([...configUrls, ...localConfigUrls])},
+      });
     </script>
   `,
     )
@@ -78,11 +77,6 @@ export async function runDevelop(args: DevelopArgs) {
   // explicitly exclude routes that we want to use other handlers for.
   //
   // express.static respects normal route declaration order.
-
-  // Return our custom `index.html` for all requests beginning with spaPath
-  // and not ending in `.js`, `.woff`, `.woff2`, `.json`, or any three-character
-  // extension.
-  const indexHtmlPathMatcher = new RegExp(`^${spaPath}/(?!.*\\.js$)(?!.*\\.woff2?$)(?!.*\\.json$)(?!.*\\....$).*$`);
 
   // Route for custom `importmap.json` goes above static assets
   if (importmap.type === 'inline') {
@@ -135,6 +129,11 @@ export async function runDevelop(args: DevelopArgs) {
       res.contentType('application/json').send(readFileSync(resolve(process.cwd(), file)));
     });
   });
+
+  // Return our custom `index.html` for all requests beginning with spaPath
+  // and not ending in `.js`, `.woff`, `.woff2`, `.json`, or any two- or three-character
+  // extension.
+  const indexHtmlPathMatcher = /\/openmrs\/spa\/(?!.*\.(js|woff2?|json|.{2,3}$)).*$/;
 
   // Route for custom `index.html` goes above static assets
   app.get(indexHtmlPathMatcher, (_, res) => res.contentType('text/html').send(indexContent));
