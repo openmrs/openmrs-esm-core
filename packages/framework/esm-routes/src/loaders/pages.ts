@@ -17,7 +17,10 @@ import {
   tryRegisterFeatureFlag,
   tryRegisterModal,
   tryRegisterWorkspace,
+  tryRegisterWorkspace2,
   tryRegisterWorkspaceGroup,
+  tryRegisterWorkspaceGroups2,
+  tryRegisterWorkspaceWindows2,
 } from './components';
 import { loadLifeCycles } from './load-lifecycles';
 
@@ -102,6 +105,9 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
     const availableWorkspaceGroups: Array<WorkspaceGroupDefinition> = routes.workspaceGroups ?? [];
     const availableFeatureFlags: Array<FeatureFlagDefinition> = routes.featureFlags ?? [];
+    const availableWorkspaceGroups2 = routes.workspaceGroups2 ?? [];
+    const availableWorkspaceWindows2 = routes.workspaceWindows2 ?? [];
+    const availableWorkspaces2 = routes.workspaces2 ?? [];
 
     routes.pages?.forEach((p) => {
       if (
@@ -171,6 +177,9 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         );
       }
     });
+    tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
+    tryRegisterWorkspaceWindows2(appName, availableWorkspaceWindows2);
+    tryRegisterWorkspace2(appName, availableWorkspaces2);
 
     availableFeatureFlags.forEach((featureFlag) => {
       if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'flagName')) {

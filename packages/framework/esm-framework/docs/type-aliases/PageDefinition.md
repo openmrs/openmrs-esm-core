@@ -34,8 +34,8 @@ Determines whether the component renders while the browser is not connected to t
 
 Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
 
-### order?
+### rootDomId?
 
-> `optional` **order**: `number`
+> `optional` **rootDomId**: `string`
 
-Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
+If specified, the page will be rendered at the DOM element with this ID.
