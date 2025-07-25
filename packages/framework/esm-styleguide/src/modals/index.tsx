@@ -60,9 +60,9 @@ async function renderModalIntoDOM(
       throw Error(`No modal named '${modalName}' has been registered.`);
     }
 
-    const { component, moduleName } = modalRegistration;
+    const { load } = modalRegistration;
 
-    const lifecycle = await loadLifeCycles(moduleName, component);
+    const lifecycle = await load();
     const id = parcelCount++;
     parcel = mountRootParcel(
       {

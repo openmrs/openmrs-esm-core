@@ -5,7 +5,6 @@ import { render, screen } from '@testing-library/react';
 import { mountRootParcel } from 'single-spa';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { getWorkspaceGroupStore } from '../workspaces';
-import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 
 const mockFn = vi.fn();
 
@@ -22,11 +21,10 @@ describe('WorkspaceRenderer', () => {
     const mockCloseWorkspaceWithSavedChanges = vi.fn();
     const mockPromptBeforeClosing = vi.fn();
     const mockSetTitle = vi.fn();
-
-    vi.mocked(loadLifeCycles).mockImplementation(() => Promise.resolve({ default: 'file-content' } as any));
+    const mockLoadFn = vi.fn().mockImplementation(() => Promise.resolve('file-content'));
 
     getWorkspaceGroupStore('test-sidebar-store')?.setState({
-      // Testing that the workspace group state should be overrode by additionalProps
+      // Testing that the workspace group state should be overrided by additionalProps
       foo: false,
       workspaceGroupStore: {},
     });
@@ -36,8 +34,7 @@ describe('WorkspaceRenderer', () => {
         workspace={{
           closeWorkspace: mockCloseWorkspace,
           name: 'workspace-name',
-          component: 'workspace-name',
-          moduleName: 'workspace-module',
+          load: mockLoadFn,
           title: 'Workspace title',
           closeWorkspaceWithSavedChanges: mockCloseWorkspaceWithSavedChanges,
           promptBeforeClosing: mockPromptBeforeClosing,
@@ -51,12 +48,12 @@ describe('WorkspaceRenderer', () => {
     );
 
     expect(screen.getByText('Loading ...')).toBeInTheDocument();
-    expect(loadLifeCycles).toHaveBeenCalled();
+    expect(mockLoadFn).toHaveBeenCalled();
 
     await screen.findByTestId('mocked-parcel');
 
     expect(mockFn).toHaveBeenCalledWith({
-      config: { default: 'file-content' },
+      config: 'file-content',
       mountParcel: mountRootParcel,
       closeWorkspace: mockCloseWorkspace,
       closeWorkspaceWithSavedChanges: mockCloseWorkspaceWithSavedChanges,

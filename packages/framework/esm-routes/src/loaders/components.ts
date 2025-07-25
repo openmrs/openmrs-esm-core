@@ -13,6 +13,7 @@ import {
   type WorkspaceGroupDefinition,
 } from '@openmrs/esm-globals';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
+import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 
 /**
  * This function registers an extension definition with the framework and will
@@ -52,7 +53,7 @@ To fix this, ensure that you define a 'component' field inside the extension def
 
   registerExtension({
     name,
-    component: extension.component,
+    load: () => loadLifeCycles(appName, extension.component),
     meta: extension.meta || {},
     order: extension.order,
     moduleName: appName,
@@ -97,7 +98,7 @@ To fix this, ensure that you define a 'component' field inside the modal definit
   registerModal({
     name,
     moduleName: appName,
-    component: modal.component,
+    load: () => loadLifeCycles(appName, modal.component),
   });
 }
 

@@ -6,7 +6,6 @@ import { getCoreTranslation } from '@openmrs/esm-translations';
 import styles from './workspace.module.scss';
 import { type OpenWorkspace } from '../workspaces';
 import { useWorkspaceGroupStore } from '../workspace-sidebar-store/useWorkspaceGroupStore';
-import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 
 interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
@@ -19,7 +18,7 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
 
   useEffect(() => {
     let active = true;
-    loadLifeCycles(workspace.moduleName, workspace.component).then((lifecycle) => {
+    workspace.load().then((lifecycle) => {
       if (active) {
         setLifecycle(lifecycle);
       }

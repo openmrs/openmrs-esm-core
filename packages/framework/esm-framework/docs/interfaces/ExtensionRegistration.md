@@ -6,14 +6,6 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:12](https://github.c
 
 ## Properties
 
-### component
-
-> `readonly` **component**: `string`
-
-Defined in: [packages/framework/esm-extensions/src/store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L14)
-
-***
-
 ### featureFlag?
 
 > `readonly` `optional` **featureFlag**: `string`
@@ -75,3 +67,15 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:17](https://github.c
 > `readonly` `optional` **privileges**: `string` \| `string`[]
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L20)
+
+## Methods
+
+### load()
+
+> **load**(): `Promise`\<`LifeCycles`\>
+
+Defined in: [packages/framework/esm-extensions/src/store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L14)
+
+#### Returns
+
+`Promise`\<`LifeCycles`\>

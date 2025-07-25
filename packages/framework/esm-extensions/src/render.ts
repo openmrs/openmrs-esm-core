@@ -33,7 +33,7 @@ export async function renderExtension(
       throw Error(`Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`);
     }
 
-    const { meta, moduleName, online, offline, component } = extensionRegistration;
+    const { meta, moduleName, online, offline, load } = extensionRegistration;
 
     if (checkStatus(online, offline)) {
       updateInternalExtensionStore((state) => {
@@ -55,7 +55,7 @@ export async function renderExtension(
         };
       });
 
-      const lifecycle = await loadLifeCycles(moduleName, component);
+      const lifecycle = await load();
       const id = parcelCount++;
       parcel = mountRootParcel(
         renderFunction({

@@ -4,6 +4,7 @@ import { type WorkspaceGroupDefinition, type WorkspaceWindowState } from '@openm
 import { type ExtensionRegistration, getExtensionRegistration } from '.';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { translateFrom } from '@openmrs/esm-translations';
+import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
 
 /** See [[WorkspaceDefinition]] for more information about these properties */
 export interface WorkspaceRegistration {
@@ -15,7 +16,7 @@ export interface WorkspaceRegistration {
   canMaximize: boolean;
   width: 'narrow' | 'wider' | 'extra-wide';
   preferredWindowSize: WorkspaceWindowState;
-  component: string;
+  load(): Promise<LifeCycles>;
   moduleName: string;
   groups: Array<string>;
 }
@@ -65,6 +66,7 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
       ...state.workspaces,
       [workspace.name]: {
         ...workspace,
+        load: () => loadLifeCycles(workspace.moduleName, workspace.component),
         preferredWindowSize: workspace.preferredWindowSize ?? 'normal',
         type: workspace.type ?? 'form',
         canHide: workspace.canHide ?? false,
@@ -136,7 +138,7 @@ export function getWorkspaceRegistration(name: string): WorkspaceRegistration {
         title: getTitleFromExtension(workspaceExtension),
         moduleName: workspaceExtension.moduleName,
         preferredWindowSize: workspaceExtension.meta?.screenSize ?? 'normal',
-        component: workspaceExtension.component,
+        load: workspaceExtension.load,
         type: workspaceExtension.meta?.type ?? 'form',
         canHide: workspaceExtension.meta?.canHide ?? false,
         canMaximize: workspaceExtension.meta?.canMaximize ?? false,
