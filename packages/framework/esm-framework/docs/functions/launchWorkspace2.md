@@ -4,7 +4,7 @@
 
 > **launchWorkspace2**\<`WorkspaceProps`, `WindowProps`, `GroupProp`\>(`workspaceName`, `workspaceProps`, `windowProps`, `groupProps`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L123)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L130)
 
 Attempts to launch the specified workspace with the given workspace props. This also implicitly opens
 the workspace window to which the workspace belongs (if it's not opened already),

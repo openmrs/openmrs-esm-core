@@ -36,7 +36,7 @@ export interface Workspace2DefinitionProps<
    * @param closeWindow If true, the workspace's window, along with all workspaces within it, will be closed as well
    * @returns a Promise that resolves to true if the workspace is closed, false otherwise.
    */
-  closeWorkspace(closeWindow?: boolean): Promise<boolean>;
+  closeWorkspace(options?: { closeWindow?: boolean; discardUnsavedChanges?: boolean }): Promise<boolean>;
 
   workspaceProps: WorkspaceProps | null;
   windowProps: WindowProps | null;

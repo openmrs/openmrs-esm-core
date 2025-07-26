@@ -50,25 +50,30 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({ lifeCycle, openedWork
   const props: Workspace2DefinitionProps = useMemo(
     () =>
       openedWorkspace && {
-        closeWorkspace: async (closeWindow?: boolean) => {
+        closeWorkspace: async (options = {}) => {
+          const { closeWindow = false, discardUnsavedChanges = false } = options;
           if (closeWindow) {
-            const okToCloseWorkspaces = await promptForClosingWorkspaces({
-              reason: 'CLOSE_WINDOW',
-              explicit: true,
-              windowName: openedWindow.windowName,
-            });
+            const okToCloseWorkspaces =
+              discardUnsavedChanges ||
+              (await promptForClosingWorkspaces({
+                reason: 'CLOSE_WINDOW',
+                explicit: true,
+                windowName: openedWindow.windowName,
+              }));
             if (okToCloseWorkspaces) {
               closeWorkspace(openedWindow.openedWorkspaces[0].workspaceName);
               return true;
             }
             return false;
           } else {
-            const okToCloseWorkspaces = await promptForClosingWorkspaces({
-              reason: 'CLOSE_WORKSPACE',
-              explicit: true,
-              windowName: openedWindow.windowName,
-              workspaceName: openedWorkspace.workspaceName,
-            });
+            const okToCloseWorkspaces =
+              discardUnsavedChanges ||
+              (await promptForClosingWorkspaces({
+                reason: 'CLOSE_WORKSPACE',
+                explicit: true,
+                windowName: openedWindow.windowName,
+                workspaceName: openedWorkspace.workspaceName,
+              }));
             if (okToCloseWorkspaces) {
               closeWorkspace(openedWorkspace.workspaceName);
               return true;

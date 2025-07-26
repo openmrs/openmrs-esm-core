@@ -54,7 +54,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ### closeWorkspace()
 
-> **closeWorkspace**(`closeWindow?`): `Promise`\<`boolean`\>
+> **closeWorkspace**(`options?`): `Promise`\<`boolean`\>
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L39)
 
@@ -62,11 +62,15 @@ closes the current workspace, along with its children.
 
 #### Parameters
 
-##### closeWindow?
+##### options?
+
+###### closeWindow?
 
 `boolean`
 
-If true, the workspace's window, along with all workspaces within it, will be closed as well
+###### discardUnsavedChanges?
+
+`boolean`
 
 #### Returns
 

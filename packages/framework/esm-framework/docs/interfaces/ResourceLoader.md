@@ -2,7 +2,7 @@
 
 # Interface: ResourceLoader()\<T\>
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:359
+Defined in: packages/framework/esm-globals/dist/types.d.ts:364
 
 ## Type Parameters
 
@@ -12,7 +12,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:359
 
 > **ResourceLoader**(): `Promise`\<`T`\>
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:360
+Defined in: packages/framework/esm-globals/dist/types.d.ts:365
 
 ## Returns
 

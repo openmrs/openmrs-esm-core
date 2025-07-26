@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceGroupDefinition2
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:293
+Defined in: packages/framework/esm-globals/dist/types.d.ts:295
 
 ## Properties
 
@@ -10,4 +10,4 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:293
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:294
+Defined in: packages/framework/esm-globals/dist/types.d.ts:296
