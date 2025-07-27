@@ -29,7 +29,7 @@ export interface Workspace2DefinitionProps<
    * @param workspaceName
    * @param workspaceProps
    */
-  launchChildWorkspace<Props extends Record<string, any>>(workspaceName: string, workspaceProps: Props): void;
+  launchChildWorkspace<Props extends Record<string, any>>(workspaceName: string, workspaceProps?: Props): void;
 
   /**
    * closes the current workspace, along with its children.

@@ -76,6 +76,6 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/action-menu2/acti
 
 > **workspaceName**: `string`
 
-#### workspaceProps
+#### workspaceProps?
 
-> **workspaceProps**: `Record`\<`string`, `any`\>
+> `optional` **workspaceProps**: `Record`\<`string`, `any`\>

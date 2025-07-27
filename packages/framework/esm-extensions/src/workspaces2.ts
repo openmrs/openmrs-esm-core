@@ -1,4 +1,8 @@
-import { type WorkspaceDefinition2, type WorkspaceGroupDefinition2, type WorkspaceWindowDefinition2 } from '@openmrs/esm-globals';
+import {
+  type WorkspaceDefinition2,
+  type WorkspaceGroupDefinition2,
+  type WorkspaceWindowDefinition2,
+} from '@openmrs/esm-globals';
 import { createGlobalStore } from '@openmrs/esm-state';
 
 export interface OpenedWorkspace {
@@ -47,11 +51,11 @@ export function getWindowByWorkspaceName(workspaceName: string) {
   const { registeredWorkspacesByName, registeredWindowsByName } = workspace2Store.getState();
   const workspace = registeredWorkspacesByName[workspaceName];
   if (!workspace) {
-    return new Error(`No workspace found with name: ${workspaceName}`);
+    throw new Error(`No workspace found with name: ${workspaceName}`);
   } else {
     const window = registeredWindowsByName[workspace.window];
     if (!window) {
-      return new Error(`No workspace window found with name: ${workspace.window} for workspace: ${workspaceName}`);
+      throw new Error(`No workspace window found with name: ${workspace.window} for workspace: ${workspaceName}`);
     } else {
       return window;
     }
@@ -63,11 +67,11 @@ export function getGroupByWindowName(windowName: string) {
   const { registeredGroupsByName, registeredWindowsByName } = workspace2Store.getState();
   const window = registeredWindowsByName[windowName];
   if (!window) {
-    return new Error(`No workspace window found with name: ${windowName}`);
+    throw new Error(`No workspace window found with name: ${windowName}`);
   } else {
     const group = registeredGroupsByName[window.group];
     if (!group) {
-      return new Error(`No workspace group found with name: ${window.group} for window: ${windowName}`);
+      throw new Error(`No workspace group found with name: ${window.group} for window: ${windowName}`);
     } else {
       return group;
     }

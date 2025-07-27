@@ -34,7 +34,7 @@ export interface ActionMenuButtonProps2 {
   tagContent?: string | React.ReactNode;
   workspaceToLaunch: {
     workspaceName: string;
-    workspaceProps: Record<string, any>;
+    workspaceProps?: Record<string, any>;
     windowProps?: Record<string, any>;
     groupProps?: Record<string, any>;
   };

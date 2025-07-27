@@ -126,7 +126,7 @@ export async function launchWorkspace2<
   GroupProp extends Record<string, any>,
 >(
   workspaceName: string,
-  workspaceProps: WorkspaceProps,
+  workspaceProps: WorkspaceProps | null = null,
   windowProps: WindowProps | null = null,
   groupProps: GroupProp | null = null,
 ): Promise<boolean> {

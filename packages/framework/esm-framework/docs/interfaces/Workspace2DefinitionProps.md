@@ -82,7 +82,7 @@ a Promise that resolves to true if the workspace is closed, false otherwise.
 
 ### launchChildWorkspace()
 
-> **launchChildWorkspace**\<`Props`\>(`workspaceName`, `workspaceProps`): `void`
+> **launchChildWorkspace**\<`Props`\>(`workspaceName`, `workspaceProps?`): `void`
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L32)
 
@@ -102,7 +102,7 @@ the window props or group props
 
 `string`
 
-##### workspaceProps
+##### workspaceProps?
 
 `Props`
 

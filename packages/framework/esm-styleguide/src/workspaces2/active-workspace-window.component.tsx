@@ -83,7 +83,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({ lifeCycle, openedWork
         },
         launchChildWorkspace: (childWorkspaceName, childWorkspaceProps) => {
           const parentWorkspaceName = openedWorkspace.workspaceName;
-          openChildWorkspace(parentWorkspaceName, childWorkspaceName, childWorkspaceProps);
+          openChildWorkspace(parentWorkspaceName, childWorkspaceName, childWorkspaceProps ?? {});
         },
         workspaceName: openedWorkspace.workspaceName,
         workspaceProps: openedWorkspace.props,
