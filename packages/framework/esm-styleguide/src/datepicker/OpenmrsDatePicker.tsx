@@ -15,8 +15,8 @@ import {
   Calendar,
   CalendarGrid,
   CalendarCell,
+  DatePicker,
   type DatePickerProps,
-  Dialog,
   FieldError,
   Group,
   Popover,
@@ -31,10 +31,10 @@ import { type StyleguideConfigObject } from '../config-schema';
 import { dateToInternationalizedDate, internationalizedDateToDate } from './utils';
 import { OpenmrsIntlLocaleContext } from './locale-context';
 import { MonthYear } from './MonthYear';
-import { DatePicker } from './DatePicker';
 import { DatePickerInput } from './DatePickerInput';
 import { DatePickerIcon } from './DatePickerIcon';
 import { DateSegment } from './DateSegment';
+import { AutoCloseDialog } from './auto-close-dialog.component';
 import styles from './datepicker.module.scss';
 
 /** A type for any of the acceptable date formats */
@@ -199,8 +199,8 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                 {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
               </div>
               <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
-                <Dialog className={styles.dialog}>
-                  <Calendar className={classNames('cds--date-picker__calendar')}>
+                <AutoCloseDialog>
+                  <Calendar>
                     <header className={styles.header}>
                       <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
                         <ChevronLeftIcon size={16} />
@@ -222,7 +222,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                       )}
                     </CalendarGrid>
                   </Calendar>
-                </Dialog>
+                </AutoCloseDialog>
               </Popover>
             </DatePicker>
           </Provider>

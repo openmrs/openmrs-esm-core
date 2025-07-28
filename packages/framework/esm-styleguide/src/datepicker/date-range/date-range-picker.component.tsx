@@ -8,13 +8,13 @@ import {
   DateInput,
   DateRangePicker,
   type DateRangePickerProps,
-  Dialog,
   FieldError,
   Label,
   Popover,
   Provider,
   RangeCalendar,
   type DateRange,
+  Group,
 } from 'react-aria-components';
 import { DateSegment } from '../DateSegment';
 import styles from './date-range-picker.module.scss';
@@ -23,11 +23,11 @@ import { OpenmrsIntlLocaleContext } from '../locale-context';
 import { type DateInputValue, I18nWrapper } from '../OpenmrsDatePicker';
 import { DateRangePickerIcon } from './date-range-icon.component';
 import { dateToInternationalizedDate, internationalizedDateToDate } from '../utils';
-import { DateRangeInputGroup } from './date-range-input-group.component';
 import { ChevronLeftIcon, ChevronRightIcon } from '../../icons';
 import { useConfig } from '@openmrs/esm-react-utils';
 import { getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
 import { type StyleguideConfigObject } from '../../config-schema';
+import { AutoCloseDialog } from '../auto-close-dialog.component';
 
 export interface OpenmrsDateRangePickerProps
   extends Omit<DateRangePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'> {
@@ -169,7 +169,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                   </Label>
                 )}
 
-                <DateRangeInputGroup>
+                <Group className={styles.inputGroup}>
                   <div className={styles.inputsWrapper}>
                     <DateInput
                       className={classNames(
@@ -200,10 +200,10 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                   <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
                     <DateRangePickerIcon />
                   </Button>
-                </DateRangeInputGroup>
+                </Group>
                 {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
                 <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
-                  <Dialog className={styles.dialog}>
+                  <AutoCloseDialog isRangePicker>
                     <RangeCalendar minValue={minDate} maxValue={maxDate} className="cds--date-picker__calendar">
                       <header className={styles.header}>
                         <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
@@ -226,7 +226,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                         )}
                       </CalendarGrid>
                     </RangeCalendar>
-                  </Dialog>
+                  </AutoCloseDialog>
                 </Popover>
               </div>
             </DateRangePicker>
