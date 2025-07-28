@@ -3,12 +3,12 @@ import { DatePickerStateContext, DateRangePickerStateContext, Dialog } from 'rea
 import { useOnClickOutside } from '@openmrs/esm-framework';
 import styles from './datepicker.module.scss';
 
-interface AutoCloseCalendarProps {
+interface AutoCloseDialogProps {
   children: React.ReactNode;
   isRangePicker?: boolean;
 }
 
-export function AutoCloseDialog({ children, isRangePicker = false }: AutoCloseCalendarProps) {
+export function AutoCloseDialog({ children, isRangePicker = false }: AutoCloseDialogProps) {
   const datePickerState = useContext(DatePickerStateContext);
   const rangePickerState = useContext(DateRangePickerStateContext);
 

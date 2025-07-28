@@ -34,8 +34,8 @@ import { MonthYear } from './MonthYear';
 import { DatePickerInput } from './DatePickerInput';
 import { DatePickerIcon } from './DatePickerIcon';
 import { DateSegment } from './DateSegment';
-import styles from './datepicker.module.scss';
 import { AutoCloseDialog } from './auto-close-dialog.component';
+import styles from './datepicker.module.scss';
 
 /** A type for any of the acceptable date formats */
 export type DateInputValue = CalendarDate | CalendarDateTime | ZonedDateTime | DayjsConfigType;
