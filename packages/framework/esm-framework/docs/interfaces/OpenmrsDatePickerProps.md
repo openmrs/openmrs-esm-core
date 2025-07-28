@@ -747,7 +747,7 @@ prop instead.
 
 ### validationBehavior?
 
-> `optional` **validationBehavior**: `"aria"` \| `"native"`
+> `optional` **validationBehavior**: `"native"` \| `"aria"`
 
 Defined in: node\_modules/react-aria-components/dist/types.d.ts:81
 

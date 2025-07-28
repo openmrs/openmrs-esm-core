@@ -32,18 +32,6 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:20](https://git
 
 ***
 
-### load()
-
-> **load**: () => `Promise`\<`object` & `LifeCycles`\>
-
-Defined in: [packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
-
-#### Returns
-
-`Promise`\<`object` & `LifeCycles`\>
-
-***
-
 ### moduleName
 
 > **moduleName**: `string`
@@ -97,3 +85,15 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:13](https://git
 > **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
 
 Defined in: [packages/framework/esm-extensions/src/workspaces.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L16)
+
+## Methods
+
+### load()
+
+> **load**(): `Promise`\<`LifeCycles`\>
+
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+
+#### Returns
+
+`Promise`\<`LifeCycles`\>

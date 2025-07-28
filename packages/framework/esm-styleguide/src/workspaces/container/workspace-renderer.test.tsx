@@ -21,7 +21,7 @@ describe('WorkspaceRenderer', () => {
     const mockCloseWorkspaceWithSavedChanges = vi.fn();
     const mockPromptBeforeClosing = vi.fn();
     const mockSetTitle = vi.fn();
-    const mockLoadFn = vi.fn().mockImplementation(() => Promise.resolve({ default: 'file-content' }));
+    const mockLoadFn = vi.fn().mockImplementation(() => Promise.resolve('file-content'));
 
     getWorkspaceGroupStore('test-sidebar-store')?.setState({
       // Testing that the workspace group state should be overrided by additionalProps
