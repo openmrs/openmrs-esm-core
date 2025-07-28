@@ -4,7 +4,6 @@ import { type WorkspaceGroupDefinition, type WorkspaceWindowState } from '@openm
 import { type ExtensionRegistration, getExtensionRegistration } from '.';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { translateFrom } from '@openmrs/esm-translations';
-import { loadLifeCycles } from '@openmrs/esm-routes';
 
 /** See [[WorkspaceDefinition]] for more information about these properties */
 export interface WorkspaceRegistration {

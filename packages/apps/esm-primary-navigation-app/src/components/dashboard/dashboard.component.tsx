@@ -57,7 +57,7 @@ export default function Dashboard({ basePath, moduleName }: DashboardProps) {
         moduleName: module,
         featureName: 'dashboard',
       })(() => <DashboardInternal basePath={basePath} />),
-    [componentContext.moduleName],
+    [basePath, module],
   );
 
   return (
