@@ -4,7 +4,7 @@ import { type WorkspaceGroupDefinition, type WorkspaceWindowState } from '@openm
 import { type ExtensionRegistration, getExtensionRegistration } from '.';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { translateFrom } from '@openmrs/esm-translations';
-import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
+import { loadLifeCycles } from '@openmrs/esm-routes';
 
 /** See [[WorkspaceDefinition]] for more information about these properties */
 export interface WorkspaceRegistration {
@@ -53,6 +53,7 @@ export interface RegisterWorkspaceOptions {
   component: string;
   moduleName: string;
   groups?: Array<string>;
+  load(): Promise<LifeCycles>;
 }
 
 /**
@@ -66,7 +67,7 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
       ...state.workspaces,
       [workspace.name]: {
         ...workspace,
-        load: () => loadLifeCycles(workspace.moduleName, workspace.component),
+        load: workspace.load,
         preferredWindowSize: workspace.preferredWindowSize ?? 'normal',
         type: workspace.type ?? 'form',
         canHide: workspace.canHide ?? false,

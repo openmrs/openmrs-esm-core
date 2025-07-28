@@ -56,7 +56,6 @@
     "@openmrs/esm-translations": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-config": "workspace:*",
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-translations": "workspace:*",
     "@swc/cli": "^0.7.7",

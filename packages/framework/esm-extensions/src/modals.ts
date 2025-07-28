@@ -1,6 +1,6 @@
+import { type LifeCycles } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { getExtensionRegistration } from '.';
-import { type LifeCycles } from 'single-spa';
 
 /** @internal */
 export interface ModalRegistration {

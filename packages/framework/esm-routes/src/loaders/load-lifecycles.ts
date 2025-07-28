@@ -1,4 +1,4 @@
-import { importDynamic } from './dynamic-loading';
+import { importDynamic } from '@openmrs/esm-dynamic-loading';
 import { type LifeCycles } from 'single-spa';
 import { registerModuleLoad } from '@openmrs/esm-config';
 
@@ -83,7 +83,7 @@ const emptyLifecycle: LifeCycles<never> = {
  *   function will load it.
  * @returns a Promise which completes once the app has been loaded and initialized
  */
-export async function initializeApp(appName: string, module?: Module) {
+async function initializeApp(appName: string, module?: Module) {
   if (!(appName in initializedApps)) {
     let _module: Module = module ?? (await importDynamic<Module>(appName));
 

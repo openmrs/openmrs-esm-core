@@ -13,7 +13,7 @@ import {
   type WorkspaceGroupDefinition,
 } from '@openmrs/esm-globals';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
-import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
+import { loadLifeCycles } from './load-lifecycles';
 
 /**
  * This function registers an extension definition with the framework and will
@@ -149,6 +149,7 @@ To fix this, ensure that you define a 'component' field inside the workspace def
     width: workspace.width,
     preferredWindowSize: workspace.preferredWindowSize,
     groups: workspace.groups,
+    load: () => loadLifeCycles(appName, workspace.component),
   });
 
   for (const group of workspace.groups || []) {

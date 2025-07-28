@@ -19,7 +19,7 @@ import {
   tryRegisterWorkspace,
   tryRegisterWorkspaceGroup,
 } from './components';
-import { loadLifeCycles } from '@openmrs/esm-dynamic-loading';
+import { loadLifeCycles } from './load-lifecycles';
 
 // this is the global holder of all pages registered in the app
 const pages: Array<RegisteredPageDefinition> = [];
