@@ -211,10 +211,14 @@ export function finishRegisteringAllApps() {
     return a.appName.localeCompare(b.appName, 'en');
   });
 
-  // Create a div for each page. This ensures their DOM order.
+  // Create a div for each page, unless the DOM already contains the div with
+  // the expected id for the page to be mounted on. See:
+  // https://single-spa.js.org/docs/configuration/#two-registered-applications-simultaneously
+  // This ensures their DOM order.
   // If we don't do this, Single-SPA 5 will create the DOM element only once
   // the page becomes active, which makes it impossible to guarantee order.
   let appIndices = new Map();
+  const appRootsDiv = document.getElementById('omrs-single-spa-app-roots');
   for (let page of pages) {
     if (!appIndices.has(page.appName)) {
       appIndices.set(page.appName, 0);
@@ -224,9 +228,13 @@ export function finishRegisteringAllApps() {
     const index = appIndices.get(page.appName);
 
     const name = `${page.appName}-page-${index}`;
-    const div = document.createElement('div');
-    div.id = `single-spa-application:${name}`;
-    document.body.appendChild(div);
+    const appDomRootId = `single-spa-application:${name}`;
+
+    if (!document.getElementById(appDomRootId)) {
+      const div = document.createElement('div');
+      div.id = appDomRootId;
+      appRootsDiv?.appendChild(div);
+    }
     tryRegisterPage(name, page);
   }
 }
