@@ -62,6 +62,18 @@ export const oneOf = (allowedValues: Array<any> | readonly any[]) => {
   );
 };
 
+export const extensionSlotConfigSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    add: { type: 'array', items: { type: 'string' } },
+    remove: { type: 'array', items: { type: 'string' } },
+    order: { type: 'array', items: { type: 'string' } },
+    configure: { type: 'object' },
+    displayExpression: { type: 'string' },
+  },
+};
+
 export const validators = {
   inRange,
   isUrl,

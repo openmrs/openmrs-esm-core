@@ -218,6 +218,12 @@ export type ExtensionDefinition = {
   meta?: {
     [k: string]: unknown;
   };
+  /**
+   * If supplied, this is used to determine the display expression for the extension.
+   * This is used to determine if the extension is displayed in the UI.
+   * If not supplied, the extension will be displayed in the UI by default.
+   */
+  displayExpression?: string;
 } & (
   | {
       /**
