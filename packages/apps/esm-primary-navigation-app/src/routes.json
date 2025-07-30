@@ -9,14 +9,13 @@
       "routeRegex": "^(?!(?:login|change-password)/?)",
       "online": true,
       "offline": true,
-      "order": 0
+      "containerDomId": "omrs-top-nav-app-container"
     },
     {
       "component": "redirect",
       "routeRegex": "^$",
       "online": true,
-      "offline": true,
-      "order": 0
+      "offline": true
     }
   ],
   "extensions": [

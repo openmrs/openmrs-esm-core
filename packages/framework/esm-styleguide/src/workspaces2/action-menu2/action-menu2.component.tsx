@@ -36,7 +36,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
   }, [initialHeight]);
 
   const windowsWithIcons = registeredWindowsByGroupName[workspaceGroup].filter(
-    (window): window is Required<WorkspaceWindowDefinition2 & { moduleName: string }> => window.icon !== undefined,
+    (window): window is Required<typeof window> => window.icon !== undefined,
   );
 
   if (windowsWithIcons.length === 0) {
