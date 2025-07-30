@@ -96,7 +96,6 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   if (!group) {
     return null;
   }
-  const icons = registeredWindowsByGroupName[group.name].filter((window) => window.icon).map((window) => window.icon);
   const workspaceDef = registeredWorkspacesByName[workspaceName];
   const windowName = workspaceDef.window;
   const windowDef = registeredWindowsByName[windowName];
@@ -109,19 +108,16 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   const width = windowDef?.width ?? 'narrow';
   const overlay = group.overlay ?? false;
 
-  if (openedWindow.hidden) {
-    return null;
-  }
   return (
     <div
       className={classNames(
         styles.workspaceFixedContainer,
-        icons.length > 0 ? styles.workspaceContainerWithActionMenu : styles.workspaceContainerWithoutActionMenu,
         {
           [styles.narrowWorkspace]: width === 'narrow',
           [styles.widerWorkspace]: width === 'wider',
           [styles.extraWideWorkspace]: width === 'extra-wide',
           [styles.overlay]: overlay,
+          [styles.hidden]: openedWindow.hidden,
         },
       )}
     >

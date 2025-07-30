@@ -18,8 +18,8 @@ $actionPanelOffset: layout.$spacing-09;
     width: $actionPanelOffset;
 
     &.overlay {
-      position: fixed;
-      top: var(--omrs-navbar-height);
+      position: absolute;
+      top: 0;
       right: 0;
       height: 100%;
     }

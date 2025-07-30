@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { ActionMenu } from './action-menu2/action-menu2.component';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import { useWorkspace2Store } from './workspace2';
+import styles from './workspace-windows-and-menu.module.scss';
 
 export function renderWorkspaceWindowsAndMenu(target: HTMLElement | null) {
   if (target) {
@@ -24,9 +25,11 @@ function WorkspaceWindowsAndMenu() {
 
   return (
     <>
-      {openedWindows.map((openedWindow) => {
-        return <ActiveWorkspaceWindow key={openedWindow.windowName} openedWindow={openedWindow} />;
-      })}
+      <div className={styles.workspaceWindowsContainer}>
+        {openedWindows.map((openedWindow) => {
+          return <ActiveWorkspaceWindow key={openedWindow.windowName} openedWindow={openedWindow} />;
+        })}
+      </div>
       <ActionMenu workspaceGroup={openedGroup.groupName} />
     </>
   );

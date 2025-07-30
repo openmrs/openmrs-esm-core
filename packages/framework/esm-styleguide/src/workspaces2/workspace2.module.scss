@@ -27,21 +27,6 @@ $extraWideWorkspaceWidth: 48.25rem;
 
 /* Desktop */
 :global(.omrs-breakpoint-gt-tablet) {
-  .workspaceContainerWithActionMenu {
-    height: 100%;
-
-    &.workspaceFixedContainer {
-      right: $actionPanelOffset;
-    }
-  }
-
-  .workspaceContainerWithoutActionMenu {
-    height: 100%;
-
-    &.workspaceFixedContainer {
-      right: 0;
-    }
-  }
 
   .header {
     position: relative;
@@ -84,18 +69,25 @@ $extraWideWorkspaceWidth: 48.25rem;
   }
 
   .workspaceFixedContainer {
+    height: 100%;
     border-left: 1px solid $text-03;
     z-index: 50;
     background-color: white;
-    transition:
-      width 0.5s ease-in-out,
-      right 0.5s ease-in-out;
+    animation: slideInFromRight 0.5s ease-in-out;
+
+    &.hidden {
+      animation: slideOutToRight 0.5s ease-in-out forwards;
+    }
 
     &.overlay {
-      position: fixed;
-      top: var(--omrs-navbar-height);
+      position: absolute;
+      top: 0;
       bottom: 0;
     }
+
+    // &.hidden {
+    //   width: 0 !important;
+    // }
   }
 
   .extraWideWorkspace {
@@ -171,6 +163,28 @@ $extraWideWorkspaceWidth: 48.25rem;
   .overlayHeaderSpacer {
     flex-grow: 1;
   }
+  
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX($narrowWorkspaceWidth);
+      width: 0;
+    }
+    to {
+      transform: translateX(0%);
+      width: $narrowWorkspaceWidth;
+    }
+  }
+
+  @keyframes slideOutToRight {
+    from {
+      transform: translateX(0%);
+      width: $narrowWorkspaceWidth;
+    }
+    to {
+      transform: translateX($narrowWorkspaceWidth);
+      width: 0;
+    }
+  }
 }
 
 /* Tablet */
@@ -244,6 +258,29 @@ $extraWideWorkspaceWidth: 48.25rem;
 
   .marginWorkspaceContent {
     margin-bottom: var(--bottom-nav-height);
+  }
+
+  
+  @keyframes slideInFromBottom {
+    from {
+      transform: translateX($narrowWorkspaceWidth);
+      width: 0;
+    }
+    to {
+      transform: translateX(0%);
+      width: $narrowWorkspaceWidth;
+    }
+  }
+
+  @keyframes slideOutToBottom {
+    from {
+      transform: translateX(0%);
+      width: $narrowWorkspaceWidth;
+    }
+    to {
+      transform: translateX($narrowWorkspaceWidth);
+      width: 0;
+    }
   }
 }
 
