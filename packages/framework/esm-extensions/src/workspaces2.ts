@@ -53,11 +53,11 @@ export function getWindowByWorkspaceName(workspaceName: string) {
   if (!workspace) {
     throw new Error(`No workspace found with name: ${workspaceName}`);
   } else {
-    const window = registeredWindowsByName[workspace.window];
-    if (!window) {
+    const workspaceWindow = registeredWindowsByName[workspace.window];
+    if (!workspaceWindow) {
       throw new Error(`No workspace window found with name: ${workspace.window} for workspace: ${workspaceName}`);
     } else {
-      return window;
+      return workspaceWindow;
     }
   }
 }
@@ -65,13 +65,13 @@ export function getWindowByWorkspaceName(workspaceName: string) {
 // given a window name, return the group that the window belongs to
 export function getGroupByWindowName(windowName: string) {
   const { registeredGroupsByName, registeredWindowsByName } = workspace2Store.getState();
-  const window = registeredWindowsByName[windowName];
-  if (!window) {
+  const workspaceWindow = registeredWindowsByName[windowName];
+  if (!workspaceWindow) {
     throw new Error(`No workspace window found with name: ${windowName}`);
   } else {
-    const group = registeredGroupsByName[window.group];
+    const group = registeredGroupsByName[workspaceWindow.group];
     if (!group) {
-      throw new Error(`No workspace group found with name: ${window.group} for window: ${windowName}`);
+      throw new Error(`No workspace group found with name: ${workspaceWindow.group} for window: ${windowName}`);
     } else {
       return group;
     }
