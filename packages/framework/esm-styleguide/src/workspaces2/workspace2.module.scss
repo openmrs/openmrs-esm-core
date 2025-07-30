@@ -83,26 +83,19 @@ $extraWideWorkspaceWidth: 48.25rem;
     width: calc(100% - $actionPanelOffset) !important;
   }
 
-  .workspaceWindowSpacer {
-    height: 100%;
-    transition: margin-right 0.5s ease-in-out;
-  }
-
-  .workspaceOverlayOuterContainer {
-    position: fixed;
-    z-index: 50;
-  }
-
   .workspaceFixedContainer {
-    position: fixed;
-    top: var(--omrs-navbar-height);
-    bottom: 0;
     border-left: 1px solid $text-03;
     z-index: 50;
     background-color: white;
     transition:
       width 0.5s ease-in-out,
       right 0.5s ease-in-out;
+
+    &.overlay {
+      position: fixed;
+      top: var(--omrs-navbar-height);
+      bottom: 0;
+    }
   }
 
   .extraWideWorkspace {

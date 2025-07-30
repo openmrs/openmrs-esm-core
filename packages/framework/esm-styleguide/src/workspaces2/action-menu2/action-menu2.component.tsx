@@ -22,7 +22,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);
   const layout = useLayoutType();
-  const { registeredWindowsByGroupName } = useWorkspace2Store();
+  const { registeredWindowsByGroupName, registeredGroupsByName } = useWorkspace2Store();
 
   useEffect(() => {
     const handleKeyboardVisibilityChange = () => {
@@ -43,11 +43,14 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
     return null; // No icons to display
   }
 
+  const overlay = registeredGroupsByName[workspaceGroup].overlay;
+
   return (
     <aside
       className={classNames(styles.sideRail, {
         [styles.sideRailHidden]: keyboardVisible,
         [styles.sideRailVisible]: !keyboardVisible,
+        [styles.overlay]: overlay,
       })}
     >
       <div className={styles.container}>

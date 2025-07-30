@@ -313,8 +313,8 @@ export interface WorkspaceGroupDefinition {
 
 export interface WorkspaceGroupDefinition2 {
   name: string;
-  // TODO: add config for close button to close group?
-  // TODO: add config for overlay mode? (or should that go in the Window instead?)
+  closeable?: boolean;
+  overlay?: boolean;
 }
 
 export interface WorkspaceWindowDefinition2 {

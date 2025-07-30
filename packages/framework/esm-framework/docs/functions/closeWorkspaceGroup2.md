@@ -4,7 +4,7 @@
 
 > **closeWorkspaceGroup2**(): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L52)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L66)
 
 Closes the workspace group that is currently opened. Note that only one workspace group
 may be opened at any given time

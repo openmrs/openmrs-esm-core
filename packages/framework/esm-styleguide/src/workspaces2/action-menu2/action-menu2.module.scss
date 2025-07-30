@@ -17,12 +17,15 @@ $actionPanelOffset: layout.$spacing-09;
   .sideRail {
     width: $actionPanelOffset;
 
-    .container {
+    &.overlay {
       position: fixed;
       top: var(--omrs-navbar-height);
       right: 0;
-      background: $ui-01;
       height: 100%;
+    }
+
+    .container {
+      background: $ui-01;
       z-index: 1000;
       width: $actionPanelOffset;
       border-left: 1px solid $text-03;

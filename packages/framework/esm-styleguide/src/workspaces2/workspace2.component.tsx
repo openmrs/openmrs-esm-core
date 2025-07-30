@@ -107,6 +107,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   const { canHide, canMaximize } = windowDef;
   const { maximized } = openedWindow;
   const width = windowDef?.width ?? 'narrow';
+  const overlay = group.overlay ?? false;
 
   if (openedWindow.hidden) {
     return null;
@@ -120,6 +121,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
           [styles.narrowWorkspace]: width === 'narrow',
           [styles.widerWorkspace]: width === 'wider',
           [styles.extraWideWorkspace]: width === 'extra-wide',
+          [styles.overlay]: overlay,
         },
       )}
     >
