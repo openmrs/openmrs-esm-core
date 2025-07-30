@@ -22,6 +22,7 @@ export interface BuildArgs {
   configPaths: Array<string>;
   buildConfig?: string;
   env: string;
+  assets: Array<string>;
 }
 
 export type BuildConfig = Partial<{
@@ -35,6 +36,7 @@ export type BuildConfig = Partial<{
   routes: string;
   spaPath: string;
   env: string;
+  assets: Array<string>;
 }>;
 
 function loadBuildConfig(buildConfigPath?: string): BuildConfig {
@@ -119,6 +121,7 @@ export async function runBuild(args: BuildArgs) {
     supportOffline: buildConfig.supportOffline ?? args.supportOffline,
     spaPath: buildConfig.spaPath || args.spaPath,
     fresh: args.fresh ?? false,
+    assets: args.assets || buildConfig.assets || [],
   });
 
   logInfo(`Running build process ...`);
