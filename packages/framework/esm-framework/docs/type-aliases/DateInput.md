@@ -4,4 +4,4 @@
 
 > **DateInput** = `string` \| `number` \| `Date`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:8
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:7
