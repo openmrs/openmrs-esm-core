@@ -112,7 +112,6 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       ) {
         pages.push({
           ...p,
-          order: p.order ?? Number.MAX_SAFE_INTEGER,
           appName,
         });
       } else {
@@ -195,10 +194,6 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
  */
 export function finishRegisteringAllApps() {
   pages.sort((a, b) => {
-    let sort = a.order - b.order;
-    if (sort != 0) {
-      return sort;
-    }
     return a.appName.localeCompare(b.appName, 'en');
   });
 
@@ -209,7 +204,6 @@ export function finishRegisteringAllApps() {
   // If we don't do this, Single-SPA 5 will create the DOM element only once
   // the page becomes active, which makes it impossible to guarantee order.
   let appIndices = new Map();
-  const appRootsDiv = document.getElementById('omrs-single-spa-app-roots');
   for (let page of pages) {
     if (!appIndices.has(page.appName)) {
       appIndices.set(page.appName, 0);
@@ -219,12 +213,18 @@ export function finishRegisteringAllApps() {
     const index = appIndices.get(page.appName);
 
     const name = `${page.appName}-page-${index}`;
+    const containerDomId = page.containerDomId ?? 'omrs-apps-container';
+    const containerDiv = document.getElementById(containerDomId);
     const appDomRootId = `single-spa-application:${name}`;
 
-    if (!document.getElementById(appDomRootId)) {
+    if (containerDiv) {
       const div = document.createElement('div');
       div.id = appDomRootId;
-      appRootsDiv?.appendChild(div);
+      containerDiv?.appendChild(div);
+    } else {
+      throw new Error(
+        `${page.appName} ${page.component} cannot be mounted to "${containerDomId}"; DOM element does not exist.`,
+      );
     }
     tryRegisterPage(name, page);
   }

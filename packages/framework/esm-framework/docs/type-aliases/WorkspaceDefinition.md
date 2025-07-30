@@ -4,7 +4,7 @@
 
 > **WorkspaceDefinition** = `object` & \{ `component`: `string`; \} \| \{ `component?`: `never`; \}
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:264
+Defined in: packages/framework/esm-globals/dist/types.d.ts:262
 
 A definition of a workspace as extracted from an app's routes.json
 

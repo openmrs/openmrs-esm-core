@@ -16,6 +16,12 @@ A definition of a page extracted from an app's routes.json
 
 The name of the component exported by this frontend module.
 
+### containerDomId?
+
+> `optional` **containerDomId**: `string`
+
+If supplied, the page will be rendered within the DOM element with he specified ID. Defaults to "omrs-apps-container" if not supplied.
+
 ### featureFlag?
 
 > `optional` **featureFlag**: `string`
@@ -33,9 +39,3 @@ Determines whether the component renders while the browser is not connected to t
 > `optional` **online**: `boolean`
 
 Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
-
-### order?
-
-> `optional` **order**: `number`
-
-Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
