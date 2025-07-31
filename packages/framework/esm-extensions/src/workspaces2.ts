@@ -44,7 +44,7 @@ const initialState: WorkspaceStoreState2 = {
   workspaceTitleByWorkspaceName: {},
 };
 
-export const workspace2Store = createGlobalStore('workspace2', initialState);
+export const workspace2Store = createGlobalStore<WorkspaceStoreState2>('workspace2', initialState);
 
 // given a workspace name, return the window that the workspace belongs to
 export function getWindowByWorkspaceName(workspaceName: string) {

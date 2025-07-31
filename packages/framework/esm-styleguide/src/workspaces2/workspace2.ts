@@ -240,7 +240,7 @@ export async function launchWorkspace2<
           ...storeState,
           openedGroup: {
             groupName: groupDef.name,
-            props: storeState?.openedGroup?.props ?? groupProps ?? groupProps,
+            props: groupProps ?? storeState?.openedGroup?.props,
           },
           openedWindows: [
             ...storeState.openedWindows.filter((_, i) => i !== openedWindowIndex),
@@ -264,7 +264,7 @@ export async function launchWorkspace2<
       ...storeState,
       openedGroup: {
         groupName: groupDef.name,
-        props: groupProps,
+        props: groupProps ?? storeState?.openedGroup?.props ?? null,
       },
       openedWindows: [
         ...storeState.openedWindows,
