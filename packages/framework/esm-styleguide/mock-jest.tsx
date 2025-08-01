@@ -142,4 +142,3 @@ export const DiagnosisTags = jest.fn(({ diagnoses }: { diagnoses: Array<Diagnosi
     ))}
   </>
 ));
-export const useLeftNavStore = jest.fn();

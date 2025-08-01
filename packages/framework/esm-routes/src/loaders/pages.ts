@@ -12,14 +12,17 @@ import {
 } from '@openmrs/esm-globals';
 import { getFeatureFlag } from '@openmrs/esm-feature-flags';
 import { routeRegex } from './helpers';
-import { getLoader } from './app';
 import {
   tryRegisterExtension,
   tryRegisterFeatureFlag,
   tryRegisterModal,
   tryRegisterWorkspace,
+  tryRegisterWorkspace2,
   tryRegisterWorkspaceGroup,
+  tryRegisterWorkspaceGroups2,
+  tryRegisterWorkspaceWindows2,
 } from './components';
+import { loadLifeCycles } from './load-lifecycles';
 
 // this is the global holder of all pages registered in the app
 const pages: Array<RegisteredPageDefinition> = [];
@@ -102,6 +105,9 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
     const availableWorkspaceGroups: Array<WorkspaceGroupDefinition> = routes.workspaceGroups ?? [];
     const availableFeatureFlags: Array<FeatureFlagDefinition> = routes.featureFlags ?? [];
+    const availableWorkspaceGroups2 = routes.workspaceGroups2 ?? [];
+    const availableWorkspaceWindows2 = routes.workspaceWindows2 ?? [];
+    const availableWorkspaces2 = routes.workspaces2 ?? [];
 
     routes.pages?.forEach((p) => {
       if (
@@ -112,7 +118,6 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       ) {
         pages.push({
           ...p,
-          order: p.order ?? Number.MAX_SAFE_INTEGER,
           appName,
         });
       } else {
@@ -171,6 +176,9 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         );
       }
     });
+    tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
+    tryRegisterWorkspaceWindows2(appName, availableWorkspaceWindows2);
+    tryRegisterWorkspace2(appName, availableWorkspaces2);
 
     availableFeatureFlags.forEach((featureFlag) => {
       if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'flagName')) {
@@ -195,14 +203,13 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
  */
 export function finishRegisteringAllApps() {
   pages.sort((a, b) => {
-    let sort = a.order - b.order;
-    if (sort != 0) {
-      return sort;
-    }
     return a.appName.localeCompare(b.appName, 'en');
   });
 
-  // Create a div for each page. This ensures their DOM order.
+  // Create a div for each page, unless the DOM already contains the div with
+  // the expected id for the page to be mounted on. See:
+  // https://single-spa.js.org/docs/configuration/#two-registered-applications-simultaneously
+  // This ensures their DOM order.
   // If we don't do this, Single-SPA 5 will create the DOM element only once
   // the page becomes active, which makes it impossible to guarantee order.
   let appIndices = new Map();
@@ -215,9 +222,19 @@ export function finishRegisteringAllApps() {
     const index = appIndices.get(page.appName);
 
     const name = `${page.appName}-page-${index}`;
-    const div = document.createElement('div');
-    div.id = `single-spa-application:${name}`;
-    document.body.appendChild(div);
+    const containerDomId = page.containerDomId ?? 'omrs-apps-container';
+    const containerDiv = document.getElementById(containerDomId);
+    const appDomRootId = `single-spa-application:${name}`;
+
+    if (containerDiv) {
+      const div = document.createElement('div');
+      div.id = appDomRootId;
+      containerDiv?.appendChild(div);
+    } else {
+      throw new Error(
+        `${page.appName} ${page.component} cannot be mounted to "${containerDomId}"; DOM element does not exist.`,
+      );
+    }
     tryRegisterPage(name, page);
   }
 }
@@ -257,6 +274,6 @@ To fix this, ensure that you define the "component" field inside the page defini
   }
 
   const activityFn = wrapPageActivityFn(getActivityFn(route), page);
-  const loader = getLoader(page.appName, page.component);
+  const loader = () => loadLifeCycles(page.appName, page.component);
   registerApplication(appName, loader, activityFn);
 }

@@ -1,0 +1,8 @@
+.workspaceWindowsContainer {
+  display: grid;
+  width: fit-content;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}

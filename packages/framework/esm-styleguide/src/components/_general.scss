@@ -25,3 +25,33 @@ body {
     margin-top: layout.$spacing-06;
   }
 }
+
+#omrs-apps-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - var(--omrs-navbar-height));
+  grid-area: appRoots;
+}
+
+#omrs-left-nav-container {
+  grid-area: leftNav;
+}
+
+#omrs-workspace-container {
+  grid-area: workspace;
+  position: relative;
+  display: flex;
+}
+
+#omrs-top-nav-app-container {
+  grid-area: topNav;
+  height: var(--omrs-navbar-height);
+}
+
+body {
+  display: grid;
+  grid-template-areas:
+    'topNav topNav topNav'
+    'leftNav appRoots workspace';
+}

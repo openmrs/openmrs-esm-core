@@ -1,0 +1,8 @@
+@use '@carbon/layout';
+
+.workspaceList {
+  li {
+    margin-left: layout.$spacing-05;
+    list-style: initial;
+  }
+}
