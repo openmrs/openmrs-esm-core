@@ -4,4 +4,4 @@
 
 > **WorkspaceWindowState** = `"maximized"` \| `"hidden"` \| `"normal"`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:260
+Defined in: packages/framework/esm-globals/dist/types.d.ts:258

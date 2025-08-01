@@ -4,7 +4,7 @@
 
 > **ModalDefinition** = `object` & \{ `component`: `string`; \} \| \{ `component?`: `never`; \}
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:234
+Defined in: packages/framework/esm-globals/dist/types.d.ts:232
 
 A definition of a modal as extracted from an app's routes.json
 

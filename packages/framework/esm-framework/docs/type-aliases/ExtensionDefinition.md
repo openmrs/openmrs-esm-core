@@ -4,7 +4,7 @@
 
 > **ExtensionDefinition** = `object` & \{ `component`: `string`; \} \| \{ `component?`: `never`; \}
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:171
+Defined in: packages/framework/esm-globals/dist/types.d.ts:169
 
 A definition of an extension as extracted from an app's routes.json
 

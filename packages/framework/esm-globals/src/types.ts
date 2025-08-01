@@ -136,9 +136,9 @@ export type PageDefinition = {
    */
   offline?: boolean;
   /**
-   * Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
+   * If supplied, the page will be rendered within the DOM element with he specified ID. Defaults to "omrs-apps-container" if not supplied.
    */
-  order?: number;
+  containerDomId?: string;
 } & (
   | {
       /**
@@ -174,7 +174,7 @@ export type PageDefinition = {
  * @internal
  * A definition of a page after the app has been registered.
  */
-export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
+export type RegisteredPageDefinition = PageDefinition & AppComponent;
 
 /**
  * A definition of an extension as extracted from an app's routes.json
