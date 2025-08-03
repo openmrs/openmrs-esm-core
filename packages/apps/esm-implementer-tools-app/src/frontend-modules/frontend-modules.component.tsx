@@ -9,7 +9,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Theme,
 } from '@carbon/react';
 import type { FrontendModule } from '../types';
 import styles from './frontend-modules.scss';

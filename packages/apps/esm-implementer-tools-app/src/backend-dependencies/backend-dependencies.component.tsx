@@ -9,7 +9,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  Theme,
 } from '@carbon/react';
 import type { ResolvedDependenciesModule } from './openmrs-backend-dependencies';
 import styles from './backend-dependencies.styles.scss';

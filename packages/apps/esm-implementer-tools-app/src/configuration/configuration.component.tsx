@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Column, FlexGrid, Row, TextInput, Theme, Toggle } from '@carbon/react';
+import { Button, Column, FlexGrid, Row, TextInput, Toggle } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { cloneDeep, isEmpty } from 'lodash-es';
 import type { Config } from '@openmrs/esm-framework/src/internal';

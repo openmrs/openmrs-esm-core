@@ -9,7 +9,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Theme,
   Toggle,
 } from '@carbon/react';
 import { useStore } from '@openmrs/esm-framework';
