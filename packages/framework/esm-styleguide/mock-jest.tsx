@@ -104,6 +104,7 @@ export const MaybePictogram = ({ pictogram }) => <span>{pictogram}</span>;
 export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
 
 export const OpenmrsDatePicker = () => <span>OpenmrsDatePicker</span>;
+export const OpenmrsDateRangePicker = () => <span>OpenmrsDateRangePicker</span>;
 
 export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   const locations = [

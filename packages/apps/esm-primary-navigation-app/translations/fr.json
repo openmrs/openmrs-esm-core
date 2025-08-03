@@ -4,7 +4,7 @@
   "change": "Modifier",
   "changeLanguage": "Changer de langue",
   "changingLanguage": "Changement de langue",
-  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
+  "noPathInDashboardExtension": "Impossible d'afficher l'extension de tableau de bord sans que la propriété \"path\" ne soit configurée dans le schéma de configuration",
   "notifications": "Notifications",
   "userMenu": "Menu utilisateur",
   "userMenuOptions": "Options du menu utilisateur",

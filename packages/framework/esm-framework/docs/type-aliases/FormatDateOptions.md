@@ -4,7 +4,7 @@
 
 > **FormatDateOptions** = `object`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:52
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:51
 
 ## Properties
 
@@ -12,7 +12,7 @@ Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:52
 
 > `optional` **calendar**: `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:56
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:55
 
 The calendar to use when formatting this date.
 
@@ -22,7 +22,7 @@ The calendar to use when formatting this date.
 
 > **day**: `boolean`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:72
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:71
 
 Whether to include the day number
 
@@ -32,7 +32,7 @@ Whether to include the day number
 
 > `optional` **locale**: `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:60
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:59
 
 The locale to use when formatting this date
 
@@ -42,7 +42,7 @@ The locale to use when formatting this date
 
 > **mode**: [`FormatDateMode`](FormatDateMode.md)
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:65
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:64
 
 - `standard`: "03 Feb 2022"
 - `wide`:     "03 — Feb — 2022"
@@ -53,7 +53,7 @@ Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:65
 
 > **month**: `boolean`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:74
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:73
 
 Whether to include the month number
 
@@ -63,7 +63,7 @@ Whether to include the month number
 
 > **noToday**: `boolean`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:85
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:84
 
 Disables the special handling of dates that are today. If false
 (the default), then dates that are today will be formatted as "Today"
@@ -76,7 +76,7 @@ formatted the same as all other dates.
 
 > `optional` **numberingSystem**: `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:78
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:77
 
 The unicode numbering system to use
 
@@ -86,7 +86,7 @@ The unicode numbering system to use
 
 > **time**: `true` \| `false` \| `"for today"`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:70
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:69
 
 Whether the time should be included in the output always (`true`),
 never (`false`), or only when the input date is today (`for today`).
@@ -97,6 +97,6 @@ never (`false`), or only when the input date is today (`for today`).
 
 > **year**: `boolean`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:76
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:75
 
 Whether to include the year
