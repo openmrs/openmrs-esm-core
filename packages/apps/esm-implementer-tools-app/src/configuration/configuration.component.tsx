@@ -116,7 +116,7 @@ export const Configuration: React.FC = () => {
 
   const mainContentHeight = isConfigToolbarOpen ? 'calc(50vh - 7rem)' : 'calc(50vh - 2rem)';
   return (
-    <Theme theme="g90">
+    <>
       <div className={styles.tools}>
         <div className={styles.toggleToolbarButton}>
           <OpenOrCloseButton isConfigToolbarOpen={isConfigToolbarOpen} toggleIsToolbarOpen={toggleIsToolbarOpen} />
@@ -197,6 +197,6 @@ export const Configuration: React.FC = () => {
           </>
         )}
       </div>
-    </Theme>
+    </>
   );
 };
