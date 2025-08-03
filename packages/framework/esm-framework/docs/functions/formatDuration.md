@@ -2,9 +2,9 @@
 
 # Function: formatDuration()
 
-> **formatDuration**(`duration`, `options?`): `any`
+> **formatDuration**(`duration`, `options?`): `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:154
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:153
 
 Formats the input duration according to the current locale.
 
@@ -24,6 +24,6 @@ Optional options for formatting.
 
 ## Returns
 
-`any`
+`string`
 
 The formatted duration string.
