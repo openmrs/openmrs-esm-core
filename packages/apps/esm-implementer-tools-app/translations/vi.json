@@ -1,6 +1,8 @@
 {
   "activeItemSourceText": "Giá trị hiện tại đến từ",
+  "arrayValidationMessage": "Value must be an array",
   "backendModules": "Backend modules",
+  "booleanValidationMessage": "Value must be a boolean",
   "checkImplementerToolsMessage": "Kiểm tra tab Backend Modules trong Công cụ triển khai để biết thêm chi tiết",
   "clearConfig": "Xóa cấu hình cục bộ",
   "close": "Đóng",
@@ -21,12 +23,17 @@
   "missing": "Missing",
   "moduleName": "Tên module",
   "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
+  "numberValidationMessage": "Value must be a number",
+  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
+  "objectValidationMessage": "Value must be an object",
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Đặt lại về mặc định",
+  "stringValidationMessage": "Value must be a string",
   "toggleImplementerTools": "Toggle Implementer Tools",
   "uiEditor": "UI editor",
   "unknownVersion": "unknown",
   "updateConfig": "Cập nhật cấu hình",
+  "uuidValidationMessage": "Value must be a valid UUID string",
   "value": "Giá trị",
   "viewModules": "Xem modules"
 }

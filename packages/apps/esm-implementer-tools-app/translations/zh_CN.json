@@ -1,6 +1,8 @@
 {
   "activeItemSourceText": "当前值来自",
+  "arrayValidationMessage": "Value must be an array",
   "backendModules": "后端模块",
+  "booleanValidationMessage": "Value must be a boolean",
   "checkImplementerToolsMessage": "请查看Implementer 工具中的Backend模块选项卡，以获取更多详细信息。",
   "clearConfig": "清除本地配置",
   "close": "关闭",
@@ -21,12 +23,17 @@
   "missing": "缺失",
   "moduleName": "模块名称",
   "modulesWithMissingDependenciesWarning": "部分模块存在未解决的backend依赖关系",
+  "numberValidationMessage": "Value must be a number",
+  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
+  "objectValidationMessage": "Value must be an object",
   "requiredVersion": "所需版本",
   "resetToDefaultValueButtonText": "恢复为默认值",
+  "stringValidationMessage": "Value must be a string",
   "toggleImplementerTools": "切换实现者工具",
   "uiEditor": "UI编辑器",
   "unknownVersion": "未知",
   "updateConfig": "更新配置",
+  "uuidValidationMessage": "Value must be a valid UUID string",
   "value": "值",
   "viewModules": "查看模块"
 }

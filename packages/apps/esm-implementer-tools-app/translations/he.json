@@ -1,6 +1,8 @@
 {
   "activeItemSourceText": "הערך הנוכחי מגיע מ",
+  "arrayValidationMessage": "Value must be an array",
   "backendModules": "מודולים בצד השרת",
+  "booleanValidationMessage": "Value must be a boolean",
   "checkImplementerToolsMessage": "Check the Backend Modules tab in the Implementer Tools for more details",
   "clearConfig": "נקה תצורה מקומית",
   "close": "Close",
@@ -21,12 +23,17 @@
   "missing": "חסר",
   "moduleName": "שם המודול",
   "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
+  "numberValidationMessage": "Value must be a number",
+  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
+  "objectValidationMessage": "Value must be an object",
   "requiredVersion": "גרסה נדרשת",
   "resetToDefaultValueButtonText": "איפוס לברירת מחדל",
+  "stringValidationMessage": "Value must be a string",
   "toggleImplementerTools": "Toggle Implementer Tools",
   "uiEditor": "עורך ממשק משתמש",
   "unknownVersion": "לא ידוע",
   "updateConfig": "Update config",
+  "uuidValidationMessage": "Value must be a valid UUID string",
   "value": "ערך",
   "viewModules": "View modules"
 }

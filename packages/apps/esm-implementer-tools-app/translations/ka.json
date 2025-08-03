@@ -1,6 +1,8 @@
 {
   "activeItemSourceText": "მიმდინარე მნიშვნელობის წყაროა",
+  "arrayValidationMessage": "Value must be an array",
   "backendModules": "უკანაბოლოს მოდულები",
+  "booleanValidationMessage": "Value must be a boolean",
   "checkImplementerToolsMessage": "Check the Backend Modules tab in the Implementer Tools for more details",
   "clearConfig": "ლოკალური კონფიგურაციის გასუფთავება",
   "close": "დახურვა",
@@ -21,12 +23,17 @@
   "missing": "აკლია",
   "moduleName": "მოდულის სახელი",
   "modulesWithMissingDependenciesWarning": "ზოგიერთ მოდულს გადაუწყვეტელი უკანაბოლოს დამოკიდებულებები გააჩნია",
+  "numberValidationMessage": "Value must be a number",
+  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
+  "objectValidationMessage": "Value must be an object",
   "requiredVersion": "საჭირო ვერსია",
   "resetToDefaultValueButtonText": "ჩამოყრა ნაგულისხმევზე",
+  "stringValidationMessage": "Value must be a string",
   "toggleImplementerTools": "განმხორციელებლის ხელსაწყოების გადართვა",
   "uiEditor": "ინტერფეისის რედაქტორი",
   "unknownVersion": "უცნობი",
   "updateConfig": "კონფიგურაციის განახლება",
+  "uuidValidationMessage": "Value must be a valid UUID string",
   "value": "მნიშვნელობა",
   "viewModules": "მოდულების ნახვა"
 }

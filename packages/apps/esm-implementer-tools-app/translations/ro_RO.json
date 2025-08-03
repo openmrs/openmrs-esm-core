@@ -1,6 +1,8 @@
 {
   "activeItemSourceText": "Valoarea curentă provine din ",
+  "arrayValidationMessage": "Value must be an array",
   "backendModules": "Module backend",
+  "booleanValidationMessage": "Value must be a boolean",
   "checkImplementerToolsMessage": "Verifică fila Module Backend din Instrumente Implementator pentru mai multe detalii",
   "clearConfig": "Șterge configurația locală",
   "close": "Închide",
@@ -21,12 +23,17 @@
   "missing": "Lipsește",
   "moduleName": "Nume modul",
   "modulesWithMissingDependenciesWarning": "Unele module au dependențe backend nerezolvate",
+  "numberValidationMessage": "Value must be a number",
+  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
+  "objectValidationMessage": "Value must be an object",
   "requiredVersion": "Versiune necesară",
   "resetToDefaultValueButtonText": "Resetează la valoarea implicită",
+  "stringValidationMessage": "Value must be a string",
   "toggleImplementerTools": "Comută Instrumente implementator",
   "uiEditor": "Editor UI",
   "unknownVersion": "necunoscută",
   "updateConfig": "Actualizează configurația",
+  "uuidValidationMessage": "Value must be a valid UUID string",
   "value": "Valoare",
   "viewModules": "Vezi modulele"
 }

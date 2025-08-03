@@ -1,6 +1,8 @@
 {
   "activeItemSourceText": "El valor actual proviene de ",
+  "arrayValidationMessage": "Value must be an array",
   "backendModules": "Módulos Backend",
+  "booleanValidationMessage": "Value must be a boolean",
   "checkImplementerToolsMessage": "Consulte la pestaña Módulos Backend en las Herramientas del Implementador para más detalles",
   "clearConfig": "Borrar la configuración local",
   "close": "Cerrar",
@@ -21,12 +23,17 @@
   "missing": "Faltante",
   "moduleName": "Nombre del módulo",
   "modulesWithMissingDependenciesWarning": "Algunos módulos tienen dependencias no resueltas en el backend",
+  "numberValidationMessage": "Value must be a number",
+  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
+  "objectValidationMessage": "Value must be an object",
   "requiredVersion": "Versión Requerida",
   "resetToDefaultValueButtonText": "Restablecer a los valores predeterminados",
+  "stringValidationMessage": "Value must be a string",
   "toggleImplementerTools": "Activar/desactivar herramientas de implementador",
   "uiEditor": "Editor por UI",
   "unknownVersion": "desconocido",
   "updateConfig": "Actualizar configuración",
+  "uuidValidationMessage": "Value must be a valid UUID string",
   "value": "Valor",
   "viewModules": "Ver módulos"
 }
