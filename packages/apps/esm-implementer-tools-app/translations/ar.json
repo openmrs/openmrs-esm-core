@@ -1,6 +1,8 @@
 {
   "activeItemSourceText": "القيمة الحالية مأخوذة من ",
+  "arrayValidationMessage": "Value must be an array",
   "backendModules": "وحدات الخلفية",
+  "booleanValidationMessage": "Value must be a boolean",
   "checkImplementerToolsMessage": "تحقق من علامة التبويب وحدات الخلفية في أدوات المنفذ لمزيد من التفاصيل",
   "clearConfig": "مسح التكوين المحلي",
   "close": "إغلاق",
@@ -21,12 +23,17 @@
   "missing": "مفقود",
   "moduleName": "اسم الوحدة",
   "modulesWithMissingDependenciesWarning": "بعض الوحدات لديها اعتمادات خلفية غير محلولة",
+  "numberValidationMessage": "Value must be a number",
+  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
+  "objectValidationMessage": "Value must be an object",
   "requiredVersion": "الإصدار المطلوب",
   "resetToDefaultValueButtonText": "إعادة تعيين إلى القيمة الافتراضية",
+  "stringValidationMessage": "Value must be a string",
   "toggleImplementerTools": "Toggle Implementer Tools",
   "uiEditor": "محرر الواجهة",
   "unknownVersion": "غير معروف",
   "updateConfig": "Update config",
+  "uuidValidationMessage": "Value must be a valid UUID string",
   "value": "قيمة",
   "viewModules": "عرض الوحدات"
 }
