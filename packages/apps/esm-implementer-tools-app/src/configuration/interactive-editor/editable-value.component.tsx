@@ -89,7 +89,7 @@ export default function EditableValue({ path, element, customType }: EditableVal
               customType={customType}
               path={path}
               handleClose={closeEditor}
-              saveFinalValue={(val) => {
+              handleSaveToConfiguration={(val) => {
                 try {
                   const result = JSON.parse(val);
                   const tempConfigUpdate = set(cloneDeep(temporaryConfigStore.getState()), ['config', ...path], result);

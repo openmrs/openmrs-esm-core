@@ -35,11 +35,11 @@ export function ValueEditorField({ element, path, valueType, value, onChange, er
     <Checkbox
       id={id}
       checked={value}
-      invalid={Boolean(error)}
-      invalidText={error}
       hideLabel
       labelText=""
       onChange={(event, { checked, id }) => onChange(checked)}
+      invalid={Boolean(error)}
+      invalidText={error}
     />
   ) : valueType === Type.ConceptUuid ? (
     <ConceptSearchBox value={value} setConcept={(concept) => onChange(concept.uuid)} />
@@ -54,19 +54,19 @@ export function ValueEditorField({ element, path, valueType, value, onChange, er
     <NumberInput
       id={id}
       value={value}
-      invalid={Boolean(error)}
-      invalidText={error}
       onChange={(_, { value }) => onChange(value ? (typeof value === 'string' ? parseInt(value) : value) : 0)}
       hideSteppers
+      invalid={Boolean(error)}
+      invalidText={error}
     />
   ) : valueType === Type.String || valueType === Type.UUID ? (
     <TextInput
       id={id}
       value={value}
-      invalid={Boolean(error)}
-      invalidText={error}
       labelText=""
       onChange={(e) => onChange(e.target.value)}
+      invalid={Boolean(error)}
+      invalidText={error}
     />
   ) : valueType === 'add' ? (
     <ExtensionSlotAdd value={value ?? element._value} setValue={onChange} />

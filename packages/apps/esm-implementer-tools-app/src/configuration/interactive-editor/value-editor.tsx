@@ -14,11 +14,11 @@ interface ValueEditorProps {
   element: ConfigValueDescriptor;
   customType?: CustomValueType;
   path: Array<string>;
-  saveFinalValue: (val: string) => void;
+  handleSaveToConfiguration: (val: string) => void;
   handleClose: () => void;
 }
 
-export function ValueEditor({ element, customType, path, saveFinalValue, handleClose }: ValueEditorProps) {
+export function ValueEditor({ element, customType, path, handleSaveToConfiguration, handleClose }: ValueEditorProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [tmpValue, setTmpValue] = useState(element._value);
   const [error, setError] = useState<string | null>(null);
@@ -39,9 +39,9 @@ export function ValueEditor({ element, customType, path, saveFinalValue, handleC
       setError(errorMessage);
     } else {
       setError(null);
-      saveFinalValue(JSON.stringify(tmpValue));
+      handleSaveToConfiguration(JSON.stringify(tmpValue));
     }
-  }, [tmpValue, valueType, validators, elementSchema, saveFinalValue]);
+  }, [tmpValue, valueType, validators, elementSchema, handleSaveToConfiguration]);
 
   useEffect(() => {
     const keyListener = (e: KeyboardEvent) => {

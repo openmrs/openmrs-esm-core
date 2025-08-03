@@ -1,11 +1,14 @@
+import { type TOptions } from 'i18next';
 import { Type, type ConfigValue, type ConfigSchema, type Validator, translateFrom } from '@openmrs/esm-framework';
 import type { CustomValueType } from './value-editor';
 
 const moduleName = '@openmrs/esm-implementer-tools-app';
+const t = (key: string, fallback?: string, options?: Omit<TOptions, 'ns' | 'defaultValue'>) =>
+  translateFrom(moduleName, key, fallback, options);
 
 const validateString = (value: ConfigValue, validators: Array<Validator>) => {
   if (typeof value !== 'string') {
-    return translateFrom(moduleName, 'stringValidationMessage', 'Value must be a string');
+    return t('stringValidationMessage', 'Value must be a string');
   }
   for (const validator of validators) {
     const error = validator(value);
@@ -16,7 +19,7 @@ const validateString = (value: ConfigValue, validators: Array<Validator>) => {
 
 const validateNumber = (value: ConfigValue, validators: Array<Validator>) => {
   if (typeof value !== 'number') {
-    return translateFrom(moduleName, 'numberValidationMessage', 'Value must be a number');
+    return t('numberValidationMessage', 'Value must be a number');
   }
   for (const validator of validators) {
     const error = validator(value);
@@ -27,7 +30,7 @@ const validateNumber = (value: ConfigValue, validators: Array<Validator>) => {
 
 const validateBoolean = (value: ConfigValue, validators: Array<Validator>) => {
   if (typeof value !== 'boolean') {
-    return translateFrom(moduleName, 'booleanValidationMessage', 'Value must be a boolean');
+    return t('booleanValidationMessage', 'Value must be a boolean');
   }
   for (const validator of validators) {
     const error = validator(value);
@@ -38,7 +41,7 @@ const validateBoolean = (value: ConfigValue, validators: Array<Validator>) => {
 
 const validateArray = (value: ConfigValue, validators: Array<Validator>, elementSchema?: ConfigSchema) => {
   if (!Array.isArray(value)) {
-    return translateFrom(moduleName, 'arrayValidationMessage', 'Value must be an array');
+    return t('arrayValidationMessage', 'Value must be an array');
   }
   for (const validator of validators) {
     const error = validator(value);
@@ -63,7 +66,7 @@ const validateArray = (value: ConfigValue, validators: Array<Validator>, element
 
 const validateObject = (value: ConfigValue, validators: Array<Validator>, elementSchema?: ConfigSchema) => {
   if (!elementSchema || typeof value !== 'object' || value === null || Array.isArray(value)) {
-    return translateFrom(moduleName, 'objectValidationMessage', 'Value must be an object');
+    return t('objectValidationMessage', 'Value must be an object');
   }
   for (const validator of validators) {
     const error = validator(value);
@@ -77,7 +80,7 @@ const validateObject = (value: ConfigValue, validators: Array<Validator>, elemen
       if (propSchema._type === Type.Array) {
         const error = validateArray(propValue, propSchema._validators ?? [], propSchema._elements);
         if (error)
-          return translateFrom(moduleName, 'objectPropertyValidationMessage', 'Property {{key}}: {{error}}', {
+          return t('objectPropertyValidationMessage', 'Property {{key}}: {{error}}', {
             key,
             error,
           });
@@ -86,7 +89,7 @@ const validateObject = (value: ConfigValue, validators: Array<Validator>, elemen
         const propValidators = propSchema._validators ?? [];
         const error = validateValue(propValue, propType, propValidators, propSchema._elements);
         if (error)
-          return translateFrom(moduleName, 'objectPropertyValidationMessage', 'Property {{key}}: {{error}}', {
+          return t('objectPropertyValidationMessage', 'Property {{key}}: {{error}}', {
             key,
             error,
           });
@@ -94,7 +97,7 @@ const validateObject = (value: ConfigValue, validators: Array<Validator>, elemen
     } else if (typeof propSchema === 'object' && propSchema !== null) {
       const error = validateObject(propValue, [], propSchema as ConfigSchema);
       if (error)
-        return translateFrom(moduleName, 'objectPropertyValidationMessage', 'Property {{key}}: {{error}}', {
+        return t('objectPropertyValidationMessage', 'Property {{key}}: {{error}}', {
           key,
           error,
         });
@@ -110,7 +113,7 @@ const validateUuid = (value: ConfigValue, validators: Array<Validator>) => {
       value,
     )
   ) {
-    return translateFrom(moduleName, 'uuidValidationMessage', 'Value must be a valid UUID string');
+    return t('uuidValidationMessage', 'Value must be a valid UUID string');
   }
   for (const validator of validators) {
     const error = validator(value);
