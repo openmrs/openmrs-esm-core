@@ -17,7 +17,7 @@
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx",
-    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.button.tsx' 'src/**/*.extension.tsx' 'src/**/*.modal.tsx' --config='../../../tools/i18next-parser.config.js'"
+    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.button.tsx' 'src/**/*.extension.tsx' 'src/**/*.modal.tsx' 'src/**/*.resource.ts' --config='../../../tools/i18next-parser.config.js'"
   },
   "keywords": [
     "openmrs",
