@@ -106,69 +106,79 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   const { canHide, canMaximize } = windowDef;
   const { maximized } = openedWindow;
   const width = windowDef?.width ?? 'narrow';
-  const overlay = group.overlay ?? false;
 
   return (
     <div
-      className={classNames(
-        styles.workspaceFixedContainer,
-        {
-          [styles.narrowWorkspace]: width === 'narrow',
-          [styles.widerWorkspace]: width === 'wider',
-          [styles.extraWideWorkspace]: width === 'extra-wide',
-          [styles.overlay]: overlay,
-          [styles.hidden]: openedWindow.hidden,
-        },
-      )}
+      className={classNames(styles.workspaceOuterContainer, {
+        [styles.narrowWorkspace]: width === 'narrow',
+        [styles.widerWorkspace]: width === 'wider',
+        [styles.extraWideWorkspace]: width === 'extra-wide',
+      })}
     >
-      <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
-        {!isDesktop(layout) && !canHide && (
-          <HeaderMenuButton
-            aria-label={getCoreTranslation('close')}
-            renderMenuIcon={<ArrowLeftIcon />}
-            onClick={() => closeWorkspace(workspaceName)}
-          />
-        )}
-        <HeaderName prefix="">{title}</HeaderName>
-        <div className={styles.overlayHeaderSpacer} />
-        <HeaderGlobalBar className={styles.headerButtons}>
-          {isDesktop(layout) && (
-            <>
-              {(canMaximize || maximized) && (
-                <HeaderGlobalAction
-                  aria-label={maximized ? getCoreTranslation('minimize') : getCoreTranslation('maximize')}
-                  onClick={() => setWindowMaximized(windowName, !maximized)}
-                >
-                  {maximized ? <Minimize /> : <Maximize />}
-                </HeaderGlobalAction>
+      <div
+        className={classNames(styles.workspaceSpacer, {
+          [styles.hidden]: openedWindow.hidden,
+        })}
+      />
+      <div
+        className={classNames(styles.workspaceMiddleContainer, {
+          [styles.maximized]: maximized,
+          [styles.hidden]: openedWindow.hidden,
+        })}
+      >
+        <div
+          className={classNames(styles.workspaceInnerContainer, {
+            [styles.maximized]: maximized,
+            [styles.hidden]: openedWindow.hidden,
+          })}
+        >
+          <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
+            {!isDesktop(layout) && !canHide && (
+              <HeaderMenuButton
+                aria-label={getCoreTranslation('close')}
+                renderMenuIcon={<ArrowLeftIcon />}
+                onClick={() => closeWorkspace(workspaceName)}
+              />
+            )}
+            <HeaderName prefix="">{title}</HeaderName>
+            <div className={styles.overlayHeaderSpacer} />
+            <HeaderGlobalBar className={styles.headerButtons}>
+              {isDesktop(layout) && (
+                <>
+                  {(canMaximize || maximized) && (
+                    <HeaderGlobalAction
+                      aria-label={maximized ? getCoreTranslation('minimize') : getCoreTranslation('maximize')}
+                      onClick={() => setWindowMaximized(windowName, !maximized)}
+                    >
+                      {maximized ? <Minimize /> : <Maximize />}
+                    </HeaderGlobalAction>
+                  )}
+                  {canHide ? (
+                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow(windowName)}>
+                      <ArrowRightIcon />
+                    </HeaderGlobalAction>
+                  ) : (
+                    <HeaderGlobalAction
+                      aria-label={getCoreTranslation('close')}
+                      onClick={() => closeWorkspace(workspaceName)}
+                    >
+                      <CloseIcon />
+                    </HeaderGlobalAction>
+                  )}
+                </>
               )}
-              {canHide ? (
-                <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow(windowName)}>
-                  <ArrowRightIcon />
-                </HeaderGlobalAction>
-              ) : (
+              {layout === 'tablet' && canHide && (
                 <HeaderGlobalAction
                   aria-label={getCoreTranslation('close')}
                   onClick={() => closeWorkspace(workspaceName)}
                 >
-                  <CloseIcon />
+                  <DownToBottom />
                 </HeaderGlobalAction>
               )}
-            </>
-          )}
-          {layout === 'tablet' && canHide && (
-            <HeaderGlobalAction aria-label={getCoreTranslation('close')} onClick={() => closeWorkspace(workspaceName)}>
-              <DownToBottom />
-            </HeaderGlobalAction>
-          )}
-        </HeaderGlobalBar>
-      </Header>
-      <div
-        className={classNames(styles.workspaceContent, {
-          [styles.marginWorkspaceContent]: true,
-        })}
-      >
-        {children}
+            </HeaderGlobalBar>
+          </Header>
+          <div className={classNames(styles.workspaceContent)}>{children}</div>
+        </div>
       </div>
     </div>
   );

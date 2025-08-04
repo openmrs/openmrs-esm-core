@@ -1,7 +1,21 @@
+.workspaceWindowsAndMenuContainer {
+  position: relative;
+  display: flex;
+  height: 100%;
+
+  &.overlay {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
+
 .workspaceWindowsContainer {
   display: grid;
   width: fit-content;
 
+  // make its children stack on top of each other
   > * {
     grid-area: 1 / 1;
   }

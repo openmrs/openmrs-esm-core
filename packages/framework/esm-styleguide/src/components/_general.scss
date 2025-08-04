@@ -30,7 +30,8 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - var(--omrs-navbar-height));
+  min-height: calc(100vh - var(--omrs-navbar-height));
+  height: fit-content;
   grid-area: appRoots;
 }
 
@@ -40,8 +41,6 @@ body {
 
 #omrs-workspace-container {
   grid-area: workspace;
-  position: relative;
-  display: flex;
 }
 
 #omrs-top-nav-app-container {
