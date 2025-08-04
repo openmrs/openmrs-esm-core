@@ -1,4 +1,4 @@
-:wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.atlassian.net/wiki/spaces/docs/pages/25476048/Developer+Documentation?atlOrigin=eyJpIjoiOGRkNTBlMTZlY2M2NGNhMzk3NDdlMDcyZTgwMjAxYjUiLCJwIjoiYyJ9). You may find the [Introduction](https://openmrs.atlassian.net/wiki/spaces/docs/pages/151093495/Introduction+to+O3+for+Developers?atlOrigin=eyJpIjoiOGVmNGFhMjQ1OTI0NDI2M2JlZjBlYTk3M2RiNTQ1MzEiLCJwIjoiYyJ9) especially helpful.
+:wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.atlassian.net/wiki/x/IABBHg). You may find the [Introduction](https://openmrs.atlassian.net/wiki/x/94ABCQ) especially helpful.
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
