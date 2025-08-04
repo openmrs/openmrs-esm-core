@@ -1,0 +1,38 @@
+@use '@carbon/styles/scss/theme';
+@use '../datepicker.module.scss' as *;
+
+.inputsWrapper {
+  display: flex;
+  min-width: 10rem;
+  max-width: 15rem;
+  margin-left: 1rem;
+  inline-size: 15rem;
+}
+
+.dateInputWrapper {
+  @extend .inputWrapper;
+  min-width: unset;
+  margin: 0px;
+}
+
+.startInput {
+  flex-basis: fit-content;
+}
+
+.endInput {
+  padding-right: unset;
+}
+
+.separator {
+  margin-inline: 0.5rem;
+}
+
+.inputGroup:has([data-placeholder]) > .inputsWrapper > .separator > span {
+  color: theme.$text-disabled;
+}
+
+:global([dir='rtl']) {
+  .endInput {
+    padding-right: 0;
+  }
+}

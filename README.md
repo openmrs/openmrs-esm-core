@@ -69,6 +69,14 @@ yarn
 yarn setup
 ```
 
+> **Note:** If `yarn setup` fails or causes system resource issues, use this alternative instead:
+>
+> ```sh
+> yarn build --concurrency 1
+> ```
+>
+> Both commands build all the packages - once either completes successfully, you can proceed to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
+
 ### Building
 
 To build all packages in the repository, run the following command:
