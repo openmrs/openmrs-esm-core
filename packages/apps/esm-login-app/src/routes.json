@@ -59,5 +59,53 @@
       "name": "change-password-modal",
       "component": "changePasswordModal"
     }
+  ],
+  "workspaces2": [
+    {
+      "name": "workspace-test",
+      "component": "workspaceTest",
+      "window": "window1"
+    },
+    {
+      "name": "workspace-test-2",
+      "component": "workspaceTest",
+      "window": "window2"
+    },
+    {
+      "name": "workspace-test-child",
+      "component": "workspaceTestChild",
+      "window": "window1"
+    },
+    {
+      "name": "workspace-test-child-2",
+      "component": "workspaceTestChild",
+      "window": "window2"
+    }
+  ],
+  "workspaceWindows2": [
+    {
+      "name": "window1",
+      "icon": "workspaceTestActionButton",
+      "canHide": true,
+      "canMaximize": true,
+      "overlay": false,
+      "group": "workspace-group-test",
+      "order": 1
+    },
+    {
+      "name": "window2",
+      "icon": "workspaceTestActionButton2",
+      "canHide": true,
+      "canMaximize": true,
+      "overlay": false,
+      "group": "workspace-group-test",
+      "order": 2
+    }
+  ],
+  "workspaceGroups2": [
+    {
+      "name": "workspace-group-test",
+      "overlay": true
+    }
   ]
 }
