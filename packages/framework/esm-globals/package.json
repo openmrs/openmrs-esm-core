@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@swc/cli": "^0.7.7",
-    "@swc/core": "^1.11.29",
+    "@swc/core": "^1.12.11",
     "concurrently": "^9.1.2",
     "rimraf": "^6.0.1",
     "single-spa": "^6.0.3"

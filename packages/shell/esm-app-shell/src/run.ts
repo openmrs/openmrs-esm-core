@@ -1,31 +1,24 @@
-import { start, triggerAppChange } from 'single-spa';
+import { start } from 'single-spa';
 import { type CalendarIdentifier } from '@internationalized/date';
 import {
-  activateOfflineCapability,
   canAccessStorage,
   cleanupObsoleteFeatureFlags,
-  dispatchConnectivityChanged,
-  dispatchPrecacheStaticDependencies,
   finishRegisteringAllApps,
   getConfig,
-  getCurrentUser,
   integrateBreakpoints,
   interpolateUrl,
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
   localStorageRoutesPrefix,
-  messageOmrsServiceWorker,
   openmrsFetch,
   provide,
   registerApp,
   registerDefaultCalendar,
-  registerOmrsServiceWorker,
   renderActionableNotifications,
   renderInlineNotifications,
   renderLoadingSpinner,
   renderSnackbars,
   renderToasts,
-  restBaseUrl,
   setupApiModule,
   setupHistory,
   setupModals,
@@ -34,9 +27,7 @@ import {
   showSnackbar,
   showToast,
   subscribeActionableNotificationShown,
-  subscribeConnectivity,
   subscribeNotificationShown,
-  subscribePrecacheStaticDependencies,
   subscribeSnackbarShown,
   subscribeToastShown,
   tryRegisterExtension,
@@ -174,27 +165,6 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
 }
 
 /**
- * Invoked when the connectivity is changed.
- */
-function connectivityChanged() {
-  if (!window.offlineEnabled) {
-    return;
-  }
-
-  const online = navigator.onLine;
-  // NB We do not wait for this to be done; it is simply scheduled
-  triggerAppChange();
-
-  dispatchConnectivityChanged(online);
-  showToast({
-    critical: true,
-    description: `Connection: ${online ? 'online' : 'offline'}`,
-    title: 'App',
-    kind: online ? 'success' : 'warning',
-  });
-}
-
-/**
  * Runs the shell by importing the translations and starting single SPA.
  */
 async function runShell() {
@@ -313,97 +283,7 @@ function registerCoreExtensions() {
   }
 }
 
-async function setupOffline() {
-  try {
-    await registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
-    await activateOfflineCapability();
-    setupOfflineStaticDependencyPrecaching();
-  } catch (error) {
-    console.error('Error while setting up offline mode.', error);
-    showNotification({
-      kind: 'error',
-      title: 'Offline Setup Error',
-      description: error.message,
-    });
-  }
-}
-
-function setupOfflineStaticDependencyPrecaching() {
-  const precacheDelay = 1000 * 60 * 5;
-  let lastPrecache: Date | null = null;
-
-  subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
-    const hasExceededPrecacheDelay = !lastPrecache || new Date().getTime() - lastPrecache.getTime() > precacheDelay;
-
-    if (hasLoggedInUser && online && hasExceededPrecacheDelay) {
-      lastPrecache = new Date();
-      dispatchPrecacheStaticDependencies();
-    }
-  });
-}
-
-function subscribeOnlineAndLoginChange(cb: (online: boolean, hasLoggedInUser: boolean) => void) {
-  let isOnline = false;
-  let hasLoggedInUser = false;
-
-  getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
-    hasLoggedInUser = !!user;
-    cb(isOnline, hasLoggedInUser);
-  });
-
-  subscribeConnectivity(({ online }) => {
-    isOnline = online;
-    cb(online, hasLoggedInUser);
-  });
-}
-
-async function precacheGlobalStaticDependencies() {
-  await precacheImportMap();
-
-  // By default, cache the session endpoint.
-  // This ensures that a lot of user/session related functions also work offline.
-  const sessionPathUrl = new URL(`${window.openmrsBase}${restBaseUrl}/session`, window.location.origin).href;
-
-  await messageOmrsServiceWorker({
-    type: 'registerDynamicRoute',
-    url: sessionPathUrl,
-    strategy: 'network-first',
-  });
-
-  await openmrsFetch(`${restBaseUrl}/session`).catch((e) =>
-    console.warn(
-      'Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.',
-      e,
-    ),
-  );
-}
-
-async function precacheImportMap() {
-  const importMap = await window.importMapOverrides.getCurrentPageMap();
-  await messageOmrsServiceWorker({
-    type: 'onImportMapChanged',
-    importMap,
-  });
-}
-
-function registerOfflineHandlers() {
-  window.addEventListener('offline', connectivityChanged);
-  window.addEventListener('online', connectivityChanged);
-}
-
-function setupOfflineCssClasses() {
-  subscribeConnectivity(({ online }) => {
-    const body = document.querySelector('body')!;
-    if (online) {
-      body.classList.remove('omrs-offline');
-    } else {
-      body.classList.add('omrs-offline');
-    }
-  });
-}
-
 export function run(configUrls: Array<string>) {
-  const offlineEnabled = window.offlineEnabled;
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
@@ -418,7 +298,6 @@ export function run(configUrls: Array<string>) {
     subscribeActionableNotificationShown(showActionableNotification);
     subscribeToastShown(showToast);
     subscribeSnackbarShown(showSnackbar);
-    subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
     setupApiModule();
     setupHistory();
     registerCoreExtensions();
@@ -426,13 +305,10 @@ export function run(configUrls: Array<string>) {
 
     return setupApps()
       .then(finishRegisteringAllApps)
-      .then(offlineEnabled ? setupOfflineCssClasses : undefined)
-      .then(offlineEnabled ? registerOfflineHandlers : undefined)
       .then(provideConfigs)
       .then(runShell)
       .catch(handleInitFailure)
       .then(closeLoading)
-      .then(offlineEnabled ? setupOffline : undefined)
       .then(registerOptionalDependencyHandler)
       .then(cleanupObsoleteFeatureFlags);
   });
