@@ -3807,6 +3807,7 @@ __metadata:
     "@openmrs/esm-styleguide": "workspace:*"
     "@openmrs/esm-translations": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
+    "@openmrs/typedoc-plugin-file-categories": "workspace:*"
     "@rspack/cli": "npm:^1.3.11"
     "@rspack/core": "npm:^1.3.11"
     concurrently: "npm:^9.1.2"
@@ -3816,7 +3817,6 @@ __metadata:
     sass-embedded: "npm:^1.89.0"
     svgo-loader: "npm:^4.0.0"
     typedoc: "npm:^0.28.5"
-    typedoc-plugin-file-categories: "workspace:*"
     typedoc-plugin-markdown: "npm:^4.6.3"
     typedoc-plugin-no-inherit: "npm:^1.6.1"
     typescript: "npm:^5.8.3"
@@ -4266,6 +4266,21 @@ __metadata:
     typescript: "npm:^5.8.3"
     webpack-bundle-analyzer: "npm:^4.10.2"
     webpack-stats-plugin: "npm:^1.1.3"
+  languageName: unknown
+  linkType: soft
+
+"@openmrs/typedoc-plugin-file-categories@workspace:*, @openmrs/typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories"
+  dependencies:
+    "@swc/cli": "npm:^0.7.7"
+    "@swc/core": "npm:^1.11.29"
+    rimraf: "npm:^6.0.1"
+    typedoc: "npm:^0.28.5"
+    typescript: "npm:^5.8.3"
+    vitest: "npm:^3.1.4"
+  peerDependencies:
+    typedoc: ">=0.28.0"
   languageName: unknown
   linkType: soft
 
@@ -21041,21 +21056,6 @@ __metadata:
   checksum: 10/2cc1bcf7d8c1237f6a16c04efc06637b2c5f2d74e58e84665445cf87668b85a21ab18dd751fa49eee6ae024b70326635d7b79ad37b1c370ed2fec6aeeeb52714
   languageName: node
   linkType: hard
-
-"typedoc-plugin-file-categories@workspace:*, typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories":
-  version: 0.0.0-use.local
-  resolution: "typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories"
-  dependencies:
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
-    rimraf: "npm:^6.0.1"
-    typedoc: "npm:^0.28.5"
-    typescript: "npm:^5.8.3"
-    vitest: "npm:^3.1.4"
-  peerDependencies:
-    typedoc: ">=0.28.0"
-  languageName: unknown
-  linkType: soft
 
 "typedoc-plugin-markdown@npm:^4.6.3":
   version: 4.7.0
