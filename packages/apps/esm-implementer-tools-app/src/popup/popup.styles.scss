@@ -9,9 +9,7 @@
   left: 0;
   width: 100%;
   z-index: 100000;
-  background-color: theme.$background;
   border-top: 2px solid $ui-05;
-  color: $color-gray-100;
   box-sizing: border-box;
 
   tr {
@@ -62,7 +60,6 @@
   justify-content: space-between;
   align-items: center;
   z-index: 2;
-  background-color: theme.$background;
 }
 
 .closeButton {
