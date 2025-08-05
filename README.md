@@ -1,4 +1,4 @@
-:wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
+:wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.atlassian.net/wiki/x/IABBHg). You may find the [Introduction](https://openmrs.atlassian.net/wiki/x/94ABCQ) especially helpful.
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
