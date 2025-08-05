@@ -40,7 +40,7 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || '')
   .filter((url) => url.length > 0)
   .map((url) => JSON.stringify(url))
   .join(', ');
-const openmrsHtmlCssAssets = (process.env.OMRS_JS_CSS_ASSETS || '')
+const openmrsJsCssAssets = (process.env.OMRS_JS_CSS_ASSETS || '')
   .split(';')
   .filter((filePath) => filePath.length > 0);
 
@@ -141,7 +141,7 @@ module.exports = (env, argv = []) => {
     });
   }
 
-  const assetsPatterns = openmrsHtmlCssAssets.map(asset => ({from: asset, to: dirname(asset)}));
+  const assetsPatterns = openmrsJsCssAssets.map(asset => ({from: asset, to: 'assets'}));
 
   return {
     entry: resolve(__dirname, 'src/index.ts'),
@@ -338,7 +338,7 @@ module.exports = (env, argv = []) => {
           openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
         },
       }),
-      new HtmlWebpackTagsPlugin({ tags: openmrsHtmlCssAssets }),
+      new HtmlWebpackTagsPlugin({ tags: openmrsJsCssAssets.map(fileName => 'assets/' + basename(fileName)) }),
       new WebpackPwaManifest({
         name: 'OpenMRS',
         short_name: 'OpenMRS',
