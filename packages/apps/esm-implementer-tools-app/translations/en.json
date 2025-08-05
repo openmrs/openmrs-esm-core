@@ -21,6 +21,8 @@
   "missing": "Missing",
   "moduleName": "Module name",
   "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
+  "noExtensionsToOrder": "No extensions found in this slot.",
+  "noExtensionsToRemoveText": "No extensions available to remove.",
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Reset to default",
   "toggleImplementerTools": "Toggle Implementer Tools",

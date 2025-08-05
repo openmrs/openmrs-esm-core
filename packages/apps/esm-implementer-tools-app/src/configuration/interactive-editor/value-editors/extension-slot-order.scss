@@ -1,0 +1,51 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+@use '@carbon/type';
+
+.extension {
+  display: flex;
+  flex-direction: column;
+}
+
+.iconAndName {
+  display: flex;
+  align-items: center;
+}
+
+.dragContainer {
+  display: flex;
+  min-height: layout.$spacing-09;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dragContainerWhenDragging {
+  @extend .dragContainer;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  background-color: rgba(255, 255, 255, 0.552);
+  transform: scale(0.75);
+}
+
+.dragIcon {
+  margin-right: layout.$spacing-02;
+  :focus {
+    border: none !important;
+  }
+}
+
+.droppable {
+  border: layout.$spacing-01 solid transparent;
+}
+
+.dropZone {
+  border: 2px solid colors.$teal-40;
+  &::before {
+    opacity: 0.4;
+  }
+}
+
+.extensionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

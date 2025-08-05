@@ -106,7 +106,7 @@ export default function EditableValue({ path, element, customType }: EditableVal
           </>
         ) : (
           <div className={styles.elementValue}>
-            <DisplayValue value={element._value} />
+            <DisplayValue value={element._value} customType={customType} />
             <Button
               kind="ghost"
               size="sm"
