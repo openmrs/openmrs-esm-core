@@ -12,7 +12,6 @@ import {
 } from '@openmrs/esm-globals';
 import { getFeatureFlag } from '@openmrs/esm-feature-flags';
 import { routeRegex } from './helpers';
-import { getLoader } from './app';
 import {
   tryRegisterExtension,
   tryRegisterFeatureFlag,
@@ -20,6 +19,7 @@ import {
   tryRegisterWorkspace,
   tryRegisterWorkspaceGroup,
 } from './components';
+import { loadLifeCycles } from './load-lifecycles';
 
 // this is the global holder of all pages registered in the app
 const pages: Array<RegisteredPageDefinition> = [];
@@ -257,6 +257,6 @@ To fix this, ensure that you define the "component" field inside the page defini
   }
 
   const activityFn = wrapPageActivityFn(getActivityFn(route), page);
-  const loader = getLoader(page.appName, page.component);
+  const loader = () => loadLifeCycles(page.appName, page.component);
   registerApplication(appName, loader, activityFn);
 }
