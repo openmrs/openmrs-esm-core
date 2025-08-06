@@ -244,6 +244,7 @@
 ## Workspace
 
 - [ActionMenuButtonProps](interfaces/ActionMenuButtonProps.md)
+- [ActionMenuButtonProps2](interfaces/ActionMenuButtonProps2.md)
 - [closeWorkspace](functions/closeWorkspace.md)
 - [launchWorkspace](functions/launchWorkspace.md)
 - [navigateAndLaunchWorkspace](functions/navigateAndLaunchWorkspace.md)

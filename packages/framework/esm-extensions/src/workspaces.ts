@@ -152,7 +152,7 @@ export function getWorkspaceRegistration(name: string): WorkspaceRegistration {
 }
 
 /**
- * This provides the workspace group registration and is also compatibile with the
+ * This provides the workspace group registration and is also compatible with the
  * old way of registering workspace groups (as extensions), but isn't recommended.
  *
  * @param name of the workspace
