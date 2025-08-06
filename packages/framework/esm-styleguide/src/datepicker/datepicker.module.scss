@@ -85,9 +85,19 @@
   --omrs-icon-fill: #{theme.$support-error};
 }
 
+.flatButtonSm {
+  height: layout.$spacing-07;
+  width: layout.$spacing-07;
+}
+
 .flatButtonMd {
   height: layout.$spacing-08;
   width: layout.$spacing-08;
+}
+
+.flatButtonLg {
+  height: layout.$spacing-09;
+  width: layout.$spacing-09;
 }
 
 .header {
@@ -128,10 +138,9 @@
 }
 
 .inputWrapper {
-  inline-size: 15rem;
+  flex: 1;
   margin-left: layout.$spacing-05;
   min-width: layout.$spacing-13;
-  max-width: 15rem;
 
   & .inputSegment {
     caret-color: var(--cds-text-primary);
@@ -173,8 +182,16 @@
   }
 }
 
+.inputWrapperSm {
+  block-size: layout.$spacing-04;
+}
+
 .inputWrapperMd {
-  block-size: layout.$spacing-08;
+  block-size: layout.$spacing-05;
+}
+
+.inputWrapperLg {
+  block-size: layout.$spacing-06;
 }
 
 .monthYear {
@@ -319,8 +336,8 @@
 
 :global([dir='rtl']) {
   .inputWrapper {
-    padding-left: unset;
-    padding-right: layout.$spacing-04;
+    margin-left: unset;
+    margin-right: layout.$spacing-05;
   }
 
   .monthYear {
