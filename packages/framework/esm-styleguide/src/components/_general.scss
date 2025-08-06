@@ -41,6 +41,8 @@ body {
 
 #omrs-workspace-container {
   grid-area: workspace;
+  position: relative;
+  height: calc(100vh - var(--omrs-navbar-height));
 }
 
 #omrs-top-nav-app-container {
@@ -53,4 +55,5 @@ body {
   grid-template-areas:
     'topNav topNav topNav'
     'leftNav appRoots workspace';
+  grid-template-columns: min-content 1fr min-content;
 }

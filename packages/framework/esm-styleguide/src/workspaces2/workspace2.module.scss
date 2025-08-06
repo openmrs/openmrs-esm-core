@@ -53,6 +53,7 @@ $extraWideWorkspaceWidth: 48.25rem;
     flex-direction: column;
     height: 100%;
     width: var(--workspaceWidth);
+    border-inline-start: 1px solid $text-03;;
     animation: slideFromRight 0.5s ease-in-out;
     transition:
       width 0.5s ease-in-out,

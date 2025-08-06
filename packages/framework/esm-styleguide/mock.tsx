@@ -144,3 +144,10 @@ export const DiagnosisTags = vi.fn(({ diagnoses }: { diagnoses: Array<Diagnosis>
     ))}
   </>
 ));
+
+export const Workspace2 = jest.fn(({ title, children }) => (
+  <div>
+    <h1>{title}</h1>
+    {children}
+  </div>
+));
