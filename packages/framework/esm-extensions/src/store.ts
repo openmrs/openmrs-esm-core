@@ -69,6 +69,16 @@ export interface ExtensionSlotState {
   assignedExtensions: Array<AssignedExtension>;
 }
 
+/**
+ * An AssignedExtension is instantiated when it is determined that an extension
+ * should be rendered for a particular extension slot, due to all of the following:
+ * - the extension declaration in routes.json specifies the slot, or
+ *   the `attach()` function is called to attach the extension to the slot, or
+ *   the configuration of the slot adds the extension
+ * - the configuration of the slot does not remove the extension
+ * - the extension is not filtered by featureFlag, online / offline, privileges
+ *   (defined in extension declaration) or 'Display Condition' (defined in configuration)
+ */
 export interface AssignedExtension {
   readonly id: string;
   readonly name: string;

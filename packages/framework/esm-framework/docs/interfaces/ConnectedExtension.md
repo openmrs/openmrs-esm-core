@@ -20,19 +20,27 @@ The extension's config. Note that this will be `null` until the slot is mounted.
 
 ***
 
-### ~~id~~
+[packages/framework/esm-extensions/src/store.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L101)
 
 > `readonly` **id**: `string`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)
 
-***
+• `Readonly` **id**: `string`
 
-### ~~meta~~
+#### Defined in
 
-> `readonly` **meta**: `Readonly`\<[`ExtensionMeta`](ExtensionMeta.md)\>
+[packages/framework/esm-extensions/src/store.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L96)
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L89)
+___
+
+### meta
+
+• `Readonly` **meta**: `Readonly`<[`ExtensionMeta`](ExtensionMeta.md)\>
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L99)
 
 ***
 
@@ -40,7 +48,9 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:89](https://github.c
 
 > `readonly` **moduleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L88)
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L98)
 
 ***
 
@@ -48,4 +58,6 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:88](https://github.c
 
 > `readonly` **name**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L87)
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L97)

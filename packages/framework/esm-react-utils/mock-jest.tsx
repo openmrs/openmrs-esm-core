@@ -71,6 +71,8 @@ export const useExtensionStore = jest.fn();
 
 export const ExtensionSlot = jest.fn().mockImplementation(({ children }) => <>{children}</>);
 
+export const SingleExtensionSlot = jest.fn().mockImplementation(({ children }) => <>{children}</>);
+
 export const Extension = jest.fn().mockImplementation((props: any) => <slot />);
 
 export const useFeatureFlag = jest.fn().mockReturnValue(true);
