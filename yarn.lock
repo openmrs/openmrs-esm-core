@@ -3807,6 +3807,7 @@ __metadata:
     "@openmrs/esm-styleguide": "workspace:*"
     "@openmrs/esm-translations": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
+    "@openmrs/typedoc-plugin-file-categories": "workspace:*"
     "@rspack/cli": "npm:^1.3.11"
     "@rspack/core": "npm:^1.3.11"
     concurrently: "npm:^9.1.2"
@@ -3816,7 +3817,6 @@ __metadata:
     sass-embedded: "npm:^1.89.0"
     svgo-loader: "npm:^4.0.0"
     typedoc: "npm:^0.28.5"
-    typedoc-plugin-file-categories: "workspace:*"
     typedoc-plugin-markdown: "npm:^4.6.3"
     typedoc-plugin-no-inherit: "npm:^1.6.1"
     typescript: "npm:^5.8.3"
@@ -4266,6 +4266,21 @@ __metadata:
     typescript: "npm:^5.8.3"
     webpack-bundle-analyzer: "npm:^4.10.2"
     webpack-stats-plugin: "npm:^1.1.3"
+  languageName: unknown
+  linkType: soft
+
+"@openmrs/typedoc-plugin-file-categories@workspace:*, @openmrs/typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories"
+  dependencies:
+    "@swc/cli": "npm:^0.7.7"
+    "@swc/core": "npm:^1.11.29"
+    rimraf: "npm:^6.0.1"
+    typedoc: "npm:^0.28.5"
+    typescript: "npm:^5.8.3"
+    vitest: "npm:^3.1.4"
+  peerDependencies:
+    typedoc: ">=0.28.0"
   languageName: unknown
   linkType: soft
 
@@ -13074,7 +13089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.0.3, glob@npm:^7.1.1, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
+"glob@npm:^7.0.3, glob@npm:^7.1.1, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.2.0":
   version: 7.2.3
   resolution: "glob@npm:7.2.3"
   dependencies:
@@ -13449,6 +13464,20 @@ __metadata:
   peerDependencies:
     webpack: ^5.20.0
   checksum: 10/01d302a434e3db9f0e2db370f06300fb613de0fb8bdcafd4693e44c2528b8608621e5e7ca5d8302446db3f20c5f8875f1f675926d469b13ebab139954d241055
+  languageName: node
+  linkType: hard
+
+"html-webpack-tags-plugin@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "html-webpack-tags-plugin@npm:3.0.2"
+  dependencies:
+    glob: "npm:^7.2.0"
+    minimatch: "npm:^3.0.4"
+    slash: "npm:^3.0.0"
+  peerDependencies:
+    html-webpack-plugin: ^5.0.0
+    webpack: ^5.0.0
+  checksum: 10/3754945dc9e19420600b1864d48bb74dc44e4d4658350232ea701aeb827d95d6cccc8fcd8f2144378b03107611240db24067f52e5d82e509439cfa15fdf33e2d
   languageName: node
   linkType: hard
 
@@ -16846,6 +16875,7 @@ __metadata:
     ejs: "npm:^3.1.8"
     glob: "npm:^7.1.3"
     html-webpack-plugin: "npm:^5.5.0"
+    html-webpack-tags-plugin: "npm:^3.0.2"
     inquirer: "npm:^7.3.3"
     lodash: "npm:^4.17.21"
     lodash-es: "npm:^4.17.21"
@@ -21041,21 +21071,6 @@ __metadata:
   checksum: 10/2cc1bcf7d8c1237f6a16c04efc06637b2c5f2d74e58e84665445cf87668b85a21ab18dd751fa49eee6ae024b70326635d7b79ad37b1c370ed2fec6aeeeb52714
   languageName: node
   linkType: hard
-
-"typedoc-plugin-file-categories@workspace:*, typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories":
-  version: 0.0.0-use.local
-  resolution: "typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories"
-  dependencies:
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
-    rimraf: "npm:^6.0.1"
-    typedoc: "npm:^0.28.5"
-    typescript: "npm:^5.8.3"
-    vitest: "npm:^3.1.4"
-  peerDependencies:
-    typedoc: ">=0.28.0"
-  languageName: unknown
-  linkType: soft
 
 "typedoc-plugin-markdown@npm:^4.6.3":
   version: 4.7.0

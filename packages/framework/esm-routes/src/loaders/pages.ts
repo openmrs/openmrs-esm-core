@@ -195,11 +195,8 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
 
 /**
  * This is called by the app shell once all route entries have been processed.
- * This actually registers the pages with the application. This function is
- * necessary to ensure that pages are rendered in the DOM according to their
- * order definition, especially because certain pages _must_ be first in the DOM.
- *
- * Each page is rendered into a div with an appropriate name.
+ * This registers the pages with the application, and creates the root div
+ * for each page in the DOM element specified by the page's containerDomId.
  */
 export function finishRegisteringAllApps() {
   pages.sort((a, b) => {
@@ -209,9 +206,9 @@ export function finishRegisteringAllApps() {
   // Create a div for each page, unless the DOM already contains the div with
   // the expected id for the page to be mounted on. See:
   // https://single-spa.js.org/docs/configuration/#two-registered-applications-simultaneously
-  // This ensures their DOM order.
+  // The div is put inside the DOM element specified by the page's containerDomId.
   // If we don't do this, Single-SPA 5 will create the DOM element only once
-  // the page becomes active, which makes it impossible to guarantee order.
+  // the page becomes active, at the end of <body>.
   let appIndices = new Map();
   for (let page of pages) {
     if (!appIndices.has(page.appName)) {

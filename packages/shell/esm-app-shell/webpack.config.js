@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackPwaManifest = require('webpack-pwa-manifest');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
 const { DefinePlugin, container } = require('webpack');
 const { basename, dirname, resolve } = require('path');
@@ -39,6 +40,10 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || '')
   .filter((url) => url.length > 0)
   .map((url) => JSON.stringify(url))
   .join(', ');
+const openmrsJsCssAssets = (process.env.OMRS_JS_CSS_ASSETS || '')
+  .split(';')
+  .filter((filePath) => filePath.length > 0);
+
 const openmrsCleanBeforeBuild =
   (() => {
     try {
@@ -135,6 +140,8 @@ module.exports = (env, argv = []) => {
       }
     });
   }
+
+  const assetsPatterns = openmrsJsCssAssets.map(asset => ({from: asset, to: 'assets'}));
 
   return {
     entry: resolve(__dirname, 'src/index.ts'),
@@ -331,6 +338,7 @@ module.exports = (env, argv = []) => {
           openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
         },
       }),
+      new HtmlWebpackTagsPlugin({ tags: openmrsJsCssAssets.map(fileName => 'assets/' + basename(fileName)) }),
       new WebpackPwaManifest({
         name: 'OpenMRS',
         short_name: 'OpenMRS',
@@ -346,7 +354,7 @@ module.exports = (env, argv = []) => {
         ],
       }),
       new CopyWebpackPlugin({
-        patterns: [{ from: resolve(__dirname, 'src/assets') }, ...appPatterns],
+        patterns: [{ from: resolve(__dirname, 'src/assets') }, ...appPatterns, ...assetsPatterns],
       }),
       new ModuleFederationPlugin({
         name,

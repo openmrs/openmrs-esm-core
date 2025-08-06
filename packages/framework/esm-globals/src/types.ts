@@ -1,4 +1,3 @@
-import type { LifeCycles } from 'single-spa';
 import type { i18n } from 'i18next';
 
 declare global {
@@ -136,7 +135,7 @@ export type PageDefinition = {
    */
   offline?: boolean;
   /**
-   * If supplied, the page will be rendered within the DOM element with he specified ID. Defaults to "omrs-apps-container" if not supplied.
+   * If supplied, the page will be rendered within the DOM element with the specified ID. Defaults to "omrs-apps-container" if not supplied.
    */
   containerDomId?: string;
 } & (
