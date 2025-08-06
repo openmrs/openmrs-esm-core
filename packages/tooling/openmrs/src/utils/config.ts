@@ -16,6 +16,7 @@ export interface WebpackOptions {
   coreAppsDir?: string;
   addCookie?: string;
   fresh?: boolean;
+  assets?: Array<string>;
 }
 
 export function loadWebpackConfig(options: WebpackOptions = {}) {
@@ -86,6 +87,10 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
 
   if (typeof options.fresh === 'boolean') {
     variables.OMRS_CLEAN_BEFORE_BUILD = options.fresh;
+  }
+
+  if (Array.isArray(options.assets)) {
+    variables.OMRS_JS_CSS_ASSETS = options.assets.join(';');
   }
 
   setEnvVariables(variables);
