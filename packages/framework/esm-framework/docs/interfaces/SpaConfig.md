@@ -2,7 +2,7 @@
 
 # Interface: SpaConfig
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:80
+Defined in: packages/framework/esm-globals/dist/types.d.ts:79
 
 The configuration passed to the app shell initialization function
 
@@ -12,7 +12,7 @@ The configuration passed to the app shell initialization function
 
 > **apiUrl**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:84
+Defined in: packages/framework/esm-globals/dist/types.d.ts:83
 
 The base path or URL for the OpenMRS API / endpoints.
 
@@ -22,7 +22,7 @@ The base path or URL for the OpenMRS API / endpoints.
 
 > `optional` **configUrls**: `string`[]
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:97
+Defined in: packages/framework/esm-globals/dist/types.d.ts:96
 
 URLs of configurations to load in the system.
 
@@ -32,7 +32,7 @@ URLs of configurations to load in the system.
 
 > `optional` **env**: [`SpaEnvironment`](../type-aliases/SpaEnvironment.md)
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:93
+Defined in: packages/framework/esm-globals/dist/types.d.ts:92
 
 The environment to use.
 
@@ -48,7 +48,7 @@ production
 
 > `optional` **offline**: `boolean`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:102
+Defined in: packages/framework/esm-globals/dist/types.d.ts:101
 
 Defines if offline should be supported by installing a service worker.
 
@@ -64,6 +64,6 @@ true
 
 > **spaPath**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:88
+Defined in: packages/framework/esm-globals/dist/types.d.ts:87
 
 The base path for the SPA root path.
