@@ -1,4 +1,5 @@
-/** @module @category Extension*
+/** @module @category Extension */
+/*
  * We have the following extension modes:
  *
  * - attached (set via code in form of: attach, detach, ...)
@@ -7,9 +8,7 @@
  * - connected (computed from assigned using connectivity and online / offline)
  */
 
-/* eslint-disable no-console */
-
-import { type Session, type SessionStore, sessionStore, userHasAccess, openmrsFetch } from '@openmrs/esm-api';
+import { type Session, type SessionStore, sessionStore, userHasAccess } from '@openmrs/esm-api';
 import {
   type ExtensionsConfigStore,
   type ExtensionSlotConfig,
@@ -21,30 +20,28 @@ import {
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
-import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
+import { evaluateAsBoolean, type VariablesMap } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
 import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
 import { isEqual, merge } from 'lodash-es';
 import { checkStatusFor } from './helpers';
-
 import {
   type AssignedExtension,
   type ExtensionRegistration,
   type ExtensionSlotInfo,
   type ExtensionInternalStore,
   type ExtensionSlotState,
+  type ExtensionSlotCustomState,
   getExtensionStore,
   getExtensionInternalStore,
   updateInternalExtensionStore,
-  getExtensionExpressionContextStore,
 } from './store';
 
 const extensionInternalStore = getExtensionInternalStore();
 const extensionStore = getExtensionStore();
 const slotsConfigStore = getExtensionSlotsConfigStore();
 const extensionsConfigStore = getExtensionsConfigStore();
-const extensionExpressionContextStore = getExtensionExpressionContextStore();
 
 // Keep the output store updated
 function updateExtensionOutputStore(
@@ -53,7 +50,6 @@ function updateExtensionOutputStore(
   extensionsConfigStore: ExtensionsConfigStore,
   featureFlagStore: FeatureFlagsStore,
   sessionStore: SessionStore,
-  extensionExpressionContext: any,
 ) {
   const slots: Record<string, ExtensionSlotState> = {};
 
@@ -72,7 +68,6 @@ function updateExtensionOutputStore(
       enabledFeatureFlags,
       isOnline,
       sessionStore.session,
-      extensionExpressionContext,
     );
     slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
   }
@@ -89,7 +84,6 @@ extensionInternalStore.subscribe((internalStore) => {
     extensionsConfigStore.getState(),
     featureFlagsStore.getState(),
     sessionStore.getState(),
-    extensionExpressionContextStore.getState(),
   );
 });
 
@@ -100,7 +94,6 @@ slotsConfigStore.subscribe((slotConfigs) => {
     extensionsConfigStore.getState(),
     featureFlagsStore.getState(),
     sessionStore.getState(),
-    extensionExpressionContextStore.getState(),
   );
 });
 
@@ -111,7 +104,6 @@ extensionsConfigStore.subscribe((extensionConfigs) => {
     extensionConfigs,
     featureFlagsStore.getState(),
     sessionStore.getState(),
-    extensionExpressionContextStore.getState(),
   );
 });
 
@@ -122,7 +114,6 @@ featureFlagsStore.subscribe((featureFlagStore) => {
     extensionsConfigStore.getState(),
     featureFlagStore,
     sessionStore.getState(),
-    extensionExpressionContextStore.getState(),
   );
 });
 
@@ -133,18 +124,6 @@ sessionStore.subscribe((session) => {
     extensionsConfigStore.getState(),
     featureFlagsStore.getState(),
     session,
-    extensionExpressionContextStore.getState(),
-  );
-});
-
-extensionExpressionContextStore.subscribe((context) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-    context,
   );
 });
 
@@ -155,105 +134,23 @@ function updateOutputStoreToCurrent() {
     extensionsConfigStore.getState(),
     featureFlagsStore.getState(),
     sessionStore.getState(),
-    extensionExpressionContextStore.getState(),
   );
 }
 
 updateOutputStoreToCurrent();
 subscribeConnectivityChanged(updateOutputStoreToCurrent);
 
-// Automatic patient context management
-let currentPatientUuid: string | null = null;
-let patientDataCache: { [uuid: string]: any } = {};
-
-async function fetchPatientData(patientUuid: string) {
-  // Check cache first
-  if (patientDataCache[patientUuid]) {
-    return patientDataCache[patientUuid];
-  }
-
-  try {
-    const response = await openmrsFetch(`/ws/rest/v1/patient/${patientUuid}`);
-    const patientData = response.data;
-
-    // Cache the result
-    patientDataCache[patientUuid] = patientData;
-
-    return patientData;
-  } catch (error) {
-    return null;
-  }
-}
-
-function updatePatientContext() {
-  const patientUuid = getPatientUuidFromUrl();
-
-  if (patientUuid !== currentPatientUuid) {
-    currentPatientUuid = patientUuid;
-
-    if (patientUuid) {
-      // Fetch patient data and update context
-      fetchPatientData(patientUuid).then((patientData) => {
-        // Only update if we're still on the same patient page
-        if (patientData && currentPatientUuid === patientUuid) {
-          const currentContext = extensionExpressionContextStore.getState();
-          const newContext: any = {
-            ...currentContext,
-            patient: patientData,
-            patientUuid: patientUuid,
-          };
-
-          extensionExpressionContextStore.setState(newContext);
-        }
-      });
-    } else {
-      // Clear patient context when not on patient page
-      const currentContext = extensionExpressionContextStore.getState();
-      const newContext = { ...currentContext };
-      delete newContext.patient;
-      delete newContext.patientUuid;
-      extensionExpressionContextStore.setState(newContext);
-    }
-  }
-}
-
-// Update patient context on URL changes
-function handleUrlChange() {
-  updatePatientContext();
-  updateOutputStoreToCurrent();
-}
-
-// Listen for URL changes
-window.addEventListener('popstate', handleUrlChange);
-
-// Override pushState and replaceState to detect programmatic navigation
-const originalPushState = history.pushState;
-const originalReplaceState = history.replaceState;
-
-history.pushState = function (...args) {
-  originalPushState.apply(history, args);
-  setTimeout(handleUrlChange, 0);
-};
-
-history.replaceState = function (...args) {
-  originalReplaceState.apply(history, args);
-  setTimeout(handleUrlChange, 0);
-};
-
-// Initial setup
-updatePatientContext();
-
-function getPatientUuidFromUrl() {
-  const match = /\/patient\/([a-zA-Z0-9\-]+)\/?/.exec(location.pathname);
-  return match && match[1];
-}
-
-function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
+function createNewExtensionSlotInfo(
+  slotName: string,
+  moduleName?: string,
+  state?: ExtensionSlotCustomState,
+): ExtensionSlotInfo {
   return {
     moduleName,
     name: slotName,
     attachedIds: [],
     config: null,
+    state,
   };
 }
 
@@ -437,7 +334,6 @@ function getAssignedExtensionsFromSlotData(
   enabledFeatureFlags: Array<string>,
   isOnline: boolean,
   session: Session | null,
-  extensionExpressionContext: any,
 ): Array<AssignedExtension> {
   const attachedIds = internalState.slots[slotName].attachedIds;
   const assignedIds = calculateAssignedIds(config, attachedIds);
@@ -468,33 +364,17 @@ function getAssignedExtensionsFromSlotData(
       }
 
       const displayConditionExpression =
-        extensionConfig?.['Display expression']?.expression ??
-        (typeof extension.displayExpression === 'string'
-          ? extension.displayExpression
-          : (extension.displayExpression as any)?.expression) ??
-        null;
-
-      if (displayConditionExpression !== null) {
-        // Handle case where displayConditionExpression is still an object
-        let expressionString = displayConditionExpression;
-        if (typeof displayConditionExpression === 'object' && displayConditionExpression?.expression) {
-          expressionString = displayConditionExpression.expression;
-        }
-
+        extensionConfig?.['Display conditions']?.expression ?? extension.expression ?? null;
+      const slotState = internalState.slots[slotName]?.state ?? null;
+      if (displayConditionExpression) {
         try {
-          // Get patient UUID from URL and add to evaluation context
-          const patientUuid = getPatientUuidFromUrl();
-          let evaluationContext: any = { ...extensionExpressionContext, session };
-
-          if (patientUuid) {
-            evaluationContext = { ...extensionExpressionContext, session, patientUuid };
-          }
-          const result = evaluateAsBoolean(expressionString, evaluationContext);
-          // if the expression evaluates to false, we do not display the extension
-          if (!result) {
+          const context =
+            slotState && typeof slotState === 'object' ? { session, ...slotState } : { session, slotState };
+          if (!evaluateExpression(displayConditionExpression, context)) {
             continue;
           }
-        } catch (error) {
+        } catch (e) {
+          console.error(`Error while evaluating expression ${displayConditionExpression}`, e);
           continue;
         }
       }
@@ -523,6 +403,15 @@ function getAssignedExtensionsFromSlotData(
   return extensions;
 }
 
+function evaluateExpression(expression: string, context: Record<string, any>) {
+  // Create variable declarations for each key in context
+  const contextKeys = Object.keys(context);
+  const contextValues = Object.values(context);
+  // The function's arguments become the context variable names
+  const fn = new Function(...contextKeys, `return (${expression});`);
+  return fn(...contextValues);
+}
+
 /**
  * Gets the list of extensions assigned to a given slot
  *
@@ -535,7 +424,6 @@ export function getAssignedExtensions(slotName: string): Array<AssignedExtension
   const extensionStoreState = extensionsConfigStore.getState();
   const featureFlagState = featureFlagsStore.getState();
   const sessionState = sessionStore.getState();
-  const extensionExpressionContext = extensionExpressionContextStore.getState();
   const isOnline = isOnlineFn();
   const enabledFeatureFlags = Object.entries(featureFlagState.flags)
     .filter(([, { enabled }]) => enabled)
@@ -549,7 +437,6 @@ export function getAssignedExtensions(slotName: string): Array<AssignedExtension
     enabledFeatureFlags,
     isOnline,
     sessionState.session,
-    extensionExpressionContext,
   );
 }
 
@@ -580,39 +467,48 @@ function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<st
  *
  * @param moduleName The name of the module that contains the extension slot
  * @param slotName The extension slot name that is actually used
+ * @param state Optional custom state for the slot, which will be stored in the extension store.
  * @internal
  */
-export const registerExtensionSlot: (moduleName: string, slotName: string) => void = (moduleName, slotName) =>
-  extensionInternalStore.setState((state) => {
-    const existingModuleName = state.slots[slotName]?.moduleName;
+export const registerExtensionSlot: (moduleName: string, slotName: string, state?: ExtensionSlotCustomState) => void = (
+  moduleName,
+  slotName,
+  state,
+) =>
+  extensionInternalStore.setState((slotState) => {
+    const existingModuleName = slotState.slots[slotName]?.moduleName;
     if (existingModuleName && existingModuleName != moduleName) {
       console.warn(
         `An extension slot with the name '${slotName}' already exists. Refusing to register the same slot name twice (in "registerExtensionSlot"). The existing one is from module ${existingModuleName}.`,
       );
-      return state;
+      return slotState;
     }
     if (existingModuleName && existingModuleName == moduleName) {
       // Re-rendering an existing slot
-      return state;
+      return slotState;
     }
-    if (state.slots[slotName]) {
+    if (slotState.slots[slotName]) {
       return {
-        ...state,
+        ...slotState,
         slots: {
-          ...state.slots,
+          ...slotState.slots,
           [slotName]: {
-            ...state.slots[slotName],
+            ...slotState.slots[slotName],
             moduleName,
+            state,
           },
         },
       };
     }
-    const slot = createNewExtensionSlotInfo(slotName, moduleName);
+    const slot = createNewExtensionSlotInfo(slotName, moduleName, state);
     return {
-      ...state,
+      ...slotState,
       slots: {
-        ...state.slots,
-        [slotName]: slot,
+        ...slotState.slots,
+        [slotName]: {
+          ...slot,
+          state,
+        },
       },
     };
   });
@@ -628,3 +524,18 @@ export const reset: () => void = () =>
       extensions: {},
     };
   });
+
+export function setExtensionSlotState(slotName: string, state: ExtensionSlotCustomState) {
+  extensionInternalStore.setState((slotState) => {
+    return {
+      ...slotState,
+      slots: {
+        ...slotState.slots,
+        [slotName]: {
+          ...slotState.slots[slotName],
+          state,
+        },
+      },
+    };
+  });
+}

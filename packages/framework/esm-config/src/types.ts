@@ -53,8 +53,6 @@ export interface ExtensionSlotConfig {
   /** Overrides the default ordering of extensions. */
   order?: Array<string>;
   configure?: ExtensionSlotConfigureValueObject;
-  /** Expression to determine whether this extension slot should be displayed */
-  displayExpression?: string;
 }
 
 export interface ExtensionSlotConfigureValueObject {
