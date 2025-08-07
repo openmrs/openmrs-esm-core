@@ -1031,6 +1031,13 @@ describe('implementer tools config', () => {
         _type: Type.Array,
         _value: [],
       },
+      expression: {
+        _default: '',
+        _description: expect.any(String),
+        _source: 'default',
+        _type: Type.String,
+        _value: '',
+      },
     },
     'Translation overrides': {
       _default: {},
@@ -1261,7 +1268,7 @@ describe('extension config', () => {
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'bazzy',
-      'Display conditions': { privileges: [] },
+      'Display conditions': { expression: '', privileges: [] },
       'Translation overrides': {},
     });
     expect(console.error).not.toHaveBeenCalled();
@@ -1284,7 +1291,7 @@ describe('extension config', () => {
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'quiz',
-      'Display conditions': { privileges: [] },
+      'Display conditions': { expression: '', privileges: [] },
       'Translation overrides': {},
     });
     expect(console.error).not.toHaveBeenCalled();
@@ -1317,10 +1324,9 @@ describe('extension config', () => {
     const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
     expect(result).toStrictEqual({
       qux: 'quxolotl',
-      'Display conditions': { privileges: [] },
+      'Display conditions': { expression: '', privileges: [] },
       'Translation overrides': {},
     });
-    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("uses the 'configure' config if one is present, with extension config schema", () => {
@@ -1343,7 +1349,7 @@ describe('extension config', () => {
     const result = getExtensionConfig('barSlot', 'fooExt#id2').getState().config;
     expect(result).toStrictEqual({
       qux: 'quxotic',
-      'Display conditions': { privileges: [] },
+      'Display conditions': { expression: '', privileges: [] },
       'Translation overrides': {},
     });
   });

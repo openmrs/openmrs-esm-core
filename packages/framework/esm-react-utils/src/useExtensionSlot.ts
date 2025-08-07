@@ -1,10 +1,10 @@
 import { useContext, useEffect } from 'react';
-import { registerExtensionSlot } from '@openmrs/esm-extensions';
+import { type ExtensionSlotCustomState, registerExtensionSlot, setExtensionSlotState } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 import { useAssignedExtensions } from './useAssignedExtensions';
 
 /** @internal */
-export function useExtensionSlot(slotName: string) {
+export function useExtensionSlot(slotName: string, state?: ExtensionSlotCustomState) {
   const { moduleName } = useContext(ComponentContext);
 
   if (!moduleName) {
@@ -12,8 +12,14 @@ export function useExtensionSlot(slotName: string) {
   }
 
   useEffect(() => {
-    registerExtensionSlot(moduleName, slotName);
+    registerExtensionSlot(moduleName, slotName, state);
   }, []);
+
+  useEffect(() => {
+    if (state) {
+      setExtensionSlotState(slotName, state);
+    }
+  }, [slotName, state]);
 
   const extensions = useAssignedExtensions(slotName);
 
