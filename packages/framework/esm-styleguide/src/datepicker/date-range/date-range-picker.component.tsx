@@ -1,4 +1,4 @@
-import React, { forwardRef, type ReactElement, useId, useMemo } from 'react';
+import React, { forwardRef, type ReactElement, useEffect, useId, useMemo, useRef, useState } from 'react';
 import classNames, { type Argument } from 'classnames';
 import { createCalendar, getLocalTimeZone, toCalendar, today, type CalendarDate } from '@internationalized/date';
 import {
@@ -141,6 +141,53 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
             onChange?.([internationalizedDateToDate(range.start), internationalizedDateToDate(range.end)]);
     }, [onChangeRaw, onChange]);
 
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [popoverWidth, setPopoverWidth] = useState<number | undefined>(undefined);
+
+    useEffect(() => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      const computeDesiredWidth = () => {
+        const rootFont = parseFloat(getComputedStyle(document.documentElement).fontSize || '16') || 16;
+        const minCalendarWidth = 17 * rootFont; // 17rem
+        const viewportWidth = window.innerWidth;
+
+        let best = el.getBoundingClientRect().width;
+        let ancestor: HTMLElement | null = el.parentElement;
+        let depth = 0;
+        while (ancestor && depth < 5) {
+          const w = ancestor.getBoundingClientRect().width;
+          if (w > best + 8) best = w;
+          ancestor = ancestor.parentElement;
+          depth++;
+        }
+
+        best = Math.max(best, minCalendarWidth);
+        best = Math.min(best, viewportWidth);
+        return Math.round(best);
+      };
+
+      const update = () => setPopoverWidth(computeDesiredWidth());
+      update();
+
+      const resizeObserver = new ResizeObserver(() => update());
+      resizeObserver.observe(el);
+      let ancestor: HTMLElement | null = el.parentElement;
+      let depth = 0;
+      while (ancestor && depth < 3) {
+        resizeObserver.observe(ancestor);
+        ancestor = ancestor.parentElement;
+        depth++;
+      }
+
+      window.addEventListener('resize', update);
+      return () => {
+        window.removeEventListener('resize', update);
+        resizeObserver.disconnect();
+      };
+    }, []);
+
     return (
       <I18nWrapper locale={intlLocale.toString()}>
         <div className={classNames('cds--form-item', className)}>
@@ -162,7 +209,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
               {...dateRangePickerProps}
               onChange={innerOnChange}
             >
-              <div className="cds--date-picker-container">
+              <div className="cds--date-picker-container" ref={containerRef}>
                 {(labelText ?? label) && (
                   <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })}>
                     {labelText ?? label}
@@ -202,7 +249,24 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                   </Button>
                 </Group>
                 {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
-                <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
+                <Popover
+                  className={styles.popover}
+                  placement="bottom start"
+                  offset={1}
+                  isNonModal={true}
+                  style={
+                    popoverWidth
+                      ? {
+                          width: popoverWidth,
+                          maxWidth: 'var(--omrs-date-picker-popover-max-width, 24rem)',
+                          minWidth: 'var(--omrs-date-picker-calendar-min-width, 17rem)',
+                        }
+                      : {
+                          maxWidth: 'var(--omrs-date-picker-popover-max-width, 24rem)',
+                          minWidth: 'var(--omrs-date-picker-calendar-min-width, 17rem)',
+                        }
+                  }
+                >
                   <AutoCloseDialog isRangePicker>
                     <RangeCalendar minValue={minDate} maxValue={maxDate} className="cds--date-picker__calendar">
                       <header className={styles.header}>

@@ -1,4 +1,4 @@
-import React, { type ReactElement, forwardRef, useId, useMemo } from 'react';
+import React, { type ReactElement, forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
 import classNames, { type Argument } from 'classnames';
 import {
   type CalendarDate,
@@ -151,6 +151,53 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
       return onChangeRaw ? onChangeRaw : (value: DateValue) => rawOnChange?.(internationalizedDateToDate(value));
     }, [onChangeRaw, rawOnChange]);
 
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [popoverWidth, setPopoverWidth] = useState<number | undefined>(undefined);
+
+    useEffect(() => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      const computeDesiredWidth = () => {
+        const rootFont = parseFloat(getComputedStyle(document.documentElement).fontSize || '16') || 16;
+        const minCalendarWidth = 17 * rootFont; // 17rem
+        const viewportWidth = window.innerWidth;
+
+        let best = el.getBoundingClientRect().width;
+        let ancestor: HTMLElement | null = el.parentElement;
+        let depth = 0;
+        while (ancestor && depth < 5) {
+          const w = ancestor.getBoundingClientRect().width;
+          if (w > best + 8) best = w;
+          ancestor = ancestor.parentElement;
+          depth++;
+        }
+
+        best = Math.max(best, minCalendarWidth);
+        best = Math.min(best, viewportWidth);
+        return Math.round(best);
+      };
+
+      const update = () => setPopoverWidth(computeDesiredWidth());
+      update();
+
+      const resizeObserver = new ResizeObserver(() => update());
+      resizeObserver.observe(el);
+      let ancestor: HTMLElement | null = el.parentElement;
+      let depth = 0;
+      while (ancestor && depth < 3) {
+        resizeObserver.observe(ancestor);
+        ancestor = ancestor.parentElement;
+        depth++;
+      }
+
+      window.addEventListener('resize', update);
+      return () => {
+        window.removeEventListener('resize', update);
+        resizeObserver.disconnect();
+      };
+    }, []);
+
     return (
       <I18nWrapper locale={intlLocale.toString()}>
         <div className={classNames('cds--form-item', className)}>
@@ -170,7 +217,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
               {...datePickerProps}
               onChange={onChange}
             >
-              <div className="cds--date-picker-container">
+              <div className="cds--date-picker-container" ref={containerRef}>
                 {(labelText ?? label) && (
                   <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })} htmlFor={id}>
                     {labelText ?? label}
@@ -181,9 +228,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                     id={id}
                     ref={ref}
                     className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
-                      [styles.inputWrapperSm]: size === 'sm',
                       [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
-                      [styles.inputWrapperLg]: size === 'lg',
                     })}
                   >
                     {(segment) => {
@@ -194,41 +239,38 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                       );
                     }}
                   </DatePickerInput>
-                  <Button
-                    className={classNames(styles.flatButton, {
-                      [styles.flatButtonSm]: size === 'sm',
-                      [styles.flatButtonMd]: size === 'md' || !size || size.length === 0,
-                      [styles.flatButtonLg]: size === 'lg',
-                    })}
-                  >
+                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
                     <DatePickerIcon />
                   </Button>
                 </Group>
                 {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
               </div>
-              <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
+              <Popover
+                className={styles.popover}
+                placement="bottom start"
+                offset={1}
+                isNonModal={true}
+                style={
+                  popoverWidth
+                    ? {
+                        width: popoverWidth,
+                        maxWidth: 'var(--omrs-date-picker-popover-max-width, 24rem)',
+                        minWidth: 'var(--omrs-date-picker-calendar-min-width, 17rem)',
+                      }
+                    : {
+                        maxWidth: 'var(--omrs-date-picker-popover-max-width, 24rem)',
+                        minWidth: 'var(--omrs-date-picker-calendar-min-width, 17rem)',
+                      }
+                }
+              >
                 <AutoCloseDialog>
                   <Calendar>
                     <header className={styles.header}>
-                      <Button
-                        className={classNames(styles.flatButton, {
-                          [styles.flatButtonSm]: size === 'sm',
-                          [styles.flatButtonMd]: size === 'md' || !size || size.length === 0,
-                          [styles.flatButtonLg]: size === 'lg',
-                        })}
-                        slot="previous"
-                      >
+                      <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
                         <ChevronLeftIcon size={16} />
                       </Button>
                       <MonthYear className={styles.monthYear} />
-                      <Button
-                        className={classNames(styles.flatButton, {
-                          [styles.flatButtonSm]: size === 'sm',
-                          [styles.flatButtonMd]: size === 'md' || !size || size.length === 0,
-                          [styles.flatButtonLg]: size === 'lg',
-                        })}
-                        slot="next"
-                      >
+                      <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
                         <ChevronRightIcon size={16} />
                       </Button>
                     </header>

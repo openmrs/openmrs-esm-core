@@ -9,7 +9,7 @@
 @use '../vars' as *;
 
 .calendarGrid {
-  width: 17rem;
+  inline-size: 100%;
 
   & tr,
   & tr > th,
@@ -85,19 +85,9 @@
   --omrs-icon-fill: #{theme.$support-error};
 }
 
-.flatButtonSm {
-  height: layout.$spacing-07;
-  width: layout.$spacing-07;
-}
-
 .flatButtonMd {
   height: layout.$spacing-08;
   width: layout.$spacing-08;
-}
-
-.flatButtonLg {
-  height: layout.$spacing-09;
-  width: layout.$spacing-09;
 }
 
 .header {
@@ -138,9 +128,10 @@
 }
 
 .inputWrapper {
-  flex: 1;
+  inline-size: 15rem;
   margin-left: layout.$spacing-05;
   min-width: layout.$spacing-13;
+  max-width: 15rem;
 
   & .inputSegment {
     caret-color: var(--cds-text-primary);
@@ -182,16 +173,8 @@
   }
 }
 
-.inputWrapperSm {
-  block-size: layout.$spacing-04;
-}
-
 .inputWrapperMd {
-  block-size: layout.$spacing-05;
-}
-
-.inputWrapperLg {
-  block-size: layout.$spacing-06;
+  block-size: layout.$spacing-08;
 }
 
 .monthYear {
@@ -313,21 +296,20 @@
   }
 }
 
-@keyframes carbon-expand {
+@keyframes fade-in-down {
   from {
     opacity: 0;
-    transform: scale(0.8) translate3d(0, -8px, 0);
+    transform: translate3d(0, -20px, 0);
   }
 
   to {
     opacity: 1;
-    transform: scale(1) translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .popover[data-entering] {
-  animation: carbon-expand motion.$duration-fast-02 motion.motion(entrance, productive);
-  transform-origin: top;
+  animation: fade-in-down motion.$duration-fast-02 motion.motion(entrance, productive);
 
   @media screen and (prefers-reduced-motion: reduce) {
     animation: none;
@@ -336,8 +318,8 @@
 
 :global([dir='rtl']) {
   .inputWrapper {
-    margin-left: unset;
-    margin-right: layout.$spacing-05;
+    padding-left: unset;
+    padding-right: layout.$spacing-04;
   }
 
   .monthYear {
