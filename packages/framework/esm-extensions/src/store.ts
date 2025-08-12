@@ -115,6 +115,7 @@ export const getExtensionInternalStore = () =>
 
 /** @internal */
 export function updateInternalExtensionStore(updater: (state: ExtensionInternalStore) => ExtensionInternalStore) {
+  // This is a function that updates the internal extension store.
   const state = extensionInternalStore.getState();
   const newState = updater(state);
 
