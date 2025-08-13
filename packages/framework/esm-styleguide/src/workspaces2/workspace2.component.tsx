@@ -24,7 +24,7 @@ export interface Workspace2DefinitionProps<
 
   /**
    * This function launches a child workspace. Unlike `launchWorkspace()`, this function is meant
-   * to be called from the a workspace, and it does not allow passing it (or changing)
+   * to be called from the a workspace, and it does not allow passing (or changing)
    * the window props or group props
    * @param workspaceName
    * @param workspaceProps
@@ -34,6 +34,7 @@ export interface Workspace2DefinitionProps<
   /**
    * closes the current workspace, along with its children.
    * @param closeWindow If true, the workspace's window, along with all workspaces within it, will be closed as well
+   * @param discardUnsavedChanges If true, the "unsaved changes" modal will be supressed, and the value of `hasUnsavedChanges` will be ignored. Use this when closing the workspace immediately after changes are saved.
    * @returns a Promise that resolves to true if the workspace is closed, false otherwise.
    */
   closeWorkspace(options?: { closeWindow?: boolean; discardUnsavedChanges?: boolean }): Promise<boolean>;
@@ -51,7 +52,9 @@ export type Workspace2Definition<
 
 /**
  * The Workspace2 component is used as a top-level container to render
- * its children as content within a workspace.
+ * its children as content within a workspace. When creating a workspace
+ * component, `<Workspace2>` should be the top-level component returned,
+ * wrapping all of the workspace content.
  */
 export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsavedChanges }) => {
   const layout = useLayoutType();

@@ -118,7 +118,7 @@ export async function closeWorkspaceGroup2() {
  * For example, in the patient chart, the visit notes / clinical forms / order basket action menu button all share
  * a "group context" of the current visit. However, the "patient list" action menu button does not need to share that group
  * context, so opening that workspace should not need to cause other workspaces / windows / groups to potentially close.
- * The "patient search" workspace in the queues and ward apps is another example of such workspace.
+ * The "patient search" workspace in the queues and ward apps is another example.
  */
 export async function launchWorkspace2<
   WorkspaceProps extends Record<string, any>,

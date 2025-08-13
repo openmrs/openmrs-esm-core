@@ -96,7 +96,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({ lifeCycle, openedWork
   return lifeCycle ? (
     <Parcel key={openedWorkspace.workspaceName} config={lifeCycle} mountParcel={mountRootParcel} {...props} />
   ) : (
-    <InlineLoading /*className={styles.loader}*/ description={`${getCoreTranslation('loading')} ...`} />
+    <InlineLoading description={`${getCoreTranslation('loading')} ...`} />
   );
 };
 
