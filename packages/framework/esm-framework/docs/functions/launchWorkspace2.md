@@ -12,13 +12,13 @@ and the workspace group to which the window belongs (if it's not opened already)
 
 When calling `launchWorkspace2`, we need to also pass in the workspace props. While not required,
 we can also pass in the window props (shared by other workspaces in the window) and the group props
-(shared by all windows and their workspaces). Omitting the window props or the group props*** means the caller
+(shared by all windows and their workspaces). Omitting the window props or the group props¹ means the caller
 explicitly does not care what the current window props and group props are, and that they may be set
 by other actions (like calling `launchWorkspace2` on a different workspace with those props passed in)
 at a later time.
 
 If there is already an opened workspace group, and it's not the group the workspace belongs to
-or has incompatible** group props, then we prompt the user to close the group (and its windows and their workspaces).
+or has incompatible² group props, then we prompt the user to close the group (and its windows and their workspaces).
 On user confirm, the existing opened group is closed and the new workspace, along with its window and its group,
 is opened.
 
@@ -32,13 +32,13 @@ This is true regardless of whether the already opened workspace has any child wo
 Note that calling this function *never* results in creating a child workspace in the affected window.
 To do so, we need to call `launchChildWorkspace` instead.
 
-** 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
-
-*** Omitting window or group props is useful for workspaces that don't have ties to the window or group "context" (props).
+[¹] Omitting window or group props is useful for workspaces that don't have ties to the window or group "context" (props).
 For example, in the patient chart, the visit notes / clinical forms / order basket action menu button all share
 a "group context" of the current visit. However, the "patient list" action menu button does not need to share that group
 context, so opening that workspace should not need to cause other workspaces / windows / groups to potentially close.
-The "patient search" workspace in the queues and ward apps is another example of such workspace.
+The "patient search" workspace in the queues and ward apps is another example.
+
+[²] 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
 
 ## Type Parameters
 

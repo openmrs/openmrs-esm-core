@@ -20,7 +20,7 @@ The name of the component exported by this frontend module.
 
 > `optional` **containerDomId**: `string`
 
-If supplied, the page will be rendered within the DOM element with he specified ID. Defaults to "omrs-apps-container" if not supplied.
+If supplied, the page will be rendered within the DOM element with the specified ID. Defaults to "omrs-apps-container" if not supplied.
 
 ### featureFlag?
 
