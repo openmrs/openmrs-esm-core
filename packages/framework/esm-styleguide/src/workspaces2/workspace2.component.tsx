@@ -66,7 +66,6 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     openedWindows,
     openedGroup,
     registeredGroupsByName,
-    registeredWindowsByGroupName,
     registeredWindowsByName,
     registeredWorkspacesByName,
     workspaceTitleByWorkspaceName,
@@ -92,18 +91,19 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   }, [openedWorkspace, title]);
 
   if (openedWindowIndex < 0 || openedGroup == null || openedWorkspace == null) {
+    // workspace window / group has likely just closed
     return null;
   }
 
-  const group = registeredGroupsByName[openedGroup!.groupName];
+  const group = registeredGroupsByName[openedGroup.groupName];
   if (!group) {
-    return null;
+    throw new Error(`Cannot find registered workspace group ${openedGroup.groupName}`);
   }
   const workspaceDef = registeredWorkspacesByName[workspaceName];
   const windowName = workspaceDef.window;
   const windowDef = registeredWindowsByName[windowName];
   if (!windowDef) {
-    return null;
+    throw new Error(`Cannot find registered workspace window ${windowName}`);
   }
 
   const { canHide, canMaximize } = windowDef;

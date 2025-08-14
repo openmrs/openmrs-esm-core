@@ -1,10 +1,7 @@
 /** @module @category Workspace */
-import React, { useEffect, useRef, useState } from 'react';
-import { type WorkspaceWindowDefinition2 } from '@openmrs/esm-globals';
-import { loadLifeCycles } from '@openmrs/esm-routes';
-import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import classNames from 'classnames';
+import React from 'react';
 import { mountRootParcel } from 'single-spa';
+import { loadLifeCycles } from '@openmrs/esm-routes';
 import Parcel from 'single-spa-react/parcel';
 import { useWorkspace2Store } from '../workspace2';
 import styles from './action-menu2.module.scss';
@@ -19,11 +16,11 @@ export interface ActionMenuProps {
  * window in the workspace group has an icon defined.
  */
 export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
-  const { registeredWindowsByGroupName } = useWorkspace2Store();
+  const { registeredWindowsByName } = useWorkspace2Store();
 
-  const windowsWithIcons = registeredWindowsByGroupName[workspaceGroup].filter(
-    (window): window is Required<typeof window> => window.icon !== undefined,
-  );
+  const windowsWithIcons = Object.values(registeredWindowsByName)
+    .filter((window): window is Required<typeof window> => window.group == workspaceGroup && window.icon !== undefined)
+    .sort((a, b) => (a.order ?? Number.MAX_VALUE) - (b.order ?? Number.MAX_VALUE));
 
   if (windowsWithIcons.length === 0) {
     return null; // No icons to display

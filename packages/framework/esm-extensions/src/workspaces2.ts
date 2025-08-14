@@ -9,8 +9,8 @@ export interface OpenedWorkspace {
   workspaceName: string;
   props: Record<string, any> | null;
   hasUnsavedChanges: boolean;
-    /** Unique identifier for the workspace instance, used to track unique instances of the same workspace */
-    uuid: string;
+  /** Unique identifier for the workspace instance, used to track unique instances of the same workspace */
+  uuid: string;
 }
 export interface OpenedWindow {
   windowName: string;
@@ -24,8 +24,6 @@ export interface WorkspaceStoreState2 {
   registeredGroupsByName: Record<string, WorkspaceGroupDefinition2>;
   registeredWindowsByName: Record<string, WorkspaceWindowDefinition2 & { moduleName: string }>;
   registeredWorkspacesByName: Record<string, WorkspaceDefinition2 & { moduleName: string }>;
-  registeredWindowsByGroupName: Record<string, Array<WorkspaceWindowDefinition2 & { moduleName: string }>>;
-  registeredWorkspacesByWindowName: Record<string, Array<WorkspaceDefinition2>>;
   openedGroup: {
     groupName: string;
     props: Record<string, any> | null;
@@ -40,8 +38,6 @@ const initialState: WorkspaceStoreState2 = {
   registeredGroupsByName: {},
   registeredWindowsByName: {},
   registeredWorkspacesByName: {},
-  registeredWindowsByGroupName: {},
-  registeredWorkspacesByWindowName: {},
   openedGroup: null,
   openedWindows: [],
   workspaceTitleByWorkspaceName: {},
@@ -49,7 +45,11 @@ const initialState: WorkspaceStoreState2 = {
 
 export const workspace2Store = createGlobalStore<WorkspaceStoreState2>('workspace2', initialState);
 
-// given a workspace name, return the window that the workspace belongs to
+/**
+ * Given a workspace name, return the window that the workspace belongs to
+ * @param workspaceName
+ * @returns
+ */
 export function getWindowByWorkspaceName(workspaceName: string) {
   const { registeredWorkspacesByName, registeredWindowsByName } = workspace2Store.getState();
   const workspace = registeredWorkspacesByName[workspaceName];
@@ -65,7 +65,11 @@ export function getWindowByWorkspaceName(workspaceName: string) {
   }
 }
 
-// given a window name, return the group that the window belongs to
+/**
+ * Given a window name, return the group that the window belongs to
+ * @param windowName
+ * @returns
+ */
 export function getGroupByWindowName(windowName: string) {
   const { registeredGroupsByName, registeredWindowsByName } = workspace2Store.getState();
   const workspaceWindow = registeredWindowsByName[windowName];
@@ -110,24 +114,18 @@ export function registerWorkspaceWindows2(appName: string, workspaceWindowDefs: 
   if (workspaceWindowDefs.length == 0) {
     return;
   }
-  const { registeredWindowsByGroupName, registeredWindowsByName } = workspace2Store.getState();
+  const { registeredWindowsByName } = workspace2Store.getState();
   const newRegisteredWindowsByName = { ...registeredWindowsByName };
-  const newRegisteredWindowsByGroupName = { ...registeredWindowsByGroupName };
   for (const windowDef of workspaceWindowDefs) {
     if (newRegisteredWindowsByName[windowDef.name]) {
       throw new Error(`Cannot register workspace window ${windowDef.name} more than once`);
     }
     const registeredWindowDef = { ...windowDef, moduleName: appName };
     newRegisteredWindowsByName[windowDef.name] = registeredWindowDef;
-    if (!newRegisteredWindowsByGroupName[windowDef.group]) {
-      newRegisteredWindowsByGroupName[windowDef.group] = [];
-    }
-    newRegisteredWindowsByGroupName[windowDef.group].push(registeredWindowDef);
   }
 
   workspace2Store.setState({
     registeredWindowsByName: newRegisteredWindowsByName,
-    registeredWindowsByGroupName: newRegisteredWindowsByGroupName,
   });
 }
 
@@ -135,23 +133,17 @@ export function registerWorkspaces2(moduleName: string, workspaceDefs: Array<Wor
   if (workspaceDefs.length == 0) {
     return;
   }
-  const { registeredWorkspacesByName, registeredWorkspacesByWindowName } = workspace2Store.getState();
+  const { registeredWorkspacesByName } = workspace2Store.getState();
   const newRegisteredWorkspacesByName = { ...registeredWorkspacesByName };
-  const newRegisteredWorkspacesByWindowName = { ...registeredWorkspacesByWindowName };
   for (const workspaceDef of workspaceDefs) {
     if (newRegisteredWorkspacesByName[workspaceDef.name]) {
       throw new Error(`Cannot register workspace ${workspaceDef.name} more than once`);
     }
     const workspaceDefWithLoader = { ...workspaceDef, moduleName };
     newRegisteredWorkspacesByName[workspaceDef.name] = workspaceDefWithLoader;
-    if (!newRegisteredWorkspacesByWindowName[workspaceDef.window]) {
-      newRegisteredWorkspacesByWindowName[workspaceDef.window] = [];
-    }
-    newRegisteredWorkspacesByWindowName[workspaceDef.window].push(workspaceDefWithLoader);
   }
 
   workspace2Store.setState({
     registeredWorkspacesByName: newRegisteredWorkspacesByName,
-    registeredWorkspacesByWindowName: newRegisteredWorkspacesByWindowName,
   });
 }
