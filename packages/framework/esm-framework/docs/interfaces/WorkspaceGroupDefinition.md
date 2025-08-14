@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceGroupDefinition
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:285
+Defined in: packages/framework/esm-globals/dist/types.d.ts:283
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:285
 
 > `optional` **members**: `string`[]
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:293
+Defined in: packages/framework/esm-globals/dist/types.d.ts:291
 
 List of workspace names which are part of the workspace group.
 
@@ -20,6 +20,6 @@ List of workspace names which are part of the workspace group.
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:289
+Defined in: packages/framework/esm-globals/dist/types.d.ts:287
 
 Name of the workspace group. This is used to launch the workspace group
