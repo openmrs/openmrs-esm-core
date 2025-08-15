@@ -20,7 +20,7 @@ import {
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
-import { evaluateAsBooleanAsync, type VariablesMap } from '@openmrs/esm-expression-evaluator';
+import { evaluateAsBoolean, type VariablesMap } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
 import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
@@ -370,7 +370,7 @@ function getAssignedExtensionsFromSlotData(
         try {
           const context: VariablesMap =
             slotState && typeof slotState === 'object' ? { session, ...slotState } : { session, slotState };
-          if (!evaluateAsBooleanAsync(displayConditionExpression, context)) {
+          if (!evaluateAsBoolean(displayConditionExpression, context)) {
             continue;
           }
         } catch (e) {
