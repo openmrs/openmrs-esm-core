@@ -20,7 +20,7 @@ import {
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
-import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
+import { evaluateAsBoolean, type VariablesMap } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
 import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
@@ -32,6 +32,7 @@ import {
   type ExtensionSlotInfo,
   type ExtensionInternalStore,
   type ExtensionSlotState,
+  type ExtensionSlotCustomState,
   getExtensionStore,
   getExtensionInternalStore,
   updateInternalExtensionStore,
@@ -139,12 +140,17 @@ function updateOutputStoreToCurrent() {
 updateOutputStoreToCurrent();
 subscribeConnectivityChanged(updateOutputStoreToCurrent);
 
-function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
+function createNewExtensionSlotInfo(
+  slotName: string,
+  moduleName?: string,
+  state?: ExtensionSlotCustomState,
+): ExtensionSlotInfo {
   return {
     moduleName,
     name: slotName,
     attachedIds: [],
     config: null,
+    state,
   };
 }
 
@@ -357,15 +363,18 @@ function getAssignedExtensionsFromSlotData(
         }
       }
 
-      const displayConditionExpression = extensionConfig?.['Display conditions']?.expression ?? null;
-      if (displayConditionExpression !== null) {
+      const displayConditionExpression =
+        extensionConfig?.['Display conditions']?.expression ?? extension.expression ?? null;
+      const slotState = internalState.slots[slotName]?.state ?? null;
+      if (displayConditionExpression && slotState) {
         try {
-          if (!evaluateAsBoolean(displayConditionExpression, { session })) {
+          const context: VariablesMap =
+            slotState && typeof slotState === 'object' ? { session, ...slotState } : { session, slotState };
+          if (!evaluateAsBoolean(displayConditionExpression, context)) {
             continue;
           }
         } catch (e) {
           console.error(`Error while evaluating expression ${displayConditionExpression}`, e);
-          // if the expression has an error, we do not display the extension
           continue;
         }
       }
@@ -449,39 +458,48 @@ function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<st
  *
  * @param moduleName The name of the module that contains the extension slot
  * @param slotName The extension slot name that is actually used
+ * @param state Optional custom state for the slot, which will be stored in the extension store.
  * @internal
  */
-export const registerExtensionSlot: (moduleName: string, slotName: string) => void = (moduleName, slotName) =>
-  extensionInternalStore.setState((state) => {
-    const existingModuleName = state.slots[slotName]?.moduleName;
+export const registerExtensionSlot: (moduleName: string, slotName: string, state?: ExtensionSlotCustomState) => void = (
+  moduleName,
+  slotName,
+  state,
+) =>
+  extensionInternalStore.setState((currentState) => {
+    const existingModuleName = currentState.slots[slotName]?.moduleName;
     if (existingModuleName && existingModuleName != moduleName) {
       console.warn(
         `An extension slot with the name '${slotName}' already exists. Refusing to register the same slot name twice (in "registerExtensionSlot"). The existing one is from module ${existingModuleName}.`,
       );
-      return state;
+      return currentState;
     }
     if (existingModuleName && existingModuleName == moduleName) {
       // Re-rendering an existing slot
-      return state;
+      return currentState;
     }
-    if (state.slots[slotName]) {
+    if (currentState.slots[slotName]) {
       return {
-        ...state,
+        ...currentState,
         slots: {
-          ...state.slots,
+          ...currentState.slots,
           [slotName]: {
-            ...state.slots[slotName],
+            ...currentState.slots[slotName],
             moduleName,
+            state,
           },
         },
       };
     }
-    const slot = createNewExtensionSlotInfo(slotName, moduleName);
+    const slot = createNewExtensionSlotInfo(slotName, moduleName, state);
     return {
-      ...state,
+      ...currentState,
       slots: {
-        ...state.slots,
-        [slotName]: slot,
+        ...currentState.slots,
+        [slotName]: {
+          ...slot,
+          state,
+        },
       },
     };
   });
@@ -497,3 +515,18 @@ export const reset: () => void = () =>
       extensions: {},
     };
   });
+
+export function setExtensionSlotState(slotName: string, state: ExtensionSlotCustomState) {
+  extensionInternalStore.setState((currentState) => {
+    return {
+      ...currentState,
+      slots: {
+        ...currentState.slots,
+        [slotName]: {
+          ...currentState.slots[slotName],
+          state,
+        },
+      },
+    };
+  });
+}
