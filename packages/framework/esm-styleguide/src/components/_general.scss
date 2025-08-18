@@ -30,30 +30,5 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: calc(100vh - var(--omrs-navbar-height));
-  height: fit-content;
-  grid-area: appRoots;
-}
-
-#omrs-left-nav-container {
-  grid-area: leftNav;
-}
-
-#omrs-workspace-container {
-  grid-area: workspace;
-  position: relative;
-  height: calc(100vh - var(--omrs-navbar-height));
-}
-
-#omrs-top-nav-app-container {
-  grid-area: topNav;
-  height: var(--omrs-navbar-height);
-}
-
-body {
-  display: grid;
-  grid-template-areas:
-    'topNav topNav topNav'
-    'leftNav appRoots workspace';
-  grid-template-columns: min-content 1fr min-content;
+  height: 100%;
 }

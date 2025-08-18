@@ -1,3 +1,4 @@
+import type { LifeCycles } from 'single-spa';
 import type { i18n } from 'i18next';
 
 declare global {
@@ -310,29 +311,6 @@ export interface WorkspaceGroupDefinition {
   members?: Array<string>;
 }
 
-export interface WorkspaceGroupDefinition2 {
-  name: string;
-  closeable?: boolean;
-  overlay?: boolean;
-}
-
-export interface WorkspaceWindowDefinition2 {
-  name: string;
-  icon?: string;
-  canHide: boolean;
-  canMaximize: boolean;
-  overlay: boolean;
-  group: string;
-  order?: number;
-  width?: 'narrow' | 'wider' | 'extra-wide';
-}
-
-export interface WorkspaceDefinition2 {
-  name: string;
-  component: string;
-  window: string;
-}
-
 /**
  * A definition of a feature flag extracted from the routes.json
  */
@@ -375,15 +353,6 @@ export interface OpenmrsAppRoutes {
   workspaces?: Array<WorkspaceDefinition>;
   /** An array of all workspace groups supported by this frontend module. */
   workspaceGroups?: Array<WorkspaceGroupDefinition>;
-
-  /** An array of all workspace groups (v2) supported by this frontend module. */
-  workspaceGroups2?: Array<WorkspaceGroupDefinition2>;
-
-  /** An array of all workspace windows (v2) supported by this frontend module. */
-  workspaceWindows2?: Array<WorkspaceWindowDefinition2>;
-
-  /** An array of all workspaces (v2) supported by this frontend module. */
-  workspaces2?: Array<WorkspaceDefinition2>;
 }
 
 /**

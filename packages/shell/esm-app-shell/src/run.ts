@@ -25,7 +25,6 @@ import {
   renderLoadingSpinner,
   renderSnackbars,
   renderToasts,
-  renderWorkspaceWindowsAndMenu,
   restBaseUrl,
   setupApiModule,
   setupHistory,
@@ -292,10 +291,6 @@ function showToasts() {
   renderToasts(document.querySelector('.omrs-toasts-container'));
 }
 
-function showWorkspacesAndActionMenu() {
-  renderWorkspaceWindowsAndMenu(document.querySelector('#omrs-workspace-container'));
-}
-
 function showSnackbars() {
   renderSnackbars(document.querySelector('.omrs-snackbars-container'));
 }
@@ -419,7 +414,6 @@ export function run(configUrls: Array<string>) {
     showNotifications();
     showActionableNotifications();
     showSnackbars();
-    showWorkspacesAndActionMenu();
     subscribeNotificationShown(showNotification);
     subscribeActionableNotificationShown(showActionableNotification);
     subscribeToastShown(showToast);

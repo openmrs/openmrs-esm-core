@@ -2,28 +2,12 @@
 
 # Interface: WorkspaceGroupDefinition2
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:293
-
-## Properties
-
-### closeable?
-
-> `optional` **closeable**: `boolean`
-
 Defined in: packages/framework/esm-globals/dist/types.d.ts:295
 
-***
+## Properties
 
 ### name
 
 > **name**: `string`
-
-Defined in: packages/framework/esm-globals/dist/types.d.ts:294
-
-***
-
-### overlay?
-
-> `optional` **overlay**: `boolean`
 
 Defined in: packages/framework/esm-globals/dist/types.d.ts:296

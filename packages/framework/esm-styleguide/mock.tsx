@@ -144,10 +144,3 @@ export const DiagnosisTags = vi.fn(({ diagnoses }: { diagnoses: Array<Diagnosis>
     ))}
   </>
 ));
-
-export const Workspace2 = vi.fn(({ title, children }) => (
-  <div>
-    <h1>{title}</h1>
-    {children}
-  </div>
-));
