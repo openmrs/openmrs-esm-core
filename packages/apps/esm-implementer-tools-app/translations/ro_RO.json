@@ -24,7 +24,7 @@
   "moduleName": "Nume modul",
   "modulesWithMissingDependenciesWarning": "Unele module au dependențe backend nerezolvate",
   "numberValidationMessage": "Valoarea trebuie sa fie un numar",
-  "objectPropertyValidationMessage": "Proprietatea {{key}}: {{error}}",
+  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
   "objectValidationMessage": "Valoarea trebuie sa fie un obiect",
   "requiredVersion": "Versiune necesară",
   "resetToDefaultValueButtonText": "Resetează la valoarea implicită",
