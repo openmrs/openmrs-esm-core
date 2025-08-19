@@ -24,7 +24,6 @@
   "moduleName": "მოდულის სახელი",
   "modulesWithMissingDependenciesWarning": "ზოგიერთ მოდულს გადაუწყვეტელი უკანაბოლოს დამოკიდებულებები გააჩნია",
   "numberValidationMessage": "Value must be a number",
-  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
   "objectValidationMessage": "Value must be an object",
   "requiredVersion": "საჭირო ვერსია",
   "resetToDefaultValueButtonText": "ჩამოყრა ნაგულისხმევზე",
