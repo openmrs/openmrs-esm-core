@@ -27,7 +27,10 @@ export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExt
     }
     const paths = p.split('/');
 
-    const localPath = (location.pathname ?? '').split('/').slice(-1 * paths.length);
+    const localPath = (location.pathname ?? '')
+      .split('/')
+      .slice(-1 * paths.length)
+      .map(s => decodeURI(s));
     return shallowEqual(paths, localPath);
   }, [location.pathname, path]);
 
