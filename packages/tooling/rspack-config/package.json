@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/rspack-config",
-  "version": "6.2.0",
+  "version": "7.0.0",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

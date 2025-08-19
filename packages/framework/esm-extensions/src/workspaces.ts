@@ -15,7 +15,7 @@ export interface WorkspaceRegistration {
   canMaximize: boolean;
   width: 'narrow' | 'wider' | 'extra-wide';
   preferredWindowSize: WorkspaceWindowState;
-  load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+  load(): Promise<LifeCycles>;
   moduleName: string;
   groups: Array<string>;
 }
@@ -49,9 +49,10 @@ export interface RegisterWorkspaceOptions {
   canMaximize?: boolean;
   width?: 'narrow' | 'wider' | 'extra-wide';
   preferredWindowSize?: WorkspaceWindowState;
-  load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+  component: string;
   moduleName: string;
   groups?: Array<string>;
+  load(): Promise<LifeCycles>;
 }
 
 /**
@@ -65,6 +66,7 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
       ...state.workspaces,
       [workspace.name]: {
         ...workspace,
+        load: workspace.load,
         preferredWindowSize: workspace.preferredWindowSize ?? 'normal',
         type: workspace.type ?? 'form',
         canHide: workspace.canHide ?? false,
