@@ -17,7 +17,7 @@ export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExt
   const { t } = useTranslation();
   const location = useLocation();
 
-  const navLink = useMemo(() => decodeURIComponent(last(location.pathname) ?? ''), [location.pathname]);
+  const navLink = useMemo(() => decodeURIComponent(last(location.pathname.split('/')) ?? ''), [location.pathname]);
 
   return (
     <div key={path}>
