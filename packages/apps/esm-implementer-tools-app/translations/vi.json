@@ -24,7 +24,6 @@
   "moduleName": "Tên module",
   "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
   "numberValidationMessage": "Value must be a number",
-  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
   "objectValidationMessage": "Value must be an object",
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Đặt lại về mặc định",
