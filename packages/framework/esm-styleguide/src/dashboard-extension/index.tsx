@@ -25,12 +25,12 @@ export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExt
     if (p.startsWith('http')) {
       return p === window.location.href;
     }
-    const paths = p.split('/');
+    const paths = p.split('/').map((s) => decodeURIComponent(s));
 
     const localPath = (location.pathname ?? '')
       .split('/')
       .slice(-1 * paths.length)
-      .map(s => decodeURI(s));
+      .map((s) => decodeURIComponent(s));
     return shallowEqual(paths, localPath);
   }, [location.pathname, path]);
 
