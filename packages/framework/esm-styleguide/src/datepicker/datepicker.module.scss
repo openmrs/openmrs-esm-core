@@ -9,7 +9,7 @@
 @use '../vars' as *;
 
 .calendarGrid {
-  width: 17rem;
+  inline-size: 100%;
 
   & tr,
   & tr > th,
