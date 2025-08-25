@@ -61,6 +61,7 @@ To fix this, ensure that you define a 'component' field inside the extension def
     online: extension.online ?? true,
     offline: extension.offline ?? false,
     featureFlag: extension.featureFlag,
+    expression: extension.expression,
   });
 
   for (const slot of slots) {
