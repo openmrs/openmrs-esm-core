@@ -28,23 +28,37 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow })
     ).then(setLifeCycles);
   }, [openedWorkspaces]);
 
-  return openedWorkspaces.map((openedWorkspace, i) => (
-    <ActiveWorkspace
-      key={openedWorkspace.uuid}
-      openedWorkspace={openedWorkspace}
-      openedWindow={openedWindow}
-      lifeCycle={lifeCycles?.[i]}
-    />
-  ));
+  return (
+    <>
+      {openedWorkspaces.map((openedWorkspace, i) => (
+        <ActiveWorkspace
+          key={openedWorkspace.uuid}
+          openedWorkspace={openedWorkspace}
+          openedWindow={openedWindow}
+          lifeCycle={lifeCycles?.[i]}
+          isRootWorkspace={i == 0}
+          isLeafWorkspace={i == openedWorkspaces.length - 1}
+        />
+      ))}
+    </>
+  );
 };
 
 interface ActiveWorkspaceProps {
   lifeCycle: ParcelConfig | undefined;
   openedWorkspace: OpenedWorkspace;
   openedWindow: OpenedWindow;
+  isRootWorkspace: boolean;
+  isLeafWorkspace: boolean;
 }
 
-const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({ lifeCycle, openedWorkspace, openedWindow }) => {
+const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
+  lifeCycle,
+  openedWorkspace,
+  openedWindow,
+  isRootWorkspace,
+  isLeafWorkspace,
+}) => {
   const { openedGroup, closeWorkspace, openChildWorkspace } = useWorkspace2Store();
 
   const props: Workspace2DefinitionProps = useMemo(
@@ -89,6 +103,8 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({ lifeCycle, openedWork
         workspaceProps: openedWorkspace.props,
         windowProps: openedWindow.props,
         groupProps: openedGroup?.props ?? null,
+        isRootWorkspace,
+        isLeafWorkspace,
       },
     [openedWorkspace, closeWorkspace, openedGroup, openedWindow],
   );

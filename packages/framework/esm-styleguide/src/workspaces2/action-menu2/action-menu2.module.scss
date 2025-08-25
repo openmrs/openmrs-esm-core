@@ -16,7 +16,7 @@ $actionPanelOffset: layout.$spacing-09;
 :global(.omrs-breakpoint-gt-tablet) {
   .sideRail {
     width: $actionPanelOffset;
-    z-index: 8003;
+    z-index: 100;
     height: 100%;
 
     &.overlay {

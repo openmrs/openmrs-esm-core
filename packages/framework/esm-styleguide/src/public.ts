@@ -31,4 +31,5 @@ export {
   ActionMenuButton2,
   Workspace2,
   type Workspace2Definition,
+  type Workspace2DefinitionProps,
 } from './workspaces2';

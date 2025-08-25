@@ -33,7 +33,7 @@ $extraWideWorkspaceWidth: 48.25rem;
     top: 0;
     bottom: 0;
     inset-inline-end: $actionPanelOffset;
-    z-index: 8000;
+    z-index: 100;
 
     transition: width 0.5s ease-in-out;
 
@@ -54,7 +54,12 @@ $extraWideWorkspaceWidth: 48.25rem;
     height: 100%;
     width: var(--workspaceWidth);
     border-inline-start: 1px solid $text-03;
-    animation: slideFromRight 0.5s ease-in-out;
+
+    // only root workspace should have sliding animations. Child workspaces should not.
+    &.isRootWorkspace {
+      animation: slideFromRight 0.5s ease-in-out;
+    }
+
     transition:
       width 0.5s ease-in-out,
       transform 0.5s ease-in-out;
@@ -233,11 +238,6 @@ $extraWideWorkspaceWidth: 48.25rem;
     background-color: $ui-02;
     overflow-y: auto;
     flex-grow: 1;
-  }
-
-  // The parcel makes a div, between the workspace container and the workspace itself
-  .workspaceContent > div {
-    height: 100%;
   }
 
   .overlay {
