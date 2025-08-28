@@ -1,4 +1,4 @@
-import { validators, Type, validator } from '@openmrs/esm-framework';
+import { validators, Type } from '@openmrs/esm-framework';
 
 export const configSchema = {
   provider: {
@@ -7,19 +7,18 @@ export const configSchema = {
       _default: 'basic',
       _description:
         "Selects the login mechanism to use. Choices are 'basic' and 'oauth2'. " +
-        "For 'oauth2' you'll also need to set the 'loginUrl'",
-      _validators: [validators.oneOf(['basic', 'oauth2'])],
+        "For 'oauth2' you'll also need to set the 'loginUrl' and 'logoutUrl'.",
     },
     loginUrl: {
       _type: Type.String,
       _default: '${openmrsSpaBase}/login',
-      _description: 'The URL to use to login. This is only needed if you are using OAuth2.',
+      _description: 'The URL to use for an OAuth2 login.',
       _validators: [validators.isUrl],
     },
     logoutUrl: {
       _type: Type.String,
       _default: '${openmrsSpaBase}/logout',
-      _description: 'The URL to use to login. This is only needed if you are using OAuth2.',
+      _description: 'The URL to use for an OAuth2 logout.',
       _validators: [validators.isUrl],
     },
   },
@@ -35,13 +34,11 @@ export const configSchema = {
       _type: Type.Number,
       _default: 8,
       _description: 'The number of locations displayed in the location picker.',
-      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
     },
     locationsPerRequest: {
       _type: Type.Number,
       _default: 50,
       _description: 'The number of results to fetch in each cycle of infinite scroll.',
-      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
     },
     useLoginLocationTag: {
       _type: Type.Boolean,
@@ -53,23 +50,49 @@ export const configSchema = {
   links: {
     loginSuccess: {
       _type: Type.String,
-      _default: '${openmrsSpaBase}/home',
       _description: 'The URL to redirect the user to after a successful login.',
+      _default: '${openmrsSpaBase}/home',
       _validators: [validators.isUrl],
     },
   },
   logo: {
     src: {
       _type: Type.String,
-      _default: '',
-      _description:
-        'The path or URL to the logo image. If set to an empty string, the default OpenMRS SVG sprite will be used.',
+      _default: null,
+      _description: 'The path or URL to the logo image. If set to null, the default OpenMRS SVG sprite will be used.',
       _validators: [validators.isUrl],
     },
     alt: {
       _type: Type.String,
       _default: 'Logo',
       _description: 'The alternative text for the logo image, displayed when the image cannot be loaded or on hover.',
+    },
+  },
+  backgroundImage: {
+    src: {
+      _type: Type.String,
+      _default: null,
+      _description: 'The path or URL to the background image. If set to null, a default background will be used.',
+      _validators: [validators.isUrl],
+    },
+    alt: {
+      _type: Type.String,
+      _default: 'Background image',
+      _description:
+        'The alternative text for the background image, displayed when the image cannot be loaded or on hover.',
+    },
+  },
+  badgeLogo: {
+    src: {
+      _type: Type.String,
+      _default: null,
+      _description: 'The path or URL to the badge Logo image. If set to null, a default badge logo will be used.',
+      _validators: [validators.isUrl],
+    },
+    alt: {
+      _type: Type.String,
+      _default: 'Badge logo',
+      _description: 'The alternative text for the badge logo, displayed when the image cannot be loaded or on hover.',
     },
   },
   footer: {
@@ -99,27 +122,19 @@ export const configSchema = {
     _description:
       'Whether to show the password field on a separate screen. If false, the password field will be shown on the same screen.',
   },
-  backgroundImage: {
-    _type: Type.String,
-    _default: '/openmrs/spa/login-background_en.png',
-    _description:
-      'The URL or path to the background image for the login page. If empty, no background image will be displayed.',
-    _validators: [validators.isUrl],
-  },
 };
 
 export interface ConfigSchema {
+  provider: {
+    loginUrl: string;
+    logoutUrl: string;
+    type: string;
+  };
   chooseLocation: {
     enabled: boolean;
     locationsPerRequest: number;
     numberToShow: number;
     useLoginLocationTag: boolean;
-  };
-  footer: {
-    additionalLogos: Array<{
-      alt: string;
-      src: string;
-    }>;
   };
   links: {
     loginSuccess: string;
@@ -128,11 +143,19 @@ export interface ConfigSchema {
     alt: string;
     src: string;
   };
-  provider: {
-    loginUrl: string;
-    logoutUrl: string;
-    type: 'basic' | 'oauth2';
+  backgroundImage: {
+    alt: string;
+    src: string;
+  };
+  footer: {
+    additionalLogos: Array<{
+      alt: string;
+      src: string;
+    }>;
+  };
+  badgeLogo: {
+    alt: string;
+    src: string;
   };
   showPasswordOnSeparateScreen: boolean;
-  backgroundImage: string;
 }

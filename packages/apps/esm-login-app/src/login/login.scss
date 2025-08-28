@@ -2,112 +2,123 @@
 @use '@carbon/type';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
-.bodyShort01 {
-  @include type.type-style('body-compact-01');
-}
-
-.productiveHeading03 {
-  @include type.type-style('heading-03');
-}
-
-.label01 {
-  @include type.type-style('label-01');
-}
-
-.caption01 {
-  @include type.type-style('legal-01');
-}
-
-.backButton {
-  height: layout.$spacing-09;
-  padding-left: 0;
-
-  svg {
-    margin-right: layout.$spacing-03;
-    order: 1;
-  }
-
-  span {
-    order: 2;
-  }
-}
-
 .container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.imageSection {
+  flex: 1;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.backgroundImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(128, 128, 128, 0.3);
+  z-index: 2;
+}
+
+.floatingBadge {
+  position: absolute;
+  top: layout.$spacing-05;
+  right: layout.$spacing-07;
+  z-index: 10;
+  border-radius: layout.$spacing-05;
+}
+
+.badgeLogo {
+  width: 12rem;
+  height: 12rem;
+  object-fit: contain;
+  border-radius: layout.$spacing-04;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.formSection {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: layout.$spacing-07;
+  background-color: $ui-background;
+  min-height: 100vh;
   position: relative;
+  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.05);
 }
 
 .center {
   text-align: center;
+  margin-bottom: layout.$spacing-07;
 }
 
 .logo {
   margin-bottom: layout.$spacing-08;
   height: layout.$spacing-11;
   width: 16rem;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 
 .logoImg {
-  margin-bottom: layout.$spacing-09;
-  max-width: 100%;
+  max-width: 40%;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 
 .poweredByTxt {
-  @extend .caption01;
-  padding-bottom: 0.5rem;
-  color: $text-02;
+  padding-bottom: layout.$spacing-02;
+  font-weight: 400;
 }
 
 .needHelp {
   display: flex;
   width: 23rem;
+  margin-top: layout.$spacing-07;
 }
 
 .needHelpText {
-  @extend .bodyShort01;
   text-align: left;
-  color: $text-02;
   display: flex;
   flex-direction: row;
   align-items: center;
   margin: layout.$spacing-05 0;
+  font-weight: 400;
 }
-
-.link {
-  text-decoration-line: none;
-  margin-left: layout.$spacing-03;
+.poweredByLogo {
+  height: layout.$spacing-08;
+  width: layout.$spacing-12;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.1));
 }
 
 .loginCard {
   border-radius: 0;
   border: 1px solid $ui-03;
   background-color: $ui-02;
-  width: 23rem;
-  padding: layout.$spacing-08;
-  border-radius: layout.$spacing-03;
+  width: 20rem;
+  padding: 2.5rem;
   position: relative;
   min-height: fit-content;
-}
-
-@media only screen and (min-width: 481px) {
-  .container {
-    height: 100vh;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .container {
-    height: 100vh;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .container {
-    height: 100vh;
-  }
 }
 
 .inputGroup {
@@ -115,16 +126,14 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  width: 18rem;
-  gap: layout.$spacing-05;
+  width: 23rem;
 
   :global(.cds--text-input) {
-    height: layout.$spacing-09;
-    @extend .label01;
+    height: 3rem;
   }
 
   :global(.cds--text-input__field-outer-wrapper) {
-    width: 18rem;
+    width: 23rem;
   }
 
   &:not(:last-child) {
@@ -134,7 +143,11 @@
 
 .continueButton {
   margin-top: layout.$spacing-06;
-  width: 18rem;
+  min-width: 23rem;
+}
+
+.signInText {
+  text-align: center;
 }
 
 .backButtonDiv {
@@ -145,32 +158,82 @@
 }
 
 .footer {
-  margin-top: 6.75rem;
+  position: absolute;
+  bottom: layout.$spacing-07;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  column-gap: 2rem;
-  width: 23rem;
   align-items: center;
+  gap: layout.$spacing-07;
+  width: auto;
+  padding: layout.$spacing-05 layout.$spacing-07;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .loader {
   min-height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .errorMessage {
-  width: 23rem;
-  margin-bottom: layout.$spacing-09;
-  position: absolute;
-  bottom: 100%;
-  left: 0;
+  width: 20rem;
+  margin-bottom: layout.$spacing-06;
+  position: relative;
+
+  :global(.cds--inline-notification) {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(218, 30, 40, 0.15);
+  }
 }
 
 .divider {
-  height: 2rem;
-  outline: 0.5px solid $color-gray-30;
+  height: layout.$spacing-07;
+  width: 1px;
+  opacity: 0.6;
 }
 
 .card {
   display: flex;
   justify-content: flex-start;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.logoContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainLogoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.poweredByContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-right: 35rem;
+  margin-top: layout.$spacing-05;
+}
+
+.poweredByLogo {
+  height: layout.$spacing-10;
+  width: auto;
+  max-width: layout.$spacing-13;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+  opacity: 0.8;
 }
