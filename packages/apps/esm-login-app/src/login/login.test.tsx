@@ -1,15 +1,6 @@
 import { useState } from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getSessionStore, refetchCurrentUser, useConfig, useSession } from '@openmrs/esm-framework';
-import { mockConfig } from '../../__mocks__/config.mock';
-import renderWithRouter from '../test-helpers/render-with-router';
-import Login from './login.component';
-
-const mockGetSessionStore = getSessionStore as jest.Mock;
-const mockedLogin = refetchCurrentUser as jest.Mock;
-const mockedUseConfig = useConfig as jest.Mock;
-const mockedUseSession = useSession as jest.Mock;
 
 const mockNavigate = jest.fn();
 const mockOpenmrsNavigate = jest.fn();
@@ -19,10 +10,25 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }));
 
-jest.mock('@openmrs/esm-framework', () => ({
-  ...jest.requireActual('@openmrs/esm-framework'),
-  navigate: mockOpenmrsNavigate,
-}));
+jest.mock('@openmrs/esm-framework', () => {
+  const actual = jest.requireActual('@openmrs/esm-framework');
+  return {
+    ...actual,
+    navigate: mockOpenmrsNavigate,
+    useConnectivity: jest.fn(() => true),
+    getCoreTranslation: jest.fn((key: string) => key),
+  };
+});
+
+import { getSessionStore, refetchCurrentUser, useConfig, useSession } from '@openmrs/esm-framework';
+import { mockConfig } from '../../__mocks__/config.mock';
+import renderWithRouter from '../test-helpers/render-with-router';
+import Login from './login.component';
+
+const mockGetSessionStore = getSessionStore as jest.Mock;
+const mockedLogin = refetchCurrentUser as jest.Mock;
+const mockedUseConfig = useConfig as jest.Mock;
+const mockedUseSession = useSession as jest.Mock;
 
 mockedLogin.mockReturnValue(
   Promise.resolve({
@@ -40,11 +46,6 @@ mockGetSessionStore.mockImplementation(() => ({
     },
   }),
 }));
-
-const loginLocations = [
-  { uuid: '111', display: 'Earth' },
-  { uuid: '222', display: 'Mars' },
-];
 
 mockedUseSession.mockReturnValue({
   authenticated: false,
@@ -152,10 +153,10 @@ describe('Login', () => {
       },
     );
 
-    const passwordInput = await screen.findByLabelText(/password/i);
+    const passwordInput = screen.getByLabelText(/password/i);
     await user.type(passwordInput, 'no-tax-fraud');
 
-    const loginButton = screen.getByRole('button', { name: /log in/i });
+    const loginButton = screen.getByRole('button', { name: /sign in/i });
     await user.click(loginButton);
 
     await waitFor(() => {
@@ -176,7 +177,7 @@ describe('Login', () => {
       Login,
       {},
       {
-        route: '/login/confirm',
+        route: '/login/confirm', // Start on password screen
       },
     );
 
@@ -185,7 +186,7 @@ describe('Login', () => {
     const passwordInput = screen.getByLabelText(/password/i);
     await user.type(passwordInput, 'no-tax-fraud');
 
-    const loginButton = screen.getByRole('button', { name: /log in/i });
+    const loginButton = screen.getByRole('button', { name: /sign in/i });
     await user.click(loginButton);
 
     await waitFor(() => {
