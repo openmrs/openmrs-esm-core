@@ -4,7 +4,7 @@
 
 > **defineExtensionConfigSchema**(`extensionName`, `schema`): `void`
 
-Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
 
 This defines a configuration schema for an extension. When a schema is defined
 for an extension, that extension will receive the configuration corresponding

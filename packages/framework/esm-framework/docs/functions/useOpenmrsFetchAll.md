@@ -4,7 +4,7 @@
 
 > **useOpenmrsFetchAll**\<`T`\>(`url`, `options`): `UseServerInfiniteReturnObject`\<`T`, `OpenMRSPaginatedResponse`\<`T`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
 
 Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
 This hook handles fetching results from *all* pages of a paginated OpenMRS REST endpoint, making multiple requests

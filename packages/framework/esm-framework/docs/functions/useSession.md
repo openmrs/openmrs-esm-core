@@ -4,7 +4,7 @@
 
 > **useSession**(): `Session`
 
-Defined in: [packages/framework/esm-react-utils/src/useSession.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L17)
+Defined in: [packages/framework/esm-react-utils/src/useSession.ts:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L17)
 
 Gets the current user session information. Returns an object with
 property `authenticated` == `false` if the user is not logged in.

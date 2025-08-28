@@ -4,4 +4,4 @@
 
 > **KnownOmrsServiceWorkerMessages** = [`OnImportMapChangedMessage`](../interfaces/OnImportMapChangedMessage.md) \| [`ClearDynamicRoutesMessage`](../interfaces/ClearDynamicRoutesMessage.md) \| [`RegisterDynamicRouteMessage`](../interfaces/RegisterDynamicRouteMessage.md)
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L42)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:42](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L42)

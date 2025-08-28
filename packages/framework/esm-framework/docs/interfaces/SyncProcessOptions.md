@@ -2,7 +2,7 @@
 
 # Interface: SyncProcessOptions\<T\>
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L52)
+Defined in: [packages/framework/esm-offline/src/sync.ts:52](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L52)
 
 Additional data which can be used for synchronizing data in a ProcessSyncItem function.
 
@@ -18,7 +18,7 @@ Additional data which can be used for synchronizing data in a ProcessSyncItem fu
 
 > **abort**: `AbortController`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L53)
+Defined in: [packages/framework/esm-offline/src/sync.ts:53](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L53)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-offline/src/sync.ts:53](https://github.com/o
 
 > **dependencies**: `any`[]
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L57)
+Defined in: [packages/framework/esm-offline/src/sync.ts:57](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L57)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-offline/src/sync.ts:57](https://github.com/o
 
 > **index**: `number`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L55)
+Defined in: [packages/framework/esm-offline/src/sync.ts:55](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L55)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-offline/src/sync.ts:55](https://github.com/o
 
 > **items**: `T`[]
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L56)
+Defined in: [packages/framework/esm-offline/src/sync.ts:56](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L56)
 
 ***
 
@@ -50,4 +50,4 @@ Defined in: [packages/framework/esm-offline/src/sync.ts:56](https://github.com/o
 
 > **userId**: `string`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L54)
+Defined in: [packages/framework/esm-offline/src/sync.ts:54](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L54)

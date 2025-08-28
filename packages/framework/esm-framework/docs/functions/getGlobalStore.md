@@ -4,7 +4,7 @@
 
 > **getGlobalStore**\<`T`\>(`name`, `fallbackState?`): `StoreApi`\<`T`\>
 
-Defined in: [packages/framework/esm-state/src/state.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L92)
+Defined in: [packages/framework/esm-state/src/state.ts:92](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L92)
 
 Returns the existing store named `name`,
 or creates a new store named `name` if none exists.

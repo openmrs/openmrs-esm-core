@@ -4,7 +4,7 @@
 
 > `const` **RenderIfValueIsTruthy**: `React.FC`\<`PropsWithChildren`\<\{ `fallback?`: `React.ReactNode`; `value`: `unknown`; \}\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/RenderIfValueIsTruthy.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/RenderIfValueIsTruthy.tsx#L17)
+Defined in: [packages/framework/esm-react-utils/src/RenderIfValueIsTruthy.tsx:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/RenderIfValueIsTruthy.tsx#L17)
 
 A really simple component that renders its children if the prop named `value` has a truthy value
 

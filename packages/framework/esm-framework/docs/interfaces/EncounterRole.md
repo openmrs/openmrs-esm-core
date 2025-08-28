@@ -2,7 +2,7 @@
 
 # Interface: EncounterRole
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L32)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:32](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L32)
 
 ## Extends
 
@@ -30,7 +30,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
 
 > `optional` **description**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L34)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:34](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L34)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 > `optional` **name**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L33)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:33](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L33)
 
 ***
 
@@ -82,7 +82,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
 
 > `optional` **retired**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L35)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:35](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L35)
 
 ***
 

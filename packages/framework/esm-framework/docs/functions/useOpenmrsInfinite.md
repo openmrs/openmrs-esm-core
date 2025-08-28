@@ -4,7 +4,7 @@
 
 > **useOpenmrsInfinite**\<`T`\>(`url`, `options`): `UseServerInfiniteReturnObject`\<`T`, `OpenMRSPaginatedResponse`\<`T`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L102)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:102](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L102)
 
 Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
 The server limits the max number of results being returned, and multiple requests are needed to get the full data set

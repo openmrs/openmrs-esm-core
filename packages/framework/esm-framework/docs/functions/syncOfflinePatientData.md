@@ -4,7 +4,7 @@
 
 > **syncOfflinePatientData**(`patientUuid`): `Promise`\<`void`\>
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L62)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:62](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L62)
 
 ## Parameters
 

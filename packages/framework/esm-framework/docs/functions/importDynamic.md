@@ -4,7 +4,7 @@
 
 > **importDynamic**\<`T`\>(`jsPackage`, `share`, `options?`): `Promise`\<`T`\>
 
-Defined in: [packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L37)
+Defined in: [packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:37](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L37)
 
 Loads the named export from a named package. This might be used like:
 

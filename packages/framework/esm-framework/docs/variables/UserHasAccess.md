@@ -4,7 +4,7 @@
 
 > `const` **UserHasAccess**: `React.FC`\<[`UserHasAccessProps`](../interfaces/UserHasAccessProps.md)\>
 
-Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L40)
+Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:40](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L40)
 
 A React component that renders its children only if the current user exists and has the privilege(s)
 specified by the `privilege` prop. This can be used not to render certain components when the user

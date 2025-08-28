@@ -4,7 +4,7 @@
 
 > **toLocationObject**(`openmrsRestForm`): [`Location`](../interfaces/Location.md)
 
-Defined in: [packages/framework/esm-emr-api/src/location.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/location.ts#L7)
+Defined in: [packages/framework/esm-emr-api/src/location.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/location.ts#L7)
 
 ## Parameters
 

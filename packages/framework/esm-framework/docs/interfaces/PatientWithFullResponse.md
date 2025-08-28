@@ -2,7 +2,7 @@
 
 # Interface: PatientWithFullResponse
 
-Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L11)
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:11](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L11)
 
 ## Extends
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:11](https://g
 
 > **includeConfig**: `true`
 
-Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L12)
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L12)
 
 #### Overrides
 

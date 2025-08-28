@@ -4,7 +4,7 @@
 
 > **removeDynamicOfflineDataFor**(`userId`, `type`, `identifier`): `Promise`\<`void`\>
 
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L213)
+Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:213](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L213)
 
 Declares that dynamic offline data of the given [type](#removedynamicofflinedatafor) with the given [identifier](#removedynamicofflinedatafor)
 no longer needs to be available offline for the user with the given ID.

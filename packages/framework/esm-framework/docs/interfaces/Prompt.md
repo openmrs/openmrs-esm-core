@@ -2,7 +2,7 @@
 
 # Interface: Prompt
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L91)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:91](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L91)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:91](
 
 > **body**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L93)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:93](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L93)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:93](
 
 > `optional` **cancelText**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L98)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:98](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L98)
 
 Defaults to "Cancel"
 
@@ -28,7 +28,7 @@ Defaults to "Cancel"
 
 > `optional` **confirmText**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L95)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:95](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L95)
 
 Defaults to "Confirm"
 
@@ -38,7 +38,7 @@ Defaults to "Confirm"
 
 > **title**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L92)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:92](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L92)
 
 ## Methods
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:92](
 
 > **onConfirm**(): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L96)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:96](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L96)
 
 #### Returns
 

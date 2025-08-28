@@ -4,7 +4,7 @@
 
 > **goBackInHistory**(`toUrl:`): `void`
 
-Defined in: [packages/framework/esm-navigation/src/history/history.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L58)
+Defined in: [packages/framework/esm-navigation/src/history/history.ts:58](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L58)
 
 Rolls back the history to the specified point and navigates to that URL.
 

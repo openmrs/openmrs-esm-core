@@ -4,7 +4,7 @@
 
 > **UnloadedSessionStore** = `object`
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L16)
+Defined in: [packages/framework/esm-api/src/current-user.ts:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L16)
 
 ## Properties
 
@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-api/src/current-user.ts:16](https://github.c
 
 > **loaded**: `false`
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L17)
+Defined in: [packages/framework/esm-api/src/current-user.ts:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L17)
 
 ***
 
@@ -20,4 +20,4 @@ Defined in: [packages/framework/esm-api/src/current-user.ts:17](https://github.c
 
 > **session**: `null`
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L18)
+Defined in: [packages/framework/esm-api/src/current-user.ts:18](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L18)

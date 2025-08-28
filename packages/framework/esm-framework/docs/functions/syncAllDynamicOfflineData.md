@@ -4,7 +4,7 @@
 
 > **syncAllDynamicOfflineData**(`type`, `abortSignal?`): `Promise`\<`void`\>
 
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L241)
+Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:241](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L241)
 
 Synchronizes all offline data entries of the given [type](#syncalldynamicofflinedata) for the currently logged in user.
 

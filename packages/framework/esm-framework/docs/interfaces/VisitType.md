@@ -2,7 +2,7 @@
 
 # Interface: VisitType
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L39)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:39](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L39)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:39](http
 
 > **display**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L41)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:41](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L41)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:41](http
 
 > `optional` **name**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L42)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:42](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L42)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:42](http
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L40)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:40](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L40)

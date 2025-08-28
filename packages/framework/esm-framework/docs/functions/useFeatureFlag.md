@@ -4,7 +4,7 @@
 
 > **useFeatureFlag**(`flagName`): `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useFeatureFlag.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFeatureFlag.ts#L18)
+Defined in: [packages/framework/esm-react-utils/src/useFeatureFlag.ts:18](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFeatureFlag.ts#L18)
 
 Use this function to tell whether a feature flag is toggled on or off.
 

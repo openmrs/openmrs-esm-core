@@ -4,7 +4,7 @@
 
 > **registerFeatureFlag**(`flagName`, `label`, `description`): `void`
 
-Defined in: [packages/framework/esm-feature-flags/src/feature-flags.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L54)
+Defined in: [packages/framework/esm-feature-flags/src/feature-flags.ts:54](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L54)
 
 This function creates a feature flag. Call it in top-level code anywhere. It will
 not reset whether the flag is enabled or not, so it's safe to call it multiple times.

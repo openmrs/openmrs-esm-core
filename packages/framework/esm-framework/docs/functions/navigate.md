@@ -4,7 +4,7 @@
 
 > **navigate**(`to`): `void`
 
-Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L49)
+Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:49](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L49)
 
 Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
 

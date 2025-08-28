@@ -2,7 +2,7 @@
 
 # Interface: Diagnosis
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L6)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:6](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L6)
 
 ## Extends
 
@@ -30,7 +30,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
 
 > `optional` **certainty**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L19)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:19](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L19)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:19](
 
 > `optional` **diagnosis**: `object`
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L7)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L7)
 
 #### coded?
 
@@ -86,7 +86,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
 
 > `optional` **encounter**: [`Encounter`](Encounter.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L18)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:18](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L18)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:18](
 
 > `optional` **formFieldNamespace**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L21)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:21](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L21)
 
 ***
 
@@ -102,7 +102,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:21](
 
 > `optional` **formFieldPath**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L22)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:22](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L22)
 
 ***
 
@@ -122,7 +122,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 > `optional` **patient**: [`Patient`](Patient.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L17)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L17)
 
 ***
 
@@ -130,7 +130,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:17](
 
 > `optional` **rank**: `number`
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L20)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:20](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L20)
 
 ***
 
@@ -162,4 +162,4 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
 
 > `optional` **voided**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L23)
+Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:23](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L23)

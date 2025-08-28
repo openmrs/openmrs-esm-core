@@ -4,7 +4,7 @@
 
 > **OpenmrsAppContext**\<`T`\>(`__namedParameters`): `null`
 
-Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L24)
+Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:24](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L24)
 
 OpenmrsAppContext is a simple React component meant to function similarly to React's Context,
 but built on top of the OpenmrsAppContext.

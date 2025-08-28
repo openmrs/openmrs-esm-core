@@ -4,7 +4,7 @@
 
 > **getFullSynchronizationItemsFor**\<`T`\>(`userId`, `type?`): `Promise`\<[`SyncItem`](../interfaces/SyncItem.md)\<`T`\>[]\>
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:281](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L281)
+Defined in: [packages/framework/esm-offline/src/sync.ts:281](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L281)
 
 Returns all currently queued up sync items of a given user.
 

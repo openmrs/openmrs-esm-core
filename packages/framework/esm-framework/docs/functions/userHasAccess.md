@@ -4,7 +4,7 @@
 
 > **userHasAccess**(`requiredPrivilege`, `user`): `boolean`
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:184](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L184)
+Defined in: [packages/framework/esm-api/src/current-user.ts:184](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L184)
 
 ## Parameters
 

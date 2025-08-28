@@ -2,7 +2,7 @@
 
 # Interface: CurrentPatientOptions
 
-Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L7)
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L7)
 
 ## Extended by
 
@@ -15,4 +15,4 @@ Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:7](https://gi
 
 > `optional` **includeConfig**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L8)
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L8)

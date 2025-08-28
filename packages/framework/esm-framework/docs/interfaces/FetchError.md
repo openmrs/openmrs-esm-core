@@ -2,7 +2,7 @@
 
 # Interface: FetchError
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:336](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L336)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:336](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L336)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:336](https://github
 
 > **response**: `Response`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:337](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L337)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:337](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L337)
 
 ***
 
@@ -18,4 +18,4 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:337](https://github
 
 > **responseBody**: `null` \| `ResponseBody`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:338](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L338)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:338](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L338)

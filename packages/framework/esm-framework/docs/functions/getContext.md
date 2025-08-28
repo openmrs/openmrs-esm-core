@@ -4,7 +4,7 @@
 
 > **getContext**\<`T`\>(`namespace`): `null` \| `Readonly`\<`T`\>
 
-Defined in: [packages/framework/esm-context/src/context.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L63)
+Defined in: [packages/framework/esm-context/src/context.ts:63](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L63)
 
 Returns an _immutable_ version of the state of the namespace as it is currently
 

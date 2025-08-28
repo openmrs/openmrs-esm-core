@@ -2,7 +2,7 @@
 
 # Interface: OpenmrsResourceStrict
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L12)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L12)
 
 Superclass for all Openmrs Resources, with strict typings.
 If the subclass does not have all attributes (including optional ones)
@@ -22,7 +22,7 @@ accounted for, use OpenmrsResource instead.
 
 > `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 > `optional` **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 > `optional` **links**: [`Link`](Link.md)[]
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 > `optional` **resourceVersion**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https:
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)

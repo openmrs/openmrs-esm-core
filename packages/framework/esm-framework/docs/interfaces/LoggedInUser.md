@@ -2,7 +2,7 @@
 
 # Interface: LoggedInUser
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L14)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:14](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L14)
 
 ## Indexable
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:14](https://g
 
 > **allowedLocales**: `string`[]
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L45)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:45](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L45)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:45](https://g
 
 > **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L16)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L16)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:16](https://g
 
 > **locale**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L44)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:44](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L44)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:44](https://g
 
 > **person**: [`Person`](Person.md)
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L40)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:40](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L40)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:40](https://g
 
 > **privileges**: [`Privilege`](Privilege.md)[]
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L41)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:41](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L41)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:41](https://g
 
 > **retired**: `boolean`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L43)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:43](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L43)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:43](https://g
 
 > **roles**: [`Role`](Role.md)[]
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L42)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:42](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L42)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:42](https://g
 
 > **systemId**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L18)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:18](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L18)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:18](https://g
 
 > **username**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L17)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L17)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:17](https://g
 
 > **userProperties**: `null` \| \{[`key`: `string`]: `undefined` \| `string`; `defaultLocation?`: `string`; `patientsVisited?`: `string`; `starredPatientLists?`: `string`; \}
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L19)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:19](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L19)
 
 #### Type declaration
 
@@ -128,4 +128,4 @@ To store the array, perform `starredPatientLists: starredPatientLists.join(',')`
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L15)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L15)

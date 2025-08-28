@@ -4,7 +4,7 @@
 
 > **useFhirFetchAll**\<`T`\>(`url`, `options`): `UseServerInfiniteReturnObject`\<`T`, `Bundle`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useFhirFetchAll.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L19)
+Defined in: [packages/framework/esm-react-utils/src/useFhirFetchAll.ts:19](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L19)
 
 This hook handles fetching results from *all* pages of a paginated FHIR REST endpoint, making multiple requests
 as needed.

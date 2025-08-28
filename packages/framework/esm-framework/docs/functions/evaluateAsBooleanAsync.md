@@ -4,7 +4,7 @@
 
 > **evaluateAsBooleanAsync**(`expression`, `variables`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:193](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L193)
+Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:193](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L193)
 
 `evaluateAsBooleanAsync()` is a variant of [()](evaluateAsync.md) which only supports boolean results. Useful
 if valid expression must return boolean values.

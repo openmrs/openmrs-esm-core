@@ -4,7 +4,7 @@
 
 > **setUserProperties**(`userUuid`, `userProperties`, `abortController?`): `Promise`\<[`SessionStore`](../type-aliases/SessionStore.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L244)
+Defined in: [packages/framework/esm-api/src/current-user.ts:244](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L244)
 
 ## Parameters
 

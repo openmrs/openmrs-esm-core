@@ -4,4 +4,4 @@
 
 > **NullablePatient** = `fhir.Patient` \| `null`
 
-Defined in: [packages/framework/esm-react-utils/src/usePatient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L6)
+Defined in: [packages/framework/esm-react-utils/src/usePatient.ts:6](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L6)

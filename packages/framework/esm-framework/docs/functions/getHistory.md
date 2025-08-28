@@ -4,7 +4,7 @@
 
 > **getHistory**(): `string`[]
 
-Defined in: [packages/framework/esm-navigation/src/history/history.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L47)
+Defined in: [packages/framework/esm-navigation/src/history/history.ts:47](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L47)
 
 Returns a list of URLs representing the history of the current window session.
 

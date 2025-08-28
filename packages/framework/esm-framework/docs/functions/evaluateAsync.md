@@ -4,7 +4,7 @@
 
 > **evaluateAsync**(`expression`, `variables`): `Promise`\<[`DefaultEvaluateReturnType`](../type-aliases/DefaultEvaluateReturnType.md)\>
 
-Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:167](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L167)
+Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:167](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L167)
 
 `evaluateAsync()` implements a relatively safe version of `eval()` that can evaluate Javascript expressions
 that use Promises. This allows us to safely add features that depend on user-supplied code without

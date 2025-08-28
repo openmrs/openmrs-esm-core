@@ -2,7 +2,7 @@
 
 # Interface: ExtensionSlotBaseProps
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L8)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L8)
 
 ## Extended by
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:8](https:/
 
 > `optional` **extensionSlotName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L15)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L15)
 
 The name of the extension slot
 
@@ -28,7 +28,7 @@ Use `name`
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L10)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L10)
 
 The name of the extension slot
 
@@ -38,7 +38,7 @@ The name of the extension slot
 
 > `optional` **select**: (`extensions`) => `AssignedExtension`[]
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
 
 An optional function for filtering or otherwise modifying
   the list of extensions that will be rendered.
@@ -59,7 +59,7 @@ An optional function for filtering or otherwise modifying
 
 > `optional` **state**: `Record`\<`string` \| `number` \| `symbol`, `unknown`\>
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L27)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:27](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L27)
 
 Only works if no children are provided*. Passes data
   through as props to the extensions that are mounted here. If `ExtensionSlot`

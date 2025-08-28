@@ -4,7 +4,7 @@
 
 > **useExtensionSlotMeta**\<`T`\>(`extensionSlotName`): `object`
 
-Defined in: [packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L10)
+Defined in: [packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L10)
 
 Extract meta data from all extension for a given extension slot.
 

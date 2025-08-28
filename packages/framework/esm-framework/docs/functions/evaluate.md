@@ -4,7 +4,7 @@
 
 > **evaluate**(`expression`, `variables`): [`DefaultEvaluateReturnType`](../type-aliases/DefaultEvaluateReturnType.md)
 
-Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L97)
+Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:97](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L97)
 
 `evaluate()` implements a relatively safe version of `eval()` that is limited to evaluating synchronous
 Javascript expressions. This allows us to safely add features that depend on user-supplied code without

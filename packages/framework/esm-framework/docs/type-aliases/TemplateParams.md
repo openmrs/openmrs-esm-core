@@ -4,7 +4,7 @@
 
 > **TemplateParams** = `object`
 
-Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L10)
+Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L10)
 
 ## Index Signature
 

@@ -2,7 +2,7 @@
 
 # Interface: PageHeaderWrapperProps
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L15)
+Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L15)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.compo
 
 > **children**: `ReactNode`
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L16)
+Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L16)
 
 ***
 
@@ -18,4 +18,4 @@ Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.compo
 
 > `optional` **className**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L17)
+Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L17)

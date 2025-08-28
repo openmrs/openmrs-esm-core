@@ -4,7 +4,7 @@
 
 > **unregisterContext**(`namespace`): `void`
 
-Defined in: [packages/framework/esm-context/src/context.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L48)
+Defined in: [packages/framework/esm-context/src/context.ts:48](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L48)
 
 Used by caller to unregister a namespace in the application context. Unregistering a namespace
 will remove the namespace and all associated data.

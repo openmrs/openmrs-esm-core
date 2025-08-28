@@ -4,7 +4,7 @@
 
 > **getExtensionStore**(): `StoreApi`\<[`ExtensionStore`](../interfaces/ExtensionStore.md)\>
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L125)
+Defined in: [packages/framework/esm-extensions/src/store.ts:125](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L125)
 
 This returns a store that modules can use to get information about the
 state of the extension system.

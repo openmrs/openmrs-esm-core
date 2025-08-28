@@ -2,7 +2,7 @@
 
 # Interface: MessageServiceWorkerResult\<T\>
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L47)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:47](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L47)
 
 ## Type Parameters
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:47](
 
 > `optional` **error**: `string`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L50)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:50](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L50)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:50](
 
 > `optional` **result**: `T`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L49)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:49](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L49)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:49](
 
 > **success**: `boolean`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L48)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:48](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L48)

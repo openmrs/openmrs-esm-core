@@ -2,7 +2,7 @@
 
 # Interface: OpenWorkspace
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L113)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:113](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L113)
 
 The default parameters received by all workspaces
 
@@ -16,7 +16,7 @@ The default parameters received by all workspaces
 
 > **additionalProps**: `object`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L114)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:114](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L114)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:11
 
 > `optional` **currentWorkspaceGroup**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L115)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L115)
 
 ***
 
@@ -152,7 +152,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:12
 
 > **closeWorkspace**(`closeWorkspaceOptions?`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L49)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:49](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L49)
 
 Call this function to close the workspace. This function will prompt the user
 if there are any unsaved changes to workspace.
@@ -180,7 +180,7 @@ closed, given the user forcefully closes the workspace.
 
 > **closeWorkspaceWithSavedChanges**(`closeWorkspaceOptions?`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L59)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:59](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L59)
 
 Call this function to close the workspace after the form is saved. This function
 will directly close the workspace without any prompt
@@ -221,7 +221,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:14
 
 > **promptBeforeClosing**(`testFcn`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L54)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:54](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L54)
 
 Call this with a no-args function that returns true if the user should be prompted before
 this workspace is closed; e.g. if there is unsaved data.
@@ -246,7 +246,7 @@ this workspace is closed; e.g. if there is unsaved data.
 
 > **setTitle**(`title`, `titleNode?`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L74)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:74](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L74)
 
 Use this to set the workspace title if it needs to be set dynamically.
 

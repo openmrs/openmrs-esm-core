@@ -2,7 +2,7 @@
 
 # Interface: FHIRResource
 
-Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L1)
+Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:1](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L1)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:1](https:
 
 > **resource**: `object`
 
-Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L2)
+Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:2](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L2)
 
 #### code
 

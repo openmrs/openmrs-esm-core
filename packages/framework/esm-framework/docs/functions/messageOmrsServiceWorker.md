@@ -4,7 +4,7 @@
 
 > **messageOmrsServiceWorker**(`message`): `Promise`\<[`MessageServiceWorkerResult`](../interfaces/MessageServiceWorkerResult.md)\<`any`\>\>
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L11)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:11](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L11)
 
 Sends the specified message to the application's service worker.
 

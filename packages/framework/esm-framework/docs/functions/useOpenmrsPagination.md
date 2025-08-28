@@ -4,7 +4,7 @@
 
 > **useOpenmrsPagination**\<`T`\>(`url`, `pageSize`, `options`): `object`
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L59)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:59](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L59)
 
 Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
 The server limits the max number of results being returned, and multiple requests are needed to get the full data set

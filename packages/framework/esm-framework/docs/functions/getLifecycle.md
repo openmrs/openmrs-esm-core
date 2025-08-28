@@ -4,7 +4,7 @@
 
 > **getLifecycle**\<`T`\>(`Component`, `options`): `ReactAppOrParcel`\<`T`\>
 
-Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L10)
+Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L10)
 
 ## Type Parameters
 

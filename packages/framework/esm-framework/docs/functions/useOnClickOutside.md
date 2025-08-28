@@ -4,7 +4,7 @@
 
 > **useOnClickOutside**\<`T`\>(`handler`, `active`): `RefObject`\<`T`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOnClickOutside.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.ts#L4)
+Defined in: [packages/framework/esm-react-utils/src/useOnClickOutside.ts:4](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.ts#L4)
 
 ## Type Parameters
 

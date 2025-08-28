@@ -4,7 +4,7 @@
 
 > **usePagination**\<`T`\>(`data`, `resultsPerPage`): `object`
 
-Defined in: [packages/framework/esm-react-utils/src/usePagination.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L15)
+Defined in: [packages/framework/esm-react-utils/src/usePagination.ts:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L15)
 
 Use this hook to paginate data that already exists on the client side.
 Note that if the data is obtained from server-side, the caller must handle server-side pagination manually.

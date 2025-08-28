@@ -4,7 +4,7 @@
 
 > **createUseStore**\<`T`\>(`store`): \{(): `T`; \<`A`\>(`actions`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>; \<`A`\>(`actions?`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>; \}
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L95)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:95](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L95)
 
 Whenever possible, use `useStore(yourStore)` instead. This function is for creating a
 custom hook for a specific store.

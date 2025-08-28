@@ -4,7 +4,7 @@
 
 > **queueSynchronizationItem**\<`T`\>(`type`, `content`, `descriptor?`): `Promise`\<`number`\>
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L261)
+Defined in: [packages/framework/esm-offline/src/sync.ts:261](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L261)
 
 Enqueues a new item in the sync queue and associates the item with the currently signed in user.
 

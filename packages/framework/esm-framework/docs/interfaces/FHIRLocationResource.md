@@ -2,7 +2,7 @@
 
 # Interface: FHIRLocationResource
 
-Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L35)
+Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:35](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L35)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:35](h
 
 > **resource**: `object`
 
-Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L36)
+Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:36](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L36)
 
 #### id
 

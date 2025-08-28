@@ -2,7 +2,7 @@
 
 # Interface: UseServerPaginationOptions\<R\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L13)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:13](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L13)
 
 ## Type Parameters
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:13](
 
 > `optional` **fetcher**: (`key`) => `Promise`\<`FetchResponse`\<`R`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L22)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:22](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L22)
 
 The fetcher to use. Defaults to openmrsFetch
 
@@ -36,7 +36,7 @@ The fetcher to use. Defaults to openmrsFetch
 
 > `optional` **immutable**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L17)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L17)
 
 Whether to use useSWR or useSWRInfinite to fetch data
 
@@ -46,6 +46,6 @@ Whether to use useSWR or useSWRInfinite to fetch data
 
 > `optional` **swrConfig**: `SWRConfiguration`
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L27)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:27](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L27)
 
 The configuration object for useSWR or useSWRInfinite

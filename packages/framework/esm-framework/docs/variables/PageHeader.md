@@ -4,7 +4,7 @@
 
 > `const` **PageHeader**: `React.FC`\<[`PageHeaderProps`](../type-aliases/PageHeaderProps.md)\>
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L58)
+Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:58](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L58)
 
 The page header is typically located at the top of a dashboard. It includes a pictogram on the left,
 the name of the dashboard or page, and the `implementationName` from the configuration, which is typically

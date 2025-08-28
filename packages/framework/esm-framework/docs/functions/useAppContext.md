@@ -4,7 +4,7 @@
 
 > **useAppContext**\<`T`\>(`namespace`): `undefined` \| `Readonly`\<`T`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
+Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
 
 This hook is used to access a namespace within the overall AppContext, so that a component can
 use any shared contextual values. A selector may be provided to further restrict the properties

@@ -2,7 +2,7 @@
 
 # Interface: Privilege
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L55)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:55](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L55)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:55](https://g
 
 > **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L57)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:57](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L57)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:57](https://g
 
 > `optional` **links**: `any`[]
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L58)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:58](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L58)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:58](https://g
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L56)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:56](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L56)

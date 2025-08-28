@@ -4,7 +4,7 @@
 
 > **useLocations**(`tagUuidOrName`, `query`): `Location`[]
 
-Defined in: [packages/framework/esm-react-utils/src/useLocations.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.tsx#L5)
+Defined in: [packages/framework/esm-react-utils/src/useLocations.tsx:5](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.tsx#L5)
 
 ## Parameters
 

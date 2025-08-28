@@ -4,7 +4,7 @@
 
 > **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
 
-Defined in: [packages/framework/esm-translations/src/index.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L40)
+Defined in: [packages/framework/esm-translations/src/index.ts:40](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L40)
 
 This function is for getting a translation from a specific module. Use this only if the
 translation is neither in the app making the call, nor in the core translations.

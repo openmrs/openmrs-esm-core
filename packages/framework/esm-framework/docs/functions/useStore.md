@@ -6,7 +6,7 @@
 
 > **useStore**\<`T`\>(`store`): `T`
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L53)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:53](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L53)
 
 ### Type Parameters
 
@@ -28,7 +28,7 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:53](https://gith
 
 > **useStore**\<`T`, `U`\>(`store`, `select`): `U`
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L54)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:54](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L54)
 
 ### Type Parameters
 
@@ -58,7 +58,7 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:54](https://gith
 
 > **useStore**\<`T`, `U`, `A`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L55)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:55](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L55)
 
 ### Type Parameters
 
@@ -96,7 +96,7 @@ Defined in: [packages/framework/esm-react-utils/src/useStore.ts:55](https://gith
 
 > **useStore**\<`T`, `U`, `A`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L60)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:60](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L60)
 
 ### Type Parameters
 

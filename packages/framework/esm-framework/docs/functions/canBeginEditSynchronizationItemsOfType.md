@@ -4,7 +4,7 @@
 
 > **canBeginEditSynchronizationItemsOfType**(`type`): `boolean`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L320)
+Defined in: [packages/framework/esm-offline/src/sync.ts:320](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L320)
 
 Returns whether editing synchronization items of the given type is supported by the currently
 registered synchronization handlers.

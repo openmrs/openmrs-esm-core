@@ -4,4 +4,4 @@
 
 > **OfflineMode** = `"on"` \| `"off"` \| `"unavailable"`
 
-Defined in: [packages/framework/esm-offline/src/mode.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L34)
+Defined in: [packages/framework/esm-offline/src/mode.ts:34](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L34)

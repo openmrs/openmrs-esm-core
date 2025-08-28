@@ -4,7 +4,7 @@
 
 > `const` **Extension**: `React.FC`\<[`ExtensionProps`](../type-aliases/ExtensionProps.md)\>
 
-Defined in: [packages/framework/esm-react-utils/src/Extension.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L20)
+Defined in: [packages/framework/esm-react-utils/src/Extension.tsx:20](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L20)
 
 Represents the position in the DOM where each extension within
 an extension slot is rendered.

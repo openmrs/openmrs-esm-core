@@ -2,7 +2,7 @@
 
 # Enumeration: Type
 
-Defined in: [packages/framework/esm-config/src/types.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L1)
+Defined in: [packages/framework/esm-config/src/types.ts:1](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L1)
 
 ## Enumeration Members
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:1](https://github.com/op
 
 > **Array**: `"Array"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L2)
+Defined in: [packages/framework/esm-config/src/types.ts:2](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L2)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:2](https://github.com/op
 
 > **Boolean**: `"Boolean"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L3)
+Defined in: [packages/framework/esm-config/src/types.ts:3](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L3)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:3](https://github.com/op
 
 > **ConceptUuid**: `"ConceptUuid"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L4)
+Defined in: [packages/framework/esm-config/src/types.ts:4](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L4)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:4](https://github.com/op
 
 > **Number**: `"Number"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L5)
+Defined in: [packages/framework/esm-config/src/types.ts:5](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L5)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:5](https://github.com/op
 
 > **Object**: `"Object"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L6)
+Defined in: [packages/framework/esm-config/src/types.ts:6](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L6)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:6](https://github.com/op
 
 > **PatientIdentifierTypeUuid**: `"PatientIdentifierTypeUuid"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L10)
+Defined in: [packages/framework/esm-config/src/types.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L10)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:10](https://github.com/o
 
 > **PersonAttributeTypeUuid**: `"PersonAttributeTypeUuid"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L9)
+Defined in: [packages/framework/esm-config/src/types.ts:9](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L9)
 
 ***
 
@@ -66,7 +66,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:9](https://github.com/op
 
 > **String**: `"String"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L7)
+Defined in: [packages/framework/esm-config/src/types.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L7)
 
 ***
 
@@ -74,4 +74,4 @@ Defined in: [packages/framework/esm-config/src/types.ts:7](https://github.com/op
 
 > **UUID**: `"UUID"`
 
-Defined in: [packages/framework/esm-config/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L8)
+Defined in: [packages/framework/esm-config/src/types.ts:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L8)

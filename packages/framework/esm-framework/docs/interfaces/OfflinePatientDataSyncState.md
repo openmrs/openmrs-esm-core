@@ -2,7 +2,7 @@
 
 # Interface: ~~OfflinePatientDataSyncState~~
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L12)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L12)
 
 ## Deprecated
 
@@ -14,7 +14,7 @@ Will be removed once all modules have been migrated to the new dynamic offline d
 
 > `readonly` **errors**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L17)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L17)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:17](http
 
 > `readonly` **failedHandlers**: `string`[]
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L16)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L16)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:16](http
 
 > `readonly` **syncedHandlers**: `string`[]
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L15)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L15)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:15](http
 
 > `readonly` **syncingHandlers**: `string`[]
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L14)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:14](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L14)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:14](http
 
 > `readonly` **timestamp**: `Date`
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L13)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:13](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L13)
 
 ## Methods
 
@@ -54,7 +54,7 @@ Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:13](http
 
 > **abort**(): `boolean`
 
-Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L18)
+Defined in: [packages/framework/esm-offline/src/offline-patient-data.ts:18](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L18)
 
 #### Returns
 

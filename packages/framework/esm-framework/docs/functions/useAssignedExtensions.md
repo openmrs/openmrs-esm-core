@@ -4,7 +4,7 @@
 
 > **useAssignedExtensions**(`slotName`): `AssignedExtension`[]
 
-Defined in: [packages/framework/esm-react-utils/src/useAssignedExtensions.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L8)
+Defined in: [packages/framework/esm-react-utils/src/useAssignedExtensions.ts:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L8)
 
 Gets the assigned extensions for a given extension slot name.
 

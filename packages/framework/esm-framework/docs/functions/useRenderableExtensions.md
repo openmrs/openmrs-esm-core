@@ -4,7 +4,7 @@
 
 > **useRenderableExtensions**(`name`): `FC`\<`Pick`\<[`ExtensionProps`](../type-aliases/ExtensionProps.md), `"state"`\>\>[]
 
-Defined in: [packages/framework/esm-react-utils/src/useRenderableExtensions.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useRenderableExtensions.tsx#L31)
+Defined in: [packages/framework/esm-react-utils/src/useRenderableExtensions.tsx:31](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useRenderableExtensions.tsx#L31)
 
 This is an advanced hook for use-cases where its useful to use the extension system,
 but not the `ExtensionSlot` component's rendering of extensions. Use of this hook

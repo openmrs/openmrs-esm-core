@@ -2,7 +2,7 @@
 
 # Interface: NotificationDescriptor
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L9)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:9](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L9)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 > `optional` **action**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L11)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:11](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L11)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 > `optional` **critical**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L13)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:13](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L13)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 > **description**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L10)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L10)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 > `optional` **kind**: [`InlineNotificationType`](../type-aliases/InlineNotificationType.md)
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L12)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L12)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 > `optional` **millis**: `number`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L14)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:14](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L14)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 > `optional` **onAction**: () => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L16)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L16)
 
 #### Returns
 
@@ -62,4 +62,4 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 > `optional` **title**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L15)
+Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L15)

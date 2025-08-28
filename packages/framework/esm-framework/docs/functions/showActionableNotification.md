@@ -4,7 +4,7 @@
 
 > **showActionableNotification**(`notification`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L85)
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:85](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L85)
 
 Displays an actionable notification in the UI.
 

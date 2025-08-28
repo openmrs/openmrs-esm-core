@@ -4,7 +4,7 @@
 
 > **getSynchronizationItems**\<`T`\>(`type?`): `Promise`\<`T`[]\>
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:293](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L293)
+Defined in: [packages/framework/esm-offline/src/sync.ts:293](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L293)
 
 Returns the content of all currently queued up sync items of the currently signed in user.
 

@@ -4,7 +4,7 @@
 
 > **getAsyncLifecycle**\<`T`\>(`lazy`, `options`): () => `Promise`\<`ReactAppOrParcel`\<`T`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L18)
+Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:18](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L18)
 
 ## Type Parameters
 

@@ -4,7 +4,7 @@
 
 > `const` **backendDependencies**: `object`
 
-Defined in: [packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
+Defined in: [packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
 
 ## Type declaration
 

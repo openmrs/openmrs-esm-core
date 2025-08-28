@@ -4,7 +4,7 @@
 
 > **useOpenmrsSWR**\<`DataType`, `ErrorType`\>(`key`, `options`): `SWRResponse`\<`FetchResponse`\<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`\<`FetchResponse`\<`DataType`\>, `ErrorType`, `BareFetcher`\<`FetchResponse`\<`DataType`\>\>\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L70)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:70](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L70)
 
 **`Beta`**
 

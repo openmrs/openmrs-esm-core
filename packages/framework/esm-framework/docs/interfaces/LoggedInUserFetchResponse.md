@@ -2,7 +2,7 @@
 
 # Interface: LoggedInUserFetchResponse
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L7)
+Defined in: [packages/framework/esm-api/src/types/fetch.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L7)
 
 ## Extends
 
@@ -42,7 +42,7 @@ Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3536
 
 > **data**: [`Session`](Session.md)
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L8)
+Defined in: [packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L8)
 
 #### Overrides
 

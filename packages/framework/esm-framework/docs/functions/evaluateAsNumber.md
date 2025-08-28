@@ -4,7 +4,7 @@
 
 > **evaluateAsNumber**(`expression`, `variables`): `number`
 
-Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L206)
+Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:206](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L206)
 
 `evaluateAsNumber()` is a variant of [()](evaluate.md) which only supports number results. Useful
 if valid expression must return numeric values.

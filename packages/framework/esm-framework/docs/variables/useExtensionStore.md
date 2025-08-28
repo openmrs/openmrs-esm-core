@@ -4,7 +4,7 @@
 
 > `const` **useExtensionStore**: \{(): `ExtensionStore`; \<`A`\>(`actions`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>; \<`A`\>(`actions?`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>; \}
 
-Defined in: [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+Defined in: [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ## Call Signature
 

@@ -2,7 +2,7 @@
 
 # Interface: NavigateOptions
 
-Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L12)
+Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L12)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:12](ht
 
 > `optional` **templateParams**: [`TemplateParams`](../type-aliases/TemplateParams.md)
 
-Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L14)
+Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:14](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L14)
 
 ***
 
@@ -18,4 +18,4 @@ Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:14](ht
 
 > **to**: `string`
 
-Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L13)
+Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:13](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L13)

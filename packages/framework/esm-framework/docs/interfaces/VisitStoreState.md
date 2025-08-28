@@ -2,7 +2,7 @@
 
 # Interface: VisitStoreState
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L25)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L25)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://githu
 
 > **manuallySetVisitUuid**: `null` \| `string`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://githu
 
 > **mutateVisitCallbacks**: `object`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L34)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:34](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L34)
 
 Stores a record of SWR mutate callbacks that should be called when
 the Visit with the specified uuid is modified. The callbacks are keyed
@@ -34,4 +34,4 @@ by unique component IDs.
 
 > **patientUuid**: `null` \| `string`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L26)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L26)

@@ -4,7 +4,7 @@
 
 > `const` **PageHeaderContent**: `React.FC`\<[`PageHeaderContentProps`](../interfaces/PageHeaderContentProps.md)\>
 
-Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L90)
+Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:90](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L90)
 
 The PageHeaderContent component should be used inside the [[PageHeader]] component. It is used if the page
 header should include some content on the right side, in addition to the pictogram and the name of the page.

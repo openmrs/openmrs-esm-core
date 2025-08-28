@@ -2,7 +2,7 @@
 
 # Interface: FetchResponse\<T\>
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L3)
+Defined in: [packages/framework/esm-api/src/types/fetch.ts:3](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L3)
 
 ## Extends
 
@@ -52,7 +52,7 @@ Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3536
 
 > **data**: `T`
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L4)
+Defined in: [packages/framework/esm-api/src/types/fetch.ts:4](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L4)
 
 ***
 

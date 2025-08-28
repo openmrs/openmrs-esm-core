@@ -4,7 +4,7 @@
 
 > **useVisit**(`patientUuid`, `representation`): [`VisitReturnType`](../interfaces/VisitReturnType.md)
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L42)
+Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:42](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L42)
 
 This React hook returns visit information if the patient UUID is not null. There are
 potentially two relevant visits at a time: "active" and "current".

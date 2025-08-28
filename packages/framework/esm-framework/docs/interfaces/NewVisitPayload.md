@@ -2,7 +2,7 @@
 
 # Interface: NewVisitPayload
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L5)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:5](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L5)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:5](https
 
 > `optional` **attributes**: `object`[]
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L12)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L12)
 
 #### attributeType
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:12](http
 
 > **location**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L7)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L7)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:7](https
 
 > `optional` **patient**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L8)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L8)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:8](https
 
 > **startDatetime**: `Date`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L9)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:9](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L9)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:9](https
 
 > `optional` **stopDatetime**: `Date`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L11)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:11](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L11)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:11](http
 
 > `optional` **uuid**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L6)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:6](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L6)
 
 ***
 
@@ -66,4 +66,4 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:6](https
 
 > **visitType**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L10)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L10)

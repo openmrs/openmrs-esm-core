@@ -4,7 +4,7 @@
 
 > **useVisitTypes**(): `VisitType`[]
 
-Defined in: [packages/framework/esm-react-utils/src/useVisitTypes.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitTypes.ts#L5)
+Defined in: [packages/framework/esm-react-utils/src/useVisitTypes.ts:5](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitTypes.ts#L5)
 
 ## Returns
 

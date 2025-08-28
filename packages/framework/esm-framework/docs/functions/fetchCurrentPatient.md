@@ -4,7 +4,7 @@
 
 > **fetchCurrentPatient**(`patientUuid`, `fetchInit?`, `includeOfflinePatients?`): `Promise`\<`null` \| `Patient`\>
 
-Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L21)
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:21](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L21)
 
 ## Parameters
 

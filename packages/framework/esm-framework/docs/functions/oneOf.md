@@ -4,7 +4,7 @@
 
 > **oneOf**(`allowedValues`): [`Validator`](../type-aliases/Validator.md)
 
-Defined in: [packages/framework/esm-config/src/validators/validators.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L58)
+Defined in: [packages/framework/esm-config/src/validators/validators.ts:58](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L58)
 
 Verifies that the value is one of the allowed options.
 

@@ -4,4 +4,4 @@
 
 > **CoreTranslationKey** = keyof *typeof* `coreTranslations`
 
-Defined in: [packages/framework/esm-translations/src/index.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L53)
+Defined in: [packages/framework/esm-translations/src/index.ts:53](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L53)

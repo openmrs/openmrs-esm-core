@@ -2,7 +2,7 @@
 
 # Interface: RegisterDynamicRouteMessage
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L36)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:36](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L36)
 
 ## Extends
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:36](
 
 > `optional` **pattern**: `string`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L37)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:37](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L37)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:37](
 
 > `optional` **strategy**: [`OmrsOfflineCachingStrategy`](../type-aliases/OmrsOfflineCachingStrategy.md)
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L39)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:39](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L39)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:39](
 
 > **type**: `"registerDynamicRoute"`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
 
 #### Inherited from
 
@@ -42,4 +42,4 @@ Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:26](
 
 > `optional` **url**: `string`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L38)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:38](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L38)

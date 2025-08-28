@@ -4,7 +4,7 @@
 
 > **setUserLanguage**(`data`): `void`
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L116)
+Defined in: [packages/framework/esm-api/src/current-user.ts:116](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L116)
 
 ## Parameters
 

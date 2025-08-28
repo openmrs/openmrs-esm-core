@@ -2,7 +2,7 @@
 
 # Interface: UploadedFile
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L1)
+Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:1](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L1)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:1](ht
 
 > **base64Content**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L3)
+Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:3](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L3)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:3](ht
 
 > `optional` **capturedFromWebcam**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L8)
+Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L8)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:8](ht
 
 > `optional` **file**: `File`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L2)
+Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:2](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L2)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:2](ht
 
 > **fileDescription**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L6)
+Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:6](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L6)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:6](ht
 
 > **fileName**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L4)
+Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:4](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L4)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:4](ht
 
 > **fileType**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L5)
+Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:5](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L5)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:5](ht
 
 > `optional` **status**: `"uploading"` \| `"complete"`
 
-Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L7)
+Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L7)

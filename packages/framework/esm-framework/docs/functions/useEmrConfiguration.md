@@ -4,7 +4,7 @@
 
 > **useEmrConfiguration**(): `object`
 
-Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L158)
+Defined in: [packages/framework/esm-react-utils/src/useEmrConfiguration.ts:158](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useEmrConfiguration.ts#L158)
 
 React hook for fetching and managing OpenMRS EMR configuration
 

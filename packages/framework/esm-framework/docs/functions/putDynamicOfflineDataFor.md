@@ -4,7 +4,7 @@
 
 > **putDynamicOfflineDataFor**(`userId`, `type`, `identifier`): `Promise`\<`void`\>
 
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:169](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L169)
+Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:169](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L169)
 
 Declares that dynamic offline data of the given [type](#putdynamicofflinedatafor) with the given [identifier](#putdynamicofflinedatafor)
 should be made available offline for the user with the given ID.

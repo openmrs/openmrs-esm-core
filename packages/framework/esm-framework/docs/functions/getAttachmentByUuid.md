@@ -4,7 +4,7 @@
 
 > **getAttachmentByUuid**(`attachmentUuid`, `abortController`): `Promise`\<`FetchResponse`\<`any`\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/attachments.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L7)
+Defined in: [packages/framework/esm-emr-api/src/attachments.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L7)
 
 ## Parameters
 

@@ -2,7 +2,7 @@
 
 # Interface: UseConfigOptions
 
-Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L134)
+Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:134](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L134)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:134](https://gi
 
 > `optional` **externalModuleName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L137)
+Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:137](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L137)
 
 An external module to load the configuration from. This option should only be used if
 absolutely necessary as it can end up making frontend modules coupled to one another.

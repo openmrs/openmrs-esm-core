@@ -2,7 +2,7 @@
 
 # Interface: Session
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L4)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:4](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L4)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:4](https://gi
 
 > `optional` **allowedLocales**: `string`[]
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L5)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:5](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L5)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:5](https://gi
 
 > **authenticated**: `boolean`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L6)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:6](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L6)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:6](https://gi
 
 > `optional` **currentProvider**: `object`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L10)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L10)
 
 #### identifier
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:10](https://g
 
 > `optional` **locale**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L7)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L7)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:7](https://gi
 
 > **sessionId**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L8)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L8)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:8](https://gi
 
 > `optional` **sessionLocation**: [`SessionLocation`](SessionLocation.md)
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L11)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:11](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L11)
 
 ***
 
@@ -66,4 +66,4 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:11](https://g
 
 > `optional` **user**: [`LoggedInUser`](LoggedInUser.md)
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L9)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:9](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L9)

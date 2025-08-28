@@ -4,7 +4,7 @@
 
 > **beginEditSynchronizationItem**(`id`): `Promise`\<`void`\>
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:330](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L330)
+Defined in: [packages/framework/esm-offline/src/sync.ts:330](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L330)
 
 Triggers an edit flow for the given synchronization item.
 If this is not possible, throws an error.

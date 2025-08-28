@@ -4,7 +4,7 @@
 
 > **useDefineAppContext**\<`T`\>(`namespace`, `value?`): (`update`) => `void`
 
-Defined in: [packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
+Defined in: [packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
 
 This hook is used to register a namespace in the AppContext. The component that registers the
 namespace is responsible for updating the value associated with the namespace. The namespace

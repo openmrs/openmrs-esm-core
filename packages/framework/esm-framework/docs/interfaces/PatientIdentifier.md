@@ -2,7 +2,7 @@
 
 # Interface: PatientIdentifier
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L21)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:21](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L21)
 
 ## Extends
 
@@ -38,7 +38,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
 
 > `optional` **identifier**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L22)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:22](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L22)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:22](ht
 
 > `optional` **identifierType**: [`PatientIdentifierType`](PatientIdentifierType.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L23)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:23](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L23)
 
 ***
 
@@ -66,7 +66,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 > `optional` **location**: `Location`
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L24)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:24](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L24)
 
 ***
 
@@ -74,7 +74,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:24](ht
 
 > `optional` **preferred**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L25)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:25](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L25)
 
 ***
 
@@ -106,4 +106,4 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
 
 > `optional` **voided**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L26)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:26](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L26)

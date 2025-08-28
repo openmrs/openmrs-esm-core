@@ -2,7 +2,7 @@
 
 # Interface: BreadcrumbSettings
 
-Defined in: [packages/framework/esm-navigation/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L3)
+Defined in: [packages/framework/esm-navigation/src/types.ts:3](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L3)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-navigation/src/types.ts:3](https://github.co
 
 > `optional` **matcher**: `string` \| `RegExp`
 
-Defined in: [packages/framework/esm-navigation/src/types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L16)
+Defined in: [packages/framework/esm-navigation/src/types.ts:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L16)
 
 A string or RegEx that determines whether the breadcrumb should be displayed.
 It is tested against the current location's path.
@@ -25,7 +25,7 @@ Can be omitted; the value of `path` is used as the default value.
 
 > `optional` **parent**: `string`
 
-Defined in: [packages/framework/esm-navigation/src/types.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L25)
+Defined in: [packages/framework/esm-navigation/src/types.ts:25](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L25)
 
 The breadcrumb's parent breadcrumb. Supply the path of the breadcrumb here, e.g.,
 if we are currently in "/foo/bar", you could provide "/foo" to get the breadcrumb
@@ -40,7 +40,7 @@ parent.
 
 > **path**: `string`
 
-Defined in: [packages/framework/esm-navigation/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L7)
+Defined in: [packages/framework/esm-navigation/src/types.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L7)
 
 Gets the path of breadcrumb for navigation purposes.
 
@@ -50,6 +50,6 @@ Gets the path of breadcrumb for navigation purposes.
 
 > **title**: `string` \| (`params`) => `string` \| (`params`) => `Promise`\<`string`\>
 
-Defined in: [packages/framework/esm-navigation/src/types.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L29)
+Defined in: [packages/framework/esm-navigation/src/types.ts:29](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L29)
 
 The title of the breadcrumb.

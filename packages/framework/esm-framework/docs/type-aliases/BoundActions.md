@@ -4,7 +4,7 @@
 
 > **BoundActions**\<`T`, `A`\> = `A` *extends* `ActionFunctionsRecord`\<`T`\> ? `BindFunctionsIn`\<`A`\> : `A` *extends* (`store`) => `ActionFunctionsRecord`\<`T`\> ? `BindFunctionsIn`\<`ActionFunctionsRecord`\<`T`\>\> : `never`
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L12)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L12)
 
 ## Type Parameters
 

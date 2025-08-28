@@ -4,7 +4,7 @@
 
 > **interpolateUrl**(`template`, `additionalParams?`): `string`
 
-Defined in: [packages/framework/esm-navigation/src/navigation/interpolate-string.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L36)
+Defined in: [packages/framework/esm-navigation/src/navigation/interpolate-string.ts:36](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L36)
 
 Interpolates a string with openmrsBase and openmrsSpaBase.
 

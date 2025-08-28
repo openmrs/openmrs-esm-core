@@ -2,7 +2,7 @@
 
 # Interface: ComponentConfig
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L7)
+Defined in: [packages/framework/esm-extensions/src/types.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L7)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-extensions/src/types.ts:7](https://github.co
 
 > `optional` **extension**: [`ExtensionData`](ExtensionData.md)
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L10)
+Defined in: [packages/framework/esm-extensions/src/types.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L10)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-extensions/src/types.ts:10](https://github.c
 
 > **featureName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L9)
+Defined in: [packages/framework/esm-extensions/src/types.ts:9](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L9)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-extensions/src/types.ts:9](https://github.co
 
 > **moduleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L8)
+Defined in: [packages/framework/esm-extensions/src/types.ts:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L8)

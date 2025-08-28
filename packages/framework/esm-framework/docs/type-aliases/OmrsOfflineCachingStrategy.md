@@ -4,7 +4,7 @@
 
 > **OmrsOfflineCachingStrategy** = `"network-only-or-cache-only"` \| `"network-first"`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-http-headers.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L15)
+Defined in: [packages/framework/esm-offline/src/service-worker-http-headers.ts:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L15)
 
 * `cache-or-network`: The default strategy, equal to the absence of this header.
   The SW attempts to resolve the request via the network, but falls back to the cache if required.

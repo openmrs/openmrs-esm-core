@@ -4,7 +4,7 @@
 
 > **useOnVisible**(`callBack`): `MutableRefObject`\<`HTMLElement`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOnVisible.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnVisible.ts#L15)
+Defined in: [packages/framework/esm-react-utils/src/useOnVisible.ts:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnVisible.ts#L15)
 
 Returns a ref that can be used on a HTML component to trigger
 an action when the component is scrolled into visible view,

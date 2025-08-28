@@ -2,7 +2,7 @@
 
 # Interface: ExtensionSlotProps
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L30)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:30](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L30)
 
 ## Extends
 
@@ -963,7 +963,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2947
 
 > `optional` **children**: `ReactNode` \| (`extension`, `state?`) => `ReactNode`
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L33)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:33](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L33)
 
 ***
 
@@ -1135,7 +1135,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2972
 
 > `optional` **extensionSlotName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L15)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L15)
 
 The name of the extension slot
 
@@ -1297,7 +1297,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2917
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L10)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L10)
 
 The name of the extension slot
 
@@ -3351,7 +3351,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2955
 
 > `optional` **select**: (`extensions`) => `AssignedExtension`[]
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
 
 An optional function for filtering or otherwise modifying
   the list of extensions that will be rendered.
@@ -3400,7 +3400,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2920
 
 > `optional` **state**: `Record`\<`string` \| `number` \| `symbol`, `unknown`\>
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L27)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:27](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L27)
 
 Only works if no children are provided*. Passes data
   through as props to the extensions that are mounted here. If `ExtensionSlot`
