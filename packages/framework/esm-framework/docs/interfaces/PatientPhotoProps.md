@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L8)
+[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:8](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L8)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L9)
+[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:9](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L9)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L10)
+[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L10)

@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L4)
+[packages/framework/esm-styleguide/src/config-schema.ts:4](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L4)
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L5)
+[packages/framework/esm-styleguide/src/config-schema.ts:5](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L5)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L6)
+[packages/framework/esm-styleguide/src/config-schema.ts:6](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L6)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L7)
+[packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L7)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L10)
+[packages/framework/esm-styleguide/src/config-schema.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L10)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L11)
+[packages/framework/esm-styleguide/src/config-schema.ts:11](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L11)
 
 ___
 
@@ -92,4 +92,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L12)
+[packages/framework/esm-styleguide/src/config-schema.ts:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L12)

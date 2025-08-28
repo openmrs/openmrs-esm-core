@@ -50,7 +50,7 @@
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L14)
+[packages/framework/esm-extensions/src/workspaces.ts:14](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L14)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L15)
+[packages/framework/esm-extensions/src/workspaces.ts:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L15)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
+[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L21)
+[packages/framework/esm-extensions/src/workspaces.ts:21](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L21)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L10)
+[packages/framework/esm-extensions/src/workspaces.ts:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L10)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
+[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
 
 ___
 
@@ -148,7 +148,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L11)
+[packages/framework/esm-extensions/src/workspaces.ts:11](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L11)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L12)
+[packages/framework/esm-extensions/src/workspaces.ts:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L12)
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L13)
+[packages/framework/esm-extensions/src/workspaces.ts:13](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L13)
 
 ___
 
@@ -190,7 +190,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L16)
+[packages/framework/esm-extensions/src/workspaces.ts:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L16)
 
 ___
 
@@ -202,7 +202,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L106)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:106](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L106)
 
 ## Methods
 
@@ -232,7 +232,7 @@ closed, given the user forcefully closes the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L46)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:46](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L46)
 
 ___
 
@@ -259,7 +259,7 @@ will directly close the workspace without any prompt
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L56)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:56](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L56)
 
 ___
 
@@ -277,7 +277,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
+[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 ___
 
@@ -304,7 +304,7 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L51)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:51](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L51)
 
 ___
 
@@ -336,4 +336,4 @@ title needs to be set dynamically.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L71)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:71](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L71)

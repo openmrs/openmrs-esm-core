@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L49)
+[packages/framework/esm-config/src/types.ts:49](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L49)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L52)
+[packages/framework/esm-config/src/types.ts:52](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L52)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L51)
+[packages/framework/esm-config/src/types.ts:51](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L51)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L50)
+[packages/framework/esm-config/src/types.ts:50](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L50)
