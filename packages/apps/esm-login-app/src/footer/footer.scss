@@ -11,18 +11,25 @@
   flex-wrap: wrap;
   gap: layout.$spacing-05;
   width: 100%;
-  filter: grayscale(100%);
-  opacity: 80%;
 }
 
 .logosContainer {
   display: flex;
-  max-height: layout.$layout-07;
-  justify-content: flex-end;
+  max-height: layout.$spacing-07;
+  justify-content: space-evenly;
+  align-items: center;
   flex-direction: row;
-  gap: layout.$spacing-03;
-  filter: grayscale(100%);
+  gap: layout.$spacing-04;
   opacity: 80%;
+  width: 100%;
+}
+
+.divider {
+  width: 2px;
+  height: layout.$spacing-06;
+  background-color: colors.$gray-40;
+  flex-shrink: 0;
+  margin: 0 layout.$spacing-02;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -40,29 +47,8 @@
   }
 
   .logosContainer {
-    justify-content: center;
+    justify-content: space-evenly;
     gap: layout.$spacing-04;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .footer {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: layout.$spacing-03;
-    padding: layout.$spacing-05;
-  }
-
-  .poweredByTile {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 1.25rem layout.$spacing-05;
-    font-size: layout.$spacing-04;
-    height: auto;
-    max-width: 100%;
-    border-radius: layout.$spacing-04;
   }
 }
 
@@ -84,10 +70,11 @@
   height: layout.$spacing-06;
   align-items: center;
   gap: layout.$spacing-03;
+  width: 100%;
 }
 
 .poweredByLogo {
-  height: layout.$layout-04;
+  height: layout.$spacing-07;
   width: auto;
   max-width: layout.$spacing-12;
   border-collapse: collapse;
