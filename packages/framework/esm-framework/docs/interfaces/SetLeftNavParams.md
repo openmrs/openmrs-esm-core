@@ -2,7 +2,7 @@
 
 # Interface: SetLeftNavParams
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:20](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L20)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L20)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:20](https://githu
 
 > **basePath**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:22](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L22)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L22)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:22](https://githu
 
 > `optional` **componentContext**: [`ComponentConfig`](ComponentConfig.md)
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:29](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L29)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L29)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:29](https://githu
 
 > `optional` **mode**: `LeftNavMode`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:28](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L28)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L28)
 
 In normal mode, the left nav is shown in desktop mode, and collapse into hamburger menu button in tablet mode
 In collapsed mode, the left nav is always collapsed, regardless of desktop / tablet mode.
@@ -38,4 +38,4 @@ In hidden mode, the left nav is not shown at all.
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:21](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L21)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L21)

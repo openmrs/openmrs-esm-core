@@ -2,7 +2,7 @@
 
 # Interface: DashboardExtensionProps
 
-Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:9](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L9)
+Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L9)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx
 
 > **basePath**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:12](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L12)
+Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L12)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx
 
 > **icon**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:13](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L13)
+Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L13)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx
 
 > **path**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:10](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L10)
+Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L10)
 
 ***
 
@@ -34,4 +34,4 @@ Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx
 
 > **title**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:11](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L11)
+Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L11)

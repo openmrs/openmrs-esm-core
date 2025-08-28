@@ -2,7 +2,7 @@
 
 # Interface: SnackbarMeta
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:25](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L25)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L25)
 
 ## Extends
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > `optional` **actionButtonLabel**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:14](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L14)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L14)
 
 #### Inherited from
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > `optional` **autoClose**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
 
 #### Inherited from
 
@@ -38,7 +38,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > **id**: `number`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:26](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L26)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L26)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > `optional` **isLowContrast**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:15](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L15)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L15)
 
 #### Inherited from
 
@@ -58,7 +58,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > `optional` **kind**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:16](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L16)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L16)
 
 #### Inherited from
 
@@ -70,7 +70,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > `optional` **onActionButtonClick**: () => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:17](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L17)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L17)
 
 #### Returns
 
@@ -86,7 +86,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > `optional` **progressActionLabel**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:18](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L18)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L18)
 
 #### Inherited from
 
@@ -98,7 +98,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > `optional` **subtitle**: `ReactNode`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:19](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L19)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L19)
 
 #### Inherited from
 
@@ -110,7 +110,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > `optional` **timeoutInMs**: `number`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:20](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L20)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L20)
 
 #### Inherited from
 
@@ -122,7 +122,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 > **title**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:22](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L22)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L22)
 
 #### Inherited from
 

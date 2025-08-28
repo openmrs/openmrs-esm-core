@@ -6,7 +6,7 @@
 
 > **subscribeTo**\<`T`, `U`\>(`store`, `handle`): () => `void`
 
-Defined in: [packages/framework/esm-state/src/state.ts:109](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L109)
+Defined in: [packages/framework/esm-state/src/state.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L109)
 
 ### Type Parameters
 
@@ -40,7 +40,7 @@ Defined in: [packages/framework/esm-state/src/state.ts:109](https://github.com/i
 
 > **subscribeTo**\<`T`, `U`\>(`store`, `select`, `handle`): () => `void`
 
-Defined in: [packages/framework/esm-state/src/state.ts:110](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L110)
+Defined in: [packages/framework/esm-state/src/state.ts:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L110)
 
 ### Type Parameters
 

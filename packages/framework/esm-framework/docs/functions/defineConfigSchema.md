@@ -4,7 +4,7 @@
 
 > **defineConfigSchema**(`moduleName`, `schema`): `void`
 
-Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:165](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L165)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L165)
 
 This defines a configuration schema for a module. The schema tells the
 configuration system how the module can be configured. It specifies

@@ -4,7 +4,7 @@
 
 > **showSnackbar**(`snackbar`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/its-kios09/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
 
 Displays a snack bar notification in the UI.
 
