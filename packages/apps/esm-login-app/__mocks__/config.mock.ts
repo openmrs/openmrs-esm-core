@@ -1,4 +1,4 @@
-import { ConfigSchema } from '../src/config-schema';
+import { type ConfigSchema } from '../src/config-schema';
 
 export const mockConfig: ConfigSchema = {
   provider: {
@@ -15,6 +15,17 @@ export const mockConfig: ConfigSchema = {
   logo: {
     src: null,
     alt: 'Logo',
+  },
+  backgroundImage: {
+    src: null,
+    alt: 'Background image',
+  },
+  footer: {
+    additionalLogos: [],
+  },
+  badgeLogo: {
+    alt: 'Badge logo',
+    src: null,
   },
   links: {
     loginSuccess: '${openmrsSpaBase}/home',

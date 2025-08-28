@@ -2,87 +2,123 @@
 
 .container {
   display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.imageSection {
+  flex: 1;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.backgroundImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(128, 128, 128, 0.3);
+  z-index: 2;
+}
+
+.floatingBadge {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  z-index: 10;
+  border-radius: 1rem;
+}
+
+.badgeLogo {
+  width: 12rem;
+  height: 12rem;
+  object-fit: contain;
+  border-radius: 0.75rem;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.formSection {
+  flex: 1;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 2rem;
+  background-color: $ui-background;
+  min-height: 100vh;
   position: relative;
-  background-image: url('./Kenyan-Nurse.png');
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: 35% 100%;
+  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.05);
 }
 
 .center {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 .logo {
   margin-bottom: 2.5rem;
   height: 5rem;
   width: 16rem;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 
 .logoImg {
-  margin-bottom: 3rem;
-  max-width: 100%;
+  max-width: 40%;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 
 .poweredByTxt {
   @extend .caption01;
   padding-bottom: 0.5rem;
-  color: $text-02;
+  font-weight: 400;
 }
 
 .needHelp {
   display: flex;
   width: 23rem;
+  margin-top: 2rem;
 }
 
 .needHelpText {
   @extend .bodyShort01;
   text-align: left;
-  color: $text-02;
   display: flex;
   flex-direction: row;
   align-items: center;
   margin: 1rem 0;
+  font-weight: 400;
 }
-
-.link {
-  text-decoration-line: none;
-  margin-left: 0.5rem;
-}
-
 .poweredByLogo {
   height: 2.5rem;
   width: 6.5rem;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.1));
 }
 
 .loginCard {
   border-radius: 0;
   border: 1px solid $ui-03;
   background-color: $ui-02;
-  width: 23rem;
+  width: 20rem;
   padding: 2.5rem;
   position: relative;
   min-height: fit-content;
-}
-
-@media only screen and (min-width: 481px) {
-  .container {
-    height: 100vh;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .login-card {
-    margin-top: 2.5%;
-    border: none;
-  }
-
-  .container {
-    height: 100vh;
-  }
 }
 
 .inputGroup {
@@ -90,7 +126,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  width: 18rem;
+  width: 23rem;
 
   :global(.cds--text-input) {
     height: 3rem;
@@ -98,7 +134,7 @@
   }
 
   :global(.cds--text-input__field-outer-wrapper) {
-    width: 18rem;
+    width: 23rem;
   }
 
   &:not(:last-child) {
@@ -108,7 +144,11 @@
 
 .continueButton {
   margin-top: 1.5rem;
-  width: 18rem;
+  min-width: 23rem;
+}
+
+.signInText {
+  text-align: center;
 }
 
 .backButtonDiv {
@@ -119,32 +159,82 @@
 }
 
 .footer {
-  margin-top: 6.75rem;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  column-gap: 2rem;
-  width: 23rem;
   align-items: center;
+  gap: 2rem;
+  width: auto;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .loader {
   min-height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .errorMessage {
-  width: 23rem;
-  margin-bottom: 3rem;
-  position: absolute;
-  bottom: 100%;
-  left: 0;
+  width: 20rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+
+  :global(.cds--inline-notification) {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(218, 30, 40, 0.15);
+  }
 }
 
 .divider {
   height: 2rem;
-  outline: 0.5px solid $color-gray-30;
+  width: 1px;
+  opacity: 0.6;
 }
 
-.card{
+.card {
   display: flex;
   justify-content: flex-start;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.logoContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainLogoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.poweredByContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-right: 35rem;
+  margin-top: 1rem;
+}
+
+.poweredByLogo {
+  height: 4rem;
+  width: auto;
+  max-width: 10rem;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+  opacity: 0.8;
 }

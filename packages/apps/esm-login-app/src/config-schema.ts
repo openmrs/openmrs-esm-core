@@ -68,6 +68,54 @@ export const configSchema = {
       _description: 'The alternative text for the logo image, displayed when the image cannot be loaded or on hover.',
     },
   },
+  backgroundImage: {
+    src: {
+      _type: Type.String,
+      _default: null,
+      _description: 'The path or URL to the background image. If set to null, a default background will be used.',
+      _validators: [validators.isUrl],
+    },
+    alt: {
+      _type: Type.String,
+      _default: 'Background image',
+      _description:
+        'The alternative text for the background image, displayed when the image cannot be loaded or on hover.',
+    },
+  },
+  badgeLogo: {
+    src: {
+      _type: Type.String,
+      _default: null,
+      _description: 'The path or URL to the badge Logo image. If set to null, a default badge logo will be used.',
+      _validators: [validators.isUrl],
+    },
+    alt: {
+      _type: Type.String,
+      _default: 'Badge logo',
+      _description: 'The alternative text for the badge logo, displayed when the image cannot be loaded or on hover.',
+    },
+  },
+  footer: {
+    additionalLogos: {
+      _type: Type.Array,
+      _elements: {
+        _type: Type.Object,
+        src: {
+          _type: Type.String,
+          _required: true,
+          _description: 'The source URL of the logo image',
+          _validators: [validators.isUrl],
+        },
+        alt: {
+          _type: Type.String,
+          _required: true,
+          _description: 'The alternative text for the logo image',
+        },
+      },
+      _default: [],
+      _description: 'An array of logos to be displayed in the footer next to the OpenMRS logo.',
+    },
+  },
   showPasswordOnSeparateScreen: {
     _type: Type.Boolean,
     _default: true,
@@ -92,6 +140,20 @@ export interface ConfigSchema {
     loginSuccess: string;
   };
   logo: {
+    alt: string;
+    src: string;
+  };
+  backgroundImage: {
+    alt: string;
+    src: string;
+  };
+  footer: {
+    additionalLogos: Array<{
+      alt: string;
+      src: string;
+    }>;
+  };
+  badgeLogo: {
     alt: string;
     src: string;
   };
