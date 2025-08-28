@@ -84,9 +84,13 @@ const Login: React.FC = () => {
     }
   }, [location.state, navigate]);
 
-  const changeUsername = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value), []);
+  const changeUsername = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(evt.target.value || '');
+  }, []);
 
-  const changePassword = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value), []);
+  const changePassword = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(evt.target.value || '');
+  }, []);
 
   const handleSubmit = useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -197,7 +201,7 @@ const Login: React.FC = () => {
                   type="text"
                   name="username"
                   labelText={t('username', 'Username')}
-                  value={username}
+                  value={username || ''}
                   onChange={changeUsername}
                   ref={usernameInputRef}
                   autoFocus
@@ -211,7 +215,7 @@ const Login: React.FC = () => {
                     type="password"
                     name="password"
                     className={styles.inputText}
-                    value={password}
+                    value={password || ''}
                     onChange={changePassword}
                   />
                 )}
@@ -241,7 +245,7 @@ const Login: React.FC = () => {
                   ref={passwordInputRef}
                   required
                   showPasswordLabel={t('showPassword', 'Show password')}
-                  value={password}
+                  value={password || ''}
                 />
                 {/* For password managers */}
                 {showPasswordOnSeparateScreen && (
@@ -251,7 +255,7 @@ const Login: React.FC = () => {
                     name="username"
                     style={hidden}
                     className={styles.inputText}
-                    value={username}
+                    value={username || ''}
                     onChange={changeUsername}
                     required
                   />
