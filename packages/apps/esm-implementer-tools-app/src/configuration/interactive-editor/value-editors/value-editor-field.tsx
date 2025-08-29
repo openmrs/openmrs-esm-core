@@ -12,6 +12,7 @@ import { ObjectEditor } from './object-editor';
 import { ExtensionSlotOrder } from './extension-slot-order';
 import { PersonAttributeTypeSearchBox } from './person-attribute-search';
 import { PatientIdentifierTypeSearchBox } from './patient-identifier-type-search';
+import { TranslationEditor } from './translation-editor';
 
 export interface ValueEditorFieldProps {
   element: ConfigValueDescriptor;
@@ -86,6 +87,8 @@ export function ValueEditorField({ element, path, valueType, value, onChange, er
     />
   ) : valueType === 'configure' && path ? (
     <>Todo</>
+  ) : valueType === 'translation-overrides' ? (
+    <TranslationEditor value={value ?? element._value} setValue={onChange} path={path} />
   ) : (
     <ObjectEditor element={element} valueObject={value} setValue={onChange} />
   );

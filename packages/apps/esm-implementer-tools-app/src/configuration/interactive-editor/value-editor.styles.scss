@@ -18,3 +18,23 @@
     }
   }
 }
+
+.arrayEditorRow {
+  margin-bottom: layout.$spacing-03;
+}
+
+.translationOverrideSection {
+  display: flex;
+  flex-direction: column;
+  gap: layout.$spacing-03;
+}
+
+.translationOverrideRow {
+  display: flex;
+  align-items: end;
+  gap: layout.$spacing-03;
+
+  div {
+    flex: 1;
+  }
+}
