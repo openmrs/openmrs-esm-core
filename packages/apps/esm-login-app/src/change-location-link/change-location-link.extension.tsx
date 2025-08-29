@@ -1,7 +1,7 @@
-import { HeaderGlobalAction } from '@carbon/react';
-import { LocationIcon, navigate, useSession } from '@openmrs/esm-framework';
 import React from 'react';
+import { HeaderGlobalAction } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
+import { LocationIcon, navigate, useSession } from '@openmrs/esm-framework';
 import styles from './change-location-link.scss';
 
 const ChangeLocationLink: React.FC = () => {

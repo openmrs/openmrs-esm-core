@@ -106,6 +106,7 @@ export const MaybePictogram = ({ pictogram }) => <span>{pictogram}</span>;
 export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
 
 export const OpenmrsDatePicker = () => <span>OpenmrsDatePicker</span>;
+export const OpenmrsDateRangePicker = () => <span>OpenmrsDateRangePicker</span>;
 
 export const LocationPicker = vi.fn(({ onChange, selectedLocationUuid }) => {
   const locations = [
@@ -143,4 +144,3 @@ export const DiagnosisTags = vi.fn(({ diagnoses }: { diagnoses: Array<Diagnosis>
     ))}
   </>
 ));
-export const useLeftNavStore = vi.fn();

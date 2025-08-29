@@ -4,7 +4,7 @@
 
 > **openmrsObservableFetch**\<`T`\>(`url`, `fetchInit`): `Observable`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`T`\>\>
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L269)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:272](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L272)
 
 The openmrsObservableFetch function is a wrapper around openmrsFetch
 that returns an [Observable](https://rxjs-dev.firebaseapp.com/guide/observable)

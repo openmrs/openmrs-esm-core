@@ -4,7 +4,7 @@
 
 > **formatPartialDate**(`dateString`, `options?`): `null` \| `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:106
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:105
 
 Formats the string representing a date, including partial representations of dates, according to the current
 locale and the given options.

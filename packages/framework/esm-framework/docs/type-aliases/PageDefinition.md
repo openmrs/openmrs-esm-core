@@ -4,7 +4,7 @@
 
 > **PageDefinition** = `object` & \{ `route`: `string` \| `boolean`; `routeRegex?`: `never`; \} \| \{ `route?`: `never`; `routeRegex`: `string`; \}
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:113
+Defined in: packages/framework/esm-globals/dist/types.d.ts:112
 
 A definition of a page extracted from an app's routes.json
 
@@ -15,6 +15,12 @@ A definition of a page extracted from an app's routes.json
 > **component**: `string`
 
 The name of the component exported by this frontend module.
+
+### containerDomId?
+
+> `optional` **containerDomId**: `string`
+
+If supplied, the page will be rendered within the DOM element with the specified ID. Defaults to "omrs-apps-container" if not supplied.
 
 ### featureFlag?
 
@@ -33,9 +39,3 @@ Determines whether the component renders while the browser is not connected to t
 > `optional` **online**: `boolean`
 
 Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
-
-### order?
-
-> `optional` **order**: `number`
-
-Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.

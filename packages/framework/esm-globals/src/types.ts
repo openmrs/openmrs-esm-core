@@ -136,9 +136,9 @@ export type PageDefinition = {
    */
   offline?: boolean;
   /**
-   * Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
+   * If supplied, the page will be rendered within the DOM element with the specified ID. Defaults to "omrs-apps-container" if not supplied.
    */
-  order?: number;
+  containerDomId?: string;
 } & (
   | {
       /**
@@ -174,7 +174,7 @@ export type PageDefinition = {
  * @internal
  * A definition of a page after the app has been registered.
  */
-export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
+export type RegisteredPageDefinition = PageDefinition & AppComponent;
 
 /**
  * A definition of an extension as extracted from an app's routes.json
@@ -218,28 +218,11 @@ export type ExtensionDefinition = {
   meta?: {
     [k: string]: unknown;
   };
-} & (
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component: string;
-      /**
-       * @internal
-       */
-      load?: never;
-    }
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component?: never;
-      /**
-       * @internal
-       */
-      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
-    }
-);
+  /**
+   * The name of the component exported by this frontend module.
+   */
+  component: string;
+};
 
 /**
  * A definition of a modal as extracted from an app's routes.json
@@ -249,28 +232,11 @@ export type ModalDefinition = {
    * The name of this modal. This is used to launch the modal.
    */
   name: string;
-} & (
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component: string;
-      /**
-       * @internal
-       */
-      load?: never;
-    }
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component?: never;
-      /**
-       * @internal
-       */
-      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
-    }
-);
+  /**
+   * The name of the component exported by this frontend module.
+   */
+  component: string;
+};
 
 /* The possible states a workspace window can be opened in. */
 export type WorkspaceWindowState = 'maximized' | 'hidden' | 'normal';
@@ -328,28 +294,11 @@ export type WorkspaceDefinition = {
    *
    */
   groups: Array<string>;
-} & (
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component: string;
-      /**
-       * @internal
-       */
-      load?: never;
-    }
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component?: never;
-      /**
-       * @internal
-       */
-      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
-    }
-);
+  /**
+   * The name of the component exported by this frontend module.
+   */
+  component: string;
+};
 
 export interface WorkspaceGroupDefinition {
   /**
@@ -407,7 +356,7 @@ export interface OpenmrsAppRoutes {
 }
 
 /**
- * This interfaces describes the format of the overall rotues.json loaded by the app shell.
+ * This interfaces describes the format of the overall routes.json loaded by the app shell.
  * Basically, this is the same as the app routes, with each routes definition keyed by the app's name
  */
 export type OpenmrsRoutes = Record<string, OpenmrsAppRoutes>;
