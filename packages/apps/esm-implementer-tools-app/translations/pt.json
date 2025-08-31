@@ -24,7 +24,6 @@
   "moduleName": "Nome do módulo",
   "modulesWithMissingDependenciesWarning": "Alguns módulos têm dependências de back-end não resolvidas",
   "numberValidationMessage": "Value must be a number",
-  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
   "objectValidationMessage": "Value must be an object",
   "requiredVersion": "Versão necessária",
   "resetToDefaultValueButtonText": "Redefinir para o padrão",

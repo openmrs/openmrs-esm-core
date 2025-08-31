@@ -24,7 +24,6 @@
   "moduleName": "اسم الوحدة",
   "modulesWithMissingDependenciesWarning": "بعض الوحدات لديها اعتمادات خلفية غير محلولة",
   "numberValidationMessage": "Value must be a number",
-  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
   "objectValidationMessage": "Value must be an object",
   "requiredVersion": "الإصدار المطلوب",
   "resetToDefaultValueButtonText": "إعادة تعيين إلى القيمة الافتراضية",
