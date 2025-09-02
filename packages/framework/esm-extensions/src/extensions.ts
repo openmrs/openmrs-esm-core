@@ -347,6 +347,12 @@ function getAssignedExtensionsFromSlotData(
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
 
+    if (slotName === 'conditions-overview-widget') {
+      console.log('====rawExtensionConfig', rawExtensionConfig);
+      console.log('====rawExtensionSlotExtensionConfig', rawExtensionSlotExtensionConfig);
+      console.log('====extensionConfig', extensionConfig);
+    }
+
     // if the extension has not been registered yet, do not include it
     if (extension) {
       const requiredPrivileges = extensionConfig?.['Display conditions']?.privileges ?? extension.privileges ?? [];
@@ -364,7 +370,7 @@ function getAssignedExtensionsFromSlotData(
       }
 
       const displayConditionExpression =
-        extensionConfig?.['Display conditions']?.expression ?? extension.expression ?? null;
+        extensionConfig?.['Display conditions']?.expression || extension.expression || null;
       const slotState = internalState.slots[slotName]?.state ?? null;
       if (displayConditionExpression && slotState) {
         try {
