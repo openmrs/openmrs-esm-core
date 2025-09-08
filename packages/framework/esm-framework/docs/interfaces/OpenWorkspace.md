@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115]
 
 > **groups**: `string`[]
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:18
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:16
 
 #### Inherited from
 
@@ -64,27 +64,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:18
 
 ***
 
-### load()
-
-> **load**: () => `Promise`\<`object` & `LifeCycles`\>
-
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:14
-
-#### Returns
-
-`Promise`\<`object` & `LifeCycles`\>
-
-#### Inherited from
-
-`WorkspaceRegistration.load`
-
-***
-
 ### moduleName
 
 > **moduleName**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:17
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:15
 
 #### Inherited from
 
@@ -214,6 +198,22 @@ will directly close the workspace without any prompt
 #### Inherited from
 
 [`DefaultWorkspaceProps`](DefaultWorkspaceProps.md).[`closeWorkspaceWithSavedChanges`](DefaultWorkspaceProps.md#closeworkspacewithsavedchanges)
+
+***
+
+### load()
+
+> **load**(): `Promise`\<`LifeCycles`\>
+
+Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:14
+
+#### Returns
+
+`Promise`\<`LifeCycles`\>
+
+#### Inherited from
+
+`WorkspaceRegistration.load`
 
 ***
 

@@ -6,7 +6,7 @@
   "changingLanguage": "Cambio lingua in corso",
   "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
   "notifications": "Notifiche",
-  "userMenu": "User menu",
-  "userMenuOptions": "User menu options",
+  "userMenu": "Menu utente",
+  "userMenuOptions": "Opzioni menu utente",
   "userMenuTooltip": "Il mio account"
 }

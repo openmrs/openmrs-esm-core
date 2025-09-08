@@ -62,7 +62,7 @@ const HeaderItems: React.FC = () => {
           </div>
         </ConfigurableLink>
         <div className={styles.divider} />
-        <ExtensionSlot name="top-nav-info-slot" />
+        <ExtensionSlot name="top-nav-info-slot" className={styles.topNavInfoSlot} />
         <HeaderGlobalBar className={styles.headerGlobalBar}>
           <ExtensionSlot
             name="top-nav-actions-slot"

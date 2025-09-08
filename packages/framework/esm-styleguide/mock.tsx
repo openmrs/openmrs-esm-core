@@ -144,4 +144,3 @@ export const DiagnosisTags = vi.fn(({ diagnoses }: { diagnoses: Array<Diagnosis>
     ))}
   </>
 ));
-export const useLeftNavStore = vi.fn();

@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-error-handling",
-  "version": "6.3.0",
+  "version": "8.0.0",
   "license": "MPL-2.0",
   "description": "An ES module to help with error handling",
   "type": "module",

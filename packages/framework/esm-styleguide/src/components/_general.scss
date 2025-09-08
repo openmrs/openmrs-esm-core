@@ -25,3 +25,10 @@ body {
     margin-top: layout.$spacing-06;
   }
 }
+
+#omrs-apps-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}

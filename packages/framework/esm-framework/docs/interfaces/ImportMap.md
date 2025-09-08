@@ -2,7 +2,7 @@
 
 # Interface: ImportMap
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:74
+Defined in: packages/framework/esm-globals/dist/types.d.ts:73
 
 ## Properties
 
@@ -10,4 +10,4 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:74
 
 > **imports**: `Record`\<`string`, `string`\>
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:75
+Defined in: packages/framework/esm-globals/dist/types.d.ts:74
