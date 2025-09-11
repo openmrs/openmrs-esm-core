@@ -289,6 +289,23 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
   });
 }
 
+/**
+ * Transforms translation overrides to flat format
+ * @internal
+ */
+export function transformTranslationOverrides(overrides: any): Record<string, Record<string, string>> {
+  const result: Record<string, Record<string, string>> = {};
+
+  for (const [language, langConfig] of Object.entries(overrides || {})) {
+    if (typeof langConfig === 'object' && langConfig !== null) {
+      // Handle flat format directly - this is now our main format
+      result[language] = langConfig as Record<string, string>;
+    }
+  }
+
+  return result;
+}
+
 /** @internal */
 export function getTranslationOverrides(
   moduleName: string,
@@ -300,7 +317,8 @@ export function getTranslationOverrides(
       const configStore = getConfigStore(moduleName);
       function update(state: ReturnType<(typeof configStore)['getState']>) {
         if (state.translationOverridesLoaded && state.config) {
-          const translationOverrides = state.config['Translation overrides'] ?? {};
+          const rawTranslationOverrides = state.config['Translation overrides'] ?? {};
+          const translationOverrides = transformTranslationOverrides(rawTranslationOverrides);
           resolve(translationOverrides);
 
           if (unsubscribe) {
@@ -319,7 +337,8 @@ export function getTranslationOverrides(
         const configStore = getExtensionConfig(slotName, extensionId);
         function update(state: ReturnType<(typeof configStore)['getState']>) {
           if (state.loaded && state.config) {
-            const translationOverrides = state.config['Translation overrides'] ?? {};
+            const rawTranslationOverrides = state.config['Translation overrides'] ?? {};
+            const translationOverrides = transformTranslationOverrides(rawTranslationOverrides);
             resolve(translationOverrides);
 
             if (unsubscribe) {
