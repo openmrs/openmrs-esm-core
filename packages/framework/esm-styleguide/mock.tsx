@@ -93,11 +93,34 @@ export const WarningIcon = () => <span>WarningIcon</span>;
 
 // Pictogram stubs
 export const AppointmentsPictogram = () => <span>AppointmentsPictogram</span>;
+export const AppointmentsAltPictogram = () => <span>AppointmentsAltPictogram</span>;
+export const Assessment1Pictogram = () => <span>Assessment1Pictogram</span>;
+export const Assessment2Pictogram = () => <span>Assessment2Pictogram</span>;
+export const BloodBankPictogram = () => <span>BloodBankPictogram</span>;
+export const CardiologyPictogram = () => <span>CardiologyPictogram</span>;
+export const CtScanPictogram = () => <span>CtScanPictogram</span>;
+export const DentistryPictogram = () => <span>DentistryPictogram</span>;
+export const EmergencyDepartmentPictogram = () => <span>EmergencyDepartmentPictogram</span>;
+export const FacilityPictogram = () => <span>FacilityPictogram</span>;
+export const GeriatricsPictogram = () => <span>GeriatricsPictogram</span>;
+export const GynaecologyPictogram = () => <span>GynaecologyPictogram</span>;
 export const HomePictogram = () => <span>HomePictogram</span>;
+export const InPatientPictogram = () => <span>InPatientPictogram</span>;
 export const LaboratoryPictogram = () => <span>LaboratoryPictogramPictogram</span>;
+export const Labs2Pictogram = () => <span>Labs2Pictogram</span>;
+export const ObstetricsPictogram = () => <span>ObstetricsPictogram</span>;
 export const PatientListsPictogram = () => <span>PatientListsPictogram</span>;
+export const PatientSearchPictogram = () => <span>PatientSearchPictogram</span>;
+export const PatientsPictogram = () => <span>PatientsPictogram</span>;
+export const PaymentsDeskPictogram = () => <span>PaymentsDeskPictogram</span>;
+export const PharmacyPictogram = () => <span>PharmacyPictogram</span>;
+export const Pharmacy2Pictogram = () => <span>Pharmacy2Pictogram</span>;
+export const RegistrationPictogram = () => <span>RegistrationPictogram</span>;
 export const ServiceQueuesPictogram = () => <span>ServiceQueuesPictogramPictogram</span>;
 export const StockManagementPictogram = () => <span>StockManagementPictogram</span>;
+export const TransferPictogram = () => <span>TransferPictogram</span>;
+export const TriagePictogram = () => <span>TriagePictogram</span>;
+export const XrayPictogram = () => <span>XrayPictogram</span>;
 
 // Misc stubs
 export const MaybeIcon = ({ icon }) => <span>{icon}</span>;
