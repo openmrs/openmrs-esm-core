@@ -89,7 +89,7 @@ import viewOff from './svgs/view-off.svg';
 import view from './svgs/view.svg';
 import warning from './svgs/warning.svg';
 import { addSvg } from '../svg-utils';
-import { IconId } from './icons';
+import { type IconId } from './icons';
 
 export function setupIcons() {
   addIconSvg('omrs-icon-activity', activity);
@@ -186,8 +186,8 @@ export function setupIcons() {
 
 /**
  * a type-safe wrapper around addSvg
- * @param iconId 
- * @param svgString 
+ * @param iconId
+ * @param svgString
  */
 function addIconSvg(iconId: IconId, svgString: string) {
   addSvg(iconId, svgString);

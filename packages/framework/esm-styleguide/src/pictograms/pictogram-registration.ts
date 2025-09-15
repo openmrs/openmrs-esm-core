@@ -25,7 +25,7 @@ import serviceQueues from './svgs/service-queues.svg';
 import transfer from './svgs/transfer.svg';
 import triage from './svgs/triage.svg';
 import xray from './svgs/x-ray.svg';
-import { PictogramId } from './pictograms';
+import { type PictogramId } from './pictograms';
 
 export function setupPictograms() {
   addPictogramSvg('omrs-pict-appointments', appointments);
@@ -58,8 +58,8 @@ export function setupPictograms() {
 
 /**
  * A type-safe wrapper around addSvg
- * @param pictogramId 
- * @param svgString 
+ * @param pictogramId
+ * @param svgString
  */
 function addPictogramSvg(pictogramId: PictogramId, svgString: string) {
   addSvg(pictogramId, svgString);
