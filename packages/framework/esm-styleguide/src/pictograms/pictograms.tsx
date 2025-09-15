@@ -4,6 +4,37 @@ import classNames, { type Argument } from 'classnames';
 import { RenderIfValueIsTruthy } from '@openmrs/esm-react-utils';
 import style from './pictograms.module.scss';
 
+export const pictogramIds = [
+  'omrs-pict-appointments',
+  'omrs-pict-assessment-1',
+  'omrs-pict-assessment-2',
+  'omrs-pict-blood-bank',
+  'omrs-pict-cardiology',
+  'omrs-pict-ct-scan',
+  'omrs-pict-dentistry',
+  'omrs-pict-emergency-department',
+  'omrs-pict-facility',
+  'omrs-pict-geriatrics',
+  'omrs-pict-gynaecology',
+  'omrs-pict-in-patient',
+  'omrs-pict-laboratory',
+  'omrs-pict-labs-2',
+  'omrs-pict-obstetrics',
+  'omrs-pict-patient-search',
+  'omrs-pict-patients',
+  'omrs-pict-payments-desk',
+  'omrs-pict-pharmacy',
+  'omrs-pict-pharmacy-2',
+  'omrs-pict-registration',
+  'omrs-pict-service-queues',
+  'omrs-pict-stock-management',
+  'omrs-pict-transfer',
+  'omrs-pict-triage',
+  'omrs-pict-x-ray',
+] as const;
+
+export type PictogramId = (typeof pictogramIds)[number];
+
 export type PictogramProps = {
   className?: Argument;
   size?: number;
@@ -15,11 +46,10 @@ export const AppointmentsPictogram = memo(
   }),
 );
 
-export const AppointmentsAltPictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function AppointmentsAltPictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-appointments-alt" pictogramProps={props} />;
-  }),
-);
+/**
+ * @deprecated use AppointmentsPictogram instead
+ */
+export const AppointmentsAltPictogram = AppointmentsPictogram;
 
 export const Assessment1Pictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function Assessment1Pictogram(props, ref) {
@@ -81,12 +111,6 @@ export const GynaecologyPictogram = memo(
   }),
 );
 
-export const HomePictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function HomePictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-home" pictogramProps={props} />;
-  }),
-);
-
 export const InPatientPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function InPatientPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-in-patient" pictogramProps={props} />;
@@ -108,12 +132,6 @@ export const Labs2Pictogram = memo(
 export const ObstetricsPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function ObstetricsPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-obstetrics" pictogramProps={props} />;
-  }),
-);
-
-export const PatientListsPictogram = memo(
-  forwardRef<SVGSVGElement, PictogramProps>(function PatientListsPictogram(props, ref) {
-    return <Pictogram ref={ref} pictogram="omrs-pict-patient-lists" pictogramProps={props} />;
   }),
 );
 
@@ -183,6 +201,13 @@ export const XrayPictogram = memo(
   }),
 );
 
+// Pictogram aliases that are a little more aligned to specific use-cases
+// should all resolve to a defined React icon
+
+export const HomePictogram = FacilityPictogram;
+
+export const PatientListsPictogram = PatientsPictogram;
+
 /**
  * This is a utility component that takes an `pictogram` and render it if the sprite for the pictogram
  * is available. The goal is to make it easier to conditionally render configuration-specified pictograms.
@@ -193,7 +218,7 @@ export const XrayPictogram = memo(
  * ```
  */
 export const MaybePictogram = memo(
-  forwardRef<SVGSVGElement, { pictogram: string; fallback?: React.ReactNode } & PictogramProps>(function MaybeIcon(
+  forwardRef<SVGSVGElement, { pictogram: PictogramId; fallback?: React.ReactNode } & PictogramProps>(function MaybeIcon(
     { pictogram, fallback, ...pictogramProps },
     ref,
   ) {
@@ -227,7 +252,7 @@ export const MaybePictogram = memo(
 
 export type SvgPictogramProps = {
   /** the id of the pictogram  */
-  pictogram: string;
+  pictogram: PictogramId;
   /** properties when using the pictogram  */
   pictogramProps: PictogramProps;
 };
