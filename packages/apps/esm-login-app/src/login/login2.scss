@@ -1,0 +1,262 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.backgroundContainer,
+.centeredLoginBackgroundContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.contentOverlay {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 1150px) {
+  .backgroundContainer {
+    max-width: 90%;
+    justify-content: right;
+  }
+
+  .backgroundImage {
+    object-fit: fit;
+    max-width: 55%;
+    /* Fit image for larger screens */
+  }
+}
+
+.logoContainer {
+  text-align: center;
+}
+
+.footer {
+  display: none;
+  @include type.type-style('label-02');
+  text-align: center;
+  margin-top: 1rem;
+
+  > * + * {
+    margin-left: 0.5rem;
+  }
+}
+
+.links {
+  margin: 0.5rem 0 0.5rem -0.8rem;
+}
+
+.link {
+  a {
+    color: colors.$gray-70;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.attribution {
+  margin: 3rem 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    height: 2rem;
+    width: 7rem;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .container {
+    max-width: 90%;
+    background-size: contain;
+    justify-content: right;
+  }
+
+  .login-card {
+    border: none;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.logo {
+  margin-bottom: 2rem;
+  max-height: 7rem;
+  max-width: 18.75rem;
+}
+
+.logo-img {
+  margin-bottom: 3rem;
+  max-width: 100%;
+}
+
+.poweredByTxt {
+  @extend .caption01 !optional;
+  text-align: center;
+  color: $color-gray-70;
+  color: $text-02;
+}
+
+.need-help {
+  display: flex;
+  width: 23rem;
+}
+
+.need-help-txt {
+  @extend .bodyShort01 !optional;
+  text-align: left;
+  color: $text-02;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.link {
+  text-decoration-line: none;
+  margin: 0 0 0.5rem 0.5rem;
+}
+
+.login-card {
+  border-radius: 0;
+  border: 1px solid $ui-03;
+  background-color: $ui-02;
+  width: 23rem;
+  padding: 2.5rem;
+  position: relative;
+  min-height: 21.5rem;
+  width: 25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 18rem;
+
+  :global(.cds--text-input) {
+    height: 3rem;
+    @extend .label01 !optional;
+  }
+
+  :global(.cds--text-input__field-outer-wrapper) {
+    width: 18rem;
+  }
+}
+
+.continueButton {
+  margin: 2rem 0;
+  width: 18rem;
+}
+
+.back-button-div {
+  width: 23rem;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+}
+
+.back-button {
+  height: 3rem;
+  padding-left: 0rem;
+
+  svg {
+    margin-right: 0.5rem;
+    order: 1;
+  }
+
+  span {
+    order: 2;
+  }
+}
+
+.loader {
+  min-height: fit-content;
+}
+
+.errorMessage {
+  margin-bottom: 3rem;
+  width: 18rem;
+}
+
+.facilityNameContainer {
+  text-align: center;
+  margin-bottom: 1.75rem;
+  font-size: var(--cds-label-02-font-size, 1.375rem);
+  font-weight: var(--cds-label-02-font-weight, 900);
+}
+
+.centeredLoginOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.centeredLoginBackgroundContainer {
+  :global(.cds--tile) {
+    background-color: #f4f4f4a1;
+  }
+
+  :global(.cds--text-input) {
+    background-color: #f4f4f475;
+  }
+
+  :global(.cds--label) {
+    font-weight: bold;
+    color: $color-gray-100;
+  }
+
+  .poweredByTxt {
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  .link {
+    color: #ffffff;
+    a {
+      color: #ffffff;
+      font-weight: bold;
+    }
+  }
+}
