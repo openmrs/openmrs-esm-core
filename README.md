@@ -102,7 +102,7 @@ yarn run:shell
 ### Running the frontend modules in `apps`
 
 ```sh
-yarn run:omrs develop --sources packages/apps/<app folder>
+ yarn start --sources packages/apps/<app folder>
 ```
 
 This will allow you to develop the app similar to the experience of developing other apps.
