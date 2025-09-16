@@ -102,10 +102,16 @@ yarn run:shell
 ### Running the frontend modules in `apps`
 
 ```sh
- yarn start --sources packages/apps/<app folder>
+yarn start --sources packages/apps/<app folder>
 ```
 
-This will allow you to develop the app similar to the experience of developing other apps.
+For example, to run the login app, run:
+
+```sh
+yarn start --sources packages/apps/esm-login-app
+```
+
+This will spin up a development server with hot module reloading so any changes you make to the code in the app will be reflected automatically in the browser.
 
 ### Running the tooling
 
