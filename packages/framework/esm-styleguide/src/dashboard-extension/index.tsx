@@ -5,12 +5,13 @@ import { useLocation } from 'react-router-dom';
 import { shallowEqual } from '@openmrs/esm-utils';
 import { ConfigurableLink, MaybeIcon } from '@openmrs/esm-framework';
 import styles from './dashboard.module.scss';
+import { type IconId } from '../icons';
 
 export interface DashboardExtensionProps {
   path: string;
   title: string;
   basePath: string;
-  icon: string;
+  icon: IconId;
 }
 
 export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExtensionProps) => {
