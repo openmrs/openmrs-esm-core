@@ -1,6 +1,7 @@
 import React from 'react';
 import { pickBy } from 'lodash-es';
 import { ExtensionSlotsConfigTree } from './extension-slots-config-tree';
+import { TranslationOverridesConfigTree } from './translation-overrides-config-tree';
 import { ConfigSubtree } from './config-subtree.component';
 import { TreeContainer } from './layout/tree-container.component';
 
@@ -13,7 +14,14 @@ export function ConfigTreeForModule({ config, moduleName }: ConfigTreeForModuleP
   return (
     <TreeContainer>
       <ExtensionSlotsConfigTree extensionsConfig={config.extensionSlots} moduleName={moduleName} />
-      <ConfigSubtree config={pickBy(config, (v, key) => key !== 'extensionSlots')} path={[moduleName]} />
+      <TranslationOverridesConfigTree
+        translationOverridesConfig={config['Translation overrides']}
+        moduleName={moduleName}
+      />
+      <ConfigSubtree
+        config={pickBy(config, (v, key) => key !== 'extensionSlots' && key !== 'Translation overrides')}
+        path={[moduleName]}
+      />
     </TreeContainer>
   );
 }
