@@ -14,6 +14,7 @@ import {
 import type { LoginReferrer } from '../login/login.component';
 import { useDefaultLocation, useLocationCount } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
+import SystemMessages from '../system-messages/system-messages.component';
 import styles from './location-picker.scss';
 
 interface LocationPickerProps {
@@ -120,6 +121,8 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
 
   return (
     <div className={styles.locationPickerContainer}>
+      <SystemMessages page="location-picker" />
+
       <form onSubmit={handleSubmit}>
         <div className={styles.locationCard}>
           <div className={styles.paddedContainer}>

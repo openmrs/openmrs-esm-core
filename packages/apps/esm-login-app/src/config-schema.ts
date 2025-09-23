@@ -99,6 +99,137 @@ export const configSchema = {
     _description:
       'Whether to show the password field on a separate screen. If false, the password field will be shown on the same screen.',
   },
+  systemMessages: {
+    enabled: {
+      _type: Type.Boolean,
+      _default: false,
+      _description: 'Whether to enable system messages on the login page.',
+    },
+    messages: {
+      _type: Type.Array,
+      _elements: {
+        _type: Type.Object,
+        id: {
+          _type: Type.String,
+          _required: true,
+          _description: 'Unique identifier for the message.',
+        },
+        type: {
+          _type: Type.String,
+          _default: 'info',
+          _description: 'The type of message to display.',
+          _validators: [validators.oneOf(['info', 'warning', 'error', 'success'])],
+        },
+        title: {
+          _type: Type.String,
+          _required: false,
+          _description: 'The title of the message.',
+        },
+        content: {
+          _type: Type.String,
+          _required: true,
+          _description: 'The content of the message. Supports HTML.',
+        },
+        dismissible: {
+          _type: Type.Boolean,
+          _default: true,
+          _description: 'Whether the message can be dismissed by the user.',
+        },
+        showOn: {
+          _type: Type.String,
+          _default: 'all',
+          _description: 'Which pages to show the message on.',
+          _validators: [validators.oneOf(['all', 'login', 'location-picker'])],
+        },
+        startDate: {
+          _type: Type.String,
+          _required: false,
+          _description: 'ISO date string for when to start showing the message.',
+        },
+        endDate: {
+          _type: Type.String,
+          _required: false,
+          _description: 'ISO date string for when to stop showing the message.',
+        },
+      },
+      _default: [],
+      _description: 'An array of system messages to display on the login page.',
+    },
+  },
+  background: {
+    type: {
+      _type: Type.String,
+      _default: 'default',
+      _description: 'The type of background to use.',
+      _validators: [validators.oneOf(['default', 'color', 'image', 'gradient'])],
+    },
+    value: {
+      _type: Type.String,
+      _default: '',
+      _description: 'The background value (color code, image URL, or gradient CSS).',
+    },
+    overlay: {
+      enabled: {
+        _type: Type.Boolean,
+        _default: false,
+        _description: 'Whether to enable an overlay on the background.',
+      },
+      color: {
+        _type: Type.String,
+        _default: 'rgba(0, 0, 0, 0.3)',
+        _description: 'The overlay color.',
+      },
+      opacity: {
+        _type: Type.Number,
+        _default: 0.3,
+        _description: 'The opacity of the overlay (0-1).',
+        _validators: [validator((v: unknown) => typeof v === 'number' && v >= 0 && v <= 1, 'Must be between 0 and 1')],
+      },
+    },
+  },
+  customContent: {
+    welcome: {
+      enabled: {
+        _type: Type.Boolean,
+        _default: false,
+        _description: 'Whether to show a welcome message.',
+      },
+      title: {
+        _type: Type.String,
+        _default: '',
+        _description: 'The title of the welcome message.',
+      },
+      message: {
+        _type: Type.String,
+        _default: '',
+        _description: 'The welcome message content. Supports HTML.',
+      },
+      position: {
+        _type: Type.String,
+        _default: 'top',
+        _description: 'Where to position the welcome message.',
+        _validators: [validators.oneOf(['top', 'bottom', 'side'])],
+      },
+    },
+    disclaimer: {
+      enabled: {
+        _type: Type.Boolean,
+        _default: false,
+        _description: 'Whether to show a disclaimer.',
+      },
+      text: {
+        _type: Type.String,
+        _default: '',
+        _description: 'The disclaimer text. Supports HTML.',
+      },
+      position: {
+        _type: Type.String,
+        _default: 'footer',
+        _description: 'Where to position the disclaimer.',
+        _validators: [validators.oneOf(['footer', 'sidebar'])],
+      },
+    },
+  },
 };
 
 export interface ConfigSchema {
@@ -127,4 +258,39 @@ export interface ConfigSchema {
     type: 'basic' | 'oauth2';
   };
   showPasswordOnSeparateScreen: boolean;
+  systemMessages: {
+    enabled: boolean;
+    messages: Array<{
+      id: string;
+      type: 'info' | 'warning' | 'error' | 'success';
+      title?: string;
+      content: string;
+      dismissible: boolean;
+      showOn: 'all' | 'login' | 'location-picker';
+      startDate?: string;
+      endDate?: string;
+    }>;
+  };
+  background: {
+    type: 'default' | 'color' | 'image' | 'gradient';
+    value: string;
+    overlay: {
+      enabled: boolean;
+      color: string;
+      opacity: number;
+    };
+  };
+  customContent: {
+    welcome: {
+      enabled: boolean;
+      title: string;
+      message: string;
+      position: 'top' | 'bottom' | 'side';
+    };
+    disclaimer: {
+      enabled: boolean;
+      text: string;
+      position: 'footer' | 'sidebar';
+    };
+  };
 }

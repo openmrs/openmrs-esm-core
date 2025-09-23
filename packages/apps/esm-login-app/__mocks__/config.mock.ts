@@ -23,4 +23,30 @@ export const mockConfig: ConfigSchema = {
     additionalLogos: [],
   },
   showPasswordOnSeparateScreen: true,
+  systemMessages: {
+    enabled: false,
+    messages: [],
+  },
+  background: {
+    type: 'default',
+    value: '',
+    overlay: {
+      enabled: false,
+      color: 'rgba(0, 0, 0, 0.3)',
+      opacity: 0.3,
+    },
+  },
+  customContent: {
+    welcome: {
+      enabled: false,
+      title: '',
+      message: '',
+      position: 'top',
+    },
+    disclaimer: {
+      enabled: false,
+      text: '',
+      position: 'footer',
+    },
+  },
 };

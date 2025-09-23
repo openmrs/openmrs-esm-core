@@ -1,0 +1,75 @@
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@carbon/colors';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.systemMessagesContainer {
+  width: 100%;
+  margin-bottom: layout.$spacing-05;
+  display: flex;
+  flex-direction: column;
+  gap: layout.$spacing-03;
+}
+
+.systemMessage {
+  width: 100%;
+
+  // Override Carbon's notification styles for better integration
+  :global(.cds--inline-notification) {
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  // Ensure proper text wrapping in notifications
+  :global(.cds--inline-notification__subtitle) {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+}
+
+.htmlContent {
+  margin-top: layout.$spacing-03;
+  padding: layout.$spacing-03;
+  background-color: $ui-01;
+  border-radius: 4px;
+  @include type.type-style('body-compact-01');
+
+  // Style HTML content appropriately
+  p {
+    margin-bottom: layout.$spacing-03;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: colors.$blue-60;
+    text-decoration: underline;
+
+    &:hover {
+      color: colors.$blue-80;
+    }
+  }
+
+  strong,
+  b {
+    font-weight: 600;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+
+  ul,
+  ol {
+    margin-left: layout.$spacing-05;
+    margin-bottom: layout.$spacing-03;
+  }
+
+  li {
+    margin-bottom: layout.$spacing-02;
+  }
+}
