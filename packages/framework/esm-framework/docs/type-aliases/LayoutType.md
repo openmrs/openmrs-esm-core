@@ -4,4 +4,4 @@
 
 > **LayoutType** = `"phone"` \| `"tablet"` \| `"small-desktop"` \| `"large-desktop"`
 
-Defined in: [packages/framework/esm-react-utils/src/useLayoutType.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L4)
+Defined in: [packages/framework/esm-react-utils/src/useLayoutType.ts:4](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L4)

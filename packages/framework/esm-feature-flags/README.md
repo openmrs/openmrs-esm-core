@@ -1,6 +1,6 @@
 # openmrs-esm-feature-flags
 
-[![npm: openmrs/esm-feature-flags](https://img.shields.io/npm/v/@openmrs/esm-feature-flags)](https://www.npmjs.com/package/@openmrs/esm-feature-flags)
+[![npm: openmrs/esm-feature-flags](https://img.shields.io/npm/v/@openmrs/esm-feature-flags)](https://github.com/openmrs/openmrs-esm-core/tree/main/packages/framework/esm-feature-flags)
 
 ## What is this?
 

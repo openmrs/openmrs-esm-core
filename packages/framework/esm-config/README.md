@@ -1,6 +1,6 @@
 # openmrs-esm-config
 
-[![npm: openmrs/esm-module-config](https://img.shields.io/npm/v/@openmrs/esm-config)](https://www.npmjs.com/package/@openmrs/esm-config)
+[![npm: openmrs/esm-module-config](https://img.shields.io/npm/v/@openmrs/esm-config)](https://github.com/openmrs/openmrs-esm-core/tree/main/packages/framework/esm-config)
 
 ## What is this?
 

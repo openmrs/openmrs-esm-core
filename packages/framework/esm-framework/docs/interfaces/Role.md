@@ -2,7 +2,7 @@
 
 # Interface: Role
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L61)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:61](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L61)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:61](https://g
 
 > **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L63)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:63](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L63)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:63](https://g
 
 > **links**: `any`[]
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L64)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:64](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L64)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:64](https://g
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L62)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:62](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L62)

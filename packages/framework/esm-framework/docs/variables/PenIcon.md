@@ -4,4 +4,4 @@
 
 > `const` **PenIcon**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`IconProps`](../type-aliases/IconProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:477](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L477)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:477](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L477)

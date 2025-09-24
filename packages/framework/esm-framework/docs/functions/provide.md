@@ -4,7 +4,7 @@
 
 > **provide**(`config`, `sourceName`): `void`
 
-Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:258](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L258)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:258](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L258)
 
 ## Parameters
 
