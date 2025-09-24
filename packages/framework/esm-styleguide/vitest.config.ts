@@ -13,5 +13,9 @@ export default defineConfig({
     },
     mockReset: true,
     setupFiles: ['./setup-tests.ts'],
+    pool: 'forks',
+  },
+  esbuild: {
+    target: 'node18',
   },
 });
