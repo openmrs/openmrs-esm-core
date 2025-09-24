@@ -4,7 +4,7 @@
 
 > **useAbortController**(): `AbortController`
 
-Defined in: [packages/framework/esm-react-utils/src/useAbortController.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAbortController.ts#L25)
+Defined in: [packages/framework/esm-react-utils/src/useAbortController.ts:25](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAbortController.ts#L25)
 
 **`Beta`**
 

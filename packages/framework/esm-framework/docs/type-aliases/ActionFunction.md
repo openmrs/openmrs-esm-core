@@ -4,7 +4,7 @@
 
 > **ActionFunction**\<`T`\> = (`state`, ...`args`) => `Partial`\<`T`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L6)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:6](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L6)
 
 ## Type Parameters
 

@@ -4,7 +4,7 @@
 
 > `const` **getAsyncExtensionLifecycle**: \<`T`\>(`lazy`, `options`) => () => `Promise`\<`ReactAppOrParcel`\<`T`\>\> = `getAsyncLifecycle`
 
-Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L32)
+Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:32](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L32)
 
 ## Type Parameters
 

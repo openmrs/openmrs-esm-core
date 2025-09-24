@@ -4,7 +4,7 @@
 
 > **getSyncLifecycle**\<`T`\>(`Component`, `options`): () => `Promise`\<`ReactAppOrParcel`\<`T`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L25)
+Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:25](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L25)
 
 ## Type Parameters
 
