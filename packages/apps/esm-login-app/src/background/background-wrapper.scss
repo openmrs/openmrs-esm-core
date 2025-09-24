@@ -1,0 +1,40 @@
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.backgroundWrapper {
+  min-height: 100vh;
+  position: relative;
+
+  &.customBackground {
+    // Ensure proper background attachment
+    background-attachment: fixed;
+
+    @media (max-width: 768px) {
+      // Disable fixed backgrounds on mobile for better performance
+      background-attachment: scroll;
+    }
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .customBackground & {
+    // Add subtle backdrop for better content readability on custom backgrounds
+    backdrop-filter: blur(0.5px);
+  }
+}

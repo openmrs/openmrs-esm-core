@@ -5,5 +5,9 @@ export default defineConfig({
     environment: 'happy-dom',
     mockReset: true,
     setupFiles: ['./setup-tests.ts'],
+    pool: 'forks',
+  },
+  esbuild: {
+    target: 'node18',
   },
 });

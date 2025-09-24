@@ -5,6 +5,7 @@
   "description": "The styleguide for OpenMRS SPA",
   "main": "dist/openmrs-esm-styleguide.js",
   "types": "dist/public.d.ts",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./src/internal.ts",

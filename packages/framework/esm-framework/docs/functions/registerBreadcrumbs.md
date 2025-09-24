@@ -4,7 +4,7 @@
 
 > **registerBreadcrumbs**(`breadcrumbs`): `void`
 
-Defined in: [packages/framework/esm-navigation/src/breadcrumbs/db.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L22)
+Defined in: [packages/framework/esm-navigation/src/breadcrumbs/db.ts:22](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L22)
 
 ## Parameters
 

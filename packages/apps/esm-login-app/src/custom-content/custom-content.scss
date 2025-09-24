@@ -1,0 +1,112 @@
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@carbon/colors';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.customContentContainer {
+  width: 100%;
+
+  &.position-top {
+    margin-bottom: layout.$spacing-06;
+  }
+
+  &.position-bottom {
+    margin-top: layout.$spacing-06;
+  }
+
+  &.position-side {
+    margin-left: layout.$spacing-06;
+    max-width: 20rem;
+  }
+
+  &.position-footer,
+  &.position-sidebar {
+    margin-top: layout.$spacing-05;
+  }
+}
+
+.welcomeMessage {
+  padding: layout.$spacing-05;
+  margin-bottom: layout.$spacing-05;
+  text-align: center;
+  background-color: $ui-01;
+  border: 1px solid $ui-03;
+}
+
+.welcomeTitle {
+  @include type.type-style('heading-03');
+  margin-bottom: layout.$spacing-04;
+  color: colors.$gray-100;
+}
+
+.welcomeContent {
+  @include type.type-style('body-01');
+  color: colors.$gray-70;
+
+  p {
+    margin-bottom: layout.$spacing-03;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: colors.$blue-60;
+    text-decoration: underline;
+
+    &:hover {
+      color: colors.$blue-80;
+    }
+  }
+
+  strong,
+  b {
+    font-weight: 600;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+
+  ul,
+  ol {
+    text-align: left;
+    margin-left: layout.$spacing-05;
+    margin-bottom: layout.$spacing-03;
+  }
+
+  li {
+    margin-bottom: layout.$spacing-02;
+  }
+}
+
+.disclaimer {
+  padding: layout.$spacing-03;
+  border-top: 1px solid $ui-03;
+  background-color: $ui-background;
+}
+
+.disclaimerContent {
+  @include type.type-style('caption-01');
+  color: colors.$gray-70;
+  text-align: center;
+
+  p {
+    margin-bottom: layout.$spacing-02;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: colors.$blue-60;
+    text-decoration: underline;
+
+    &:hover {
+      color: colors.$blue-80;
+    }
+  }
+}

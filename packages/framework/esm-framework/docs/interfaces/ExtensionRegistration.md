@@ -2,7 +2,7 @@
 
 # Interface: ExtensionRegistration
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L12)
+Defined in: [packages/framework/esm-extensions/src/store.ts:12](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L12)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:12](https://github.c
 
 > `readonly` `optional` **featureFlag**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L21)
+Defined in: [packages/framework/esm-extensions/src/store.ts:21](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L21)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:21](https://github.c
 
 > `readonly` **meta**: `Readonly`\<[`ExtensionMeta`](ExtensionMeta.md)\>
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L16)
+Defined in: [packages/framework/esm-extensions/src/store.ts:16](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L16)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:16](https://github.c
 
 > `readonly` **moduleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L15)
+Defined in: [packages/framework/esm-extensions/src/store.ts:15](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L15)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:15](https://github.c
 
 > `readonly` **name**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L13)
+Defined in: [packages/framework/esm-extensions/src/store.ts:13](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L13)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:13](https://github.c
 
 > `readonly` `optional` **offline**: `boolean`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L19)
+Defined in: [packages/framework/esm-extensions/src/store.ts:19](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L19)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:19](https://github.c
 
 > `readonly` `optional` **online**: `boolean`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L18)
+Defined in: [packages/framework/esm-extensions/src/store.ts:18](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L18)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:18](https://github.c
 
 > `readonly` `optional` **order**: `number`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L17)
+Defined in: [packages/framework/esm-extensions/src/store.ts:17](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L17)
 
 ***
 
@@ -66,7 +66,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:17](https://github.c
 
 > `readonly` `optional` **privileges**: `string` \| `string`[]
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L20)
+Defined in: [packages/framework/esm-extensions/src/store.ts:20](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L20)
 
 ## Methods
 
@@ -74,7 +74,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:20](https://github.c
 
 > **load**(): `Promise`\<`LifeCycles`\>
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L14)
+Defined in: [packages/framework/esm-extensions/src/store.ts:14](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L14)
 
 #### Returns
 

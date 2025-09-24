@@ -4,7 +4,7 @@
 
 > **getCurrentOfflineMode**(): [`OfflineModeResult`](../interfaces/OfflineModeResult.md)
 
-Defined in: [packages/framework/esm-offline/src/mode.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L45)
+Defined in: [packages/framework/esm-offline/src/mode.ts:45](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L45)
 
 ## Returns
 

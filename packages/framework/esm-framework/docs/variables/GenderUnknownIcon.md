@@ -4,4 +4,4 @@
 
 > `const` **GenderUnknownIcon**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`IconProps`](../type-aliases/IconProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:284](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L284)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:284](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L284)
