@@ -4,7 +4,7 @@
 
 > `const` **MaybePictogram**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<`object` & [`PictogramProps`](../type-aliases/PictogramProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L75)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:75](https://github.com/UjjawalPrabhat/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L75)
 
 This is a utility component that takes an `pictogram` and render it if the sprite for the pictogram
 is available. The goal is to make it easier to conditionally render configuration-specified pictograms.
