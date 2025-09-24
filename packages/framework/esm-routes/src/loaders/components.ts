@@ -4,6 +4,9 @@ import {
   registerModal,
   registerWorkspace,
   registerWorkspaceGroup,
+  registerWorkspaceGroups2,
+  registerWorkspaces2,
+  registerWorkspaceWindows2,
 } from '@openmrs/esm-extensions';
 import {
   type FeatureFlagDefinition,
@@ -11,6 +14,9 @@ import {
   type ModalDefinition,
   type WorkspaceDefinition,
   type WorkspaceGroupDefinition,
+  type WorkspaceGroupDefinition2,
+  type WorkspaceDefinition2,
+  type WorkspaceWindowDefinition2,
 } from '@openmrs/esm-globals';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
 import { loadLifeCycles } from './load-lifecycles';
@@ -181,6 +187,18 @@ To fix this, ensure that you define the "name" field inside the workspace defini
     name,
     members: workspaceGroup.members ?? [],
   });
+}
+
+export function tryRegisterWorkspaceGroups2(appName: string, workspaceGroupDefs: Array<WorkspaceGroupDefinition2>) {
+  registerWorkspaceGroups2(workspaceGroupDefs);
+}
+
+export function tryRegisterWorkspace2(appName: string, workspaceDefs: Array<WorkspaceDefinition2>) {
+  registerWorkspaces2(appName, workspaceDefs);
+}
+
+export function tryRegisterWorkspaceWindows2(appName: string, workspaceWindowDefs: Array<WorkspaceWindowDefinition2>) {
+  registerWorkspaceWindows2(appName, workspaceWindowDefs);
 }
 
 /**
