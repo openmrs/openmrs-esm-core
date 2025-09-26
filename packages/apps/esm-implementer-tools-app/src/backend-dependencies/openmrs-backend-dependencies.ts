@@ -41,8 +41,8 @@ let cachedFrontendModules: Array<ResolvedDependenciesModule>;
 
 async function initInstalledBackendModules(): Promise<Array<BackendModule>> {
   try {
-    const response = await fetchInstalledBackendModules();
-    return response.data.results;
+    const modules = await fetchInstalledBackendModules();
+    return modules;
   } catch (err) {
     console.error(err);
   }
@@ -88,10 +88,44 @@ function checkIfModulesAreInstalled(
   };
 }
 
-function fetchInstalledBackendModules() {
-  return openmrsFetch(`${restBaseUrl}/module?v=custom:(uuid,version)`, {
-    method: 'GET',
-  });
+async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
+  const collected: Array<BackendModule> = [];
+  let nextUrl: string | null = `${restBaseUrl}/module?v=default`;
+  let safetyCounter = 0;
+  const MAX_PAGES = 50;
+
+  const resolveNext = (url?: string | null) => {
+    if (!url) return null;
+    if (/^https?:\/\//i.test(url)) return url;
+    if (url.startsWith('/')) return url;
+    return `${restBaseUrl}/${url.replace(/^\/?/, '')}`;
+  };
+
+  while (nextUrl && safetyCounter < MAX_PAGES) {
+    try {
+      const { data } = await openmrsFetch(nextUrl, { method: 'GET' });
+      const rawResults: Array<any> = Array.isArray(data?.results) ? data.results : [];
+
+      // Use moduleid/moduleId for name matching against required dependency keys (e.g., 'reporting')
+      const pageResults: Array<BackendModule> = rawResults.map((r) => ({
+        uuid: r.moduleId ?? r.moduleid ?? r.uuid,
+        version: r.version,
+      }));
+
+      collected.push(...pageResults);
+
+      const links: Array<{ rel?: string; uri?: string; href?: string }> = Array.isArray(data?.links) ? data.links : [];
+      const nextLink = links.find((l) => (l.rel || '').toLowerCase() === 'next');
+
+      nextUrl = resolveNext(nextLink ? nextLink.uri || nextLink.href || null : null);
+      safetyCounter += 1;
+    } catch (e) {
+      console.error('Failed to fetch installed backend modules page', e);
+      break;
+    }
+  }
+
+  return collected;
 }
 
 function getMissingBackendModules(
