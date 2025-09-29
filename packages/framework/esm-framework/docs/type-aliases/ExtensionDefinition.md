@@ -4,7 +4,7 @@
 
 > **ExtensionDefinition** = `object`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:170
+Defined in: packages/framework/esm-globals/dist/types.d.ts:168
 
 A definition of an extension as extracted from an app's routes.json
 
@@ -14,9 +14,19 @@ A definition of an extension as extracted from an app's routes.json
 
 > **component**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:212
+Defined in: packages/framework/esm-globals/dist/types.d.ts:214
 
 The name of the component exported by this frontend module.
+
+***
+
+### displayExpression?
+
+> `optional` **displayExpression**: `string`
+
+Defined in: packages/framework/esm-globals/dist/types.d.ts:200
+
+The expression that determines whether the extension is displayed.
 
 ***
 
@@ -24,7 +34,7 @@ The name of the component exported by this frontend module.
 
 > `optional` **featureFlag**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:202
+Defined in: packages/framework/esm-globals/dist/types.d.ts:204
 
 If supplied, the extension will only be rendered when this feature flag is enabled.
 
@@ -34,7 +44,7 @@ If supplied, the extension will only be rendered when this feature flag is enabl
 
 > `optional` **meta**: `object`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:206
+Defined in: packages/framework/esm-globals/dist/types.d.ts:208
 
 Meta describes any properties that are passed down to the extension when it is loaded
 
@@ -48,7 +58,7 @@ Meta describes any properties that are passed down to the extension when it is l
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:174
+Defined in: packages/framework/esm-globals/dist/types.d.ts:172
 
 The name of this extension. This is used to refer to the extension in configuration.
 
@@ -58,7 +68,7 @@ The name of this extension. This is used to refer to the extension in configurat
 
 > `optional` **offline**: `boolean`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:190
+Defined in: packages/framework/esm-globals/dist/types.d.ts:188
 
 Determines whether the component renders while the browser is not connected to the internet. If false, this page will never render while offline.
 
@@ -68,7 +78,7 @@ Determines whether the component renders while the browser is not connected to t
 
 > `optional` **online**: `boolean`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:186
+Defined in: packages/framework/esm-globals/dist/types.d.ts:184
 
 Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
 
@@ -78,7 +88,7 @@ Determines whether the component renders while the browser is connected to the i
 
 > `optional` **order**: `number`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:194
+Defined in: packages/framework/esm-globals/dist/types.d.ts:192
 
 Determines the order in which this component renders in its default extension slot. Note that this can be overridden by configuration.
 
@@ -88,7 +98,7 @@ Determines the order in which this component renders in its default extension sl
 
 > `optional` **privileges**: `string` \| `string`[]
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:198
+Defined in: packages/framework/esm-globals/dist/types.d.ts:196
 
 The user must have ANY of these privileges to see this extension.
 
@@ -98,7 +108,7 @@ The user must have ANY of these privileges to see this extension.
 
 > `optional` **slot**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:178
+Defined in: packages/framework/esm-globals/dist/types.d.ts:176
 
 If supplied, the slot that this extension is rendered into by default.
 
@@ -108,6 +118,6 @@ If supplied, the slot that this extension is rendered into by default.
 
 > `optional` **slots**: `string`[]
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:182
+Defined in: packages/framework/esm-globals/dist/types.d.ts:180
 
 If supplied, the slots that this extension is rendered into by default.

@@ -24,7 +24,6 @@
   "moduleName": "שם המודול",
   "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
   "numberValidationMessage": "Value must be a number",
-  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
   "objectValidationMessage": "Value must be an object",
   "requiredVersion": "גרסה נדרשת",
   "resetToDefaultValueButtonText": "איפוס לברירת מחדל",

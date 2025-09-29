@@ -24,7 +24,6 @@
   "moduleName": "模块名称",
   "modulesWithMissingDependenciesWarning": "部分模块存在未解决的backend依赖关系",
   "numberValidationMessage": "Value must be a number",
-  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
   "objectValidationMessage": "Value must be an object",
   "requiredVersion": "所需版本",
   "resetToDefaultValueButtonText": "恢复为默认值",

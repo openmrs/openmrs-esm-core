@@ -26,7 +26,6 @@
   "noExtensionsToOrder": "No extensions found in this slot.",
   "noExtensionsToRemoveText": "No extensions available to remove.",
   "numberValidationMessage": "Value must be a number",
-  "objectPropertyValidationMessage": "Property {{key}}: {{error}}",
   "objectValidationMessage": "Value must be an object",
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Reset to default",
