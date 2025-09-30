@@ -60,6 +60,7 @@ export interface ActionMenuButtonProps2 {
  * 1. restores the workspace window if it is opened and hidden; or
  * 2. launch a workspace from within that window, if the window is not opened.
  *
+ * @experimental
  */
 export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   icon: getIcon,

@@ -19,6 +19,7 @@ import { v4 as uuidV4 } from 'uuid';
  * the requested group is immediately opened.
  *
  * ** 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
+ * @experimental
  * @param groupName
  * @param groupProps
  * @returns a Promise that resolves to true if the specified workspace group with the specified group props
@@ -60,6 +61,7 @@ export async function launchWorkspaceGroup2<GroupProps extends Record<string, an
 /**
  * Closes the workspace group that is currently opened. Note that only one workspace group
  * may be opened at any given time
+ * @experimental
  * @returns a Promise that resolves to true if there is no opened group to begin with or we successfully closed
  * the opened group; false otherwise.
  */
@@ -119,6 +121,7 @@ export async function closeWorkspaceGroup2() {
  * The "patient search" workspace in the queues and ward apps is another example.
  *
  * [²] 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
+ * @experimental
  */
 export async function launchWorkspace2<
   WorkspaceProps extends Record<string, any>,
@@ -329,7 +332,7 @@ type PromptReason =
  * When the closing is explicit, it prompts for confirmation for affected workspaces with unsaved changes.
  * When the closing is implicit, it prompts for confirmation for all affected workspaces, regardless of
  * whether they have unsaved changes.
- *
+ * @experimental
  * @param promptReason
  * @returns a Promise that resolves to true if the user confirmed closing the workspaces; false otherwise.
  */

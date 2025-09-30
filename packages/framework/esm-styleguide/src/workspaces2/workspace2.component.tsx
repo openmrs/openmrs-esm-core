@@ -55,6 +55,7 @@ export type Workspace2Definition<
  * its children as content within a workspace. When creating a workspace
  * component, `<Workspace2>` should be the top-level component returned,
  * wrapping all of the workspace content.
+ * @experimental
  */
 export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsavedChanges }) => {
   const layout = useLayoutType();
