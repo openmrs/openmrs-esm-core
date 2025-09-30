@@ -862,7 +862,7 @@ export const ShoppingCartAddItemIcon = ShoppingCartArrowDownIcon;
  * ```
  */
 export const MaybeIcon = memo(
-  forwardRef<SVGSVGElement, { icon: IconId; fallback?: React.ReactNode } & IconProps>(function MaybeIcon(
+  forwardRef<SVGSVGElement, { icon: string; fallback?: React.ReactNode } & IconProps>(function MaybeIcon(
     { icon, fallback, ...iconProps },
     ref,
   ) {
@@ -888,7 +888,7 @@ export const MaybeIcon = memo(
 
     return (
       <RenderIfValueIsTruthy value={iconRef.current} fallback={fallback}>
-        <Icon ref={ref} icon={icon} iconProps={iconProps} />
+        <Icon ref={ref} icon={icon as IconId} iconProps={iconProps} />
       </RenderIfValueIsTruthy>
     );
   }),
