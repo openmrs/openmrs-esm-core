@@ -58,6 +58,6 @@
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Inconnu",
   "unsavedChangesInWorkspace": "Il se peut que des modifications non enregistrées aient été apportées à « {{NomEspace}} ». Veuillez les enregistrer avant d'ouvrir un autre espace de travail.",
-  "unsavedChangesTitleText": "Modifications non enregistrés",
+  "unsavedChangesTitleText": "Modifications non enregistrées",
   "workspaceHeader": "En-tête de l'espace de travail"
 }
