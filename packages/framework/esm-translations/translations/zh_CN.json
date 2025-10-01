@@ -15,7 +15,7 @@
   "Clinic": "临床",
   "close": "关闭",
   "closeAllOpenedWorkspaces": "放弃 {{count}} 个工作区中的更改",
-  "closingAllWorkspacesPromptBody": "以下工作区中有未保存的更改。您是否要放弃这些工作区中的更改？ {{workspaceNames}}",
+  "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "您有未保存的更改",
   "confirm": "确认",
   "contactAdministratorIfIssuePersists": "如果问题仍然存在，请与系统管理员联系。",
@@ -57,6 +57,7 @@
   "stateProvince": "省份",
   "toggleDevTools": "切换开发工具",
   "unknown": "未知",
+  "unsavedChangesInOpenedWorkspace": "You may have unsaved changes in the opened workspace. Do you want to discard these changes?",
   "unsavedChangesInWorkspace": "{{workspaceName}} 中有未保存的更改。请在打开另一个工作区之前保存它们。",
   "unsavedChangesTitleText": "未保存的更改",
   "workspaceHeader": "工作区标题"

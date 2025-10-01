@@ -15,7 +15,7 @@
   "Clinic": "Klinik",
   "close": "Tutup",
   "closeAllOpenedWorkspaces": "Buang perubahan di {{count}} workspace",
-  "closingAllWorkspacesPromptBody": "Ada perubahan yang belum disimpan di workspace berikut. Apakah Anda ingin membuang perubahan di workspace berikut? {{workspaceNames}}",
+  "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "Anda memiliki perubahan yang belum disimpan",
   "confirm": "Konfirmasi",
   "contactAdministratorIfIssuePersists": "Hubungi administrator sistem jika masalah tetap terjadi.",
@@ -57,6 +57,7 @@
   "stateProvince": "Provinsi",
   "toggleDevTools": "Alihkan dev tools",
   "unknown": "Tidak diketahui",
+  "unsavedChangesInOpenedWorkspace": "You may have unsaved changes in the opened workspace. Do you want to discard these changes?",
   "unsavedChangesInWorkspace": "Mungkin ada perubahan yang belum disimpan di \"{{workspaceName}}\". Harap simpan sebelum membuka workspace lain.",
   "unsavedChangesTitleText": "Perubahan belum disimpan",
   "workspaceHeader": "Header workspace"
