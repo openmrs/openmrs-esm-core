@@ -209,6 +209,10 @@ export type ExtensionDefinition = {
    */
   privileges?: string | Array<string>;
   /**
+   * The expression that determines whether the extension is displayed.
+   */
+  displayExpression?: string;
+  /**
    * If supplied, the extension will only be rendered when this feature flag is enabled.
    */
   featureFlag?: string;
@@ -222,10 +226,6 @@ export type ExtensionDefinition = {
    * The name of the component exported by this frontend module.
    */
   component: string;
-  /**
-   * The expression that determines whether the extension is displayed.
-   */
-  expression: string;
 };
 
 /**

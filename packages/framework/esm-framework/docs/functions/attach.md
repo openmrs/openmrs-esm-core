@@ -4,7 +4,7 @@
 
 > **attach**(`slotName`, `extensionId`): `void`
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:216](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L216)
+Defined in: [packages/framework/esm-extensions/src/extensions.ts:222](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L222)
 
 Attach an extension to an extension slot.
 

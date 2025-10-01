@@ -19,7 +19,7 @@ export interface ExtensionRegistration {
   readonly offline?: boolean;
   readonly privileges?: string | Array<string>;
   readonly featureFlag?: string;
-  readonly expression?: string;
+  readonly displayExpression?: string;
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {
@@ -42,7 +42,7 @@ export interface ExtensionInternalStore {
   extensions: Record<string, ExtensionInfo>;
 }
 
-export type ExtensionSlotCustomState = string | Record<string | symbol | number, unknown>;
+export type ExtensionSlotCustomState = Record<string | symbol | number, unknown> | undefined | null;
 
 export interface ExtensionSlotInfo {
   /**

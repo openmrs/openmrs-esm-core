@@ -20,7 +20,7 @@ import {
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
-import { evaluateAsBoolean, type VariablesMap } from '@openmrs/esm-expression-evaluator';
+import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
 import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
@@ -364,17 +364,21 @@ function getAssignedExtensionsFromSlotData(
       }
 
       const displayConditionExpression =
-        extensionConfig?.['Display conditions']?.expression || extension.expression || null;
-      const slotState = internalState.slots[slotName]?.state ?? null;
-      if (displayConditionExpression && slotState) {
+        extensionConfig?.['Display conditions']?.expression || extension.displayExpression;
+
+      if (displayConditionExpression !== undefined && typeof displayConditionExpression === 'string') {
         try {
-          const context: VariablesMap =
-            slotState && typeof slotState === 'object' ? { session, ...slotState } : { session, slotState };
+          const slotState = internalState.slots[slotName]?.state;
+          const context = slotState && typeof slotState === 'object' ? { session, ...slotState } : { session };
+
           if (!evaluateAsBoolean(displayConditionExpression, context)) {
             continue;
           }
         } catch (e) {
-          console.error(`Error while evaluating expression ${displayConditionExpression}`, e);
+          console.error(
+            `Error while evaluating expression '${displayConditionExpression}' for extension ${name} in slot ${slotName}`,
+            e,
+          );
           continue;
         }
       }
@@ -474,10 +478,12 @@ export const registerExtensionSlot: (moduleName: string, slotName: string, state
       );
       return currentState;
     }
+
     if (existingModuleName && existingModuleName == moduleName) {
       // Re-rendering an existing slot
       return currentState;
     }
+
     if (currentState.slots[slotName]) {
       return {
         ...currentState,
@@ -491,6 +497,7 @@ export const registerExtensionSlot: (moduleName: string, slotName: string, state
         },
       };
     }
+
     const slot = createNewExtensionSlotInfo(slotName, moduleName, state);
     return {
       ...currentState,
@@ -498,11 +505,33 @@ export const registerExtensionSlot: (moduleName: string, slotName: string, state
         ...currentState.slots,
         [slotName]: {
           ...slot,
-          state,
         },
       },
     };
   });
+
+/**
+ * Used by extension slots to update the copy of the state for the extension slot
+ *
+ * @param slotName The name of the slot with state to update
+ * @param state A copy of the new state
+ * @param parital Whether this should be applied as a partial
+ */
+export function updateExtensionSlotState(slotName: string, state: ExtensionSlotCustomState, partial: boolean = false) {
+  extensionInternalStore.setState((currentState) => {
+    const newState = partial ? merge(currentState.slots[slotName].state, state) : state;
+    return {
+      ...currentState,
+      slots: {
+        ...currentState.slots,
+        [slotName]: {
+          ...currentState.slots[slotName],
+          state: newState,
+        },
+      },
+    };
+  });
+}
 
 /**
  * @internal
@@ -515,18 +544,3 @@ export const reset: () => void = () =>
       extensions: {},
     };
   });
-
-export function setExtensionSlotState(slotName: string, state: ExtensionSlotCustomState) {
-  extensionInternalStore.setState((currentState) => {
-    return {
-      ...currentState,
-      slots: {
-        ...currentState.slots,
-        [slotName]: {
-          ...currentState.slots[slotName],
-          state,
-        },
-      },
-    };
-  });
-}

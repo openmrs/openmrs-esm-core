@@ -89,21 +89,6 @@ export function ExtensionSlot({
 
   const extensionsToRender = useMemo(() => select(extensions), [select, extensions]);
 
-  useEffect(() => {
-    if (state !== undefined && name) {
-      updateInternalExtensionStore((current) => ({
-        ...current,
-        slots: {
-          ...current.slots,
-          [name]: {
-            ...current.slots[name],
-            state,
-          },
-        },
-      }));
-    }
-  }, [state, name]);
-
   const extensionsFromChildrenFunction = useMemo(() => {
     if (typeof children == 'function' && !React.isValidElement(children)) {
       return extensionsToRender.map((extension) => children(extension, state));
