@@ -15,6 +15,8 @@
   "Clinic": "Clínica",
   "close": "Cerrar",
   "closeAllOpenedWorkspaces": "Descartar cambios en {{count}} espacios de trabajo",
+  "closeWorkspaces2PromptBody": "You are about to close the following workspace(s), which might have unsaved changes:",
+  "closeWorkspaces2PromptTitle": "Close workspace(s)",
   "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "Tiene cambios sin guardar",
   "confirm": "Confirmar",
