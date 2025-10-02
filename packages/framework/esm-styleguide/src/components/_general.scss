@@ -39,7 +39,7 @@ body {
   grid-area: leftNav;
 }
 
-#omrs-workspace-container {
+#omrs-workspaces-container {
   grid-area: workspace;
   position: relative;
   height: calc(100vh - var(--omrs-navbar-height));

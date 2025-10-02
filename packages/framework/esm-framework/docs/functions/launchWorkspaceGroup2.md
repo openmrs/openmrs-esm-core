@@ -4,7 +4,9 @@
 
 > **launchWorkspaceGroup2**\<`GroupProps`\>(`groupName`, `groupProps`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L27)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L28)
+
+**`Experimental`**
 
 Attempts to launch the specified workspace group with the given group props. Note that only one workspace group
 may be opened at any given time. If a workspace group is already opened, calling `launchWorkspaceGroup2` with

@@ -16,9 +16,9 @@ interface Workspace2Props {
 }
 
 export interface Workspace2DefinitionProps<
-  WorkspaceProps extends Record<string, any> = object,
-  WindowProps extends Record<string, any> = object,
-  GroupProps extends Record<string, any> = object,
+  WorkspaceProps extends object = object,
+  WindowProps extends object = object,
+  GroupProps extends object = object,
 > {
   workspaceName: string;
 
@@ -29,7 +29,7 @@ export interface Workspace2DefinitionProps<
    * @param workspaceName
    * @param workspaceProps
    */
-  launchChildWorkspace<Props extends Record<string, any>>(workspaceName: string, workspaceProps?: Props): void;
+  launchChildWorkspace<Props extends object>(workspaceName: string, workspaceProps?: Props): void;
 
   /**
    * closes the current workspace, along with its children.
@@ -45,9 +45,9 @@ export interface Workspace2DefinitionProps<
 }
 
 export type Workspace2Definition<
-  WorkspaceProps extends Record<string, any>,
-  WindowProps extends Record<string, any>,
-  GroupProps extends Record<string, any>,
+  WorkspaceProps extends object,
+  WindowProps extends object,
+  GroupProps extends object,
 > = React.FC<Workspace2DefinitionProps<WorkspaceProps, WindowProps, GroupProps>>;
 
 /**

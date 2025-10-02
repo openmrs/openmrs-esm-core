@@ -14,7 +14,7 @@ interface TagsProps {
   tagContent?: React.ReactNode;
 }
 
-function Tags({ getIcon, isWindowHidden: isWindowHidden, tagContent }: TagsProps) {
+function Tags({ getIcon, isWindowHidden, tagContent }: TagsProps) {
   return (
     <>
       {getIcon({ size: 16 })}

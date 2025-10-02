@@ -293,7 +293,7 @@ function showToasts() {
 }
 
 function showWorkspacesAndActionMenu() {
-  renderWorkspaceWindowsAndMenu(document.querySelector('#omrs-workspace-container'));
+  renderWorkspaceWindowsAndMenu(document.querySelector('#omrs-workspaces-container'));
 }
 
 function showSnackbars() {

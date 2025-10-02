@@ -10,6 +10,7 @@ import {
 import { useStoreWithActions, type Actions } from '@openmrs/esm-react-utils';
 import { showModal } from '../modals';
 import { v4 as uuidV4 } from 'uuid';
+import { shallowEqual } from '@openmrs/esm-utils';
 
 /**
  * Attempts to launch the specified workspace group with the given group props. Note that only one workspace group
@@ -25,7 +26,7 @@ import { v4 as uuidV4 } from 'uuid';
  * @returns a Promise that resolves to true if the specified workspace group with the specified group props
  *  is successfully opened, or that it already is opened.
  */
-export async function launchWorkspaceGroup2<GroupProps extends Record<string, any>>(
+export async function launchWorkspaceGroup2<GroupProps extends object>(
   groupName: string,
   groupProps: GroupProps | null,
 ): Promise<boolean> {
@@ -39,7 +40,7 @@ export async function launchWorkspaceGroup2<GroupProps extends Record<string, an
       if (!okToCloseWorkspaces) {
         return false;
       }
-      // else, go outside the loop and open the new group with no openedWindows
+      // else, proceed to open the new group with no openedWindows
     } else {
       // no-op, group with group props is already opened
       return true;
@@ -83,7 +84,7 @@ export async function closeWorkspaceGroup2() {
     return true;
   }
 
-  // no openedGroup with being with, return true
+  // no openedGroup with begin with, return true
   return true;
 }
 
@@ -94,13 +95,13 @@ export async function closeWorkspaceGroup2() {
  *
  * When calling `launchWorkspace2`, we need to also pass in the workspace props. While not required,
  * we can also pass in the window props (shared by other workspaces in the window) and the group props
- * (shared by all windows and their workspaces). Omitting the window props or the group props¹ means the caller
+ * (shared by all windows and their workspaces). Omitting the window props or the group props[^1] means the caller
  * explicitly does not care what the current window props and group props are, and that they may be set
  * by other actions (like calling `launchWorkspace2` on a different workspace with those props passed in)
  * at a later time.
  *
  * If there is already an opened workspace group, and it's not the group the workspace belongs to
- * or has incompatible² group props, then we prompt the user to close the group (and its windows and their workspaces).
+ * or has incompatible[^2] group props, then we prompt the user to close the group (and its windows and their workspaces).
  * On user confirm, the existing opened group is closed and the new workspace, along with its window and its group,
  * is opened.
  *
@@ -114,19 +115,19 @@ export async function closeWorkspaceGroup2() {
  * Note that calling this function *never* results in creating a child workspace in the affected window.
  * To do so, we need to call `launchChildWorkspace` instead.
  *
- * [¹] Omitting window or group props is useful for workspaces that don't have ties to the window or group "context" (props).
+ * [^1] Omitting window or group props is useful for workspaces that don't have ties to the window or group "context" (props).
  * For example, in the patient chart, the visit notes / clinical forms / order basket action menu button all share
  * a "group context" of the current visit. However, the "patient list" action menu button does not need to share that group
  * context, so opening that workspace should not need to cause other workspaces / windows / groups to potentially close.
  * The "patient search" workspace in the queues and ward apps is another example.
  *
- * [²] 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
+ * [^2] 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
  * @experimental
  */
 export async function launchWorkspace2<
-  WorkspaceProps extends Record<string, any>,
-  WindowProps extends Record<string, any>,
-  GroupProp extends Record<string, any>,
+  WorkspaceProps extends object,
+  WindowProps extends object,
+  GroupProp extends object,
 >(
   workspaceName: string,
   workspaceProps: WorkspaceProps | null = null,
@@ -187,7 +188,7 @@ export async function launchWorkspace2<
     const { openedWorkspaces } = openedWindow;
 
     if (arePropsCompatible(openedWindow.props, windowProps)) {
-      // this case is tricky, this results in restoring the window is if:
+      // this case is tricky, this results in restoring the window if:
       // 1. the workspace is opened (but not necessarily as a leaf workspace)
       // 2. the props of the opened workspace is same as workspace props (from the function input)
       //
@@ -300,20 +301,7 @@ function arePropsCompatible(a: Record<string, any> | null, b: Record<string, any
     return true;
   }
 
-  // check that every prop in a is also in b, and they are equal
-  for (let key in a) {
-    if (!(key in b) || a[key] !== b[key]) {
-      return false;
-    }
-  }
-
-  // check that every prop in b is also in a, and they are equal
-  for (let key in b) {
-    if (!(key in a) || a[key] !== b[key]) {
-      return false;
-    }
-  }
-  return true;
+  return shallowEqual(a, b);
 }
 
 type PromptReason =
