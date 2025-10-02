@@ -4,4 +4,4 @@
 
 > **NameUse** = `"usual"` \| `"official"` \| `"temp"` \| `"nickname"` \| `"anonymous"` \| `"old"` \| `"maiden"`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:345
+Defined in: packages/framework/esm-globals/dist/types.d.ts:341

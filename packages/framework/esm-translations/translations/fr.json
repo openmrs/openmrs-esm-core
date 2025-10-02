@@ -15,7 +15,7 @@
   "Clinic": "Clinique",
   "close": "Fermer",
   "closeAllOpenedWorkspaces": "Annuler les modifications dans les {{count}} espaces de travail ",
-  "closingAllWorkspacesPromptBody": "Il y a des modifications non enregistrées dans les espaces de travail suivants. Voulez-vous annuler les modifications ? {{workspaceNames}}",
+  "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "Vous avez des modifications non enregistrées",
   "confirm": "Valider",
   "contactAdministratorIfIssuePersists": "Si le problème persiste, veuillez contacter votre administrateur système.",
@@ -57,7 +57,8 @@
   "stateProvince": "État",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Inconnu",
+  "unsavedChangesInOpenedWorkspace": "You may have unsaved changes in the opened workspace. Do you want to discard these changes?",
   "unsavedChangesInWorkspace": "Il se peut que des modifications non enregistrées aient été apportées à « {{NomEspace}} ». Veuillez les enregistrer avant d'ouvrir un autre espace de travail.",
-  "unsavedChangesTitleText": "Modifications non enregistrés",
+  "unsavedChangesTitleText": "Modifications non enregistrées",
   "workspaceHeader": "En-tête de l'espace de travail"
 }

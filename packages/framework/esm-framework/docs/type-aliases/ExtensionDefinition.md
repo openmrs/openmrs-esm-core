@@ -14,19 +14,9 @@ A definition of an extension as extracted from an app's routes.json
 
 > **component**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:214
+Defined in: packages/framework/esm-globals/dist/types.d.ts:210
 
 The name of the component exported by this frontend module.
-
-***
-
-### displayExpression?
-
-> `optional` **displayExpression**: `string`
-
-Defined in: packages/framework/esm-globals/dist/types.d.ts:200
-
-The expression that determines whether the extension is displayed.
 
 ***
 
@@ -34,7 +24,7 @@ The expression that determines whether the extension is displayed.
 
 > `optional` **featureFlag**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:204
+Defined in: packages/framework/esm-globals/dist/types.d.ts:200
 
 If supplied, the extension will only be rendered when this feature flag is enabled.
 
@@ -44,7 +34,7 @@ If supplied, the extension will only be rendered when this feature flag is enabl
 
 > `optional` **meta**: `object`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:208
+Defined in: packages/framework/esm-globals/dist/types.d.ts:204
 
 Meta describes any properties that are passed down to the extension when it is loaded
 

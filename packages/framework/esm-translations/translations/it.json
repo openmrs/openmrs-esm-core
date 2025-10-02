@@ -15,7 +15,7 @@
   "Clinic": "Clinica",
   "close": "Chiudi",
   "closeAllOpenedWorkspaces": "Elimina le modifiche in {{count}} aree di lavoro",
-  "closingAllWorkspacesPromptBody": "Ci sono modifiche non salvate nelle seguenti aree di lavoro. Vuoi eliminarle? {{workspaceNames}}",
+  "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "Hai modifiche non salvate",
   "confirm": "Conferma",
   "contactAdministratorIfIssuePersists": "Contatta l'amministratore di sistema se il problema persiste.",
@@ -57,6 +57,7 @@
   "stateProvince": "Stato",
   "toggleDevTools": "Attiva/disattiva strumenti di sviluppo",
   "unknown": "Sconosciuto",
+  "unsavedChangesInOpenedWorkspace": "You may have unsaved changes in the opened workspace. Do you want to discard these changes?",
   "unsavedChangesInWorkspace": "Potrebbero esserci modifiche non salvate in \"{{workspaceName}}\". Salvale prima di aprire un'altra area di lavoro.",
   "unsavedChangesTitleText": "Modifiche non salvate",
   "workspaceHeader": "Intestazione area di lavoro"
