@@ -174,3 +174,10 @@ export const DiagnosisTags = jest.fn(({ diagnoses }: { diagnoses: Array<Diagnosi
     ))}
   </>
 ));
+
+export const Workspace2 = jest.fn(({ title, children }) => (
+  <div>
+    <h1>{title}</h1>
+    {children}
+  </div>
+));

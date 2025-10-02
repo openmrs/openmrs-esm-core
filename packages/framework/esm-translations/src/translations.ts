@@ -35,9 +35,15 @@ const workspaceTranslations = {
   workspaceHeader: 'Workspace header',
 };
 
+const workspace2Translations = {
+  closeWorkspaces2PromptTitle: 'Close workspace(s)',
+  closeWorkspaces2PromptBody: 'You are about to close the following workspace(s), which might have unsaved changes:',
+};
+
 export const coreTranslations = {
   ...addressFields,
   ...workspaceTranslations,
+  ...workspace2Translations,
   actions: 'Actions',
   address: 'Address',
   age: 'Age',
