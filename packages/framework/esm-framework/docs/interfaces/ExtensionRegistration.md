@@ -6,6 +6,14 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:12](https://github.c
 
 ## Properties
 
+### displayExpression?
+
+> `readonly` `optional` **displayExpression**: `string`
+
+Defined in: [packages/framework/esm-extensions/src/store.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L22)
+
+***
+
 ### featureFlag?
 
 > `readonly` `optional` **featureFlag**: `string`

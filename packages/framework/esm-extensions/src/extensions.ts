@@ -32,6 +32,7 @@ import {
   type ExtensionSlotInfo,
   type ExtensionInternalStore,
   type ExtensionSlotState,
+  type ExtensionSlotCustomState,
   getExtensionStore,
   getExtensionInternalStore,
   updateInternalExtensionStore,
@@ -139,12 +140,17 @@ function updateOutputStoreToCurrent() {
 updateOutputStoreToCurrent();
 subscribeConnectivityChanged(updateOutputStoreToCurrent);
 
-function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
+function createNewExtensionSlotInfo(
+  slotName: string,
+  moduleName?: string,
+  state?: ExtensionSlotCustomState,
+): ExtensionSlotInfo {
   return {
     moduleName,
     name: slotName,
     attachedIds: [],
     config: null,
+    state,
   };
 }
 
@@ -357,15 +363,22 @@ function getAssignedExtensionsFromSlotData(
         }
       }
 
-      const displayConditionExpression = extensionConfig?.['Display conditions']?.expression ?? null;
-      if (displayConditionExpression !== null) {
+      const displayConditionExpression =
+        extensionConfig?.['Display conditions']?.expression || extension.displayExpression;
+
+      if (displayConditionExpression !== undefined && typeof displayConditionExpression === 'string') {
         try {
-          if (!evaluateAsBoolean(displayConditionExpression, { session })) {
+          const slotState = internalState.slots[slotName]?.state;
+          const context = slotState && typeof slotState === 'object' ? { session, ...slotState } : { session };
+
+          if (!evaluateAsBoolean(displayConditionExpression, context)) {
             continue;
           }
         } catch (e) {
-          console.error(`Error while evaluating expression ${displayConditionExpression}`, e);
-          // if the expression has an error, we do not display the extension
+          console.error(
+            `Error while evaluating expression '${displayConditionExpression}' for extension ${name} in slot ${slotName}`,
+            e,
+          );
           continue;
         }
       }
@@ -449,42 +462,76 @@ function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<st
  *
  * @param moduleName The name of the module that contains the extension slot
  * @param slotName The extension slot name that is actually used
+ * @param state Optional custom state for the slot, which will be stored in the extension store.
  * @internal
  */
-export const registerExtensionSlot: (moduleName: string, slotName: string) => void = (moduleName, slotName) =>
-  extensionInternalStore.setState((state) => {
-    const existingModuleName = state.slots[slotName]?.moduleName;
+export const registerExtensionSlot: (moduleName: string, slotName: string, state?: ExtensionSlotCustomState) => void = (
+  moduleName,
+  slotName,
+  state,
+) =>
+  extensionInternalStore.setState((currentState) => {
+    const existingModuleName = currentState.slots[slotName]?.moduleName;
     if (existingModuleName && existingModuleName != moduleName) {
       console.warn(
         `An extension slot with the name '${slotName}' already exists. Refusing to register the same slot name twice (in "registerExtensionSlot"). The existing one is from module ${existingModuleName}.`,
       );
-      return state;
+      return currentState;
     }
+
     if (existingModuleName && existingModuleName == moduleName) {
       // Re-rendering an existing slot
-      return state;
+      return currentState;
     }
-    if (state.slots[slotName]) {
+
+    if (currentState.slots[slotName]) {
       return {
-        ...state,
+        ...currentState,
         slots: {
-          ...state.slots,
+          ...currentState.slots,
           [slotName]: {
-            ...state.slots[slotName],
+            ...currentState.slots[slotName],
             moduleName,
+            state,
           },
         },
       };
     }
-    const slot = createNewExtensionSlotInfo(slotName, moduleName);
+
+    const slot = createNewExtensionSlotInfo(slotName, moduleName, state);
     return {
-      ...state,
+      ...currentState,
       slots: {
-        ...state.slots,
-        [slotName]: slot,
+        ...currentState.slots,
+        [slotName]: {
+          ...slot,
+        },
       },
     };
   });
+
+/**
+ * Used by extension slots to update the copy of the state for the extension slot
+ *
+ * @param slotName The name of the slot with state to update
+ * @param state A copy of the new state
+ * @param parital Whether this should be applied as a partial
+ */
+export function updateExtensionSlotState(slotName: string, state: ExtensionSlotCustomState, partial: boolean = false) {
+  extensionInternalStore.setState((currentState) => {
+    const newState = partial ? merge(currentState.slots[slotName].state, state) : state;
+    return {
+      ...currentState,
+      slots: {
+        ...currentState.slots,
+        [slotName]: {
+          ...currentState.slots[slotName],
+          state: newState,
+        },
+      },
+    };
+  });
+}
 
 /**
  * @internal

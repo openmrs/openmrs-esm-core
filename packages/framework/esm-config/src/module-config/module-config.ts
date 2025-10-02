@@ -905,6 +905,11 @@ const implicitConfigSchema: ConfigSchema = {
       _type: Type.Array,
       _default: [],
     },
+    expression: {
+      _description: 'The expression that determines whether the extension is displayed',
+      _type: Type.String,
+      _default: '',
+    },
   },
   ...translationOverridesSchema,
 };

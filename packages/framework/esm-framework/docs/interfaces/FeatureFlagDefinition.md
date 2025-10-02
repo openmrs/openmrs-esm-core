@@ -2,7 +2,7 @@
 
 # Interface: FeatureFlagDefinition
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:296
+Defined in: packages/framework/esm-globals/dist/types.d.ts:300
 
 A definition of a feature flag extracted from the routes.json
 
@@ -12,7 +12,7 @@ A definition of a feature flag extracted from the routes.json
 
 > **description**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:302
+Defined in: packages/framework/esm-globals/dist/types.d.ts:306
 
 An explanation of what the flag does, which will be displayed in the Implementer Tools
 
@@ -22,7 +22,7 @@ An explanation of what the flag does, which will be displayed in the Implementer
 
 > **flagName**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:298
+Defined in: packages/framework/esm-globals/dist/types.d.ts:302
 
 A code-friendly name for the flag, which will be used to reference it in code
 
@@ -32,6 +32,6 @@ A code-friendly name for the flag, which will be used to reference it in code
 
 > **label**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:300
+Defined in: packages/framework/esm-globals/dist/types.d.ts:304
 
 A human-friendly name which will be displayed in the Implementer Tools

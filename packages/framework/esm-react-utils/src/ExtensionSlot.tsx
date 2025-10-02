@@ -1,6 +1,6 @@
 /** @module @category Extension */
-import React, { useRef, useMemo } from 'react';
-import { type AssignedExtension } from '@openmrs/esm-extensions';
+import React, { useRef, useMemo, useEffect } from 'react';
+import { updateInternalExtensionStore, type AssignedExtension } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 import { Extension } from './Extension';
 import { useExtensionSlot } from './useExtensionSlot';
@@ -85,7 +85,7 @@ export function ExtensionSlot({
 
   const name = (extensionSlotName ?? legacyExtensionSlotName) as string;
   const slotRef = useRef(null);
-  const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
+  const { extensions, extensionSlotModuleName } = useExtensionSlot(name, state);
 
   const extensionsToRender = useMemo(() => select(extensions), [select, extensions]);
 

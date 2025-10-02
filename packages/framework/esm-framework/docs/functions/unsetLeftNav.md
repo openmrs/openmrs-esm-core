@@ -4,7 +4,7 @@
 
 > **unsetLeftNav**(`name`): `void`
 
-Defined in: [packages/framework/esm-extensions/src/left-nav.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L46)
+Defined in: [packages/framework/esm-extensions/src/left-nav.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L49)
 
 Unsets the left nav context if the current context is for the supplied name.
 

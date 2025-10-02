@@ -1,4 +1,4 @@
-import { afterEach, vi } from 'vitest';
+import { afterEach } from 'vitest';
 import type {} from '@openmrs/esm-globals';
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
@@ -9,4 +9,6 @@ window.getOpenmrsSpaBase = () => '/openmrs/spa/';
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+});
