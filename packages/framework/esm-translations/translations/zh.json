@@ -15,6 +15,8 @@
   "Clinic": "Clinic",
   "close": "关闭",
   "closeAllOpenedWorkspaces": "放弃 {{count}} 个工作区中的更改",
+  "closeWorkspaces2PromptBody": "You are about to close the following workspace(s), which might have unsaved changes:",
+  "closeWorkspaces2PromptTitle": "Close workspace(s)",
   "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "您有未保存的更改",
   "confirm": "确认",
