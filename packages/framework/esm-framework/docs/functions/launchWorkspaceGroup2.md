@@ -4,7 +4,7 @@
 
 > **launchWorkspaceGroup2**\<`GroupProps`\>(`groupName`, `groupProps`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L28)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L29)
 
 **`Experimental`**
 
@@ -20,7 +20,7 @@ the requested group is immediately opened.
 
 ### GroupProps
 
-`GroupProps` *extends* `Record`\<`string`, `any`\>
+`GroupProps` *extends* `object`
 
 ## Parameters
 

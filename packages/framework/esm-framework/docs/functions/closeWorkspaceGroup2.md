@@ -4,7 +4,7 @@
 
 > **closeWorkspaceGroup2**(): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L68)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L69)
 
 **`Experimental`**
 

@@ -10,12 +10,12 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ### WorkspaceProps
 
-`WorkspaceProps` *extends* `Record`\<`string`, `any`\>
+`WorkspaceProps` *extends* `object`
 
 ### WindowProps
 
-`WindowProps` *extends* `Record`\<`string`, `any`\>
+`WindowProps` *extends* `object`
 
 ### GroupProps
 
-`GroupProps` *extends* `Record`\<`string`, `any`\>
+`GroupProps` *extends* `object`
