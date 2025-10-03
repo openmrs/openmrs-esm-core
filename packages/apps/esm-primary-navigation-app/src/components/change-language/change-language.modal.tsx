@@ -1,5 +1,7 @@
+import classNames from 'classnames';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { capitalize } from 'lodash-es';
 import {
   Button,
   Checkbox,
@@ -10,11 +12,9 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from '@carbon/react';
-import { capitalize } from 'lodash-es';
 import { useAbortController, useConnectivity, useSession } from '@openmrs/esm-framework';
 import { updateSessionLocale, updateUserProperties } from './change-language.resource';
 import styles from './change-language.scss';
-import classNames from 'classnames';
 
 interface ChangeLanguageModalProps {
   close(): void;
