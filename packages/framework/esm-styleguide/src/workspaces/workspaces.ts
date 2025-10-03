@@ -1,5 +1,6 @@
 /** @module @category Workspace */
 import { useMemo, type ReactNode } from 'react';
+import type { StoreApi } from 'zustand/vanilla';
 import {
   getWorkspaceGroupRegistration,
   getWorkspaceRegistration,
@@ -10,7 +11,6 @@ import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { useStore } from '@openmrs/esm-react-utils';
-import type { StoreApi } from 'zustand/vanilla';
 
 export interface CloseWorkspaceOptions {
   /**

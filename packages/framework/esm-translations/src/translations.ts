@@ -27,16 +27,23 @@ const workspaceTranslations = {
   maximize: 'Maximize',
   minimize: 'Minimize',
   openAnyway: 'Open anyway',
-  unsavedChangesInOpenedWorkspace: `You may have unsaved changes in the opened workspace. Do you want to discard these changes?`,
+  unsavedChangesInOpenedWorkspace:
+    'You may have unsaved changes in the opened workspace. Do you want to discard these changes?',
   unsavedChangesInWorkspace:
     'There may be unsaved changes in "{{workspaceName}}". Please save them before opening another workspace.',
   unsavedChangesTitleText: 'Unsaved changes',
   workspaceHeader: 'Workspace header',
 };
 
+const workspace2Translations = {
+  closeWorkspaces2PromptTitle: 'Close workspace(s)',
+  closeWorkspaces2PromptBody: 'You are about to close the following workspace(s), which might have unsaved changes:',
+};
+
 export const coreTranslations = {
   ...addressFields,
   ...workspaceTranslations,
+  ...workspace2Translations,
   actions: 'Actions',
   address: 'Address',
   age: 'Age',

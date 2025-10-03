@@ -4,15 +4,15 @@
 
 > **SvgPictogramProps** = `object`
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:108](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L108)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:253](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L253)
 
 ## Properties
 
 ### pictogram
 
-> **pictogram**: `string`
+> **pictogram**: [`PictogramId`](PictogramId.md)
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L110)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:255](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L255)
 
 the id of the pictogram
 
@@ -22,6 +22,6 @@ the id of the pictogram
 
 > **pictogramProps**: [`PictogramProps`](PictogramProps.md)
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L112)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:257](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L257)
 
 properties when using the pictogram
