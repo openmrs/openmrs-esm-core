@@ -38,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.83.0",
+    "@carbon/react": "^1.92.1",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
@@ -46,17 +46,17 @@
     "@openmrs/esm-framework": "*",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-i18next": "11.x",
+    "react-i18next": "16.x",
     "rxjs": "6.x",
     "swr": "2.x"
   },
   "devDependencies": {
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/webpack-config": "workspace:*",
-    "ace-builds": "^1.4.14",
-    "react": "^18.1.0",
-    "react-ace": "^9.5.0",
-    "react-dom": "^18.1.0",
+    "ace-builds": "^1.43.3",
+    "react": "^18.3.1",
+    "react-ace": "^14.0.1",
+    "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
     "rxjs": "^6.5.3",
     "swr": "2.2.5",

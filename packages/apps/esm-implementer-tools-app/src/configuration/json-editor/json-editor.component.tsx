@@ -1,12 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button } from '@carbon/react';
-import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-dracula';
+import { Button } from '@carbon/react';
+import { useTranslation } from 'react-i18next';
 import { clearConfigErrors, temporaryConfigStore, useStore } from '@openmrs/esm-framework/src/internal';
 import styles from './json-editor.scss';
+
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/theme-dracula';
+import ace from 'ace-builds/src-noconflict/ace';
+
+// Configure ace to bundle workers locally (webpack 5 asset modules)
+// Using new URL() syntax instead of deprecated file-loader or CDN for offline compatibility
+ace.config.setModuleUrl(
+  'ace/mode/json_worker',
+  new URL('ace-builds/src-noconflict/worker-json.js', import.meta.url).href,
+);
 
 export interface JsonEditorProps {
   /** A CSS value */
@@ -25,17 +34,17 @@ export default function JsonEditor({ height }: JsonEditorProps) {
     try {
       config = JSON.parse(editorValue);
     } catch (e) {
-      setError(e.message);
+      setError(e instanceof Error ? e.message : 'Invalid JSON');
       return;
     }
     setError('');
     clearConfigErrors();
     temporaryConfigStore.setState({ config });
-  }, [editorValue, temporaryConfigStore]);
+  }, [editorValue, temporaryConfig.config]);
 
   useEffect(() => {
     if (editorValue != JSON.stringify(temporaryConfig.config, null, 2)) {
-      setKey((k) => `${k}+`); // just keep appendingplus signs
+      setKey((k) => `${k}+`); // just keep appending plus signs
     }
   }, [temporaryConfig.config]);
 
