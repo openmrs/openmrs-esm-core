@@ -12,10 +12,12 @@ const mockUser = {
 };
 
 const mockUpdateUserProperties = jest.fn((...args) => Promise.resolve());
+const mockUpdateSessionLocale = jest.fn((...args) => Promise.resolve());
 const mockUseSession = jest.mocked(useSession);
 
 jest.mock('./change-language.resource', () => ({
   updateUserProperties: (...args) => mockUpdateUserProperties(...args),
+  updateSessionLocale: (...args) => mockUpdateSessionLocale(...args),
 }));
 
 describe(`Change Language Modal`, () => {
@@ -71,29 +73,30 @@ describe(`Change Language Modal`, () => {
 
     expect(screen.getByText(/changing language.../i)).toBeInTheDocument();
   });
-it('should display the "Update your default locale" checkbox checked by default', () => {
-  render(<ChangeLanguageModal close={jest.fn()} />);
 
-  const checkbox = screen.getByRole('checkbox', { name: /update your default locale/i });
-  expect(checkbox).toBeChecked();
-});
+  it('should display the "Update your default locale" checkbox checked by default', () => {
+    render(<ChangeLanguageModal close={jest.fn()} />);
 
-it('should call updateSessionLocale when checkbox is unchecked and user changes locale', async () => {
-  const user = userEvent.setup();
+    const checkbox = screen.getByRole('checkbox', { name: /update your default locale/i });
+    expect(checkbox).toBeChecked();
+  });
 
-  render(<ChangeLanguageModal close={jest.fn()} />);
+  it('should call updateSessionLocale when checkbox is unchecked and user changes locale', async () => {
+    const user = userEvent.setup();
 
-  // Uncheck the checkbox to only update session locale
-  const checkbox = screen.getByRole('checkbox', { name: /update your default locale/i });
-  await user.click(checkbox);
+    render(<ChangeLanguageModal close={jest.fn()} />);
 
-  // Change locale
-  await user.click(screen.getByRole('radio', { name: /english/i }));
-  await user.click(screen.getByRole('button', { name: /change/i }));
+    // Uncheck the checkbox to only update session locale
+    const checkbox = screen.getByRole('checkbox', { name: /update your default locale/i });
+    await user.click(checkbox);
 
-  expect(mockUpdateSessionLocale).toHaveBeenCalledWith('en', expect.anything());
-  expect(mockUpdateUserProperties).not.toHaveBeenCalled();
-});
+    // Change locale
+    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(mockUpdateSessionLocale).toHaveBeenCalledWith('en', expect.anything());
+    expect(mockUpdateUserProperties).not.toHaveBeenCalled();
+  });
 
   it('should disable submit button when selected locale is same as current locale', () => {
     render(<ChangeLanguageModal close={jest.fn()} />);
