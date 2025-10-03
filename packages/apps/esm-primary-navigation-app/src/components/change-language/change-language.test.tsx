@@ -74,10 +74,10 @@ describe(`Change Language Modal`, () => {
     expect(screen.getByText(/changing language.../i)).toBeInTheDocument();
   });
 
-  it('should display the "Update your default locale" checkbox checked by default', () => {
+  it('should display the "Save as my default language" checkbox checked by default', () => {
     render(<ChangeLanguageModal close={jest.fn()} />);
 
-    const checkbox = screen.getByRole('checkbox', { name: /update your default locale/i });
+    const checkbox = screen.getByRole('checkbox', { name: /Save as my default language/i });
     expect(checkbox).toBeChecked();
   });
 
@@ -87,7 +87,7 @@ describe(`Change Language Modal`, () => {
     render(<ChangeLanguageModal close={jest.fn()} />);
 
     // Uncheck the checkbox to only update session locale
-    const checkbox = screen.getByRole('checkbox', { name: /update your default locale/i });
+    const checkbox = screen.getByRole('checkbox', { name: /Save as my default language/i });
     await user.click(checkbox);
 
     // Change locale
