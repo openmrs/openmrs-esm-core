@@ -1,11 +1,4 @@
-import {
-  getCurrentUser,
-  getSynchronizationItemsFor,
-  openmrsObservableFetch,
-  restBaseUrl,
-} from '@openmrs/esm-framework/src/internal';
-import { mergeMap } from 'rxjs/operators';
-import { userPropertyChange } from './constants';
+import { getCurrentUser, openmrsObservableFetch, restBaseUrl } from '@openmrs/esm-framework/src/internal';
 
 export function getCurrentSession() {
   return openmrsObservableFetch(`${restBaseUrl}/session`);
@@ -16,16 +9,5 @@ export function getCurrentSession() {
  * changes to that user.
  */
 export function getSynchronizedCurrentUser() {
-  return getCurrentUser({ includeAuthStatus: true }).pipe(
-    mergeMap(async (result) => {
-      const { user } = result;
-
-      if (user) {
-        const allChanges = await getSynchronizationItemsFor<any>(user.uuid, userPropertyChange);
-        Object.assign(user.userProperties, ...allChanges);
-      }
-
-      return result;
-    }),
-  );
+  return getCurrentUser({ includeAuthStatus: true });
 }

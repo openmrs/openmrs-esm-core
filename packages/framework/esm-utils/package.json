@@ -54,7 +54,7 @@
   "peerDependencies": {
     "@openmrs/esm-globals": "6.x",
     "dayjs": "1.x",
-    "i18next": "21.x",
+    "i18next": "25.x",
     "rxjs": "6.x"
   },
   "devDependencies": {

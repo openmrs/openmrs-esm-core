@@ -1,7 +1,6 @@
 import React from 'react';
 import { of } from 'rxjs';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {
   useConfig,
   useAssignedExtensions,
@@ -34,10 +33,6 @@ mockUseLeftNavStore.mockReturnValue({ slotName: '', basePath: '', mode: 'normal'
 jest.mock('./root.resource', () => ({
   getSynchronizedCurrentUser: jest.fn(() => mockUserObservable),
   getCurrentSession: jest.fn(() => mockSessionObservable),
-}));
-
-jest.mock('./offline', () => ({
-  syncUserPropertiesChanges: () => Promise.resolve({}),
 }));
 
 jest.mock('./utils', () => ({

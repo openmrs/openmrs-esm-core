@@ -2,14 +2,6 @@
 @use '@carbon/type';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
-.bodyShort01 {
-  @include type.type-style('body-compact-01');
-}
-
-.headerPanel {
-  height: max-content;
-}
-
 .primaryNavContainer {
   height: var(--omrs-topnav-height);
 }
@@ -17,6 +9,7 @@
 .languageOptionsContainer {
   display: flex;
   flex-direction: column;
+  padding-bottom: layout.$spacing-05;
   max-height: 28rem;
 }
 
@@ -24,7 +17,19 @@
   display: flex;
   height: layout.$spacing-09;
   align-items: center;
-  @extend .bodyShort01;
+  @include type.type-style('body-compact-01');
+}
+
+.updateDefaultLocaleContainer {
+  padding-top: layout.$spacing-03;
+  padding-left: layout.$spacing-05;
+  padding-right: layout.$spacing-05;
+  padding-bottom: layout.$spacing-06;
+}
+
+.updateDefaultLocaleExplainer {
+  @include type.type-style('body-compact-01');
+  color: $text-02;
 }
 
 .submitButton {

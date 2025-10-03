@@ -80,10 +80,10 @@
   },
   "peerDependencies": {
     "dayjs": "1.x",
-    "i18next": "21.x",
+    "i18next": "25.x",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-i18next": "11.x",
+    "react-i18next": "16.x",
     "rxjs": "6.x",
     "single-spa": "6.x",
     "swr": "2.x"

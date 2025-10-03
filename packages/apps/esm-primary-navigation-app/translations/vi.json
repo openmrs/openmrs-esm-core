@@ -2,6 +2,8 @@
   "AppMenuTooltip": "App Menu",
   "cancel": "Hủy",
   "change": "Thay đổi",
+  "changeDefaultLocale": "Update your default locale",
+  "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
   "changeLanguage": "Thay đổi ngôn ngữ",
   "changingLanguage": "Đang thay đổi ngôn ngữ",
   "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
