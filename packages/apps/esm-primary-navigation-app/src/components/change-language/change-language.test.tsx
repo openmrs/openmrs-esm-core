@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { type LoggedInUser, type Session, useConnectivity, useSession } from '@openmrs/esm-framework';
+import { type LoggedInUser, type Session, useSession } from '@openmrs/esm-framework';
 import ChangeLanguageModal from './change-language.modal';
 
 const mockUser = {
@@ -11,14 +11,11 @@ const mockUser = {
   },
 };
 
-const mockPostUserPropertiesOnline = jest.fn((...args) => Promise.resolve());
-const mockPostUserPropertiesOffline = jest.fn((...args) => Promise.resolve());
-const mockUseConnectivity = jest.mocked(useConnectivity);
+const mockUpdateUserProperties = jest.fn((...args) => Promise.resolve());
 const mockUseSession = jest.mocked(useSession);
 
 jest.mock('./change-language.resource', () => ({
-  postUserPropertiesOnline: (...args) => mockPostUserPropertiesOnline(...args),
-  postUserPropertiesOffline: (...args) => mockPostUserPropertiesOffline(...args),
+  updateUserProperties: (...args) => mockUpdateUserProperties(...args),
 }));
 
 describe(`Change Language Modal`, () => {
@@ -60,16 +57,12 @@ describe(`Change Language Modal`, () => {
     await user.click(screen.getByRole('radio', { name: /english/i }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
-    expect(mockPostUserPropertiesOnline).toHaveBeenCalledWith(
-      mockUser.uuid,
-      { defaultLocale: 'en' },
-      expect.anything(),
-    );
+    expect(mockUpdateUserProperties).toHaveBeenCalledWith(mockUser.uuid, { defaultLocale: 'en' }, expect.anything());
   });
 
   it('should show a loading indicator in the submit button while language change is in progress', async () => {
     const user = userEvent.setup();
-    mockPostUserPropertiesOnline.mockImplementation(() => new Promise(() => {}));
+    mockUpdateUserProperties.mockImplementation(() => new Promise(() => {}));
 
     render(<ChangeLanguageModal close={jest.fn()} />);
 
@@ -77,23 +70,6 @@ describe(`Change Language Modal`, () => {
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(screen.getByText(/changing language.../i)).toBeInTheDocument();
-  });
-
-  it('should use offline endpoint when user is offline', async () => {
-    const user = userEvent.setup();
-    mockUseConnectivity.mockReturnValue(false);
-
-    render(<ChangeLanguageModal close={jest.fn()} />);
-
-    await user.click(screen.getByRole('radio', { name: /english/i }));
-    await user.click(screen.getByRole('button', { name: /change/i }));
-
-    expect(mockPostUserPropertiesOffline).toHaveBeenCalledWith(
-      mockUser.uuid,
-      { defaultLocale: 'en' },
-      expect.anything(),
-    );
-    expect(mockPostUserPropertiesOnline).not.toHaveBeenCalled();
   });
 
   it('should disable submit button when selected locale is same as current locale', () => {

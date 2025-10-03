@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
+  Checkbox,
   InlineLoading,
   ModalBody,
   ModalFooter,
@@ -10,9 +11,10 @@ import {
   RadioButtonGroup,
 } from '@carbon/react';
 import { capitalize } from 'lodash-es';
-import { useConnectivity, useSession } from '@openmrs/esm-framework';
-import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
+import { useAbortController, useConnectivity, useSession } from '@openmrs/esm-framework';
+import { updateSessionLocale, updateUserProperties } from './change-language.resource';
 import styles from './change-language.scss';
+import classNames from 'classnames';
 
 interface ChangeLanguageModalProps {
   close(): void;
@@ -20,30 +22,33 @@ interface ChangeLanguageModalProps {
 
 export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps) {
   const { t } = useTranslation();
-  const isOnline = useConnectivity();
   const session = useSession();
   const user = session?.user;
   const allowedLocales = session?.allowedLocales ?? [];
   const [selectedLocale, setSelectedLocale] = useState(session?.locale);
+  const [shouldChangeDefaultLocale, setShouldChangeDefaultLocale] = useState(true);
   const [isChangingLanguage, setIsChangingLanguage] = useState(false);
+  const ac = useAbortController();
 
   const handleSubmit = useCallback(() => {
     setIsChangingLanguage(true);
 
-    const postUserProperties = isOnline ? postUserPropertiesOnline : postUserPropertiesOffline;
-
     if (selectedLocale && selectedLocale !== session?.locale) {
-      const ac = new AbortController();
-      postUserProperties(
-        user.uuid,
-        {
-          ...(user.userProperties ?? {}),
-          defaultLocale: selectedLocale.replace(/-/gi, '_'),
-        },
-        ac,
-      );
+      const formattedLocale = selectedLocale.replace(/-/gi, '_');
+      if (shouldChangeDefaultLocale) {
+        updateUserProperties(
+          user.uuid,
+          {
+            ...(user.userProperties ?? {}),
+            defaultLocale: formattedLocale,
+          },
+          ac,
+        );
+      } else {
+        updateSessionLocale(formattedLocale, ac);
+      }
     }
-  }, [isOnline, user.userProperties, user.uuid, selectedLocale]);
+  }, [user.userProperties, user.uuid, selectedLocale, shouldChangeDefaultLocale]);
 
   const languageNames = useMemo(
     () =>
@@ -77,6 +82,14 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
           </RadioButtonGroup>
         </div>
       </ModalBody>
+      <div className={classNames('cds--layer-two', styles.updateDefaultLocaleContainer)} role="region">
+        <Checkbox
+          id={`change-default-locale`}
+          labelText={t('changeDefaultLocale', 'Update your default locale')}
+          checked={shouldChangeDefaultLocale}
+          onClick={() => setShouldChangeDefaultLocale(!shouldChangeDefaultLocale)}
+        />
+      </div>
       <ModalFooter>
         <Button kind="secondary" onClick={close}>
           {t('cancel', 'Cancel')}
