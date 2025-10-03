@@ -27,6 +27,11 @@
   padding-bottom: layout.$spacing-06;
 }
 
+.updateDefaultLocaleExplainer {
+  @include type.type-style('body-compact-01');
+  color: $text-02;
+}
+
 .submitButton {
   :global(.cds--inline-loading) {
     min-height: layout.$spacing-05 !important;

@@ -85,10 +85,13 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
       <div className={classNames('cds--layer-two', styles.updateDefaultLocaleContainer)} role="region">
         <Checkbox
           id={`change-default-locale`}
-          labelText={t('changeDefaultLocale', 'Update your default locale')}
+          labelText={t('changeDefaultLocale', 'Save as my default language')}
           checked={shouldChangeDefaultLocale}
           onChange={(_, { checked }) => setShouldChangeDefaultLocale(checked)}
         />
+        <p className={classNames(styles.updateDefaultLocaleExplainer)}>
+          {t('changeDefaultLocaleExplanation', 'Leave this unchecked to change language for this session only')}
+        </p>
       </div>
       <ModalFooter>
         <Button kind="secondary" onClick={close}>
