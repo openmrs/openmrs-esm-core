@@ -12,7 +12,7 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from '@carbon/react';
-import { useAbortController, useConnectivity, useSession } from '@openmrs/esm-framework';
+import { useAbortController, useSession } from '@openmrs/esm-framework';
 import { updateSessionLocale, updateUserProperties } from './change-language.resource';
 import styles from './change-language.scss';
 
@@ -87,7 +87,7 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
           id={`change-default-locale`}
           labelText={t('changeDefaultLocale', 'Update your default locale')}
           checked={shouldChangeDefaultLocale}
-          onClick={() => setShouldChangeDefaultLocale(!shouldChangeDefaultLocale)}
+          onChange={(_, { checked }) => setShouldChangeDefaultLocale(checked)}
         />
       </div>
       <ModalFooter>
