@@ -81,7 +81,7 @@ describe('Login', () => {
     const user = userEvent.setup();
 
     expect(screen.getByRole('textbox', { name: /username/i })).toBeInTheDocument();
-    // no input to username
+
     const continueButton = screen.getByRole('button', { name: /Continue/i });
     await user.click(continueButton);
     expect(screen.getByRole('textbox', { name: /username/i })).toHaveFocus();
@@ -115,7 +115,6 @@ describe('Login', () => {
     await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
-  // TODO: Complete the test
   it('sends the user to the location select page on login if there is more than one location', async () => {
     let refreshUser = (user: any) => {};
     mockLogin.mockImplementation(() => {
@@ -282,5 +281,75 @@ describe('Login', () => {
     const usernameInput = screen.getByRole('textbox', { name: /username/i });
 
     expect(usernameInput).toHaveFocus();
+  });
+
+  it('renders configurable branding with custom title and links', () => {
+    const brandedConfig = {
+      ...mockConfig,
+      branding: {
+        title: 'Test Health Center',
+        subtitle: 'Electronic Medical Records',
+        customText: '',
+        helpText: 'Need help? Contact support',
+        contactEmail: 'support@test.org',
+        customLinks: [
+          {
+            text: 'Go to Legacy UI',
+            url: '/openmrs/index.htm',
+          },
+        ],
+      },
+      logo: {
+        src: 'test-logo.png',
+        alt: 'Test Health Center Logo',
+      },
+    };
+    mockUseConfig.mockReturnValue(brandedConfig);
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: '/login',
+      },
+    );
+
+    expect(screen.getByAltText('Test Health Center Logo')).toBeInTheDocument();
+    expect(screen.getByText('Test Health Center')).toBeInTheDocument();
+    expect(screen.getByText('Electronic Medical Records')).toBeInTheDocument();
+    expect(screen.getByText('Need help? Contact support')).toBeInTheDocument();
+    expect(screen.getByText(/support@test.org/)).toBeInTheDocument();
+    expect(screen.getByText('Go to Legacy UI')).toBeInTheDocument();
+  });
+
+  it('renders default layout when layout type is default with logo', () => {
+    const defaultConfig = {
+      ...mockConfig,
+      layout: {
+        ...mockConfig.layout,
+        type: 'default',
+        showLogo: true,
+        showFooter: true,
+      },
+      branding: {
+        title: '',
+        subtitle: '',
+        customText: '',
+        helpText: '',
+        contactEmail: '',
+        customLinks: [],
+      },
+    };
+    mockUseConfig.mockReturnValue(defaultConfig);
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: '/login',
+      },
+    );
+
+    expect(screen.getAllByRole('img', { name: /OpenMRS logo/i })).toHaveLength(2);
   });
 });

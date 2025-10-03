@@ -156,3 +156,124 @@
   bottom: 100%;
   left: 0;
 }
+
+.brandingTitle {
+  text-align: center;
+  margin-bottom: layout.$spacing-05;
+
+  h2 {
+    @include type.type-style('heading-04');
+    color: inherit;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.brandingSubtitle {
+  text-align: center;
+  margin-bottom: layout.$spacing-04;
+
+  p {
+    @extend .bodyShort01;
+    color: $text-02;
+    margin: 0;
+  }
+}
+
+.brandingCustomText {
+  @extend .bodyShort01;
+  color: $text-02;
+  margin-bottom: layout.$spacing-05;
+  text-align: center;
+}
+
+.helpText {
+  @extend .caption01;
+  color: $text-02;
+  text-align: center;
+  margin-top: layout.$spacing-05;
+
+  p {
+    margin: 0;
+  }
+}
+
+.contactInfo {
+  @extend .caption01;
+  color: $text-02;
+  text-align: center;
+  margin-top: layout.$spacing-04;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: #0f62fe;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.customLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: layout.$spacing-03;
+  margin-top: layout.$spacing-05;
+}
+
+.customLink {
+  @extend .bodyShort01;
+  color: #0f62fe;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.position-left {
+  align-items: flex-start;
+  padding-left: 5%;
+
+  @media (min-width: 1024px) {
+    padding-left: 10%;
+  }
+}
+
+.position-center {
+  align-items: center;
+}
+
+.position-right {
+  align-items: flex-end;
+  padding-right: 5%;
+
+  @media (min-width: 1024px) {
+    padding-right: 10%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .position-left,
+  .position-right {
+    align-items: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .loginCard {
+    width: 90vw;
+    max-width: 23rem;
+  }
+
+  .brandingTitle h2 {
+    @include type.type-style('heading-03');
+  }
+}
