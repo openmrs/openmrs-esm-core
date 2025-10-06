@@ -1,6 +1,6 @@
 import React from 'react';
 import { interpolateUrl, useConfig } from '@openmrs/esm-framework';
-import { type TFunction } from 'react-i18next';
+import { type TFunction } from 'i18next';
 import { type ConfigSchema } from './config-schema';
 import styles from './login/login.scss';
 
@@ -16,7 +16,7 @@ const Logo: React.FC<{ t: TFunction }> = ({ t }) => {
     <svg role="img" className={styles.logo}>
       <title>{t('openmrsLogo', 'OpenMRS logo')}</title>
       <use href="#omrs-logo-full-color"></use>
-    </svg> 
+    </svg>
   );
 };
 
