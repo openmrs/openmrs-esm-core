@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ComboBox } from '@carbon/react';
 import { useLocationByUuid, useLocations } from '../location-picker/location-picker.resource';
-import styles from './location-selector.module.scss';
 
 interface Location {
   resource: { id: string; name: string };
@@ -14,8 +13,7 @@ interface LocationSelectorProps {
   locationTag?: string;
   locationsPerRequest?: number;
   onChange: (locationUuid?: string) => void;
-  Locationlabel: string;
-  comBoxLabel: string;
+  label?: string;
 }
 
 export const LocationSelector: React.FC<LocationSelectorProps> = ({
@@ -24,8 +22,7 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
   locationTag,
   locationsPerRequest = 50,
   onChange,
-  Locationlabel,
-  comBoxLabel,
+  label,
 }) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -59,9 +56,8 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
 
   return (
     <section data-testid="combo">
-      <div className={styles.sectionTitle}>{Locationlabel}</div>
       <ComboBox
-        aria-label={comBoxLabel}
+        aria-label={label}
         id="location"
         invalidText={t('Required')}
         items={items}
@@ -70,7 +66,7 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
         itemToString={(item) => item?.label || ''}
         onChange={(evt) => onChange(evt.selectedItem?.id)}
         onInputChange={(value) => setSearchTerm(value)}
-        titleText={comBoxLabel}
+        titleText={label}
       />
     </section>
   );
