@@ -39,11 +39,11 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
   }, [fetchedLocations]);
 
   const effectiveLocations = useMemo<Location[]>(() => {
-    const base = fetchedLocations.length > 0 ? fetchedLocations : initialLocations;
+    const baseLocations = fetchedLocations.length > 0 ? fetchedLocations : initialLocations;
     if (defaultLocation && !searchTerm) {
-      return [defaultLocation, ...base.filter((loc) => loc.resource.id !== defaultLocationUuid)];
+      return [defaultLocation, ...baseLocations.filter((loc) => loc.resource.id !== defaultLocationUuid)];
     }
-    return base;
+    return baseLocations;
   }, [defaultLocation, defaultLocationUuid, fetchedLocations, initialLocations, searchTerm]);
 
   const items = useMemo(
