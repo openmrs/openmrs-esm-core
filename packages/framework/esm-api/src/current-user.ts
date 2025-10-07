@@ -114,7 +114,7 @@ function isValidLocale(locale: unknown): locale is string {
 }
 
 export function setUserLanguage(data: Session) {
-  let locale = data.user?.userProperties?.defaultLocale ?? data.locale;
+  let locale = data.locale ?? data.user?.userProperties?.defaultLocale;
 
   if (locale && locale.includes('_')) {
     locale = locale.replaceAll('_', '-');

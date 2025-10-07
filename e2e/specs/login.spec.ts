@@ -33,7 +33,7 @@ test('Login as Admin user', async ({ page }) => {
   });
 
   await test.step('Then I should get navigated to the home page', async () => {
-    await expect(page).toHaveURL(`${process.env.E2E_BASE_URL}/spa/home`);
+    await expect(page).toHaveURL(`${process.env.E2E_BASE_URL}/spa/home/service-queues`);
   });
 
   await test.step('And I should see the location picker in top nav', async () => {
