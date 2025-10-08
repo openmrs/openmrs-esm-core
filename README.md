@@ -181,12 +181,12 @@ cp example.env .env
 By default, tests run against a local backend at http://localhost:8080/openmrs. To test local changes, make sure your dev server is running before executing tests. For example, to test local changes to the Login app, run:
 
 ```bash
-yarn start --sources packages/apps/esm-login-app
+yarn start --sources packages/apps/esm-login-app # or any other app in the packages/apps directory
 ```
 
-To test against a remote instance (such as the OpenMRS refapp hosted on dev3.openmrs.org, update the E2E_BASE_URL environment variable in your .env file:
+To test against a remote instance (such as the OpenMRS refapp hosted on dev3.openmrs.org), update the `E2E_BASE_URL` environment variable in your .env file:
 
-```
+```env
 E2E_BASE_URL=https://dev3.openmrs.org/openmrs
 ```
 
@@ -196,7 +196,7 @@ To run E2E tests:
 yarn test-e2e
 ```
 
-This will run all the E2E tests (files in the e2e directory with the *.spec.ts extension) in headless mode. That means no browser UI will be visible.
+This will run all the E2E tests (files in the e2e/specs directory with the `*.spec.ts` extension) in headless mode. That means no browser UI will be visible.
 
 To run tests in headed mode (shows the browser while tests run) use:
 
@@ -219,7 +219,7 @@ yarn test-e2e --headed --ui
 To run a specific test file:
 
 ```bash
-yarn test-e2e <test-name>
+yarn test-e2e <test-name> # for example, yarn test-e2e login.spec.ts
 ```
 
 Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3) to learn more about End-to-End tests in this project.
