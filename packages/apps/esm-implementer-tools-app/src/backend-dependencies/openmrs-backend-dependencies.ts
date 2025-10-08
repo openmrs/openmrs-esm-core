@@ -39,6 +39,8 @@ interface BackendModule {
 
 let cachedFrontendModules: Array<ResolvedDependenciesModule>;
 
+const MAX_PAGES = 50;
+
 async function initInstalledBackendModules(): Promise<Array<BackendModule>> {
   try {
     const modules = await fetchInstalledBackendModules();
@@ -90,9 +92,8 @@ function checkIfModulesAreInstalled(
 
 async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
   const collected: Array<BackendModule> = [];
-  let nextUrl: string | null = `${restBaseUrl}/module?v=default`;
+  let nextUrl: string | null = `${restBaseUrl}/module?v=custom:(uuid,version)`;
   let safetyCounter = 0;
-  const MAX_PAGES = 50;
 
   const resolveNext = (url?: string | null) => {
     if (!url) return null;
@@ -104,11 +105,10 @@ async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
   while (nextUrl && safetyCounter < MAX_PAGES) {
     try {
       const { data } = await openmrsFetch(nextUrl, { method: 'GET' });
-      const rawResults: Array<any> = Array.isArray(data?.results) ? data.results : [];
+      const rawResults: Array<BackendModule> = Array.isArray(data?.results) ? data.results : [];
 
-      // Use moduleid/moduleId for name matching against required dependency keys (e.g., 'reporting')
       const pageResults: Array<BackendModule> = rawResults.map((r) => ({
-        uuid: r.moduleId ?? r.moduleid ?? r.uuid,
+        uuid: r.uuid,
         version: r.version,
       }));
 
@@ -117,12 +117,18 @@ async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
       const links: Array<{ rel?: string; uri?: string; href?: string }> = Array.isArray(data?.links) ? data.links : [];
       const nextLink = links.find((l) => (l.rel || '').toLowerCase() === 'next');
 
-      nextUrl = resolveNext(nextLink ? nextLink.uri || nextLink.href || null : null);
+      nextUrl = resolveNext(nextLink?.uri ?? null);
       safetyCounter += 1;
     } catch (e) {
-      console.error('Failed to fetch installed backend modules page', e);
+      console.error(`Failed to fetch installed backend modules page ${safetyCounter + 1} (URL: ${nextUrl})`, e);
       break;
     }
+  }
+
+  if (nextUrl && safetyCounter >= MAX_PAGES) {
+    console.warn(
+      `Reached maximum page limit (${MAX_PAGES}) while fetching backend modules. There may be more data available at: ${nextUrl}`,
+    );
   }
 
   return collected;
