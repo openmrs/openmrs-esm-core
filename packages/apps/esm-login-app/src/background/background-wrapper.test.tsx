@@ -45,44 +45,17 @@ const defaultConfig: ConfigSchema = {
   },
   showPasswordOnSeparateScreen: true,
   layout: {
-    type: 'default',
-    columnPosition: 'center',
-    showLogo: true,
+    loginFormPosition: 'center',
     showFooter: true,
   },
   background: {
-    type: 'default',
-    value: '',
-    alt: 'Background Image',
-    size: 'cover',
-    position: 'center',
-    repeat: 'no-repeat',
-    attachment: 'scroll',
-    overlay: {
-      enabled: false,
-      color: 'rgba(0, 0, 0, 0.3)',
-      opacity: 0.3,
-      blendMode: 'normal',
-    },
-  },
-  card: {
-    backgroundColor: '',
-    borderRadius: '',
-    width: '',
-    padding: '',
-    boxShadow: '',
-  },
-  button: {
-    backgroundColor: '',
-    textColor: '',
+    color: '',
+    imageUrl: '',
   },
   branding: {
     title: '',
     subtitle: '',
-    customText: '',
     helpText: '',
-    contactEmail: '',
-    customLinks: [],
   },
 };
 
@@ -110,9 +83,8 @@ describe('BackgroundWrapper', () => {
     const configWithColorBg = {
       ...defaultConfig,
       background: {
-        ...defaultConfig.background,
-        type: 'color' as const,
-        value: '#ff0000',
+        color: '#ff0000',
+        imageUrl: '',
       },
     };
     mockUseConfig.mockReturnValue(configWithColorBg);
@@ -130,13 +102,8 @@ describe('BackgroundWrapper', () => {
     const configWithImageBg = {
       ...defaultConfig,
       background: {
-        ...defaultConfig.background,
-        type: 'image' as const,
-        value: 'https://example.com/background.jpg',
-        size: 'contain',
-        position: 'top',
-        repeat: 'repeat-x' as const,
-        attachment: 'fixed' as const,
+        color: '',
+        imageUrl: 'https://example.com/background.jpg',
       },
     };
     mockUseConfig.mockReturnValue(configWithImageBg);
@@ -150,16 +117,15 @@ describe('BackgroundWrapper', () => {
     expect(screen.getByTestId('test-child')).toBeInTheDocument();
   });
 
-  it('renders with gradient background configuration', () => {
-    const configWithGradientBg = {
+  it('renders with both color and image background', () => {
+    const configWithBothBg = {
       ...defaultConfig,
       background: {
-        ...defaultConfig.background,
-        type: 'gradient' as const,
-        value: 'linear-gradient(45deg, #ff0000, #0000ff)',
+        color: '#0071C5',
+        imageUrl: 'https://example.com/background.jpg',
       },
     };
-    mockUseConfig.mockReturnValue(configWithGradientBg);
+    mockUseConfig.mockReturnValue(configWithBothBg);
 
     render(
       <BackgroundWrapper>
@@ -170,112 +136,15 @@ describe('BackgroundWrapper', () => {
     expect(screen.getByTestId('test-child')).toBeInTheDocument();
   });
 
-  it('renders with overlay configuration', () => {
-    const configWithOverlay = {
-      ...defaultConfig,
-      background: {
-        ...defaultConfig.background,
-        type: 'color' as const,
-        value: '#ff0000',
-        overlay: {
-          enabled: true,
-          color: 'rgba(0, 0, 0, 0.5)',
-          opacity: 0.5,
-          blendMode: 'multiply' as const,
-        },
-      },
-    };
-    mockUseConfig.mockReturnValue(configWithOverlay);
-
-    render(
-      <BackgroundWrapper>
-        <div data-testid="test-child">Test Content</div>
-      </BackgroundWrapper>,
-    );
-
-    expect(screen.getByTestId('test-child')).toBeInTheDocument();
-  });
-
-  it('renders split-screen layout with right column position', () => {
-    const configWithSplitScreen = {
-      ...defaultConfig,
-      layout: {
-        ...defaultConfig.layout,
-        type: 'split-screen' as const,
-        columnPosition: 'right' as const,
-      },
-      background: {
-        ...defaultConfig.background,
-        type: 'image' as const,
-        value: 'https://example.com/bg.jpg',
-      },
-    };
-    mockUseConfig.mockReturnValue(configWithSplitScreen);
-
-    render(
-      <BackgroundWrapper>
-        <div data-testid="test-child">Test Content</div>
-      </BackgroundWrapper>,
-    );
-
-    expect(screen.getByTestId('test-child')).toBeInTheDocument();
-  });
-
-  it('renders split-screen layout with left column position', () => {
-    const configWithSplitScreen = {
-      ...defaultConfig,
-      layout: {
-        ...defaultConfig.layout,
-        type: 'split-screen' as const,
-        columnPosition: 'left' as const,
-      },
-      background: {
-        ...defaultConfig.background,
-        type: 'image' as const,
-        value: 'https://example.com/bg.jpg',
-      },
-    };
-    mockUseConfig.mockReturnValue(configWithSplitScreen);
-
-    render(
-      <BackgroundWrapper>
-        <div data-testid="test-child">Test Content</div>
-      </BackgroundWrapper>,
-    );
-
-    expect(screen.getByTestId('test-child')).toBeInTheDocument();
-  });
-
-  it('handles empty background value gracefully', () => {
+  it('handles empty background values gracefully', () => {
     const configWithEmptyBg = {
       ...defaultConfig,
       background: {
-        ...defaultConfig.background,
-        type: 'image' as const,
-        value: '',
+        color: '',
+        imageUrl: '',
       },
     };
     mockUseConfig.mockReturnValue(configWithEmptyBg);
-
-    render(
-      <BackgroundWrapper>
-        <div data-testid="test-child">Test Content</div>
-      </BackgroundWrapper>,
-    );
-
-    expect(screen.getByTestId('test-child')).toBeInTheDocument();
-  });
-
-  it('renders with custom background configuration', () => {
-    const configWithCustomBg = {
-      ...defaultConfig,
-      background: {
-        ...defaultConfig.background,
-        type: 'color' as const,
-        value: '#ff0000',
-      },
-    };
-    mockUseConfig.mockReturnValue(configWithCustomBg);
 
     render(
       <BackgroundWrapper>

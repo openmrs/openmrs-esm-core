@@ -283,21 +283,13 @@ describe('Login', () => {
     expect(usernameInput).toHaveFocus();
   });
 
-  it('renders configurable branding with custom title and links', () => {
+  it('renders configurable branding with custom title and help text', () => {
     const brandedConfig = {
       ...mockConfig,
       branding: {
         title: 'Test Health Center',
         subtitle: 'Electronic Medical Records',
-        customText: '',
         helpText: 'Need help? Contact support',
-        contactEmail: 'support@test.org',
-        customLinks: [
-          {
-            text: 'Go to Legacy UI',
-            url: '/openmrs/index.htm',
-          },
-        ],
       },
       logo: {
         src: 'test-logo.png',
@@ -318,26 +310,19 @@ describe('Login', () => {
     expect(screen.getByText('Test Health Center')).toBeInTheDocument();
     expect(screen.getByText('Electronic Medical Records')).toBeInTheDocument();
     expect(screen.getByText('Need help? Contact support')).toBeInTheDocument();
-    expect(screen.getByText(/support@test.org/)).toBeInTheDocument();
-    expect(screen.getByText('Go to Legacy UI')).toBeInTheDocument();
   });
 
-  it('renders default layout when layout type is default with logo', () => {
+  it('renders default layout', () => {
     const defaultConfig = {
       ...mockConfig,
       layout: {
-        ...mockConfig.layout,
-        type: 'default',
-        showLogo: true,
+        loginFormPosition: 'center' as const,
         showFooter: true,
       },
       branding: {
         title: '',
         subtitle: '',
-        customText: '',
         helpText: '',
-        contactEmail: '',
-        customLinks: [],
       },
     };
     mockUseConfig.mockReturnValue(defaultConfig);

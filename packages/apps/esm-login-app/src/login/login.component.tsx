@@ -23,15 +23,7 @@ export interface LoginReferrer {
 
 const Login: React.FC = () => {
   const config = useConfig<ConfigSchema>();
-  const {
-    showPasswordOnSeparateScreen,
-    provider: loginProvider,
-    links: loginLinks,
-    layout,
-    card,
-    button,
-    branding,
-  } = config;
+  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks, layout, branding } = config;
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -146,20 +138,9 @@ const Login: React.FC = () => {
   );
 
   if (!loginProvider || loginProvider.type === 'basic') {
-    const cardStyles: React.CSSProperties = {};
-    if (card.backgroundColor) cardStyles.backgroundColor = card.backgroundColor;
-    if (card.borderRadius) cardStyles.borderRadius = card.borderRadius;
-    if (card.width) cardStyles.width = card.width;
-    if (card.padding) cardStyles.padding = card.padding;
-    if (card.boxShadow) cardStyles.boxShadow = card.boxShadow;
-
-    const buttonStyles: React.CSSProperties = {};
-    if (button.backgroundColor) buttonStyles.backgroundColor = button.backgroundColor;
-    if (button.textColor) buttonStyles.color = button.textColor;
-
     const containerClass =
-      layout.columnPosition !== 'center'
-        ? `${styles.container} ${styles[`position-${layout.columnPosition}`]}`
+      layout.loginFormPosition !== 'center'
+        ? `${styles.container} ${styles[`position-${layout.loginFormPosition}`]}`
         : styles.container;
 
     return (
@@ -176,12 +157,10 @@ const Login: React.FC = () => {
             </div>
           )}
 
-          <Tile className={styles.loginCard} style={cardStyles}>
-            {layout.showLogo && (
-              <div className={styles.center}>
-                <Logo t={t} />
-              </div>
-            )}
+          <Tile className={styles.loginCard}>
+            <div className={styles.center}>
+              <Logo t={t} />
+            </div>
 
             {branding.title && (
               <div className={styles.brandingTitle}>
@@ -193,10 +172,6 @@ const Login: React.FC = () => {
               <div className={styles.brandingSubtitle}>
                 <p>{t(branding.subtitle, branding.subtitle)}</p>
               </div>
-            )}
-
-            {branding.customText && (
-              <div className={styles.brandingCustomText} dangerouslySetInnerHTML={{ __html: branding.customText }} />
             )}
 
             <form onSubmit={handleSubmit}>
@@ -228,7 +203,6 @@ const Login: React.FC = () => {
                       <Button
                         type="submit"
                         className={styles.continueButton}
-                        style={buttonStyles}
                         renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                         iconDescription={t('loginButtonIconDescription', 'Log in button')}
                         disabled={!isLoginEnabled || isLoggingIn}
@@ -243,7 +217,6 @@ const Login: React.FC = () => {
                   ) : (
                     <Button
                       className={styles.continueButton}
-                      style={buttonStyles}
                       renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                       iconDescription="Continue to password"
                       onClick={continueLogin}
@@ -268,7 +241,6 @@ const Login: React.FC = () => {
                     <Button
                       type="submit"
                       className={styles.continueButton}
-                      style={buttonStyles}
                       renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                       iconDescription="Log in"
                       disabled={!isLoginEnabled || isLoggingIn}
@@ -287,25 +259,6 @@ const Login: React.FC = () => {
             {branding.helpText && (
               <div className={styles.helpText}>
                 <p>{t(branding.helpText, branding.helpText)}</p>
-              </div>
-            )}
-
-            {branding.contactEmail && (
-              <div className={styles.contactInfo}>
-                <p>
-                  {t('needHelp', 'Need help?')} {t('contactUs', 'Contact us at')}{' '}
-                  <a href={`mailto:${branding.contactEmail}`}>{branding.contactEmail}</a>
-                </p>
-              </div>
-            )}
-
-            {branding.customLinks.length > 0 && (
-              <div className={styles.customLinks}>
-                {branding.customLinks.map((link, index) => (
-                  <a key={index} href={link.url} className={styles.customLink}>
-                    {t(link.text, link.text)}
-                  </a>
-                ))}
               </div>
             )}
           </Tile>
