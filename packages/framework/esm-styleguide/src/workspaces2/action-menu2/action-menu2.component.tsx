@@ -21,7 +21,7 @@ export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
   const {groupName, props} = workspaceGroup;
 
   const windowsWithIcons = Object.values(registeredWindowsByName)
-    .filter((window): window is Required<typeof window> => window.group == groupName && window.icon !== undefined)
+    .filter((window): window is Required<typeof window> => window.group === groupName && window.icon !== undefined)
     .sort((a, b) => (a.order ?? Number.MAX_VALUE) - (b.order ?? Number.MAX_VALUE));
 
   if (windowsWithIcons.length === 0) {

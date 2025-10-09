@@ -36,8 +36,8 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow })
           openedWorkspace={openedWorkspace}
           openedWindow={openedWindow}
           lifeCycle={lifeCycles?.[i]}
-          isRootWorkspace={i == 0}
-          isLeafWorkspace={i == openedWorkspaces.length - 1}
+          isRootWorkspace={i === 0}
+          isLeafWorkspace={i === openedWorkspaces.length - 1}
         />
       ))}
     </>
