@@ -33,6 +33,8 @@ body {
   min-height: calc(100vh - var(--omrs-navbar-height));
   height: fit-content;
   grid-area: appRoots;
+  overflow-x: auto;
+  min-width: 0;
 }
 
 #omrs-left-nav-container {
@@ -41,8 +43,9 @@ body {
 
 #omrs-workspaces-container {
   grid-area: workspace;
-  position: relative;
+  position: sticky;
   height: calc(100vh - var(--omrs-navbar-height));
+  top: var(--omrs-navbar-height);
 }
 
 #omrs-top-nav-app-container {
