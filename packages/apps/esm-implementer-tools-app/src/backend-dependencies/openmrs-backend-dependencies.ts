@@ -105,23 +105,18 @@ async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
   while (nextUrl && safetyCounter < MAX_PAGES) {
     try {
       const { data } = await openmrsFetch(nextUrl, { method: 'GET' });
-      const rawResults: Array<BackendModule> = Array.isArray(data?.results) ? data.results : [];
-
-      const pageResults: Array<BackendModule> = rawResults.map((r) => ({
-        uuid: r.uuid,
-        version: r.version,
-      }));
+      const pageResults: Array<BackendModule> = Array.isArray(data?.results) ? data.results : [];
 
       collected.push(...pageResults);
 
-      const links: Array<{ rel?: string; uri?: string; href?: string }> = Array.isArray(data?.links) ? data.links : [];
+      const links: Array<{ rel?: string; uri?: string }> = Array.isArray(data?.links) ? data.links : [];
       const nextLink = links.find((l) => (l.rel || '').toLowerCase() === 'next');
 
       nextUrl = resolveNext(nextLink?.uri ?? null);
       safetyCounter += 1;
     } catch (e) {
       console.error(`Failed to fetch installed backend modules page ${safetyCounter + 1} (URL: ${nextUrl})`, e);
-      break;
+      throw new Error(`Failed to fetch backend modules: ${e instanceof Error ? e.message : 'Unknown error'}`);
     }
   }
 
@@ -169,11 +164,9 @@ function getInstalledAndRequiredBackendModules(
     version: declaredBackendModules[key],
   }));
 
-  return requiredModules.filter((requiredModule) => {
-    return installedBackendModules.find((installedModule) => {
-      return requiredModule.uuid === installedModule.uuid;
-    });
-  });
+  // Use Set for O(1) lookup instead of O(n) find
+  const installedUuids = new Set(installedBackendModules.map((module) => module.uuid));
+  return requiredModules.filter((requiredModule) => installedUuids.has(requiredModule.uuid));
 }
 
 function getInstalledVersion(
@@ -181,7 +174,7 @@ function getInstalledVersion(
   installedBackendModules: Array<BackendModule>,
 ) {
   const moduleName = installedAndRequiredBackendModule.uuid;
-  return installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? '';
+  return installedBackendModules.find((mod) => mod.uuid === moduleName)?.version ?? '';
 }
 
 function getResolvedModuleType(requiredVersion: string, installedVersion: string): ResolvedBackendModuleType {
