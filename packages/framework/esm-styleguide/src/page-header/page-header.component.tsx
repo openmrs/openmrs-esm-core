@@ -101,7 +101,7 @@ export const PageHeaderContent: React.FC<PageHeaderContentProps> = ({ title, ill
       {illustration}
       <div className={styles.pageLabels}>
         {config?.implementationName && <p>{getCoreTranslation(config.implementationName as CoreTranslationKey)}</p>}
-        <p className={styles.pageName}>{title}</p>
+        <h1 className={styles.pageName}>{title}</h1>
       </div>
     </div>
   );
