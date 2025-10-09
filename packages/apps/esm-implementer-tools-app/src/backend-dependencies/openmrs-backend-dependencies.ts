@@ -96,9 +96,15 @@ async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
   let safetyCounter = 0;
 
   const resolveNext = (url?: string | null) => {
-    if (!url) return null;
-    if (/^https?:\/\//i.test(url)) return url;
-    if (url.startsWith('/')) return url;
+    if (!url) {
+      return null;
+    }
+    if (/^https?:\/\//i.test(url)) {
+      return url;
+    }
+    if (url.startsWith('/')) {
+      return url;
+    }
     return `${restBaseUrl}/${url.replace(/^\/?/, '')}`;
   };
 
@@ -115,7 +121,7 @@ async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
       nextUrl = resolveNext(nextLink?.uri ?? null);
       safetyCounter += 1;
     } catch (e) {
-      console.error(`Failed to fetch installed backend modules page ${safetyCounter + 1} (URL: ${nextUrl})`, e);
+      console.error(`Failed to fetch backend modules on request ${safetyCounter + 1} (URL: ${nextUrl})`, e);
       throw new Error(`Failed to fetch backend modules: ${e instanceof Error ? e.message : 'Unknown error'}`);
     }
   }
@@ -164,7 +170,6 @@ function getInstalledAndRequiredBackendModules(
     version: declaredBackendModules[key],
   }));
 
-  // Use Set for O(1) lookup instead of O(n) find
   const installedUuids = new Set(installedBackendModules.map((module) => module.uuid));
   return requiredModules.filter((requiredModule) => installedUuids.has(requiredModule.uuid));
 }
@@ -208,4 +213,9 @@ export async function checkModules(): Promise<Array<ResolvedDependenciesModule>>
 
 export function hasInvalidDependencies(frontendModules: Array<ResolvedDependenciesModule>) {
   return frontendModules.some((m) => m.dependencies.some((n) => n.type !== 'okay'));
+}
+
+// For use in tests
+export function clearCache() {
+  cachedFrontendModules = undefined as any;
 }
