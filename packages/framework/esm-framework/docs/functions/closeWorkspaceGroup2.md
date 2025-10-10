@@ -2,14 +2,24 @@
 
 # Function: closeWorkspaceGroup2()
 
-> **closeWorkspaceGroup2**(): `Promise`\<`boolean`\>
+> **closeWorkspaceGroup2**(`discardUnsavedChanges?`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L69)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L72)
 
 **`Experimental`**
 
 Closes the workspace group that is currently opened. Note that only one workspace group
 may be opened at any given time
+
+## Parameters
+
+### discardUnsavedChanges?
+
+`boolean`
+
+If true, then the workspace group is forced closed, with no prompt
+for confirmation for unsaved changes in any opened workspace. This should be used sparingly
+for clean-up purpose, ex: when exiting an app.
 
 ## Returns
 

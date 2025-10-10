@@ -20,14 +20,16 @@ export interface OpenedWindow {
   maximized: boolean;
   hidden: boolean;
 }
+
+export interface OpenedGroup {
+  groupName: string;
+  props: Record<string, any> | null;
+}
 export interface WorkspaceStoreState2 {
   registeredGroupsByName: Record<string, WorkspaceGroupDefinition2>;
   registeredWindowsByName: Record<string, WorkspaceWindowDefinition2 & { moduleName: string }>;
   registeredWorkspacesByName: Record<string, WorkspaceDefinition2 & { moduleName: string }>;
-  openedGroup: {
-    groupName: string;
-    props: Record<string, any> | null;
-  } | null;
+  openedGroup: OpenedGroup | null;
   /** Most recently opened window at the end of array. Each element has a unique windowName */
   openedWindows: Array<OpenedWindow>;
 
