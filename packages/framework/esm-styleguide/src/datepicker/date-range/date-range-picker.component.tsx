@@ -88,6 +88,16 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
     const preferredDateLocaleMap = config.preferredDateLocale;
 
     const id = useId();
+    const hasVisibleLabel = !!(labelText ?? label);
+
+    // Warn in development if no accessible label is provided
+    if (process.env.NODE_ENV !== 'production') {
+      if (!hasVisibleLabel && !dateRangePickerProps['aria-label'] && !dateRangePickerProps['aria-labelledby']) {
+        console.warn(
+          'OpenmrsDateRangePicker: You must provide either a visible label (labelText/label) or an aria-label for accessibility.',
+        );
+      }
+    }
 
     const locale = useMemo(() => {
       let locale = getLocale();
@@ -146,7 +156,6 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
         <div className={classNames('cds--form-item', className)}>
           <Provider values={[[OpenmrsIntlLocaleContext, intlLocale]]}>
             <DateRangePicker
-              id={id}
               className={classNames('cds--date-picker', {
                 'cds--date-picker--light': light,
                 'cds--date-picker--disabled': isDisabled,
@@ -163,7 +172,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
               onChange={innerOnChange}
             >
               <div className="cds--date-picker-container">
-                {(labelText ?? label) && (
+                {hasVisibleLabel && (
                   <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })}>
                     {labelText ?? label}
                   </Label>

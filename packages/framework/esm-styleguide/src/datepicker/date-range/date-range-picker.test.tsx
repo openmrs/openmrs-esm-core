@@ -1,6 +1,6 @@
 import React from 'react';
 import type { i18n } from 'i18next';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
@@ -66,5 +66,33 @@ describe('OpenmrsDateRangePicker', () => {
     );
     const input = screen.getByLabelText('datepicker');
     expect(input).toHaveTextContent('15/03/2025–18/06/2025');
+  });
+
+  it('should work with aria-label when labelText is empty', () => {
+    render(<OpenmrsDateRangePicker aria-label="Select date range" labelText="" />);
+    const group = screen.getByRole('group', { name: /Select date range/i });
+    expect(group).toBeInTheDocument();
+    // Should not render a visible label element
+    expect(screen.queryByText('Select date range')).not.toBeInTheDocument();
+  });
+
+  it('should render visible label when labelText is provided', () => {
+    render(<OpenmrsDateRangePicker labelText="Date range" />);
+    // Check that the label text is visible
+    const labelText = screen.getByText('Date range');
+    expect(labelText).toBeInTheDocument();
+    expect(labelText).toHaveClass('cds--label');
+    // Check that the group exists
+    const group = screen.getByRole('group');
+    expect(group).toBeInTheDocument();
+  });
+
+  it('should warn in development when neither labelText nor aria-label is provided', () => {
+    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(<OpenmrsDateRangePicker labelText="" />);
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      'OpenmrsDateRangePicker: You must provide either a visible label (labelText/label) or an aria-label for accessibility.',
+    );
+    consoleWarnSpy.mockRestore();
   });
 });
