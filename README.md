@@ -1,4 +1,4 @@
-:wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
+:wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.atlassian.net/wiki/x/IABBHg). You may find the [Introduction](https://openmrs.atlassian.net/wiki/x/94ABCQ) especially helpful.
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
@@ -69,6 +69,14 @@ yarn
 yarn setup
 ```
 
+> **Note:** If `yarn setup` fails or causes system resource issues, use this alternative instead:
+>
+> ```sh
+> yarn build --concurrency 1
+> ```
+>
+> Both commands build all the packages - once either completes successfully, you can proceed to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
+
 ### Building
 
 To build all packages in the repository, run the following command:
@@ -94,10 +102,16 @@ yarn run:shell
 ### Running the frontend modules in `apps`
 
 ```sh
-yarn run:omrs develop --sources packages/apps/<app folder>
+yarn start --sources packages/apps/<app folder>
 ```
 
-This will allow you to develop the app similar to the experience of developing other apps.
+For example, to run the login app, run:
+
+```sh
+yarn start --sources packages/apps/esm-login-app
+```
+
+This will spin up a development server with hot module reloading so any changes you make to the code in the app will be reflected automatically in the browser.
 
 ### Running the tooling
 
@@ -155,31 +169,60 @@ By default, `turbo` will cache test runs. This means that re-running tests witho
 yarn turbo run test --force
 ```
 
-#### E2E tests
+#### Running End-to-End (E2E) tests
 
-To run E2E tests locally, follow these steps:
-
-##### Start the Development Server
-
-Begin by spinning up a development server for the frontend module that you want to test. Ensure the server is running before proceeding.
-
-##### Set Up Environment Variables
-
-Copy the example environment variables into a new .env file by running the following command:
+Before running the E2E tests, you need to set up the test environment. Install Playwright browsers and setup the default test environment variables by running the following commands:
 
 ```bash
+npx playwright install
 cp example.env .env
 ```
 
-##### Execute Tests
-
-Run the tests with the following command:
+By default, tests run against a local backend at http://localhost:8080/openmrs. To test local changes, make sure your dev server is running before executing tests. For example, to test local changes to the Login app, run:
 
 ```bash
-yarn test-e2e --ui --headed
+yarn start --sources packages/apps/esm-login-app # or any other app in the packages/apps directory
 ```
 
-Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3#End-to-end-testing-with-Playwright) to learn more about End-to-End tests.
+To test against a remote instance (such as the OpenMRS refapp hosted on dev3.openmrs.org), update the `E2E_BASE_URL` environment variable in your .env file:
+
+```env
+E2E_BASE_URL=https://dev3.openmrs.org/openmrs
+```
+
+To run E2E tests:
+
+```bash
+yarn test-e2e
+```
+
+This will run all the E2E tests (files in the e2e/specs directory with the `*.spec.ts` extension) in headless mode. That means no browser UI will be visible.
+
+To run tests in headed mode (shows the browser while tests run) use:
+
+```bash
+yarn test-e2e --headed
+```
+
+To run tests in Playwright's UI mode (interactive debugger), use:
+
+```bash
+yarn test-e2e --ui
+```
+
+You'll most often want to run tests in both headed and UI mode:
+
+```bash
+yarn test-e2e --headed --ui
+```
+
+To run a specific test file:
+
+```bash
+yarn test-e2e <test-name> # for example, yarn test-e2e login.spec.ts
+```
+
+Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3) to learn more about End-to-End tests in this project.
 
 ### Linking the framework
 

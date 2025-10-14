@@ -15,7 +15,9 @@
   "Clinic": "Clínica",
   "close": "Fechar",
   "closeAllOpenedWorkspaces": "Descartar alterações em {{count}} espaços de trabalho ",
-  "closingAllWorkspacesPromptBody": "Há alterações não salvas nos seguintes espaços de trabalho. Deseja descartar as alterações nos seguintes espaços de trabalho? {{workspaceNames}}",
+  "closeWorkspaces2PromptBody": "You are about to close the following workspace(s), which might have unsaved changes:",
+  "closeWorkspaces2PromptTitle": "Close workspace(s)",
+  "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "Você tem alterações não salvas",
   "confirm": "Confirmar",
   "contactAdministratorIfIssuePersists": "Entre em contato com o administrador do sistema se o problema persistir.",
@@ -57,6 +59,7 @@
   "stateProvince": "Estado",
   "toggleDevTools": "Toggle dev tools",
   "unknown": "Desconhecido",
+  "unsavedChangesInOpenedWorkspace": "You may have unsaved changes in the opened workspace. Do you want to discard these changes?",
   "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "Alterações não salvas",
   "workspaceHeader": "Cabeçalho do espaço de trabalho"

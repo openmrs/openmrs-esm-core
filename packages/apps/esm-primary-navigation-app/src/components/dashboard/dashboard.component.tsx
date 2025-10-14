@@ -10,6 +10,7 @@ import {
   openmrsComponentDecorator,
   type OpenmrsReactComponentProps,
   Type,
+  type IconId,
 } from '@openmrs/esm-framework/src/internal';
 
 export const dashboardConfigSchema = {
@@ -38,7 +39,7 @@ export const dashboardConfigSchema = {
 export interface DashboardConfig {
   path: string;
   title: string;
-  icon: string;
+  icon: IconId;
   moduleName: string;
 }
 
@@ -57,7 +58,7 @@ export default function Dashboard({ basePath, moduleName }: DashboardProps) {
         moduleName: module,
         featureName: 'dashboard',
       })(() => <DashboardInternal basePath={basePath} />),
-    [componentContext.moduleName],
+    [basePath, module],
   );
 
   return (

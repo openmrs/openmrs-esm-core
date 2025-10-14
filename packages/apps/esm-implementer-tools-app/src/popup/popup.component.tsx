@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ContentSwitcher, IconButton, Switch } from '@carbon/react';
+import { ContentSwitcher, IconButton, Switch, Theme } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { CloseIcon } from '@openmrs/esm-framework';
 import { Configuration } from '../configuration/configuration.component';
@@ -45,43 +45,45 @@ export default function Popup({
 
   return (
     <div className={styles.popup}>
-      <div className={styles.topBar}>
-        <div className={styles.tabs}>
-          <ContentSwitcher
-            className={styles.contentSwitcher}
-            selectedIndex={activeTab}
-            onChange={(switcherItem: SwitcherItem) => {
-              setActiveTab(switcherItem.index);
-            }}
-            size="lg"
-          >
-            <Switch name="configuration-tab" text={t('configuration', 'Configuration')} className="darkThemeSwitch" />
-            <Switch
-              name="frontend-modules-tab"
-              text={t('frontendModules', 'Frontend modules')}
-              className="darkThemeSwitch"
-            />
-            <Switch
-              name="backend-modules-tab"
-              text={t('backendModules', 'Backend modules')}
-              className="darkThemeSwitch"
-            />
-            <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature flags')} className="darkThemeSwitch" />
-          </ContentSwitcher>
+      <Theme theme="g90">
+        <div className={styles.topBar}>
+          <div className={styles.tabs}>
+            <ContentSwitcher
+              className={styles.contentSwitcher}
+              selectedIndex={activeTab}
+              onChange={(switcherItem: SwitcherItem) => {
+                setActiveTab(switcherItem.index);
+              }}
+              size="lg"
+            >
+              <Switch name="configuration-tab" text={t('configuration', 'Configuration')} className="darkThemeSwitch" />
+              <Switch
+                name="frontend-modules-tab"
+                text={t('frontendModules', 'Frontend modules')}
+                className="darkThemeSwitch"
+              />
+              <Switch
+                name="backend-modules-tab"
+                text={t('backendModules', 'Backend modules')}
+                className="darkThemeSwitch"
+              />
+              <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature flags')} className="darkThemeSwitch" />
+            </ContentSwitcher>
+          </div>
+          <div>
+            <IconButton
+              align="left"
+              className={styles.closeButton}
+              kind="secondary"
+              label={t('close', 'Close')}
+              onClick={close}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
         </div>
-        <div>
-          <IconButton
-            align="left"
-            className={styles.closeButton}
-            kind="secondary"
-            label={t('close', 'Close')}
-            onClick={close}
-          >
-            <CloseIcon />
-          </IconButton>
-        </div>
-      </div>
-      <div className={styles.content}>{tabContent}</div>
+        <div className={styles.content}>{tabContent}</div>
+      </Theme>
     </div>
   );
 }

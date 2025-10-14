@@ -9228,6 +9228,7 @@ packages/framework/esm-styleguide/src/workspaces/workspaces.ts:543](https://gith
 - [formatTime](functions/formatTime.md)
 - [formatDatetime](functions/formatDatetime.md)
 - [convertToLocaleCalendar](functions/convertToLocaleCalendar.md)
+- [formatDuration](functions/formatDuration.md)
 
 ## Dynamic Loading
 

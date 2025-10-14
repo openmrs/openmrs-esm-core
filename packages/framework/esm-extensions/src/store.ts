@@ -11,7 +11,7 @@ export interface ExtensionMeta {
 
 export interface ExtensionRegistration {
   readonly name: string;
-  load(): Promise<{ default?: LifeCycles } & LifeCycles>;
+  load(): Promise<LifeCycles>;
   readonly moduleName: string;
   readonly meta: Readonly<ExtensionMeta>;
   readonly order?: number;

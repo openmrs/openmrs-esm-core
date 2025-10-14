@@ -2,6 +2,6 @@
 
 # Variable: HomePictogram
 
-> `const` **HomePictogram**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`PictogramProps`](../type-aliases/PictogramProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
+> `const` **HomePictogram**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`PictogramProps`](../type-aliases/PictogramProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\> = `FacilityPictogram`
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L18)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:207](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L207)

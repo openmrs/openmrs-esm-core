@@ -72,10 +72,10 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:20](https://github.c
 
 ### load()
 
-> **load**(): `Promise`\<`object` & `LifeCycles`\>
+> **load**(): `Promise`\<`LifeCycles`\>
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L14)
 
 #### Returns
 
-`Promise`\<`object` & `LifeCycles`\>
+`Promise`\<`LifeCycles`\>

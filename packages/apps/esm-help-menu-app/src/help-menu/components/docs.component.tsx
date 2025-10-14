@@ -9,7 +9,7 @@ const Docs = () => {
   return (
     <Link
       className={styles.helpButton}
-      href="https://openmrs.atlassian.net/wiki/spaces/docs/pages/151093495/Introduction+to+O3+for+Developers"
+      href="https://om.rs/o3docs"
       rel="noopener noreferrer"
       renderIcon={ArrowUpRight}
       target="_blank"

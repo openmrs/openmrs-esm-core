@@ -9,14 +9,13 @@
       "routeRegex": "^(?!(?:login|change-password)/?)",
       "online": true,
       "offline": true,
-      "order": 0
+      "containerDomId": "omrs-top-nav-app-container"
     },
     {
       "component": "redirect",
       "routeRegex": "^$",
       "online": true,
-      "offline": true,
-      "order": 0
+      "offline": true
     }
   ],
   "extensions": [
@@ -33,14 +32,6 @@
       "slot": "user-panel-slot",
       "component": "changeLanguageLink",
       "online": true,
-      "offline": true,
-      "order": 1
-    },
-    {
-      "name": "offline-banner",
-      "slot": "user-panel-slot",
-      "component": "offlineBanner",
-      "online": false,
       "offline": true,
       "order": 1
     },

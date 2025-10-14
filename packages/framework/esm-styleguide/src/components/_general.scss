@@ -25,3 +25,38 @@ body {
     margin-top: layout.$spacing-06;
   }
 }
+
+#omrs-apps-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - var(--omrs-navbar-height));
+  height: fit-content;
+  grid-area: appRoots;
+  overflow-x: auto;
+  min-width: 0;
+}
+
+#omrs-left-nav-container {
+  grid-area: leftNav;
+}
+
+#omrs-workspaces-container {
+  grid-area: workspace;
+  position: sticky;
+  height: calc(100vh - var(--omrs-navbar-height));
+  top: var(--omrs-navbar-height);
+}
+
+#omrs-top-nav-app-container {
+  grid-area: topNav;
+  height: var(--omrs-navbar-height);
+}
+
+body {
+  display: grid;
+  grid-template-areas:
+    'topNav topNav topNav'
+    'leftNav appRoots workspace';
+  grid-template-columns: min-content 1fr min-content;
+}
