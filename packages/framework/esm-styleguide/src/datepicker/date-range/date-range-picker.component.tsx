@@ -156,6 +156,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
         <div className={classNames('cds--form-item', className)}>
           <Provider values={[[OpenmrsIntlLocaleContext, intlLocale]]}>
             <DateRangePicker
+              id={hasVisibleLabel ? id : undefined}
               className={classNames('cds--date-picker', {
                 'cds--date-picker--light': light,
                 'cds--date-picker--disabled': isDisabled,
@@ -173,7 +174,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
             >
               <div className="cds--date-picker-container">
                 {hasVisibleLabel && (
-                  <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })}>
+                  <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })} htmlFor={id}>
                     {labelText ?? label}
                   </Label>
                 )}

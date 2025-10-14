@@ -182,12 +182,13 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
             >
               <div className="cds--date-picker-container">
                 {hasVisibleLabel && (
-                  <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })}>
+                  <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })} htmlFor={id}>
                     {labelText ?? label}
                   </Label>
                 )}
                 <Group className={styles.inputGroup}>
                   <DatePickerInput
+                    id={hasVisibleLabel ? id : undefined}
                     ref={ref}
                     className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
                       [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
