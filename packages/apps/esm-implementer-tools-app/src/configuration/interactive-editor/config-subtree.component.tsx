@@ -12,12 +12,13 @@ export interface ConfigSubtreeProps {
 export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
   function setActiveItemDescriptionOnMouseEnter(thisPath, key, value) {
     if (!implementerToolsStore.getState().configPathBeingEdited) {
+      const isLeaf = value.hasOwnProperty('_value') || value.hasOwnProperty('_type');
       implementerToolsStore.setState({
         activeItemDescription: {
           path: thisPath,
           source: value._source,
           description: value._description,
-          value: JSON.stringify(value._value),
+          value: isLeaf ? JSON.stringify(value._value) : undefined,
         },
       });
     }
@@ -32,25 +33,27 @@ export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
 
   return (
     <>
-      {Object.entries(config).map(([key, value], i) => {
-        const thisPath = path.concat([key]);
-        const isLeaf = value.hasOwnProperty('_value') || value.hasOwnProperty('_type');
-        return (
-          <Subtree
-            label={key}
-            leaf={isLeaf}
-            onMouseEnter={() => setActiveItemDescriptionOnMouseEnter(thisPath, key, value)}
-            onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave(thisPath)}
-            key={`subtree-${thisPath.join('.')}`}
-          >
-            {isLeaf ? (
-              <EditableValue path={thisPath} element={value} />
-            ) : (
-              <ConfigSubtree config={value} path={thisPath} />
-            )}
-          </Subtree>
-        );
-      })}
+      {Object.entries(config)
+        .filter(([key]) => !key.startsWith('_'))
+        .map(([key, value], i) => {
+          const thisPath = path.concat([key]);
+          const isLeaf = value.hasOwnProperty('_value') || value.hasOwnProperty('_type');
+          return (
+            <Subtree
+              label={key}
+              leaf={isLeaf}
+              onMouseEnter={() => setActiveItemDescriptionOnMouseEnter(thisPath, key, value)}
+              onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave(thisPath)}
+              key={`subtree-${thisPath.join('.')}`}
+            >
+              {isLeaf ? (
+                <EditableValue path={thisPath} element={value} />
+              ) : (
+                <ConfigSubtree config={value} path={thisPath} />
+              )}
+            </Subtree>
+          );
+        })}
     </>
   );
 }
