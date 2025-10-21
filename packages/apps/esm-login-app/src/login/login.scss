@@ -16,6 +16,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+
+  @media only screen and (max-width: 1024px) {
+    display: none;
+  }
 }
 
 .backgroundImage {
@@ -67,6 +71,13 @@
   min-height: 100vh;
   position: relative;
   box-shadow: -2px 0 20px rgba(0, 0, 0, 0.05);
+
+  @media only screen and (max-width: 1024px) {
+    flex: none;
+    width: 100%;
+    box-shadow: none;
+    padding: layout.$spacing-05;
+  }
 }
 
 .center {
@@ -79,6 +90,11 @@
   height: layout.$spacing-11;
   width: 16rem;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+
+  @media only screen and (max-width: 768px) {
+    width: 12rem;
+    height: auto;
+  }
 }
 
 .logoImg {
@@ -95,6 +111,11 @@
   display: flex;
   width: 23rem;
   margin-top: layout.$spacing-07;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 20rem;
+  }
 }
 
 .needHelpText {
@@ -105,6 +126,7 @@
   margin: layout.$spacing-05 0;
   font-weight: 400;
 }
+
 .poweredByLogo {
   height: layout.$spacing-08;
   width: layout.$spacing-12;
@@ -119,6 +141,12 @@
   padding: 2.5rem;
   position: relative;
   min-height: fit-content;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 18rem;
+    padding: 2rem;
+  }
 }
 
 .inputGroup {
@@ -139,11 +167,25 @@
   &:not(:last-child) {
     margin-bottom: layout.$spacing-05;
   }
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 20rem;
+
+    :global(.cds--text-input__field-outer-wrapper) {
+      width: 100%;
+    }
+  }
 }
 
 .continueButton {
   margin-top: layout.$spacing-06;
   min-width: 23rem;
+
+  @media only screen and (max-width: 768px) {
+    min-width: 100%;
+    max-width: 20rem;
+  }
 }
 
 .signInText {
@@ -155,6 +197,11 @@
   position: absolute;
   bottom: 100%;
   left: 0;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 20rem;
+  }
 }
 
 .footer {
@@ -173,6 +220,20 @@
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+  @media only screen and (max-width: 1024px) {
+    position: fixed;
+    width: calc(100% - layout.$spacing-07 * 2);
+    max-width: 90%;
+    padding: layout.$spacing-04 layout.$spacing-05;
+    gap: layout.$spacing-05;
+  }
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: layout.$spacing-03;
+    padding: layout.$spacing-03;
+  }
 }
 
 .loader {
@@ -190,6 +251,11 @@
   :global(.cds--inline-notification) {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(218, 30, 40, 0.15);
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 20rem;
   }
 }
 
@@ -228,6 +294,11 @@
   width: 100%;
   margin-right: 35rem;
   margin-top: layout.$spacing-05;
+
+  @media only screen and (max-width: 1024px) {
+    margin-right: 0;
+    justify-content: center;
+  }
 }
 
 .poweredByLogo {
@@ -236,4 +307,9 @@
   max-width: layout.$spacing-13;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
   opacity: 0.8;
+
+  @media only screen and (max-width: 768px) {
+    height: layout.$spacing-08;
+    max-width: layout.$spacing-11;
+  }
 }

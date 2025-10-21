@@ -5,12 +5,38 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: layout.$spacing-05;
-  position: absolute;
+  padding: layout.$spacing-05 layout.$spacing-07;
+  position: fixed;
   bottom: 0;
   flex-wrap: wrap;
-  gap: layout.$spacing-05;
   width: 100%;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  box-sizing: border-box;
+
+  > * {
+    pointer-events: auto;
+  }
+}
+
+.leftSection {
+  flex: 0 0 auto;
+}
+
+.centerSection {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  @media only screen and (max-width: 1024px) {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    margin-left: auto;
+  }
 }
 
 .logosContainer {
@@ -20,7 +46,7 @@
   align-items: center;
   flex-direction: row;
   gap: layout.$spacing-04;
-  opacity: 80%;
+  opacity: 0.8;
   width: 100%;
 }
 
@@ -32,29 +58,9 @@
   margin: 0 layout.$spacing-02;
 }
 
-@media only screen and (max-width: 1024px) {
-  .footer {
-    flex-direction: row;
-    justify-content: center;
-    padding: layout.$spacing-05;
-  }
-
-  .poweredByTile {
-    padding: layout.$spacing-05 layout.$spacing-03;
-    font-size: layout.$spacing-04;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .logosContainer {
-    justify-content: space-evenly;
-    gap: layout.$spacing-04;
-  }
-}
-
 .poweredByTile {
   display: flex;
-  text-align: left;
+  text-align: center;
   max-width: fit-content;
   min-height: fit-content;
   font-size: smaller;
@@ -63,6 +69,7 @@
   border: 1px solid colors.$gray-20;
   border-radius: layout.$spacing-04;
   flex-wrap: wrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 .poweredByContainer {
@@ -73,26 +80,52 @@
   width: 100%;
 }
 
+.openmrsContainer {
+  display: flex;
+  align-items: center;
+  gap: layout.$spacing-04;
+  height: layout.$spacing-06;
+}
+
 .poweredByLogo {
   height: layout.$spacing-07;
   width: auto;
   max-width: layout.$spacing-12;
-  border-collapse: collapse;
   padding: 0;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
 }
 
-.poweredByLogo + .poweredByText {
-  margin-left: layout.$spacing-02;
+.openmrsLogo {
+  height: layout.$spacing-07;
+  width: auto;
+  max-width: 8rem;
+  display: block;
+  flex-shrink: 0;
 }
 
-.learnMoreButton {
-  display: flex;
-  align-items: center;
+.copyrightTile {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  right: 2rem;
 
-  svg {
-    fill: colors.$blue-60;
+  @media only screen and (max-width: 1024px) {
+    right: -2rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .footer {
+    flex-direction: row;
+    gap: layout.$spacing-03;
+    align-items: center;
+    padding: layout.$spacing-03 layout.$spacing-05;
+  }
+
+  .poweredByTile {
+    width: 100%;
+    max-width: 20rem;
   }
 }
