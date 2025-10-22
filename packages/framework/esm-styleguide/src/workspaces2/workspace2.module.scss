@@ -10,7 +10,7 @@ $extraWideWorkspaceWidth: 48.25rem;
 // This container has no layout purpose.
 // It is used to set the --workspaceWidth variable.
 .workspaceOuterContainer {
-  --actionPanelOffset: 0;
+  --actionPanelOffset: 0px;
 
   &.narrowWorkspace {
     --workspaceWidth: #{$narrowWorkspaceWidth};
