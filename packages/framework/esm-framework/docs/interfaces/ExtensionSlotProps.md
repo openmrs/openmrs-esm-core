@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:30](https:
 
 > `optional` **about**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2939
+Defined in: node\_modules/@types/react/index.d.ts:2933
 
 #### Inherited from
 
@@ -26,7 +26,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2939
 
 > `optional` **accessKey**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2912
+Defined in: node\_modules/@types/react/index.d.ts:2906
 
 #### Inherited from
 
@@ -38,7 +38,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2912
 
 > `optional` **aria-activedescendant**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2610
+Defined in: node\_modules/@types/react/index.d.ts:2604
 
 Identifies the currently active element when DOM focus is on a composite widget, textbox, group, or application.
 
@@ -52,7 +52,7 @@ Identifies the currently active element when DOM focus is on a composite widget,
 
 > `optional` **aria-atomic**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2612
+Defined in: node\_modules/@types/react/index.d.ts:2606
 
 Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute.
 
@@ -66,7 +66,7 @@ Indicates whether assistive technologies will present all, or only parts of, the
 
 > `optional` **aria-autocomplete**: `"none"` \| `"list"` \| `"both"` \| `"inline"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2617
+Defined in: node\_modules/@types/react/index.d.ts:2611
 
 Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be
 presented if they are made.
@@ -81,7 +81,7 @@ presented if they are made.
 
 > `optional` **aria-braillelabel**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2623
+Defined in: node\_modules/@types/react/index.d.ts:2617
 
 Defines a string value that labels the current element, which is intended to be converted into Braille.
 
@@ -99,7 +99,7 @@ aria-label.
 
 > `optional` **aria-brailleroledescription**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2628
+Defined in: node\_modules/@types/react/index.d.ts:2622
 
 Defines a human-readable, author-localized abbreviated description for the role of an element, which is intended to be converted into Braille.
 
@@ -117,7 +117,7 @@ aria-roledescription.
 
 > `optional` **aria-busy**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2629
+Defined in: node\_modules/@types/react/index.d.ts:2623
 
 #### Inherited from
 
@@ -129,7 +129,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2629
 
 > `optional` **aria-checked**: `boolean` \| `"true"` \| `"false"` \| `"mixed"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2634
+Defined in: node\_modules/@types/react/index.d.ts:2628
 
 Indicates the current "checked" state of checkboxes, radio buttons, and other widgets.
 
@@ -148,7 +148,7 @@ Indicates the current "checked" state of checkboxes, radio buttons, and other wi
 
 > `optional` **aria-colcount**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2639
+Defined in: node\_modules/@types/react/index.d.ts:2633
 
 Defines the total number of columns in a table, grid, or treegrid.
 
@@ -166,7 +166,7 @@ aria-colindex.
 
 > `optional` **aria-colindex**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2644
+Defined in: node\_modules/@types/react/index.d.ts:2638
 
 Defines an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
 
@@ -185,7 +185,7 @@ Defines an element's column index or position with respect to the total number o
 
 > `optional` **aria-colindextext**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2649
+Defined in: node\_modules/@types/react/index.d.ts:2643
 
 Defines a human readable text alternative of aria-colindex.
 
@@ -203,7 +203,7 @@ aria-rowindextext.
 
 > `optional` **aria-colspan**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2654
+Defined in: node\_modules/@types/react/index.d.ts:2648
 
 Defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid.
 
@@ -222,7 +222,7 @@ Defines the number of columns spanned by a cell or gridcell within a table, grid
 
 > `optional` **aria-controls**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2659
+Defined in: node\_modules/@types/react/index.d.ts:2653
 
 Identifies the element (or elements) whose contents or presence are controlled by the current element.
 
@@ -240,7 +240,7 @@ aria-owns.
 
 > `optional` **aria-current**: `boolean` \| `"true"` \| `"location"` \| `"time"` \| `"false"` \| `"page"` \| `"step"` \| `"date"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2661
+Defined in: node\_modules/@types/react/index.d.ts:2655
 
 Indicates the element that represents the current item within a container or set of related elements.
 
@@ -254,7 +254,7 @@ Indicates the element that represents the current item within a container or set
 
 > `optional` **aria-describedby**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2666
+Defined in: node\_modules/@types/react/index.d.ts:2660
 
 Identifies the element (or elements) that describes the object.
 
@@ -272,7 +272,7 @@ aria-labelledby
 
 > `optional` **aria-description**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2671
+Defined in: node\_modules/@types/react/index.d.ts:2665
 
 Defines a string value that describes or annotates the current element.
 
@@ -290,7 +290,7 @@ related aria-describedby.
 
 > `optional` **aria-details**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2676
+Defined in: node\_modules/@types/react/index.d.ts:2670
 
 Identifies the element that provides a detailed, extended description for the object.
 
@@ -308,7 +308,7 @@ aria-describedby.
 
 > `optional` **aria-disabled**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2681
+Defined in: node\_modules/@types/react/index.d.ts:2675
 
 Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
 
@@ -327,7 +327,7 @@ Indicates that the element is perceivable but disabled, so it is not editable or
 
 > `optional` **aria-dropeffect**: `"link"` \| `"copy"` \| `"none"` \| `"move"` \| `"execute"` \| `"popup"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2686
+Defined in: node\_modules/@types/react/index.d.ts:2680
 
 Indicates what functions can be performed when a dragged object is released on the drop target.
 
@@ -345,7 +345,7 @@ in ARIA 1.1
 
 > `optional` **aria-errormessage**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2691
+Defined in: node\_modules/@types/react/index.d.ts:2685
 
 Identifies the element that provides an error message for the object.
 
@@ -364,7 +364,7 @@ Identifies the element that provides an error message for the object.
 
 > `optional` **aria-expanded**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2693
+Defined in: node\_modules/@types/react/index.d.ts:2687
 
 Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed.
 
@@ -378,7 +378,7 @@ Indicates whether the element, or another grouping element it controls, is curre
 
 > `optional` **aria-flowto**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2698
+Defined in: node\_modules/@types/react/index.d.ts:2692
 
 Identifies the next element (or elements) in an alternate reading order of content which, at the user's discretion,
 allows assistive technology to override the general default of reading in document source order.
@@ -393,7 +393,7 @@ allows assistive technology to override the general default of reading in docume
 
 > `optional` **aria-grabbed**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2703
+Defined in: node\_modules/@types/react/index.d.ts:2697
 
 Indicates an element's "grabbed" state in a drag-and-drop operation.
 
@@ -411,7 +411,7 @@ in ARIA 1.1
 
 > `optional` **aria-haspopup**: `boolean` \| `"true"` \| `"dialog"` \| `"menu"` \| `"false"` \| `"grid"` \| `"listbox"` \| `"tree"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2705
+Defined in: node\_modules/@types/react/index.d.ts:2699
 
 Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element.
 
@@ -425,7 +425,7 @@ Indicates the availability and type of interactive popup element, such as menu o
 
 > `optional` **aria-hidden**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2710
+Defined in: node\_modules/@types/react/index.d.ts:2704
 
 Indicates whether the element is exposed to an accessibility API.
 
@@ -443,7 +443,7 @@ aria-disabled.
 
 > `optional` **aria-invalid**: `boolean` \| `"true"` \| `"false"` \| `"grammar"` \| `"spelling"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2715
+Defined in: node\_modules/@types/react/index.d.ts:2709
 
 Indicates the entered value does not conform to the format expected by the application.
 
@@ -461,7 +461,7 @@ aria-errormessage.
 
 > `optional` **aria-keyshortcuts**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2717
+Defined in: node\_modules/@types/react/index.d.ts:2711
 
 Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element.
 
@@ -475,7 +475,7 @@ Indicates keyboard shortcuts that an author has implemented to activate or give 
 
 > `optional` **aria-label**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2722
+Defined in: node\_modules/@types/react/index.d.ts:2716
 
 Defines a string value that labels the current element.
 
@@ -493,7 +493,7 @@ aria-labelledby.
 
 > `optional` **aria-labelledby**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2727
+Defined in: node\_modules/@types/react/index.d.ts:2721
 
 Identifies the element (or elements) that labels the current element.
 
@@ -511,7 +511,7 @@ aria-describedby.
 
 > `optional` **aria-level**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2729
+Defined in: node\_modules/@types/react/index.d.ts:2723
 
 Defines the hierarchical level of an element within a structure.
 
@@ -525,7 +525,7 @@ Defines the hierarchical level of an element within a structure.
 
 > `optional` **aria-live**: `"off"` \| `"assertive"` \| `"polite"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2731
+Defined in: node\_modules/@types/react/index.d.ts:2725
 
 Indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies, and user can expect from the live region.
 
@@ -539,7 +539,7 @@ Indicates that an element will be updated, and describes the types of updates th
 
 > `optional` **aria-modal**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2733
+Defined in: node\_modules/@types/react/index.d.ts:2727
 
 Indicates whether an element is modal when displayed.
 
@@ -553,7 +553,7 @@ Indicates whether an element is modal when displayed.
 
 > `optional` **aria-multiline**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2735
+Defined in: node\_modules/@types/react/index.d.ts:2729
 
 Indicates whether a text box accepts multiple lines of input or only a single line.
 
@@ -567,7 +567,7 @@ Indicates whether a text box accepts multiple lines of input or only a single li
 
 > `optional` **aria-multiselectable**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2737
+Defined in: node\_modules/@types/react/index.d.ts:2731
 
 Indicates that the user may select more than one item from the current selectable descendants.
 
@@ -581,7 +581,7 @@ Indicates that the user may select more than one item from the current selectabl
 
 > `optional` **aria-orientation**: `"horizontal"` \| `"vertical"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2739
+Defined in: node\_modules/@types/react/index.d.ts:2733
 
 Indicates whether the element's orientation is horizontal, vertical, or unknown/ambiguous.
 
@@ -595,7 +595,7 @@ Indicates whether the element's orientation is horizontal, vertical, or unknown/
 
 > `optional` **aria-owns**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2745
+Defined in: node\_modules/@types/react/index.d.ts:2739
 
 Identifies an element (or elements) in order to define a visual, functional, or contextual parent/child relationship
 between DOM elements where the DOM hierarchy cannot be used to represent the relationship.
@@ -614,7 +614,7 @@ aria-controls.
 
 > `optional` **aria-placeholder**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2750
+Defined in: node\_modules/@types/react/index.d.ts:2744
 
 Defines a short hint (a word or short phrase) intended to aid the user with data entry when the control has no value.
 A hint could be a sample value or a brief description of the expected format.
@@ -629,7 +629,7 @@ A hint could be a sample value or a brief description of the expected format.
 
 > `optional` **aria-posinset**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2755
+Defined in: node\_modules/@types/react/index.d.ts:2749
 
 Defines an element's number or position in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM.
 
@@ -647,7 +647,7 @@ aria-setsize.
 
 > `optional` **aria-pressed**: `boolean` \| `"true"` \| `"false"` \| `"mixed"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2760
+Defined in: node\_modules/@types/react/index.d.ts:2754
 
 Indicates the current "pressed" state of toggle buttons.
 
@@ -666,7 +666,7 @@ Indicates the current "pressed" state of toggle buttons.
 
 > `optional` **aria-readonly**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2765
+Defined in: node\_modules/@types/react/index.d.ts:2759
 
 Indicates that the element is not editable, but is otherwise operable.
 
@@ -684,7 +684,7 @@ aria-disabled.
 
 > `optional` **aria-relevant**: `"text"` \| `"all"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2770
+Defined in: node\_modules/@types/react/index.d.ts:2764
 
 Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
 
@@ -702,7 +702,7 @@ aria-atomic.
 
 > `optional` **aria-required**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2783
+Defined in: node\_modules/@types/react/index.d.ts:2777
 
 Indicates that user input is required on the element before a form may be submitted.
 
@@ -716,7 +716,7 @@ Indicates that user input is required on the element before a form may be submit
 
 > `optional` **aria-roledescription**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2785
+Defined in: node\_modules/@types/react/index.d.ts:2779
 
 Defines a human-readable, author-localized description for the role of an element.
 
@@ -730,7 +730,7 @@ Defines a human-readable, author-localized description for the role of an elemen
 
 > `optional` **aria-rowcount**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2790
+Defined in: node\_modules/@types/react/index.d.ts:2784
 
 Defines the total number of rows in a table, grid, or treegrid.
 
@@ -748,7 +748,7 @@ aria-rowindex.
 
 > `optional` **aria-rowindex**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2795
+Defined in: node\_modules/@types/react/index.d.ts:2789
 
 Defines an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
 
@@ -767,7 +767,7 @@ Defines an element's row index or position with respect to the total number of r
 
 > `optional` **aria-rowindextext**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2800
+Defined in: node\_modules/@types/react/index.d.ts:2794
 
 Defines a human readable text alternative of aria-rowindex.
 
@@ -785,7 +785,7 @@ aria-colindextext.
 
 > `optional` **aria-rowspan**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2805
+Defined in: node\_modules/@types/react/index.d.ts:2799
 
 Defines the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
 
@@ -804,7 +804,7 @@ Defines the number of rows spanned by a cell or gridcell within a table, grid, o
 
 > `optional` **aria-selected**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2810
+Defined in: node\_modules/@types/react/index.d.ts:2804
 
 Indicates the current "selected" state of various widgets.
 
@@ -823,7 +823,7 @@ Indicates the current "selected" state of various widgets.
 
 > `optional` **aria-setsize**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2815
+Defined in: node\_modules/@types/react/index.d.ts:2809
 
 Defines the number of items in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM.
 
@@ -841,7 +841,7 @@ aria-posinset.
 
 > `optional` **aria-sort**: `"other"` \| `"none"` \| `"ascending"` \| `"descending"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2817
+Defined in: node\_modules/@types/react/index.d.ts:2811
 
 Indicates if items in a table or grid are sorted in ascending or descending order.
 
@@ -855,7 +855,7 @@ Indicates if items in a table or grid are sorted in ascending or descending orde
 
 > `optional` **aria-valuemax**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2819
+Defined in: node\_modules/@types/react/index.d.ts:2813
 
 Defines the maximum allowed value for a range widget.
 
@@ -869,7 +869,7 @@ Defines the maximum allowed value for a range widget.
 
 > `optional` **aria-valuemin**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2821
+Defined in: node\_modules/@types/react/index.d.ts:2815
 
 Defines the minimum allowed value for a range widget.
 
@@ -883,7 +883,7 @@ Defines the minimum allowed value for a range widget.
 
 > `optional` **aria-valuenow**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2826
+Defined in: node\_modules/@types/react/index.d.ts:2820
 
 Defines the current value for a range widget.
 
@@ -901,7 +901,7 @@ aria-valuetext.
 
 > `optional` **aria-valuetext**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2828
+Defined in: node\_modules/@types/react/index.d.ts:2822
 
 Defines the human readable text alternative of aria-valuenow for a range widget.
 
@@ -915,7 +915,7 @@ Defines the human readable text alternative of aria-valuenow for a range widget.
 
 > `optional` **autoCapitalize**: `"on"` \| `"off"` \| `string` & `object` \| `"none"` \| `"sentences"` \| `"words"` \| `"characters"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2913
+Defined in: node\_modules/@types/react/index.d.ts:2907
 
 #### Inherited from
 
@@ -927,7 +927,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2913
 
 > `optional` **autoCorrect**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2952
+Defined in: node\_modules/@types/react/index.d.ts:2946
 
 #### Inherited from
 
@@ -939,7 +939,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2952
 
 > `optional` **autoFocus**: `boolean`
 
-Defined in: node\_modules/@types/react/index.d.ts:2914
+Defined in: node\_modules/@types/react/index.d.ts:2908
 
 #### Inherited from
 
@@ -951,7 +951,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2914
 
 > `optional` **autoSave**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2953
+Defined in: node\_modules/@types/react/index.d.ts:2947
 
 #### Inherited from
 
@@ -971,7 +971,7 @@ Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:33](https:
 
 > `optional` **className**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2915
+Defined in: node\_modules/@types/react/index.d.ts:2909
 
 #### Inherited from
 
@@ -983,7 +983,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2915
 
 > `optional` **color**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2954
+Defined in: node\_modules/@types/react/index.d.ts:2948
 
 #### Inherited from
 
@@ -995,7 +995,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2954
 
 > `optional` **content**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2940
+Defined in: node\_modules/@types/react/index.d.ts:2934
 
 #### Inherited from
 
@@ -1007,7 +1007,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2940
 
 > `optional` **contentEditable**: `Booleanish` \| `"inherit"` \| `"plaintext-only"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2916
+Defined in: node\_modules/@types/react/index.d.ts:2910
 
 #### Inherited from
 
@@ -1019,7 +1019,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2916
 
 > `optional` **contextMenu**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2917
+Defined in: node\_modules/@types/react/index.d.ts:2911
 
 #### Inherited from
 
@@ -1031,7 +1031,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2917
 
 > `optional` **dangerouslySetInnerHTML**: `object`
 
-Defined in: node\_modules/@types/react/index.d.ts:2399
+Defined in: node\_modules/@types/react/index.d.ts:2393
 
 #### \_\_html
 
@@ -1047,7 +1047,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2399
 
 > `optional` **datatype**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2941
+Defined in: node\_modules/@types/react/index.d.ts:2935
 
 #### Inherited from
 
@@ -1059,7 +1059,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2941
 
 > `optional` **defaultChecked**: `boolean`
 
-Defined in: node\_modules/@types/react/index.d.ts:2906
+Defined in: node\_modules/@types/react/index.d.ts:2900
 
 #### Inherited from
 
@@ -1071,7 +1071,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2906
 
 > `optional` **defaultValue**: `string` \| `number` \| readonly `string`[]
 
-Defined in: node\_modules/@types/react/index.d.ts:2907
+Defined in: node\_modules/@types/react/index.d.ts:2901
 
 #### Inherited from
 
@@ -1083,7 +1083,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2907
 
 > `optional` **dir**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2918
+Defined in: node\_modules/@types/react/index.d.ts:2912
 
 #### Inherited from
 
@@ -1095,7 +1095,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2918
 
 > `optional` **draggable**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2919
+Defined in: node\_modules/@types/react/index.d.ts:2913
 
 #### Inherited from
 
@@ -1107,7 +1107,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2919
 
 > `optional` **enterKeyHint**: `"next"` \| `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"previous"` \| `"send"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2920
+Defined in: node\_modules/@types/react/index.d.ts:2914
 
 #### Inherited from
 
@@ -1119,7 +1119,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2920
 
 > `optional` **exportparts**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2978
+Defined in: node\_modules/@types/react/index.d.ts:2972
 
 #### See
 
@@ -1153,7 +1153,7 @@ Use `name`
 
 > `optional` **hidden**: `boolean`
 
-Defined in: node\_modules/@types/react/index.d.ts:2921
+Defined in: node\_modules/@types/react/index.d.ts:2915
 
 #### Inherited from
 
@@ -1165,7 +1165,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2921
 
 > `optional` **id**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2922
+Defined in: node\_modules/@types/react/index.d.ts:2916
 
 #### Inherited from
 
@@ -1177,7 +1177,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2922
 
 > `optional` **inlist**: `any`
 
-Defined in: node\_modules/@types/react/index.d.ts:2942
+Defined in: node\_modules/@types/react/index.d.ts:2936
 
 #### Inherited from
 
@@ -1189,7 +1189,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2942
 
 > `optional` **inputMode**: `"url"` \| `"search"` \| `"text"` \| `"none"` \| `"tel"` \| `"email"` \| `"numeric"` \| `"decimal"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2969
+Defined in: node\_modules/@types/react/index.d.ts:2963
 
 Hints at the type of data that might be entered by the user while editing the element or its contents
 
@@ -1207,7 +1207,7 @@ Hints at the type of data that might be entered by the user while editing the el
 
 > `optional` **is**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2974
+Defined in: node\_modules/@types/react/index.d.ts:2968
 
 Specify that a standard HTML element should behave like a defined custom built-in element
 
@@ -1225,7 +1225,7 @@ Specify that a standard HTML element should behave like a defined custom built-i
 
 > `optional` **itemID**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2958
+Defined in: node\_modules/@types/react/index.d.ts:2952
 
 #### Inherited from
 
@@ -1237,7 +1237,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2958
 
 > `optional` **itemProp**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2955
+Defined in: node\_modules/@types/react/index.d.ts:2949
 
 #### Inherited from
 
@@ -1249,7 +1249,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2955
 
 > `optional` **itemRef**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2959
+Defined in: node\_modules/@types/react/index.d.ts:2953
 
 #### Inherited from
 
@@ -1261,7 +1261,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2959
 
 > `optional` **itemScope**: `boolean`
 
-Defined in: node\_modules/@types/react/index.d.ts:2956
+Defined in: node\_modules/@types/react/index.d.ts:2950
 
 #### Inherited from
 
@@ -1273,7 +1273,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2956
 
 > `optional` **itemType**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2957
+Defined in: node\_modules/@types/react/index.d.ts:2951
 
 #### Inherited from
 
@@ -1285,7 +1285,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2957
 
 > `optional` **lang**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2923
+Defined in: node\_modules/@types/react/index.d.ts:2917
 
 #### Inherited from
 
@@ -1311,7 +1311,7 @@ The name of the extension slot
 
 > `optional` **nonce**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2924
+Defined in: node\_modules/@types/react/index.d.ts:2918
 
 #### Inherited from
 
@@ -1323,7 +1323,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2924
 
 > `optional` **onAbort**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2458
+Defined in: node\_modules/@types/react/index.d.ts:2452
 
 #### Inherited from
 
@@ -1335,7 +1335,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2458
 
 > `optional` **onAbortCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2459
+Defined in: node\_modules/@types/react/index.d.ts:2453
 
 #### Inherited from
 
@@ -1347,7 +1347,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2459
 
 > `optional` **onAnimationEnd**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2586
+Defined in: node\_modules/@types/react/index.d.ts:2580
 
 #### Inherited from
 
@@ -1359,7 +1359,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2586
 
 > `optional` **onAnimationEndCapture**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2587
+Defined in: node\_modules/@types/react/index.d.ts:2581
 
 #### Inherited from
 
@@ -1371,7 +1371,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2587
 
 > `optional` **onAnimationIteration**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2588
+Defined in: node\_modules/@types/react/index.d.ts:2582
 
 #### Inherited from
 
@@ -1383,7 +1383,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2588
 
 > `optional` **onAnimationIterationCapture**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2589
+Defined in: node\_modules/@types/react/index.d.ts:2583
 
 #### Inherited from
 
@@ -1395,7 +1395,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2589
 
 > `optional` **onAnimationStart**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2584
+Defined in: node\_modules/@types/react/index.d.ts:2578
 
 #### Inherited from
 
@@ -1407,7 +1407,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2584
 
 > `optional` **onAnimationStartCapture**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2585
+Defined in: node\_modules/@types/react/index.d.ts:2579
 
 #### Inherited from
 
@@ -1419,7 +1419,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2585
 
 > `optional` **onAuxClick**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2504
+Defined in: node\_modules/@types/react/index.d.ts:2498
 
 #### Inherited from
 
@@ -1431,7 +1431,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2504
 
 > `optional` **onAuxClickCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2505
+Defined in: node\_modules/@types/react/index.d.ts:2499
 
 #### Inherited from
 
@@ -1441,9 +1441,9 @@ Defined in: node\_modules/@types/react/index.d.ts:2505
 
 ### onBeforeInput?
 
-> `optional` **onBeforeInput**: `InputEventHandler`\<`HTMLDivElement`\>
+> `optional` **onBeforeInput**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2430
+Defined in: node\_modules/@types/react/index.d.ts:2424
 
 #### Inherited from
 
@@ -1455,7 +1455,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2430
 
 > `optional` **onBeforeInputCapture**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2431
+Defined in: node\_modules/@types/react/index.d.ts:2425
 
 #### Inherited from
 
@@ -1467,7 +1467,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2431
 
 > `optional` **onBlur**: `FocusEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2424
+Defined in: node\_modules/@types/react/index.d.ts:2418
 
 #### Inherited from
 
@@ -1479,7 +1479,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2424
 
 > `optional` **onBlurCapture**: `FocusEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2425
+Defined in: node\_modules/@types/react/index.d.ts:2419
 
 #### Inherited from
 
@@ -1491,7 +1491,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2425
 
 > `optional` **onCanPlay**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2460
+Defined in: node\_modules/@types/react/index.d.ts:2454
 
 #### Inherited from
 
@@ -1503,7 +1503,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2460
 
 > `optional` **onCanPlayCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2461
+Defined in: node\_modules/@types/react/index.d.ts:2455
 
 #### Inherited from
 
@@ -1515,7 +1515,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2461
 
 > `optional` **onCanPlayThrough**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2462
+Defined in: node\_modules/@types/react/index.d.ts:2456
 
 #### Inherited from
 
@@ -1527,7 +1527,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2462
 
 > `optional` **onCanPlayThroughCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2463
+Defined in: node\_modules/@types/react/index.d.ts:2457
 
 #### Inherited from
 
@@ -1539,7 +1539,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2463
 
 > `optional` **onChange**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2428
+Defined in: node\_modules/@types/react/index.d.ts:2422
 
 #### Inherited from
 
@@ -1551,7 +1551,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2428
 
 > `optional` **onChangeCapture**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2429
+Defined in: node\_modules/@types/react/index.d.ts:2423
 
 #### Inherited from
 
@@ -1563,7 +1563,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2429
 
 > `optional` **onClick**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2506
+Defined in: node\_modules/@types/react/index.d.ts:2500
 
 #### Inherited from
 
@@ -1575,7 +1575,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2506
 
 > `optional` **onClickCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2507
+Defined in: node\_modules/@types/react/index.d.ts:2501
 
 #### Inherited from
 
@@ -1587,7 +1587,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2507
 
 > `optional` **onCompositionEnd**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2414
+Defined in: node\_modules/@types/react/index.d.ts:2408
 
 #### Inherited from
 
@@ -1599,7 +1599,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2414
 
 > `optional` **onCompositionEndCapture**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2415
+Defined in: node\_modules/@types/react/index.d.ts:2409
 
 #### Inherited from
 
@@ -1611,7 +1611,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2415
 
 > `optional` **onCompositionStart**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2416
+Defined in: node\_modules/@types/react/index.d.ts:2410
 
 #### Inherited from
 
@@ -1623,7 +1623,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2416
 
 > `optional` **onCompositionStartCapture**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2417
+Defined in: node\_modules/@types/react/index.d.ts:2411
 
 #### Inherited from
 
@@ -1635,7 +1635,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2417
 
 > `optional` **onCompositionUpdate**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2418
+Defined in: node\_modules/@types/react/index.d.ts:2412
 
 #### Inherited from
 
@@ -1647,7 +1647,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2418
 
 > `optional` **onCompositionUpdateCapture**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2419
+Defined in: node\_modules/@types/react/index.d.ts:2413
 
 #### Inherited from
 
@@ -1659,7 +1659,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2419
 
 > `optional` **onContextMenu**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2508
+Defined in: node\_modules/@types/react/index.d.ts:2502
 
 #### Inherited from
 
@@ -1671,7 +1671,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2508
 
 > `optional` **onContextMenuCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2509
+Defined in: node\_modules/@types/react/index.d.ts:2503
 
 #### Inherited from
 
@@ -1683,7 +1683,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2509
 
 > `optional` **onCopy**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2406
+Defined in: node\_modules/@types/react/index.d.ts:2400
 
 #### Inherited from
 
@@ -1695,7 +1695,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2406
 
 > `optional` **onCopyCapture**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2407
+Defined in: node\_modules/@types/react/index.d.ts:2401
 
 #### Inherited from
 
@@ -1707,7 +1707,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2407
 
 > `optional` **onCut**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2408
+Defined in: node\_modules/@types/react/index.d.ts:2402
 
 #### Inherited from
 
@@ -1719,7 +1719,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2408
 
 > `optional` **onCutCapture**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2409
+Defined in: node\_modules/@types/react/index.d.ts:2403
 
 #### Inherited from
 
@@ -1731,7 +1731,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2409
 
 > `optional` **onDoubleClick**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2510
+Defined in: node\_modules/@types/react/index.d.ts:2504
 
 #### Inherited from
 
@@ -1743,7 +1743,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2510
 
 > `optional` **onDoubleClickCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2511
+Defined in: node\_modules/@types/react/index.d.ts:2505
 
 #### Inherited from
 
@@ -1755,7 +1755,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2511
 
 > `optional` **onDrag**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2512
+Defined in: node\_modules/@types/react/index.d.ts:2506
 
 #### Inherited from
 
@@ -1767,7 +1767,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2512
 
 > `optional` **onDragCapture**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2513
+Defined in: node\_modules/@types/react/index.d.ts:2507
 
 #### Inherited from
 
@@ -1779,7 +1779,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2513
 
 > `optional` **onDragEnd**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2514
+Defined in: node\_modules/@types/react/index.d.ts:2508
 
 #### Inherited from
 
@@ -1791,7 +1791,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2514
 
 > `optional` **onDragEndCapture**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2515
+Defined in: node\_modules/@types/react/index.d.ts:2509
 
 #### Inherited from
 
@@ -1803,7 +1803,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2515
 
 > `optional` **onDragEnter**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2516
+Defined in: node\_modules/@types/react/index.d.ts:2510
 
 #### Inherited from
 
@@ -1815,7 +1815,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2516
 
 > `optional` **onDragEnterCapture**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2517
+Defined in: node\_modules/@types/react/index.d.ts:2511
 
 #### Inherited from
 
@@ -1827,7 +1827,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2517
 
 > `optional` **onDragExit**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2518
+Defined in: node\_modules/@types/react/index.d.ts:2512
 
 #### Inherited from
 
@@ -1839,7 +1839,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2518
 
 > `optional` **onDragExitCapture**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2519
+Defined in: node\_modules/@types/react/index.d.ts:2513
 
 #### Inherited from
 
@@ -1851,7 +1851,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2519
 
 > `optional` **onDragLeave**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2520
+Defined in: node\_modules/@types/react/index.d.ts:2514
 
 #### Inherited from
 
@@ -1863,7 +1863,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2520
 
 > `optional` **onDragLeaveCapture**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2521
+Defined in: node\_modules/@types/react/index.d.ts:2515
 
 #### Inherited from
 
@@ -1875,7 +1875,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2521
 
 > `optional` **onDragOver**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2522
+Defined in: node\_modules/@types/react/index.d.ts:2516
 
 #### Inherited from
 
@@ -1887,7 +1887,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2522
 
 > `optional` **onDragOverCapture**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2523
+Defined in: node\_modules/@types/react/index.d.ts:2517
 
 #### Inherited from
 
@@ -1899,7 +1899,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2523
 
 > `optional` **onDragStart**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2524
+Defined in: node\_modules/@types/react/index.d.ts:2518
 
 #### Inherited from
 
@@ -1911,7 +1911,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2524
 
 > `optional` **onDragStartCapture**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2525
+Defined in: node\_modules/@types/react/index.d.ts:2519
 
 #### Inherited from
 
@@ -1923,7 +1923,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2525
 
 > `optional` **onDrop**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2526
+Defined in: node\_modules/@types/react/index.d.ts:2520
 
 #### Inherited from
 
@@ -1935,7 +1935,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2526
 
 > `optional` **onDropCapture**: `DragEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2527
+Defined in: node\_modules/@types/react/index.d.ts:2521
 
 #### Inherited from
 
@@ -1947,7 +1947,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2527
 
 > `optional` **onDurationChange**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2464
+Defined in: node\_modules/@types/react/index.d.ts:2458
 
 #### Inherited from
 
@@ -1959,7 +1959,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2464
 
 > `optional` **onDurationChangeCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2465
+Defined in: node\_modules/@types/react/index.d.ts:2459
 
 #### Inherited from
 
@@ -1971,7 +1971,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2465
 
 > `optional` **onEmptied**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2466
+Defined in: node\_modules/@types/react/index.d.ts:2460
 
 #### Inherited from
 
@@ -1983,7 +1983,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2466
 
 > `optional` **onEmptiedCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2467
+Defined in: node\_modules/@types/react/index.d.ts:2461
 
 #### Inherited from
 
@@ -1995,7 +1995,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2467
 
 > `optional` **onEncrypted**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2468
+Defined in: node\_modules/@types/react/index.d.ts:2462
 
 #### Inherited from
 
@@ -2007,7 +2007,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2468
 
 > `optional` **onEncryptedCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2469
+Defined in: node\_modules/@types/react/index.d.ts:2463
 
 #### Inherited from
 
@@ -2019,7 +2019,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2469
 
 > `optional` **onEnded**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2470
+Defined in: node\_modules/@types/react/index.d.ts:2464
 
 #### Inherited from
 
@@ -2031,7 +2031,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2470
 
 > `optional` **onEndedCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2471
+Defined in: node\_modules/@types/react/index.d.ts:2465
 
 #### Inherited from
 
@@ -2043,7 +2043,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2471
 
 > `optional` **onError**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2444
+Defined in: node\_modules/@types/react/index.d.ts:2438
 
 #### Inherited from
 
@@ -2055,7 +2055,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2444
 
 > `optional` **onErrorCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2445
+Defined in: node\_modules/@types/react/index.d.ts:2439
 
 #### Inherited from
 
@@ -2067,7 +2067,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2445
 
 > `optional` **onFocus**: `FocusEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2422
+Defined in: node\_modules/@types/react/index.d.ts:2416
 
 #### Inherited from
 
@@ -2079,7 +2079,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2422
 
 > `optional` **onFocusCapture**: `FocusEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2423
+Defined in: node\_modules/@types/react/index.d.ts:2417
 
 #### Inherited from
 
@@ -2091,7 +2091,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2423
 
 > `optional` **onGotPointerCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2570
+Defined in: node\_modules/@types/react/index.d.ts:2564
 
 #### Inherited from
 
@@ -2103,7 +2103,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2570
 
 > `optional` **onGotPointerCaptureCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2571
+Defined in: node\_modules/@types/react/index.d.ts:2565
 
 #### Inherited from
 
@@ -2115,7 +2115,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2571
 
 > `optional` **onInput**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2432
+Defined in: node\_modules/@types/react/index.d.ts:2426
 
 #### Inherited from
 
@@ -2127,7 +2127,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2432
 
 > `optional` **onInputCapture**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2433
+Defined in: node\_modules/@types/react/index.d.ts:2427
 
 #### Inherited from
 
@@ -2139,7 +2139,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2433
 
 > `optional` **onInvalid**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2438
+Defined in: node\_modules/@types/react/index.d.ts:2432
 
 #### Inherited from
 
@@ -2151,7 +2151,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2438
 
 > `optional` **onInvalidCapture**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2439
+Defined in: node\_modules/@types/react/index.d.ts:2433
 
 #### Inherited from
 
@@ -2163,7 +2163,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2439
 
 > `optional` **onKeyDown**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2448
+Defined in: node\_modules/@types/react/index.d.ts:2442
 
 #### Inherited from
 
@@ -2175,7 +2175,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2448
 
 > `optional` **onKeyDownCapture**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2449
+Defined in: node\_modules/@types/react/index.d.ts:2443
 
 #### Inherited from
 
@@ -2187,7 +2187,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2449
 
 > `optional` **onKeyPress**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2451
+Defined in: node\_modules/@types/react/index.d.ts:2445
 
 #### Deprecated
 
@@ -2203,7 +2203,7 @@ Use `onKeyUp` or `onKeyDown` instead
 
 > `optional` **onKeyPressCapture**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2453
+Defined in: node\_modules/@types/react/index.d.ts:2447
 
 #### Deprecated
 
@@ -2219,7 +2219,7 @@ Use `onKeyUpCapture` or `onKeyDownCapture` instead
 
 > `optional` **onKeyUp**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2454
+Defined in: node\_modules/@types/react/index.d.ts:2448
 
 #### Inherited from
 
@@ -2231,7 +2231,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2454
 
 > `optional` **onKeyUpCapture**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2455
+Defined in: node\_modules/@types/react/index.d.ts:2449
 
 #### Inherited from
 
@@ -2243,7 +2243,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2455
 
 > `optional` **onLoad**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2442
+Defined in: node\_modules/@types/react/index.d.ts:2436
 
 #### Inherited from
 
@@ -2255,7 +2255,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2442
 
 > `optional` **onLoadCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2443
+Defined in: node\_modules/@types/react/index.d.ts:2437
 
 #### Inherited from
 
@@ -2267,7 +2267,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2443
 
 > `optional` **onLoadedData**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2472
+Defined in: node\_modules/@types/react/index.d.ts:2466
 
 #### Inherited from
 
@@ -2279,7 +2279,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2472
 
 > `optional` **onLoadedDataCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2473
+Defined in: node\_modules/@types/react/index.d.ts:2467
 
 #### Inherited from
 
@@ -2291,7 +2291,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2473
 
 > `optional` **onLoadedMetadata**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2474
+Defined in: node\_modules/@types/react/index.d.ts:2468
 
 #### Inherited from
 
@@ -2303,7 +2303,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2474
 
 > `optional` **onLoadedMetadataCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2475
+Defined in: node\_modules/@types/react/index.d.ts:2469
 
 #### Inherited from
 
@@ -2315,7 +2315,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2475
 
 > `optional` **onLoadStart**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2476
+Defined in: node\_modules/@types/react/index.d.ts:2470
 
 #### Inherited from
 
@@ -2327,7 +2327,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2476
 
 > `optional` **onLoadStartCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2477
+Defined in: node\_modules/@types/react/index.d.ts:2471
 
 #### Inherited from
 
@@ -2339,7 +2339,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2477
 
 > `optional` **onLostPointerCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2572
+Defined in: node\_modules/@types/react/index.d.ts:2566
 
 #### Inherited from
 
@@ -2351,7 +2351,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2572
 
 > `optional` **onLostPointerCaptureCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2573
+Defined in: node\_modules/@types/react/index.d.ts:2567
 
 #### Inherited from
 
@@ -2363,7 +2363,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2573
 
 > `optional` **onMouseDown**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2528
+Defined in: node\_modules/@types/react/index.d.ts:2522
 
 #### Inherited from
 
@@ -2375,7 +2375,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2528
 
 > `optional` **onMouseDownCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2529
+Defined in: node\_modules/@types/react/index.d.ts:2523
 
 #### Inherited from
 
@@ -2387,7 +2387,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2529
 
 > `optional` **onMouseEnter**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2530
+Defined in: node\_modules/@types/react/index.d.ts:2524
 
 #### Inherited from
 
@@ -2399,7 +2399,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2530
 
 > `optional` **onMouseLeave**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2531
+Defined in: node\_modules/@types/react/index.d.ts:2525
 
 #### Inherited from
 
@@ -2411,7 +2411,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2531
 
 > `optional` **onMouseMove**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2532
+Defined in: node\_modules/@types/react/index.d.ts:2526
 
 #### Inherited from
 
@@ -2423,7 +2423,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2532
 
 > `optional` **onMouseMoveCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2533
+Defined in: node\_modules/@types/react/index.d.ts:2527
 
 #### Inherited from
 
@@ -2435,7 +2435,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2533
 
 > `optional` **onMouseOut**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2534
+Defined in: node\_modules/@types/react/index.d.ts:2528
 
 #### Inherited from
 
@@ -2447,7 +2447,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2534
 
 > `optional` **onMouseOutCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2535
+Defined in: node\_modules/@types/react/index.d.ts:2529
 
 #### Inherited from
 
@@ -2459,7 +2459,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2535
 
 > `optional` **onMouseOver**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2536
+Defined in: node\_modules/@types/react/index.d.ts:2530
 
 #### Inherited from
 
@@ -2471,7 +2471,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2536
 
 > `optional` **onMouseOverCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2537
+Defined in: node\_modules/@types/react/index.d.ts:2531
 
 #### Inherited from
 
@@ -2483,7 +2483,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2537
 
 > `optional` **onMouseUp**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2538
+Defined in: node\_modules/@types/react/index.d.ts:2532
 
 #### Inherited from
 
@@ -2495,7 +2495,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2538
 
 > `optional` **onMouseUpCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2539
+Defined in: node\_modules/@types/react/index.d.ts:2533
 
 #### Inherited from
 
@@ -2507,7 +2507,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2539
 
 > `optional` **onPaste**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2410
+Defined in: node\_modules/@types/react/index.d.ts:2404
 
 #### Inherited from
 
@@ -2519,7 +2519,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2410
 
 > `optional` **onPasteCapture**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2411
+Defined in: node\_modules/@types/react/index.d.ts:2405
 
 #### Inherited from
 
@@ -2531,7 +2531,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2411
 
 > `optional` **onPause**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2478
+Defined in: node\_modules/@types/react/index.d.ts:2472
 
 #### Inherited from
 
@@ -2543,7 +2543,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2478
 
 > `optional` **onPauseCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2479
+Defined in: node\_modules/@types/react/index.d.ts:2473
 
 #### Inherited from
 
@@ -2555,7 +2555,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2479
 
 > `optional` **onPlay**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2480
+Defined in: node\_modules/@types/react/index.d.ts:2474
 
 #### Inherited from
 
@@ -2567,7 +2567,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2480
 
 > `optional` **onPlayCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2481
+Defined in: node\_modules/@types/react/index.d.ts:2475
 
 #### Inherited from
 
@@ -2579,7 +2579,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2481
 
 > `optional` **onPlaying**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2482
+Defined in: node\_modules/@types/react/index.d.ts:2476
 
 #### Inherited from
 
@@ -2591,7 +2591,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2482
 
 > `optional` **onPlayingCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2483
+Defined in: node\_modules/@types/react/index.d.ts:2477
 
 #### Inherited from
 
@@ -2603,7 +2603,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2483
 
 > `optional` **onPointerCancel**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2562
+Defined in: node\_modules/@types/react/index.d.ts:2556
 
 #### Inherited from
 
@@ -2615,7 +2615,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2562
 
 > `optional` **onPointerCancelCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2563
+Defined in: node\_modules/@types/react/index.d.ts:2557
 
 #### Inherited from
 
@@ -2627,7 +2627,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2563
 
 > `optional` **onPointerDown**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2556
+Defined in: node\_modules/@types/react/index.d.ts:2550
 
 #### Inherited from
 
@@ -2639,7 +2639,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2556
 
 > `optional` **onPointerDownCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2557
+Defined in: node\_modules/@types/react/index.d.ts:2551
 
 #### Inherited from
 
@@ -2651,7 +2651,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2557
 
 > `optional` **onPointerEnter**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2564
+Defined in: node\_modules/@types/react/index.d.ts:2558
 
 #### Inherited from
 
@@ -2663,7 +2663,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2564
 
 > `optional` **onPointerLeave**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2565
+Defined in: node\_modules/@types/react/index.d.ts:2559
 
 #### Inherited from
 
@@ -2675,7 +2675,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2565
 
 > `optional` **onPointerMove**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2558
+Defined in: node\_modules/@types/react/index.d.ts:2552
 
 #### Inherited from
 
@@ -2687,7 +2687,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2558
 
 > `optional` **onPointerMoveCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2559
+Defined in: node\_modules/@types/react/index.d.ts:2553
 
 #### Inherited from
 
@@ -2699,7 +2699,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2559
 
 > `optional` **onPointerOut**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2568
+Defined in: node\_modules/@types/react/index.d.ts:2562
 
 #### Inherited from
 
@@ -2711,7 +2711,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2568
 
 > `optional` **onPointerOutCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2569
+Defined in: node\_modules/@types/react/index.d.ts:2563
 
 #### Inherited from
 
@@ -2723,7 +2723,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2569
 
 > `optional` **onPointerOver**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2566
+Defined in: node\_modules/@types/react/index.d.ts:2560
 
 #### Inherited from
 
@@ -2735,7 +2735,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2566
 
 > `optional` **onPointerOverCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2567
+Defined in: node\_modules/@types/react/index.d.ts:2561
 
 #### Inherited from
 
@@ -2747,7 +2747,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2567
 
 > `optional` **onPointerUp**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2560
+Defined in: node\_modules/@types/react/index.d.ts:2554
 
 #### Inherited from
 
@@ -2759,7 +2759,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2560
 
 > `optional` **onPointerUpCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2561
+Defined in: node\_modules/@types/react/index.d.ts:2555
 
 #### Inherited from
 
@@ -2771,7 +2771,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2561
 
 > `optional` **onProgress**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2484
+Defined in: node\_modules/@types/react/index.d.ts:2478
 
 #### Inherited from
 
@@ -2783,7 +2783,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2484
 
 > `optional` **onProgressCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2485
+Defined in: node\_modules/@types/react/index.d.ts:2479
 
 #### Inherited from
 
@@ -2795,7 +2795,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2485
 
 > `optional` **onRateChange**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2486
+Defined in: node\_modules/@types/react/index.d.ts:2480
 
 #### Inherited from
 
@@ -2807,7 +2807,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2486
 
 > `optional` **onRateChangeCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2487
+Defined in: node\_modules/@types/react/index.d.ts:2481
 
 #### Inherited from
 
@@ -2819,7 +2819,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2487
 
 > `optional` **onReset**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2434
+Defined in: node\_modules/@types/react/index.d.ts:2428
 
 #### Inherited from
 
@@ -2831,7 +2831,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2434
 
 > `optional` **onResetCapture**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2435
+Defined in: node\_modules/@types/react/index.d.ts:2429
 
 #### Inherited from
 
@@ -2843,7 +2843,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2435
 
 > `optional` **onScroll**: `UIEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2576
+Defined in: node\_modules/@types/react/index.d.ts:2570
 
 #### Inherited from
 
@@ -2855,7 +2855,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2576
 
 > `optional` **onScrollCapture**: `UIEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2577
+Defined in: node\_modules/@types/react/index.d.ts:2571
 
 #### Inherited from
 
@@ -2867,7 +2867,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2577
 
 > `optional` **onSeeked**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2488
+Defined in: node\_modules/@types/react/index.d.ts:2482
 
 #### Inherited from
 
@@ -2879,7 +2879,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2488
 
 > `optional` **onSeekedCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2489
+Defined in: node\_modules/@types/react/index.d.ts:2483
 
 #### Inherited from
 
@@ -2891,7 +2891,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2489
 
 > `optional` **onSeeking**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2490
+Defined in: node\_modules/@types/react/index.d.ts:2484
 
 #### Inherited from
 
@@ -2903,7 +2903,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2490
 
 > `optional` **onSeekingCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2491
+Defined in: node\_modules/@types/react/index.d.ts:2485
 
 #### Inherited from
 
@@ -2915,7 +2915,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2491
 
 > `optional` **onSelect**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2542
+Defined in: node\_modules/@types/react/index.d.ts:2536
 
 #### Inherited from
 
@@ -2927,7 +2927,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2542
 
 > `optional` **onSelectCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2543
+Defined in: node\_modules/@types/react/index.d.ts:2537
 
 #### Inherited from
 
@@ -2939,7 +2939,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2543
 
 > `optional` **onStalled**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2492
+Defined in: node\_modules/@types/react/index.d.ts:2486
 
 #### Inherited from
 
@@ -2951,7 +2951,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2492
 
 > `optional` **onStalledCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2493
+Defined in: node\_modules/@types/react/index.d.ts:2487
 
 #### Inherited from
 
@@ -2963,7 +2963,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2493
 
 > `optional` **onSubmit**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2436
+Defined in: node\_modules/@types/react/index.d.ts:2430
 
 #### Inherited from
 
@@ -2975,7 +2975,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2436
 
 > `optional` **onSubmitCapture**: `FormEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2437
+Defined in: node\_modules/@types/react/index.d.ts:2431
 
 #### Inherited from
 
@@ -2987,7 +2987,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2437
 
 > `optional` **onSuspend**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2494
+Defined in: node\_modules/@types/react/index.d.ts:2488
 
 #### Inherited from
 
@@ -2999,7 +2999,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2494
 
 > `optional` **onSuspendCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2495
+Defined in: node\_modules/@types/react/index.d.ts:2489
 
 #### Inherited from
 
@@ -3011,7 +3011,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2495
 
 > `optional` **onTimeUpdate**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2496
+Defined in: node\_modules/@types/react/index.d.ts:2490
 
 #### Inherited from
 
@@ -3023,7 +3023,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2496
 
 > `optional` **onTimeUpdateCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2497
+Defined in: node\_modules/@types/react/index.d.ts:2491
 
 #### Inherited from
 
@@ -3035,7 +3035,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2497
 
 > `optional` **onTouchCancel**: `TouchEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2546
+Defined in: node\_modules/@types/react/index.d.ts:2540
 
 #### Inherited from
 
@@ -3047,7 +3047,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2546
 
 > `optional` **onTouchCancelCapture**: `TouchEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2547
+Defined in: node\_modules/@types/react/index.d.ts:2541
 
 #### Inherited from
 
@@ -3059,7 +3059,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2547
 
 > `optional` **onTouchEnd**: `TouchEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2548
+Defined in: node\_modules/@types/react/index.d.ts:2542
 
 #### Inherited from
 
@@ -3071,7 +3071,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2548
 
 > `optional` **onTouchEndCapture**: `TouchEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2549
+Defined in: node\_modules/@types/react/index.d.ts:2543
 
 #### Inherited from
 
@@ -3083,7 +3083,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2549
 
 > `optional` **onTouchMove**: `TouchEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2550
+Defined in: node\_modules/@types/react/index.d.ts:2544
 
 #### Inherited from
 
@@ -3095,7 +3095,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2550
 
 > `optional` **onTouchMoveCapture**: `TouchEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2551
+Defined in: node\_modules/@types/react/index.d.ts:2545
 
 #### Inherited from
 
@@ -3107,7 +3107,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2551
 
 > `optional` **onTouchStart**: `TouchEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2552
+Defined in: node\_modules/@types/react/index.d.ts:2546
 
 #### Inherited from
 
@@ -3119,7 +3119,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2552
 
 > `optional` **onTouchStartCapture**: `TouchEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2553
+Defined in: node\_modules/@types/react/index.d.ts:2547
 
 #### Inherited from
 
@@ -3131,7 +3131,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2553
 
 > `optional` **onTransitionEnd**: `TransitionEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2592
+Defined in: node\_modules/@types/react/index.d.ts:2586
 
 #### Inherited from
 
@@ -3143,7 +3143,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2592
 
 > `optional` **onTransitionEndCapture**: `TransitionEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2593
+Defined in: node\_modules/@types/react/index.d.ts:2587
 
 #### Inherited from
 
@@ -3155,7 +3155,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2593
 
 > `optional` **onVolumeChange**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2498
+Defined in: node\_modules/@types/react/index.d.ts:2492
 
 #### Inherited from
 
@@ -3167,7 +3167,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2498
 
 > `optional` **onVolumeChangeCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2499
+Defined in: node\_modules/@types/react/index.d.ts:2493
 
 #### Inherited from
 
@@ -3179,7 +3179,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2499
 
 > `optional` **onWaiting**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2500
+Defined in: node\_modules/@types/react/index.d.ts:2494
 
 #### Inherited from
 
@@ -3191,7 +3191,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2500
 
 > `optional` **onWaitingCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2501
+Defined in: node\_modules/@types/react/index.d.ts:2495
 
 #### Inherited from
 
@@ -3203,7 +3203,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2501
 
 > `optional` **onWheel**: `WheelEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2580
+Defined in: node\_modules/@types/react/index.d.ts:2574
 
 #### Inherited from
 
@@ -3215,7 +3215,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2580
 
 > `optional` **onWheelCapture**: `WheelEventHandler`\<`HTMLDivElement`\>
 
-Defined in: node\_modules/@types/react/index.d.ts:2581
+Defined in: node\_modules/@types/react/index.d.ts:2575
 
 #### Inherited from
 
@@ -3227,7 +3227,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2581
 
 > `optional` **part**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2982
+Defined in: node\_modules/@types/react/index.d.ts:2976
 
 #### See
 
@@ -3243,7 +3243,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2982
 
 > `optional` **prefix**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2943
+Defined in: node\_modules/@types/react/index.d.ts:2937
 
 #### Inherited from
 
@@ -3255,7 +3255,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2943
 
 > `optional` **property**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2944
+Defined in: node\_modules/@types/react/index.d.ts:2938
 
 #### Inherited from
 
@@ -3267,7 +3267,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2944
 
 > `optional` **radioGroup**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2933
+Defined in: node\_modules/@types/react/index.d.ts:2927
 
 #### Inherited from
 
@@ -3279,7 +3279,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2933
 
 > `optional` **rel**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2945
+Defined in: node\_modules/@types/react/index.d.ts:2939
 
 #### Inherited from
 
@@ -3291,7 +3291,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2945
 
 > `optional` **resource**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2946
+Defined in: node\_modules/@types/react/index.d.ts:2940
 
 #### Inherited from
 
@@ -3303,7 +3303,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2946
 
 > `optional` **results**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2960
+Defined in: node\_modules/@types/react/index.d.ts:2954
 
 #### Inherited from
 
@@ -3315,7 +3315,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2960
 
 > `optional` **rev**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2947
+Defined in: node\_modules/@types/react/index.d.ts:2941
 
 #### Inherited from
 
@@ -3327,7 +3327,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2947
 
 > `optional` **role**: `AriaRole`
 
-Defined in: node\_modules/@types/react/index.d.ts:2936
+Defined in: node\_modules/@types/react/index.d.ts:2930
 
 #### Inherited from
 
@@ -3339,7 +3339,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2936
 
 > `optional` **security**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2961
+Defined in: node\_modules/@types/react/index.d.ts:2955
 
 #### Inherited from
 
@@ -3376,7 +3376,7 @@ An optional function for filtering or otherwise modifying
 
 > `optional` **slot**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2925
+Defined in: node\_modules/@types/react/index.d.ts:2919
 
 #### Inherited from
 
@@ -3388,7 +3388,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2925
 
 > `optional` **spellCheck**: `Booleanish`
 
-Defined in: node\_modules/@types/react/index.d.ts:2926
+Defined in: node\_modules/@types/react/index.d.ts:2920
 
 #### Inherited from
 
@@ -3417,7 +3417,7 @@ Only works if no children are provided*. Passes data
 
 > `optional` **style**: `CSSProperties`
 
-Defined in: node\_modules/@types/react/index.d.ts:2927
+Defined in: node\_modules/@types/react/index.d.ts:2921
 
 #### Inherited from
 
@@ -3429,7 +3429,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2927
 
 > `optional` **suppressContentEditableWarning**: `boolean`
 
-Defined in: node\_modules/@types/react/index.d.ts:2908
+Defined in: node\_modules/@types/react/index.d.ts:2902
 
 #### Inherited from
 
@@ -3441,7 +3441,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2908
 
 > `optional` **suppressHydrationWarning**: `boolean`
 
-Defined in: node\_modules/@types/react/index.d.ts:2909
+Defined in: node\_modules/@types/react/index.d.ts:2903
 
 #### Inherited from
 
@@ -3453,7 +3453,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2909
 
 > `optional` **tabIndex**: `number`
 
-Defined in: node\_modules/@types/react/index.d.ts:2928
+Defined in: node\_modules/@types/react/index.d.ts:2922
 
 #### Inherited from
 
@@ -3465,7 +3465,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2928
 
 > `optional` **title**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2929
+Defined in: node\_modules/@types/react/index.d.ts:2923
 
 #### Inherited from
 
@@ -3477,7 +3477,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2929
 
 > `optional` **translate**: `"yes"` \| `"no"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2930
+Defined in: node\_modules/@types/react/index.d.ts:2924
 
 #### Inherited from
 
@@ -3489,7 +3489,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2930
 
 > `optional` **typeof**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2948
+Defined in: node\_modules/@types/react/index.d.ts:2942
 
 #### Inherited from
 
@@ -3501,7 +3501,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2948
 
 > `optional` **unselectable**: `"on"` \| `"off"`
 
-Defined in: node\_modules/@types/react/index.d.ts:2962
+Defined in: node\_modules/@types/react/index.d.ts:2956
 
 #### Inherited from
 
@@ -3513,7 +3513,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2962
 
 > `optional` **vocab**: `string`
 
-Defined in: node\_modules/@types/react/index.d.ts:2949
+Defined in: node\_modules/@types/react/index.d.ts:2943
 
 #### Inherited from
 
