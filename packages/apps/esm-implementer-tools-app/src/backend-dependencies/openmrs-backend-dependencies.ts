@@ -39,10 +39,12 @@ interface BackendModule {
 
 let cachedFrontendModules: Array<ResolvedDependenciesModule>;
 
+const MAX_PAGES = 50;
+
 async function initInstalledBackendModules(): Promise<Array<BackendModule>> {
   try {
-    const response = await fetchInstalledBackendModules();
-    return response.data.results;
+    const modules = await fetchInstalledBackendModules();
+    return modules;
   } catch (err) {
     console.error(err);
   }
@@ -88,10 +90,49 @@ function checkIfModulesAreInstalled(
   };
 }
 
-function fetchInstalledBackendModules() {
-  return openmrsFetch(`${restBaseUrl}/module?v=custom:(uuid,version)`, {
-    method: 'GET',
-  });
+async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
+  const collected: Array<BackendModule> = [];
+  let nextUrl: string | null = `${restBaseUrl}/module?v=custom:(uuid,version)`;
+  let safetyCounter = 0;
+
+  const resolveNext = (url?: string | null) => {
+    if (!url) {
+      return null;
+    }
+    if (/^https?:\/\//i.test(url)) {
+      return url;
+    }
+    if (url.startsWith('/')) {
+      return url;
+    }
+    return `${restBaseUrl}/${url.replace(/^\/?/, '')}`;
+  };
+
+  while (nextUrl && safetyCounter < MAX_PAGES) {
+    try {
+      const { data } = await openmrsFetch(nextUrl, { method: 'GET' });
+      const pageResults: Array<BackendModule> = Array.isArray(data?.results) ? data.results : [];
+
+      collected.push(...pageResults);
+
+      const links: Array<{ rel?: string; uri?: string }> = Array.isArray(data?.links) ? data.links : [];
+      const nextLink = links.find((l) => (l.rel || '').toLowerCase() === 'next');
+
+      nextUrl = resolveNext(nextLink?.uri ?? null);
+      safetyCounter += 1;
+    } catch (e) {
+      console.error(`Failed to fetch backend modules on request ${safetyCounter + 1} (URL: ${nextUrl})`, e);
+      throw new Error(`Failed to fetch backend modules: ${e instanceof Error ? e.message : 'Unknown error'}`);
+    }
+  }
+
+  if (nextUrl && safetyCounter >= MAX_PAGES) {
+    console.warn(
+      `Reached maximum page limit (${MAX_PAGES}) while fetching backend modules. There may be more data available at: ${nextUrl}`,
+    );
+  }
+
+  return collected;
 }
 
 function getMissingBackendModules(
@@ -129,11 +170,8 @@ function getInstalledAndRequiredBackendModules(
     version: declaredBackendModules[key],
   }));
 
-  return requiredModules.filter((requiredModule) => {
-    return installedBackendModules.find((installedModule) => {
-      return requiredModule.uuid === installedModule.uuid;
-    });
-  });
+  const installedUuids = new Set(installedBackendModules.map((module) => module.uuid));
+  return requiredModules.filter((requiredModule) => installedUuids.has(requiredModule.uuid));
 }
 
 function getInstalledVersion(
@@ -141,7 +179,7 @@ function getInstalledVersion(
   installedBackendModules: Array<BackendModule>,
 ) {
   const moduleName = installedAndRequiredBackendModule.uuid;
-  return installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? '';
+  return installedBackendModules.find((mod) => mod.uuid === moduleName)?.version ?? '';
 }
 
 function getResolvedModuleType(requiredVersion: string, installedVersion: string): ResolvedBackendModuleType {
@@ -175,4 +213,9 @@ export async function checkModules(): Promise<Array<ResolvedDependenciesModule>>
 
 export function hasInvalidDependencies(frontendModules: Array<ResolvedDependenciesModule>) {
   return frontendModules.some((m) => m.dependencies.some((n) => n.type !== 'okay'));
+}
+
+// For use in tests
+export function clearCache() {
+  cachedFrontendModules = undefined as any;
 }

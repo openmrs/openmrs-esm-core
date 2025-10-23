@@ -10,6 +10,12 @@
   "ignorePatterns": [
     {
       "pattern": "^https://dev3.openmrs.org"
+    },
+    {
+      "pattern": "^https://www.npmjs.com/package/@openmrs/"
+    },
+    {
+      "pattern": "^http://localhost"
     }
   ],
   "retryOn429": true,

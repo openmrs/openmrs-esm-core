@@ -24,3 +24,12 @@ export * from './pictograms/pictograms';
 export { type StyleguideConfigObject } from './config-schema';
 export * from './location-picker';
 export * from './diagnosis-tags';
+export {
+  launchWorkspace2,
+  launchWorkspaceGroup2,
+  closeWorkspaceGroup2,
+  ActionMenuButton2,
+  Workspace2,
+  type Workspace2Definition,
+  type Workspace2DefinitionProps,
+} from './workspaces2';

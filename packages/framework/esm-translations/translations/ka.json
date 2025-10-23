@@ -15,7 +15,9 @@
   "Clinic": "კლინიკა",
   "close": "დახურვა",
   "closeAllOpenedWorkspaces": "ცვლილებების გაუქმება {{count}} სამუშაო სივრცეში",
-  "closingAllWorkspacesPromptBody": "There are unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
+  "closeWorkspaces2PromptBody": "You are about to close the following workspace(s), which might have unsaved changes:",
+  "closeWorkspaces2PromptTitle": "Close workspace(s)",
+  "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "გაქვთ შეუნახავი ცვლილებები",
   "confirm": "დადასტურება",
   "contactAdministratorIfIssuePersists": "Contact your system administrator if the problem persists.",
@@ -57,6 +59,7 @@
   "stateProvince": "შტატი",
   "toggleDevTools": "პროგრამისტის ხელსაწყოების გადართვა",
   "unknown": "უცნობი",
+  "unsavedChangesInOpenedWorkspace": "You may have unsaved changes in the opened workspace. Do you want to discard these changes?",
   "unsavedChangesInWorkspace": "There may be unsaved changes in \"{{workspaceName}}\". Please save them before opening another workspace.",
   "unsavedChangesTitleText": "შეუნახავი ცვლილებები",
   "workspaceHeader": "სამუშაო სივრცის თავსართი"

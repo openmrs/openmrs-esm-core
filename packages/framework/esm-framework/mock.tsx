@@ -90,10 +90,16 @@ export const usePatientPhoto = vi.fn(() => ({
 }));
 
 export const ActionMenuButton = vi.fn(({ handler }) => <button onClick={handler}>Action Menu Button</button>);
+export const ActionMenuButton2 = vi.fn(({ label, tagContent, icon }) => (
+  <button>
+    {icon} {tagContent} {label}
+  </button>
+));
 export const ActionMenu = vi.fn(() => <div>Action Menu</div>);
 export const WorkspaceContainer = vi.fn(() => <div>Workspace Container</div>);
 export const closeWorkspace = vi.fn();
 export const launchWorkspace = vi.fn();
+export const launchWorkspace2 = vi.fn();
 export const launchWorkspaceGroup = vi.fn();
 export const navigateAndLaunchWorkspace = vi.fn();
 export const useWorkspaces = vi.fn();
