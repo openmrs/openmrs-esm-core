@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import {
   type ExtensionSlotCustomState,
   registerExtensionSlot,
@@ -11,22 +11,21 @@ import { useAssignedExtensions } from './useAssignedExtensions';
 export function useExtensionSlot(slotName: string, state?: ExtensionSlotCustomState) {
   const { moduleName } = useContext(ComponentContext);
   const isInitialRender = useRef(true);
-  const extensionState = useMemo(() => state, [state]);
 
   if (!moduleName) {
     throw Error('ComponentContext has not been provided. This should come from @openmrs/esm-react-utils.');
   }
 
   useEffect(() => {
-    registerExtensionSlot(moduleName, slotName, extensionState);
+    registerExtensionSlot(moduleName, slotName, state);
     isInitialRender.current = false;
   }, []);
 
   useEffect(() => {
     if (!isInitialRender.current) {
-      updateExtensionSlotState(slotName, extensionState);
+      updateExtensionSlotState(slotName, state);
     }
-  }, [slotName, extensionState]);
+  }, [slotName, state]);
 
   const extensions = useAssignedExtensions(slotName);
 

@@ -4,7 +4,7 @@
 
 > **getAssignedExtensions**(`slotName`): [`AssignedExtension`](../interfaces/AssignedExtension.md)[]
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:416](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L416)
+Defined in: [packages/framework/esm-extensions/src/extensions.ts:421](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L421)
 
 Gets the list of extensions assigned to a given slot
 

@@ -9,13 +9,13 @@ import {
   registerWorkspaceWindows2,
 } from '@openmrs/esm-extensions';
 import {
-  type FeatureFlagDefinition,
   type ExtensionDefinition,
+  type FeatureFlagDefinition,
   type ModalDefinition,
   type WorkspaceDefinition,
+  type WorkspaceDefinition2,
   type WorkspaceGroupDefinition,
   type WorkspaceGroupDefinition2,
-  type WorkspaceDefinition2,
   type WorkspaceWindowDefinition2,
 } from '@openmrs/esm-globals';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';

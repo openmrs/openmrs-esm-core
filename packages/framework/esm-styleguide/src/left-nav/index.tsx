@@ -4,9 +4,9 @@ import { SideNav, type SideNavProps } from '@carbon/react';
 import {
   ComponentContext,
   ExtensionSlot,
+  RenderIfValueIsTruthy,
   useAssignedExtensions,
   useLeftNavStore,
-  RenderIfValueIsTruthy,
 } from '@openmrs/esm-react-utils';
 import styles from './left-nav.module.scss';
 

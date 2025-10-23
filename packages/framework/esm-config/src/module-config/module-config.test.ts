@@ -1032,11 +1032,11 @@ describe('implementer tools config', () => {
         _value: [],
       },
       expression: {
-        _default: '',
+        _default: undefined,
         _description: expect.any(String),
         _source: 'default',
         _type: Type.String,
-        _value: '',
+        _value: undefined,
       },
     },
     'Translation overrides': {
@@ -1268,7 +1268,7 @@ describe('extension config', () => {
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'bazzy',
-      'Display conditions': { expression: '', privileges: [] },
+      'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
     expect(console.error).not.toHaveBeenCalled();
@@ -1291,7 +1291,7 @@ describe('extension config', () => {
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'quiz',
-      'Display conditions': { expression: '', privileges: [] },
+      'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
     expect(console.error).not.toHaveBeenCalled();
@@ -1324,7 +1324,7 @@ describe('extension config', () => {
     const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
     expect(result).toStrictEqual({
       qux: 'quxolotl',
-      'Display conditions': { expression: '', privileges: [] },
+      'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
   });
@@ -1349,7 +1349,7 @@ describe('extension config', () => {
     const result = getExtensionConfig('barSlot', 'fooExt#id2').getState().config;
     expect(result).toStrictEqual({
       qux: 'quxotic',
-      'Display conditions': { expression: '', privileges: [] },
+      'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
   });

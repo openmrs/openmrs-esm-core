@@ -10,15 +10,15 @@
 
 import { type Session, type SessionStore, sessionStore, userHasAccess } from '@openmrs/esm-api';
 import {
-  type ExtensionsConfigStore,
   type ExtensionSlotConfig,
   type ExtensionSlotsConfigStore,
-  getExtensionConfigFromStore,
-  getExtensionsConfigStore,
-  getExtensionSlotConfig,
+  type ExtensionsConfigStore,
   getExtensionConfigFromExtensionSlotStore,
+  getExtensionConfigFromStore,
+  getExtensionSlotConfig,
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
+  getExtensionsConfigStore,
 } from '@openmrs/esm-config';
 import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
@@ -28,13 +28,13 @@ import { isEqual, merge } from 'lodash-es';
 import { checkStatusFor } from './helpers';
 import {
   type AssignedExtension,
-  type ExtensionRegistration,
-  type ExtensionSlotInfo,
   type ExtensionInternalStore,
-  type ExtensionSlotState,
+  type ExtensionRegistration,
   type ExtensionSlotCustomState,
-  getExtensionStore,
+  type ExtensionSlotInfo,
+  type ExtensionSlotState,
   getExtensionInternalStore,
+  getExtensionStore,
   updateInternalExtensionStore,
 } from './store';
 
@@ -339,6 +339,10 @@ function getAssignedExtensionsFromSlotData(
   const assignedIds = calculateAssignedIds(config, attachedIds);
   const extensions: Array<AssignedExtension> = [];
 
+  // Create context once for all extensions in this slot
+  const slotState = internalState.slots[slotName]?.state;
+  const expressionContext = slotState && typeof slotState === 'object' ? { session, ...slotState } : { session };
+
   for (let id of assignedIds) {
     const { config: rawExtensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
     const rawExtensionSlotExtensionConfig = getExtensionConfigFromExtensionSlotStore(config, slotName, id);
@@ -366,12 +370,13 @@ function getAssignedExtensionsFromSlotData(
       const displayConditionExpression =
         extensionConfig?.['Display conditions']?.expression || extension.displayExpression;
 
-      if (displayConditionExpression !== undefined && typeof displayConditionExpression === 'string') {
+      if (
+        displayConditionExpression !== undefined &&
+        typeof displayConditionExpression === 'string' &&
+        displayConditionExpression.trim().length > 0
+      ) {
         try {
-          const slotState = internalState.slots[slotName]?.state;
-          const context = slotState && typeof slotState === 'object' ? { session, ...slotState } : { session };
-
-          if (!evaluateAsBoolean(displayConditionExpression, context)) {
+          if (!evaluateAsBoolean(displayConditionExpression, expressionContext)) {
             continue;
           }
         } catch (e) {
@@ -515,7 +520,7 @@ export const registerExtensionSlot: (moduleName: string, slotName: string, state
  *
  * @param slotName The name of the slot with state to update
  * @param state A copy of the new state
- * @param parital Whether this should be applied as a partial
+ * @param partial Whether this should be applied as a partial
  */
 export function updateExtensionSlotState(slotName: string, state: ExtensionSlotCustomState, partial: boolean = false) {
   extensionInternalStore.setState((currentState) => {
