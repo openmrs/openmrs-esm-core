@@ -12,7 +12,7 @@ export interface ConfigSubtreeProps {
 export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
   function setActiveItemDescriptionOnMouseEnter(thisPath, key, value) {
     if (!implementerToolsStore.getState().configPathBeingEdited) {
-      const isLeaf = Object.hasOwn(value, '_value');
+      const isLeaf = value && typeof value === 'object' && Object.hasOwn(value, '_value');
       implementerToolsStore.setState({
         activeItemDescription: {
           path: thisPath,
@@ -37,7 +37,7 @@ export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
         .filter(([key]) => !key.startsWith('_'))
         .map(([key, value], i) => {
           const thisPath = path.concat([key]);
-          const isLeaf = Object.hasOwn(value, '_value');
+          const isLeaf = value && typeof value === 'object' && Object.hasOwn(value, '_value');
           return (
             <Subtree
               label={key}
