@@ -36,7 +36,10 @@ $extraWideWorkspaceWidth: 48.25rem;
     inset-inline-end: var(--actionPanelOffset);
     z-index: 100;
 
-    animation: growToWidth 0.5s ease-in-out;
+    &.isRootWorkspace {
+      animation: growToWidth 0.5s ease-in-out;
+    }
+
     transition: width 0.5s ease-in-out;
 
     &.maximized {
@@ -67,9 +70,7 @@ $extraWideWorkspaceWidth: 48.25rem;
     border-inline-start: 1px solid $text-03;
     background-color: #fff;
 
-    transition:
-      width 0.5s ease-in-out,
-      transform 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
 
     &.maximized {
       width: calc(100vw - var(--actionPanelOffset));
@@ -176,7 +177,6 @@ $extraWideWorkspaceWidth: 48.25rem;
   .header {
     position: relative;
     background-color: var(--brand-02);
-    margin-inline-start: layout.$spacing-04;
 
     a {
       color: $ui-02;
@@ -209,10 +209,6 @@ $extraWideWorkspaceWidth: 48.25rem;
     &.isRootWorkspace {
       animation: slideFromBottom 0.5s ease-in-out;
     }
-
-    // .hidden {
-    //   width: 0 !important;
-    // }
   }
 
   .marginWorkspaceContent {
