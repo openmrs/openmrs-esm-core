@@ -43,31 +43,12 @@ const slotsConfigStore = getExtensionSlotsConfigStore();
 const extensionsConfigStore = getExtensionsConfigStore();
 
 // Keep the output store updated
-function updateExtensionOutputStore(
-  internalState: ExtensionInternalStore,
-  extensionSlotConfigs: ExtensionSlotsConfigStore,
-  extensionsConfigStore: ExtensionsConfigStore,
-  featureFlagStore: FeatureFlagsStore,
-  sessionStore: SessionStore,
-) {
+function updateExtensionOutputStore() {
   const slots: Record<string, ExtensionSlotState> = {};
 
-  const isOnline = isOnlineFn();
-  const enabledFeatureFlags = Object.entries(featureFlagStore.flags)
-    .filter(([, { enabled }]) => enabled)
-    .map(([name]) => name);
-
+  const internalState = extensionInternalStore.getState();
   for (let [slotName, slot] of Object.entries(internalState.slots)) {
-    const { config } = getExtensionSlotConfigFromStore(extensionSlotConfigs, slot.name);
-    const assignedExtensions = getAssignedExtensionsFromSlotData(
-      slotName,
-      internalState,
-      config,
-      extensionsConfigStore,
-      enabledFeatureFlags,
-      isOnline,
-      sessionStore.session,
-    );
+    const assignedExtensions = getAssignedExtensions(slotName);
     slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
   }
 
@@ -76,68 +57,14 @@ function updateExtensionOutputStore(
   }
 }
 
-extensionInternalStore.subscribe((internalStore) => {
-  updateExtensionOutputStore(
-    internalStore,
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-  );
-});
+extensionInternalStore.subscribe(updateExtensionOutputStore);
+slotsConfigStore.subscribe(updateExtensionOutputStore);
+extensionsConfigStore.subscribe(updateExtensionOutputStore);
+featureFlagsStore.subscribe(updateExtensionOutputStore);
+sessionStore.subscribe(updateExtensionOutputStore);
 
-slotsConfigStore.subscribe((slotConfigs) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotConfigs,
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-  );
-});
-
-extensionsConfigStore.subscribe((extensionConfigs) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionConfigs,
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-  );
-});
-
-featureFlagsStore.subscribe((featureFlagStore) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagStore,
-    sessionStore.getState(),
-  );
-});
-
-sessionStore.subscribe((session) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    session,
-  );
-});
-
-function updateOutputStoreToCurrent() {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-  );
-}
-
-updateOutputStoreToCurrent();
-subscribeConnectivityChanged(updateOutputStoreToCurrent);
+updateExtensionOutputStore();
+subscribeConnectivityChanged(updateExtensionOutputStore);
 
 function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
   return {
@@ -320,22 +247,31 @@ function getOrder(
   }
 }
 
-function getAssignedExtensionsFromSlotData(
-  slotName: string,
-  internalState: ExtensionInternalStore,
-  config: ExtensionSlotConfig,
-  extensionConfigStoreState: ExtensionsConfigStore,
-  enabledFeatureFlags: Array<string>,
-  isOnline: boolean,
-  session: Session | null,
-): Array<AssignedExtension> {
-  const attachedIds = internalState.slots[slotName].attachedIds;
-  const assignedIds = calculateAssignedIds(config, attachedIds);
-  const extensions: Array<AssignedExtension> = [];
+/**
+ * Create a list of AssignedExtensions for a given slot. This function further
+ * filters out extensions that fail 'Display conditions', privilege, feature flag or
+ * online / offline checks
+ * @see AssignedExtension
+ * @param slotName the name of the slot
+ * @param extensionIds a list of extensionIds that are slotted into the slot
+ * @returns a list of AssignedExtensions
+ */
+function getAssignedExtensionsByExtensionIds(slotName: string, extensionIds: string[]): Array<AssignedExtension> {
+  const internalState = extensionInternalStore.getState();
+  const extensionConfigStoreState = extensionsConfigStore.getState();
+  const featureFlagState = featureFlagsStore.getState();
+  const { session } = sessionStore.getState();
+  const isOnline = isOnlineFn();
+  const { config: slotConfig } = getExtensionSlotConfig(slotName);
+  const enabledFeatureFlags = Object.entries(featureFlagState.flags)
+    .filter(([, { enabled }]) => enabled)
+    .map(([name]) => name);
 
-  for (let id of assignedIds) {
+  const assignedExtensions: Array<AssignedExtension> = [];
+
+  for (let id of extensionIds) {
     const { config: rawExtensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
-    const rawExtensionSlotExtensionConfig = getExtensionConfigFromExtensionSlotStore(config, slotName, id);
+    const rawExtensionSlotExtensionConfig = getExtensionConfigFromExtensionSlotStore(slotConfig, slotName, id);
     const extensionConfig = merge(rawExtensionConfig, rawExtensionSlotExtensionConfig);
 
     const name = getExtensionNameFromId(id);
@@ -378,7 +314,7 @@ function getAssignedExtensionsFromSlotData(
         continue;
       }
 
-      extensions.push({
+      assignedExtensions.push({
         id,
         name,
         moduleName: extension.moduleName,
@@ -391,38 +327,44 @@ function getAssignedExtensionsFromSlotData(
     }
   }
 
-  return extensions;
+  return assignedExtensions;
 }
 
 /**
- * Gets the list of extensions assigned to a given slot
- *
+ * Gets the list of AssignedExtensions for a given slot
+ * @see AssignedExtension
  * @param slotName The slot to load the assigned extensions for
  * @returns An array of extensions assigned to the named slot
  */
 export function getAssignedExtensions(slotName: string): Array<AssignedExtension> {
-  const internalState = extensionInternalStore.getState();
-  const { config: slotConfig } = getExtensionSlotConfig(slotName);
-  const extensionStoreState = extensionsConfigStore.getState();
-  const featureFlagState = featureFlagsStore.getState();
-  const sessionState = sessionStore.getState();
-  const isOnline = isOnlineFn();
-  const enabledFeatureFlags = Object.entries(featureFlagState.flags)
-    .filter(([, { enabled }]) => enabled)
-    .map(([name]) => name);
-
-  return getAssignedExtensionsFromSlotData(
-    slotName,
-    internalState,
-    slotConfig,
-    extensionStoreState,
-    enabledFeatureFlags,
-    isOnline,
-    sessionState.session,
-  );
+  const extensionIds = getExtensionIds(slotName);
+  return getAssignedExtensionsByExtensionIds(slotName, extensionIds);
 }
 
-function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<string>) {
+/**
+ * Get an single assigned extension, as if it is assigned to the 'global' extension slot, by extensionId
+ * @see AssignedExtension
+ * @param extensionId
+ */
+export function getSingleAssignedExtension(extensionId: string): AssignedExtension | null {
+  const ret = getAssignedExtensionsByExtensionIds('global', [extensionId]);
+  return ret.length > 0 ? ret[0] : null;
+}
+
+/**
+ * Calculate a list of extension ids that are slotted into the specified slot
+ * either via:
+ * - the "slot" attribute in the extension declaration in routes.json, or
+ * - calling attach(), or
+ * - the "add" attribute in the configuration of the slot
+ * @param slotName the name of the slot
+ * @returns a list of extensions ids slotted into the specified slot
+ */
+function getExtensionIds(slotName: string) {
+  const internalState = extensionInternalStore.getState();
+  const { config } = getExtensionSlotConfig(slotName);
+
+  const attachedIds = internalState.slots[slotName].attachedIds;
   const addedIds = config.add || [];
   const removedIds = config.remove || [];
   const idOrder = config.order || [];

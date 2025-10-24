@@ -72,6 +72,8 @@ export const useExtensionStore = vi.fn();
 
 export const ExtensionSlot = vi.fn(({ children }) => <>{children}</>);
 
+export const SingleExtensionSlot = vi.fn(({ children }) => <>{children}</>);
+
 export const Extension = vi.fn((props: any) => <slot />);
 
 export const useFeatureFlag = vi.fn().mockReturnValue(true);

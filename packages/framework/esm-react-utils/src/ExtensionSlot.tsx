@@ -1,6 +1,6 @@
 /** @module @category Extension */
-import React, { useRef, useMemo } from 'react';
-import { type AssignedExtension } from '@openmrs/esm-extensions';
+import React, { useMemo } from 'react';
+import { getSingleAssignedExtension, type AssignedExtension } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 import { Extension } from './Extension';
 import { useExtensionSlot } from './useExtensionSlot';
@@ -8,15 +8,6 @@ import { useExtensionSlot } from './useExtensionSlot';
 export interface ExtensionSlotBaseProps {
   /** The name of the extension slot */
   name: string;
-  /**
-   * The name of the extension slot
-   * @deprecated Use `name`
-   */
-  extensionSlotName?: string;
-  /**
-   * An optional function for filtering or otherwise modifying
-   *   the list of extensions that will be rendered.
-   */
   select?: (extensions: Array<AssignedExtension>) => Array<AssignedExtension>;
   /**
    *Only works if no children are provided*. Passes data
@@ -69,8 +60,7 @@ function defaultSelect(extensions: Array<AssignedExtension>) {
  *
  */
 export function ExtensionSlot({
-  name: extensionSlotName,
-  extensionSlotName: legacyExtensionSlotName,
+  name,
   select = defaultSelect,
   children,
   state,
@@ -83,45 +73,122 @@ export function ExtensionSlot({
     );
   }
 
-  const name = (extensionSlotName ?? legacyExtensionSlotName) as string;
-  const slotRef = useRef(null);
   const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
 
   const extensionsToRender = useMemo(() => select(extensions), [select, extensions]);
 
-  const extensionsFromChildrenFunction = useMemo(() => {
-    if (typeof children == 'function' && !React.isValidElement(children)) {
-      return extensionsToRender.map((extension) => children(extension, state));
-    }
-  }, [children, extensionsToRender]);
+  return (
+    <RenderedExtensions
+      {...{ children, state, extensionsToRender, name, style, extensionSlotModuleName, ...divProps }}
+    />
+  );
+}
+
+type SingleExtensionSlotProps = Omit<ExtensionSlotProps, 'name' | 'select'> & { extensionId: string };
+
+/**
+ * A special extension slot, with slot name 'global', that renders only one single extension
+ * by its extensionId. The extensionId is the extension name, with an optional `#<string>` suffix
+ * used to indicate specific configuration. (For example, given a extension with name 'foo',
+ * then 'foo', 'foo#bar', 'foo#baz' are all valid extensionIds)
+ *
+ * @see ExtensionSlot
+ *
+ * @example
+ * Passing a react node as children
+ *
+ * ```tsx
+ * <SingleExtensionSlot extensionId="foo">
+ *   <div style={{ width: 10rem }}>
+ *     <Extension />
+ *   </div>
+ * </SingleExtensionSlot>
+ * ```
+ *
+ * @example
+ * Passing a function as children
+ *
+ * ```tsx
+ * <SingleExtensionSlot extensionId="bar">
+ *   {(extension) => (
+ *     <h1>{extension.name}</h1>
+ *     <div style={{ color: extension.meta.color }}>
+ *       <Extension />
+ *     </div>
+ *   )}
+ * </SingleExtensionSlot>
+ * ```
+ */
+export function SingleExtensionSlot({ extensionId, children, state, style, ...divProps }: SingleExtensionSlotProps) {
+  const singleExtension = getSingleAssignedExtension(extensionId);
+  if (singleExtension == null) {
+    return null;
+  }
+
+  return (
+    <RenderedExtensions
+      {...{
+        children,
+        state,
+        extensionsToRender: [singleExtension],
+        name: 'global',
+        style,
+        extensionSlotModuleName: '@openmrs/esm-app-shell',
+        ...divProps,
+      }}
+    />
+  );
+}
+
+type RenderedExtensionsProps = Omit<ExtensionSlotProps, 'select'> & {
+  extensionsToRender: AssignedExtension[];
+  extensionSlotModuleName: string;
+};
+
+function RenderedExtensions({
+  children,
+  state,
+  extensionsToRender,
+  name,
+  style,
+  extensionSlotModuleName,
+  ...divProps
+}: RenderedExtensionsProps) {
+  const renderedExtensions: React.ReactNode[] = useMemo(() => {
+    return extensionsToRender.map((extension) => {
+      if (typeof children === 'function' && !React.isValidElement(children)) {
+        return children(extension, state);
+      } else if (children) {
+        return children;
+      } else {
+        return <Extension state={state} />;
+      }
+    });
+  }, [children, extensionsToRender, state]);
 
   return (
     <div
-      ref={slotRef}
       data-extension-slot-name={name}
       data-extension-slot-module-name={extensionSlotModuleName}
       style={{ ...style, position: 'relative' }}
       {...divProps}
     >
-      {name &&
-        extensionsToRender?.map((extension, i) => (
-          <ComponentContext.Provider
-            key={extension.id}
-            value={{
-              moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
-              featureName: '', // featureName is not used by the receiving Extension
-              extension: {
-                extensionId: extension.id,
-                extensionSlotName: name,
-                extensionSlotModuleName,
-              },
-            }}
-          >
-            {extensionsFromChildrenFunction?.[i] ?? (typeof children !== 'function' ? children : null) ?? (
-              <Extension state={state} />
-            )}
-          </ComponentContext.Provider>
-        ))}
+      {extensionsToRender?.map((extension, i) => (
+        <ComponentContext.Provider
+          key={extension.id}
+          value={{
+            moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
+            featureName: '', // featureName is not used by the receiving Extension
+            extension: {
+              extensionId: extension.id,
+              extensionSlotName: name,
+              extensionSlotModuleName,
+            },
+          }}
+        >
+          {renderedExtensions[i]}
+        </ComponentContext.Provider>
+      ))}
     </div>
   );
 }
