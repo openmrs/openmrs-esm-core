@@ -2,7 +2,7 @@
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
 import { attach, registerExtension, updateInternalExtensionStore } from '../../../esm-extensions';
@@ -182,8 +182,10 @@ describe('Expression evaluation in extension display conditions', () => {
 
     render(<App />);
 
-    await screen.findByTestId(/slot/);
-    expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Schmoo');
+    await waitFor(() => {
+      const slot = screen.getByTestId('slot');
+      expect(slot.firstChild).toHaveAttribute('data-extension-id', 'Schmoo');
+    });
   });
 
   it('should hide extension using a complex expression', async () => {
@@ -240,8 +242,10 @@ describe('Expression evaluation in extension display conditions', () => {
 
     render(<App />);
 
-    await screen.findByTestId(/slot/);
-    expect(screen.getByTestId('slot').firstChild).toBeNull();
+    await waitFor(() => {
+      const slot = screen.getByTestId('slot');
+      expect(slot.firstChild).toBeNull();
+    });
   });
 
   it('should hide extension if expression contains an error', async () => {
@@ -277,8 +281,10 @@ describe('Expression evaluation in extension display conditions', () => {
 
     render(<App />);
 
-    await screen.findByTestId(/slot/);
-    expect(screen.getByTestId('slot').firstChild).toBeNull();
+    await waitFor(() => {
+      const slot = screen.getByTestId('slot');
+      expect(slot.firstChild).toBeNull();
+    });
   }, 10000);
 });
 
