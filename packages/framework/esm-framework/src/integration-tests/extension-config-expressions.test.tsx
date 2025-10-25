@@ -143,25 +143,27 @@ describe('Expression evaluation in extension display conditions', () => {
       },
     });
 
-    mockSessionStore.setState({
-      loaded: true,
-      session: {
-        authenticated: true,
-        sessionId: '1',
-        user: {
-          uuid: '1',
-          display: 'Non-Admin',
-          username: 'nonadmin',
-          systemId: 'nonadmin',
-          userProperties: {},
-          person: {} as Person,
-          privileges: [{ uuid: '1', display: 'YOWTCH!' }],
-          roles: [],
-          retired: false,
-          locale: 'en',
-          allowedLocales: ['en'],
+    await act(async () => {
+      mockSessionStore.setState({
+        loaded: true,
+        session: {
+          authenticated: true,
+          sessionId: '1',
+          user: {
+            uuid: '1',
+            display: 'Non-Admin',
+            username: 'nonadmin',
+            systemId: 'nonadmin',
+            userProperties: {},
+            person: {} as Person,
+            privileges: [{ uuid: '1', display: 'YOWTCH!' }],
+            roles: [],
+            retired: false,
+            locale: 'en',
+            allowedLocales: ['en'],
+          },
         },
-      },
+      });
     });
 
     function RootComponent() {
@@ -203,25 +205,27 @@ describe('Expression evaluation in extension display conditions', () => {
       },
     });
 
-    mockSessionStore.setState({
-      loaded: true,
-      session: {
-        authenticated: true,
-        sessionId: '1',
-        user: {
-          uuid: '1',
-          display: 'Non-Admin',
-          username: 'nonadmin',
-          systemId: 'nonadmin',
-          userProperties: {},
-          person: {} as Person,
-          privileges: [{ uuid: '1', display: 'YOWTCH!' }],
-          roles: [],
-          retired: false,
-          locale: 'en',
-          allowedLocales: ['en'],
+    await act(async () => {
+      mockSessionStore.setState({
+        loaded: true,
+        session: {
+          authenticated: true,
+          sessionId: '1',
+          user: {
+            uuid: '1',
+            display: 'Non-Admin',
+            username: 'nonadmin',
+            systemId: 'nonadmin',
+            userProperties: {},
+            person: {} as Person,
+            privileges: [{ uuid: '1', display: 'YOWTCH!' }],
+            roles: [],
+            retired: false,
+            locale: 'en',
+            allowedLocales: ['en'],
+          },
         },
-      },
+      });
     });
 
     function RootComponent() {
@@ -255,12 +259,15 @@ describe('Expression evaluation in extension display conditions', () => {
     attach('A slot', 'Schmoo');
     defineConfigSchema('esm-bedrock', {});
     registerModuleLoad('esm-bedrock');
-    provide({
-      'esm-bedrock': {
-        'Display conditions': {
-          expression: 'NotDefined === true',
+
+    await act(async () => {
+      provide({
+        'esm-bedrock': {
+          'Display conditions': {
+            expression: 'NotDefined === true',
+          },
         },
-      },
+      });
     });
 
     function RootComponent() {
