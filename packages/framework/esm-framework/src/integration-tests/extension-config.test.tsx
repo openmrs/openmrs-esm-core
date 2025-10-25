@@ -301,7 +301,7 @@ describe('Interaction between configuration and extension systems', () => {
 
     render(<App />);
 
-    screen.findByTestId(/slot/);
+    await screen.findByTestId(/slot/);
     expect(screen.getByText(/clothes/)).toHaveTextContent(/leopard/);
 
     act(() => {
@@ -383,7 +383,7 @@ describe('Interaction between configuration and extension systems', () => {
 
     render(<App />);
 
-    screen.findByTestId(/slot/);
+    await screen.findByTestId(/slot/);
     expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Wilma');
     expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
   });

@@ -130,6 +130,19 @@ describe('Expression evaluation in extension display conditions', () => {
 
   it('should show extension using a complex expression', async () => {
     const promise = Promise.resolve();
+
+    registerSimpleExtension('Schmoo', 'esm-bedrock', true);
+    attach('A slot', 'Schmoo');
+    defineConfigSchema('esm-bedrock', {});
+    registerModuleLoad('esm-bedrock');
+    provide({
+      'esm-bedrock': {
+        'Display conditions': {
+          expression: 'session.user.privileges.some(p => p.display === "YOWTCH!")',
+        },
+      },
+    });
+
     mockSessionStore.setState({
       loaded: true,
       session: {
@@ -147,18 +160,6 @@ describe('Expression evaluation in extension display conditions', () => {
           retired: false,
           locale: 'en',
           allowedLocales: ['en'],
-        },
-      },
-    });
-
-    registerSimpleExtension('Schmoo', 'esm-bedrock', true);
-    attach('A slot', 'Schmoo');
-    defineConfigSchema('esm-bedrock', {});
-    registerModuleLoad('esm-bedrock');
-    provide({
-      'esm-bedrock': {
-        'Display conditions': {
-          expression: 'session.user.privileges.some(p => p.display === "YOWTCH!")',
         },
       },
     });
@@ -187,6 +188,19 @@ describe('Expression evaluation in extension display conditions', () => {
 
   it('should hide extension using a complex expression', async () => {
     const promise = Promise.resolve();
+
+    registerSimpleExtension('Schmoo', 'esm-bedrock', true);
+    attach('A slot', 'Schmoo');
+    defineConfigSchema('esm-bedrock', {});
+    registerModuleLoad('esm-bedrock');
+    provide({
+      'esm-bedrock': {
+        'Display conditions': {
+          expression: 'session.user.privileges.every(p => p.display !== "YOWTCH!")',
+        },
+      },
+    });
+
     mockSessionStore.setState({
       loaded: true,
       session: {
@@ -204,18 +218,6 @@ describe('Expression evaluation in extension display conditions', () => {
           retired: false,
           locale: 'en',
           allowedLocales: ['en'],
-        },
-      },
-    });
-
-    registerSimpleExtension('Schmoo', 'esm-bedrock', true);
-    attach('A slot', 'Schmoo');
-    defineConfigSchema('esm-bedrock', {});
-    registerModuleLoad('esm-bedrock');
-    provide({
-      'esm-bedrock': {
-        'Display conditions': {
-          expression: 'session.user.privileges.every(p => p.display !== "YOWTCH!")',
         },
       },
     });
