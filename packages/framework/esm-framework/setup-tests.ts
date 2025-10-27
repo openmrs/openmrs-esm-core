@@ -1,7 +1,13 @@
-import { afterEach } from 'vitest';
-import type {} from '@openmrs/esm-globals';
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
+import { afterEach } from 'vitest';
+import type {} from '@openmrs/esm-globals';
+
+declare global {
+  interface Window {
+    IS_REACT_ACT_ENVIRONMENT?: boolean;
+  }
+}
 
 // Configure React's act() environment for Vitest
 // See: https://github.com/testing-library/react-testing-library/issues/1061

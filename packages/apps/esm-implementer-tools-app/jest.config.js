@@ -11,6 +11,7 @@ module.exports = {
     '^lodash-es$': 'lodash',
     '^lodash-es/(.*)$': 'lodash/$1',
     '\\.(s?css)$': 'identity-obj-proxy',
+    '@openmrs/esm-framework/src/internal': '@openmrs/esm-framework/mock',
     '@openmrs/esm-framework': '@openmrs/esm-framework/mock',
     dexie: require.resolve('dexie'),
   },
