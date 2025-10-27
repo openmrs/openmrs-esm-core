@@ -22,10 +22,3 @@ window.HTMLElement.prototype.scrollIntoView = vi.fn();
 
 afterEach(cleanup);
 afterEach(vi.resetAllMocks);
-
-vi.spyOn(console, 'error').mockImplementation((message, ...args) => {
-  if (typeof message === 'string' && message.includes('Attempted to override the existing store')) {
-    return;
-  }
-  console.warn(message, ...args);
-});
