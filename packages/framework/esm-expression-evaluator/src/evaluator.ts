@@ -242,6 +242,13 @@ export function evaluateAsType<T>(
     throw `Unknown expression type ${expression}. Expressions must either be a string or pre-compiled string.`;
   }
 
+  if (typeof expression === 'string' && expression.trim().length === 0) {
+    throw {
+      type: 'Empty expression',
+      message: 'Expression cannot be an empty string',
+    };
+  }
+
   if (typeof variables === 'undefined' || variables === null) {
     variables = {};
   }
@@ -284,6 +291,13 @@ export async function evaluateAsTypeAsync<T>(
     return Promise.reject(
       `Unknown expression type ${expression}. Expressions must either be a string or pre-compiled string.`,
     );
+  }
+
+  if (typeof expression === 'string' && expression.trim().length === 0) {
+    throw {
+      type: 'Empty expression',
+      message: 'Expression cannot be an empty string',
+    };
   }
 
   if (typeof variables === 'undefined' || variables === null) {
