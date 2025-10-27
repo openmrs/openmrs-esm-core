@@ -76,25 +76,25 @@ export const PatientBannerActionsMenu = jest.fn(() => <div>Patient Banner Action
 
 // Mock hooks used by PatientBannerContactDetails internal components
 export const usePatient = jest.fn((patientId?: string) => ({
-  patient: null,
+  patient: null as any,
   isLoading: false,
   error: null,
 }));
 
 export const usePatientContactAttributes = jest.fn((patientId?: string) => ({
-  contactAttributes: [],
+  contactAttributes: [] as Array<any>,
   isLoading: false,
   error: null,
 }));
 
 export const useRelationships = jest.fn((patientId?: string) => ({
-  data: [],
+  data: [] as Array<any>,
   isLoading: false,
   error: null,
 }));
 
 export const usePatientListsForPatient = jest.fn((patientUuid?: string) => ({
-  cohorts: [],
+  cohorts: [] as Array<any>,
   isLoading: false,
   error: null,
 }));

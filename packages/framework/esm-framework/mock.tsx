@@ -83,25 +83,25 @@ export const PatientBannerActionsMenu = vi.fn(() => <div>Patient Banner Actions 
 
 // Mock hooks used by PatientBannerContactDetails internal components
 export const usePatient = vi.fn((patientId?: string) => ({
-  patient: null,
+  patient: null as any,
   isLoading: false,
   error: null,
 }));
 
 export const usePatientContactAttributes = vi.fn((patientId?: string) => ({
-  contactAttributes: [],
+  contactAttributes: [] as Array<any>,
   isLoading: false,
   error: null,
 }));
 
 export const useRelationships = vi.fn((patientId?: string) => ({
-  data: [],
+  data: [] as Array<any>,
   isLoading: false,
   error: null,
 }));
 
 export const usePatientListsForPatient = vi.fn((patientUuid?: string) => ({
-  cohorts: [],
+  cohorts: [] as Array<any>,
   isLoading: false,
   error: null,
 }));
