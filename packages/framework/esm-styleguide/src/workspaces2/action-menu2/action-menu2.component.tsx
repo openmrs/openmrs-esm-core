@@ -18,7 +18,7 @@ export interface ActionMenuProps {
  */
 export function ActionMenu({ workspaceGroup }: ActionMenuProps) {
   const { registeredWindowsByName } = useWorkspace2Store();
-  const {groupName, props} = workspaceGroup;
+  const { groupName, props } = workspaceGroup;
 
   const windowsWithIcons = Object.values(registeredWindowsByName)
     .filter((window): window is Required<typeof window> => window.group === groupName && window.icon !== undefined)

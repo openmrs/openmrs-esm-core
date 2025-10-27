@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
 import { attach, registerExtension, updateInternalExtensionStore } from '../../../esm-extensions';
@@ -14,13 +14,15 @@ import {
   useExtensionStore,
 } from '../../../esm-react-utils/src';
 import {
-  defineConfigSchema,
-  provide,
-  Type,
-  registerModuleLoad,
-  temporaryConfigStore,
   configInternalStore,
+  defineConfigSchema,
   getExtensionSlotsConfigStore,
+  getExtensionsConfigStore,
+  provide,
+  registerModuleLoad,
+  resetConfigSystem,
+  temporaryConfigStore,
+  Type,
 } from '../../../esm-config/src';
 
 vi.mock('@openmrs/esm-api', async () => {
@@ -35,9 +37,16 @@ vi.mock('@openmrs/esm-api', async () => {
 describe('Interaction between configuration and extension systems', () => {
   beforeEach(() => {
     temporaryConfigStore.setState({ config: {} });
-    configInternalStore.setState({ providedConfigs: [], schemas: {} });
+    configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
+    mockSessionStore.setState({});
     getExtensionSlotsConfigStore().setState({ slots: {} });
+    getExtensionsConfigStore().setState({ configs: {} });
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
+    resetConfigSystem();
+  });
+
+  afterEach(() => {
+    cleanup();
   });
 
   it('Config should add, order, and remove extensions within slots', async () => {
@@ -292,7 +301,7 @@ describe('Interaction between configuration and extension systems', () => {
 
     render(<App />);
 
-    screen.findByTestId(/slot/);
+    await screen.findByTestId(/slot/);
     expect(screen.getByText(/clothes/)).toHaveTextContent(/leopard/);
 
     act(() => {
@@ -374,9 +383,11 @@ describe('Interaction between configuration and extension systems', () => {
 
     render(<App />);
 
-    screen.findByTestId(/slot/);
-    expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Wilma');
-    expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
+    await waitFor(() => {
+      const slot = screen.getByTestId('slot');
+      expect(slot.firstChild).toHaveAttribute('data-extension-id', 'Wilma');
+      expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
+    });
   });
 
   it('should show extension when user has configured privilege', async () => {
@@ -436,28 +447,29 @@ describe('Interaction between configuration and extension systems', () => {
     expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Schmoo');
   });
 
-  // TODO This test fails on CI but not locally
-  it.skip('should only show extensions users have default privilege for', async () => {
-    const promise = Promise.resolve();
-    mockSessionStore.setState({
-      loaded: true,
-      session: {
-        authenticated: true,
-        sessionId: '1',
-        user: {
-          uuid: '1',
-          display: 'Non-Admin',
-          username: 'nonadmin',
-          systemId: 'nonadmin',
-          userProperties: {},
-          person: {} as Person,
-          privileges: [{ uuid: '1', display: 'YOWTCH!' }],
-          roles: [],
-          retired: false,
-          locale: 'en',
-          allowedLocales: ['en'],
+  it('should only show extensions users have default privilege for', async () => {
+    // Set up initial session state before registering extensions
+    await act(async () => {
+      mockSessionStore.setState({
+        loaded: true,
+        session: {
+          authenticated: true,
+          sessionId: '1',
+          user: {
+            uuid: '1',
+            display: 'Non-Admin',
+            username: 'nonadmin',
+            systemId: 'nonadmin',
+            userProperties: {},
+            person: {} as Person,
+            privileges: [{ uuid: '1', display: 'YOWTCH!' }],
+            roles: [],
+            retired: false,
+            locale: 'en',
+            allowedLocales: ['en'],
+          },
         },
-      },
+      });
     });
 
     registerSimpleExtension('Schmoo', 'esm-bedrock', true, 'Yabadabadoo!');
@@ -485,13 +497,13 @@ describe('Interaction between configuration and extension systems', () => {
       disableTranslations: true,
     })(RootComponent);
 
-    await act(async () => await promise);
-
     render(<App />);
 
-    screen.findByTestId(/slot/);
-    expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Wilma');
-    expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
+    await waitFor(() => {
+      const slot = screen.getByTestId('slot');
+      expect(slot.firstChild).toHaveAttribute('data-extension-id', 'Wilma');
+      expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
+    });
   });
 });
 

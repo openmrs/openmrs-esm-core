@@ -208,6 +208,10 @@ export type ExtensionDefinition = {
    */
   privileges?: string | Array<string>;
   /**
+   * The expression that determines whether the extension is displayed.
+   */
+  displayExpression?: string;
+  /**
    * If supplied, the extension will only be rendered when this feature flag is enabled.
    */
   featureFlag?: string;
