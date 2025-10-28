@@ -448,28 +448,25 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it('should only show extensions users have default privilege for', async () => {
-    // Set up initial session state before registering extensions
-    await act(async () => {
-      mockSessionStore.setState({
-        loaded: true,
-        session: {
-          authenticated: true,
-          sessionId: '1',
-          user: {
-            uuid: '1',
-            display: 'Non-Admin',
-            username: 'nonadmin',
-            systemId: 'nonadmin',
-            userProperties: {},
-            person: {} as Person,
-            privileges: [{ uuid: '1', display: 'YOWTCH!' }],
-            roles: [],
-            retired: false,
-            locale: 'en',
-            allowedLocales: ['en'],
-          },
+    mockSessionStore.setState({
+      loaded: true,
+      session: {
+        authenticated: true,
+        sessionId: '1',
+        user: {
+          uuid: '1',
+          display: 'Non-Admin',
+          username: 'nonadmin',
+          systemId: 'nonadmin',
+          userProperties: {},
+          person: {} as Person,
+          privileges: [{ uuid: '1', display: 'YOWTCH!' }],
+          roles: [],
+          retired: false,
+          locale: 'en',
+          allowedLocales: ['en'],
         },
-      });
+      },
     });
 
     registerSimpleExtension('Schmoo', 'esm-bedrock', true, 'Yabadabadoo!');
