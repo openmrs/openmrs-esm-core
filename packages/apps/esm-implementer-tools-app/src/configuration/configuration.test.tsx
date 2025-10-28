@@ -361,4 +361,38 @@ describe('Configuration', () => {
       // expect(mockSetTemporaryConfigValue).toHaveBeenCalledWith(["@openmrs/luigi", "favoriteNumbers"], [5, 11, 13]);
     }
   });
+
+  it('handles hovering over config tree items without crashing', async () => {
+    const user = userEvent.setup();
+
+    implementerToolsConfigStore.setState({
+      config: {
+        '@openmrs/mario': {
+          hasHat: mockImplToolsConfig['@openmrs/mario'].hasHat,
+          weapons: {
+            gloves: {
+              _type: Type.Number,
+              _default: 0,
+              _value: 2,
+              _source: 'provided',
+            },
+          },
+        },
+      },
+    });
+
+    renderConfiguration();
+
+    // Find and hover over a leaf node (hasHat)
+    const hasHatElement = await screen.findByText('hasHat');
+    await user.hover(hasHatElement);
+
+    // Find and hover over a branch node (weapons) - this should not crash
+    const weaponsElement = await screen.findByText('weapons');
+    await user.hover(weaponsElement);
+
+    // Both elements should still be in the document (no crash occurred)
+    expect(hasHatElement).toBeInTheDocument();
+    expect(weaponsElement).toBeInTheDocument();
+  });
 });
