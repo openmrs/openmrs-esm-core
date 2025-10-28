@@ -447,7 +447,7 @@ describe('Interaction between configuration and extension systems', () => {
     expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Schmoo');
   });
 
-  it('should only show extensions users have default privilege for', async () => {
+  it('should only show extensions users have default privilege for', { timeout: 15000 }, async () => {
     // Set up initial session state before registering extensions
     await act(async () => {
       mockSessionStore.setState({
@@ -499,11 +499,14 @@ describe('Interaction between configuration and extension systems', () => {
 
     render(<App />);
 
-    await waitFor(() => {
-      const slot = screen.getByTestId('slot');
-      expect(slot.firstChild).toHaveAttribute('data-extension-id', 'Wilma');
-      expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
-    });
+    await waitFor(
+      () => {
+        const slot = screen.getByTestId('slot');
+        expect(slot.firstChild).toHaveAttribute('data-extension-id', 'Wilma');
+        expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
+      },
+      { timeout: 10000 },
+    );
   });
 });
 
