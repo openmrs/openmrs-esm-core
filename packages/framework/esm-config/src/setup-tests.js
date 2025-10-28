@@ -1,10 +1,12 @@
 /* eslint-disable no-undef */
+import { vi } from 'vitest';
+
 global.window.System = {
-  import: jest.fn().mockRejectedValue(new Error('config.json not available in import map')),
-  resolve: jest.fn().mockImplementation(() => {
+  import: vi.fn().mockRejectedValue(new Error('config.json not available in import map')),
+  resolve: vi.fn().mockImplementation(() => {
     throw new Error('config.json not available in import map');
   }),
-  register: jest.fn(),
+  register: vi.fn(),
 };
 
 global.window.openmrsBase = '/openmrs';

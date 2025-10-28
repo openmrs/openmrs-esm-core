@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceGroupDefinition2
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:293
+Defined in: packages/framework/esm-globals/dist/types.d.ts:297
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:293
 
 > `optional` **closeable**: `boolean`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:295
+Defined in: packages/framework/esm-globals/dist/types.d.ts:299
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:295
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:294
+Defined in: packages/framework/esm-globals/dist/types.d.ts:298
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:294
 
 > `optional` **overlay**: `boolean`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:296
+Defined in: packages/framework/esm-globals/dist/types.d.ts:300

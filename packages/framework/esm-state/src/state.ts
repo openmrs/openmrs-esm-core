@@ -11,10 +11,23 @@ interface StoreEntity {
 
 const availableStores: Record<string, StoreEntity> = {};
 
+// Check if we're in a test environment (Vitest or Jest)
+const isTestEnvironment = () => {
+  try {
+    return (
+      process.env.NODE_ENV === 'test' ||
+      (typeof process !== 'undefined' && (process.env.VITEST === 'true' || process.env.JEST_WORKER_ID !== undefined)) ||
+      (typeof globalThis !== 'undefined' && ('__vitest_worker__' in globalThis || '__jest__' in globalThis))
+    );
+  } catch {
+    return false;
+  }
+};
+
 // spaEnv isn't available immediately. Wait a bit before making stores available
 // on window in development mode.
 setTimeout(() => {
-  if (window && window.spaEnv === 'development') {
+  if (typeof window !== 'undefined' && window.spaEnv === 'development') {
     window['stores'] = availableStores;
   }
 }, 1000);
@@ -32,7 +45,9 @@ export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T>
 
   if (available) {
     if (available.active) {
-      console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
+      if (!isTestEnvironment()) {
+        console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
+      }
     } else {
       available.value.setState(initialState, true);
     }
@@ -64,7 +79,9 @@ export function registerGlobalStore<T>(name: string, store: StoreApi<T>): StoreA
 
   if (available) {
     if (available.active) {
-      console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
+      if (!isTestEnvironment()) {
+        console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
+      }
     } else {
       available.value = store;
     }

@@ -19,6 +19,7 @@ export interface ExtensionRegistration {
   readonly offline?: boolean;
   readonly privileges?: string | Array<string>;
   readonly featureFlag?: string;
+  readonly displayExpression?: string;
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {
@@ -41,6 +42,8 @@ export interface ExtensionInternalStore {
   extensions: Record<string, ExtensionInfo>;
 }
 
+export type ExtensionSlotCustomState = Record<string | symbol | number, unknown> | undefined | null;
+
 export interface ExtensionSlotInfo {
   /**
    * The module in which the extension slot exists. Undefined if the slot
@@ -58,6 +61,7 @@ export interface ExtensionSlotInfo {
   attachedIds: Array<string>;
   /** The configuration provided for this slot. `null` if not yet loaded. */
   config: Omit<ExtensionSlotConfig, 'configuration'> | null;
+  state?: ExtensionSlotCustomState;
 }
 
 export interface ExtensionStore {
@@ -67,6 +71,7 @@ export interface ExtensionStore {
 export interface ExtensionSlotState {
   moduleName?: string;
   assignedExtensions: Array<AssignedExtension>;
+  state?: ExtensionSlotCustomState;
 }
 
 export interface AssignedExtension {
@@ -110,6 +115,7 @@ export const getExtensionInternalStore = () =>
 
 /** @internal */
 export function updateInternalExtensionStore(updater: (state: ExtensionInternalStore) => ExtensionInternalStore) {
+  // This is a function that updates the internal extension store.
   const state = extensionInternalStore.getState();
   const newState = updater(state);
 

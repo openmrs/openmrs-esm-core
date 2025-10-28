@@ -9,13 +9,13 @@ import {
   registerWorkspaceWindows2,
 } from '@openmrs/esm-extensions';
 import {
-  type FeatureFlagDefinition,
   type ExtensionDefinition,
+  type FeatureFlagDefinition,
   type ModalDefinition,
   type WorkspaceDefinition,
+  type WorkspaceDefinition2,
   type WorkspaceGroupDefinition,
   type WorkspaceGroupDefinition2,
-  type WorkspaceDefinition2,
   type WorkspaceWindowDefinition2,
 } from '@openmrs/esm-globals';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
@@ -67,6 +67,7 @@ To fix this, ensure that you define a 'component' field inside the extension def
     online: extension.online ?? true,
     offline: extension.offline ?? false,
     featureFlag: extension.featureFlag,
+    displayExpression: extension.displayExpression,
   });
 
   for (const slot of slots) {

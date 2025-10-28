@@ -1,6 +1,7 @@
 import type {} from '@openmrs/esm-globals';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { type ComponentConfig } from './types';
+import { type ExtensionSlotState } from './store';
 
 type LeftNavMode = 'normal' | 'collapsed' | 'hidden';
 export interface LeftNavStore {
@@ -8,6 +9,7 @@ export interface LeftNavStore {
   basePath: string;
   mode: LeftNavMode;
   componentContext?: ComponentConfig;
+  state?: ExtensionSlotState;
 }
 
 /** @internal */
@@ -27,6 +29,7 @@ export interface SetLeftNavParams {
    */
   mode?: LeftNavMode;
   componentContext?: ComponentConfig;
+  state?: ExtensionSlotState;
 }
 
 /**
@@ -34,8 +37,8 @@ export interface SetLeftNavParams {
  *
  * @deprecated Please use {@link useLeftNav} instead. This function will be made internal in a future release.
  */
-export function setLeftNav({ name, basePath, mode, componentContext }: SetLeftNavParams) {
-  leftNavStore.setState({ slotName: name, basePath, mode: mode ?? 'normal', componentContext });
+export function setLeftNav({ name, basePath, mode, componentContext, state }: SetLeftNavParams) {
+  leftNavStore.setState({ slotName: name, basePath, mode: mode ?? 'normal', componentContext, state });
 }
 
 /**

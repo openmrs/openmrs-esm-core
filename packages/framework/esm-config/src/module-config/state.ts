@@ -111,7 +111,7 @@ function initializeConfigStore() {
 
 /** @internal */
 export function getConfigStore(moduleName: string) {
-  // We use a store for each module's config, named `config-${moduleName}`
+  // We use a store for each module's config, named `config-module-${moduleName}`
   return getGlobalStore<ConfigStore>(`config-module-${moduleName}`, initializeConfigStore());
 }
 

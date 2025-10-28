@@ -4,9 +4,9 @@ import { SideNav, type SideNavProps } from '@carbon/react';
 import {
   ComponentContext,
   ExtensionSlot,
+  RenderIfValueIsTruthy,
   useAssignedExtensions,
   useLeftNavStore,
-  RenderIfValueIsTruthy,
 } from '@openmrs/esm-react-utils';
 import styles from './left-nav.module.scss';
 
@@ -30,7 +30,7 @@ interface LeftNavMenuProps extends SideNavProps {
  * is deprecated; it simply renders nothing.
  */
 export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>((props, ref) => {
-  const { slotName, basePath, componentContext } = useLeftNavStore();
+  const { slotName, basePath, componentContext, state } = useLeftNavStore();
   const currentPath = window.location ?? { pathname: '' };
   const navMenuItems = useAssignedExtensions(slotName ?? '');
 
@@ -41,16 +41,16 @@ export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>((prop
         {slotName ? (
           <RenderIfValueIsTruthy
             value={componentContext}
-            fallback={<ExtensionSlot name={slotName} state={{ basePath, currentPath }} />}
+            fallback={<ExtensionSlot name={slotName} state={{ basePath, currentPath, ...state }} />}
           >
             <ComponentContext.Provider value={componentContext!}>
-              <ExtensionSlot name={slotName} state={{ basePath, currentPath }} />
+              <ExtensionSlot name={slotName} state={{ basePath, currentPath, ...state }} />
             </ComponentContext.Provider>
           </RenderIfValueIsTruthy>
         ) : null}
       </SideNav>
     );
   } else {
-    return <></>;
+    return null;
   }
 });
