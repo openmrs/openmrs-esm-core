@@ -55,12 +55,12 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "6.x",
-    "@openmrs/esm-config": "6.x",
-    "@openmrs/esm-expression-evaluator": "6.x",
-    "@openmrs/esm-feature-flags": "6.x",
-    "@openmrs/esm-state": "6.x",
-    "@openmrs/esm-utils": "6.x",
+    "@openmrs/esm-api": "8.x",
+    "@openmrs/esm-config": "8.x",
+    "@openmrs/esm-expression-evaluator": "8.x",
+    "@openmrs/esm-feature-flags": "8.x",
+    "@openmrs/esm-state": "8.x",
+    "@openmrs/esm-utils": "8.x",
     "single-spa": "6.x"
   },
   "devDependencies": {

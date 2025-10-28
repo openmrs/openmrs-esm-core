@@ -45,12 +45,12 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-config": "6.x",
-    "@openmrs/esm-dynamic-loading": "6.x",
-    "@openmrs/esm-extensions": "6.x",
-    "@openmrs/esm-feature-flags": "6.x",
-    "@openmrs/esm-globals": "6.x",
-    "@openmrs/esm-utils": "6.x",
+    "@openmrs/esm-config": "8.x",
+    "@openmrs/esm-dynamic-loading": "8.x",
+    "@openmrs/esm-extensions": "8.x",
+    "@openmrs/esm-feature-flags": "8.x",
+    "@openmrs/esm-globals": "8.x",
+    "@openmrs/esm-utils": "8.x",
     "single-spa": "6.x"
   },
   "devDependencies": {
