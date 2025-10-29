@@ -16,12 +16,19 @@ export const mockConfig: ConfigSchema = {
     src: null,
     alt: 'Logo',
   },
-  links: {
-    loginSuccess: '${openmrsSpaBase}/home',
+  backgroundImage: {
+    src: null,
+    alt: 'Background image',
   },
   footer: {
     additionalLogos: [],
   },
+  badgeLogo: {
+    alt: 'Badge logo',
+    src: null,
+  },
+  links: {
+    loginSuccess: '${openmrsSpaBase}/home',
+  },
   showPasswordOnSeparateScreen: true,
-  backgroundImage: '',
 };

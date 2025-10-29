@@ -108,7 +108,7 @@ describe('Login', () => {
     await user.type(screen.getByRole('textbox', { name: /Username/i }), 'yoshi');
     await user.click(screen.getByRole('button', { name: /Continue/i }));
 
-    const loginButton = screen.getByRole('button', { name: /log in/i });
+    const loginButton = screen.getByRole('button', { name: /sign in/i });
     await screen.findByLabelText(/^password$/i);
     await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(loginButton);
@@ -144,7 +144,7 @@ describe('Login', () => {
     await user.click(screen.getByRole('button', { name: /Continue/i }));
     await screen.findByLabelText(/^password$/i);
     await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
-    await user.click(screen.getByRole('button', { name: /log in/i }));
+    await user.click(screen.getByRole('button', { name: /sign in/i }));
   });
 
   it('should render the both the username and password fields when the showPasswordOnSeparateScreen config is false', async () => {
@@ -164,7 +164,7 @@ describe('Login', () => {
     const usernameInput = screen.queryByRole('textbox', { name: /username/i });
     const continueButton = screen.queryByRole('button', { name: /Continue/i });
     const passwordInput = screen.queryByLabelText(/^password$/i);
-    const loginButton = screen.queryByRole('button', { name: /log in/i });
+    const loginButton = screen.queryByRole('button', { name: /sign in/i });
 
     expect(usernameInput).toBeInTheDocument();
     expect(continueButton).not.toBeInTheDocument();
@@ -188,7 +188,7 @@ describe('Login', () => {
     const usernameInput = screen.queryByRole('textbox', { name: /username/i });
     const continueButton = screen.queryByRole('button', { name: /Continue/i });
     const passwordInput = screen.queryByLabelText(/password/i);
-    const loginButton = screen.queryByRole('button', { name: /log in/i });
+    const loginButton = screen.queryByRole('button', { name: /sign in/i });
 
     expect(usernameInput).toBeInTheDocument();
     expect(continueButton).toBeInTheDocument();
@@ -215,7 +215,7 @@ describe('Login', () => {
 
     const usernameInput = screen.getByRole('textbox', { name: /username/i });
     const passwordInput = screen.getByLabelText(/^password$/i);
-    const loginButton = screen.getByRole('button', { name: /log in/i });
+    const loginButton = screen.getByRole('button', { name: /sign in/i });
 
     await user.type(usernameInput, 'yoshi');
     await user.type(passwordInput, 'no-tax-fraud');
