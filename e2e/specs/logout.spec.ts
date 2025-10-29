@@ -10,12 +10,18 @@ test('Logout as Admin user', async ({ page }) => {
     await homePage.goto();
   });
 
-  await test.step('And I click the `User` button', async () => {
+  await test.step('And I open the user menu and click Logout', async () => {
     await page.getByRole('button', { name: /My Account/i }).click();
-  });
 
-  await test.step('And I click the `Logout` button', async () => {
-    await page.getByRole('button', { name: /logout/i }).click();
+    // Try to find logout control with multiple possible roles (button, menuitem, or link)
+    // Using locator.or() to handle different UI implementations
+    const logoutLocator = page
+      .getByRole('button', { name: /logout/i })
+      .or(page.getByRole('menuitem', { name: /logout/i }))
+      .or(page.getByRole('link', { name: /logout/i }));
+
+    await expect(logoutLocator).toBeVisible({ timeout: 15000 });
+    await logoutLocator.click();
   });
 
   await test.step('Then I should be redirected to the login page', async () => {
@@ -29,5 +35,5 @@ test('Logout as Admin user', async ({ page }) => {
 
 test.afterEach(async () => {
   // log in again
-  globalSetup();
+  await globalSetup();
 });
