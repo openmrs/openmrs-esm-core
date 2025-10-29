@@ -126,7 +126,6 @@ describe('Configuration', () => {
 
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const value = row.getByText('false');
       const editButton = row.getByText('Edit').parentElement as any;
       await user.click(editButton);
       const editor = row.getByRole('button', { name: /edit/i });
@@ -179,9 +178,7 @@ describe('Configuration', () => {
 
       await user.click(editButton);
 
-      const searchbox = await row.findByRole('combobox', {
-        name: /search concepts/i,
-      });
+      const searchbox = await row.findByPlaceholderText(/search concepts/i);
 
       await user.type(searchbox, 'fedora');
 
@@ -325,7 +322,6 @@ describe('Configuration', () => {
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
 
-      const inputs = row.getByText('[ 4, 12 ]');
       const editButton = row.getByRole('button', { name: /edit/i });
 
       await user.click(editButton);
