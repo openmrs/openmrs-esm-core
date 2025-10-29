@@ -1430,7 +1430,7 @@ describe('translation overrides', () => {
       corges: { _default: false, _type: Type.Boolean },
     });
     const config = Config.getConfig('corge-module');
-    await expect(config).resolves.toStrictEqual({ corges: true });
+    expect(config).resolves.toStrictEqual({ corges: true });
     expect(console.error).not.toHaveBeenCalled();
   });
 });
