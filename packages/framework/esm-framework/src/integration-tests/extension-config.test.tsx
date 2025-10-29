@@ -448,6 +448,7 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it('should only show extensions users have default privilege for', async () => {
+    const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,
       session: {
@@ -493,6 +494,8 @@ describe('Interaction between configuration and extension systems', () => {
       featureName: 'Bedrock',
       disableTranslations: true,
     })(RootComponent);
+
+    await act(async () => await promise);
 
     render(<App />);
 
