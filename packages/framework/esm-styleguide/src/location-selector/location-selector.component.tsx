@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ComboBox } from '@carbon/react';
-import { useLocationByUuid, useLocations } from '../location-picker/location-picker.resource';
 import { useDebounce } from '@openmrs/esm-react-utils';
+import { getCoreTranslation } from '@openmrs/esm-translations';
+
+import { useLocationByUuid, useLocations } from '../location-picker/location-picker.resource';
 
 interface Location {
   resource: { id: string; name: string };
@@ -60,7 +62,7 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
       <ComboBox
         aria-label={label}
         id="location"
-        invalidText={t('Required')}
+        invalidText={getCoreTranslation('error','Required')}
         items={items}
         initialSelectedItem={items.find((i) => i.id === defaultLocationUuid)}
         selectedItem={items.find((i) => i.id === selectedLocationUuid)}
