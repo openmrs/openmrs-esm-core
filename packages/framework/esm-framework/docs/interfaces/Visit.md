@@ -58,9 +58,9 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:27](http
 
 ***
 
-### stopDatetime?
+### stopDatetime
 
-> `optional` **stopDatetime**: `string`
+> **stopDatetime**: `null` \| `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L28)
 

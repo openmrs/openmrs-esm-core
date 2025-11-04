@@ -103,6 +103,10 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
 
   useVisitContextStore(mutateVisit);
 
+  const waitingForData = Boolean(!activeData || (retrospectiveVisitUuid && !retroData));
+  const hasRelevantError = Boolean(retrospectiveVisitUuid ? retroError : activeError);
+  const isLoading = waitingForData && !hasRelevantError;
+
   return {
     error: activeError || retroError,
     mutate: mutateVisit,
@@ -110,6 +114,6 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     activeVisit,
     currentVisit,
     currentVisitIsRetrospective: Boolean(retrospectiveVisitUuid),
-    isLoading: Boolean((!activeData || (retrospectiveVisitUuid && !retroData)) && (!activeError || !retroError)),
+    isLoading,
   };
 }
