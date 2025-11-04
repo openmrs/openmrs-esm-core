@@ -46,18 +46,11 @@ describe('usePatient', () => {
 
   afterEach(() => {
     // Restore original location
-    Object.defineProperty(window, 'location', {
-      value: originalLocation,
-      writable: true,
-    });
+    vi.unstubAllGlobals();
   });
 
   function mockLocation(pathname: string) {
-    delete (window as any).location;
-    Object.defineProperty(window, 'location', {
-      value: { ...originalLocation, pathname },
-      writable: true,
-    });
+    vi.stubGlobal('location', { ...originalLocation, pathname });
   }
 
   describe('with patientUuid parameter', () => {
