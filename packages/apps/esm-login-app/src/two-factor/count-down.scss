@@ -1,0 +1,54 @@
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.countdownContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: layout.$spacing-05;
+  min-height: 2rem;
+}
+
+.countdownText {
+  color: #525252;
+  text-align: center;
+}
+
+.time {
+  font-weight: 600;
+  color: #262626;
+  font-variant-numeric: tabular-nums;
+}
+
+.resendButton {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #0f62fe;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color: #0043ce;
+    text-decoration-thickness: 2px;
+  }
+
+  &:active {
+    color: #002d9c;
+  }
+
+  &:focus {
+    outline: 2px solid #0f62fe;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  &:disabled {
+    color: #8d8d8d;
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+}

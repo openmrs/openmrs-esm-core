@@ -122,9 +122,11 @@ const Login: React.FC = () => {
               }
             }
 
-            openmrsNavigate({ to });
+            // openmrsNavigate({ to });
+            navigate(`/login/two-factor?next=${to}`);
           } else {
-            navigate('/login/location');
+            // navigate('/login/location');
+            navigate(`/login/two-factor?next=\${openmrsSpaBase}/login/location`);
           }
         } else {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));

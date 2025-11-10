@@ -4,6 +4,7 @@ import ChangePassword from './change-password/change-password.component';
 import LocationPickerView from './location-picker/location-picker-view.component';
 import Login from './login/login.component';
 import RedirectLogout from './redirect-logout/redirect-logout.component';
+import TwoFactorAuthentication from './two-factor/two-factor-authentication.component';
 
 const Root: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const Root: React.FC = () => {
         <Route path="login" element={<Login />} />
         <Route path="login/confirm" element={<Login />} />
         <Route path="login/location" element={<LocationPickerView />} />
+        <Route path="login/two-factor" element={<TwoFactorAuthentication />} />
         <Route path="logout" element={<RedirectLogout />} />
         <Route path="change-password" element={<ChangePassword />} />
       </Routes>
