@@ -1,5 +1,6 @@
 @use '@carbon/layout';
 @use '@carbon/type';
+@use '@carbon/colors';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
 .countdownContainer {
@@ -11,13 +12,13 @@
 }
 
 .countdownText {
-  color: #525252;
+  color: colors.$gray-70;
   text-align: center;
 }
 
 .time {
   font-weight: 600;
-  color: #262626;
+  color: colors.$gray-90;
   font-variant-numeric: tabular-nums;
 }
 
@@ -25,29 +26,29 @@
   background: none;
   border: none;
   padding: 0;
-  color: #0f62fe;
+  color: colors.$blue-60;
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    color: #0043ce;
+    color: colors.$blue-70;
     text-decoration-thickness: 2px;
   }
 
   &:active {
-    color: #002d9c;
+    color: colors.$blue-80;
   }
 
   &:focus {
-    outline: 2px solid #0f62fe;
+    outline: 2px solid colors.$blue-60;
     outline-offset: 2px;
     border-radius: 2px;
   }
 
   &:disabled {
-    color: #8d8d8d;
+    color: colors.$gray-50;
     cursor: not-allowed;
     text-decoration: none;
   }
