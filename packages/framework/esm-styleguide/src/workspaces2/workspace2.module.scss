@@ -3,7 +3,6 @@
 @use '@carbon/type';
 @use '../vars' as *;
 
-$actionPanelOffset: layout.$spacing-09;
 $narrowWorkspaceWidth: 26.25rem;
 $widerWorkspaceWidth: 32.25rem;
 $extraWideWorkspaceWidth: 48.25rem;
@@ -11,6 +10,8 @@ $extraWideWorkspaceWidth: 48.25rem;
 // This container has no layout purpose.
 // It is used to set the --workspaceWidth variable.
 .workspaceOuterContainer {
+  --actionPanelOffset: 0px;
+
   &.narrowWorkspace {
     --workspaceWidth: #{$narrowWorkspaceWidth};
   }
@@ -32,16 +33,29 @@ $extraWideWorkspaceWidth: 48.25rem;
     position: absolute;
     top: 0;
     bottom: 0;
-    inset-inline-end: $actionPanelOffset;
-    z-index: 8000;
+    inset-inline-end: var(--actionPanelOffset);
+    z-index: 100;
+
+    &.isRootWorkspace {
+      animation: growToWidth 0.5s ease-in-out;
+    }
 
     transition: width 0.5s ease-in-out;
 
     &.maximized {
-      width: calc(100vw - $actionPanelOffset);
+      width: calc(100vw - var(--actionPanelOffset));
     }
     &.hidden {
       width: 0;
+    }
+
+    @keyframes growToWidth {
+      from {
+        width: 0;
+      }
+      to {
+        width: inherit;
+      }
     }
   }
 
@@ -54,25 +68,12 @@ $extraWideWorkspaceWidth: 48.25rem;
     height: 100%;
     width: var(--workspaceWidth);
     border-inline-start: 1px solid $text-03;
-    animation: slideFromRight 0.5s ease-in-out;
-    transition:
-      width 0.5s ease-in-out,
-      transform 0.5s ease-in-out;
+    background-color: #fff;
+
+    transition: width 0.5s ease-in-out;
 
     &.maximized {
-      width: calc(100vw - $actionPanelOffset);
-    }
-    &.hidden {
-      transform: translateX(100%);
-    }
-
-    @keyframes slideFromRight {
-      from {
-        transform: translateX(100%);
-      }
-      to {
-        transform: translateX(0px);
-      }
+      width: calc(100vw - var(--actionPanelOffset));
     }
   }
 
@@ -137,11 +138,6 @@ $extraWideWorkspaceWidth: 48.25rem;
         color: inherit;
       }
     }
-
-    &:not(.maximizedWindow) {
-      right: auto;
-      left: auto;
-    }
   }
 
   .headerButtons {
@@ -159,96 +155,20 @@ $extraWideWorkspaceWidth: 48.25rem;
     }
   }
 
-  .maximizedWindow {
-    width: calc(100% - $actionPanelOffset) !important;
-  }
-
-  .workspaceFixedContainer {
-    height: 100%;
-    border-left: 1px solid $text-03;
-    z-index: 50;
-    background-color: white;
-    animation: slideInFromRight 0.5s ease-in-out;
-
-    &.hidden {
-      animation: slideOutToRight 0.5s ease-in-out forwards;
-    }
-
-    &.overlay {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-    }
-  }
-
-  .extraWideWorkspace {
-    width: $extraWideWorkspaceWidth;
-
-    .workspaceFixedContainer {
-      width: $extraWideWorkspaceWidth;
-    }
-
-    &.hiddenRelative {
-      margin-right: -$extraWideWorkspaceWidth !important;
-    }
-
-    .hiddenFixed {
-      right: -$extraWideWorkspaceWidth !important;
-    }
-  }
-
-  .widerWorkspace {
-    width: $widerWorkspaceWidth;
-
-    .workspaceFixedContainer {
-      width: $widerWorkspaceWidth;
-    }
-
-    &.hiddenRelative {
-      margin-right: -$widerWorkspaceWidth !important;
-    }
-
-    .hiddenFixed {
-      right: -$widerWorkspaceWidth !important;
-    }
-  }
-
-  .narrowWorkspace {
-    width: $narrowWorkspaceWidth;
-
-    .workspaceFixedContainer {
-      width: $narrowWorkspaceWidth;
-    }
-
-    &.hiddenRelative {
-      margin-right: -$narrowWorkspaceWidth !important;
-    }
-
-    .hiddenFixed {
-      right: -$narrowWorkspaceWidth !important;
-    }
-  }
-
   .workspaceContent {
     background-color: $ui-02;
     overflow-y: auto;
     flex-grow: 1;
   }
 
-  // The parcel makes a div, between the workspace container and the workspace itself
-  .workspaceContent > div {
-    height: 100%;
-  }
-
-  .overlay {
-    background-color: $ui-02;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-  }
-
   .overlayHeaderSpacer {
     flex-grow: 1;
+  }
+
+  .workspaceOuterContainer {
+    &.isActionMenuOpened {
+      --actionPanelOffset: #{layout.$spacing-09};
+    }
   }
 }
 
@@ -272,71 +192,39 @@ $extraWideWorkspaceWidth: 48.25rem;
     }
   }
 
-  .hiddenFixed {
-    top: 100% !important;
+  .workspaceOuterContainer {
+    width: 100vw !important;
   }
 
-  .workspaceFixedContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 8002;
-    transition: top 0.5s ease-in-out;
-  }
-
-  .workspaceContainerWithActionMenu {
-    &.workspaceFixedContainer {
-      bottom: var(--bottom-nav-height);
+  .workspaceMiddleContainer {
+    width: inherit !important;
+    &.hidden {
+      display: none;
     }
   }
 
-  .overlay {
-    background-color: $ui-02;
-    display: flex;
-    flex-direction: column;
-  }
+  .workspaceInnerContainer {
+    width: 100vw !important;
 
-  .overlayCloseButton {
-    order: 1;
-  }
-
-  .overlayTitle {
-    order: 2;
-  }
-
-  .workspaceContent {
-    background-color: $ui-01;
-    overflow-y: auto;
-    height: 100%;
-  }
-
-  // The parcel makes a div, between the workspace container and the workspace itself
-  .workspaceContent > div {
-    height: 100%;
-  }
-
-  .dynamicWidth {
-    width: 100%;
+    &.isRootWorkspace {
+      animation: slideFromBottom 0.5s ease-in-out;
+    }
   }
 
   .marginWorkspaceContent {
     margin-bottom: var(--bottom-nav-height);
   }
 
-  @keyframes slideInFromBottom {
+  @keyframes slideFromBottom {
     from {
-      transform: translateX($narrowWorkspaceWidth);
-      width: 0;
+      transform: translateY(100%);
     }
     to {
-      transform: translateX(0%);
-      width: $narrowWorkspaceWidth;
+      transform: translateY(0%);
     }
   }
 
-  @keyframes slideOutToBottom {
+  @keyframes slideToBottom {
     from {
       transform: translateX(0%);
       width: $narrowWorkspaceWidth;
@@ -354,7 +242,7 @@ html[dir='rtl'] {
     .workspaceContainerWithActionMenu {
       &.workspaceFixedContainer {
         right: unset;
-        left: $actionPanelOffset;
+        left: var(--actionPanelOffset);
       }
     }
 

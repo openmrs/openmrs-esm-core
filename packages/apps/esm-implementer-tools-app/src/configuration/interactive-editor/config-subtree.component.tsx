@@ -10,20 +10,21 @@ export interface ConfigSubtreeProps {
 }
 
 export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
-  function setActiveItemDescriptionOnMouseEnter(thisPath, key, value) {
+  function setActiveItemDescriptionOnMouseEnter(thisPath: Array<string>, value: any) {
     if (!implementerToolsStore.getState().configPathBeingEdited) {
+      const isLeaf = value && typeof value === 'object' && Object.hasOwn(value, '_value');
       implementerToolsStore.setState({
         activeItemDescription: {
           path: thisPath,
-          source: value._source,
-          description: value._description,
-          value: JSON.stringify(value._value),
+          source: isLeaf ? value._source : undefined,
+          description: isLeaf ? value._description : undefined,
+          value: isLeaf ? JSON.stringify(value._value) : undefined,
         },
       });
     }
   }
 
-  function removeActiveItemDescriptionOnMouseLeave(thisPath) {
+  function removeActiveItemDescriptionOnMouseLeave(thisPath: Array<string>) {
     const state = implementerToolsStore.getState();
     if (isEqual(state.activeItemDescription?.path, thisPath) && !isEqual(state.configPathBeingEdited, thisPath)) {
       implementerToolsStore.setState({ activeItemDescription: undefined });
@@ -32,25 +33,27 @@ export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
 
   return (
     <>
-      {Object.entries(config).map(([key, value], i) => {
-        const thisPath = path.concat([key]);
-        const isLeaf = value.hasOwnProperty('_value') || value.hasOwnProperty('_type');
-        return (
-          <Subtree
-            label={key}
-            leaf={isLeaf}
-            onMouseEnter={() => setActiveItemDescriptionOnMouseEnter(thisPath, key, value)}
-            onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave(thisPath)}
-            key={`subtree-${thisPath.join('.')}`}
-          >
-            {isLeaf ? (
-              <EditableValue path={thisPath} element={value} />
-            ) : (
-              <ConfigSubtree config={value} path={thisPath} />
-            )}
-          </Subtree>
-        );
-      })}
+      {Object.entries(config)
+        .filter(([key]) => !key.startsWith('_'))
+        .map(([key, value]) => {
+          const thisPath = path.concat([key]);
+          const isLeaf = value && typeof value === 'object' && Object.hasOwn(value, '_value');
+          return (
+            <Subtree
+              label={key}
+              leaf={isLeaf}
+              onMouseEnter={() => setActiveItemDescriptionOnMouseEnter(thisPath, value)}
+              onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave(thisPath)}
+              key={`subtree-${thisPath.join('.')}`}
+            >
+              {isLeaf ? (
+                <EditableValue path={thisPath} element={value} />
+              ) : (
+                <ConfigSubtree config={value} path={thisPath} />
+              )}
+            </Subtree>
+          );
+        })}
     </>
   );
 }

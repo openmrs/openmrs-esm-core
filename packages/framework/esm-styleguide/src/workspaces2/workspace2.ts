@@ -63,15 +63,20 @@ export async function launchWorkspaceGroup2<GroupProps extends object>(
  * Closes the workspace group that is currently opened. Note that only one workspace group
  * may be opened at any given time
  * @experimental
+ * @param discardUnsavedChanges If true, then the workspace group is forced closed, with no prompt
+ * for confirmation for unsaved changes in any opened workspace. This should be used sparingly
+ * for clean-up purpose, ex: when exiting an app.
  * @returns a Promise that resolves to true if there is no opened group to begin with or we successfully closed
  * the opened group; false otherwise.
  */
-export async function closeWorkspaceGroup2() {
+export async function closeWorkspaceGroup2(discardUnsavedChanges?: boolean) {
   const state = workspace2Store.getState();
   const { openedGroup, openedWindows } = state;
   if (openedGroup) {
     if (openedWindows.length > 0) {
-      const okToCloseWorkspaces = await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: true });
+      const okToCloseWorkspaces =
+        discardUnsavedChanges ||
+        (await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: true }));
       if (!okToCloseWorkspaces) {
         return false;
       }
@@ -543,7 +548,7 @@ export function useWorkspace2Store() {
 function newOpenedWorkspace(workspaceName: string, workspaceProps: Record<string, any> | null): OpenedWorkspace {
   return {
     workspaceName,
-    props: workspaceProps,
+    props: workspaceProps ?? {},
     hasUnsavedChanges: false,
     uuid: uuidV4(),
   };
