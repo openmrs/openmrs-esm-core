@@ -1,0 +1,55 @@
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@carbon/colors';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.countdownContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: layout.$spacing-05;
+  min-height: 2rem;
+}
+
+.countdownText {
+  color: colors.$gray-70;
+  text-align: center;
+}
+
+.time {
+  font-weight: 600;
+  color: colors.$gray-90;
+  font-variant-numeric: tabular-nums;
+}
+
+.resendButton {
+  background: none;
+  border: none;
+  padding: 0;
+  color: colors.$blue-60;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color: colors.$blue-70;
+    text-decoration-thickness: 2px;
+  }
+
+  &:active {
+    color: colors.$blue-80;
+  }
+
+  &:focus {
+    outline: 2px solid colors.$blue-60;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  &:disabled {
+    color: colors.$gray-50;
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+}

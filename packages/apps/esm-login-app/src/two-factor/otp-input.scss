@@ -1,0 +1,99 @@
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@carbon/colors';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.otpContainer {
+  display: flex;
+  gap: layout.$spacing-03;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: layout.$spacing-05 0;
+
+  @media only screen and (max-width: 768px) {
+    gap: layout.$spacing-02;
+  }
+}
+
+.otpInput {
+  width: 3.5rem;
+  height: 3.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: 0;
+  border: 2px solid $ui-03;
+  border-radius: 8px;
+  background-color: $ui-01;
+  color: colors.$gray-90;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &:focus {
+    border-color: $interactive-01;
+    box-shadow: 0 0 0 3px rgba(0, 125, 250, 0.1);
+    background-color: $ui-01;
+  }
+
+  &:disabled {
+    background-color: $ui-02;
+    border-color: $ui-03;
+    color: colors.$gray-90;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &::placeholder {
+    color: colors.$gray-90;
+    opacity: 0.5;
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.125rem;
+  }
+
+  @media only screen and (max-width: 480px) {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1rem;
+  }
+}
+
+.otpInput.focused {
+  border-color: $interactive-01;
+  box-shadow: 0 0 0 3px rgba(0, 125, 250, 0.15);
+  background-color: $ui-01;
+}
+
+.otpInput.filled {
+  border-color: $ui-04;
+  background-color: $ui-01;
+}
+
+.otpInput.error {
+  border-color: colors.$red-60;
+  background-color: rgba(218, 30, 40, 0.05);
+
+  &:focus {
+    border-color: colors.$red-60;
+    box-shadow: 0 0 0 3px rgba(218, 30, 40, 0.15);
+  }
+}
+
+.otpInput.error.filled {
+  border-color: colors.$red-60;
+  background-color: rgba(218, 30, 40, 0.05);
+}
