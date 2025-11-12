@@ -4,7 +4,7 @@
 
 > **Workspace2Definition**\<`WorkspaceProps`, `WindowProps`, `GroupProps`\> = `React.FC`\<[`Workspace2DefinitionProps`](../interfaces/Workspace2DefinitionProps.md)\<`WorkspaceProps`, `WindowProps`, `GroupProps`\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L52)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L53)
 
 **`Experimental`**
 

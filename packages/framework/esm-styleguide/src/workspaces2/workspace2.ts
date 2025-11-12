@@ -1,3 +1,6 @@
+import { type Context, useContext } from 'react';
+import { SingleSpaContext } from 'single-spa-react';
+import { v4 as uuidV4 } from 'uuid';
 import {
   getGroupByWindowName,
   getOpenedWindowIndexByWorkspace,
@@ -8,9 +11,9 @@ import {
   type WorkspaceStoreState2,
 } from '@openmrs/esm-extensions';
 import { useStoreWithActions, type Actions } from '@openmrs/esm-react-utils';
-import { showModal } from '../modals';
-import { v4 as uuidV4 } from 'uuid';
 import { shallowEqual } from '@openmrs/esm-utils';
+import { showModal } from '../modals';
+import { type Workspace2DefinitionProps } from './workspace2.component';
 
 /**
  * Attempts to launch the specified workspace group with the given group props. Note that only one workspace group
@@ -544,6 +547,20 @@ const workspace2StoreActions = {
 export function useWorkspace2Store() {
   return useStoreWithActions(workspace2Store, workspace2StoreActions);
 }
+
+/**
+ * Returns the react Context containing props passed into a workspace.
+ * This hook MUST be called inside a child of <Workspace2>
+ */
+export const useWorkspace2Context = () =>
+  useContext<Workspace2DefinitionProps>(SingleSpaContext as unknown as Context<Workspace2DefinitionProps>);
+
+/**
+ * @returns a list of registered workspaces.
+ */
+export const getRegisteredWorkspace2Names = () => {
+  return Object.keys(workspace2Store.getState().registeredWorkspacesByName);
+};
 
 function newOpenedWorkspace(workspaceName: string, workspaceProps: Record<string, any> | null): OpenedWorkspace {
   return {
