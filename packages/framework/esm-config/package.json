@@ -55,9 +55,9 @@
     "ramda": "^0.30.1"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "6.x",
-    "@openmrs/esm-state": "6.x",
-    "@openmrs/esm-utils": "6.x",
+    "@openmrs/esm-globals": "8.x",
+    "@openmrs/esm-state": "8.x",
+    "@openmrs/esm-utils": "8.x",
     "single-spa": "6.x"
   },
   "devDependencies": {
