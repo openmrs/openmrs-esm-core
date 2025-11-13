@@ -182,12 +182,12 @@ export function clearCurrentUser() {
 }
 
 export function userHasAccess(
-  requiredPrivilege: string | string[],
+  requiredPrivilege: string | Array<string>,
   user: { privileges: Array<Privilege>; roles: Array<Role> },
 ) {
   if (user === undefined) {
     // if the user hasn't been loaded, then return false iff there is a required privilege
-    return Boolean(requiredPrivilege);
+    return !Boolean(requiredPrivilege);
   }
 
   if (!Boolean(requiredPrivilege)) {

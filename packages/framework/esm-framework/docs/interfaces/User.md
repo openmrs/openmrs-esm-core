@@ -2,7 +2,7 @@
 
 # Interface: User
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L68)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L70)
 
 Superclass for all Openmrs Resources, with strict typings.
 If the subclass does not have all attributes (including optional ones)
