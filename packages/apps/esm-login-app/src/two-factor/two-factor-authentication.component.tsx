@@ -5,6 +5,7 @@ import OTPCountdown from './otp-count-down.component';
 import { useSearchParams } from 'react-router-dom';
 import { navigate } from '@openmrs/esm-framework';
 import { useTranslation } from 'react-i18next';
+import { useProviderDetails } from './two-factor.resource';
 
 const TwoFactorAuthentication = () => {
   const [otpValue, setOtpValue] = useState('');
@@ -13,6 +14,7 @@ const TwoFactorAuthentication = () => {
   const { t } = useTranslation();
   const next = searchParams.get('next');
   const COUNT_DOWN_DURATION = 60;
+  const { nationalId, telephone, isLoading, error: providerError, mutate: providerMutate } = useProviderDetails();
 
   const handleOtpChange = (value: string) => {
     setOtpValue(value);
@@ -25,13 +27,11 @@ const TwoFactorAuthentication = () => {
     }
     // console.log('OTP Complete:', value);
     // Here you would typically validate the OTP with your backend
-    // For now, we'll just log it
   };
 
   const handleResend = () => {
     // console.log('Resending OTP code...');
     // Here you would typically call your API to resend the OTP code
-    // For now, we'll just log it
     setOtpValue('');
     setError(false);
   };

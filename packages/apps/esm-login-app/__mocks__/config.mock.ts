@@ -1,4 +1,4 @@
-import { type ConfigSchema } from '../src/config-schema';
+import { type ConfigSchema } from '@openmrs/esm-framework';
 
 export const mockConfig: ConfigSchema = {
   provider: {
@@ -31,4 +31,9 @@ export const mockConfig: ConfigSchema = {
     loginSuccess: '${openmrsSpaBase}/home',
   },
   showPasswordOnSeparateScreen: true,
+  attributeTypes: {
+    personPhoneNumber: '',
+    providerPhoneNumber: '',
+    providerNationalId: '',
+  },
 };

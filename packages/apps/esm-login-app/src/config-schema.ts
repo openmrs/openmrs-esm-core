@@ -122,9 +122,23 @@ export const configSchema = {
     _description:
       'Whether to show the password field on a separate screen. If false, the password field will be shown on the same screen.',
   },
+  attributeTypes: {
+    _type: Type.Object,
+    _description: 'The attribute types to use for the phone number.',
+    _default: {
+      personPhoneNumber: 'b2c38640-2603-4629-aebd-3b54f33f1e3a',
+      providerPhoneNumber: '37daed7f-1f4e-4e62-8e83-6048ade18a87',
+      providerNationalId: '3d152c97-2293-4a2b-802e-e0f1009b7b15',
+    },
+  },
 };
 
 export interface ConfigSchema {
+  attributeTypes: {
+    personPhoneNumber: string;
+    providerPhoneNumber: string;
+    providerNationalId: string;
+  };
   provider: {
     loginUrl: string;
     logoutUrl: string;
