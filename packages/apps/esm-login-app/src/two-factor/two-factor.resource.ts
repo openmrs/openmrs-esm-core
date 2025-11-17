@@ -50,8 +50,21 @@ export const useProviderDetails = () => {
   return {
     nationalId: nationalIdFromProviderAttributes,
     telephone: phoneNumberFromPersonAttributes || phoneNumberFromProviderAttributes,
+    name: providerDetails?.person?.display,
     isLoading,
     error,
     mutate,
   };
 };
+
+/**
+ * Removes the '+' prefix from a phone number if present
+ * @param phoneNumber - The phone number to sanitize
+ * @returns The phone number without the '+' prefix
+ */
+export function sanitizePhoneNumber(phoneNumber: string): string {
+  if (!phoneNumber) {
+    return phoneNumber;
+  }
+  return phoneNumber.startsWith('+') ? phoneNumber.substring(1) : phoneNumber;
+}
