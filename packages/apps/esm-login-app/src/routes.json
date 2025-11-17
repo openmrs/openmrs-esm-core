@@ -46,6 +46,10 @@
       "offline": true
     },
     {
+      "name": "two-factor-authentication-modal",
+      "component": "twoFactorAuthenticationModal"
+    },
+    {
       "name": "location-changer",
       "slot": "top-nav-info-slot",
       "component": "changeLocationLink",

@@ -8,6 +8,7 @@ import {
   getCoreTranslation,
   navigate as openmrsNavigate,
   refetchCurrentUser,
+  showModal,
   useConfig,
   useConnectivity,
   useSession,
@@ -92,6 +93,10 @@ const Login: React.FC = () => {
     setPassword(evt.target.value || '');
   }, []);
 
+  const showTwoFactorAuthentication = useCallback((redirectTo: string) => {
+    const dispose = showModal('two-factor-authentication-modal', { onClose: () => dispose(), redirectTo });
+  }, []);
+
   const handleSubmit = useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
@@ -123,10 +128,10 @@ const Login: React.FC = () => {
             }
 
             // openmrsNavigate({ to });
-            navigate(`/login/two-factor?next=${to}`);
+            showTwoFactorAuthentication(to);
           } else {
             // navigate('/login/location');
-            navigate(`/login/two-factor?next=\${openmrsSpaBase}/login/location`);
+            showTwoFactorAuthentication(`\${openmrsSpaBase}/login/location`);
           }
         } else {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
@@ -159,7 +164,7 @@ const Login: React.FC = () => {
       return false;
     },
 
-    [showPassword, username, password, navigate],
+    [showPassword, username, password, navigate, showTwoFactorAuthentication],
   );
 
   if (!loginProvider || loginProvider.type === 'basic') {

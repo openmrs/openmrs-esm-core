@@ -1,20 +1,21 @@
-import { InlineLoading } from '@carbon/react';
+import { InlineLoading, ModalBody, ModalHeader } from '@carbon/react';
 import { navigate, showSnackbar } from '@openmrs/esm-framework';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
 import OTPCountdown from './otp-count-down.component';
 import OtpInput from './otp-input.component';
 import { otpManager } from './otp.resource';
 import { sanitizePhoneNumber, useProviderDetails } from './two-factor.resource';
 import styles from './two-factor.scss';
 
-const TwoFactorAuthentication = () => {
+type TwoFactorAuthenticationProps = {
+  redirectTo: string;
+  onClose: () => void;
+};
+const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redirectTo, onClose }) => {
   const [otpValue, setOtpValue] = useState('');
   const [error, setError] = useState(false);
-  const [searchParams] = useSearchParams();
   const { t } = useTranslation();
-  const next = searchParams.get('next');
   const COUNT_DOWN_DURATION = 60;
   const otpExpiryMinutes = 5;
   const { nationalId, telephone, isLoading, error: providerError, mutate: providerMutate, name } = useProviderDetails();
@@ -60,9 +61,8 @@ const TwoFactorAuthentication = () => {
   const handleOtpComplete = async (value: string) => {
     try {
       await onVerify(value, telephone);
-      if (next) {
-        navigate({ to: next });
-      }
+      navigate({ to: redirectTo });
+      onClose?.();
     } catch (error) {
       setError(true);
     }
@@ -77,9 +77,10 @@ const TwoFactorAuthentication = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.formSection}>
-        <strong>{t('twoFactorAuthentication', 'Two Factor Authentication')}</strong>
+    <>
+      <ModalHeader title={t('twoFactorAuthentication', 'Two Factor Authentication')} closeModal={onClose} />
+      <ModalBody className={styles.container}>
+        {/* <strong>{t('twoFactorAuthentication', 'Two Factor Authentication')}</strong> */}
         <p>{t('pleaseEnterTheOtpCodeToContinue', 'Please enter the otp code to continue')}</p>
         <OtpInput
           length={5}
@@ -91,8 +92,8 @@ const TwoFactorAuthentication = () => {
           placeholder=""
         />
         <OTPCountdown duration={COUNT_DOWN_DURATION} onResend={handleResend} />
-      </div>
-    </div>
+      </ModalBody>
+    </>
   );
 };
 
