@@ -166,7 +166,7 @@ export async function launchWorkspace2<
 
   // if current opened group is not the same as the requested group, or if the group props are different, then prompt for unsaved changes
   if (openedGroup && (openedGroup.groupName !== groupDef.name || !arePropsCompatible(openedGroup.props, groupProps))) {
-    const okToCloseWorkspaces = await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: false });
+    const okToCloseWorkspaces = await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: true });
     if (okToCloseWorkspaces) {
       workspace2Store.setState({
         ...storeState,
