@@ -4,26 +4,7 @@
 
 .container {
   display: flex;
-  min-height: 100vh;
-  position: relative;
-}
-
-.formSection {
-  flex: 1;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: layout.$spacing-07;
-  background-color: $ui-background;
-  min-height: 100vh;
-  position: relative;
-  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.05);
-
-  @media only screen and (max-width: 1024px) {
-    flex: none;
-    width: 100%;
-    box-shadow: none;
-    padding: layout.$spacing-05;
-  }
+  gap: layout.$spacing-05;
 }

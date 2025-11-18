@@ -29,6 +29,7 @@ const OTPCountdown: React.FC<OTPCountdownProps> = ({
   const [isActive, setIsActive] = useState<boolean>(autoStart);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { t } = useTranslation();
+  const [requested, setRequested] = useState<boolean>(false);
 
   // Format time as MM:SS
   const formatTime = useCallback((seconds: number): string => {
@@ -45,6 +46,7 @@ const OTPCountdown: React.FC<OTPCountdownProps> = ({
 
   // Handle resend click
   const handleResend = useCallback(() => {
+    setRequested(true);
     startCountdown();
     onResend?.();
   }, [startCountdown, onResend]);
@@ -83,6 +85,14 @@ const OTPCountdown: React.FC<OTPCountdownProps> = ({
       }
     };
   }, []);
+
+  if (!requested) {
+    return (
+      <button type="button" onClick={handleResend} className={styles.resendButton} aria-label={resendText}>
+        {resendText || t('sendOTPCode', 'Send OTP Code')}
+      </button>
+    );
+  }
 
   return (
     <div className={`${styles.countdownContainer} ${className || ''}`}>

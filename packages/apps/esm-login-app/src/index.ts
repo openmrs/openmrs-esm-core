@@ -25,3 +25,7 @@ export const logoutButton = getSyncLifecycle(logoutButtonComponent, options);
 export const changeLocationLink = getSyncLifecycle(changeLocationLinkComponent, options);
 export const changePasswordLink = getSyncLifecycle(changePasswordLinkComponent, options);
 export const changePasswordModal = getAsyncLifecycle(() => import('./change-password/change-password.modal'), options);
+export const twoFactorAuthenticationModal = getAsyncLifecycle(
+  () => import('./two-factor/two-factor-authentication.component'),
+  options,
+);
