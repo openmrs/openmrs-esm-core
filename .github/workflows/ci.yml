@@ -50,7 +50,7 @@ jobs:
         run: yarn turbo run build --color --concurrency=5
 
       - name: 🔍 Run lint, tests and typecheck code
-        run: yarn run verify --concurrency=5
+        run: yarn run verify --concurrency=1
 
   pre_release:
     runs-on: ubuntu-latest
