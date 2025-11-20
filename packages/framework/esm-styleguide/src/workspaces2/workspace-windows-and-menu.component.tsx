@@ -37,7 +37,7 @@ function WorkspaceWindowsAndMenu() {
           return <ActiveWorkspaceWindow key={openedWindow.windowName} openedWindow={openedWindow} />;
         })}
       </div>
-      <ActionMenu workspaceGroup={openedGroup} />
+      <ActionMenu workspaceGroup={group} groupProps={openedGroup.props} />
     </div>
   );
 }

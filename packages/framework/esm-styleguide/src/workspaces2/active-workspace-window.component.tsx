@@ -105,6 +105,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
         groupProps: openedGroup?.props ?? null,
         isRootWorkspace,
         isLeafWorkspace,
+        windowName: openedWindow.windowName,
       },
     [openedWorkspace, closeWorkspace, openedGroup, openedWindow],
   );
