@@ -103,6 +103,7 @@ export const launchWorkspaceGroup = jest.fn();
 export const closeWorkspaceGroup2 = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();
+export const useWorkspace2Context = jest.fn();
 
 export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange, isInvalid, invalidText }) => (
   <>
