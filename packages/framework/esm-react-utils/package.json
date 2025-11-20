@@ -23,6 +23,7 @@
   "source": true,
   "scripts": {
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "typescript": "tsc --project tsconfig.build.json",
@@ -91,6 +92,7 @@
     "@openmrs/esm-utils": "workspace:*",
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
+    "@vitest/coverage-v8": "^4.0.7",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
@@ -102,6 +104,6 @@
     "rimraf": "^6.0.1",
     "rxjs": "^6.5.3",
     "swr": "2.2.5",
-    "vitest": "^3.1.4"
+    "vitest": "^4.0.7"
   }
 }

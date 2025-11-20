@@ -16,6 +16,7 @@
   "scripts": {
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rimraf dist && swc --strip-leading-paths src -d dist && tsc --project tsconfig.build.json",
     "build:development": "rimraf dist && swc --strip-leading-paths src -d dist && tsc --project tsconfig.build.json",
     "typescript": "tsc --project tsconfig.build.json",
@@ -50,9 +51,10 @@
     "@openmrs/esm-globals": "workspace:*",
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
+    "@vitest/coverage-v8": "^4.0.7",
     "cross-env": "^7.0.3",
     "happy-dom": "^17.4.7",
     "rimraf": "^6.0.1",
-    "vitest": "^3.1.4"
+    "vitest": "^4.0.7"
   }
 }
