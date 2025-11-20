@@ -110,15 +110,15 @@ async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
 
   while (nextUrl && safetyCounter < MAX_PAGES) {
     try {
-      const { data } = await openmrsFetch(nextUrl, { method: 'GET' });
+      const { data } = await openmrsFetch<{
+        results: Array<BackendModule>;
+        next?: string | null;
+      }>(nextUrl, { method: 'GET' });
       const pageResults: Array<BackendModule> = Array.isArray(data?.results) ? data.results : [];
 
       collected.push(...pageResults);
 
-      const links: Array<{ rel?: string; uri?: string }> = Array.isArray(data?.links) ? data.links : [];
-      const nextLink = links.find((l) => (l.rel || '').toLowerCase() === 'next');
-
-      nextUrl = resolveNext(nextLink?.uri ?? null);
+      nextUrl = resolveNext(data?.next ?? null);
       safetyCounter += 1;
     } catch (e) {
       console.error(`Failed to fetch backend modules on request ${safetyCounter + 1} (URL: ${nextUrl})`, e);

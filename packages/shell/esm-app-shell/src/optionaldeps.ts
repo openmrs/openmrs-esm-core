@@ -51,9 +51,9 @@ function setupOptionalDependencies() {
   }, new Map());
 
   if (optionalDependencyFlags.size > 0) {
-    openmrsFetch<{ results: { uuid: string; version: string }[] }>(`${restBaseUrl}/module?v=custom:(uuid,version)`)
-      .then((response) => {
-        (response.data.results ?? []).forEach((backendModule) => {
+    fetchAllBackendModules()
+      .then((backendModules) => {
+        backendModules.forEach((backendModule) => {
           if (optionalDependencyFlags.has(backendModule.uuid)) {
             const optionalDependency = optionalDependencyFlags.get(backendModule.uuid);
             if (
@@ -73,4 +73,45 @@ function setupOptionalDependencies() {
       })
       .catch(() => {}); // swallow any issues fetching
   }
+}
+
+async function fetchAllBackendModules(): Promise<Array<{ uuid: string; version: string }>> {
+  const collected: Array<{ uuid: string; version: string }> = [];
+  let nextUrl: string | null = `${restBaseUrl}/module?v=custom:(uuid,version)`;
+  const MAX_PAGES = 50;
+  let safetyCounter = 0;
+
+  const resolveNext = (url?: string | null) => {
+    if (!url) {
+      return null;
+    }
+    if (/^https?:\/\//i.test(url)) {
+      return url;
+    }
+    if (url.startsWith('/')) {
+      return url;
+    }
+    return `${restBaseUrl}/${url.replace(/^\/?/, '')}`;
+  };
+
+  while (nextUrl && safetyCounter < MAX_PAGES) {
+    const { data } = await openmrsFetch<{
+      results: Array<{ uuid: string; version: string }>;
+      next?: string | null;
+    }>(nextUrl, { method: 'GET' });
+
+    const pageResults: Array<{ uuid: string; version: string }> = Array.isArray(data?.results) ? data.results : [];
+    collected.push(...pageResults);
+
+    nextUrl = resolveNext(data?.next ?? null);
+    safetyCounter += 1;
+  }
+
+  if (nextUrl && safetyCounter >= MAX_PAGES) {
+    console.warn(
+      `Reached maximum page limit (${MAX_PAGES}) while fetching backend modules. There may be more data available at: ${nextUrl}`,
+    );
+  }
+
+  return collected;
 }
