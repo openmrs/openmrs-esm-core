@@ -75,22 +75,32 @@ function setupOptionalDependencies() {
   }
 }
 
+/**
+ * Fetches all backend modules with pagination support.
+ * The API returns paginated results with a 'next' field pointing to the next page.
+ *
+ * @returns Array of backend modules with their uuid and version
+ */
 async function fetchAllBackendModules(): Promise<Array<{ uuid: string; version: string }>> {
   const collected: Array<{ uuid: string; version: string }> = [];
   let nextUrl: string | null = `${restBaseUrl}/module?v=custom:(uuid,version)`;
   const MAX_PAGES = 50;
   let safetyCounter = 0;
 
+  // Normalizes the next URL to handle relative and absolute URLs
   const resolveNext = (url?: string | null) => {
     if (!url) {
       return null;
     }
+    // Already a full URL
     if (/^https?:\/\//i.test(url)) {
       return url;
     }
+    // Absolute path
     if (url.startsWith('/')) {
       return url;
     }
+    // Relative path - prepend restBaseUrl
     return `${restBaseUrl}/${url.replace(/^\/?/, '')}`;
   };
 

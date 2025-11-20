@@ -90,21 +90,32 @@ function checkIfModulesAreInstalled(
   };
 }
 
+/**
+ * Fetches all installed backend modules with pagination support.
+ * The API returns paginated results with a 'next' field pointing to the next page.
+ *
+ * @returns Array of backend modules with their uuid and version
+ * @throws Error if any page fetch fails
+ */
 async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
   const collected: Array<BackendModule> = [];
   let nextUrl: string | null = `${restBaseUrl}/module?v=custom:(uuid,version)`;
   let safetyCounter = 0;
 
+  // Normalizes the next URL to handle relative and absolute URLs
   const resolveNext = (url?: string | null) => {
     if (!url) {
       return null;
     }
+    // Already a full URL
     if (/^https?:\/\//i.test(url)) {
       return url;
     }
+    // Absolute path
     if (url.startsWith('/')) {
       return url;
     }
+    // Relative path - prepend restBaseUrl
     return `${restBaseUrl}/${url.replace(/^\/?/, '')}`;
   };
 
@@ -114,8 +125,8 @@ async function fetchInstalledBackendModules(): Promise<Array<BackendModule>> {
         results: Array<BackendModule>;
         next?: string | null;
       }>(nextUrl, { method: 'GET' });
-      const pageResults: Array<BackendModule> = Array.isArray(data?.results) ? data.results : [];
 
+      const pageResults: Array<BackendModule> = Array.isArray(data?.results) ? data.results : [];
       collected.push(...pageResults);
 
       nextUrl = resolveNext(data?.next ?? null);
