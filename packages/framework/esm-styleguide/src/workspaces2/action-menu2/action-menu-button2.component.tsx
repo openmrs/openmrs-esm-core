@@ -6,7 +6,7 @@ import { useLayoutType } from '@openmrs/esm-react-utils';
 import { SingleSpaContext } from 'single-spa-react';
 import { type OpenedWindow } from '@openmrs/esm-extensions';
 import styles from './action-menu-button2.module.scss';
-import { launchWorkspace2, useWorkspace2Store } from '../workspace2';
+import { launchWorkspace2, useWorkspace2Store, useWorkspace2Context } from '../workspace2';
 
 interface TagsProps {
   getIcon: (props: object) => JSX.Element;
