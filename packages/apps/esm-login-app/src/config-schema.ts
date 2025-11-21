@@ -1,4 +1,4 @@
-import { validators, Type, validator } from '@openmrs/esm-framework';
+import { validators, Type } from '@openmrs/esm-framework';
 
 export const configSchema = {
   provider: {
@@ -35,13 +35,13 @@ export const configSchema = {
       _type: Type.Number,
       _default: 8,
       _description: 'The number of locations displayed in the location picker.',
-      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
+      _validators: [validators.inRange(1, 100)],
     },
     locationsPerRequest: {
       _type: Type.Number,
       _default: 50,
       _description: 'The number of results to fetch in each cycle of infinite scroll.',
-      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
+      _validators: [validators.inRange(1, 500)],
     },
     useLoginLocationTag: {
       _type: Type.Boolean,
@@ -59,6 +59,8 @@ export const configSchema = {
     },
   },
   logo: {
+    _type: Type.Object,
+    _description: 'Configure the logo displayed on the login page.',
     src: {
       _type: Type.String,
       _default: '',
@@ -73,6 +75,8 @@ export const configSchema = {
     },
   },
   footer: {
+    _type: Type.Object,
+    _description: 'Configure the footer section of the login page.',
     additionalLogos: {
       _type: Type.Array,
       _elements: {
@@ -98,6 +102,55 @@ export const configSchema = {
     _default: true,
     _description:
       'Whether to show the password field on a separate screen. If false, the password field will be shown on the same screen.',
+  },
+  layout: {
+    _type: Type.Object,
+    _description: 'Configure the position and layout of the login form on the page.',
+    loginFormPosition: {
+      _type: Type.String,
+      _default: 'center',
+      _description: 'Position of the login form on the screen.',
+      _validators: [validators.oneOf(['left', 'center', 'right'])],
+    },
+    showFooter: {
+      _type: Type.Boolean,
+      _default: true,
+      _description: 'Whether to show the footer on the login page.',
+    },
+  },
+  background: {
+    _type: Type.Object,
+    _description: 'Configure the login page background with either a solid color or background image.',
+    color: {
+      _type: Type.String,
+      _default: '',
+      _description: 'Solid background color (e.g., "#0071C5", "blue", "rgb(0,113,197)"). Leave empty for default.',
+    },
+    imageUrl: {
+      _type: Type.String,
+      _default: '',
+      _description: 'URL to background image (e.g., "https://example.com/bg.jpg"). Leave empty for no image.',
+      _validators: [validators.isUrl],
+    },
+  },
+  branding: {
+    _type: Type.Object,
+    _description: 'Configure custom branding text for the login page.',
+    title: {
+      _type: Type.String,
+      _default: '',
+      _description: 'Custom title text or translation key (e.g., "welcome.title").',
+    },
+    subtitle: {
+      _type: Type.String,
+      _default: '',
+      _description: 'Custom subtitle text or translation key (e.g., "welcome.subtitle").',
+    },
+    helpText: {
+      _type: Type.String,
+      _default: '',
+      _description: 'Custom help text or translation key for support information.',
+    },
   },
 };
 
@@ -127,4 +180,17 @@ export interface ConfigSchema {
     type: 'basic' | 'oauth2';
   };
   showPasswordOnSeparateScreen: boolean;
+  background: {
+    color: string;
+    imageUrl: string;
+  };
+  layout: {
+    loginFormPosition: 'left' | 'center' | 'right';
+    showFooter: boolean;
+  };
+  branding: {
+    title: string;
+    subtitle: string;
+    helpText: string;
+  };
 }
