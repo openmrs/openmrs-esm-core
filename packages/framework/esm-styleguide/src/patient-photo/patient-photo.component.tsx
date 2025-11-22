@@ -75,22 +75,24 @@ export function PatientPhoto({ patientUuid, patientName, alt }: PatientPhotoProp
   }
 
   return (
-    <Avatar
-      alt={altText}
-      color="rgba(0,0,0,0)"
-      maxInitials={3}
-      name={patientName}
-      size="56"
-      src={validImageSrc ?? undefined}
-      style={
-        !validImageSrc
-          ? {
-              backgroundImage: pattern.toDataUrl(),
-              backgroundRepeat: 'round',
-            }
-          : undefined
-      }
-      textSizeRatio={2}
-    />
+    <div aria-label={altText}>
+      <Avatar
+        alt={altText}
+        color="rgba(0,0,0,0)"
+        maxInitials={3}
+        name={patientName}
+        size="56"
+        src={validImageSrc ?? undefined}
+        style={
+          !validImageSrc
+            ? {
+                backgroundImage: pattern.toDataUrl(),
+                backgroundRepeat: 'round',
+              }
+            : undefined
+        }
+        textSizeRatio={2}
+      />
+    </div>
   );
 }
