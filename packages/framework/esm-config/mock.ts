@@ -32,4 +32,6 @@ export function defineExtensionConfigSchema(extensionName, schema) {
   configSchema = schema;
 }
 
+export const extensionHasOwnConfigSchema = vi.fn(() => false);
+
 export const clearConfigErrors = vi.fn();

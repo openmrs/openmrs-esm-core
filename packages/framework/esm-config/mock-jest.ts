@@ -34,4 +34,6 @@ export function defineExtensionConfigSchema(extensionName, schema) {
   configSchema = schema;
 }
 
+export const extensionHasOwnConfigSchema = jest.fn(() => false);
+
 export const clearConfigErrors = jest.fn();
