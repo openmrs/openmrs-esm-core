@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
-import { useOnVisible } from '@openmrs/esm-framework';
-import { useTranslation } from 'react-i18next';
+import { useOnVisible} from '@openmrs/esm-framework';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { InlineLoading, RadioButton, RadioButtonGroup, RadioButtonSkeleton, Search } from '@carbon/react';
 import { useLocationByUuid, useLocations } from './location-picker.resource';
 import styles from './location-picker.module.scss';
@@ -20,7 +20,6 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   locationsPerRequest = 50,
   onChange,
 }) => {
-  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   let defaultLocation = useLocationByUuid(defaultLocationUuid).location;
@@ -60,9 +59,9 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   return (
     <div>
       <Search
-        labelText={t('searchForLocation', 'Search for a location')}
+        labelText={getCoreTranslation('searchForLocation')}
         id="search-1"
-        placeholder={t('searchForLocation', 'Search for a location')}
+        placeholder={getCoreTranslation('searchForLocation')}
         onChange={(event) => search(event.target.value)}
         size="lg"
       />
@@ -100,13 +99,13 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
                 </RadioButtonGroup>
               ) : (
                 <div className={styles.emptyState}>
-                  <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
+                  <p className={styles.locationNotFound}>{getCoreTranslation('noResultsToDisplay')}</p>
                 </div>
               )}
             </div>
             {loadingNewData && (
               <div className={styles.loadingIcon}>
-                <InlineLoading description={t('loading', 'Loading')} />
+                <InlineLoading description={getCoreTranslation('loading')} />
               </div>
             )}
           </>
