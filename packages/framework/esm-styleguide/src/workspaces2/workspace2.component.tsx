@@ -1,13 +1,14 @@
 import React, { useEffect, type ReactNode } from 'react';
+import classNames from 'classnames';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import classNames from 'classnames';
+import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { ArrowRightIcon, CloseIcon } from '../icons';
-import styles from './workspace2.module.scss';
 import { useWorkspace2Store, useWorkspace2Context } from './workspace2';
+import styles from './workspace2.module.scss';
+
 interface Workspace2Props {
   title: string;
   children: ReactNode;

@@ -1,7 +1,7 @@
-import React, { useState, useRef, useCallback, useMemo } from 'react';
-import { useOnVisible } from '@openmrs/esm-framework';
-import { useTranslation } from 'react-i18next';
+import React, { useCallback, useMemo, useState } from 'react';
 import { InlineLoading, RadioButton, RadioButtonGroup, RadioButtonSkeleton, Search } from '@carbon/react';
+import { getCoreTranslation } from '@openmrs/esm-translations';
+import { useOnVisible } from '@openmrs/esm-framework';
 import { useLocationByUuid, useLocations } from './location-picker.resource';
 import styles from './location-picker.module.scss';
 
@@ -20,10 +20,9 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   locationsPerRequest = 50,
   onChange,
 }) => {
-  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  let defaultLocation = useLocationByUuid(defaultLocationUuid).location;
+  const { location: defaultLocation } = useLocationByUuid(defaultLocationUuid);
 
   const {
     locations: fetchedLocations,
@@ -34,11 +33,11 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   } = useLocations(locationTag, locationsPerRequest, searchTerm);
 
   const locations = useMemo(() => {
-    if (defaultLocation && !searchTerm) {
+    if (defaultLocation && !searchTerm && defaultLocationUuid) {
       return [defaultLocation, ...fetchedLocations?.filter(({ resource }) => resource.id !== defaultLocationUuid)];
     }
     return fetchedLocations;
-  }, [defaultLocation, fetchedLocations]);
+  }, [defaultLocation, fetchedLocations, defaultLocationUuid, searchTerm]);
 
   const search = (location: string) => {
     onChange();
@@ -55,14 +54,14 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
 
   const loadingIconRef = useOnVisible(loadMore);
 
-  const reloadIndex = hasMore ? locations.length - locationsPerRequest / 2 : -1;
+  const reloadIndex = hasMore ? Math.max(0, Math.floor(locations.length - locationsPerRequest / 2)) : -1;
 
   return (
     <div>
       <Search
-        labelText={t('searchForLocation', 'Search for a location')}
+        labelText={getCoreTranslation('searchForLocation')}
         id="search-1"
-        placeholder={t('searchForLocation', 'Search for a location')}
+        placeholder={getCoreTranslation('searchForLocation')}
         onChange={(event) => search(event.target.value)}
         size="lg"
       />
@@ -81,8 +80,8 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
               {locations?.length > 0 ? (
                 <RadioButtonGroup
                   name="loginLocations"
-                  onChange={(ev) => {
-                    onChange(ev?.toString());
+                  onChange={(value) => {
+                    onChange(value?.toString());
                   }}
                   orientation="vertical"
                   valueSelected={selectedLocationUuid}
@@ -93,20 +92,20 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
                       key={entry.resource.id}
                       id={entry.resource.id}
                       name={entry.resource.name}
-                      labelText={<span ref={i == reloadIndex ? loadingIconRef : null}>{entry.resource.name}</span>}
+                      labelText={<span ref={i === reloadIndex ? loadingIconRef : null}>{entry.resource.name}</span>}
                       value={entry.resource.id}
                     />
                   ))}
                 </RadioButtonGroup>
               ) : (
                 <div className={styles.emptyState}>
-                  <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
+                  <p className={styles.locationNotFound}>{getCoreTranslation('noResultsToDisplay')}</p>
                 </div>
               )}
             </div>
             {loadingNewData && (
               <div className={styles.loadingIcon}>
-                <InlineLoading description={t('loading', 'Loading')} />
+                <InlineLoading description={getCoreTranslation('loading')} />
               </div>
             )}
           </>

@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Avatar from 'react-avatar';
 import GeoPattern from 'geopattern';
 import { SkeletonIcon } from '@carbon/react';
-import { useTranslation } from 'react-i18next';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { usePatientPhoto } from './usePatientPhoto';
 import PlaceholderIcon from './placeholder-icon.component';
 import styles from './patient-photo.module.scss';
@@ -18,7 +18,6 @@ export interface PatientPhotoProps {
  * A component which displays the patient photo https://zeroheight.com/23a080e38/p/6663f3-patient-header. If there is no photo, it will display a generated avatar. The default size is 56px.
  */
 export function PatientPhoto({ patientUuid, patientName, alt }: PatientPhotoProps) {
-  const { t } = useTranslation();
   const { data: photo, isLoading } = usePatientPhoto(patientUuid);
   const [validImageSrc, setValidImageSrc] = useState<string | null>(null);
   const [isValidating, setIsValidating] = useState(false);
@@ -58,9 +57,9 @@ export function PatientPhoto({ patientUuid, patientName, alt }: PatientPhotoProp
     }
 
     return validImageSrc
-      ? t('patientPhotoAlt', 'Profile photo of {{patientName}}', { patientName })
-      : t('patientAvatarAlt', 'Avatar for {{patientName}}', { patientName });
-  }, [alt, validImageSrc, patientName, t]);
+      ? getCoreTranslation('patientPhotoAlt', 'Profile photo of {{patientName}}', { patientName })
+      : getCoreTranslation('patientAvatarAlt', 'Avatar for {{patientName}}', { patientName });
+  }, [alt, validImageSrc, patientName]);
 
   if (isLoading || isValidating) {
     return <SkeletonIcon className={styles.skeleton} data-testid="skeleton-icon" />;
@@ -69,7 +68,9 @@ export function PatientPhoto({ patientUuid, patientName, alt }: PatientPhotoProp
   if (photo?.imageSrc && !validImageSrc) {
     return (
       <PlaceholderIcon
-        aria-label={t('patientPhotoPlaceholder', 'Photo placeholder for {{patientName}}', { patientName })}
+        aria-label={getCoreTranslation('patientPhotoPlaceholder', 'Photo placeholder for {{patientName}}', {
+          patientName,
+        })}
       />
     );
   }
