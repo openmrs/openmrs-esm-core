@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Button } from '@carbon/react';
 import { CloseIcon, type ConfigSchema, type Config, getCoreTranslation, SaveIcon, Type } from '@openmrs/esm-framework';
+import { temporaryConfigStore } from '@openmrs/esm-framework/src/internal';
 import type { ConfigValueDescriptor } from './editable-value.component';
 import { ValueEditorField } from './value-editors/value-editor-field';
 import styles from './value-editor.styles.scss';
 import { validateValue } from './validators.resource';
+import { get } from 'lodash-es';
 
-export type CustomValueType = 'add' | 'remove' | 'order' | 'configure';
+export type CustomValueType = 'add' | 'remove' | 'order' | 'configure' | 'translation-overrides';
 
 export type ValueType = CustomValueType | Type;
 
@@ -20,7 +22,14 @@ interface ValueEditorProps {
 
 export function ValueEditor({ element, customType, path, handleSaveToConfiguration, handleClose }: ValueEditorProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [tmpValue, setTmpValue] = useState(element._value);
+
+  const getCurrentValue = () => {
+    const tempConfigState = temporaryConfigStore.getState();
+    const tempValue = get(tempConfigState, ['config', ...path]);
+    return tempValue !== undefined ? tempValue : element._value;
+  };
+
+  const [tmpValue, setTmpValue] = useState(getCurrentValue);
   const [error, setError] = useState<string | null>(null);
 
   const valueType = customType ?? element._type;
