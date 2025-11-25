@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import useSwrImmutable from 'swr/immutable';
 import useSwrInfinite from 'swr/infinite';
 import { type FetchResponse, fhirBaseUrl, openmrsFetch } from '@openmrs/esm-api';
