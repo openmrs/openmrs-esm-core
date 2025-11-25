@@ -3,6 +3,7 @@ import type {} from '@openmrs/esm-globals';
 import { shallowEqual } from '@openmrs/esm-utils';
 import type { StoreApi } from 'zustand/vanilla';
 import { createStore } from 'zustand/vanilla';
+import { isTestEnvironment } from './utils';
 
 interface StoreEntity {
   value: StoreApi<unknown>;
@@ -11,22 +12,9 @@ interface StoreEntity {
 
 const availableStores: Record<string, StoreEntity> = {};
 
-// Check if we're in a test environment (Vitest or Jest)
-const isTestEnvironment = () => {
-  try {
-    return (
-      process.env.NODE_ENV === 'test' ||
-      (typeof process !== 'undefined' && (process.env.VITEST === 'true' || process.env.JEST_WORKER_ID !== undefined)) ||
-      (typeof globalThis !== 'undefined' && ('__vitest_worker__' in globalThis || '__jest__' in globalThis))
-    );
-  } catch {
-    return false;
-  }
-};
-
 // spaEnv isn't available immediately. Wait a bit before making stores available
 // on window in development mode.
-setTimeout(() => {
+globalThis.setTimeout?.(() => {
   if (typeof window !== 'undefined' && window.spaEnv === 'development') {
     window['stores'] = availableStores;
   }
@@ -134,11 +122,13 @@ export function subscribeTo<T, U>(...args: SubscribeToArgs<T, U>): () => void {
   const handler = typeof handle === 'undefined' ? (select as unknown as (state: U) => void) : handle;
   const selector = typeof handle === 'undefined' ? (state: T) => state as unknown as U : (select as (state: T) => U);
 
-  handler(selector(store.getState()));
-  return store.subscribe((state, previous) => {
+  let previous = selector(store.getState());
+  handler(previous);
+  return store.subscribe((state) => {
     const current = selector(state);
 
     if (!shallowEqual(previous, current)) {
+      previous = current;
       handler(current);
     }
   });
