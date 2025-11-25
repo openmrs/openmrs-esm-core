@@ -1,9 +1,9 @@
 import { getAsyncLifecycle, getSyncLifecycle } from '@openmrs/esm-framework';
-
-import ReleaseNotesComponent from './help-menu/components/release-notes.component';
-import DocsComponent from './help-menu/components/docs.component';
 import ContactUsComponent from './help-menu/components/contact-us.component';
-export const importTranslation = () => Promise.resolve();
+import DocsComponent from './help-menu/components/docs.component';
+import ReleaseNotesComponent from './help-menu/components/release-notes.component';
+
+export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
 const options = {
   featureName: 'help-menu',
