@@ -34,6 +34,7 @@
   "edit": "Modifier",
   "error": "Erreur",
   "errorCopy": "Désolé, il y a eu un problème lors de l'affichage de cette information. Vous pouvez essayer de rafraîchir cette page ou contacter l'administrateur du site en mentionnant le code d'erreur ci-dessus.",
+  "errorLoadingLoginLocations": "Unable to load login locations. Please try again or contact support if the problem persists.",
   "female": "Femme",
   "hide": "Cacher",
   "leftNavigation": "Left navigation",
