@@ -2,7 +2,9 @@ import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Observable, type Subscriber } from 'rxjs';
-import type { LoggedInUser, Privilege, Role , type getCurrentUser, type userHasAccess } from '@openmrs/esm-api';
+import type { LoggedInUser, Privilege, Role } from '@openmrs/esm-api';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { getCurrentUser, userHasAccess } from '@openmrs/esm-api';
 import { UserHasAccess } from './UserHasAccess';
 
 // Mock getCurrentUser and userHasAccess
