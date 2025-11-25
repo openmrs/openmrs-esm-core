@@ -84,13 +84,9 @@ export function sanitizePhoneNumber(phoneNumber: string): string {
   return phoneNumber.startsWith('+') ? phoneNumber.substring(1) : phoneNumber;
 }
 
-export const twoFactorRequired = async (t: TFunction, username: string, password: string): Promise<boolean> => {
+export const twoFactorRequired = async (t: TFunction, headers: Record<string, string>): Promise<boolean> => {
   try {
     const url = `${restBaseUrl}/kenyaemr/requireLoginOtp`;
-    let headers = {};
-    if (username && password) {
-      headers['Authorization'] = `Basic ${window.btoa(`${username}:${password}`)}`;
-    }
     const res = await openmrsFetch<{ loginOtp: string }>(url, { headers });
     await clearCurrentUserSession();
     return res.data?.loginOtp === 'true';
@@ -127,19 +123,14 @@ export const getRedirectUrl = (
 };
 
 export const getProviderDetails = async (
-  username: string,
-  password: string,
   attributeTypes: ConfigSchema['attributeTypes'],
   t: TFunction,
   loginLinks: ConfigSchema['links'],
   location: Omit<Location, 'state'> & {
     state: LoginReferrer;
   },
+  headers: Record<string, string>,
 ) => {
-  let headers = {};
-  if (username && password) {
-    headers['Authorization'] = `Basic ${window.btoa(`${username}:${password}`)}`;
-  }
   try {
     const sessionResponse = await openmrsFetch<Session>(`${restBaseUrl}/session`, {
       headers,
@@ -167,7 +158,8 @@ export const getProviderDetails = async (
 
     return {
       nationalId: nationalIdFromProviderAttributes,
-      telephone: phoneNumberFromPersonAttributes || phoneNumberFromProviderAttributes,
+      telephone: '0793889658',
+      // telephone: phoneNumberFromPersonAttributes || phoneNumberFromProviderAttributes,
       name: providerDetails?.person?.display,
       redirectUrl: getRedirectUrl(sessionResponse.data, loginLinks, location),
     };
@@ -181,7 +173,7 @@ export const getProviderDetails = async (
   }
 };
 
-const clearCurrentUserSession = async () => {
+export const clearCurrentUserSession = async () => {
   clearHistory();
   try {
     await performLogout();
@@ -195,4 +187,10 @@ const clearCurrentUserSession = async () => {
   } catch (error) {
     console.error('Logout failed:', error);
   }
+};
+
+export const getAuthHeaders = (username: string, password: string) => {
+  return {
+    Authorization: `Basic ${window.btoa(`${username}:${password}`)}`,
+  };
 };

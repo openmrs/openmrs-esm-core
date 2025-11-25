@@ -14,6 +14,7 @@ type TwoFactorAuthenticationProps = {
   name: string;
   telephone: string;
   nationalId: string;
+  headers: Record<string, string>;
 };
 const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({
   onSuccess,
@@ -21,6 +22,7 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({
   name,
   telephone,
   nationalId,
+  headers,
 }) => {
   const [otpValue, setOtpValue] = useState('');
   const [otpInputDisabled, setOtpInputDisabled] = useState(true);
@@ -34,7 +36,7 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({
     return {
       onRequestOtp: async (phone: string): Promise<void> => {
         const sanitizedPhone = sanitizePhoneNumber(phone);
-        await otpManager.requestOTP(sanitizedPhone, patientName, otpExpiryMinutes, nationalId);
+        await otpManager.requestOTP(sanitizedPhone, patientName, otpExpiryMinutes, nationalId, headers);
       },
       onVerify: async (otp: string, _phoneNumber?: string): Promise<void> => {
         const sanitizedPhone = sanitizePhoneNumber(phoneNumber);
@@ -74,12 +76,12 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({
     }
   };
 
-  const handleResend = () => {
+  const handleResend = async () => {
     // console.log('Resending OTP code...');
     // Here you would typically call your API to resend the OTP code
     setOtpValue('');
     setError(false);
-    onRequestOtp(telephone);
+    await onRequestOtp(telephone);
     setOtpInputDisabled(false);
   };
 

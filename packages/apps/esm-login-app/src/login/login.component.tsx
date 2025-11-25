@@ -18,7 +18,12 @@ import Logo from '../logo.component';
 import styles from './login.scss';
 import BackgroundImage from '../background-image/background-image.component';
 import Footer from '../footer/footer.component';
-import { getProviderDetails, getRedirectUrl, twoFactorRequired } from '../two-factor/two-factor.resource';
+import {
+  getAuthHeaders,
+  getProviderDetails,
+  getRedirectUrl,
+  twoFactorRequired,
+} from '../two-factor/two-factor.resource';
 
 export interface LoginReferrer {
   referrer?: string;
@@ -100,13 +105,20 @@ const Login: React.FC = () => {
   }, []);
 
   const showTwoFactorAuthentication = useCallback(
-    (name: string, telephone: string, nationalId: string, onSuccess?: () => Promise<void>) => {
+    (
+      name: string,
+      telephone: string,
+      nationalId: string,
+      headers: Record<string, string>,
+      onSuccess?: () => Promise<void>,
+    ) => {
       const dispose = showModal('two-factor-authentication-modal', {
         onClose: () => dispose(),
         name,
         telephone,
         nationalId,
         onSuccess,
+        headers,
       });
     },
     [],
@@ -144,14 +156,16 @@ const Login: React.FC = () => {
 
       try {
         setIsLoggingIn(true);
-        const requiresTwoFactor = await twoFactorRequired(t, username, password);
+        const headers = getAuthHeaders(username, password);
+        const requiresTwoFactor = await twoFactorRequired(t, headers);
 
         if (requiresTwoFactor) {
-          const providerDetails = await getProviderDetails(username, password, attributeTypes, t, loginLinks, location);
+          const providerDetails = await getProviderDetails(attributeTypes, t, loginLinks, location, headers);
           return showTwoFactorAuthentication(
             providerDetails.name,
             providerDetails.telephone,
             providerDetails.nationalId,
+            headers,
             () => handlePostTwoFactorAuthentication(username, password),
           );
         }
