@@ -2,9 +2,11 @@
 
 # Type Alias: Workspace2Definition\<WorkspaceProps, WindowProps, GroupProps\>
 
-> **Workspace2Definition**\<`WorkspaceProps`, `WindowProps`, `GroupProps`\> = `React.FC`\<`Workspace2DefinitionProps`\<`WorkspaceProps`, `WindowProps`, `GroupProps`\>\>
+> **Workspace2Definition**\<`WorkspaceProps`, `WindowProps`, `GroupProps`\> = `React.FC`\<[`Workspace2DefinitionProps`](../interfaces/Workspace2DefinitionProps.md)\<`WorkspaceProps`, `WindowProps`, `GroupProps`\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L47)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L54)
+
+**`Experimental`**
 
 ## Type Parameters
 

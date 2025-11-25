@@ -28,7 +28,10 @@ export {
   launchWorkspace2,
   launchWorkspaceGroup2,
   closeWorkspaceGroup2,
+  getRegisteredWorkspace2Names,
+  useWorkspace2Context,
   ActionMenuButton2,
   Workspace2,
   type Workspace2Definition,
+  type Workspace2DefinitionProps,
 } from './workspaces2';

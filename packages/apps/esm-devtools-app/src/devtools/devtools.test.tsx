@@ -12,6 +12,14 @@ vi.mock('./import-map.component', () => ({
   importMapOverridden: false,
 }));
 
+vi.mock('@openmrs/esm-framework', async () => {
+  const actual = await vi.importActual('@openmrs/esm-framework');
+  return {
+    ...actual,
+    getCoreTranslation: (key: string) => key,
+  };
+});
+
 const defaultProps: AppProps = {
   name: '@openmrs/esm-devtools-app-page-0',
   singleSpa: {},

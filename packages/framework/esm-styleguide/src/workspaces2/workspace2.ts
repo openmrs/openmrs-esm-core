@@ -1,3 +1,6 @@
+import { type Context, useContext } from 'react';
+import { SingleSpaContext } from 'single-spa-react';
+import { v4 as uuidV4 } from 'uuid';
 import {
   getGroupByWindowName,
   getOpenedWindowIndexByWorkspace,
@@ -8,9 +11,9 @@ import {
   type WorkspaceStoreState2,
 } from '@openmrs/esm-extensions';
 import { useStoreWithActions, type Actions } from '@openmrs/esm-react-utils';
-import { showModal } from '../modals';
-import { v4 as uuidV4 } from 'uuid';
 import { shallowEqual } from '@openmrs/esm-utils';
+import { showModal } from '../modals';
+import { type Workspace2DefinitionProps } from './workspace2.component';
 
 /**
  * Attempts to launch the specified workspace group with the given group props. Note that only one workspace group
@@ -63,15 +66,20 @@ export async function launchWorkspaceGroup2<GroupProps extends object>(
  * Closes the workspace group that is currently opened. Note that only one workspace group
  * may be opened at any given time
  * @experimental
+ * @param discardUnsavedChanges If true, then the workspace group is forced closed, with no prompt
+ * for confirmation for unsaved changes in any opened workspace. This should be used sparingly
+ * for clean-up purpose, ex: when exiting an app.
  * @returns a Promise that resolves to true if there is no opened group to begin with or we successfully closed
  * the opened group; false otherwise.
  */
-export async function closeWorkspaceGroup2() {
+export async function closeWorkspaceGroup2(discardUnsavedChanges?: boolean) {
   const state = workspace2Store.getState();
   const { openedGroup, openedWindows } = state;
   if (openedGroup) {
     if (openedWindows.length > 0) {
-      const okToCloseWorkspaces = await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: true });
+      const okToCloseWorkspaces =
+        discardUnsavedChanges ||
+        (await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: true }));
       if (!okToCloseWorkspaces) {
         return false;
       }
@@ -158,7 +166,7 @@ export async function launchWorkspace2<
 
   // if current opened group is not the same as the requested group, or if the group props are different, then prompt for unsaved changes
   if (openedGroup && (openedGroup.groupName !== groupDef.name || !arePropsCompatible(openedGroup.props, groupProps))) {
-    const okToCloseWorkspaces = await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: false });
+    const okToCloseWorkspaces = await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: true });
     if (okToCloseWorkspaces) {
       workspace2Store.setState({
         ...storeState,
@@ -540,10 +548,24 @@ export function useWorkspace2Store() {
   return useStoreWithActions(workspace2Store, workspace2StoreActions);
 }
 
+/**
+ * Returns the react Context containing props passed into a workspace.
+ * This hook MUST be called inside a child of <Workspace2>
+ */
+export const useWorkspace2Context = () =>
+  useContext<Workspace2DefinitionProps>(SingleSpaContext as unknown as Context<Workspace2DefinitionProps>);
+
+/**
+ * @returns a list of registered workspaces.
+ */
+export const getRegisteredWorkspace2Names = () => {
+  return Object.keys(workspace2Store.getState().registeredWorkspacesByName);
+};
+
 function newOpenedWorkspace(workspaceName: string, workspaceProps: Record<string, any> | null): OpenedWorkspace {
   return {
     workspaceName,
-    props: workspaceProps,
+    props: workspaceProps ?? {},
     hasUnsavedChanges: false,
     uuid: uuidV4(),
   };

@@ -208,6 +208,10 @@ export type ExtensionDefinition = {
    */
   privileges?: string | Array<string>;
   /**
+   * The expression that determines whether the extension is displayed.
+   */
+  displayExpression?: string;
+  /**
    * If supplied, the extension will only be rendered when this feature flag is enabled.
    */
   featureFlag?: string;
@@ -314,14 +318,23 @@ export interface WorkspaceGroupDefinition2 {
   name: string;
   closeable?: boolean;
   overlay?: boolean;
+
+  /**
+   * In app-wide persistence mode, a workspace group renders its
+   * action menu without a close button. This is for
+   * workspace groups that are meant to be opened for the entire duration of the app
+   *
+   * In closable persistence mode, a workspace group renders its
+   * action menu with a close button. User may explicitly close the group, along
+   * with any opened windows / workspaces.
+   */
+  persistence?: 'app-wide' | 'closable';
 }
 
 export interface WorkspaceWindowDefinition2 {
   name: string;
   icon?: string;
-  canHide: boolean;
-  canMaximize: boolean;
-  overlay: boolean;
+  canMaximize?: boolean;
   group: string;
   order?: number;
   width?: 'narrow' | 'wider' | 'extra-wide';
