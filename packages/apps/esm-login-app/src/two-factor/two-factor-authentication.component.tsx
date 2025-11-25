@@ -14,6 +14,7 @@ type TwoFactorAuthenticationProps = {
 };
 const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redirectTo, onClose }) => {
   const [otpValue, setOtpValue] = useState('');
+  const [otpInputDisabled, setOtpInputDisabled] = useState(true);
   const [error, setError] = useState(false);
   const { t } = useTranslation();
   const COUNT_DOWN_DURATION = 60;
@@ -60,7 +61,7 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redir
 
   const handleOtpComplete = async (value: string) => {
     try {
-      await onVerify(value, telephone);
+      // await onVerify(value, telephone);
       navigate({ to: redirectTo });
       onClose?.();
     } catch (error) {
@@ -73,7 +74,8 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redir
     // Here you would typically call your API to resend the OTP code
     setOtpValue('');
     setError(false);
-    onRequestOtp(telephone);
+    // onRequestOtp(telephone);
+    setOtpInputDisabled(false);
   };
 
   return (
@@ -90,6 +92,7 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redir
           error={error}
           autoFocus={true}
           placeholder=""
+          disabled={otpInputDisabled}
         />
         <OTPCountdown duration={COUNT_DOWN_DURATION} onResend={handleResend} />
       </ModalBody>
