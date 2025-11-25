@@ -4,14 +4,15 @@ import { useTranslation } from 'react-i18next';
 interface PlaceholderIconProps {
   width?: number;
   height?: number;
+  'aria-label'?: string;
 }
 
-const PlaceholderIcon: React.FC<PlaceholderIconProps> = ({ width = 56, height = 56 }) => {
+const PlaceholderIcon: React.FC<PlaceholderIconProps> = ({ width = 56, height = 56, 'aria-label': ariaLabel }) => {
   const { t } = useTranslation();
 
   return (
     <svg
-      aria-label={t('patientPhotoPlaceholder', 'Patient photo placeholder')}
+      aria-label={ariaLabel ?? t('patientPhotoPlaceholder', 'Patient photo placeholder')}
       width={width}
       height={height}
       fill="none"

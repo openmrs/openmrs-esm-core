@@ -1,10 +1,10 @@
 import React from 'react';
+import classNames from 'classnames';
 import { createRoot } from 'react-dom/client';
 import { ActionMenu } from './action-menu2/action-menu2.component';
-import ActiveWorkspaceWindow from './active-workspace-window.component';
 import { useWorkspace2Store } from './workspace2';
+import ActiveWorkspaceWindow from './active-workspace-window.component';
 import styles from './workspace-windows-and-menu.module.scss';
-import classNames from 'classnames';
 
 export function renderWorkspaceWindowsAndMenu(target: HTMLElement | null) {
   if (target) {
