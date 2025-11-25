@@ -1,33 +1,34 @@
 import { InlineLoading, ModalBody, ModalHeader } from '@carbon/react';
-import { navigate, showSnackbar } from '@openmrs/esm-framework';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import OTPCountdown from './otp-count-down.component';
 import OtpInput from './otp-input.component';
 import { otpManager } from './otp.resource';
-import { sanitizePhoneNumber, useProviderDetails } from './two-factor.resource';
+import { sanitizePhoneNumber } from './two-factor.resource';
 import styles from './two-factor.scss';
+import { showSnackbar } from '@openmrs/esm-framework';
 
 type TwoFactorAuthenticationProps = {
-  redirectTo: string;
+  onSuccess?: () => Promise<void>;
   onClose: () => void;
+  name: string;
+  telephone: string;
+  nationalId: string;
 };
-const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redirectTo, onClose }) => {
+const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({
+  onSuccess,
+  onClose,
+  name,
+  telephone,
+  nationalId,
+}) => {
   const [otpValue, setOtpValue] = useState('');
   const [otpInputDisabled, setOtpInputDisabled] = useState(true);
+  const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState(false);
   const { t } = useTranslation();
   const COUNT_DOWN_DURATION = 60;
   const otpExpiryMinutes = 5;
-  const { nationalId, telephone, isLoading, error: providerError, mutate: providerMutate, name } = useProviderDetails();
-  useEffect(() => {
-    if (providerError)
-      showSnackbar({
-        title: t('errorGettingProviderDetails', 'Error getting provider details'),
-        subtitle: providerError?.message,
-        kind: 'error',
-      });
-  }, [providerError]);
 
   const createDynamicOTPHandlers = (patientName: string, phoneNumber: string, nationalId: string) => {
     return {
@@ -48,10 +49,6 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redir
     };
   };
 
-  if (isLoading) {
-    return <InlineLoading description={t('loading', 'Loading') + '...'} />;
-  }
-
   const { onRequestOtp, onVerify, cleanup } = createDynamicOTPHandlers(name, telephone, nationalId); // TODO: rePLACE NUMBER WITH TELEPHON VARIABLE
 
   const handleOtpChange = (value: string) => {
@@ -60,12 +57,20 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redir
   };
 
   const handleOtpComplete = async (value: string) => {
+    setIsVerifying(true);
     try {
-      // await onVerify(value, telephone);
-      navigate({ to: redirectTo });
+      await onVerify(value, telephone);
+      showSnackbar({
+        title: t('otpVerified', 'OTP verified'),
+        subtitle: t('otpVerifiedMessage', 'OTP verified successfully'),
+        kind: 'success',
+      });
+      await onSuccess?.();
       onClose?.();
     } catch (error) {
       setError(true);
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -74,7 +79,7 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redir
     // Here you would typically call your API to resend the OTP code
     setOtpValue('');
     setError(false);
-    // onRequestOtp(telephone);
+    onRequestOtp(telephone);
     setOtpInputDisabled(false);
   };
 
@@ -82,19 +87,24 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({ redir
     <>
       <ModalHeader title={t('twoFactorAuthentication', 'Two Factor Authentication')} closeModal={onClose} />
       <ModalBody className={styles.container}>
-        {/* <strong>{t('twoFactorAuthentication', 'Two Factor Authentication')}</strong> */}
         <p>{t('pleaseEnterTheOtpCodeToContinue', 'Please enter the otp code to continue')}</p>
-        <OtpInput
-          length={5}
-          mask={true}
-          onChange={handleOtpChange}
-          onComplete={handleOtpComplete}
-          error={error}
-          autoFocus={true}
-          placeholder=""
-          disabled={otpInputDisabled}
-        />
-        <OTPCountdown duration={COUNT_DOWN_DURATION} onResend={handleResend} />
+        {isVerifying ? (
+          <InlineLoading description={t('verifying', 'Verifying') + '...'} />
+        ) : (
+          <>
+            <OtpInput
+              length={5}
+              mask={true}
+              onChange={handleOtpChange}
+              onComplete={handleOtpComplete}
+              error={error}
+              autoFocus={true}
+              placeholder=""
+              disabled={otpInputDisabled}
+            />
+            <OTPCountdown duration={COUNT_DOWN_DURATION} onResend={handleResend} />
+          </>
+        )}
       </ModalBody>
     </>
   );
