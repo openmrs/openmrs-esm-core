@@ -34,6 +34,7 @@
   "edit": "Edit",
   "error": "Error",
   "errorCopy": "Maaf, ada masalah menampilkan informasi ini. Anda dapat mencoba memuat ulang halaman ini, atau menghubungi administrator situs dan menyebutkan kode error di atas.",
+  "errorLoadingLoginLocations": "Unable to load login locations. Please try again or contact support if the problem persists.",
   "female": "Perempuan",
   "hide": "Sembunyikan",
   "leftNavigation": "Left navigation",
