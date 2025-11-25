@@ -5,7 +5,6 @@ import useSwrInfinite from 'swr/infinite';
 import { type FetchResponse, fhirBaseUrl, openmrsFetch } from '@openmrs/esm-api';
 import { type FHIRLocationResource } from '@openmrs/esm-emr-api';
 import { useDebounce } from '@openmrs/esm-react-utils';
-import { showNotification } from '../notifications';
 
 export interface LocationResponse {
   type: string;
@@ -27,6 +26,7 @@ export interface LoginLocationData {
   totalResults?: number;
   hasMore: boolean;
   loadingNewData: boolean;
+  error: Error | null;
   setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[] | undefined>;
 }
 
@@ -53,7 +53,6 @@ export function useLocationByUuid(locationUuid?: string) {
 }
 
 export function useLocations(locationTag?: string, count: number = 0, searchQuery: string = ''): LoginLocationData {
-  const { t } = useTranslation();
   const debouncedSearchQuery = useDebounce(searchQuery);
   function constructUrl(page: number, prevPageData: FetchResponse<LocationResponse>) {
     if (prevPageData) {
@@ -92,7 +91,7 @@ export function useLocations(locationTag?: string, count: number = 0, searchQuer
       urlSearchParameters.append('_tag', locationTag);
     }
 
-    if (typeof debouncedSearchQuery === 'string' && debouncedSearchQuery != '') {
+    if (typeof debouncedSearchQuery === 'string' && debouncedSearchQuery !== '') {
       urlSearchParameters.append('name:contains', debouncedSearchQuery);
     }
 
@@ -104,15 +103,6 @@ export function useLocations(locationTag?: string, count: number = 0, searchQuer
     openmrsFetch,
   );
 
-  if (error) {
-    showNotification({
-      title: t('errorLoadingLoginLocations', 'Error loading login locations'),
-      kind: 'error',
-      critical: true,
-      description: error?.message,
-    });
-  }
-
   const memoizedLocations = useMemo(() => {
     return {
       locations: data?.length ? data?.flatMap((entries) => entries?.data?.entry ?? []) : [],
@@ -120,9 +110,10 @@ export function useLocations(locationTag?: string, count: number = 0, searchQuer
       totalResults: data?.[0]?.data?.total,
       hasMore: data?.length ? data?.[data.length - 1]?.data?.link?.some((link) => link.relation === 'next') : false,
       loadingNewData: isValidating,
+      error: error || null,
       setPage: setSize,
     };
-  }, [isLoading, data, isValidating, setSize]);
+  }, [isLoading, data, isValidating, setSize, error]);
 
   return memoizedLocations;
 }
