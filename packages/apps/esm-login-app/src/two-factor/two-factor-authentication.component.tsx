@@ -11,7 +11,7 @@ import { showSnackbar } from '@openmrs/esm-framework';
 type TwoFactorAuthenticationProps = {
   onSuccess?: () => Promise<void>;
   onClose: () => void;
-  name: string;
+  patientName: string;
   telephone: string;
   nationalId: string;
   headers: Record<string, string>;
@@ -19,7 +19,7 @@ type TwoFactorAuthenticationProps = {
 const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({
   onSuccess,
   onClose,
-  name,
+  patientName,
   telephone,
   nationalId,
   headers,
@@ -51,7 +51,7 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = ({
     };
   };
 
-  const { onRequestOtp, onVerify, cleanup } = createDynamicOTPHandlers(name, telephone, nationalId); // TODO: rePLACE NUMBER WITH TELEPHON VARIABLE
+  const { onRequestOtp, onVerify, cleanup } = createDynamicOTPHandlers(patientName, telephone, nationalId); // TODO: rePLACE NUMBER WITH TELEPHON VARIABLE
 
   const handleOtpChange = (value: string) => {
     setOtpValue(value);

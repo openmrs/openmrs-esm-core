@@ -106,7 +106,7 @@ const Login: React.FC = () => {
 
   const showTwoFactorAuthentication = useCallback(
     (
-      name: string,
+      patientName: string,
       telephone: string,
       nationalId: string,
       headers: Record<string, string>,
@@ -114,7 +114,7 @@ const Login: React.FC = () => {
     ) => {
       const dispose = showModal('two-factor-authentication-modal', {
         onClose: () => dispose(),
-        name,
+        patientName,
         telephone,
         nationalId,
         onSuccess,
