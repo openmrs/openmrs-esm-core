@@ -1,5 +1,6 @@
 import { type FetchResponse, openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 import useSWR from 'swr';
+import { clearCurrentUserSession } from './two-factor.resource';
 
 export interface OtpContext extends Record<string, string | number> {
   otp: string;
@@ -55,7 +56,7 @@ export function parseMessage<T extends Record<string, string | number>>(context:
  */
 function buildSmsUrl(message: string, receiver: string, nationalId: string | null = null): string {
   const encodedMessage = encodeURIComponent(message);
-  let url = `${restBaseUrl}/kenyaemr/send-kenyaemr-sms?message=${encodedMessage}&phone=${receiver}`;
+  let url = `${restBaseUrl}/kenyaemr/send-palkehmis-sms?message=${encodedMessage}&phone=${receiver}`;
 
   if (nationalId?.trim()) {
     url += `&nationalId=${encodeURIComponent(nationalId)}`;
@@ -73,22 +74,6 @@ function validateOtpInputs(receiver: string, patientName: string): void {
 }
 
 /**
- * Hook to get OTP source configuration
- */
-export const useOtpSource = () => {
-  const url = `${restBaseUrl}/kenyaemr/checkotpsource`;
-
-  const { data, error, isLoading } = useSWR<FetchResponse<OTPSource>>(url, openmrsFetch);
-
-  return {
-    otpSource: data?.data?.otpSource,
-    data,
-    error,
-    isLoading,
-  };
-};
-
-/**
  * Sends OTP via SMS for KEHMIS workflow (client generates OTP)
  */
 async function sendOtpKehmis(
@@ -97,6 +82,7 @@ async function sendOtpKehmis(
   patientName: string,
   expiryMinutes: number = 5,
   nationalId: string | null = null,
+  headers: Record<string, string>,
 ): Promise<void> {
   validateOtpInputs(receiver, patientName);
 
@@ -117,8 +103,10 @@ async function sendOtpKehmis(
     const response = await openmrsFetch(url, {
       method: 'POST',
       redirect: 'follow',
+      headers,
     });
 
+    await clearCurrentUserSession();
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -137,6 +125,7 @@ class KehmisOTPManager {
     patientName: string,
     expiryMinutes: number = 5,
     nationalId: string | null = null,
+    headers: Record<string, string>,
   ): Promise<void> {
     this.cleanupExpiredOTPs();
 
@@ -152,7 +141,7 @@ class KehmisOTPManager {
 
     this.otpStore.set(phoneNumber, otpData);
 
-    await sendOtpKehmis(otp, phoneNumber, patientName, expiryMinutes, nationalId);
+    await sendOtpKehmis(otp, phoneNumber, patientName, expiryMinutes, nationalId, headers);
   }
 
   async verifyOTP(phoneNumber: string, inputOtp: string): Promise<boolean> {
@@ -233,6 +222,7 @@ async function requestOtpFromServer(
   patientName: string,
   expiryMinutes: number = 5,
   nationalId: string | null = null,
+  headers: Record<string, string>,
 ): Promise<{ id: string; message: string }> {
   validateOtpInputs(receiver, patientName);
 
@@ -253,6 +243,7 @@ async function requestOtpFromServer(
     const response = await openmrsFetch(url, {
       method: 'POST',
       redirect: 'follow',
+      headers,
     });
 
     if (!response.ok) {
@@ -371,13 +362,14 @@ class HieOTPManager {
     patientName: string,
     expiryMinutes: number = 5,
     nationalId: string | null = null,
+    headers: Record<string, string>,
   ): Promise<void> {
     this.cleanupExpiredOTPs();
 
     const expiryTime = expiryMinutes * 60 * 1000;
 
     try {
-      const { id, message } = await requestOtpFromServer(phoneNumber, patientName, expiryMinutes, nationalId);
+      const { id, message } = await requestOtpFromServer(phoneNumber, patientName, expiryMinutes, nationalId, headers);
       const sessionData = {
         otpId: id,
         timestamp: Date.now(),
@@ -487,6 +479,7 @@ interface IOTPManager {
     patientName: string,
     expiryMinutes?: number,
     nationalId?: string | null,
+    headers?: Record<string, string>,
   ): Promise<void>;
   verifyOTP(phoneNumber: string, inputOtp: string): Promise<boolean>;
   cleanupExpiredOTPs(): void;
@@ -501,7 +494,7 @@ class OTPManagerAdapter implements IOTPManager {
   private hieManager: HieOTPManager;
   private currentSource: string;
 
-  constructor(otpSource: string = 'kehmis') {
+  constructor(otpSource: 'kehmis' | 'hie' = 'kehmis') {
     this.kehmisManager = new KehmisOTPManager();
     this.hieManager = new HieOTPManager();
     this.currentSource = otpSource;
@@ -520,9 +513,10 @@ class OTPManagerAdapter implements IOTPManager {
     patientName: string,
     expiryMinutes: number = 5,
     nationalId: string | null = null,
+    headers: Record<string, string>,
   ): Promise<void> {
     this.cleanupExpiredOTPs();
-    return this.getManager().requestOTP(phoneNumber, patientName, expiryMinutes, nationalId);
+    return this.getManager().requestOTP(phoneNumber, patientName, expiryMinutes, nationalId, headers);
   }
 
   async verifyOTP(phoneNumber: string, inputOtp: string): Promise<boolean> {
@@ -552,7 +546,7 @@ class OTPManagerAdapter implements IOTPManager {
   }
 }
 
-export const otpManager = new OTPManagerAdapter();
+export const otpManager = new OTPManagerAdapter('kehmis');
 
 export const cleanupAllOTPs = (): void => {
   otpManager.cleanupExpiredOTPs();
@@ -572,8 +566,8 @@ export function createOtpHandlers(
   }
 
   return {
-    onRequestOtp: async (phone: string): Promise<void> => {
-      await otpManager.requestOTP(phone, patientName, expiryMinutes, nationalId);
+    onRequestOtp: async (phone: string, headers: Record<string, string>): Promise<void> => {
+      await otpManager.requestOTP(phone, patientName, expiryMinutes, nationalId, headers);
     },
     onVerify: async (otp: string, phoneNumber: string): Promise<void> => {
       const isValid = await otpManager.verifyOTP(phoneNumber, otp);

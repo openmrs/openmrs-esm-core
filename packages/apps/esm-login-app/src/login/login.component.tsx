@@ -18,6 +18,12 @@ import Logo from '../logo.component';
 import styles from './login.scss';
 import BackgroundImage from '../background-image/background-image.component';
 import Footer from '../footer/footer.component';
+import {
+  getAuthHeaders,
+  getProviderDetails,
+  getRedirectUrl,
+  twoFactorRequired,
+} from '../two-factor/two-factor.resource';
 
 export interface LoginReferrer {
   referrer?: string;
@@ -31,7 +37,12 @@ const hidden: React.CSSProperties = {
 };
 
 const Login: React.FC = () => {
-  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+  const {
+    showPasswordOnSeparateScreen,
+    provider: loginProvider,
+    links: loginLinks,
+    attributeTypes,
+  } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -93,10 +104,43 @@ const Login: React.FC = () => {
     setPassword(evt.target.value || '');
   }, []);
 
-  const showTwoFactorAuthentication = useCallback((redirectTo: string) => {
-    const dispose = showModal('two-factor-authentication-modal', { onClose: () => dispose(), redirectTo });
-  }, []);
+  const showTwoFactorAuthentication = useCallback(
+    (
+      patientName: string,
+      telephone: string,
+      nationalId: string,
+      headers: Record<string, string>,
+      onSuccess?: () => Promise<void>,
+    ) => {
+      const dispose = showModal('two-factor-authentication-modal', {
+        onClose: () => dispose(),
+        patientName,
+        telephone,
+        nationalId,
+        onSuccess,
+        headers,
+      });
+    },
+    [],
+  );
 
+  const handlePostTwoFactorAuthentication = async (username: string, password: string) => {
+    const sessionStore = await refetchCurrentUser(username, password);
+    const session = sessionStore.session;
+    const authenticated = sessionStore?.session?.authenticated;
+    if (authenticated) {
+      const redirectUrl = getRedirectUrl(session, loginLinks, location);
+      openmrsNavigate({ to: redirectUrl });
+    } else {
+      setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
+      setUsername('');
+      setPassword('');
+
+      if (showPasswordOnSeparateScreen) {
+        navigate('/login');
+      }
+    }
+  };
   const handleSubmit = useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
@@ -112,36 +156,20 @@ const Login: React.FC = () => {
 
       try {
         setIsLoggingIn(true);
+        const headers = getAuthHeaders(username, password);
+        const requiresTwoFactor = await twoFactorRequired(t, headers);
 
-        const sessionStore = await refetchCurrentUser(username, password);
-        const session = sessionStore.session;
-        const authenticated = sessionStore?.session?.authenticated;
-        if (authenticated) {
-          if (session.sessionLocation) {
-            let to = loginLinks?.loginSuccess || '/home';
-            if (location?.state?.referrer) {
-              if (location.state.referrer.startsWith('/')) {
-                to = `\${openmrsSpaBase}${location.state.referrer}`;
-              } else {
-                to = location.state.referrer;
-              }
-            }
-
-            // openmrsNavigate({ to });
-            showTwoFactorAuthentication(to);
-          } else {
-            // navigate('/login/location');
-            showTwoFactorAuthentication(`\${openmrsSpaBase}/login/location`);
-          }
-        } else {
-          setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
-          setUsername('');
-          setPassword('');
-
-          if (showPasswordOnSeparateScreen) {
-            navigate('/login');
-          }
+        if (requiresTwoFactor) {
+          const providerDetails = await getProviderDetails(attributeTypes, t, loginLinks, location, headers);
+          return showTwoFactorAuthentication(
+            providerDetails.name,
+            providerDetails.telephone,
+            providerDetails.nationalId,
+            headers,
+            () => handlePostTwoFactorAuthentication(username, password),
+          );
         }
+        await handlePostTwoFactorAuthentication(username, password);
 
         return true;
       } catch (error: unknown) {

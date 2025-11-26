@@ -1,17 +1,38 @@
 import { useState } from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getSessionStore, refetchCurrentUser, type SessionStore, useConfig, useSession } from '@openmrs/esm-framework';
+import {
+  getSessionStore,
+  refetchCurrentUser,
+  type SessionStore,
+  useConfig,
+  useSession,
+  useConnectivity,
+} from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
+import * as twoFactorResource from '../two-factor/two-factor.resource';
+
+jest.mock('../two-factor/two-factor.resource', () => ({
+  ...jest.requireActual('../two-factor/two-factor.resource'),
+  twoFactorRequired: jest.fn(),
+  getAuthHeaders: jest.fn(),
+  getProviderDetails: jest.fn(),
+}));
 
 const mockGetSessionStore = jest.mocked(getSessionStore);
 const mockLogin = jest.mocked(refetchCurrentUser);
 const mockUseConfig = jest.mocked(useConfig);
 const mockUseSession = jest.mocked(useSession);
+const mockUseConnectivity = jest.mocked(useConnectivity);
+const mockTwoFactorRequired = jest.mocked(twoFactorResource.twoFactorRequired);
+const mockGetAuthHeaders = jest.mocked(twoFactorResource.getAuthHeaders);
+const mockGetProviderDetails = jest.mocked(twoFactorResource.getProviderDetails);
 
-mockLogin.mockResolvedValue({} as SessionStore);
+mockLogin.mockResolvedValue({
+  session: { authenticated: true },
+} as unknown as SessionStore);
 mockGetSessionStore.mockImplementation(() => {
   return {
     getState: jest.fn().mockReturnValue({
@@ -34,8 +55,22 @@ const loginLocations = [
 
 mockUseSession.mockReturnValue({ authenticated: false, sessionId: '123' });
 mockUseConfig.mockReturnValue(mockConfig);
+mockUseConnectivity.mockReturnValue(true);
+mockTwoFactorRequired.mockResolvedValue(false);
+mockGetAuthHeaders.mockImplementation((username: string, password: string) => ({
+  Authorization: `Basic ${window.btoa(`${username}:${password}`)}`,
+}));
 
 describe('Login', () => {
+  beforeEach(() => {
+    mockUseConnectivity.mockReturnValue(true);
+    mockTwoFactorRequired.mockResolvedValue(false);
+    mockUseSession.mockReturnValue({ authenticated: false, sessionId: '123' });
+    mockUseConfig.mockReturnValue(mockConfig);
+    mockLogin.mockResolvedValue({
+      session: { authenticated: true },
+    } as unknown as SessionStore);
+  });
   it('renders the login form', () => {
     renderWithRouter(
       Login,
@@ -93,7 +128,11 @@ describe('Login', () => {
   });
 
   it('makes an API request when you submit the form', async () => {
-    mockLogin.mockResolvedValue({ some: 'data' } as unknown as SessionStore);
+    mockLogin.mockResolvedValue({
+      session: { authenticated: true },
+    } as unknown as SessionStore);
+    mockUseConnectivity.mockReturnValue(true);
+    mockTwoFactorRequired.mockResolvedValue(false);
 
     renderWithRouter(
       Login,
@@ -197,11 +236,15 @@ describe('Login', () => {
   });
 
   it('should be able to login when the showPasswordOnSeparateScreen config is false', async () => {
-    mockLogin.mockResolvedValue({ some: 'data' } as unknown as SessionStore);
+    mockLogin.mockResolvedValue({
+      session: { authenticated: true },
+    } as unknown as SessionStore);
     mockUseConfig.mockReturnValue({
       ...mockConfig,
       showPasswordOnSeparateScreen: false,
     });
+    mockUseConnectivity.mockReturnValue(true);
+    mockTwoFactorRequired.mockResolvedValue(false);
     const user = userEvent.setup();
     mockLogin.mockClear();
 

@@ -6,7 +6,7 @@ export interface OTPCountdownProps {
   /** Duration of the countdown in seconds */
   duration?: number;
   /** Callback when resend is clicked */
-  onResend?: () => void;
+  onResend?: () => Promise<void>;
   /** Whether to auto-start the countdown on mount */
   autoStart?: boolean;
   /** Additional CSS class name */
@@ -45,10 +45,10 @@ const OTPCountdown: React.FC<OTPCountdownProps> = ({
   }, [duration]);
 
   // Handle resend click
-  const handleResend = useCallback(() => {
+  const handleResend = useCallback(async () => {
     setRequested(true);
     startCountdown();
-    onResend?.();
+    await onResend?.();
   }, [startCountdown, onResend]);
 
   // Countdown effect
