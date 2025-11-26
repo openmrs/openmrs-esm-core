@@ -158,8 +158,7 @@ export const getProviderDetails = async (
 
     return {
       nationalId: nationalIdFromProviderAttributes,
-      telephone: '0793889658',
-      // telephone: phoneNumberFromPersonAttributes || phoneNumberFromProviderAttributes,
+      telephone: phoneNumberFromPersonAttributes || phoneNumberFromProviderAttributes,
       name: providerDetails?.person?.display,
       redirectUrl: getRedirectUrl(sessionResponse.data, loginLinks, location),
     };
