@@ -19,10 +19,11 @@
       "cache": false,
       "persistent": true
     },
-    "watch": {},
-    "lint": {
-      "dependsOn": ["^lint"]
+    "coverage": {
+      "outputs": ["coverage/**"]
     },
+    "watch": {},
+    "lint": {},
     "typescript": {
       "dependsOn": ["^typescript"]
     },

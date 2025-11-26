@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, type ReactNode } from 'react';
-import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
-import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
-import { SingleSpaContext } from 'single-spa-react';
-import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
-import { getCoreTranslation } from '@openmrs/esm-translations';
+import React, { useEffect, type ReactNode } from 'react';
 import classNames from 'classnames';
-import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../icons';
+import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderName } from '@carbon/react';
+import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
+import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
+import { getCoreTranslation } from '@openmrs/esm-translations';
+import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
+import { ArrowRightIcon, CloseIcon } from '../icons';
+import { useWorkspace2Store, useWorkspace2Context } from './workspace2';
 import styles from './workspace2.module.scss';
-import { useWorkspace2Store } from './workspace2';
+
 interface Workspace2Props {
   title: string;
   children: ReactNode;
@@ -44,6 +44,8 @@ export interface Workspace2DefinitionProps<
   windowProps: WindowProps | null;
   groupProps: GroupProps | null;
   workspaceName: string;
+  windowName: string;
+  isRootWorkspace: boolean;
 }
 
 /**
@@ -76,7 +78,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     workspaceTitleByWorkspaceName,
     setWorkspaceTitle,
   } = useWorkspace2Store();
-  const { workspaceName, isRootWorkspace, closeWorkspace } = useContext(SingleSpaContext);
+  const { workspaceName, isRootWorkspace, closeWorkspace } = useWorkspace2Context();
 
   const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
 

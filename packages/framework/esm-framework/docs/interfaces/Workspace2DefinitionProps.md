@@ -32,6 +32,26 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ***
 
+### isRootWorkspace
+
+> **isRootWorkspace**: `boolean`
+
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L48)
+
+**`Experimental`**
+
+***
+
+### windowName
+
+> **windowName**: `string`
+
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L47)
+
+**`Experimental`**
+
+***
+
 ### windowProps
 
 > **windowProps**: `null` \| `WindowProps`

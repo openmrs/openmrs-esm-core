@@ -1,6 +1,5 @@
 /** @module @category Store */
-import { subscribeTo } from '@openmrs/esm-state';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
 import type { StoreApi } from 'zustand';
 
 export type ActionFunction<T> = (state: T, ...args: any[]) => Partial<T>;
@@ -67,8 +66,18 @@ function useStore<T, U, A extends Actions<T>>(
   select: (state: T) => U = defaultSelectFunction(),
   actions?: A,
 ) {
-  const [state, setState] = useState<U>(() => select(store.getState()));
-  useEffect(() => subscribeTo(store, select, setState), [store, select]);
+  // Use useSyncExternalStore to subscribe synchronously during render
+  // This ensures React can properly track all state updates
+  const subscribe = useCallback(
+    (callback: () => void) => {
+      return store.subscribe(callback);
+    },
+    [store],
+  );
+
+  const getSnapshot = useCallback(() => select(store.getState()), [store, select]);
+
+  const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 
   let boundActions: BoundActions<T, Actions<T>> = useMemo(
     () => (actions ? bindActions(store, actions) : {}),
@@ -97,8 +106,10 @@ function createUseStore<T>(store: StoreApi<T>) {
   function useStore<A extends Actions<T>>(actions: A): T & BoundActions<T, A>;
   function useStore<A extends Actions<T>>(actions?: A): T & BoundActions<T, A>;
   function useStore<A extends Actions<T>>(actions?: A) {
-    const [state, set] = useState(store.getState());
-    useEffect(() => store.subscribe((state) => set(state)), []);
+    const subscribe = useCallback((callback: () => void) => store.subscribe(callback), []);
+    const getSnapshot = useCallback(() => store.getState(), []);
+    const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+
     let boundActions: BoundActions<T, Actions<T>> = useMemo(
       () => (actions ? bindActions(store, actions) : {}),
       [actions],

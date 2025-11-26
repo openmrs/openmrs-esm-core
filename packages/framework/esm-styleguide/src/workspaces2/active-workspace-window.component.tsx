@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import Parcel from 'single-spa-react/parcel';
+import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import { InlineLoading } from '@carbon/react';
 import { type OpenedWindow, type OpenedWorkspace, workspace2Store } from '@openmrs/esm-extensions';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { mountRootParcel, type ParcelConfig } from 'single-spa';
-import Parcel from 'single-spa-react/parcel';
 import { promptForClosingWorkspaces, useWorkspace2Store } from './workspace2';
 import { type Workspace2DefinitionProps } from './workspace2.component';
 
@@ -105,6 +105,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
         groupProps: openedGroup?.props ?? null,
         isRootWorkspace,
         isLeafWorkspace,
+        windowName: openedWindow.windowName,
       },
     [openedWorkspace, closeWorkspace, openedGroup, openedWindow],
   );
