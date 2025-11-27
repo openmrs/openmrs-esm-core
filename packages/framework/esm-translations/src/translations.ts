@@ -64,6 +64,8 @@ export const coreTranslations = {
   error: 'Error',
   errorCopy:
     'Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.',
+  errorLoadingLoginLocations:
+    'Unable to load login locations. Please try again or contact support if the problem persists.',
   female: 'Female',
   leftNavigation: 'Left navigation',
   loading: 'Loading',

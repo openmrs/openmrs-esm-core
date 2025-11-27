@@ -1,5 +1,12 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { InlineLoading, RadioButton, RadioButtonGroup, RadioButtonSkeleton, Search } from '@carbon/react';
+import React, { useCallback, useId, useMemo, useState } from 'react';
+import {
+  InlineLoading,
+  InlineNotification,
+  RadioButton,
+  RadioButtonGroup,
+  RadioButtonSkeleton,
+  Search,
+} from '@carbon/react';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { useOnVisible } from '@openmrs/esm-framework';
 import { useLocationByUuid, useLocations } from './location-picker.resource';
@@ -20,7 +27,8 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   locationsPerRequest = 50,
   onChange,
 }) => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const searchId = useId();
 
   const { location: defaultLocation } = useLocationByUuid(defaultLocationUuid);
 
@@ -29,55 +37,69 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
     isLoading,
     hasMore,
     loadingNewData,
+    error,
     setPage,
   } = useLocations(locationTag, locationsPerRequest, searchTerm);
 
   const locations = useMemo(() => {
     if (defaultLocation && !searchTerm && defaultLocationUuid) {
-      return [defaultLocation, ...fetchedLocations?.filter(({ resource }) => resource.id !== defaultLocationUuid)];
+      return [defaultLocation, ...fetchedLocations.filter(({ resource }) => resource.id !== defaultLocationUuid)];
     }
-    return fetchedLocations;
+    return fetchedLocations ?? [];
   }, [defaultLocation, fetchedLocations, defaultLocationUuid, searchTerm]);
 
-  const search = (location: string) => {
-    onChange();
-    setSearchTerm(location);
-  };
+  const handleSearchChange = useCallback(
+    (searchQuery: string) => {
+      onChange();
+      setSearchTerm(searchQuery.trim());
+    },
+    [onChange],
+  );
 
   const loadMore = useCallback(() => {
     if (loadingNewData || !hasMore) {
       return;
-    } else {
-      setPage((page) => page + 1);
     }
+    setPage((page) => page + 1);
   }, [loadingNewData, hasMore, setPage]);
 
   const loadingIconRef = useOnVisible(loadMore);
 
-  const reloadIndex = hasMore ? Math.max(0, Math.floor(locations.length - locationsPerRequest / 2)) : -1;
+  const infiniteScrollTriggerIndex = hasMore ? Math.max(0, Math.floor(locations.length - locationsPerRequest / 2)) : -1;
 
   return (
-    <div>
+    <>
       <Search
+        aria-describedby={error ? `${searchId}-error` : undefined}
         labelText={getCoreTranslation('searchForLocation')}
-        id="search-1"
+        id={searchId}
         placeholder={getCoreTranslation('searchForLocation')}
-        onChange={(event) => search(event.target.value)}
+        onChange={(event) => handleSearchChange(event.target.value)}
         size="lg"
       />
+      {error && (
+        <div className={styles.errorNotification} id={`${searchId}-error`}>
+          <InlineNotification
+            kind="error"
+            subtitle={getCoreTranslation(
+              'errorLoadingLoginLocations',
+              'Unable to load login locations. Please try again or contact support if the problem persists.',
+            )}
+            title={getCoreTranslation('error', 'Error')}
+          />
+        </div>
+      )}
       <div className={styles.searchResults}>
         {isLoading ? (
           <div className={styles.loadingContainer}>
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+            {Array.from({ length: 5 }).map((_, index) => (
+              <RadioButtonSkeleton key={index} className={styles.radioButtonSkeleton} role="progressbar" />
+            ))}
           </div>
         ) : (
           <>
             <div className={styles.locationResultsContainer}>
-              {locations?.length > 0 ? (
+              {locations.length > 0 ? (
                 <RadioButtonGroup
                   name="loginLocations"
                   onChange={(value) => {
@@ -89,10 +111,14 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
                   {locations.map((entry, i) => (
                     <RadioButton
                       className={styles.locationRadioButton}
-                      key={entry.resource.id}
                       id={entry.resource.id}
+                      key={entry.resource.id}
+                      labelText={
+                        <span ref={i === infiniteScrollTriggerIndex ? loadingIconRef : null}>
+                          {entry.resource.name}
+                        </span>
+                      }
                       name={entry.resource.name}
-                      labelText={<span ref={i === reloadIndex ? loadingIconRef : null}>{entry.resource.name}</span>}
                       value={entry.resource.id}
                     />
                   ))}
@@ -111,6 +137,6 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
           </>
         )}
       </div>
-    </div>
+    </>
   );
 };

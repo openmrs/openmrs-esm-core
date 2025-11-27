@@ -34,6 +34,7 @@
   "edit": "Modifica",
   "error": "Errore",
   "errorCopy": "Si è verificato un problema durante la visualizzazione di queste informazioni. Puoi provare a ricaricare la pagina o contattare l'amministratore del sito citando il codice errore sopra indicato.",
+  "errorLoadingLoginLocations": "Unable to load login locations. Please try again or contact support if the problem persists.",
   "female": "Femmina",
   "hide": "Nascondi",
   "leftNavigation": "Left navigation",
