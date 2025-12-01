@@ -31,7 +31,7 @@ const defaultSwrConfig: SWRConfiguration = {
     if (error instanceof OpenmrsFetchError) {
       const status = error.response.status;
       // retry all server-side errors
-      if (status < 400 || status >= 500) {
+      if (status >= 500) {
         return true;
       }
 
