@@ -2,7 +2,7 @@ import React, { type ComponentType, type ErrorInfo, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { type Cache, SWRConfig, type SWRConfiguration } from 'swr';
 import type {} from '@openmrs/esm-globals';
-import { openmrsFetch } from '@openmrs/esm-api';
+import { openmrsFetch, OpenmrsFetchError } from '@openmrs/esm-api';
 import { type ComponentConfig, type ExtensionData } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 
@@ -27,6 +27,25 @@ const defaultSwrConfig: SWRConfiguration = {
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
   refreshInterval: 0,
+  shouldRetryOnError: (error) => {
+    if (error instanceof OpenmrsFetchError) {
+      const status = error.response.status;
+      // retry all server-side errors
+      if (status >= 500) {
+        return true;
+      }
+
+      // retry on authentication failure or rate-limited requests
+      if (status === 401 || status === 403 || status === 429) {
+        return true;
+      }
+
+      // do not retry on other client-side errors
+      return false;
+    }
+
+    return true;
+  },
   provider: () => swrCache,
 };
 
