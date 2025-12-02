@@ -2,6 +2,9 @@ import { test } from '../core';
 import { expect } from '@playwright/test';
 import { HomePage, LoginPage } from '../pages';
 
+// Clear session state to test login flow from scratch
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test('View action buttons in the navbar', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const homePage = new HomePage(page);
@@ -11,10 +14,18 @@ test('View action buttons in the navbar', async ({ page }) => {
     await loginPage.goto();
     await page.getByLabel(/username/i).fill(`${process.env.E2E_USER_ADMIN_USERNAME}`);
     await page.getByText(/continue/i).click();
+    // Password field is hidden until this step (O3-5243: two-step login form)
+    // Wait for password field to become visible (it's hidden with visibility:hidden until Continue is clicked)
+    await page.getByLabel(/^password$/i).waitFor({ state: 'visible', timeout: 10000 });
     await page.getByLabel(/^password$/i).fill(`${process.env.E2E_USER_ADMIN_PASSWORD}`);
     await page.getByRole('button', { name: /log in/i }).click();
-    await page.getByText(/outpatient clinic/i).click();
-    await page.getByRole('button', { name: /confirm/i }).click();
+    // Wait for page navigation to complete after login
+    await page.waitForLoadState('domcontentloaded');
+    // Handle location selection if it appears (some setups skip this if default location is set)
+    const locationPicker = page.getByText(/outpatient clinic/i);
+    await locationPicker.click({ timeout: 5000 }).catch(() => {});
+    const confirmButton = page.getByRole('button', { name: /confirm/i });
+    await confirmButton.click({ timeout: 5000 }).catch(() => {});
   });
 
   await test.step('When I visit the home page', async () => {
