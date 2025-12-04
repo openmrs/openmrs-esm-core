@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { shallowEqual } from '@openmrs/esm-utils';
 import { ConfigurableLink, MaybeIcon } from '@openmrs/esm-framework';
-import styles from './dashboard.module.scss';
 import { type IconId } from '../icons';
+import styles from './dashboard.module.scss';
 
 export interface DashboardExtensionProps {
   path: string;

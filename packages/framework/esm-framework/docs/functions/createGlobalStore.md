@@ -4,7 +4,7 @@
 
 > **createGlobalStore**\<`T`\>(`name`, `initialState`): `StoreApi`\<`T`\>
 
-Defined in: [packages/framework/esm-state/src/state.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L43)
+Defined in: [packages/framework/esm-state/src/state.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L31)
 
 Creates a Zustand store.
 

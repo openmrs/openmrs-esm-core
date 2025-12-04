@@ -127,7 +127,7 @@ export const Configuration: React.FC = () => {
               <Column>
                 <TextInput
                   id="extensionSearch"
-                  labelText="Search configuration"
+                  labelText={t('searchConfiguration', 'Search configuration')}
                   onChange={(e) => setFilterText(e.target.value)}
                   autoComplete="off"
                 />

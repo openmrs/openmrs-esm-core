@@ -4,4 +4,4 @@
 
 > **SnackbarType** = `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
-Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L29)
+Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L30)

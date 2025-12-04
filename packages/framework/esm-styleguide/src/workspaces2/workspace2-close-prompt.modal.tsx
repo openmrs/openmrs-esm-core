@@ -1,6 +1,5 @@
 import React from 'react';
 import { ModalHeader, ModalBody, ModalFooter, Button } from '@carbon/react';
-import { useTranslation } from 'react-i18next';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import styles from './workspace2-close-prompt.module.scss';
 
@@ -18,8 +17,6 @@ const Workspace2ClosePromptModal: React.FC<WorkspaceUnsavedChangesModal> = ({
   onCancel,
   affectedWorkspaceTitles,
 }) => {
-  const { t } = useTranslation();
-
   return (
     <>
       <ModalHeader closeModal={onCancel} title={getCoreTranslation('closeWorkspaces2PromptTitle')} />
@@ -33,10 +30,10 @@ const Workspace2ClosePromptModal: React.FC<WorkspaceUnsavedChangesModal> = ({
       </ModalBody>
       <ModalFooter>
         <Button kind="secondary" onClick={onCancel}>
-          {t('cancel', 'Cancel')}
+          {getCoreTranslation('cancel', 'Cancel')}
         </Button>
         <Button kind="danger" onClick={onConfirm}>
-          {t('discardChanges', 'Discard changes')}
+          {getCoreTranslation('discardChanges', 'Discard changes')}
         </Button>
       </ModalFooter>
     </>

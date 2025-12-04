@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ActionableNotification } from '@carbon/react';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 /** @module @category UI */
 
 export interface ActionableNotificationProps {
@@ -49,9 +50,9 @@ export const ActionableNotificationComponent: React.FC<ActionableNotificationPro
     <ActionableNotification
       kind={(kind as ActionableNotificationType) || 'info'}
       actionButtonLabel={actionText}
-      ariaLabel="Closes actionable notification"
+      ariaLabel={getCoreTranslation('closesActionableNotification', 'Closes actionable notification')}
       onActionButtonClick={handleActionClick}
-      statusIconDescription="Actionable notification"
+      statusIconDescription={getCoreTranslation('actionableNotification', 'Actionable notification')}
       subtitle={subtitle}
       title={title}
       lowContrast={critical}

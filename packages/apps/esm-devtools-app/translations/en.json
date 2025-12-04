@@ -1,0 +1,19 @@
+{
+  "addModule": "Add Module",
+  "addNewModule": "Add new module",
+  "apply": "Apply",
+  "cancel": "Cancel",
+  "default": "Default",
+  "defaultUrl": "Default URL",
+  "domain": "Domain",
+  "editModule": "Edit Module {{- moduleName}}",
+  "externalOverride": "External Override",
+  "filename": "Filename",
+  "inlineOverride": "Inline Override",
+  "moduleName": "Module Name",
+  "moduleStatus": "Module Status",
+  "overrideDisabled": "Override Disabled",
+  "overrideUrl": "Override URL",
+  "resetOverrides": "Reset all overrides",
+  "searchModules": "Search modules"
+}

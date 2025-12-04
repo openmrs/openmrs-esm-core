@@ -24,6 +24,7 @@
   "scripts": {
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "typescript": "tsc --project tsconfig.build.json",
@@ -67,11 +68,12 @@
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
     "@types/ramda": "^0.26.44",
+    "@vitest/coverage-v8": "^4.0.7",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "happy-dom": "^17.4.7",
     "rimraf": "^6.0.1",
     "single-spa": "^6.0.3",
-    "vitest": "^3.1.4"
+    "vitest": "^4.0.7"
   }
 }

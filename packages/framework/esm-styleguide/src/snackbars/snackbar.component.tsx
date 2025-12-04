@@ -2,6 +2,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import classnames from 'classnames';
 import { ActionableNotification } from '@carbon/react';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import styles from './snackbar.module.scss';
 
 // Design documentation for Snackbars https://zeroheight.com/23a080e38/p/683580-notifications/t/468baf
@@ -84,7 +85,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
   return (
     <ActionableNotification
       actionButtonLabel={actionText}
-      aria-label="Close snackbar"
+      aria-label={getCoreTranslation('closeSnackbar', 'Close snackbar')}
       className={classnames(styles.slideIn, {
         [styles.animated]: applyAnimation,
         [styles.slideOut]: isClosing,
@@ -94,7 +95,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
       lowContrast={isLowContrast}
       onActionButtonClick={handleActionClick}
       onClose={closeSnackbar}
-      statusIconDescription="Snackbar notification"
+      statusIconDescription={getCoreTranslation('snackbarNotification', 'Snackbar notification')}
       subtitle={subtitle}
       title={title}
       {...props}
