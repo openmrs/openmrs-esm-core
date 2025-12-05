@@ -51,6 +51,8 @@ const HeaderItems: React.FC = () => {
             onClick={() => {
               togglePanel('sideMenu');
             }}
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
             isActive={isActivePanel('sideMenu')}
           />
         )}
