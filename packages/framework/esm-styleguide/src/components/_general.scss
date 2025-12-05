@@ -47,6 +47,8 @@ body {
   height: calc(100vh - var(--omrs-navbar-height));
   top: var(--omrs-navbar-height);
   z-index: 9000;
+  contain: layout style paint;
+  will-change: contents;
 }
 
 #omrs-top-nav-app-container {

@@ -35,9 +35,10 @@ $extraWideWorkspaceWidth: 48.25rem;
     bottom: 0;
     inset-inline-end: var(--actionPanelOffset);
     z-index: 100;
+    will-change: transform;
 
     &.isRootWorkspace {
-      animation: growToWidth 0.5s ease-in-out;
+      animation: slideFromRight 0.5s ease-in-out;
     }
 
     transition: width 0.5s ease-in-out;
@@ -49,12 +50,12 @@ $extraWideWorkspaceWidth: 48.25rem;
       width: 0;
     }
 
-    @keyframes growToWidth {
+    @keyframes slideFromRight {
       from {
-        width: 0;
+        transform: translateX(100%);
       }
       to {
-        width: inherit;
+        transform: translateX(0);
       }
     }
   }
@@ -69,6 +70,7 @@ $extraWideWorkspaceWidth: 48.25rem;
     width: var(--workspaceWidth);
     border-inline-start: 1px solid $text-03;
     background-color: #fff;
+    will-change: width;
 
     transition: width 0.5s ease-in-out;
 
@@ -85,6 +87,7 @@ $extraWideWorkspaceWidth: 48.25rem;
   .workspaceSpacer {
     width: inherit;
     height: 100%;
+    will-change: width;
     animation: growToWidth 0.5s ease-in-out;
 
     &.hidden {
@@ -113,9 +116,9 @@ $extraWideWorkspaceWidth: 48.25rem;
 
 .loader {
   display: flex;
-  background-color: $openmrs-background-grey;
   justify-content: center;
-  min-height: layout.$spacing-09;
+  align-items: center;
+  min-height: 50%;
 }
 
 .hiddenExtraWorkspace {
