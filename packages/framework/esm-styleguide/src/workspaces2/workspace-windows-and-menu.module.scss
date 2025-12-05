@@ -2,8 +2,10 @@
   position: relative;
   display: flex;
   height: 100%;
+  contain: content;
 
   &.overlay {
+    contain: none;
     position: absolute;
     right: 0;
     top: 0;
