@@ -14,6 +14,7 @@ import {
 import { type ConfigSchema } from '../config-schema';
 import Logo from '../logo.component';
 import Footer from '../footer.component';
+import BackgroundWrapper from '../background/background-wrapper.component';
 import styles from './login.scss';
 
 export interface LoginReferrer {
@@ -21,7 +22,8 @@ export interface LoginReferrer {
 }
 
 const Login: React.FC = () => {
-  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+  const config = useConfig<ConfigSchema>();
+  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks, layout, branding } = config;
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -136,9 +138,14 @@ const Login: React.FC = () => {
   );
 
   if (!loginProvider || loginProvider.type === 'basic') {
+    const containerClass =
+      layout.loginFormPosition !== 'center'
+        ? `${styles.container} ${styles[`position-${layout.loginFormPosition}`]}`
+        : styles.container;
+
     return (
-      <div className={styles.container}>
-        <Tile className={styles.loginCard}>
+      <BackgroundWrapper>
+        <div className={containerClass}>
           {errorMessage && (
             <div className={styles.errorMessage}>
               <InlineNotification
@@ -149,23 +156,76 @@ const Login: React.FC = () => {
               />
             </div>
           )}
-          <div className={styles.center}>
-            <Logo t={t} />
-          </div>
-          <form onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
-              <TextInput
-                id="username"
-                type="text"
-                labelText={t('username', 'Username')}
-                value={username}
-                onChange={changeUsername}
-                ref={usernameInputRef}
-                required
-                autoFocus
-              />
-              {showPasswordOnSeparateScreen ? (
-                showPasswordField ? (
+
+          <Tile className={styles.loginCard}>
+            <div className={styles.center}>
+              <Logo t={t} />
+            </div>
+
+            {branding.title && (
+              <div className={styles.brandingTitle}>
+                <h2>{t(branding.title, branding.title)}</h2>
+              </div>
+            )}
+
+            {branding.subtitle && (
+              <div className={styles.brandingSubtitle}>
+                <p>{t(branding.subtitle, branding.subtitle)}</p>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              <div className={styles.inputGroup}>
+                <TextInput
+                  id="username"
+                  type="text"
+                  labelText={t('username', 'Username')}
+                  value={username}
+                  onChange={changeUsername}
+                  ref={usernameInputRef}
+                  required
+                  autoFocus
+                />
+                {showPasswordOnSeparateScreen ? (
+                  showPasswordField ? (
+                    <>
+                      <PasswordInput
+                        id="password"
+                        labelText={t('password', 'Password')}
+                        name="password"
+                        onChange={changePassword}
+                        ref={passwordInputRef}
+                        required
+                        value={password}
+                        showPasswordLabel={t('showPassword', 'Show password')}
+                        invalidText={t('validValueRequired', 'A valid value is required')}
+                      />
+                      <Button
+                        type="submit"
+                        className={styles.continueButton}
+                        renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                        iconDescription={t('loginButtonIconDescription', 'Log in button')}
+                        disabled={!isLoginEnabled || isLoggingIn}
+                      >
+                        {isLoggingIn ? (
+                          <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
+                        ) : (
+                          t('login', 'Log in')
+                        )}
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      className={styles.continueButton}
+                      renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                      iconDescription="Continue to password"
+                      onClick={continueLogin}
+                      disabled={!isLoginEnabled}
+                    >
+                      {t('continue', 'Continue')}
+                    </Button>
+                  )
+                ) : (
                   <>
                     <PasswordInput
                       id="password"
@@ -182,7 +242,7 @@ const Login: React.FC = () => {
                       type="submit"
                       className={styles.continueButton}
                       renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                      iconDescription={t('loginButtonIconDescription', 'Log in button')}
+                      iconDescription="Log in"
                       disabled={!isLoginEnabled || isLoggingIn}
                     >
                       {isLoggingIn ? (
@@ -192,50 +252,20 @@ const Login: React.FC = () => {
                       )}
                     </Button>
                   </>
-                ) : (
-                  <Button
-                    className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                    iconDescription="Continue to password"
-                    onClick={continueLogin}
-                    disabled={!isLoginEnabled}
-                  >
-                    {t('continue', 'Continue')}
-                  </Button>
-                )
-              ) : (
-                <>
-                  <PasswordInput
-                    id="password"
-                    labelText={t('password', 'Password')}
-                    name="password"
-                    onChange={changePassword}
-                    ref={passwordInputRef}
-                    required
-                    value={password}
-                    showPasswordLabel={t('showPassword', 'Show password')}
-                    invalidText={t('validValueRequired', 'A valid value is required')}
-                  />
-                  <Button
-                    type="submit"
-                    className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                    iconDescription="Log in"
-                    disabled={!isLoginEnabled || isLoggingIn}
-                  >
-                    {isLoggingIn ? (
-                      <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
-                    ) : (
-                      t('login', 'Log in')
-                    )}
-                  </Button>
-                </>
-              )}
-            </div>
-          </form>
-        </Tile>
-        <Footer />
-      </div>
+                )}
+              </div>
+            </form>
+
+            {branding.helpText && (
+              <div className={styles.helpText}>
+                <p>{t(branding.helpText, branding.helpText)}</p>
+              </div>
+            )}
+          </Tile>
+
+          {layout.showFooter && <Footer />}
+        </div>
+      </BackgroundWrapper>
     );
   }
   return null;
