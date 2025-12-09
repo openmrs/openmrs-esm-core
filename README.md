@@ -1,3 +1,4 @@
+```markdown
 :wave: New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.atlassian.net/wiki/x/IABBHg). You may find the [Introduction](https://openmrs.atlassian.net/wiki/x/94ABCQ) especially helpful.
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
@@ -75,7 +76,7 @@ yarn setup
 > yarn build --concurrency 1
 > ```
 >
-> Both commands build all the packages - once either completes successfully, you can proceed to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
+> Both commands build all the packages — once either completes successfully, you can proceed to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
 
 ### Building
 
@@ -171,7 +172,7 @@ yarn turbo run test --force
 
 #### Running End-to-End (E2E) tests
 
-Before running the E2E tests, you need to set up the test environment. Install Playwright browsers and setup the default test environment variables by running the following commands:
+Before running the E2E tests, you need to set up the test environment. Install Playwright browsers and set up the default test environment variables by running the following commands:
 
 ```bash
 npx playwright install
@@ -226,9 +227,7 @@ Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/page
 
 ### Linking the framework
 
-You probably want to try out your changes to a framework library in a frontend module. Unfortunately, getting
-a working development environment for this is very finicky. No one technique works for all frontend modules
-all the time.
+You probably want to try out your changes to a framework library in a frontend module. Unfortunately, getting a working development environment for this is very finicky; no one technique works for all frontend modules all the time.
 
 Note that even though frontend modules import from `@openmrs/esm-framework`, the package you need to link is the sub-library; for example, if you are trying to test changes in `packages/framework/esm-api`, you will need to link that sub-library.
 
@@ -244,10 +243,7 @@ This should be the first thing you try. To link the styleguide, for example, you
 yarn link ../path/to/openmrs-esm-core/packages/framework/esm-styleguide
 ```
 
-This will add a line to the "resolutions" section of the `package.json` file which uses the `portal:` protocol.
-The other protocol is `link:`. If you need to make changes to the `esm-framework` package, you will need to link
-it in as well. However, this does not work as a portal created with the `yarn link` command. Rather you will
-want to manually add the line to the `resolutions` field in the `package.json` file:
+This will add a line to the "resolutions" section of the `package.json` file which uses the `portal:` protocol. The other protocol is `link:`. If you need to make changes to the `esm-framework` package, you will need to link it in as well. However, linking `@openmrs/esm-framework` as a portal created by `yarn link` will not work; instead manually add the line to the `resolutions` field in the `package.json` file:
 
 ```json
 "resolutions": {
@@ -264,7 +260,7 @@ Install `yalc` on your computer with:
 npm install -g yalc
 ```
 
-Then, link the repository you are working on. For `esm-api`, for example, run
+Then, link the repository you are working on. For `esm-api`, for example, run:
 
 ```sh
 # In this repository
@@ -284,23 +280,34 @@ Here, there are two options:
 
 #### Method 1: Using the frontend dev server
 
-In order to get your local version of the core packages to be served in your local
-dev server, you will need to link the tooling as well.
+In order to get your local version of the core packages to be served in your local dev server, you will need to link the tooling as well.
 
-`yarn link /path/to/esm-core/packages/tooling/openmrs`.
+```sh
+yarn link /path/to/esm-core/packages/tooling/openmrs
+```
 
-You can try using `yalc` for this as well, if `yarn link` doesn't work. Or manually creating a `link:` resolution in `package.json`.
-In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
-Then run your patient chart dev server as usual, with `yarn start`.
+You can try using `yalc` for this as well, if `yarn link` doesn't work. Or manually create a `link:` resolution in `package.json`.
+In `packages/shell/esm-app-shell`, run:
+
+```sh
+yarn build:development --watch
+```
+
+to ensure the built app shell is updated with your changes and available to the patient chart. Then run your patient chart dev server as usual, with `yarn start`.
 
 #### Method 2: Using import map overrides
 
-In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient chart repository, `cd` into whatever packages you are working on and run `yarn serve` from there. Then use the import map override tool in the browser to tell the frontend to load your local patient chart packages.
+In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient chart repository, `cd` into whatever package(s) you are working on and run `yarn serve` from there. Then use the import map override tool in the browser to tell the frontend to load your local patient chart packages.
 
 #### Once it's working
 
-Please note that any of these techniques will modify the `package.json` file. These changes must be undone before creating
-your PR. If you used `yarn link`, you can undo these changes by running `yarn unlink --all` in the patient chart repo.
+Please note that any of these techniques will modify the `package.json` file. These changes must be undone before creating your PR. If you used `yarn link`, you can undo these changes by running:
+
+```sh
+yarn unlink --all
+```
+
+in the patient chart repo.
 
 ### Version and release
 
@@ -318,9 +325,7 @@ Where version corresponds to:
 - `minor` for new features that are backwards-compatible e.g `3.2.0` → `3.3.0`
 - `major` for breaking changes e.g. `3.2.0` → `4.0.0`
 
-Note that this command will not create a new tag, nor publish the packages. After running it, make a PR or merge to `main` with the resulting changeset. Note that the release commit message must resemble `(chore) Release vx.x.x` where `x.x.x` is the new version number prefixed with `v`.
-
-This is because we don't want to trigger a pre-release build when effecting a version bump.
+Note that this command will not create a new tag, nor publish the packages. After running it, make a PR or merge to `main` with the resulting changeset. Note that the release commit message must resemble `(chore) Release vx.x.x` where `x.x.x` is the new version number prefixed with `v`. This is to avoid triggering a pre-release build when effecting a version bump.
 
 Once the version bump commit is merged, go to GitHub and [draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new).
 
@@ -332,8 +337,8 @@ The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title sh
 
 When releasing a new major version (e.g., moving from v6 to v7), you must:
 
-1. Update all peerDependencies that reference `@openmrs/` packages in every package that depends on them
-2. Change the version notation from the current major version to the new one (e.g., from `6.x` to `7.x`)
+1. Update all peerDependencies that reference `@openmrs/` packages in every package that depends on them.
+2. Change the version notation from the current major version to the new one (e.g., from `6.x` to `7.x`).
 
 Example:
 
@@ -361,3 +366,4 @@ For documentation about our design patterns, please visit our [design system doc
 
 Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes.
 Also, ensure you specify fixed (pinned) versions of Playwright in the package.json file to maintain consistency between the Playwright version used in the Docker image for Bamboo test execution and the version used in the codebase.
+```
