@@ -156,14 +156,3 @@
   bottom: 100%;
   left: 0;
 }
-
-// Hidden password field for browser autofill support
-// Uses visibility:hidden instead of display:none to keep the input in the DOM
-// This allows browsers to autofill both username and password credentials
-.hiddenPasswordField {
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  position: absolute;
-  pointer-events: none;
-}

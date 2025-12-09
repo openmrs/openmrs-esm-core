@@ -172,7 +172,7 @@ describe('Login', () => {
     expect(loginButton).toBeInTheDocument();
   });
 
-  it('should render password field hidden but present for autofill when showPasswordOnSeparateScreen config is true (default)', async () => {
+  it('should not render the password field when the showPasswordOnSeparateScreen config is true (default)', async () => {
     mockUseConfig.mockReturnValue({
       ...mockConfig,
     });
@@ -187,14 +187,12 @@ describe('Login', () => {
 
     const usernameInput = screen.queryByRole('textbox', { name: /username/i });
     const continueButton = screen.queryByRole('button', { name: /Continue/i });
-    const passwordInput = screen.queryByLabelText(/^password$/i);
+    const passwordInput = screen.queryByLabelText(/password/i);
     const loginButton = screen.queryByRole('button', { name: /log in/i });
 
     expect(usernameInput).toBeInTheDocument();
     expect(continueButton).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-    expect(passwordInput).toHaveAttribute('aria-hidden', 'true');
-    expect(passwordInput).toHaveAttribute('tabIndex', '-1');
+    expect(passwordInput).not.toBeInTheDocument();
     expect(loginButton).not.toBeInTheDocument();
   });
 
@@ -284,32 +282,5 @@ describe('Login', () => {
     const usernameInput = screen.getByRole('textbox', { name: /username/i });
 
     expect(usernameInput).toHaveFocus();
-  });
-
-  it('should make password input visible and accessible after continuing from username step', async () => {
-    const user = userEvent.setup();
-    mockUseConfig.mockReturnValue({
-      ...mockConfig,
-    });
-
-    renderWithRouter(
-      Login,
-      {},
-      {
-        route: '/login',
-      },
-    );
-
-    const usernameInput = screen.getByRole('textbox', { name: /username/i });
-    const continueButton = screen.getByRole('button', { name: /Continue/i });
-
-    await user.type(usernameInput, 'testuser');
-    await user.click(continueButton);
-
-    const passwordInput = screen.getByLabelText(/^password$/i);
-
-    // Password should now be visible and accessible
-    expect(passwordInput).toHaveAttribute('aria-hidden', 'false');
-    expect(passwordInput).toHaveAttribute('tabIndex', '0');
   });
 });
