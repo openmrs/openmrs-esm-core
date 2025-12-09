@@ -51,10 +51,7 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (showPasswordOnSeparateScreen) {
       if (showPasswordField) {
-        // Only focus password input if it's empty (to preserve browser autofilled values)
-        if (!passwordInputRef.current?.value) {
-          passwordInputRef.current?.focus();
-        }
+        passwordInputRef.current?.focus();
       } else {
         usernameInputRef.current?.focus();
       }
@@ -160,8 +157,6 @@ const Login: React.FC = () => {
               <TextInput
                 id="username"
                 type="text"
-                name="username"
-                autoComplete="username"
                 labelText={t('username', 'Username')}
                 value={username}
                 onChange={changeUsername}
@@ -170,25 +165,19 @@ const Login: React.FC = () => {
                 autoFocus
               />
               {showPasswordOnSeparateScreen ? (
-                <>
-                  {/* Password input is always in DOM for browser autofill support, but visually hidden until username step is complete */}
-                  <div className={showPasswordField ? undefined : styles.hiddenPasswordField}>
+                showPasswordField ? (
+                  <>
                     <PasswordInput
                       id="password"
                       labelText={t('password', 'Password')}
                       name="password"
-                      autoComplete="current-password"
                       onChange={changePassword}
                       ref={passwordInputRef}
-                      required={showPasswordField}
+                      required
                       value={password}
                       showPasswordLabel={t('showPassword', 'Show password')}
                       invalidText={t('validValueRequired', 'A valid value is required')}
-                      aria-hidden={!showPasswordField}
-                      tabIndex={showPasswordField ? 0 : -1}
                     />
-                  </div>
-                  {showPasswordField ? (
                     <Button
                       type="submit"
                       className={styles.continueButton}
@@ -202,25 +191,24 @@ const Login: React.FC = () => {
                         t('login', 'Log in')
                       )}
                     </Button>
-                  ) : (
-                    <Button
-                      className={styles.continueButton}
-                      renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                      iconDescription="Continue to password"
-                      onClick={continueLogin}
-                      disabled={!isLoginEnabled}
-                    >
-                      {t('continue', 'Continue')}
-                    </Button>
-                  )}
-                </>
+                  </>
+                ) : (
+                  <Button
+                    className={styles.continueButton}
+                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                    iconDescription="Continue to password"
+                    onClick={continueLogin}
+                    disabled={!isLoginEnabled}
+                  >
+                    {t('continue', 'Continue')}
+                  </Button>
+                )
               ) : (
                 <>
                   <PasswordInput
                     id="password"
                     labelText={t('password', 'Password')}
                     name="password"
-                    autoComplete="current-password"
                     onChange={changePassword}
                     ref={passwordInputRef}
                     required
