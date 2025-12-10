@@ -41,10 +41,16 @@ $extraWideWorkspaceWidth: 48.25rem;
       animation: slideFromRight 0.5s ease-in-out;
     }
 
-    transition: width 0.5s ease-in-out;
-
     &.maximized {
-      width: calc(100vw - var(--actionPanelOffset));
+      position: fixed !important;
+      top: var(--omrs-navbar-height) !important;
+      inset-inline-start: 0 !important;
+      inset-inline-end: var(--actionPanelOffset) !important;
+      width: calc(100vw - var(--actionPanelOffset)) !important;
+      bottom: 0 !important;
+      transform: none !important;
+      will-change: auto !important;
+      transition: none !important;
     }
     &.hidden {
       width: 0;
@@ -71,11 +77,11 @@ $extraWideWorkspaceWidth: 48.25rem;
     border-inline-start: 1px solid $text-03;
     background-color: #fff;
     will-change: width;
-
     transition: width 0.5s ease-in-out;
 
     &.maximized {
-      width: calc(100vw - var(--actionPanelOffset));
+      width: 100%;
+      transition: none !important;
     }
   }
 

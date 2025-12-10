@@ -2,7 +2,15 @@
   position: relative;
   display: flex;
   height: 100%;
+  width: 100%;
   contain: content;
+
+  // When any workspace is maximized, remove containment to allow fixed positioning
+  &.hasMaximizedWindow {
+    contain: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
 
   &.overlay {
     contain: none;
@@ -10,6 +18,7 @@
     right: 0;
     top: 0;
     bottom: 0;
+    width: 100vw;
   }
 }
 

@@ -25,11 +25,13 @@ function WorkspaceWindowsAndMenu() {
   }
 
   const group = registeredGroupsByName[openedGroup.groupName];
+  const hasMaximizedWindow = openedWindows.some((window) => window.maximized);
 
   return (
     <div
       className={classNames(styles.workspaceWindowsAndMenuContainer, {
         [styles.overlay]: group.overlay,
+        [styles.hasMaximizedWindow]: hasMaximizedWindow,
       })}
     >
       <div className={styles.workspaceWindowsContainer}>
