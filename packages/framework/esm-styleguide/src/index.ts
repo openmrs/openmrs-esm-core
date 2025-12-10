@@ -1,10 +1,11 @@
 import { defineConfigSchema } from '@openmrs/esm-config';
-import { setupLogo } from './logo';
-import { setupIcons } from './icons/icon-registration';
+import { registerModal } from '@openmrs/esm-extensions';
 import { setupBranding } from './brand';
 import { esmStyleGuideSchema } from './config-schema';
+import { setupEmptyCard } from './empty-card/empty-card-registration';
+import { setupIcons } from './icons/icon-registration';
+import { setupLogo } from './logo';
 import { setupPictograms } from './pictograms/pictogram-registration';
-import { registerModal } from '@openmrs/esm-extensions';
 import { getSyncLifecycle } from '@openmrs/esm-react-utils';
 import Workspace2ClosePromptModal from './workspaces2/workspace2-close-prompt.modal';
 
@@ -13,6 +14,7 @@ setupBranding();
 setupLogo();
 setupIcons();
 setupPictograms();
+setupEmptyCard();
 
 registerModal({
   name: 'workspace2-close-prompt',
