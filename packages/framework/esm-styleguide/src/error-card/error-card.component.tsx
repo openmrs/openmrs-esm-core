@@ -5,7 +5,9 @@ import { CardHeader } from '../cards';
 import styles from './error-card.module.scss';
 
 export interface ErrorCardProps {
+  /** This is the error that triggered rendering the card. It is expected to be the error returned from `openmrsFetch()` */
   error: any;
+  /** The title for this card. This must be a pre-translated string. */
   headerTitle: string;
 }
 
