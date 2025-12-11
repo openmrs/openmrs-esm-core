@@ -15,7 +15,7 @@ describe('Event system', () => {
 
     it('dispatches an event with payload', () => {
       const handler = vi.fn();
-      window.addEventListener('openmrs:page-changed', handler);
+      window.addEventListener('openmrs:before-page-changed', handler);
 
       const payload = {
         cancelNavigation: vi.fn(),
@@ -23,12 +23,12 @@ describe('Event system', () => {
         oldUrl: 'http://localhost/old',
         newUrl: 'http://localhost/new',
       };
-      fireOpenmrsEvent('page-changed', payload);
+      fireOpenmrsEvent('before-page-changed', payload);
 
       expect(handler).toHaveBeenCalledOnce();
       const event = handler.mock.calls[0][0] as CustomEvent;
       expect(event.detail).toEqual(payload);
-      window.removeEventListener('openmrs:page-changed', handler);
+      window.removeEventListener('openmrs:before-page-changed', handler);
     });
 
     it('returns true when event is not cancelled', () => {
@@ -60,7 +60,7 @@ describe('Event system', () => {
 
     it('receives the event payload', () => {
       const handler = vi.fn();
-      const unsubscribe = subscribeOpenmrsEvent('page-changed', handler);
+      const unsubscribe = subscribeOpenmrsEvent('before-page-changed', handler);
 
       const payload = {
         cancelNavigation: vi.fn(),
@@ -68,7 +68,7 @@ describe('Event system', () => {
         oldUrl: 'http://localhost/old',
         newUrl: 'http://localhost/new',
       };
-      fireOpenmrsEvent('page-changed', payload);
+      fireOpenmrsEvent('before-page-changed', payload);
 
       expect(handler).toHaveBeenCalledWith(payload);
       unsubscribe();

@@ -444,7 +444,7 @@ export function run(configUrls: Array<string>) {
       .then(offlineEnabled ? setupOffline : undefined)
       .then(() => {
         // intentionally not returned so that processing the "started" event doesn't block
-        Promise.resolve().then(() => fireOpenmrsEvent('started'));
+        fireOpenmrsEvent('started');
       });
   });
 }

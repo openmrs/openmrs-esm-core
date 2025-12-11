@@ -36,9 +36,9 @@ export interface EventTypes {
    */
   started: never;
   /**
-   * The page-changed event is fired whenever the active page in the application changes
+   * The before-page-changed event is fired before the active page in the application changes
    */
-  'page-changed': PageChanged;
+  'before-page-changed': PageChanged;
 }
 
 /**

@@ -42,7 +42,7 @@ window.addEventListener('single-spa:before-routing-event', (event: Event) => {
           !it.startsWith('@openmrs/esm-help-menu-app'),
       );
 
-      const payload: OpenmrsEventTypes['page-changed'] = {
+      const payload: OpenmrsEventTypes['before-page-changed'] = {
         cancelNavigation: event.detail.cancelNavigation,
         newPage: undefined,
         oldUrl: event.detail.oldUrl,
@@ -53,7 +53,7 @@ window.addEventListener('single-spa:before-routing-event', (event: Event) => {
         payload.newPage = mountedApp;
       }
 
-      fireOpenmrsEvent('page-changed', payload);
+      fireOpenmrsEvent('before-page-changed', payload);
     }
   }
 });

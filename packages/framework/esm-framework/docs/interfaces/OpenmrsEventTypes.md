@@ -8,13 +8,13 @@ This is the set of events supported by the custom event system
 
 ## Properties
 
-### page-changed
+### before-page-changed
 
-> **page-changed**: `PageChanged`
+> **before-page-changed**: `PageChanged`
 
 Defined in: [packages/framework/esm-emr-api/src/events/types.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/types.ts#L41)
 
-The page-changed event is fired whenever the active page in the application changes
+The before-page-changed event is fired before the active page in the application changes
 
 ***
 
