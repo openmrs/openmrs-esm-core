@@ -54,7 +54,7 @@ body {
   grid-area: topNav;
   height: 0;
 }
-#omrs-top-nav-app-container:has(> div:not(:empty)) {
+#omrs-top-nav-app-container.has-content {
   height: var(--omrs-navbar-height);
 }
 body {

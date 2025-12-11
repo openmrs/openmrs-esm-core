@@ -50,6 +50,7 @@ import { setupI18n } from './locale';
 import { registerOptionalDependencyHandler } from './optionaldeps';
 import { appName, getCoreExtensions } from './ui';
 import { setupCoreConfig } from './core-config';
+import { initializeTopNavContentCheck } from './topNavContentCheck';
 
 // @internal
 // used to track when the window.installedModules global is finalised
@@ -411,6 +412,7 @@ export function run(configUrls: Array<string>) {
   const offlineEnabled = window.offlineEnabled;
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
+  initializeTopNavContentCheck();
 
   return import('@openmrs/esm-styleguide/src/index').then(() => {
     integrateBreakpoints();
