@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { Button, Layer, Tile } from '@carbon/react';
 import { useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import styles from './empty-card.module.scss';
 import { CardHeader } from '../cards';
+import styles from './empty-card.module.scss';
 
 export interface EmptyCardProps {
   /** The name of the type of item that would be displayed here if not empty. This must be a pre-translated string. */
