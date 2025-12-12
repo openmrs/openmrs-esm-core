@@ -15,35 +15,6 @@
   color: $text-02;
 }
 
-.desktopHeading {
-  h4 {
-    @include type.type-style('heading-compact-02');
-    color: $text-02;
-  }
-}
-
-.tabletHeading {
-  h4 {
-    @include type.type-style('heading-03');
-    color: $text-02;
-  }
-}
-
-.desktopHeading,
-.tabletHeading {
-  text-align: left;
-  text-transform: capitalize;
-  margin-bottom: layout.$spacing-05;
-
-  h4:after {
-    content: '';
-    display: block;
-    width: layout.$spacing-07;
-    padding-top: 0.188rem;
-    border-bottom: 0.375rem solid var(--brand-03);
-  }
-}
-
 .tile {
   text-align: center;
   border: 1px solid $ui-03;

@@ -6,7 +6,6 @@ export * from './dashboard-extension';
 export * from './datepicker';
 export * from './diagnosis-tags';
 export * from './empty-card';
-export * from './error-card';
 export * from './error-state';
 export * from './icons/icons';
 export * from './left-nav';
