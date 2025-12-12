@@ -1,6 +1,21 @@
 import { test } from '../core';
-import { expect } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
 import { HomePage, LoginPage } from '../pages';
+
+async function selectLocationIfRequired(page: Page) {
+  const locationPicker = page.getByText(/outpatient clinic/i);
+  const isLocationPickerVisible = await locationPicker
+    .waitFor({ state: 'visible', timeout: 2000 })
+    .then(() => true)
+    .catch(() => false);
+
+  if (isLocationPickerVisible) {
+    await locationPicker.click();
+    await page.getByRole('button', { name: /confirm/i }).click();
+  }
+}
+
+test.use({ storageState: { cookies: [], origins: [] } });
 
 test('View action buttons in the navbar', async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -11,10 +26,11 @@ test('View action buttons in the navbar', async ({ page }) => {
     await loginPage.goto();
     await page.getByLabel(/username/i).fill(`${process.env.E2E_USER_ADMIN_USERNAME}`);
     await page.getByText(/continue/i).click();
+    await page.getByLabel(/^password$/i).waitFor({ state: 'visible', timeout: 10000 });
     await page.getByLabel(/^password$/i).fill(`${process.env.E2E_USER_ADMIN_PASSWORD}`);
     await page.getByRole('button', { name: /log in/i }).click();
-    await page.getByText(/outpatient clinic/i).click();
-    await page.getByRole('button', { name: /confirm/i }).click();
+    await page.waitForLoadState('domcontentloaded');
+    await selectLocationIfRequired(page);
   });
 
   await test.step('When I visit the home page', async () => {
