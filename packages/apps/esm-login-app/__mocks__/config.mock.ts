@@ -23,4 +23,17 @@ export const mockConfig: ConfigSchema = {
     additionalLogos: [],
   },
   showPasswordOnSeparateScreen: true,
+  background: {
+    color: '',
+    imageUrl: '',
+  },
+  layout: {
+    loginFormPosition: 'center' as const,
+    showFooter: true,
+  },
+  branding: {
+    title: '',
+    subtitle: '',
+    helpText: '',
+  },
 };
