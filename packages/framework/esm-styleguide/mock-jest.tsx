@@ -133,7 +133,7 @@ export const XrayPictogram = () => <span>XrayPictogram</span>;
 export const MaybeIcon = ({ icon }) => <span>{icon}</span>;
 export const MaybePictogram = ({ pictogram }) => <span>{pictogram}</span>;
 
-export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
+export { CardHeader, EmptyCard, ErrorCard, EmptyCardIllustration, Pagination, PageHeader, PageHeaderContent } from '.';
 
 export const OpenmrsDatePicker = () => <span>OpenmrsDatePicker</span>;
 export const OpenmrsDateRangePicker = () => <span>OpenmrsDateRangePicker</span>;
