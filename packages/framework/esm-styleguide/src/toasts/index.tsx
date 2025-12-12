@@ -6,6 +6,8 @@ import type { ToastDescriptor, ToastNotificationMeta } from './toast.component';
 import ActiveToasts from './active-toasts.component';
 import isEmpty from 'lodash-es/isEmpty';
 
+export { type ToastDescriptor, type ToastType, type ToastNotificationMeta } from './toast.component';
+
 const toastsSubject = new Subject<ToastNotificationMeta>();
 let toastId = 0;
 

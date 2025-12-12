@@ -61,6 +61,7 @@ export const coreTranslations = {
   delete: 'Delete',
   discardChanges: 'Discard changes',
   edit: 'Edit',
+  emptyStateText: 'There are no {{displayText}} to display',
   error: 'Error',
   errorCopy:
     'Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.',
@@ -72,6 +73,8 @@ export const coreTranslations = {
   male: 'Male',
   noResultsToDisplay: 'No results to display',
   other: 'Other',
+  paginationItemsCount: '{{pageItemsCount}} / {{totalItems}} items',
+  paginationOfPages: 'of {{count}} pages',
   patientAvatarAlt: 'Avatar for {{patientName}}',
   patientIdentifierSticker: 'Patient identifier sticker',
   patientLists: 'Patient lists',
@@ -82,6 +85,7 @@ export const coreTranslations = {
   printErrorExplainer: 'An error occurred in {{errorLocation}}',
   printIdentifierSticker: 'Print identifier sticker',
   printing: 'Printing',
+  recordNewEntry: 'Record {{displayText}}',
   relationships: 'Relationships',
   resetOverrides: 'Reset overrides',
   save: 'Save',
@@ -89,6 +93,7 @@ export const coreTranslations = {
   scriptLoadingError:
     'Failed to load overridden script from {{url}}. Please check that the bundled script is available at the expected URL. Click the button below to reset all import map overrides.',
   searchForLocation: 'Search for a location',
+  seeAll: 'See all',
   seeMoreLists: 'See {{count}} more lists',
   sex: 'Sex',
   showLess: 'Show less',

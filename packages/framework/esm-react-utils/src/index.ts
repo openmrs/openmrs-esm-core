@@ -37,6 +37,7 @@ export * from './useOnClickOutside';
 export * from './useOnVisible';
 export * from './useOpenmrsSWR';
 export * from './usePagination';
+export * from './usePaginationInfo';
 export * from './usePatient';
 export * from './usePrimaryIdentifierResource';
 export * from './useRenderableExtensions';
