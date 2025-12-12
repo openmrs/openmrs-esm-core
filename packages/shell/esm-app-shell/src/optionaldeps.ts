@@ -3,23 +3,11 @@ import {
   openmrsFetch,
   registerFeatureFlag,
   setFeatureFlag,
-  getCurrentUser,
   restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
 import { satisfies } from 'semver';
 
-export function registerOptionalDependencyHandler() {
-  const subscription = getCurrentUser().subscribe((session) => {
-    if (session.authenticated) {
-      subscription?.unsubscribe();
-      setupOptionalDependencies();
-    }
-  });
-
-  return Promise.resolve();
-}
-
-function setupOptionalDependencies() {
+export function setupOptionalDependencies() {
   const optionalDependencyFlags = window.installedModules.reduce<
     Map<string, { version: string; feature: FeatureFlagDefinition }>
   >((curr, module) => {
