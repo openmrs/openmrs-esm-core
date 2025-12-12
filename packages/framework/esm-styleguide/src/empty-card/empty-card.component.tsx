@@ -15,7 +15,7 @@ export interface EmptyCardProps {
   launchForm?(): void;
 }
 
-const EmptyDataIllustration = ({ width = '64', height = '64' }) => {
+export const EmptyCardIllustration = ({ width = '64', height = '64' }) => {
   return (
     <svg width={width} height={height} viewBox="0 0 64 64">
       <use href={`#omrs-empty-data-illustration`} />
@@ -34,7 +34,7 @@ export const EmptyCard: React.FC<EmptyCardProps> = (props) => {
     <Layer className={styles.layer}>
       <Tile className={styles.tile}>
         <CardHeader title={props.headerTitle} />
-        <EmptyDataIllustration />
+        <EmptyCardIllustration />
         <p className={styles.content}>
           {getCoreTranslation('emptyStateText', 'There are no {{displayText}} to display', {
             displayText: props.displayText,

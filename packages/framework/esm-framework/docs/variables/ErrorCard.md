@@ -2,8 +2,6 @@
 
 # Variable: ErrorCard
 
-> `const` **ErrorCard**: `React.FC`\<[`ErrorCardProps`](../interfaces/ErrorCardProps.md)\>
+> `const` **ErrorCard**: `FC`\<[`ErrorStateProps`](../interfaces/ErrorStateProps.md)\> = `ErrorState`
 
-Defined in: [packages/framework/esm-styleguide/src/error-card/error-card.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-card/error-card.component.tsx#L17)
-
-Re-usable card for displaying a fetch error
+Defined in: [packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L29)

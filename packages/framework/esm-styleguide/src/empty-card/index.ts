@@ -1,1 +1,1 @@
-export { EmptyCard, type EmptyCardProps } from './empty-card.component';
+export { EmptyCard, EmptyCardIllustration, type EmptyCardProps } from './empty-card.component';

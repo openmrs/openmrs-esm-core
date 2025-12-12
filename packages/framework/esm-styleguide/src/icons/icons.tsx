@@ -862,18 +862,18 @@ export const ShoppingCartAddItemIcon = ShoppingCartArrowDownIcon;
  * ```
  */
 export const MaybeIcon = memo(
-  forwardRef<SVGSVGElement, { icon: string; fallback?: React.ReactNode } & IconProps>(function MaybeIcon(
+  forwardRef<SVGSVGElement, { icon: string | undefined; fallback?: React.ReactNode } & IconProps>(function MaybeIcon(
     { icon, fallback, ...iconProps },
     ref,
   ) {
-    const iconRef = useRef(document.getElementById(icon));
+    const iconRef = useRef(icon ? document.getElementById(icon) : undefined);
 
     useEffect(() => {
       const container = document.getElementById('omrs-svgs-container');
       const callback: MutationCallback = (mutationList) => {
         for (const mutation of mutationList) {
           if (mutation.type === 'childList') {
-            iconRef.current = document.getElementById(icon);
+            iconRef.current = icon ? document.getElementById(icon) : undefined;
           }
         }
       };
