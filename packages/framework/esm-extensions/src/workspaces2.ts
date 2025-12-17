@@ -18,7 +18,6 @@ export interface OpenedWindow {
   openedWorkspaces: Array<OpenedWorkspace>;
   props: Record<string, any> | null;
   maximized: boolean;
-  hidden: boolean;
 }
 
 export interface OpenedGroup {
@@ -33,6 +32,12 @@ export interface WorkspaceStoreState2 {
   /** Most recently opened window at the end of array. Each element has a unique windowName */
   openedWindows: Array<OpenedWindow>;
 
+  /**
+   * While there can be multiple openedWindows, only the most recently opened window can be
+   * togged shown or hidden, the rest are implicitly hidden.
+   **/
+  isMostRecentlyOpenedWindowHidden: boolean;
+
   workspaceTitleByWorkspaceName: Record<string, string>;
 }
 
@@ -43,6 +48,7 @@ const initialState: WorkspaceStoreState2 = {
   openedGroup: null,
   openedWindows: [],
   workspaceTitleByWorkspaceName: {},
+  isMostRecentlyOpenedWindowHidden: false,
 };
 
 export const workspace2Store = createGlobalStore<WorkspaceStoreState2>('workspace2', initialState);

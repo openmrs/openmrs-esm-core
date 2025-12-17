@@ -77,6 +77,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     registeredWorkspacesByName,
     workspaceTitleByWorkspaceName,
     setWorkspaceTitle,
+    isMostRecentlyOpenedWindowHidden,
   } = useWorkspace2Store();
   const { workspaceName, isRootWorkspace, closeWorkspace } = useWorkspace2Context();
 
@@ -122,6 +123,8 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     (window) => window.group === openedGroup.groupName && window.icon !== undefined,
   );
 
+  const isWindowHidden = openedWindowIndex < openedWindows.length - 1 || isMostRecentlyOpenedWindowHidden;
+
   return (
     <div
       className={classNames(styles.workspaceOuterContainer, {
@@ -133,20 +136,20 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     >
       <div
         className={classNames(styles.workspaceSpacer, {
-          [styles.hidden]: openedWindow.hidden,
+          [styles.hidden]: isWindowHidden,
         })}
       />
       <div
         className={classNames(styles.workspaceMiddleContainer, {
           [styles.maximized]: maximized,
-          [styles.hidden]: openedWindow.hidden,
+          [styles.hidden]: isWindowHidden,
           [styles.isRootWorkspace]: isRootWorkspace,
         })}
       >
         <div
           className={classNames(styles.workspaceInnerContainer, {
             [styles.maximized]: maximized,
-            [styles.hidden]: openedWindow.hidden,
+            [styles.hidden]: isWindowHidden,
             [styles.isRootWorkspace]: isRootWorkspace,
           })}
         >
@@ -166,10 +169,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
                       </HeaderGlobalAction>
                     )}
                     {canHide ? (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('hide')}
-                        onClick={() => hideWindow(windowName)}
-                      >
+                      <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
                         <ArrowRightIcon />
                       </HeaderGlobalAction>
                     ) : (
@@ -184,10 +184,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
                 ) : (
                   <>
                     {canHide && (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('hide')}
-                        onClick={() => hideWindow(windowName)}
-                      >
+                      <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
                         <DownToBottom />
                       </HeaderGlobalAction>
                     )}
