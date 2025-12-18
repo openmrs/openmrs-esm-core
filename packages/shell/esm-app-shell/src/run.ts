@@ -3,10 +3,11 @@ import { type CalendarIdentifier } from '@internationalized/date';
 import {
   activateOfflineCapability,
   canAccessStorage,
-  cleanupObsoleteFeatureFlags,
   dispatchConnectivityChanged,
   dispatchPrecacheStaticDependencies,
+  type ExtensionDefinition,
   finishRegisteringAllApps,
+  fireOpenmrsEvent,
   getConfig,
   getCurrentUser,
   integrateBreakpoints,
@@ -47,7 +48,8 @@ import {
   type StyleguideConfigObject,
 } from '@openmrs/esm-framework/src/internal';
 import { setupI18n } from './locale';
-import { registerOptionalDependencyHandler } from './optionaldeps';
+import './routing-events';
+import './events';
 import { appName, getCoreExtensions } from './ui';
 import { setupCoreConfig } from './core-config';
 
@@ -314,7 +316,8 @@ function showLoadingSpinner() {
 function registerCoreExtensions() {
   const extensions = getCoreExtensions();
   for (const extension of extensions) {
-    tryRegisterExtension(appName, extension);
+    // FIXME This "core extensions" concept should likely be retired
+    tryRegisterExtension(appName, extension as unknown as ExtensionDefinition);
   }
 }
 
@@ -439,7 +442,9 @@ export function run(configUrls: Array<string>) {
       .catch(handleInitFailure)
       .then(closeLoading)
       .then(offlineEnabled ? setupOffline : undefined)
-      .then(registerOptionalDependencyHandler)
-      .then(cleanupObsoleteFeatureFlags);
+      .then(() => {
+        // intentionally not returned so that processing the "started" event doesn't block
+        fireOpenmrsEvent('started');
+      });
   });
 }
