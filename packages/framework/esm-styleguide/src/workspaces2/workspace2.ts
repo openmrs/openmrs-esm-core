@@ -14,7 +14,6 @@ import { useStoreWithActions, type Actions } from '@openmrs/esm-react-utils';
 import { shallowEqual } from '@openmrs/esm-utils';
 import { showModal } from '../modals';
 import { type Workspace2DefinitionProps } from './workspace2.component';
-import { State } from 'swr';
 
 /**
  * Attempts to launch the specified workspace group with the given group props. Note that only one workspace group
@@ -440,9 +439,14 @@ const workspace2StoreActions = {
 
     let hidden = state.isMostRecentlyOpenedWindowHidden;
     if (window.openedWorkspaces.length === 0) {
+      const wasMostRecentWindow = openedWindowIndex === state.openedWindows.length - 1;
       // if no workspaces left, remove the window
       openedWindows.splice(openedWindowIndex, 1);
-      hidden = true;
+      // If we removed the most recent window and there are still windows left,
+      // the new most recent window should be shown
+      if (wasMostRecentWindow && openedWindows.length > 0) {
+        hidden = false;
+      }
     } else {
       // if there are still workspaces left, just update the window
       openedWindows[openedWindowIndex] = window;

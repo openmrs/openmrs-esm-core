@@ -34,7 +34,7 @@ export interface WorkspaceStoreState2 {
 
   /**
    * While there can be multiple openedWindows, only the most recently opened window can be
-   * togged shown or hidden, the rest are implicitly hidden.
+   * toggled shown or hidden, the rest are implicitly hidden.
    **/
   isMostRecentlyOpenedWindowHidden: boolean;
 
