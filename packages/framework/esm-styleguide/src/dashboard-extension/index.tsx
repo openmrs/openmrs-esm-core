@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import { shallowEqual } from '@openmrs/esm-utils';
 import { ConfigurableLink, MaybeIcon } from '@openmrs/esm-framework';
 import { type IconId } from '../icons';
@@ -10,8 +10,8 @@ import styles from './dashboard.module.scss';
 export interface DashboardExtensionProps {
   path: string;
   title: string;
-  basePath: string;
-  icon: IconId;
+  basePath?: string;
+  icon?: IconId;
 }
 
 export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExtensionProps) => {
@@ -49,3 +49,13 @@ export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExt
     </div>
   );
 };
+
+export function createDashboard(props: Omit<DashboardExtensionProps, 'basePath'>) {
+  return function ({ basePath }: { basePath: string }) {
+    return (
+      <BrowserRouter>
+        <DashboardExtension basePath={basePath} {...props} />
+      </BrowserRouter>
+    );
+  };
+}

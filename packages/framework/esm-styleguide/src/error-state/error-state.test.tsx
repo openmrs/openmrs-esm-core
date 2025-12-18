@@ -31,7 +31,7 @@ describe('ErrorState', () => {
 
     render(<ErrorState headerTitle="test" error={{}} />);
     // eslint-disable-next-line testing-library/no-node-access
-    expect(screen.getByRole('heading').parentElement?.getAttribute('class')).toContain('tabletHeading');
+    expect(screen.getByRole('heading').parentElement?.getAttribute('class')).toContain('tabletHeader');
   });
 
   it('should render desktop layout when layout type is not tablet', () => {
@@ -39,7 +39,7 @@ describe('ErrorState', () => {
 
     render(<ErrorState headerTitle="test" error={{}} />);
     // eslint-disable-next-line testing-library/no-node-access
-    expect(screen.getByRole('heading').parentElement?.getAttribute('class')).toContain('desktopHeading');
+    expect(screen.getByRole('heading').parentElement?.getAttribute('class')).toContain('desktopHeader');
   });
 
   it('should handle error with partial response data', () => {

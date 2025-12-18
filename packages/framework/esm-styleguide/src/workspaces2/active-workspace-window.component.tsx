@@ -37,7 +37,7 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow })
           key={openedWorkspace.uuid}
           openedWorkspace={openedWorkspace}
           openedWindow={openedWindow}
-          lifeCycle={lifeCycles?.[i]}
+          lifeCycle={lifeCycles && lifeCycles[i] ? lifeCycles[i] : undefined}
           isRootWorkspace={i === 0}
           isLeafWorkspace={i === openedWorkspaces.length - 1}
         />
@@ -99,12 +99,12 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
         },
         launchChildWorkspace: (childWorkspaceName, childWorkspaceProps) => {
           const parentWorkspaceName = openedWorkspace.workspaceName;
-          openChildWorkspace(parentWorkspaceName, childWorkspaceName, childWorkspaceProps ?? {});
+          openChildWorkspace(parentWorkspaceName, childWorkspaceName, childWorkspaceProps || {});
         },
         workspaceName: openedWorkspace.workspaceName,
         workspaceProps: openedWorkspace.props,
         windowProps: openedWindow.props,
-        groupProps: openedGroup?.props ?? null,
+        groupProps: openedGroup && openedGroup.props ? openedGroup.props : null,
         isRootWorkspace,
         isLeafWorkspace,
         windowName: openedWindow.windowName,
@@ -115,10 +115,10 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
   if (!lifeCycle) {
     const { registeredWorkspacesByName } = workspace2Store.getState();
     const workspaceDef = registeredWorkspacesByName[openedWorkspace.workspaceName];
-    const windowName = workspaceDef?.window;
+    const windowName = workspaceDef && workspaceDef.window ? workspaceDef.window : undefined;
     const { registeredWindowsByName } = workspace2Store.getState();
-    const windowDef = registeredWindowsByName[windowName];
-    const width = windowDef?.width ?? 'narrow';
+    const windowDef = windowName ? registeredWindowsByName[windowName] : undefined;
+    const width = windowDef && windowDef.width ? windowDef.width : 'narrow';
 
     return (
       <div
