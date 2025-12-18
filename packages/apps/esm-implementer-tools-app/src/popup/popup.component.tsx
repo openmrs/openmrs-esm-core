@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ContentSwitcher, IconButton, Switch } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/react/icons';
+import { ContentSwitcher, IconButton, Switch, Theme } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { CloseIcon } from '@openmrs/esm-framework';
 import { Configuration } from '../configuration/configuration.component';

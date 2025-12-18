@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
+import { vi } from 'vitest';
 import { openmrsFetch } from '@openmrs/esm-api/mock';
 import { configSchema } from '@openmrs/esm-config/mock';
 import { getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
@@ -6,94 +7,100 @@ import { createGlobalStore } from '@openmrs/esm-state/mock';
 import {
   isDesktop as realIsDesktop,
   usePagination as realUsePagination,
+  usePaginationInfo as realUsePaginationInfo,
   useOpenmrsPagination as realUseOpenmrsrPagination,
   useOpenmrsInfinite as realUseOpenmrsInfinite,
   useOpenmrsFetchAll as realUseOpenmrsFetchAll,
   useFhirPagination as realUseFhirPagination,
   useFhirInfinite as realUseFhirInfinite,
   useFhirFetchAll as realUseFhirFetchAll,
+  useVisitContextStore as realUseVisitContextStore,
 } from './src/index';
-export { ConfigurableLink, useStore, useStoreWithActions, createUseStore } from './src/index';
+export { ConfigurableLink } from './src/ConfigurableLink';
+export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
 import * as utils from '@openmrs/esm-utils';
 
 export const ComponentContext = React.createContext(null);
 
-export const openmrsComponentDecorator = jest.fn().mockImplementation(() => (component) => component);
+export const openmrsComponentDecorator = vi.fn().mockImplementation(() => (component) => component);
 
-export const useAttachments = jest.fn(() => ({
+export const useAttachments = vi.fn(() => ({
   isLoading: true,
   data: [],
   error: null,
-  mutate: jest.fn(),
+  mutate: vi.fn(),
   isValidating: true,
 }));
 
-export const useConfig = jest.fn().mockImplementation((options?: { externalModuleName?: string }) => {
+export const useConfig = vi.fn((options?: { externalModuleName?: string }) => {
   if (options?.externalModuleName) {
     console.warn(`Mock useConfig called with externalModuleName: ${options.externalModuleName}`);
   }
   return utils.getDefaultsFromConfigSchema(configSchema);
 });
 
-export const useCurrentPatient = jest.fn(() => []);
+export const useCurrentPatient = vi.fn(() => []);
 
-export const usePatient = jest.fn(() => ({
+export const usePatient = vi.fn(() => ({
   isLoading: true,
   patient: null,
   patientUuid: null,
   error: null,
 }));
 
-export const useSession = jest.fn(() => ({
+export const useSession = vi.fn(() => ({
   authenticated: false,
   sessionId: '',
 }));
 
-export const useLayoutType = jest.fn(() => 'desktop');
+export const useLayoutType = vi.fn(() => 'desktop');
 
-export const useRenderableExtensions = jest.fn(() => []);
+export const useRenderableExtensions = vi.fn(() => []);
 
-export const useAssignedExtensions = jest.fn(() => []);
+export const useAssignedExtensions = vi.fn(() => []);
 
-export const useExtensionSlotMeta = jest.fn(() => ({}));
+export const useExtensionSlotMeta = vi.fn(() => ({}));
 
-export const useConnectedExtensions = jest.fn(() => []);
+export const useConnectedExtensions = vi.fn(() => []);
 
-export const UserHasAccess = jest.fn().mockImplementation((props: any) => {
+export const UserHasAccess = vi.fn((props: PropsWithChildren) => {
   return props.children;
 });
 
 export const useExtensionInternalStore = createGlobalStore('extensionInternal', getExtensionInternalStore());
 
-export const useExtensionStore = jest.fn();
+export const useExtensionStore = vi.fn();
 
-export const ExtensionSlot = jest.fn().mockImplementation(({ children }) => <>{children}</>);
+export const ExtensionSlot = vi.fn(({ children }) => <>{children}</>);
 
-export const Extension = jest.fn().mockImplementation((props: any) => <slot />);
+export const Extension = vi.fn((props: any) => <slot />);
 
-export const useFeatureFlag = jest.fn().mockReturnValue(true);
+export const useFeatureFlag = vi.fn().mockReturnValue(true);
 
-export const usePagination = jest.fn(realUsePagination);
+export const usePagination = vi.fn(realUsePagination);
+export const usePaginationInfo = vi.fn(realUsePaginationInfo);
 
-export const useOpenmrsPagination = jest.fn(realUseOpenmrsrPagination);
-export const useOpenmrsInfinite = jest.fn(realUseOpenmrsInfinite);
-export const useOpenmrsFetchAll = jest.fn(realUseOpenmrsFetchAll);
-export const useFhirPagination = jest.fn(realUseFhirPagination);
-export const useFhirInfinite = jest.fn(realUseFhirInfinite);
-export const useFhirFetchAll = jest.fn(realUseFhirFetchAll);
+export const useOpenmrsPagination = vi.fn(realUseOpenmrsrPagination);
+export const useOpenmrsInfinite = vi.fn(realUseOpenmrsInfinite);
+export const useOpenmrsFetchAll = vi.fn(realUseOpenmrsFetchAll);
+export const useFhirPagination = vi.fn(realUseFhirPagination);
+export const useFhirInfinite = vi.fn(realUseFhirInfinite);
+export const useFhirFetchAll = vi.fn(realUseFhirFetchAll);
 
-export const useVisit = jest.fn().mockReturnValue({
+export const useVisit = vi.fn(() => ({
   error: null,
-  mutate: jest.fn(),
+  mutate: vi.fn(),
   isValidating: true,
   currentVisit: null,
   activeVisit: null,
   currentVisitIsRetrospective: false,
-});
+}));
 
-export const useVisitTypes = jest.fn(() => []);
+export const useVisitContextStore = vi.fn(realUseVisitContextStore);
 
-export const useAbortController = jest.fn(() => {
+export const useVisitTypes = vi.fn(() => []);
+
+export const useAbortController = vi.fn(() => {
   let aborted = false;
   return {
     abort: () => {
@@ -105,48 +112,56 @@ export const useAbortController = jest.fn(() => {
   } as AbortController;
 });
 
-export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
+export const useOpenmrsSWR = vi.fn((key: string | Array<any>) => {
   return { data: openmrsFetch(key.toString()) };
 });
 
-export const useDebounce = jest.fn().mockImplementation((value) => value);
+export const useDebounce = vi.fn((value) => value);
 
-export const useOnClickOutside = jest.fn(function useOnClickOutside() {
+export const useOnClickOutside = vi.fn(function useOnClickOutside() {
   return React.useRef();
 });
 
-export const useBodyScrollLock = jest.fn();
+export const useOnVisible = vi.fn(function useOnVisible() {
+  return React.useRef();
+});
 
-export const isDesktop = jest.fn().mockImplementation(realIsDesktop);
+export const useBodyScrollLock = vi.fn();
 
-export const useLocations = jest.fn().mockReturnValue([]);
+export const isDesktop = vi.fn(realIsDesktop);
 
-export const toOmrsIsoString = jest.fn().mockImplementation((date: Date) => date.toISOString());
+export const useLocations = vi.fn(() => []);
 
-export const toDateObjectStrict = jest.fn().mockImplementation((date: string) => new Date(date));
+export const toOmrsIsoString = vi.fn((date: Date) => date.toISOString());
 
-export const getLocale = jest.fn().mockReturnValue('en');
+export const toDateObjectStrict = vi.fn((date: string) => new Date(date));
 
-export const useAppContext = jest.fn();
+export const getLocale = vi.fn(() => 'en');
 
-export const useAssignedExtensionIds = jest.fn();
+export const useAppContext = vi.fn();
 
-export const useConnectivity = jest.fn();
+export const useAssignedExtensionIds = vi.fn();
 
-export const useDefineAppContext = jest.fn();
+export const useConnectivity = vi.fn();
 
-export const useExtensionSlot = jest.fn();
+export const useDefineAppContext = vi.fn();
 
-export const useForceUpdate = jest.fn();
+export const useExtensionSlot = vi.fn();
+
+export const useForceUpdate = vi.fn();
+
+export const useLeftNav = vi.fn();
+
+export const useLeftNavStore = vi.fn();
 
 // TODO: Remove this in favour of usePrimaryIdentifierCode below
-export const usePrimaryIdentifierResource = jest.fn();
+export const usePrimaryIdentifierResource = vi.fn();
 
-export const usePrimaryIdentifierCode = jest.fn();
+export const usePrimaryIdentifierCode = vi.fn();
 
-export const useEmrConfiguration = jest.fn().mockReturnValue({
+export const useEmrConfiguration = vi.fn(() => ({
   emrConfiguration: undefined,
   isLoadingEmrConfiguration: false,
-  mutateEmrConfiguration: jest.fn(),
+  mutateEmrConfiguration: vi.fn(),
   errorFetchingEmrConfiguration: undefined,
-});
+}));

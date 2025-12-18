@@ -1,0 +1,14 @@
+{
+  "AppMenuTooltip": "Meniu aplicație",
+  "cancel": "Anulează",
+  "change": "Schimbă",
+  "changeDefaultLocale": "Update your default locale",
+  "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
+  "changeLanguage": "Schimbă limba",
+  "changingLanguage": "Se schimbă limba",
+  "noPathInDashboardExtension": "Nu se poate reda extensia tabloului de bord fără ca proprietatea \"path\" să fie setată în schema de configurare",
+  "notifications": "Notificări",
+  "userMenu": "Meniul utilizatorului",
+  "userMenuOptions": "Opțiuni meniu utilizator",
+  "userMenuTooltip": "Contul meu"
+}

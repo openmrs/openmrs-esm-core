@@ -1,9 +1,9 @@
 /** @module @category Workspace */
 import { useMemo, type ReactNode } from 'react';
+import type { StoreApi } from 'zustand/vanilla';
 import {
   getWorkspaceGroupRegistration,
   getWorkspaceRegistration,
-  WorkspaceGroupRegistration,
   type WorkspaceRegistration,
 } from '@openmrs/esm-extensions';
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
@@ -11,7 +11,6 @@ import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { useStore } from '@openmrs/esm-react-utils';
-import type { StoreApi } from 'zustand/vanilla';
 
 export interface CloseWorkspaceOptions {
   /**
@@ -107,7 +106,7 @@ export interface WorkspaceStoreState {
   workspaceGroup?: {
     name: string;
     members: Array<string>;
-    cleanup?: Function;
+    cleanup?(): void;
   };
 }
 
@@ -182,12 +181,12 @@ function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: () => void)
 }
 
 interface LaunchWorkspaceGroupArg {
-  state: object;
-  onWorkspaceGroupLaunch?: Function;
-  workspaceGroupCleanup?: Function;
+  state: Record<string | symbol | number, any>;
+  onWorkspaceGroupLaunch?(): void;
+  workspaceGroupCleanup?(): void;
   workspaceToLaunch?: {
     name: string;
-    additionalProps?: object;
+    additionalProps?: Record<string | symbol | number, any>;
   };
 }
 

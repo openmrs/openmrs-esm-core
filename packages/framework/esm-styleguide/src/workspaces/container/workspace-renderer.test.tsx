@@ -1,24 +1,27 @@
 import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
+import { mountRootParcel } from 'single-spa';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { getWorkspaceGroupStore } from '../workspaces';
 
-const mockFn = jest.fn();
+const mockFn = vi.fn();
 
-jest.mock('single-spa-react/parcel', () =>
-  jest.fn((props) => {
+vi.mock('single-spa-react/parcel', () => ({
+  default: vi.fn((props) => {
     mockFn(props);
     return <div data-testid="mocked-parcel" />;
   }),
-);
+}));
 
 describe('WorkspaceRenderer', () => {
   it('should render workspace', async () => {
-    const mockCloseWorkspace = jest.fn();
-    const mockCloseWorkspaceWithSavedChanges = jest.fn();
-    const mockPromptBeforeClosing = jest.fn();
-    const mockSetTitle = jest.fn();
-    const mockLoadFn = jest.fn().mockImplementation(() => Promise.resolve({ default: 'file-content' }));
+    const mockCloseWorkspace = vi.fn();
+    const mockCloseWorkspaceWithSavedChanges = vi.fn();
+    const mockPromptBeforeClosing = vi.fn();
+    const mockSetTitle = vi.fn();
+    const mockLoadFn = vi.fn().mockImplementation(() => Promise.resolve('file-content'));
 
     getWorkspaceGroupStore('test-sidebar-store')?.setState({
       // Testing that the workspace group state should be overrided by additionalProps
@@ -51,7 +54,7 @@ describe('WorkspaceRenderer', () => {
 
     expect(mockFn).toHaveBeenCalledWith({
       config: 'file-content',
-      mountParcel: undefined,
+      mountParcel: mountRootParcel,
       closeWorkspace: mockCloseWorkspace,
       closeWorkspaceWithSavedChanges: mockCloseWorkspaceWithSavedChanges,
       promptBeforeClosing: mockPromptBeforeClosing,

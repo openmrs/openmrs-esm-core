@@ -194,6 +194,12 @@ yargs.command(
         default: false,
         describe: 'Determines if a service worker should be installed for offline support.',
         type: 'boolean',
+      })
+      .option('use-rspack', {
+        default: undefined,
+        describe:
+          "Set this flag to force the CLI to attempt to use the Rspack Dev Server. Note that this will fail if the project you are using it in doesn't use Rspack.",
+        type: 'boolean',
       }),
   async (args) =>
     runCommand('runDevelop', {
@@ -203,7 +209,7 @@ yargs.command(
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
           await getImportmapAndRoutes(args.importmap, args.routes, args.port),
-          await runProject(args.port, args.sources),
+          await runProject(args.port, args.sources, args['use-rspack']),
           args.backend,
           args.spaPath,
         ),
@@ -294,12 +300,20 @@ yargs.command(
         default: 'production',
         describe: 'The environment to build for. e.g., development, production.',
         type: 'string',
+      })
+      .option('asset', {
+        default: [],
+        describe:
+          "The path to CSS or JS assets to copy into 'assets/' in the build directory, and include as <link> and <script> tags in the generated HTML. Can be used multiple times.",
+        type: 'array',
+        coerce: (arg: Array<string>) => arg.map((p) => resolve(process.cwd(), p)),
       }),
   async (args) =>
     runCommand('runBuild', {
       ...args,
       configUrls: args['config-url'],
       configPaths: args['config-path'],
+      assets: args['asset'],
     }),
 );
 
@@ -392,6 +406,7 @@ yargs.command(
     }),
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 yargs
   .epilog(
     'The SPA assemble config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` ' +

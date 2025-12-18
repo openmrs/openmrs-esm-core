@@ -89,7 +89,7 @@ export default function EditableValue({ path, element, customType }: EditableVal
               customType={customType}
               path={path}
               handleClose={closeEditor}
-              handleSave={(val) => {
+              handleSaveToConfiguration={(val) => {
                 try {
                   const result = JSON.parse(val);
                   const tempConfigUpdate = set(cloneDeep(temporaryConfigStore.getState()), ['config', ...path], result);
@@ -125,7 +125,9 @@ export default function EditableValue({ path, element, customType }: EditableVal
                 hasIconOnly
                 onClick={() => {
                   clearConfigErrors(path.join('.'));
-                  temporaryConfigStore.setState(unset(temporaryConfigStore.getState(), ['config', ...path]) as any);
+                  const state = cloneDeep(temporaryConfigStore.getState());
+                  unset(state, ['config', ...path]);
+                  temporaryConfigStore.setState(state);
                 }}
               />
             ) : null}

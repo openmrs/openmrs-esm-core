@@ -16,6 +16,7 @@ export interface WebpackOptions {
   coreAppsDir?: string;
   addCookie?: string;
   fresh?: boolean;
+  assets?: Array<string>;
 }
 
 export function loadWebpackConfig(options: WebpackOptions = {}) {
@@ -88,10 +89,15 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
     variables.OMRS_CLEAN_BEFORE_BUILD = options.fresh;
   }
 
+  if (Array.isArray(options.assets)) {
+    variables.OMRS_JS_CSS_ASSETS = options.assets.join(';');
+  }
+
   setEnvVariables(variables);
 
   const config:
     | ((env: Record<string, unknown>) => WebpackConfig)
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     | WebpackConfig = require('@openmrs/esm-app-shell/webpack.config.js');
 
   if (typeof config === 'function') {

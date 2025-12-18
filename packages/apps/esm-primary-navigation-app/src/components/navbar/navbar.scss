@@ -41,3 +41,11 @@
   background-color: rgba(244, 244, 244, 0.4);
   margin-inline-start: layout.$spacing-04;
 }
+
+.topNavInfoSlot {
+  gap: layout.$spacing-03;
+}
+
+.panelWrapper {
+  display: contents;
+}

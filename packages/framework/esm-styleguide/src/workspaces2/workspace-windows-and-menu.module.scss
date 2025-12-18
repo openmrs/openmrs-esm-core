@@ -1,0 +1,33 @@
+.workspaceWindowsAndMenuContainer {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  contain: content;
+
+  // When any workspace is maximized, remove containment to allow fixed positioning
+  &.hasMaximizedWindow {
+    contain: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  &.overlay {
+    contain: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: calc(100vw - var(--actionPanelOffset));
+  }
+}
+
+.workspaceWindowsContainer {
+  display: grid;
+  width: fit-content;
+
+  // make its children stack on top of each other
+  > * {
+    grid-area: 1 / 1;
+  }
+}

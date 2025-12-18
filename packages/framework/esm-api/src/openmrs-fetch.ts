@@ -2,9 +2,9 @@
 import { Observable } from 'rxjs';
 import { isPlainObject } from 'lodash-es';
 import { getConfig } from '@openmrs/esm-config';
-import { navigate } from '@openmrs/esm-navigation';
-import { clearHistory } from '@openmrs/esm-navigation/src/index';
+import { clearHistory, navigate } from '@openmrs/esm-navigation';
 import type { FetchResponse } from './types';
+import { defaultRedirectAuthFailureUrl, type EsmApiConfigObject } from './config-schema';
 
 export const restBaseUrl = '/ws/rest/v1';
 export const fhirBaseUrl = '/ws/fhir2/R4';
@@ -89,7 +89,6 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     throw Error("The second argument to @openmrs/api's openmrsFetch function must be a plain object.");
   }
 
-  // @ts-ignore
   if (!window.openmrsBase) {
     throw Error(
       "@openmrs/api is running in a browser that doesn't have window.openmrsBase, which is provided by openmrs-module-spa's HTML file.",
@@ -150,9 +149,9 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
 
   return window.fetch(url, fetchInit as RequestInit).then(async (r) => {
     const response = r as FetchResponse<T>;
+    const { redirectAuthFailure, followRedirects } = await getConfig<EsmApiConfigObject>('@openmrs/esm-api');
     if (response.ok) {
       if (response.status === 204) {
-        const { followRedirects } = await getConfig('@openmrs/esm-api');
         if (followRedirects && response.headers.has('location')) {
           const location = response.headers.get('location');
           if (location) {
@@ -190,16 +189,18 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
        */
 
       /*
-       *Redirect to given url when redirect on auth failure is enabled
+       * Redirect to given url when redirect on auth failure is enabled
        */
-      const { redirectAuthFailure } = await getConfig('@openmrs/esm-api');
-
       if (
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
         (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
       ) {
         clearHistory();
-        navigate({ to: redirectAuthFailure.url });
+        // by default, redirect to the url specified in the config.
+        // If blank, use the location header from the response.
+        // If that is also blank, use the default redirect url.
+        const location = redirectAuthFailure.url || response.headers.get('location') || defaultRedirectAuthFailureUrl;
+        navigate({ to: location });
 
         /* We sometimes don't really want this promise to resolve since there's no response data,
          * nor do we want it to reject because that would trigger error handling. We instead

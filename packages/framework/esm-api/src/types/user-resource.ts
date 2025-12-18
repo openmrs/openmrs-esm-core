@@ -54,16 +54,19 @@ export interface SessionLocation {
 
 export interface Privilege {
   uuid: string;
+  name: string;
   display: string;
   links?: Array<any>;
 }
 
 export interface Role {
   uuid: string;
+  name: string;
   display: string;
-  links: Array<any>;
+  links?: Array<any>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface User extends OpenmrsResource {
   // TODO: add more attributes
 }

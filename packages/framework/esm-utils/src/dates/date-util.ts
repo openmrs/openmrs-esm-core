@@ -10,13 +10,15 @@ import {
   createCalendar,
   toCalendar,
 } from '@internationalized/date';
-import { getLocale } from '@openmrs/esm-utils';
+import { DurationFormat } from '@formatjs/intl-durationformat';
 import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
-import isToday from 'dayjs/plugin/isToday';
-import objectSupport from 'dayjs/plugin/objectSupport';
-import utc from 'dayjs/plugin/utc';
+import isToday from 'dayjs/plugin/isToday.js';
+import objectSupport from 'dayjs/plugin/objectSupport.js';
+import utc from 'dayjs/plugin/utc.js';
 import { isNil, omit } from 'lodash-es';
+import { getLocale } from '../';
+import type { DurationFormatOptions, DurationInput } from '@formatjs/intl-durationformat/src/types';
 
 dayjs.extend(isToday);
 dayjs.extend(utc);
@@ -412,4 +414,16 @@ export function convertToLocaleCalendar(
   const localCalendarName = getDefaultCalendar(locale_);
 
   return localCalendarName ? toCalendar(date, createCalendar(localCalendarName)) : date;
+}
+
+/**
+ * Formats the input duration according to the current locale.
+ *
+ * @param duration The duration to format (DurationInput object).
+ * @param options Optional options for formatting.
+ * @returns The formatted duration string.
+ */
+export function formatDuration(duration: DurationInput, options?: DurationFormatOptions) {
+  const formatter = new DurationFormat(getLocale(), options);
+  return formatter.format(duration);
 }

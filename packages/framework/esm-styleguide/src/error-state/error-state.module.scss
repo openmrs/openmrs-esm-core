@@ -1,6 +1,6 @@
 @use '@carbon/layout';
 @use '@carbon/type';
-@use '@openmrs/esm-styleguide/src/vars' as *;
+@use '../vars' as *;
 
 .errorMessage {
   @include type.type-style('heading-compact-02');
@@ -13,35 +13,6 @@
   margin-bottom: layout.$spacing-03;
   @include type.type-style('body-01');
   color: $text-02;
-}
-
-.desktopHeading {
-  h4 {
-    @include type.type-style('heading-compact-02');
-    color: $text-02;
-  }
-}
-
-.tabletHeading {
-  h4 {
-    @include type.type-style('heading-03');
-    color: $text-02;
-  }
-}
-
-.desktopHeading,
-.tabletHeading {
-  text-align: left;
-  text-transform: capitalize;
-  margin-bottom: layout.$spacing-05;
-
-  h4:after {
-    content: '';
-    display: block;
-    width: layout.$spacing-07;
-    padding-top: 0.188rem;
-    border-bottom: 0.375rem solid var(--brand-03);
-  }
 }
 
 .tile {

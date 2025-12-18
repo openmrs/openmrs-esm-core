@@ -1,41 +1,29 @@
-[@openmrs/esm-framework](../API.md) / OfflineModeResult
+[O3 Framework](../API.md) / OfflineModeResult
 
 # Interface: OfflineModeResult
 
-## Table of contents
+Defined in: [packages/framework/esm-offline/src/mode.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L36)
 
-### Offline Properties
-
-- [active](OfflineModeResult.md#active)
-- [current](OfflineModeResult.md#current)
-- [notAvailable](OfflineModeResult.md#notavailable)
-
-## Offline Properties
+## Properties
 
 ### active
 
-• **active**: `boolean`
+> **active**: `boolean`
 
-#### Defined in
+Defined in: [packages/framework/esm-offline/src/mode.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L39)
 
-[packages/framework/esm-offline/src/mode.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L39)
-
-___
+***
 
 ### current
 
-• **current**: [`OfflineMode`](../API.md#offlinemode)
+> **current**: [`OfflineMode`](../type-aliases/OfflineMode.md)
 
-#### Defined in
+Defined in: [packages/framework/esm-offline/src/mode.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L37)
 
-[packages/framework/esm-offline/src/mode.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L37)
-
-___
+***
 
 ### notAvailable
 
-• **notAvailable**: `boolean`
+> **notAvailable**: `boolean`
 
-#### Defined in
-
-[packages/framework/esm-offline/src/mode.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L38)
+Defined in: [packages/framework/esm-offline/src/mode.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L38)

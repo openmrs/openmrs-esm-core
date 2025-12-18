@@ -1,6 +1,6 @@
 @use '@carbon/layout';
 @use '@carbon/type';
-@use '@openmrs/esm-styleguide/src/vars' as *;
+@use '../vars' as *;
 
 .bodyCompact01 {
   @include type.type-style('body-compact-01');
@@ -13,11 +13,6 @@
   padding: 0 layout.$spacing-06;
   background-color: $ui-01;
   height: 25.5rem;
-}
-
-.resultsCount {
-  @extend .bodyCompact01;
-  color: $color-gray-70;
 }
 
 .locationResultsContainer {
@@ -37,18 +32,6 @@
   @include type.type-style('heading-compact-01');
   color: $text-02;
   margin-bottom: layout.$spacing-05;
-}
-
-.confirmButton {
-  padding: layout.$spacing-06;
-
-  .savePreferenceCheckbox {
-    padding-bottom: layout.$spacing-05 !important;
-  }
-
-  button {
-    width: 100%;
-  }
 }
 
 .radioButtonSkeleton {
@@ -81,4 +64,8 @@
   flex-direction: column;
   justify-content: center;
   margin: layout.$spacing-06 auto 0;
+}
+
+.errorNotification {
+  margin: layout.$spacing-03 0;
 }

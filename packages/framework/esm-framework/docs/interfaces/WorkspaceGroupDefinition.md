@@ -1,34 +1,25 @@
-[@openmrs/esm-framework](../API.md) / WorkspaceGroupDefinition
+[O3 Framework](../API.md) / WorkspaceGroupDefinition
 
 # Interface: WorkspaceGroupDefinition
 
-## Table of contents
-
-### Properties
-
-- [members](WorkspaceGroupDefinition.md#members)
-- [name](WorkspaceGroupDefinition.md#name)
+Defined in: packages/framework/esm-globals/dist/types.d.ts:287
 
 ## Properties
 
-### members
+### members?
 
-• `Optional` **members**: `string`[]
+> `optional` **members**: `string`[]
+
+Defined in: packages/framework/esm-globals/dist/types.d.ts:295
 
 List of workspace names which are part of the workspace group.
 
-#### Defined in
-
-[packages/framework/esm-globals/src/types.ts:362](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L362)
-
-___
+***
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
+
+Defined in: packages/framework/esm-globals/dist/types.d.ts:291
 
 Name of the workspace group. This is used to launch the workspace group
-
-#### Defined in
-
-[packages/framework/esm-globals/src/types.ts:358](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L358)

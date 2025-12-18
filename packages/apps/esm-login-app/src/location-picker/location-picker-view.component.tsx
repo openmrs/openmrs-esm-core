@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { Button, Checkbox, InlineLoading } from '@carbon/react';
 import { useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, Checkbox, InlineLoading } from '@carbon/react';
 import {
+  getCoreTranslation,
+  LocationPicker,
   navigate,
   setSessionLocation,
   useConfig,
   useConnectivity,
   useSession,
-  LocationPicker,
-  getCoreTranslation,
 } from '@openmrs/esm-framework';
-import type { LoginReferrer } from '../login/login.component';
 import { useDefaultLocation, useLocationCount } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
+import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker.scss';
 
 interface LocationPickerProps {
@@ -27,6 +27,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
   const [searchParams] = useSearchParams();
+  const checkboxId = useId();
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
   const { defaultLocation, updateDefaultLocation, savePreference, setSavePreference } =
     useDefaultLocation(isUpdateFlow);
@@ -40,7 +41,6 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
   const { currentUser, userProperties } = useMemo(
     () => ({
       currentUser: user?.display,
-      userUuid: user?.uuid,
       userProperties: user?.userProperties,
     }),
     [user],
@@ -64,7 +64,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
       setIsSubmitting(true);
 
       const referrer = state?.referrer;
-      const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
+      const returnToUrl = searchParams.get('returnToUrl');
 
       const sessionDefined = setSessionLocation(locationUuid, new AbortController());
 
@@ -79,20 +79,23 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
         } else {
           navigate({ to: config.links.loginSuccess });
         }
-        return;
       });
     },
-    [state?.referrer, config.links.loginSuccess, updateDefaultLocation],
+    [state?.referrer, config.links.loginSuccess, updateDefaultLocation, searchParams],
   );
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
     if (isLoadingLocationCount) return;
 
-    if (locationCount == 0) {
+    if (locationCount === 0) {
       changeLocation();
-    } else if (locationCount == 1 || !chooseLocation.enabled) {
-      changeLocation(firstLocation!.resource.id, true);
+    } else if (locationCount === 1 || !chooseLocation.enabled) {
+      if (firstLocation?.resource?.id) {
+        changeLocation(firstLocation.resource.id, true);
+      } else {
+        console.error('Expected location data is missing', { firstLocation, locationCount });
+      }
     }
   }, [locationCount, isLoadingLocationCount]);
 
@@ -111,7 +114,9 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
     (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
 
-      if (!activeLocation) return;
+      if (!activeLocation) {
+        return;
+      }
 
       changeLocation(activeLocation, savePreference);
     },
@@ -141,10 +146,10 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
           />
           <div className={styles.footerContainer}>
             <Checkbox
-              id="checkbox"
               className={styles.savePreferenceCheckbox}
-              labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
               checked={savePreference}
+              id={checkboxId}
+              labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
               onChange={(_, { checked }) => setSavePreference(checked)}
             />
             <Button

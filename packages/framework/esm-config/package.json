@@ -1,18 +1,33 @@
 {
   "name": "@openmrs/esm-config",
-  "version": "6.2.0",
+  "version": "8.0.0",
   "license": "MPL-2.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
-  "browser": "dist/openmrs-esm-module-config.js",
-  "main": "src/index.ts",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./src/public": {
+      "types": "./src/public.ts",
+      "default": "./dist/public.js"
+    },
+    "./mock": {
+      "import": "./mock.ts",
+      "require": "./mock-jest.ts"
+    }
+  },
   "source": true,
   "scripts": {
-    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
-    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode development",
-    "analyze": "webpack --mode=production --env analyze=true",
-    "typescript": "tsc",
+    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
+    "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
+    "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "typescript": "tsc --project tsconfig.build.json",
     "lint": "eslint src --ext ts,tsx"
   },
   "keywords": [
@@ -38,7 +53,7 @@
     "access": "public"
   },
   "dependencies": {
-    "ramda": "^0.26.1"
+    "ramda": "^0.30.1"
   },
   "peerDependencies": {
     "@openmrs/esm-globals": "6.x",
@@ -50,7 +65,15 @@
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
     "@types/ramda": "^0.26.44",
-    "single-spa": "^6.0.3"
+    "@vitest/coverage-v8": "^4.0.7",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "happy-dom": "^17.4.7",
+    "rimraf": "^6.0.1",
+    "single-spa": "^6.0.3",
+    "vitest": "^4.0.7"
   }
 }

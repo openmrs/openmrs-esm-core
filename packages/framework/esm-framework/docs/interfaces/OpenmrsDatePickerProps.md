@@ -1,675 +1,244 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsDatePickerProps
+[O3 Framework](../API.md) / OpenmrsDatePickerProps
 
 # Interface: OpenmrsDatePickerProps
 
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L46)
+
 Properties for the OpenmrsDatePicker
 
-## Hierarchy
+## Extends
 
-- `Omit`<`DatePickerProps`<`CalendarDate`\>, ``"className"`` \| ``"onChange"`` \| ``"defaultValue"`` \| ``"value"``\>
-
-  ↳ **`OpenmrsDatePickerProps`**
-
-## Table of contents
-
-### Properties
-
-- [aria-describedby](OpenmrsDatePickerProps.md#aria-describedby)
-- [aria-details](OpenmrsDatePickerProps.md#aria-details)
-- [aria-label](OpenmrsDatePickerProps.md#aria-label)
-- [aria-labelledby](OpenmrsDatePickerProps.md#aria-labelledby)
-- [autoFocus](OpenmrsDatePickerProps.md#autofocus)
-- [children](OpenmrsDatePickerProps.md#children)
-- [className](OpenmrsDatePickerProps.md#classname)
-- [defaultOpen](OpenmrsDatePickerProps.md#defaultopen)
-- [defaultValue](OpenmrsDatePickerProps.md#defaultvalue)
-- [firstDayOfWeek](OpenmrsDatePickerProps.md#firstdayofweek)
-- [granularity](OpenmrsDatePickerProps.md#granularity)
-- [hideTimeZone](OpenmrsDatePickerProps.md#hidetimezone)
-- [hourCycle](OpenmrsDatePickerProps.md#hourcycle)
-- [id](OpenmrsDatePickerProps.md#id)
-- [invalid](OpenmrsDatePickerProps.md#invalid)
-- [invalidText](OpenmrsDatePickerProps.md#invalidtext)
-- [isDisabled](OpenmrsDatePickerProps.md#isdisabled)
-- [isInvalid](OpenmrsDatePickerProps.md#isinvalid)
-- [isOpen](OpenmrsDatePickerProps.md#isopen)
-- [isReadOnly](OpenmrsDatePickerProps.md#isreadonly)
-- [isRequired](OpenmrsDatePickerProps.md#isrequired)
-- [label](OpenmrsDatePickerProps.md#label)
-- [labelText](OpenmrsDatePickerProps.md#labeltext)
-- [light](OpenmrsDatePickerProps.md#light)
-- [maxDate](OpenmrsDatePickerProps.md#maxdate)
-- [maxValue](OpenmrsDatePickerProps.md#maxvalue)
-- [minDate](OpenmrsDatePickerProps.md#mindate)
-- [minValue](OpenmrsDatePickerProps.md#minvalue)
-- [name](OpenmrsDatePickerProps.md#name)
-- [pageBehavior](OpenmrsDatePickerProps.md#pagebehavior)
-- [placeholderValue](OpenmrsDatePickerProps.md#placeholdervalue)
-- [short](OpenmrsDatePickerProps.md#short)
-- [shouldCloseOnSelect](OpenmrsDatePickerProps.md#shouldcloseonselect)
-- [shouldForceLeadingZeros](OpenmrsDatePickerProps.md#shouldforceleadingzeros)
-- [size](OpenmrsDatePickerProps.md#size)
-- [slot](OpenmrsDatePickerProps.md#slot)
-- [style](OpenmrsDatePickerProps.md#style)
-- [validationBehavior](OpenmrsDatePickerProps.md#validationbehavior)
-- [value](OpenmrsDatePickerProps.md#value)
-
-### Methods
-
-- [isDateUnavailable](OpenmrsDatePickerProps.md#isdateunavailable)
-- [onBlur](OpenmrsDatePickerProps.md#onblur)
-- [onChange](OpenmrsDatePickerProps.md#onchange)
-- [onChangeRaw](OpenmrsDatePickerProps.md#onchangeraw)
-- [onFocus](OpenmrsDatePickerProps.md#onfocus)
-- [onFocusChange](OpenmrsDatePickerProps.md#onfocuschange)
-- [onKeyDown](OpenmrsDatePickerProps.md#onkeydown)
-- [onKeyUp](OpenmrsDatePickerProps.md#onkeyup)
-- [onOpenChange](OpenmrsDatePickerProps.md#onopenchange)
-- [validate](OpenmrsDatePickerProps.md#validate)
+- `Omit`\<`DatePickerProps`\<`CalendarDate`\>, `"className"` \| `"onChange"` \| `"defaultValue"` \| `"value"`\>
 
 ## Properties
 
-### aria-describedby
+### aria-describedby?
 
-• `Optional` **aria-describedby**: `string`
+> `optional` **aria-describedby**: `string`
+
+Defined in: node\_modules/@react-types/shared/src/dom.d.ts:40
 
 Identifies the element (or elements) that describes the object.
 
 #### Inherited from
 
-Omit.aria-describedby
+`Omit.aria-describedby`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/dom.d.ts:40
+### aria-details?
 
-___
+> `optional` **aria-details**: `string`
 
-### aria-details
-
-• `Optional` **aria-details**: `string`
+Defined in: node\_modules/@react-types/shared/src/dom.d.ts:45
 
 Identifies the element (or elements) that provide a detailed, extended description for the object.
 
 #### Inherited from
 
-Omit.aria-details
+`Omit.aria-details`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/dom.d.ts:45
+### aria-label?
 
-___
+> `optional` **aria-label**: `string`
 
-### aria-label
-
-• `Optional` **aria-label**: `string`
+Defined in: node\_modules/@react-types/shared/src/dom.d.ts:30
 
 Defines a string value that labels the current element.
 
 #### Inherited from
 
-Omit.aria-label
+`Omit.aria-label`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/dom.d.ts:30
+### aria-labelledby?
 
-___
+> `optional` **aria-labelledby**: `string`
 
-### aria-labelledby
-
-• `Optional` **aria-labelledby**: `string`
+Defined in: node\_modules/@react-types/shared/src/dom.d.ts:35
 
 Identifies the element (or elements) that labels the current element.
 
 #### Inherited from
 
-Omit.aria-labelledby
+`Omit.aria-labelledby`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/dom.d.ts:35
+### autoFocus?
 
-___
+> `optional` **autoFocus**: `boolean`
 
-### autoFocus
-
-• `Optional` **autoFocus**: `boolean`
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:128
 
 Whether the element should receive focus on render.
 
 #### Inherited from
 
-Omit.autoFocus
+`Omit.autoFocus`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/events.d.ts:120
+### children?
 
-___
+> `optional` **children**: `ReactNode` \| (`values`) => `ReactNode`
 
-### children
-
-• `Optional` **children**: `ReactNode` \| (`values`: `DatePickerRenderProps` & { `defaultChildren`: `ReactNode`  }) => `ReactNode`
+Defined in: node\_modules/react-aria-components/dist/types.d.ts:53
 
 The children of the component. A function may be provided to alter the children based on component state.
 
 #### Inherited from
 
-Omit.children
+`Omit.children`
 
-#### Defined in
+***
 
-node_modules/react-aria-components/dist/types.d.ts:53
+### className?
 
-___
+> `optional` **className**: `Argument`
 
-### className
-
-• `Optional` **className**: `Argument`
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L50)
 
 Any CSS classes to add to the outer div of the date picker
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L102)
+### defaultOpen?
 
-___
+> `optional` **defaultOpen**: `boolean`
 
-### defaultOpen
-
-• `Optional` **defaultOpen**: `boolean`
+Defined in: node\_modules/@react-types/overlays/src/index.d.ts:112
 
 Whether the overlay is open by default (uncontrolled).
 
 #### Inherited from
 
-Omit.defaultOpen
+`Omit.defaultOpen`
 
-#### Defined in
+***
 
-node_modules/@react-types/overlays/src/index.d.ts:112
+### defaultValue?
 
-___
+> `optional` **defaultValue**: `DateInputValue`
 
-### defaultValue
-
-• `Optional` **defaultValue**: [`DateInputValue`](../API.md#dateinputvalue)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L52)
 
 The default value (uncontrolled)
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L104)
+### firstDayOfWeek?
 
-___
+> `optional` **firstDayOfWeek**: `"sun"` \| `"mon"` \| `"tue"` \| `"wed"` \| `"thu"` \| `"fri"` \| `"sat"`
 
-### firstDayOfWeek
-
-• `Optional` **firstDayOfWeek**: ``"sun"`` \| ``"mon"`` \| ``"tue"`` \| ``"wed"`` \| ``"thu"`` \| ``"fri"`` \| ``"sat"``
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:78
 
 The day that starts the week.
 
 #### Inherited from
 
-Omit.firstDayOfWeek
+`Omit.firstDayOfWeek`
 
-#### Defined in
+***
 
-node_modules/@react-types/datepicker/src/index.d.ts:78
+### granularity?
 
-___
+> `optional` **granularity**: `Granularity`
 
-### granularity
-
-• `Optional` **granularity**: `Granularity`
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:52
 
 Determines the smallest unit that is displayed in the date picker. By default, this is `"day"` for dates, and `"minute"` for times.
 
 #### Inherited from
 
-Omit.granularity
+`Omit.granularity`
 
-#### Defined in
+***
 
-node_modules/@react-types/datepicker/src/index.d.ts:52
+### hideTimeZone?
 
-___
+> `optional` **hideTimeZone**: `boolean`
 
-### hideTimeZone
-
-• `Optional` **hideTimeZone**: `boolean`
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:57
 
 Whether to hide the time zone abbreviation.
 
-**`default`** false
+#### Default
+
+```ts
+false
+```
 
 #### Inherited from
 
-Omit.hideTimeZone
+`Omit.hideTimeZone`
 
-#### Defined in
+***
 
-node_modules/@react-types/datepicker/src/index.d.ts:57
+### hourCycle?
 
-___
+> `optional` **hourCycle**: `12` \| `24`
 
-### hourCycle
-
-• `Optional` **hourCycle**: ``12`` \| ``24``
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:50
 
 Whether to display the time in 12 or 24 hour format. By default, this is determined by the user's locale.
 
 #### Inherited from
 
-Omit.hourCycle
+`Omit.hourCycle`
 
-#### Defined in
+***
 
-node_modules/@react-types/datepicker/src/index.d.ts:50
+### id?
 
-___
+> `optional` **id**: `string`
 
-### id
-
-• `Optional` **id**: `string`
+Defined in: node\_modules/@react-types/shared/src/dom.d.ts:62
 
 The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).
 
 #### Inherited from
 
-Omit.id
+`Omit.id`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/dom.d.ts:62
+### invalid?
 
-___
+> `optional` **invalid**: `boolean`
 
-### invalid
-
-• `Optional` **invalid**: `boolean`
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L54)
 
 Whether the input value is invalid.
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L106)
+### invalidText?
 
-___
+> `optional` **invalidText**: `string`
 
-### invalidText
-
-• `Optional` **invalidText**: `string`
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L56)
 
 Text to show if the input is invalid e.g. an error message
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:108](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L108)
+### isDateUnavailable()?
 
-___
+> `optional` **isDateUnavailable**: (`date`) => `boolean`
 
-### isDisabled
-
-• `Optional` **isDisabled**: `boolean`
-
-Whether the input is disabled.
-
-#### Inherited from
-
-Omit.isDisabled
-
-#### Defined in
-
-node_modules/@react-types/shared/src/inputs.d.ts:60
-
-___
-
-### isInvalid
-
-• `Optional` **isInvalid**: `boolean`
-
-Whether the input value is invalid.
-
-#### Inherited from
-
-Omit.isInvalid
-
-#### Defined in
-
-node_modules/@react-types/shared/src/inputs.d.ts:25
-
-___
-
-### isOpen
-
-• `Optional` **isOpen**: `boolean`
-
-Whether the overlay is open by default (controlled).
-
-#### Inherited from
-
-Omit.isOpen
-
-#### Defined in
-
-node_modules/@react-types/overlays/src/index.d.ts:110
-
-___
-
-### isReadOnly
-
-• `Optional` **isReadOnly**: `boolean`
-
-Whether the input can be selected but not changed by the user.
-
-#### Inherited from
-
-Omit.isReadOnly
-
-#### Defined in
-
-node_modules/@react-types/shared/src/inputs.d.ts:62
-
-___
-
-### isRequired
-
-• `Optional` **isRequired**: `boolean`
-
-Whether user input is required on the input before form submission.
-
-#### Inherited from
-
-Omit.isRequired
-
-#### Defined in
-
-node_modules/@react-types/shared/src/inputs.d.ts:23
-
-___
-
-### label
-
-• `Optional` **label**: `string` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
-
-The label for this DatePicker element
-
-**`deprecated`** Use labelText instead
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L113)
-
-___
-
-### labelText
-
-• `Optional` **labelText**: `string` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
-
-The label for this DatePicker element.
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L115)
-
-___
-
-### light
-
-• `Optional` **light**: `boolean`
-
-'true' to use the light version.
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:117](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L117)
-
-___
-
-### maxDate
-
-• `Optional` **maxDate**: [`DateInputValue`](../API.md#dateinputvalue)
-
-The latest date it is possible to select
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:119](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L119)
-
-___
-
-### maxValue
-
-• `Optional` **maxValue**: ``null`` \| `DateValue`
-
-The maximum allowed date that a user may select.
-
-#### Inherited from
-
-Omit.maxValue
-
-#### Defined in
-
-node_modules/@react-types/datepicker/src/index.d.ts:44
-
-___
-
-### minDate
-
-• `Optional` **minDate**: [`DateInputValue`](../API.md#dateinputvalue)
-
-The earliest date it is possible to select
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L121)
-
-___
-
-### minValue
-
-• `Optional` **minValue**: ``null`` \| `DateValue`
-
-The minimum allowed date that a user may select.
-
-#### Inherited from
-
-Omit.minValue
-
-#### Defined in
-
-node_modules/@react-types/datepicker/src/index.d.ts:42
-
-___
-
-### name
-
-• `Optional` **name**: `string`
-
-The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname).
-
-#### Inherited from
-
-Omit.name
-
-#### Defined in
-
-node_modules/@react-types/shared/src/dom.d.ts:130
-
-___
-
-### pageBehavior
-
-• `Optional` **pageBehavior**: `PageBehavior`
-
-Controls the behavior of paging. Pagination either works by advancing the visible page by visibleDuration (default) or one unit of visibleDuration.
-
-**`default`** visible
-
-#### Inherited from
-
-Omit.pageBehavior
-
-#### Defined in
-
-node_modules/@react-types/datepicker/src/index.d.ts:74
-
-___
-
-### placeholderValue
-
-• `Optional` **placeholderValue**: ``null`` \| `CalendarDate`
-
-A placeholder date that influences the format of the placeholder shown when no value is selected. Defaults to today's date at midnight.
-
-#### Inherited from
-
-Omit.placeholderValue
-
-#### Defined in
-
-node_modules/@react-types/datepicker/src/index.d.ts:48
-
-___
-
-### short
-
-• `Optional` **short**: `boolean`
-
-'true' to use the short version.
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L129)
-
-___
-
-### shouldCloseOnSelect
-
-• `Optional` **shouldCloseOnSelect**: `boolean` \| () => `boolean`
-
-Determines whether the date picker popover should close automatically when a date is selected.
-
-**`default`** true
-
-#### Inherited from
-
-Omit.shouldCloseOnSelect
-
-#### Defined in
-
-node_modules/@react-stately/datepicker/dist/types.d.ts:21
-
-___
-
-### shouldForceLeadingZeros
-
-• `Optional` **shouldForceLeadingZeros**: `boolean`
-
-Whether to always show leading zeros in the month, day, and hour fields.
-By default, this is determined by the user's locale.
-
-#### Inherited from
-
-Omit.shouldForceLeadingZeros
-
-#### Defined in
-
-node_modules/@react-types/datepicker/src/index.d.ts:62
-
-___
-
-### size
-
-• `Optional` **size**: ``"sm"`` \| ``"md"`` \| ``"lg"``
-
-Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:127](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L127)
-
-___
-
-### slot
-
-• `Optional` **slot**: ``null`` \| `string`
-
-A slot name for the component. Slots allow the component to receive props from a parent component.
-An explicit `null` value indicates that the local props completely override all props received from a parent.
-
-#### Inherited from
-
-Omit.slot
-
-#### Defined in
-
-node_modules/react-aria-components/dist/types.d.ts:70
-
-___
-
-### style
-
-• `Optional` **style**: `CSSProperties` \| (`values`: `DatePickerRenderProps` & { `defaultStyle`: `CSSProperties`  }) => `undefined` \| `CSSProperties`
-
-The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state.
-
-#### Inherited from
-
-Omit.style
-
-#### Defined in
-
-node_modules/react-aria-components/dist/types.d.ts:47
-
-___
-
-### validationBehavior
-
-• `Optional` **validationBehavior**: ``"native"`` \| ``"aria"``
-
-Whether to use native HTML form validation to prevent form submission
-when the value is missing or invalid, or mark the field as required
-or invalid via ARIA.
-
-**`default`** 'native'
-
-#### Inherited from
-
-Omit.validationBehavior
-
-#### Defined in
-
-node_modules/react-aria-components/dist/types.d.ts:81
-
-___
-
-### value
-
-• `Optional` **value**: [`DateInputValue`](../API.md#dateinputvalue)
-
-The value (controlled)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L131)
-
-## Methods
-
-### isDateUnavailable
-
-▸ `Optional` **isDateUnavailable**(`date`): `boolean`
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:46
 
 Callback that is called for each date of the calendar. If it returns true, then the date is unavailable.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `date` | `DateValue` |
+##### date
+
+`DateValue`
 
 #### Returns
 
@@ -677,25 +246,189 @@ Callback that is called for each date of the calendar. If it returns true, then 
 
 #### Inherited from
 
-Omit.isDateUnavailable
+`Omit.isDateUnavailable`
 
-#### Defined in
+***
 
-node_modules/@react-types/datepicker/src/index.d.ts:46
+### isDisabled?
 
-___
+> `optional` **isDisabled**: `boolean`
 
-### onBlur
+Defined in: node\_modules/@react-types/shared/src/inputs.d.ts:60
 
-▸ `Optional` **onBlur**(`e`): `void`
+Whether the input is disabled.
+
+#### Inherited from
+
+`Omit.isDisabled`
+
+***
+
+### isInvalid?
+
+> `optional` **isInvalid**: `boolean`
+
+Defined in: node\_modules/@react-types/shared/src/inputs.d.ts:25
+
+Whether the input value is invalid.
+
+#### Inherited from
+
+`Omit.isInvalid`
+
+***
+
+### isOpen?
+
+> `optional` **isOpen**: `boolean`
+
+Defined in: node\_modules/@react-types/overlays/src/index.d.ts:110
+
+Whether the overlay is open by default (controlled).
+
+#### Inherited from
+
+`Omit.isOpen`
+
+***
+
+### isReadOnly?
+
+> `optional` **isReadOnly**: `boolean`
+
+Defined in: node\_modules/@react-types/shared/src/inputs.d.ts:62
+
+Whether the input can be selected but not changed by the user.
+
+#### Inherited from
+
+`Omit.isReadOnly`
+
+***
+
+### isRequired?
+
+> `optional` **isRequired**: `boolean`
+
+Defined in: node\_modules/@react-types/shared/src/inputs.d.ts:23
+
+Whether user input is required on the input before form submission.
+
+#### Inherited from
+
+`Omit.isRequired`
+
+***
+
+### ~~label?~~
+
+> `optional` **label**: `string` \| `ReactElement`\<`any`, `string` \| `JSXElementConstructor`\<`any`\>\>
+
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L61)
+
+The label for this DatePicker element
+
+#### Deprecated
+
+Use labelText instead
+
+***
+
+### labelText?
+
+> `optional` **labelText**: `string` \| `ReactElement`\<`any`, `string` \| `JSXElementConstructor`\<`any`\>\>
+
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L63)
+
+The label for this DatePicker element.
+
+***
+
+### light?
+
+> `optional` **light**: `boolean`
+
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L65)
+
+'true' to use the light version.
+
+***
+
+### maxDate?
+
+> `optional` **maxDate**: `DateInputValue`
+
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L67)
+
+The latest date it is possible to select
+
+***
+
+### maxValue?
+
+> `optional` **maxValue**: `null` \| `DateValue`
+
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:44
+
+The maximum allowed date that a user may select.
+
+#### Inherited from
+
+`Omit.maxValue`
+
+***
+
+### minDate?
+
+> `optional` **minDate**: `DateInputValue`
+
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L69)
+
+The earliest date it is possible to select
+
+***
+
+### minValue?
+
+> `optional` **minValue**: `null` \| `DateValue`
+
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:42
+
+The minimum allowed date that a user may select.
+
+#### Inherited from
+
+`Omit.minValue`
+
+***
+
+### name?
+
+> `optional` **name**: `string`
+
+Defined in: node\_modules/@react-types/shared/src/dom.d.ts:130
+
+The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname).
+
+#### Inherited from
+
+`Omit.name`
+
+***
+
+### onBlur()?
+
+> `optional` **onBlur**: (`e`) => `void`
+
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:87
 
 Handler that is called when the element loses focus.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `e` | `FocusEvent`<`Target`, `Element`\> |
+##### e
+
+`FocusEvent`\<`Element`\>
 
 #### Returns
 
@@ -703,69 +436,63 @@ Handler that is called when the element loses focus.
 
 #### Inherited from
 
-Omit.onBlur
+`Omit.onBlur`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/events.d.ts:85
+### onChange()?
 
-___
+> `optional` **onChange**: (`value`) => `void`
 
-### onChange
-
-▸ `Optional` **onChange**(`value`): `void`
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L71)
 
 Handler that is called when the value changes.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `undefined` \| ``null`` \| `Date` |
+##### value
+
+`undefined` | `null` | `Date`
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:123](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L123)
+### onChangeRaw()?
 
-___
+> `optional` **onChangeRaw**: (`value`) => `void`
 
-### onChangeRaw
-
-▸ `Optional` **onChangeRaw**(`value`): `void`
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L73)
 
 Handler that is called when the value changes. Note that this provides types from @internationalized/date.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | ``null`` \| `DateValue` |
+##### value
+
+`null` | `DateValue`
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L125)
+### onFocus()?
 
-___
+> `optional` **onFocus**: (`e`) => `void`
 
-### onFocus
-
-▸ `Optional` **onFocus**(`e`): `void`
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:85
 
 Handler that is called when the element receives focus.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `e` | `FocusEvent`<`Target`, `Element`\> |
+##### e
+
+`FocusEvent`\<`Element`\>
 
 #### Returns
 
@@ -773,25 +500,23 @@ Handler that is called when the element receives focus.
 
 #### Inherited from
 
-Omit.onFocus
+`Omit.onFocus`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/events.d.ts:83
+### onFocusChange()?
 
-___
+> `optional` **onFocusChange**: (`isFocused`) => `void`
 
-### onFocusChange
-
-▸ `Optional` **onFocusChange**(`isFocused`): `void`
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:89
 
 Handler that is called when the element's focus status changes.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `isFocused` | `boolean` |
+##### isFocused
+
+`boolean`
 
 #### Returns
 
@@ -799,25 +524,23 @@ Handler that is called when the element's focus status changes.
 
 #### Inherited from
 
-Omit.onFocusChange
+`Omit.onFocusChange`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/events.d.ts:87
+### onKeyDown()?
 
-___
+> `optional` **onKeyDown**: (`e`) => `void`
 
-### onKeyDown
-
-▸ `Optional` **onKeyDown**(`e`): `void`
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:78
 
 Handler that is called when a key is pressed.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `e` | `KeyboardEvent` |
+##### e
+
+`KeyboardEvent`
 
 #### Returns
 
@@ -825,25 +548,23 @@ Handler that is called when a key is pressed.
 
 #### Inherited from
 
-Omit.onKeyDown
+`Omit.onKeyDown`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/events.d.ts:76
+### onKeyUp()?
 
-___
+> `optional` **onKeyUp**: (`e`) => `void`
 
-### onKeyUp
-
-▸ `Optional` **onKeyUp**(`e`): `void`
+Defined in: node\_modules/@react-types/shared/src/events.d.ts:80
 
 Handler that is called when a key is released.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `e` | `KeyboardEvent` |
+##### e
+
+`KeyboardEvent`
 
 #### Returns
 
@@ -851,25 +572,23 @@ Handler that is called when a key is released.
 
 #### Inherited from
 
-Omit.onKeyUp
+`Omit.onKeyUp`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/events.d.ts:78
+### onOpenChange()?
 
-___
+> `optional` **onOpenChange**: (`isOpen`) => `void`
 
-### onOpenChange
-
-▸ `Optional` **onOpenChange**(`isOpen`): `void`
+Defined in: node\_modules/@react-types/overlays/src/index.d.ts:114
 
 Handler that is called when the overlay's open state changes.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `isOpen` | `boolean` |
+##### isOpen
+
+`boolean`
 
 #### Returns
 
@@ -877,17 +596,133 @@ Handler that is called when the overlay's open state changes.
 
 #### Inherited from
 
-Omit.onOpenChange
+`Omit.onOpenChange`
 
-#### Defined in
+***
 
-node_modules/@react-types/overlays/src/index.d.ts:114
+### pageBehavior?
 
-___
+> `optional` **pageBehavior**: `PageBehavior`
 
-### validate
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:74
 
-▸ `Optional` **validate**(`value`): `undefined` \| ``null`` \| ``true`` \| `ValidationError`
+Controls the behavior of paging. Pagination either works by advancing the visible page by visibleDuration (default) or one unit of visibleDuration.
+
+#### Default
+
+```ts
+visible
+```
+
+#### Inherited from
+
+`Omit.pageBehavior`
+
+***
+
+### placeholderValue?
+
+> `optional` **placeholderValue**: `null` \| `CalendarDate`
+
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:48
+
+A placeholder date that influences the format of the placeholder shown when no value is selected. Defaults to today's date at midnight.
+
+#### Inherited from
+
+`Omit.placeholderValue`
+
+***
+
+### short?
+
+> `optional` **short**: `boolean`
+
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L77)
+
+'true' to use the short version.
+
+***
+
+### shouldCloseOnSelect?
+
+> `optional` **shouldCloseOnSelect**: `boolean` \| () => `boolean`
+
+Defined in: node\_modules/@react-stately/datepicker/dist/types.d.ts:21
+
+Determines whether the date picker popover should close automatically when a date is selected.
+
+#### Default
+
+```ts
+true
+```
+
+#### Inherited from
+
+`Omit.shouldCloseOnSelect`
+
+***
+
+### shouldForceLeadingZeros?
+
+> `optional` **shouldForceLeadingZeros**: `boolean`
+
+Defined in: node\_modules/@react-types/datepicker/src/index.d.ts:62
+
+Whether to always show leading zeros in the month, day, and hour fields.
+By default, this is determined by the user's locale.
+
+#### Inherited from
+
+`Omit.shouldForceLeadingZeros`
+
+***
+
+### size?
+
+> `optional` **size**: `"sm"` \| `"md"` \| `"lg"`
+
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L75)
+
+Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option
+
+***
+
+### slot?
+
+> `optional` **slot**: `null` \| `string`
+
+Defined in: node\_modules/react-aria-components/dist/types.d.ts:70
+
+A slot name for the component. Slots allow the component to receive props from a parent component.
+An explicit `null` value indicates that the local props completely override all props received from a parent.
+
+#### Inherited from
+
+`Omit.slot`
+
+***
+
+### style?
+
+> `optional` **style**: `CSSProperties` \| (`values`) => `undefined` \| `CSSProperties`
+
+Defined in: node\_modules/react-aria-components/dist/types.d.ts:47
+
+The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state.
+
+#### Inherited from
+
+`Omit.style`
+
+***
+
+### validate()?
+
+> `optional` **validate**: (`value`) => `undefined` \| `null` \| `true` \| `ValidationError`
+
+Defined in: node\_modules/@react-types/shared/src/inputs.d.ts:41
 
 A function that returns an error message if a given value is invalid.
 Validation errors are displayed to the user when the form is submitted
@@ -896,18 +731,46 @@ prop instead.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
+##### value
+
+`CalendarDate`
 
 #### Returns
 
-`undefined` \| ``null`` \| ``true`` \| `ValidationError`
+`undefined` \| `null` \| `true` \| `ValidationError`
 
 #### Inherited from
 
-Omit.validate
+`Omit.validate`
 
-#### Defined in
+***
 
-node_modules/@react-types/shared/src/inputs.d.ts:41
+### validationBehavior?
+
+> `optional` **validationBehavior**: `"native"` \| `"aria"`
+
+Defined in: node\_modules/react-aria-components/dist/types.d.ts:81
+
+Whether to use native HTML form validation to prevent form submission
+when the value is missing or invalid, or mark the field as required
+or invalid via ARIA.
+
+#### Default
+
+```ts
+'native'
+```
+
+#### Inherited from
+
+`Omit.validationBehavior`
+
+***
+
+### value?
+
+> `optional` **value**: `DateInputValue`
+
+Defined in: [packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/OpenmrsDatePicker.tsx#L79)
+
+The value (controlled)

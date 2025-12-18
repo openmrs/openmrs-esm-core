@@ -1,3 +1,7 @@
+import { describe, expect, it } from 'vitest';
+import dayjs from 'dayjs';
+import timezoneMock from 'timezone-mock';
+import type { i18n } from 'i18next';
 import {
   toOmrsIsoString,
   toDateObjectStrict,
@@ -7,10 +11,8 @@ import {
   formatTime,
   registerDefaultCalendar,
   formatPartialDate,
+  formatDuration,
 } from './date-util';
-import dayjs from 'dayjs';
-import timezoneMock from 'timezone-mock';
-import type { i18n } from 'i18next';
 
 window.i18next = { language: 'en' } as i18n;
 
@@ -194,5 +196,17 @@ describe('Openmrs Dates', () => {
         })
         .replace(/ /g, '-') + ', 03:22 PM';
     expect(formatDate(testDate, { noToday: true }).replaceAll(/[\u202F]/g, ' ')).toEqual(expected);
+  });
+
+  it('formats duration with respect to the locale', () => {
+    window.i18next.language = 'en';
+    const duration = { hours: 1, minutes: 1, seconds: 1, days: 1, months: 1, years: 1 };
+    expect(formatDuration(duration, { style: 'narrow' })).toMatch(/1y.*1m.*1d.*1h.*1m.*1s/);
+    expect(formatDuration(duration, { style: 'short' })).toMatch(
+      /1\s+yr,.*1\s+mth,.*1\s+day,.*1\s+hr,.*1\s+min,.*1\s+sec/,
+    );
+    expect(formatDuration(duration, { style: 'long' })).toMatch(
+      /1\s+year,.*1\s+month,.*1\s+day,.*1\s+hour,.*1\s+minute,.*1\s+second/,
+    );
   });
 });

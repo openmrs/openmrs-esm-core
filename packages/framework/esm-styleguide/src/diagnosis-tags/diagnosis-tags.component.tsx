@@ -1,8 +1,9 @@
-import { Tag } from '@carbon/react';
-import { type Diagnosis } from '@openmrs/esm-api';
-import { useConfig } from '@openmrs/esm-react-utils';
 import React from 'react';
+import { Tag } from '@carbon/react';
+import { useConfig } from '@openmrs/esm-react-utils';
+import { type Diagnosis } from '@openmrs/esm-emr-api';
 import { type StyleguideConfigObject } from '../config-schema';
+import styles from './diagnosis-tags.module.scss';
 
 interface DiagnosisTagsProps {
   diagnoses: Array<Diagnosis>;
@@ -19,7 +20,7 @@ export const DiagnosisTags: React.FC<DiagnosisTagsProps> = ({ diagnoses }) => {
   });
 
   return (
-    <>
+    <div className={styles.container}>
       {diagnoses.map((diagnosis) => {
         const { rank, uuid, display } = diagnosis;
         // technically rank can be any integer, but we only use 1 for primary
@@ -32,6 +33,6 @@ export const DiagnosisTags: React.FC<DiagnosisTagsProps> = ({ diagnoses }) => {
           </Tag>
         );
       })}
-    </>
+    </div>
   );
 };

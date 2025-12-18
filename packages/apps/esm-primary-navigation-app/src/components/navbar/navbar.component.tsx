@@ -14,7 +14,6 @@ import { isDesktop } from '../../utils';
 import Logo from '../logo/logo.component';
 import NotificationsMenuPanel from '../navbar-header-panels/notifications-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
-import OfflineBanner from '../offline-banner/offline-banner.component';
 import styles from './navbar.scss';
 
 const HeaderItems: React.FC = () => {
@@ -37,13 +36,12 @@ const HeaderItems: React.FC = () => {
   );
 
   const showHamburger = useMemo(
-    () => (!isDesktop(layout) || mode === 'collapsed') && navMenuItems.length > 0,
+    () => (!isDesktop(layout) || mode === 'collapsed') && mode !== 'hidden' && navMenuItems.length > 0,
     [navMenuItems.length, layout, mode],
   );
 
   return (
     <>
-      <OfflineBanner />
       <Header aria-label="OpenMRS" className={styles.topNavHeader}>
         {showHamburger && (
           <HeaderMenuButton
@@ -53,6 +51,8 @@ const HeaderItems: React.FC = () => {
             onClick={() => {
               togglePanel('sideMenu');
             }}
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
             isActive={isActivePanel('sideMenu')}
           />
         )}
@@ -62,7 +62,7 @@ const HeaderItems: React.FC = () => {
           </div>
         </ConfigurableLink>
         <div className={styles.divider} />
-        <ExtensionSlot name="top-nav-info-slot" />
+        <ExtensionSlot name="top-nav-info-slot" className={styles.topNavInfoSlot} />
         <HeaderGlobalBar className={styles.headerGlobalBar}>
           <ExtensionSlot
             name="top-nav-actions-slot"

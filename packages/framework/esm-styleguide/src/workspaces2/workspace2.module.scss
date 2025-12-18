@@ -1,0 +1,267 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '../vars' as *;
+
+$narrowWorkspaceWidth: 26.25rem;
+$widerWorkspaceWidth: 32.25rem;
+$extraWideWorkspaceWidth: 48.25rem;
+
+// This container has no layout purpose.
+// It is used to set the --workspaceWidth variable.
+.workspaceOuterContainer {
+  --actionPanelOffset: 0px;
+
+  &.narrowWorkspace {
+    --workspaceWidth: #{$narrowWorkspaceWidth};
+  }
+  &.widerWorkspace {
+    --workspaceWidth: #{$widerWorkspaceWidth};
+  }
+  &.extraWideWorkspace {
+    --workspaceWidth: #{$extraWideWorkspaceWidth};
+  }
+
+  width: var(--workspaceWidth);
+  display: contents;
+
+  // This container clips the workspace when it slides out of screen
+  // (via overflow: hidden)
+  .workspaceMiddleContainer {
+    width: inherit;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-end: var(--actionPanelOffset);
+    z-index: 100;
+    will-change: transform;
+
+    &.isRootWorkspace {
+      animation: slideFromRight 0.5s ease-in-out;
+    }
+
+    &.maximized {
+      position: fixed !important;
+      top: var(--omrs-navbar-height) !important;
+      inset-inline-start: 0 !important;
+      inset-inline-end: var(--actionPanelOffset) !important;
+      width: calc(100vw - var(--actionPanelOffset)) !important;
+      bottom: 0 !important;
+      transform: none !important;
+      will-change: auto !important;
+      transition: none !important;
+    }
+    &.hidden {
+      width: 0;
+    }
+
+    @keyframes slideFromRight {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  // This container contains the actual workspace content
+  // it has sliding transitions when hidden / restored, and
+  // changes size (width) when maximized
+  .workspaceInnerContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: var(--workspaceWidth);
+    border-inline-start: 1px solid $text-03;
+    background-color: #fff;
+    will-change: width;
+    transition: width 0.5s ease-in-out;
+
+    &.maximized {
+      width: 100%;
+      transition: none !important;
+    }
+  }
+
+  // The spacer is responsible for taking up space and shrinking the width of the "main" content
+  // in omrs-apps-container when in non-overlay mode.
+  // Note that the spacer takes up --workspaceWidth amount of space, but does
+  // not grow when the workspace is maximized. In other words, it does not shrink the
+  // "main" content further when workspace is maximized.
+  .workspaceSpacer {
+    width: inherit;
+    height: 100%;
+    will-change: width;
+    animation: growToWidth 0.5s ease-in-out;
+
+    &.hidden {
+      animation: shrinkWidth 0.5s ease-in-out forwards;
+    }
+
+    @keyframes growToWidth {
+      from {
+        width: 0;
+      }
+      to {
+        width: inherit;
+      }
+    }
+
+    @keyframes shrinkWidth {
+      from {
+        width: inherit;
+      }
+      to {
+        width: 0;
+      }
+    }
+  }
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50%;
+}
+
+.hiddenExtraWorkspace {
+  display: none;
+}
+
+/* Desktop */
+:global(.omrs-breakpoint-gt-tablet) {
+  .header {
+    position: relative;
+    box-sizing: content-box;
+    border-bottom: 1px solid $text-03;
+    background-color: $ui-03;
+    height: var(--workspace-header-height);
+
+    a {
+      @include type.type-style('heading-compact-02');
+
+      &:hover {
+        color: inherit;
+      }
+    }
+  }
+
+  .headerButtons {
+    button {
+      background-color: $ui-02;
+      border-right: 1px solid colors.$gray-20;
+
+      > svg {
+        fill: colors.$cool-gray-100 !important;
+      }
+
+      &:hover {
+        background-color: $ui-01;
+      }
+    }
+  }
+
+  .workspaceContent {
+    background-color: $ui-02;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+
+  .overlayHeaderSpacer {
+    flex-grow: 1;
+  }
+
+  .workspaceOuterContainer {
+    &.isActionMenuOpened {
+      --actionPanelOffset: #{layout.$spacing-09};
+    }
+  }
+}
+
+/* Tablet */
+:global(.omrs-breakpoint-lt-desktop) {
+  .header {
+    position: relative;
+    background-color: var(--brand-02);
+
+    a {
+      color: $ui-02;
+    }
+
+    button {
+      color: $ui-02;
+      background-color: var(--brand-02);
+
+      &:hover {
+        background-color: var(--brand-03);
+      }
+    }
+  }
+
+  .workspaceOuterContainer {
+    width: 100vw !important;
+  }
+
+  .workspaceMiddleContainer {
+    width: inherit !important;
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .workspaceInnerContainer {
+    width: 100vw !important;
+
+    &.isRootWorkspace {
+      animation: slideFromBottom 0.5s ease-in-out;
+    }
+  }
+
+  .marginWorkspaceContent {
+    margin-bottom: var(--bottom-nav-height);
+  }
+
+  @keyframes slideFromBottom {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0%);
+    }
+  }
+
+  @keyframes slideToBottom {
+    from {
+      transform: translateX(0%);
+      width: $narrowWorkspaceWidth;
+    }
+    to {
+      transform: translateX($narrowWorkspaceWidth);
+      width: 0;
+    }
+  }
+}
+
+// Overriding styles for RTL support
+html[dir='rtl'] {
+  :global(.omrs-breakpoint-gt-tablet) {
+    .workspaceContainerWithActionMenu {
+      &.workspaceFixedContainer {
+        right: unset;
+        left: var(--actionPanelOffset);
+      }
+    }
+
+    .workspaceContainerWithoutActionMenu {
+      height: 100%;
+
+      &.workspaceFixedContainer {
+        right: unset;
+        left: 0;
+      }
+    }
+  }
+}

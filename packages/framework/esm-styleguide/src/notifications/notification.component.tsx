@@ -1,5 +1,5 @@
 import React from 'react';
-import { InlineNotification } from '@carbon/react';
+import { ActionableNotification } from '@carbon/react';
 /** @module @category UI */
 
 export interface NotificationProps {
@@ -7,12 +7,13 @@ export interface NotificationProps {
 }
 
 export interface NotificationDescriptor {
-  description: React.ReactNode;
-  action?: React.ReactNode;
+  description: string;
+  action?: string;
   kind?: InlineNotificationType;
   critical?: boolean;
   millis?: number;
   title?: string;
+  onAction?: () => void;
 }
 
 export interface InlineNotificationMeta extends NotificationDescriptor {
@@ -22,15 +23,17 @@ export interface InlineNotificationMeta extends NotificationDescriptor {
 export type InlineNotificationType = 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
 
 export const Notification: React.FC<NotificationProps> = ({ notification }) => {
-  const { description, action, kind, critical, title } = notification;
+  const { description, action, kind, critical, title, onAction } = notification;
 
   return (
-    <InlineNotification
-      actions={action}
+    <ActionableNotification
+      actionButtonLabel={action}
       kind={kind || 'info'}
       lowContrast={critical}
       subtitle={description}
       title={title || ''}
+      inline={true}
+      onActionButtonClick={onAction}
     />
   );
 };

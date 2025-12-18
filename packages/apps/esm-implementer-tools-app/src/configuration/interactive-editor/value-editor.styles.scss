@@ -1,0 +1,20 @@
+@use '@carbon/layout';
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/theme';
+
+.errorMessage {
+  color: theme.$text-error;
+  font-size: layout.$spacing-04;
+  margin-top: layout.$spacing-02;
+}
+
+.valueEditorButtons {
+  margin-top: layout.$spacing-03;
+
+  :global(.cds--btn--primary) {
+    background-color: button.$button-primary;
+    &:hover {
+      background-color: button.$button-primary-hover;
+    }
+  }
+}

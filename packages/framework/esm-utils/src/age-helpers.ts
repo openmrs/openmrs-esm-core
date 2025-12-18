@@ -3,7 +3,7 @@ import { DurationFormat } from '@formatjs/intl-durationformat';
 import { type DurationFormatOptions, type DurationInput } from '@formatjs/intl-durationformat/src/types';
 import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
-import objectSupport from 'dayjs/plugin/objectSupport';
+import objectSupport from 'dayjs/plugin/objectSupport.js';
 import { omit } from 'lodash-es';
 import { getLocale } from './get-locale';
 

@@ -1,7 +1,6 @@
 /** @module @category API */
-import type { Location } from '@openmrs/esm-api';
-import { getLocations } from '@openmrs/esm-api';
 import { useState, useEffect } from 'react';
+import { getLocations, type Location } from '@openmrs/esm-emr-api';
 
 export function useLocations(tagUuidOrName: string | null = null, query: string | null = null): Array<Location> {
   const [locations, setLocations] = useState<Array<Location>>([]);

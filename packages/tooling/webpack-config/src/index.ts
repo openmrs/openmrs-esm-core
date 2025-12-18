@@ -54,8 +54,9 @@ import {
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 
-type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module'> & {
+type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module' | 'output'> & {
   module: ModuleOptions;
+  output: Partial<WebpackConfiguration['output']>;
 };
 
 const production = 'production';
@@ -63,6 +64,7 @@ const { ModuleFederationPlugin } = container;
 
 function getFrameworkVersion() {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { version } = require('@openmrs/esm-framework/package.json');
     return `^${version}`;
   } catch {
@@ -152,6 +154,7 @@ export const optimizationConfig: Partial<WebpackConfiguration['optimization']> =
 
 export default (env: Record<string, string>, argv: Record<string, string> = {}) => {
   const root = process.cwd();
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { name, version, peerDependencies, browser, main, types } = require(resolve(root, 'package.json'));
   // this typing is provably incorrect, but actually works
   const mode = (argv.mode || process.env.NODE_ENV || 'development') as WebpackConfiguration['mode'];
@@ -216,7 +219,11 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
               cssLoader,
               {
                 loader: require.resolve('sass-loader'),
-                options: { sassOptions: { quietDeps: true } },
+                options: {
+                  api: 'modern-compiler',
+                  implementation: require.resolve('sass-embedded'),
+                  sassOptions: { quietDeps: true },
+                },
               },
             ],
           },
@@ -300,6 +307,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
               import: 'swr/',
               shareKey: 'swr/',
               shareScope: 'default',
+              // eslint-disable-next-line @typescript-eslint/no-require-imports
               version: require('swr/package.json').version,
             };
           } else {

@@ -2,8 +2,13 @@
   "AppMenuTooltip": "Menú de la Aplicación",
   "cancel": "Cancelar",
   "change": "Cambiar",
+  "changeDefaultLocale": "Update your default locale",
+  "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
   "changeLanguage": "Cambiar idioma",
   "changingLanguage": "Cambiando idioma",
+  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
   "notifications": "Notificaciones",
+  "userMenu": "Menú de usuario",
+  "userMenuOptions": " Opciones del menú de usuario",
   "userMenuTooltip": "Mi Cuenta"
 }

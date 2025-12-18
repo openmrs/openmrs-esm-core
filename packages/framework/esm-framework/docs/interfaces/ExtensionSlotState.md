@@ -1,30 +1,29 @@
-[@openmrs/esm-framework](../API.md) / ExtensionSlotState
+[O3 Framework](../API.md) / ExtensionSlotState
 
 # Interface: ExtensionSlotState
 
-## Table of contents
+Defined in: [packages/framework/esm-extensions/src/store.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L71)
 
-### Extension Properties
-
-- [assignedExtensions](ExtensionSlotState.md#assignedextensions)
-- [moduleName](ExtensionSlotState.md#modulename)
-
-## Extension Properties
+## Properties
 
 ### assignedExtensions
 
-• **assignedExtensions**: [`AssignedExtension`](AssignedExtension.md)[]
+> **assignedExtensions**: [`AssignedExtension`](AssignedExtension.md)[]
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/store.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L73)
 
-[packages/framework/esm-extensions/src/store.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L69)
+***
 
-___
+### moduleName?
 
-### moduleName
+> `optional` **moduleName**: `string`
 
-• `Optional` **moduleName**: `string`
+Defined in: [packages/framework/esm-extensions/src/store.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L72)
 
-#### Defined in
+***
 
-[packages/framework/esm-extensions/src/store.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L68)
+### state?
+
+> `optional` **state**: `ExtensionSlotCustomState`
+
+Defined in: [packages/framework/esm-extensions/src/store.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L74)

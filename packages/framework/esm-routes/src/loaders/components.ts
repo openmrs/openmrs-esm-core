@@ -1,20 +1,25 @@
 import {
   attach,
-  type ExtensionRegistration,
   registerExtension,
   registerModal,
   registerWorkspace,
   registerWorkspaceGroup,
+  registerWorkspaceGroups2,
+  registerWorkspaces2,
+  registerWorkspaceWindows2,
 } from '@openmrs/esm-extensions';
 import {
-  type FeatureFlagDefinition,
   type ExtensionDefinition,
+  type FeatureFlagDefinition,
   type ModalDefinition,
   type WorkspaceDefinition,
+  type WorkspaceDefinition2,
   type WorkspaceGroupDefinition,
+  type WorkspaceGroupDefinition2,
+  type WorkspaceWindowDefinition2,
 } from '@openmrs/esm-globals';
-import { getLoader } from './app';
 import { registerFeatureFlag } from '@openmrs/esm-feature-flags';
+import { loadLifeCycles } from './load-lifecycles';
 
 /**
  * This function registers an extension definition with the framework and will
@@ -43,7 +48,7 @@ a 'slot' property. Only the 'slots' property will be honored.`,
   }
   const slots = extension.slots ? extension.slots : extension.slot ? [extension.slot] : [];
 
-  if (!extension.component && !extension.load) {
+  if (!extension.component) {
     console.error(
       `The extension ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
 To fix this, ensure that you define a 'component' field inside the extension definition.`,
@@ -52,33 +57,18 @@ To fix this, ensure that you define a 'component' field inside the extension def
     return;
   }
 
-  let loader: ExtensionRegistration['load'] | undefined = undefined;
-  if (extension.component) {
-    loader = getLoader(appName, extension.component);
-  } else if (extension.load) {
-    if (typeof extension.load !== 'function') {
-      console.error(
-        `The extension ${name} from ${appName} declares a 'load' property that is not a function. This is not
-supported, so the extension will not be loaded.`,
-      );
-      return;
-    }
-    loader = extension.load;
-  }
-
-  if (loader) {
-    registerExtension({
-      name,
-      load: loader,
-      meta: extension.meta || {},
-      order: extension.order,
-      moduleName: appName,
-      privileges: extension.privileges,
-      online: extension.online ?? true,
-      offline: extension.offline ?? false,
-      featureFlag: extension.featureFlag,
-    });
-  }
+  registerExtension({
+    name,
+    load: () => loadLifeCycles(appName, extension.component),
+    meta: extension.meta || {},
+    order: extension.order,
+    moduleName: appName,
+    privileges: extension.privileges,
+    online: extension.online ?? true,
+    offline: extension.offline ?? false,
+    featureFlag: extension.featureFlag,
+    displayExpression: extension.displayExpression,
+  });
 
   for (const slot of slots) {
     attach(slot, name);
@@ -103,7 +93,7 @@ modal definition.`,
     return;
   }
 
-  if (!modal.component && !modal.load) {
+  if (!modal.component) {
     console.error(
       `The modal ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
 To fix this, ensure that you define a 'component' field inside the modal definition.`,
@@ -112,27 +102,11 @@ To fix this, ensure that you define a 'component' field inside the modal definit
     return;
   }
 
-  let loader: ExtensionRegistration['load'] | undefined = undefined;
-  if (modal.component) {
-    loader = getLoader(appName, modal.component);
-  } else if (modal.load) {
-    if (typeof modal.load !== 'function') {
-      console.error(
-        `The modal ${name} from ${appName} declares a 'load' property that is not a function. This is not
-supported, so the modal will not be loaded.`,
-      );
-      return;
-    }
-    loader = modal.load;
-  }
-
-  if (loader) {
-    registerModal({
-      name,
-      load: loader,
-      moduleName: appName,
-    });
-  }
+  registerModal({
+    name,
+    moduleName: appName,
+    load: () => loadLifeCycles(appName, modal.component),
+  });
 }
 
 /**
@@ -162,7 +136,7 @@ To fix this, ensure that you define the "title" field inside the workspace defin
     return;
   }
 
-  if (!workspace.component && !workspace.load) {
+  if (!workspace.component) {
     console.error(
       `The workspace ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
 To fix this, ensure that you define a 'component' field inside the workspace definition.`,
@@ -171,34 +145,19 @@ To fix this, ensure that you define a 'component' field inside the workspace def
     return;
   }
 
-  let loader: ExtensionRegistration['load'] | undefined = undefined;
-  if (workspace.component) {
-    loader = getLoader(appName, workspace.component);
-  } else if (workspace.load) {
-    if (typeof workspace.load !== 'function') {
-      console.error(
-        `The workspace ${name} from ${appName} declares a 'load' property that is not a function. This is not
-supported, so the workspace will not be loaded.`,
-      );
-      return;
-    }
-    loader = workspace.load;
-  }
-
-  if (loader) {
-    registerWorkspace({
-      name,
-      title,
-      load: loader,
-      moduleName: appName,
-      type: workspace.type,
-      canHide: workspace.canHide,
-      canMaximize: workspace.canMaximize,
-      width: workspace.width,
-      preferredWindowSize: workspace.preferredWindowSize,
-      groups: workspace.groups,
-    });
-  }
+  registerWorkspace({
+    name,
+    title,
+    component: workspace.component,
+    moduleName: appName,
+    type: workspace.type,
+    canHide: workspace.canHide,
+    canMaximize: workspace.canMaximize,
+    width: workspace.width,
+    preferredWindowSize: workspace.preferredWindowSize,
+    groups: workspace.groups,
+    load: () => loadLifeCycles(appName, workspace.component),
+  });
 
   for (const group of workspace.groups || []) {
     registerWorkspaceGroup({
@@ -229,6 +188,18 @@ To fix this, ensure that you define the "name" field inside the workspace defini
     name,
     members: workspaceGroup.members ?? [],
   });
+}
+
+export function tryRegisterWorkspaceGroups2(appName: string, workspaceGroupDefs: Array<WorkspaceGroupDefinition2>) {
+  registerWorkspaceGroups2(workspaceGroupDefs);
+}
+
+export function tryRegisterWorkspace2(appName: string, workspaceDefs: Array<WorkspaceDefinition2>) {
+  registerWorkspaces2(appName, workspaceDefs);
+}
+
+export function tryRegisterWorkspaceWindows2(appName: string, workspaceWindowDefs: Array<WorkspaceWindowDefinition2>) {
+  registerWorkspaceWindows2(appName, workspaceWindowDefs);
 }
 
 /**

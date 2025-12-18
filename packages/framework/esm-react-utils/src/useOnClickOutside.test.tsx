@@ -1,10 +1,11 @@
 import React, { type PropsWithChildren } from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useOnClickOutside } from './useOnClickOutside';
 
 describe('useOnClickOutside', () => {
-  const handler: (e: Event) => void = jest.fn();
+  const handler: (e: Event) => void = vi.fn();
 
   it('should call the handler when clicking outside', async () => {
     const user = userEvent.setup();
@@ -52,7 +53,7 @@ describe('useOnClickOutside', () => {
       return <div ref={ref}>{children}</div>;
     };
     const view = render(<Component />);
-    const spy = jest.spyOn(window, 'removeEventListener');
+    const spy = vi.spyOn(window, 'removeEventListener');
 
     // act
     view.unmount();

@@ -24,6 +24,7 @@ export { jsep };
 
 /** An object containing the variable to use when evaluating this expression */
 export type VariablesMap = {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   [key: string]: string | number | boolean | Function | RegExp | object | null | VariablesMap | Array<VariablesMap>;
 };
 
@@ -241,6 +242,13 @@ export function evaluateAsType<T>(
     throw `Unknown expression type ${expression}. Expressions must either be a string or pre-compiled string.`;
   }
 
+  if (typeof expression === 'string' && expression.trim().length === 0) {
+    throw {
+      type: 'Empty expression',
+      message: 'Expression cannot be an empty string',
+    };
+  }
+
   if (typeof variables === 'undefined' || variables === null) {
     variables = {};
   }
@@ -283,6 +291,13 @@ export async function evaluateAsTypeAsync<T>(
     return Promise.reject(
       `Unknown expression type ${expression}. Expressions must either be a string or pre-compiled string.`,
     );
+  }
+
+  if (typeof expression === 'string' && expression.trim().length === 0) {
+    throw {
+      type: 'Empty expression',
+      message: 'Expression cannot be an empty string',
+    };
   }
 
   if (typeof variables === 'undefined' || variables === null) {
@@ -336,7 +351,7 @@ function defaultTypePredicate(result: unknown): result is DefaultEvaluateReturnT
   );
 }
 
-function booleanTypePredicate(result: unknown): result is Boolean {
+function booleanTypePredicate(result: unknown): result is boolean {
   return typeof result === 'boolean';
 }
 

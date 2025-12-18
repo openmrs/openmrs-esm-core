@@ -1,19 +1,19 @@
 /** @module @category Config */
-import { clone, reduce, mergeDeepRight, equals, omit } from 'ramda';
-import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject } from '../types';
+import { clone, equals, reduce, mergeDeepRight, omit } from 'ramda';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig } from '../types';
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
 import { validator } from '../validators/validator';
 import { type ConfigExtensionStore, type ConfigInternalStore, type ConfigStore } from './state';
 import {
-  configInternalStore,
   configExtensionStore,
+  configInternalStore,
   getConfigStore,
   getExtensionConfig,
+  getExtensionSlotsConfigStore,
   getExtensionsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
-  getExtensionSlotsConfigStore,
 } from './state';
 import { type TemporaryConfigStore } from '..';
 
@@ -37,42 +37,37 @@ import { type TemporaryConfigStore } from '..';
  * store values at the end. `computeExtensionConfigs` calls `getGlobalStore`,
  * which creates stores.
  */
-computeModuleConfig(configInternalStore.getState(), temporaryConfigStore.getState());
-configInternalStore.subscribe((configState) => computeModuleConfig(configState, temporaryConfigStore.getState()));
-temporaryConfigStore.subscribe((tempConfigState) =>
-  computeModuleConfig(configInternalStore.getState(), tempConfigState),
-);
+// Store unsubscribe functions to allow cleanup (e.g., in tests or hot module reloading)
+const configSubscriptions: Array<() => void> = [];
 
-computeImplementerToolsConfig(configInternalStore.getState(), temporaryConfigStore.getState());
-configInternalStore.subscribe((configState) =>
-  computeImplementerToolsConfig(configState, temporaryConfigStore.getState()),
-);
-temporaryConfigStore.subscribe((tempConfigState) =>
-  computeImplementerToolsConfig(configInternalStore.getState(), tempConfigState),
-);
+/**
+ * Recomputes all configuration derived stores based on current state of input stores.
+ * Called whenever any input store (configInternalStore, temporaryConfigStore, configExtensionStore) changes.
+ */
+function recomputeAllConfigs() {
+  const configState = configInternalStore.getState();
+  const tempConfigState = temporaryConfigStore.getState();
+  const extensionState = configExtensionStore.getState();
 
-computeExtensionSlotConfigs(configInternalStore.getState(), temporaryConfigStore.getState());
-configInternalStore.subscribe((configState) =>
-  computeExtensionSlotConfigs(configState, temporaryConfigStore.getState()),
-);
-temporaryConfigStore.subscribe((tempConfigState) =>
-  computeExtensionSlotConfigs(configInternalStore.getState(), tempConfigState),
-);
+  computeModuleConfig(configState, tempConfigState);
+  computeImplementerToolsConfig(configState, tempConfigState);
+  computeExtensionSlotConfigs(configState, tempConfigState);
+  computeExtensionConfigs(configState, extensionState, tempConfigState);
+}
 
-computeExtensionConfigs(
-  configInternalStore.getState(),
-  configExtensionStore.getState(),
-  temporaryConfigStore.getState(),
-);
-configInternalStore.subscribe((configState) => {
-  computeExtensionConfigs(configState, configExtensionStore.getState(), temporaryConfigStore.getState());
-});
-configExtensionStore.subscribe((extensionState) => {
-  computeExtensionConfigs(configInternalStore.getState(), extensionState, temporaryConfigStore.getState());
-});
-temporaryConfigStore.subscribe((tempConfigState) => {
-  computeExtensionConfigs(configInternalStore.getState(), configExtensionStore.getState(), tempConfigState);
-});
+function setupConfigSubscriptions() {
+  // Initial computation
+  recomputeAllConfigs();
+
+  // Subscribe to all input stores with a single handler
+  // This ensures we only recompute once even if multiple stores change simultaneously
+  configSubscriptions.push(configInternalStore.subscribe(recomputeAllConfigs));
+  configSubscriptions.push(temporaryConfigStore.subscribe(recomputeAllConfigs));
+  configSubscriptions.push(configExtensionStore.subscribe(recomputeAllConfigs));
+}
+
+// Set up subscriptions at module load time
+setupConfigSubscriptions();
 
 function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
   for (let moduleName of Object.keys(state.schemas)) {
@@ -83,21 +78,24 @@ function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryCon
     // available, which as of this writing blocks the schema definition from occurring
     // for modules loaded based on their extensions.
     const moduleStore = getConfigStore(moduleName);
+    let newState;
     if (state.moduleLoaded[moduleName]) {
       const config = getConfigForModule(moduleName, state, tempState);
-      moduleStore.setState({
+      newState = {
         translationOverridesLoaded: true,
         loaded: true,
         config,
-      });
+      };
     } else {
       const config = getConfigForModuleImplicitSchema(moduleName, state, tempState);
-      moduleStore.setState({
+      newState = {
         translationOverridesLoaded: true,
         loaded: false,
         config,
-      });
+      };
     }
+
+    moduleStore.setState(newState);
   }
 }
 
@@ -109,14 +107,21 @@ function computeExtensionSlotConfigs(state: ConfigInternalStore, tempState: Temp
   const slotStore = getExtensionSlotsConfigStore();
   const oldState = slotStore.getState();
   const newState = { slots: { ...oldState.slots, ...newSlotStoreEntries } };
-  if (!equals(oldState, newState)) {
+
+  if (!equals(oldState.slots, newState.slots)) {
     slotStore.setState(newState);
   }
 }
 
 function computeImplementerToolsConfig(state: ConfigInternalStore, tempConfigState: TemporaryConfigStore) {
+  const oldState = implementerToolsConfigStore.getState();
   const config = getImplementerToolsConfig(state, tempConfigState);
-  implementerToolsConfigStore.setState({ config });
+  const newState = { config };
+
+  // Use deep equality on the actual config content, not the wrapper object
+  if (!equals(oldState.config, newState.config)) {
+    implementerToolsConfigStore.setState(newState);
+  }
 }
 
 function computeExtensionConfigs(
@@ -137,12 +142,19 @@ function computeExtensionConfigs(
       tempConfigState,
     );
 
-    configs[extension.slotName] = {
-      ...configs[extension.slotName],
-      [extension.extensionId]: { config, loaded: true },
-    };
+    if (!configs[extension.slotName]) {
+      configs[extension.slotName] = {};
+    }
+    configs[extension.slotName][extension.extensionId] = { config, loaded: true };
   }
-  getExtensionsConfigStore().setState({ configs });
+  const extensionsConfigStore = getExtensionsConfigStore();
+  const oldState = extensionsConfigStore.getState();
+  const newState = { configs };
+
+  // Use deep equality to only update if configs actually changed
+  if (!equals(oldState.configs, newState.configs)) {
+    extensionsConfigStore.setState(newState);
+  }
 }
 
 /*
@@ -278,7 +290,10 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
       if (state.loaded && state.config) {
         const config = omit(['Display conditions', 'Translation overrides'], state.config);
         resolve(config as T);
-        unsubscribe && unsubscribe();
+
+        if (unsubscribe) {
+          unsubscribe();
+        }
       }
     }
     update(store.getState());
@@ -299,7 +314,10 @@ export function getTranslationOverrides(
         if (state.translationOverridesLoaded && state.config) {
           const translationOverrides = state.config['Translation overrides'] ?? {};
           resolve(translationOverrides);
-          unsubscribe && unsubscribe();
+
+          if (unsubscribe) {
+            unsubscribe();
+          }
         }
       }
       update(configStore.getState());
@@ -315,7 +333,10 @@ export function getTranslationOverrides(
           if (state.loaded && state.config) {
             const translationOverrides = state.config['Translation overrides'] ?? {};
             resolve(translationOverrides);
-            unsubscribe && unsubscribe();
+
+            if (unsubscribe) {
+              unsubscribe();
+            }
           }
         }
         update(configStore.getState());
@@ -428,7 +449,7 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
 function getExtensionSlotConfigs(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
-): Record<string, ExtensionSlotConfigObject> {
+): Record<string, ExtensionSlotConfig> {
   const allConfigs = mergeConfigs(getProvidedConfigs(configState, tempConfigState));
   const slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>> = Object.keys(allConfigs).reduce(
     (obj, key) => {
@@ -712,6 +733,7 @@ function runAllValidatorsInConfigTree(schema: ConfigSchema, config: ConfigObject
  */
 function checkType(keyPath: string, _type: Type | undefined, value: any) {
   if (_type) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const validator: Record<string, Function> = {
       Array: isArray,
       Boolean: isBoolean,
@@ -732,6 +754,7 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
  * Runs validators, logging errors.
  * @returns true if all pass, false otherwise.
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function runValidators(keyPath: string, validators: Array<Function> | undefined, value: any) {
   let returnValue = true;
   if (validators) {
@@ -808,7 +831,7 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   return config;
 };
 
-function hasObjectSchema(elementsSchema: Object | undefined): elementsSchema is ConfigSchema {
+function hasObjectSchema(elementsSchema: unknown): elementsSchema is ConfigSchema {
   return (
     !!elementsSchema && Object.keys(elementsSchema).filter((e) => !['_default', '_validators'].includes(e)).length > 0
   );
@@ -817,12 +840,16 @@ function hasObjectSchema(elementsSchema: Object | undefined): elementsSchema is 
 function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
-
 /** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
-const displayedValidationMessages = new Set<string>();
+let displayedValidationMessages = new Set<string>();
 
 function logError(keyPath: string, message: string) {
   const key = `${keyPath}:::${message}`;
+  // technically, this should not be possible, but because of how things wind-up transpiled, this isn't impossible
+  if (!displayedValidationMessages) {
+    displayedValidationMessages = new Set<string>();
+  }
+
   if (!displayedValidationMessages.has(key)) {
     console.error(message);
     displayedValidationMessages.add(key);
@@ -845,6 +872,20 @@ export function clearConfigErrors(keyPath?: string) {
   } else {
     displayedValidationMessages.clear();
   }
+}
+
+/**
+ * Cleans up all config store subscriptions and re-establishes them. This is primarily
+ * useful for testing, where subscriptions set up at module load time need to be cleared
+ * between tests to prevent infinite update loops. After clearing, subscriptions are
+ * re-established so the config system continues to work normally.
+ *
+ * @internal
+ */
+export function resetConfigSystem() {
+  configSubscriptions.forEach((unsubscribe) => unsubscribe());
+  configSubscriptions.length = 0;
+  setupConfigSubscriptions();
 }
 
 /**
@@ -889,6 +930,11 @@ const implicitConfigSchema: ConfigSchema = {
       _description: 'The privilege(s) the user must have to use this extension',
       _type: Type.Array,
       _default: [],
+    },
+    expression: {
+      _description: 'The expression that determines whether the extension is displayed',
+      _type: Type.String,
+      _default: undefined,
     },
   },
   ...translationOverridesSchema,

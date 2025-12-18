@@ -1,98 +1,71 @@
-[@openmrs/esm-framework](../API.md) / AssignedExtension
+[O3 Framework](../API.md) / AssignedExtension
 
 # Interface: AssignedExtension
 
-## Table of contents
+Defined in: [packages/framework/esm-extensions/src/store.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L77)
 
-### Extension Properties
-
-- [config](AssignedExtension.md#config)
-- [featureFlag](AssignedExtension.md#featureflag)
-- [id](AssignedExtension.md#id)
-- [meta](AssignedExtension.md#meta)
-- [moduleName](AssignedExtension.md#modulename)
-- [name](AssignedExtension.md#name)
-- [offline](AssignedExtension.md#offline)
-- [online](AssignedExtension.md#online)
-
-## Extension Properties
+## Properties
 
 ### config
 
-• `Readonly` **config**: ``null`` \| `Readonly`<[`ConfigObject`](ConfigObject.md)\>
+> `readonly` **config**: `null` \| `Readonly`\<`ConfigObject`\>
+
+Defined in: [packages/framework/esm-extensions/src/store.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L83)
 
 The extension's config. Note that this will be `null` until the slot is mounted.
 
-#### Defined in
+***
 
-[packages/framework/esm-extensions/src/store.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L78)
+### featureFlag?
 
-___
+> `readonly` `optional` **featureFlag**: `string`
 
-### featureFlag
+Defined in: [packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)
 
-• `Optional` `Readonly` **featureFlag**: `string`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/store.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L81)
-
-___
+***
 
 ### id
 
-• `Readonly` **id**: `string`
+> `readonly` **id**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/store.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L78)
 
-[packages/framework/esm-extensions/src/store.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L73)
-
-___
+***
 
 ### meta
 
-• `Readonly` **meta**: `Readonly`<[`ExtensionMeta`](ExtensionMeta.md)\>
+> `readonly` **meta**: `Readonly`\<[`ExtensionMeta`](ExtensionMeta.md)\>
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/store.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L81)
 
-[packages/framework/esm-extensions/src/store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L76)
-
-___
+***
 
 ### moduleName
 
-• `Readonly` **moduleName**: `string`
+> `readonly` **moduleName**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/store.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L80)
 
-[packages/framework/esm-extensions/src/store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L75)
-
-___
+***
 
 ### name
 
-• `Readonly` **name**: `string`
+> `readonly` **name**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-extensions/src/store.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L79)
 
-[packages/framework/esm-extensions/src/store.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L74)
+***
 
-___
+### offline?
 
-### offline
+> `readonly` `optional` **offline**: `boolean` \| `object`
 
-• `Optional` `Readonly` **offline**: `boolean` \| `object`
+Defined in: [packages/framework/esm-extensions/src/store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L85)
 
-#### Defined in
+***
 
-[packages/framework/esm-extensions/src/store.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L80)
+### online?
 
-___
+> `readonly` `optional` **online**: `boolean` \| `object`
 
-### online
-
-• `Optional` `Readonly` **online**: `boolean` \| `object`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/store.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L79)
+Defined in: [packages/framework/esm-extensions/src/store.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L84)

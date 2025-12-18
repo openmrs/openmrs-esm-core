@@ -1,3 +1,4 @@
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import 'fake-indexeddb/auto';
 import { OfflineDb } from './offline-db';
 import {
@@ -11,15 +12,15 @@ import {
 
 const mockUserId = '00000000-0000-0000-0000-000000000000';
 
-jest.mock('@openmrs/esm-api', () => ({
-  getLoggedInUser: jest.fn(async () => ({ uuid: mockUserId })),
+vi.mock('@openmrs/esm-api', () => ({
+  getLoggedInUser: vi.fn(async () => ({ uuid: mockUserId })),
 }));
 
-let consoleWarn;
+let consoleWarn: ReturnType<typeof vi.spyOn>;
 
 beforeAll(() => {
   // Hide dexie warnings about missing indexes.
-  consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterAll(() => {

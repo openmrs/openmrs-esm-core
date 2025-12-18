@@ -2,8 +2,13 @@
   "AppMenuTooltip": "应用菜单",
   "cancel": "取消",
   "change": "更改",
+  "changeDefaultLocale": "Update your default locale",
+  "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
   "changeLanguage": "更改语言",
   "changingLanguage": "正在更改语言",
+  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
   "notifications": "通知",
+  "userMenu": "用户菜单",
+  "userMenuOptions": "用户菜单选项",
   "userMenuTooltip": "我的账户"
 }

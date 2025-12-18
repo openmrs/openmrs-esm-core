@@ -22,6 +22,7 @@ export interface BuildArgs {
   configPaths: Array<string>;
   buildConfig?: string;
   env: string;
+  assets: Array<string>;
 }
 
 export type BuildConfig = Partial<{
@@ -35,6 +36,7 @@ export type BuildConfig = Partial<{
   routes: string;
   spaPath: string;
   env: string;
+  assets: Array<string>;
 }>;
 
 function loadBuildConfig(buildConfigPath?: string): BuildConfig {
@@ -53,6 +55,7 @@ function addConfigFilesFromPaths(configPaths: Array<string>, targetDir: string) 
 }
 
 export async function runBuild(args: BuildArgs) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const webpack: WebpackExport = require('webpack');
   const buildConfig = loadBuildConfig(args.buildConfig);
   const configUrls = buildConfig.configUrls || args.configUrls;
@@ -118,6 +121,7 @@ export async function runBuild(args: BuildArgs) {
     supportOffline: buildConfig.supportOffline ?? args.supportOffline,
     spaPath: buildConfig.spaPath || args.spaPath,
     fresh: args.fresh ?? false,
+    assets: args.assets || buildConfig.assets || [],
   });
 
   logInfo(`Running build process ...`);
@@ -135,12 +139,13 @@ export async function runBuild(args: BuildArgs) {
       if (err || stats?.hasErrors()) {
         reject(err ?? new Error(stats?.compilation.errors.toString()));
       } else {
-        stats &&
+        if (stats) {
           console.log(
             stats.toString({
               colors: true,
             }),
           );
+        }
 
         addConfigFilesFromPaths(buildConfig.configPaths || args.configPaths, args.target);
 

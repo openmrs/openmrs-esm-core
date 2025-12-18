@@ -1,85 +1,69 @@
-[@openmrs/esm-framework](../API.md) / NewVisitPayload
+[O3 Framework](../API.md) / NewVisitPayload
 
 # Interface: NewVisitPayload
 
-## Table of contents
-
-### Properties
-
-- [attributes](NewVisitPayload.md#attributes)
-- [location](NewVisitPayload.md#location)
-- [patient](NewVisitPayload.md#patient)
-- [startDatetime](NewVisitPayload.md#startdatetime)
-- [stopDatetime](NewVisitPayload.md#stopdatetime)
-- [uuid](NewVisitPayload.md#uuid)
-- [visitType](NewVisitPayload.md#visittype)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L5)
 
 ## Properties
 
-### attributes
+### attributes?
 
-• `Optional` **attributes**: { `attributeType`: `string` ; `value`: `string`  }[]
+> `optional` **attributes**: `object`[]
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L12)
 
-[packages/framework/esm-api/src/types/visit-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L12)
+#### attributeType
 
-___
+> **attributeType**: `string`
+
+#### value
+
+> **value**: `string`
+
+***
 
 ### location
 
-• **location**: `string`
+> **location**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L7)
 
-[packages/framework/esm-api/src/types/visit-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L7)
+***
 
-___
+### patient?
 
-### patient
+> `optional` **patient**: `string`
 
-• `Optional` **patient**: `string`
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L8)
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/visit-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L8)
-
-___
+***
 
 ### startDatetime
 
-• **startDatetime**: `Date`
+> **startDatetime**: `Date`
 
-#### Defined in
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L9)
 
-[packages/framework/esm-api/src/types/visit-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L9)
+***
 
-___
+### stopDatetime?
 
-### stopDatetime
+> `optional` **stopDatetime**: `Date`
 
-• `Optional` **stopDatetime**: `Date`
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L11)
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/visit-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L11)
+### uuid?
 
-___
+> `optional` **uuid**: `string`
 
-### uuid
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L6)
 
-• `Optional` **uuid**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/visit-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L6)
-
-___
+***
 
 ### visitType
 
-• **visitType**: `string`
+> **visitType**: `string`
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/visit-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L10)
+Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L10)

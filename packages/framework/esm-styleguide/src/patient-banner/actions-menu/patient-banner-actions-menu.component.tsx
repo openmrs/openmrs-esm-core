@@ -41,7 +41,7 @@ export function PatientBannerActionsMenu({
               </>
             }
           >
-            <ExtensionSlot name="patient-actions-slot" key="patient-actions-slot" state={patientActionsSlotState} />
+            <ExtensionSlot name={actionsSlotName} key={actionsSlotName} state={patientActionsSlotState} />
           </CustomOverflowMenu>
         </div>
       ) : null}

@@ -1,30 +1,25 @@
-[@openmrs/esm-framework](../API.md) / ErrorStateProps
+[O3 Framework](../API.md) / ErrorStateProps
 
 # Interface: ErrorStateProps
 
-## Table of contents
-
-### Properties
-
-- [error](ErrorStateProps.md#error)
-- [headerTitle](ErrorStateProps.md#headertitle)
+Defined in: [packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L7)
 
 ## Properties
 
 ### error
 
-• **error**: `any`
+> **error**: `any`
 
-#### Defined in
+Defined in: [packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L9)
 
-[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L8)
+The error that caused this error card to be rendered. Expected to be a failed fetch result.
 
-___
+***
 
 ### headerTitle
 
-• **headerTitle**: `string`
+> **headerTitle**: `string`
 
-#### Defined in
+Defined in: [packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L11)
 
-[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L9)
+The title to use for this empty component. This must be a pre-translated string.

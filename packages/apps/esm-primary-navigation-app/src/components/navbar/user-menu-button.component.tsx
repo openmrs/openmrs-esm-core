@@ -1,5 +1,5 @@
 import { HeaderGlobalAction } from '@carbon/react';
-import { CloseIcon, useAssignedExtensions, UserAvatarIcon } from '@openmrs/esm-framework';
+import { CloseIcon, useAssignedExtensions, UserAvatarIcon, useOnClickOutside } from '@openmrs/esm-framework';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,10 +14,11 @@ const UserMenuButton: React.FC<MenuButtonProps> = ({ isActivePanel, togglePanel,
   const userMenuItems = useAssignedExtensions('user-panel-slot');
   const showUserMenu = useMemo(() => userMenuItems.length > 0, [userMenuItems.length]);
   const { t } = useTranslation();
+  const userMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel('userMenu'), isActivePanel('userMenu'));
 
   return (
     showUserMenu && (
-      <>
+      <div ref={userMenuRef} className={styles.panelWrapper}>
         <HeaderGlobalAction
           aria-label={t('userMenuTooltip', 'My Account')}
           aria-labelledby="Users Avatar Icon"
@@ -25,7 +26,7 @@ const UserMenuButton: React.FC<MenuButtonProps> = ({ isActivePanel, togglePanel,
             [styles.headerGlobalBarButton]: isActivePanel('userMenu'),
             [styles.activePanel]: !isActivePanel('userMenu'),
           })}
-          enterDelayMs={500}
+          // @ts-ignore - `name` is not a valid prop for the HeaderGlobalAction component, but we need the name prop for user onboarding app to work correctly
           name="User"
           isActive={isActivePanel('userMenu')}
           onClick={() => {
@@ -35,7 +36,7 @@ const UserMenuButton: React.FC<MenuButtonProps> = ({ isActivePanel, togglePanel,
           {isActivePanel('userMenu') ? <CloseIcon size={20} /> : <UserAvatarIcon size={20} />}
         </HeaderGlobalAction>
         <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel('userMenu')} />
-      </>
+      </div>
     )
   );
 };

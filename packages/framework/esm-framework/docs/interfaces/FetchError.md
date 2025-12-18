@@ -1,34 +1,21 @@
-[@openmrs/esm-framework](../API.md) / FetchError
+[O3 Framework](../API.md) / FetchError
 
 # Interface: FetchError
 
-## Implemented by
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:336](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L336)
 
-- [`OpenmrsFetchError`](../classes/OpenmrsFetchError.md)
-
-## Table of contents
-
-### API Properties
-
-- [response](FetchError.md#response)
-- [responseBody](FetchError.md#responsebody)
-
-## API Properties
+## Properties
 
 ### response
 
-• **response**: `Response`
+> **response**: `Response`
 
-#### Defined in
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:337](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L337)
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:336](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L336)
-
-___
+***
 
 ### responseBody
 
-• **responseBody**: ``null`` \| `ResponseBody`
+> **responseBody**: `null` \| `ResponseBody`
 
-#### Defined in
-
-[packages/framework/esm-api/src/openmrs-fetch.ts:337](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L337)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:338](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L338)

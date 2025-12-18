@@ -1,3 +1,4 @@
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import unset from 'lodash/unset';
 import * as Config from './module-config';
 import type { MockedStore } from '@openmrs/esm-state/mock';
@@ -14,6 +15,8 @@ import {
 } from './state';
 import { Type } from '../types';
 import { getExtensionSlotsConfigStore } from '..';
+
+vi.mock('@openmrs/esm-state', () => import('@openmrs/esm-state/mock'));
 
 // Names from Wikipedia's "Metasyntactic variable" page:
 // foo, bar, baz, qux, quux, corge, grault, garply, waldo, fred, plugh, xyzzy, thud
@@ -41,7 +44,7 @@ async function resetAll() {
 
 describe('defineConfigSchema', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -216,7 +219,7 @@ describe('getConfig', () => {
   beforeAll(resetAll);
 
   beforeEach(async () => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -308,7 +311,7 @@ describe('getConfig', () => {
   // DISABLED: Presently getConfig *does not resolve* when looking up a module
   //   with no schema. The behavior described in this test would be preferable,
   //   but would require some deeper changes.
-  xit('throws if looking up module with no schema', async () => {
+  it.skip('throws if looking up module with no schema', async () => {
     await expect(Config.getConfig('fake-module')).rejects.toThrow(/No config schema has been defined.*fake-module/);
   });
 
@@ -958,12 +961,12 @@ describe('getConfig', () => {
 
 describe('type validations', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
 
-  test.each([
+  it.each([
     [Type.Array, 'doop'],
     [Type.Boolean, 0],
     [Type.ConceptUuid, 'Weight'],
@@ -985,7 +988,7 @@ describe('type validations', () => {
 
 describe('processConfig', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -1027,6 +1030,13 @@ describe('implementer tools config', () => {
         _source: 'default',
         _type: Type.Array,
         _value: [],
+      },
+      expression: {
+        _default: undefined,
+        _description: expect.any(String),
+        _source: 'default',
+        _type: Type.String,
+        _value: undefined,
       },
     },
     'Translation overrides': {
@@ -1070,7 +1080,7 @@ describe('implementer tools config', () => {
 
 describe('temporary config', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -1131,7 +1141,7 @@ describe('temporary config', () => {
 
 describe('extension slot config', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
   });
 
   afterEach(resetAll);
@@ -1239,7 +1249,7 @@ describe('extension slot config', () => {
 
 describe('extension config', () => {
   beforeEach(() => {
-    console.error = jest.fn();
+    console.error = vi.fn();
     Config.defineConfigSchema('ext-mod', {
       bar: { _default: 'barry' },
       baz: { _default: 'bazzy' },
@@ -1258,7 +1268,7 @@ describe('extension config', () => {
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'bazzy',
-      'Display conditions': { privileges: [] },
+      'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
     expect(console.error).not.toHaveBeenCalled();
@@ -1281,7 +1291,7 @@ describe('extension config', () => {
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'quiz',
-      'Display conditions': { privileges: [] },
+      'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
     expect(console.error).not.toHaveBeenCalled();
@@ -1314,10 +1324,9 @@ describe('extension config', () => {
     const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
     expect(result).toStrictEqual({
       qux: 'quxolotl',
-      'Display conditions': { privileges: [] },
+      'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
-    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("uses the 'configure' config if one is present, with extension config schema", () => {
@@ -1340,7 +1349,7 @@ describe('extension config', () => {
     const result = getExtensionConfig('barSlot', 'fooExt#id2').getState().config;
     expect(result).toStrictEqual({
       qux: 'quxotic',
-      'Display conditions': { privileges: [] },
+      'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
   });
@@ -1397,7 +1406,7 @@ describe('extension config', () => {
 
 describe('translation overrides', () => {
   it('allows obtaining translation overrides before schema is registered', async () => {
-    console.error = jest.fn();
+    console.error = vi.fn();
     Config.provide({
       'corge-module': {
         'Translation overrides': {

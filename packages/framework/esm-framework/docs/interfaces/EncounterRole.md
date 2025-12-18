@@ -1,122 +1,97 @@
-[@openmrs/esm-framework](../API.md) / EncounterRole
+[O3 Framework](../API.md) / EncounterRole
 
 # Interface: EncounterRole
 
-## Hierarchy
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L32)
 
-- [`OpenmrsResource`](OpenmrsResource.md)
+## Extends
 
-  ↳ **`EncounterRole`**
+- `OpenmrsResource`
 
-## Table of contents
+## Indexable
 
-### Properties
-
-- [auditInfo](EncounterRole.md#auditinfo)
-- [description](EncounterRole.md#description)
-- [display](EncounterRole.md#display)
-- [links](EncounterRole.md#links)
-- [name](EncounterRole.md#name)
-- [resourceVersion](EncounterRole.md#resourceversion)
-- [retired](EncounterRole.md#retired)
-- [uuid](EncounterRole.md#uuid)
+\[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
-### auditInfo
+### auditInfo?
 
-• `Optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo**: `AuditInfo`
 
-#### Inherited from
-
-[OpenmrsResource](OpenmrsResource.md).[auditInfo](OpenmrsResource.md#auditinfo)
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
-
-___
-
-### description
-
-• `Optional` **description**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/encounter-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L34)
-
-___
-
-### display
-
-• `Optional` **display**: `string`
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
+`OpenmrsResource.auditInfo`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+### description?
 
-___
+> `optional` **description**: `string`
 
-### links
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L34)
 
-• `Optional` **links**: [`Link`](Link.md)[]
+***
 
-#### Inherited from
+### display?
 
-[OpenmrsResource](OpenmrsResource.md).[links](OpenmrsResource.md#links)
+> `optional` **display**: `string`
 
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
-
-___
-
-### name
-
-• `Optional` **name**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/encounter-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L33)
-
-___
-
-### resourceVersion
-
-• `Optional` **resourceVersion**: `string`
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[resourceVersion](OpenmrsResource.md#resourceversion)
+`OpenmrsResource.display`
 
-#### Defined in
+***
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+### links?
 
-___
+> `optional` **links**: `Link`[]
 
-### retired
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
-• `Optional` **retired**: `boolean`
+#### Inherited from
 
-#### Defined in
+`OpenmrsResource.links`
 
-[packages/framework/esm-api/src/types/encounter-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/encounter-resource.ts#L35)
+***
 
-___
+### name?
+
+> `optional` **name**: `string`
+
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L33)
+
+***
+
+### resourceVersion?
+
+> `optional` **resourceVersion**: `string`
+
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
+
+#### Inherited from
+
+`OpenmrsResource.resourceVersion`
+
+***
+
+### retired?
+
+> `optional` **retired**: `boolean`
+
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L35)
+
+***
 
 ### uuid
 
-• **uuid**: `string`
+> **uuid**: `string`
+
+Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
 
 #### Inherited from
 
-[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+`OpenmrsResource.uuid`
