@@ -77,20 +77,32 @@ export const configSchema = {
       _type: Type.Array,
       _elements: {
         _type: Type.Object,
-        src: {
-          _type: Type.String,
-          _required: true,
-          _description: 'The source URL of the logo image',
-          _validators: [validators.isUrl],
-        },
-        alt: {
-          _type: Type.String,
-          _required: true,
-          _description: 'The alternative text for the logo image',
+        _properties: {
+          src: {
+            _type: Type.String,
+            _required: true,
+            _description: 'The source URL of the logo image',
+            _validators: [validators.isUrl],
+          },
+          alt: {
+            _type: Type.String,
+            _required: true,
+            _description: 'The alternative text for the logo image',
+          },
         },
       },
       _default: [],
       _description: 'An array of logos to be displayed in the footer next to the OpenMRS logo.',
+    },
+    version: {
+      _type: Type.String,
+      _default: null,
+      _description: 'Version number to display in the footer (e.g., "3.0.0")',
+    },
+    showVersion: {
+      _type: Type.Boolean,
+      _default: false,
+      _description: 'Whether to display the version information in the footer.',
     },
   },
   showPasswordOnSeparateScreen: {
@@ -113,6 +125,8 @@ export interface ConfigSchema {
       alt: string;
       src: string;
     }>;
+    version: string;
+    showVersion: boolean;
   };
   links: {
     loginSuccess: string;

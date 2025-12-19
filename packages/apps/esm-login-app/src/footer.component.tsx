@@ -28,8 +28,14 @@ const Footer: React.FC = () => {
             <use href="#omrs-logo-full-color"></use>
           </svg>
           <span className={styles.poweredByText}>
-            {t('poweredBySubtext', 'An open-source medical record system and global community')}
+            {t('poweredBySubtext', 'An open-source medical record system and global community.')}
           </span>
+          {/* Only show version section if enabled in config and version is provided */}
+          {config.footer.showVersion && config.footer.version && (
+            <span className={styles.versionText}>
+              {t('version', 'Version')} {config.footer.version}
+            </span>
+          )}
           <Link
             className={styles.learnMoreButton}
             href="https://openmrs.org"

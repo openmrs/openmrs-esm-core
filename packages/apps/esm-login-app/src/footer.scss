@@ -23,6 +23,13 @@
   opacity: 80%;
 }
 
+.versionText {
+  font-size: layout.$spacing-05;
+  color: var(--brand-03);
+  text-align: right;
+  flex-shrink: 0;
+}
+
 @media only screen and (max-width: 1024px) {
   .footer {
     flex-direction: row;
