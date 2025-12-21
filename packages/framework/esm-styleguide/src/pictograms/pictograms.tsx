@@ -218,7 +218,7 @@ export const PatientListsPictogram = PatientsPictogram;
  * ```
  */
 export const MaybePictogram = memo(
-  forwardRef<SVGSVGElement, { pictogram: string; fallback?: React.ReactNode } & PictogramProps>(function MaybeIcon(
+  forwardRef<SVGSVGElement, { pictogram: string; fallback?: React.ReactNode } & PictogramProps>(function MaybePictogram(
     { pictogram, fallback, ...pictogramProps },
     ref,
   ) {

@@ -7,6 +7,7 @@ import { createGlobalStore } from '@openmrs/esm-state/mock';
 import {
   isDesktop as realIsDesktop,
   usePagination as realUsePagination,
+  usePaginationInfo as realUsePaginationInfo,
   useOpenmrsPagination as realUseOpenmrsrPagination,
   useOpenmrsInfinite as realUseOpenmrsInfinite,
   useOpenmrsFetchAll as realUseOpenmrsFetchAll,
@@ -77,6 +78,7 @@ export const Extension = vi.fn((props: any) => <slot />);
 export const useFeatureFlag = vi.fn().mockReturnValue(true);
 
 export const usePagination = vi.fn(realUsePagination);
+export const usePaginationInfo = vi.fn(realUsePaginationInfo);
 
 export const useOpenmrsPagination = vi.fn(realUseOpenmrsrPagination);
 export const useOpenmrsInfinite = vi.fn(realUseOpenmrsInfinite);

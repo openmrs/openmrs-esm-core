@@ -1,5 +1,5 @@
 import { HeaderGlobalAction } from '@carbon/react';
-import { CloseIcon, SwitcherIcon, useAssignedExtensions } from '@openmrs/esm-framework';
+import { CloseIcon, SwitcherIcon, useAssignedExtensions, useOnClickOutside } from '@openmrs/esm-framework';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,10 +14,11 @@ const AppMenuButton: React.FC<MenuButtonProps> = ({ isActivePanel, togglePanel, 
   const appMenuItems = useAssignedExtensions('app-menu-slot');
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
   const { t } = useTranslation();
+  const appMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel('appMenu'), isActivePanel('appMenu'));
 
   return (
     showAppMenu && (
-      <>
+      <div ref={appMenuRef} className={styles.panelWrapper}>
         <HeaderGlobalAction
           aria-label={t('AppMenuTooltip', 'App Menu')}
           aria-labelledby="App Menu"
@@ -34,7 +35,7 @@ const AppMenuButton: React.FC<MenuButtonProps> = ({ isActivePanel, togglePanel, 
           {isActivePanel('appMenu') ? <CloseIcon size={20} /> : <SwitcherIcon size={20} />}
         </HeaderGlobalAction>
         <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel('appMenu')} />
-      </>
+      </div>
     )
   );
 };
