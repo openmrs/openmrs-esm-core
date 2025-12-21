@@ -38,17 +38,14 @@ describe('OpenmrsDatePicker', () => {
     render(<OpenmrsDatePicker aria-label="Select appointment date" labelText="" />);
     const group = screen.getByRole('group', { name: /Select appointment date/i });
     expect(group).toBeInTheDocument();
-    // Should not render a visible label element
     expect(screen.queryByText('Select appointment date')).not.toBeInTheDocument();
   });
 
   it('should render visible label when labelText is provided', () => {
     render(<OpenmrsDatePicker labelText="Appointment date" />);
-    // Check that the label text is visible
     const labelText = screen.getByText('Appointment date');
     expect(labelText).toBeInTheDocument();
     expect(labelText).toHaveClass('cds--label');
-    // Check that the group exists
     const group = screen.getByRole('group');
     expect(group).toBeInTheDocument();
   });
@@ -61,5 +58,10 @@ describe('OpenmrsDatePicker', () => {
     );
     consoleWarnSpy.mockRestore();
   });
+
+  it('should render disabled input when disabled prop is true', () => {
+    render(<OpenmrsDatePicker aria-label="datepicker" disabled />);
+    const input = screen.getByLabelText('datepicker');
+    expect(input).toBeDisabled();
+  });
 });
-//test updated
