@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
           <svg aria-label={t('openmrsLogo', 'OpenMRS Logo')} className={styles.poweredByLogo} role="img">
             <use href="#omrs-logo-full-color"></use>
           </svg>
-          <span className={styles.poweredByText}>
+          <span className={`${styles.poweredByText} ${styles.poweredBySubtext}`}>
             {t('poweredBySubtext', 'An open-source medical record system and global community')}
           </span>
           <Link
