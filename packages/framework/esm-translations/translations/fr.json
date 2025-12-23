@@ -77,7 +77,7 @@
   "toggleDevTools": "Activer/Désactiver les outils de développement",
   "unknown": "Inconnu",
   "unsavedChangesInOpenedWorkspace": "Il se pourrait que vous ayez des modifications non enregistrées dans l'espace de travail ouvert. Voulez-vous ignorer ces modifications ?",
-  "unsavedChangesInWorkspace": "Il se peut que des modifications non enregistrées aient été apportées à « {{NomEspace}} ». Veuillez les enregistrer avant d'ouvrir un autre espace de travail.",
+  "unsavedChangesInWorkspace": "Il se peut que des modifications non enregistrées aient été apportées à « {{workspaceName}} ». Veuillez les enregistrer avant d'ouvrir un autre espace de travail.",
   "unsavedChangesTitleText": "Modifications non enregistrées",
   "workspaceHeader": "En-tête de l'espace de travail",
   "yearAbbreviation": "yr",
