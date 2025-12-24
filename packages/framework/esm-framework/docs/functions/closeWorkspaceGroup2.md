@@ -4,7 +4,7 @@
 
 > **closeWorkspaceGroup2**(`discardUnsavedChanges?`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L75)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L76)
 
 **`Experimental`**
 
