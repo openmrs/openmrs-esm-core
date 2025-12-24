@@ -37,6 +37,13 @@ const Login: React.FC = () => {
   const [showPasswordField, setShowPasswordField] = useState(false);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
+  // Use a ref to track showPasswordField for the submit handler to avoid stale closures
+  const showPasswordFieldRef = useRef(showPasswordField);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    showPasswordFieldRef.current = showPasswordField;
+  }, [showPasswordField]);
 
   useEffect(() => {
     if (!user) {
@@ -51,22 +58,15 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (showPasswordOnSeparateScreen) {
       if (showPasswordField) {
-        passwordInputRef.current?.focus();
+        // Only focus password input if it's empty (to preserve browser autofilled values)
+        if (!passwordInputRef.current?.value) {
+          passwordInputRef.current?.focus();
+        }
       } else {
         usernameInputRef.current?.focus();
       }
     }
   }, [showPasswordField, showPasswordOnSeparateScreen]);
-
-  const continueLogin = useCallback(() => {
-    const usernameField = usernameInputRef.current;
-
-    if (usernameField?.value.trim()) {
-      setShowPasswordField(true);
-    } else {
-      usernameField?.focus();
-    }
-  }, []);
 
   const changeUsername = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value), []);
   const changePassword = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value), []);
@@ -76,19 +76,36 @@ const Login: React.FC = () => {
       evt.preventDefault();
       evt.stopPropagation();
 
-      if (showPasswordOnSeparateScreen && !showPasswordField) {
-        continueLogin();
+      // Read values directly from DOM to support browser autofill
+      // (autofill may not trigger onChange events, leaving React state empty)
+      const usernameInput = document.getElementById('username') as HTMLInputElement;
+      const passwordInput = document.getElementById('password') as HTMLInputElement;
+      const currentUsername = usernameInput?.value?.trim() || username;
+      const currentPassword = passwordInput?.value || password;
+
+      // Use ref to get current showPasswordField value to avoid stale closure
+      const isPasswordFieldVisible = showPasswordFieldRef.current;
+
+      // If password field is not visible yet, show it and sync username
+      if (showPasswordOnSeparateScreen && !isPasswordFieldVisible) {
+        if (currentUsername) {
+          setUsername(currentUsername);
+          setShowPasswordField(true);
+        } else {
+          usernameInputRef.current?.focus();
+        }
         return false;
       }
 
-      if (!password || !password.trim()) {
+      // Validate password
+      if (!currentPassword || !currentPassword.trim()) {
         passwordInputRef.current?.focus();
         return false;
       }
 
       try {
         setIsLoggingIn(true);
-        const sessionStore = await refetchCurrentUser(username, password);
+        const sessionStore = await refetchCurrentUser(currentUsername, currentPassword);
         const session = sessionStore.session;
         const authenticated = sessionStore?.session?.authenticated;
 
@@ -132,8 +149,22 @@ const Login: React.FC = () => {
         setIsLoggingIn(false);
       }
     },
-    [username, password, navigate, showPasswordOnSeparateScreen],
+    [username, password, navigate, showPasswordOnSeparateScreen, showPasswordField, loginLinks, location, t],
   );
+
+  const continueLogin = useCallback(() => {
+    // Use getElementById as Carbon component refs may not expose the underlying input
+    const usernameInput = document.getElementById('username') as HTMLInputElement;
+    const usernameValue = usernameInput?.value?.trim();
+
+    if (usernameValue) {
+      // Sync DOM value to state (for autofill support)
+      setUsername(usernameValue);
+      setShowPasswordField(true);
+    } else {
+      usernameInputRef.current?.focus();
+    }
+  }, []);
 
   if (!loginProvider || loginProvider.type === 'basic') {
     return (
@@ -157,27 +188,33 @@ const Login: React.FC = () => {
               <TextInput
                 id="username"
                 type="text"
+                name="username"
+                autoComplete="username"
                 labelText={t('username', 'Username')}
                 value={username}
                 onChange={changeUsername}
                 ref={usernameInputRef}
-                required
                 autoFocus
               />
               {showPasswordOnSeparateScreen ? (
-                showPasswordField ? (
-                  <>
+                <>
+                  {/* Password input is always in DOM for browser autofill support, but visually hidden until username step is complete */}
+                  <div className={showPasswordField ? undefined : styles.hiddenPasswordField}>
                     <PasswordInput
                       id="password"
                       labelText={t('password', 'Password')}
                       name="password"
+                      autoComplete="current-password"
                       onChange={changePassword}
                       ref={passwordInputRef}
-                      required
                       value={password}
                       showPasswordLabel={t('showPassword', 'Show password')}
                       invalidText={t('validValueRequired', 'A valid value is required')}
+                      aria-hidden={!showPasswordField}
+                      tabIndex={showPasswordField ? 0 : -1}
                     />
+                  </div>
+                  {showPasswordField ? (
                     <Button
                       type="submit"
                       className={styles.continueButton}
@@ -191,27 +228,27 @@ const Login: React.FC = () => {
                         t('login', 'Log in')
                       )}
                     </Button>
-                  </>
-                ) : (
-                  <Button
-                    className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                    iconDescription="Continue to password"
-                    onClick={continueLogin}
-                    disabled={!isLoginEnabled}
-                  >
-                    {t('continue', 'Continue')}
-                  </Button>
-                )
+                  ) : (
+                    <Button
+                      type="submit"
+                      className={styles.continueButton}
+                      renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                      iconDescription="Continue to password"
+                      disabled={!isLoginEnabled}
+                    >
+                      {t('continue', 'Continue')}
+                    </Button>
+                  )}
+                </>
               ) : (
                 <>
                   <PasswordInput
                     id="password"
                     labelText={t('password', 'Password')}
                     name="password"
+                    autoComplete="current-password"
                     onChange={changePassword}
                     ref={passwordInputRef}
-                    required
                     value={password}
                     showPasswordLabel={t('showPassword', 'Show password')}
                     invalidText={t('validValueRequired', 'A valid value is required')}
