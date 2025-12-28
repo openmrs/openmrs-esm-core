@@ -11,6 +11,14 @@
   flex-wrap: wrap;
   gap: layout.$spacing-05;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  .contentOverlay & {
+    position: relative;
+    bottom: auto;
+    margin-top: auto;
+  }
 }
 
 .logosContainer {
@@ -71,7 +79,7 @@
 .poweredByTile {
   display: flex;
   text-align: left;
-  max-width: fit-content;
+  max-width: 100%;
   min-height: fit-content;
   font-size: smaller;
   background-color: colors.$white;
@@ -79,6 +87,8 @@
   border: 1px solid colors.$gray-20;
   border-radius: layout.$spacing-04;
   flex-wrap: wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .poweredByContainer {
