@@ -3357,10 +3357,10 @@ __metadata:
     rxjs: "npm:^6.5.3"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-error-handling": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-navigation": 6.x
+    "@openmrs/esm-config": 8.x
+    "@openmrs/esm-error-handling": 8.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-navigation": 8.x
   languageName: unknown
   linkType: soft
 
@@ -3419,9 +3419,9 @@ __metadata:
     single-spa: "npm:^6.0.3"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-state": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-state": 8.x
+    "@openmrs/esm-utils": 8.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -3437,8 +3437,8 @@ __metadata:
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-state": 8.x
   languageName: unknown
   linkType: soft
 
@@ -3524,8 +3524,8 @@ __metadata:
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-translations": 6.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-translations": 8.x
   languageName: unknown
   linkType: soft
 
@@ -3548,9 +3548,9 @@ __metadata:
     rxjs: "npm:^6.5.3"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-offline": 6.x
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-api": 8.x
+    "@openmrs/esm-offline": 8.x
+    "@openmrs/esm-state": 8.x
   languageName: unknown
   linkType: soft
 
@@ -3567,7 +3567,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-globals": 8.x
   languageName: unknown
   linkType: soft
 
@@ -3615,12 +3615,12 @@ __metadata:
     single-spa: "npm:^6.0.3"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-expression-evaluator": 6.x
-    "@openmrs/esm-feature-flags": 6.x
-    "@openmrs/esm-state": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-api": 8.x
+    "@openmrs/esm-config": 8.x
+    "@openmrs/esm-expression-evaluator": 8.x
+    "@openmrs/esm-feature-flags": 8.x
+    "@openmrs/esm-state": 8.x
+    "@openmrs/esm-utils": 8.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -3637,8 +3637,8 @@ __metadata:
     rimraf: "npm:^6.0.1"
     single-spa: "npm:^6.0.3"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-state": 8.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -3811,7 +3811,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-state": 8.x
   languageName: unknown
   linkType: soft
 
@@ -3866,9 +3866,9 @@ __metadata:
     vitest: "npm:^4.0.7"
     workbox-window: "npm:^6.1.5"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-api": 8.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-state": 8.x
     rxjs: 6.x
   languageName: unknown
   linkType: soft
@@ -3934,17 +3934,17 @@ __metadata:
     swr: "npm:2.2.5"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-context": 6.x
-    "@openmrs/esm-emr-api": 6.x
-    "@openmrs/esm-error-handling": 6.x
-    "@openmrs/esm-extensions": 6.x
-    "@openmrs/esm-feature-flags": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-navigation": 6.x
-    "@openmrs/esm-state": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-api": 8.x
+    "@openmrs/esm-config": 8.x
+    "@openmrs/esm-context": 8.x
+    "@openmrs/esm-emr-api": 8.x
+    "@openmrs/esm-error-handling": 8.x
+    "@openmrs/esm-extensions": 8.x
+    "@openmrs/esm-feature-flags": 8.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-navigation": 8.x
+    "@openmrs/esm-state": 8.x
+    "@openmrs/esm-utils": 8.x
     dayjs: 1.x
     i18next: 25.x
     react: 18.x
@@ -3976,12 +3976,12 @@ __metadata:
     vitest: "npm:^4.0.7"
     vitest-fetch-mock: "npm:^0.4.5"
   peerDependencies:
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-dynamic-loading": 6.x
-    "@openmrs/esm-extensions": 6.x
-    "@openmrs/esm-feature-flags": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-config": 8.x
+    "@openmrs/esm-dynamic-loading": 8.x
+    "@openmrs/esm-extensions": 8.x
+    "@openmrs/esm-feature-flags": 8.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-utils": 8.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -4001,8 +4001,8 @@ __metadata:
     vitest: "npm:^4.0.7"
     zustand: "npm:^4.5.5"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-utils": 8.x
   languageName: unknown
   linkType: soft
 
@@ -4049,17 +4049,17 @@ __metadata:
     typescript: "npm:^5.8.3"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-emr-api": 6.x
-    "@openmrs/esm-error-handling": 6.x
-    "@openmrs/esm-extensions": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-navigation": 6.x
-    "@openmrs/esm-react-utils": 6.x
-    "@openmrs/esm-state": 6.x
-    "@openmrs/esm-translations": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-api": 8.x
+    "@openmrs/esm-config": 8.x
+    "@openmrs/esm-emr-api": 8.x
+    "@openmrs/esm-error-handling": 8.x
+    "@openmrs/esm-extensions": 8.x
+    "@openmrs/esm-globals": 8.x
+    "@openmrs/esm-navigation": 8.x
+    "@openmrs/esm-react-utils": 8.x
+    "@openmrs/esm-state": 8.x
+    "@openmrs/esm-translations": 8.x
+    "@openmrs/esm-utils": 8.x
     dayjs: 1.x
     i18next: 25.x
     react: 18.x
@@ -4108,7 +4108,7 @@ __metadata:
     semver: "npm:7.3.2"
     vitest: "npm:^4.0.7"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-globals": 8.x
     dayjs: 1.x
     i18next: 25.x
     rxjs: 6.x
