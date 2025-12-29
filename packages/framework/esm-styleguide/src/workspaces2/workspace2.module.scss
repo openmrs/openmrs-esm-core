@@ -35,11 +35,6 @@ $extraWideWorkspaceWidth: 48.25rem;
     bottom: 0;
     inset-inline-end: var(--actionPanelOffset);
     z-index: 100;
-    will-change: transform;
-
-    &.isRootWorkspace {
-      animation: slideFromRight 0.5s ease-in-out;
-    }
 
     &.maximized {
       position: fixed !important;
@@ -55,20 +50,10 @@ $extraWideWorkspaceWidth: 48.25rem;
     &.hidden {
       width: 0;
     }
-
-    @keyframes slideFromRight {
-      from {
-        transform: translateX(100%);
-      }
-      to {
-        transform: translateX(0);
-      }
-    }
   }
 
   // This container contains the actual workspace content
-  // it has sliding transitions when hidden / restored, and
-  // changes size (width) when maximized
+  // and changes size (width) when maximized
   .workspaceInnerContainer {
     display: flex;
     flex-direction: column;
@@ -93,29 +78,9 @@ $extraWideWorkspaceWidth: 48.25rem;
   .workspaceSpacer {
     width: inherit;
     height: 100%;
-    will-change: width;
-    animation: growToWidth 0.5s ease-in-out;
 
     &.hidden {
-      animation: shrinkWidth 0.5s ease-in-out forwards;
-    }
-
-    @keyframes growToWidth {
-      from {
-        width: 0;
-      }
-      to {
-        width: inherit;
-      }
-    }
-
-    @keyframes shrinkWidth {
-      from {
-        width: inherit;
-      }
-      to {
-        width: 0;
-      }
+      width: 0;
     }
   }
 }
@@ -214,34 +179,10 @@ $extraWideWorkspaceWidth: 48.25rem;
 
   .workspaceInnerContainer {
     width: 100vw !important;
-
-    &.isRootWorkspace {
-      animation: slideFromBottom 0.5s ease-in-out;
-    }
   }
 
   .marginWorkspaceContent {
     margin-bottom: var(--bottom-nav-height);
-  }
-
-  @keyframes slideFromBottom {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0%);
-    }
-  }
-
-  @keyframes slideToBottom {
-    from {
-      transform: translateX(0%);
-      width: $narrowWorkspaceWidth;
-    }
-    to {
-      transform: translateX($narrowWorkspaceWidth);
-      width: 0;
-    }
   }
 }
 
