@@ -28,11 +28,8 @@ RUN yarn install --immutable
 # Build all packages
 RUN yarn turbo run build
 
-# Check if spa-assemble-config.json exists, create default if not
-COPY spa-assemble-config.json* ./
-RUN if [ ! -f spa-assemble-config.json ]; then \
-    echo '{"frontendModules":{}}' > spa-assemble-config.json; \
-    fi
+# Copy SPA assembly configuration
+COPY spa-assemble-config.json ./
 
 # Assemble the SPA
 RUN node packages/tooling/openmrs/dist/cli.js assemble \
