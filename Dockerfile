@@ -54,11 +54,15 @@ RUN npm install -g serve@14
 RUN addgroup -g 1001 -S openmrs && \
     adduser -S -D -H -u 1001 -s /sbin/nologin -G openmrs openmrs
 
-# Set working directory
+# Set working directory - serve from root to maintain /openmrs/spa path
 WORKDIR /app
 
-# Copy built application from builder stage
-COPY --from=builder --chown=openmrs:openmrs /app/spa .
+# Create the expected directory structure: /app/openmrs/spa/
+# This ensures assets are served at /openmrs/spa/* as the build expects
+RUN mkdir -p /app/openmrs/spa
+
+# Copy built application to the correct path
+COPY --from=builder --chown=openmrs:openmrs /app/spa /app/openmrs/spa
 
 # Switch to non-root user
 USER openmrs
@@ -66,11 +70,10 @@ USER openmrs
 # Expose port
 EXPOSE 3000
 
-# Health check
+# Health check - check the actual path
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/openmrs/spa/ || exit 1
 
-# Start serve in SPA mode
-# -s = SPA mode (rewrites all requests to index.html for client-side routing)
-# -l = listen port
+# Start serve in SPA mode, serving from /app root
+# The -s flag enables SPA mode (rewrites to index.html for client-side routing)
 CMD ["serve", "-s", ".", "-l", "3000"]
