@@ -11,14 +11,20 @@ FROM --platform=$BUILDPLATFORM node:22-alpine AS builder
 ARG APP_SHELL_VERSION=next
 ARG CACHE_BUST
 
-# Set working directory
+# OpenMRS build-time environment variables (used by webpack)
+# OMRS_API_URL - Set via build arg if backend is on different host
+ARG OMRS_API_URL=https://api.emr.hubuk.ng/openmrs
+ENV OMRS_API_URL=https://api.emr.hubuk.ng/openmrs
+ENV OMRS_PUBLIC_PATH=/openmrs/spa
+ENV OMRS_PAGE_TITLE=OpenMRS
+ENV OMRS_OFFLINE=disable
+ENV NODE_ENV=production
+
 WORKDIR /app
 
 # Copy package files first for better caching
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn ./.yarn
-
-# Copy workspace packages
 COPY packages ./packages
 COPY turbo.json ./
 
@@ -43,39 +49,24 @@ RUN node packages/tooling/openmrs/dist/cli.js build \
     --target /app/spa
 
 # -----------------------------------------------------------------------------
-# Stage 2: Production Stage - Lightweight static server
+# Stage 2: Production Stage - nginx
 # -----------------------------------------------------------------------------
-FROM node:22-alpine AS production
+FROM nginx:1.25-alpine AS production
 
-# Install serve globally
-RUN npm install -g serve@14
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S openmrs && \
-    adduser -S -D -H -u 1001 -s /sbin/nologin -G openmrs openmrs
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Set working directory - serve from root to maintain /openmrs/spa path
-WORKDIR /app
+# Copy built application
+COPY --from=builder /app/spa /usr/share/nginx/html/openmrs/spa
 
-# Create the expected directory structure: /app/openmrs/spa/
-# This ensures assets are served at /openmrs/spa/* as the build expects
-RUN mkdir -p /app/openmrs/spa
+# Expose port 80
+EXPOSE 80
 
-# Copy built application to the correct path
-COPY --from=builder --chown=openmrs:openmrs /app/spa /app/openmrs/spa
-
-# Copy serve configuration for SPA routing
-COPY --chown=openmrs:openmrs serve.json ./
-
-# Switch to non-root user
-USER openmrs
-
-# Expose port
-EXPOSE 3000
-
-# Health check - check the actual path
+# Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/openmrs/spa/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost/openmrs/spa/ || exit 1
 
-# Start serve with config file (handles SPA routing for /openmrs/spa/*)
-CMD ["serve", "-c", "serve.json", "-l", "3000"]
+CMD ["nginx", "-g", "daemon off;"]
