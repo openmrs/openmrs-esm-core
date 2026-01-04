@@ -1,0 +1,114 @@
+name: Build and Deploy EMR frontend
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+jobs:
+  # ===========================================================================
+  # Build Job
+  # ===========================================================================
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            .yarn/cache
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run linting
+        run: yarn lint
+        continue-on-error: true
+
+      - name: Run type check
+        run: yarn turbo run typescript
+        continue-on-error: true
+
+      - name: Run tests
+        run: yarn turbo run test
+        continue-on-error: true
+
+      - name: Build packages
+        run: yarn turbo run build
+
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@3.04
+        with:
+          name: hubuk/rednoxx-emr-frontend:latest
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          dockerfile: Dockerfile
+
+  # ===========================================================================
+  # Deploy
+  # ===========================================================================
+  deploy:
+    name: Deploy EMR Frontend
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://emr.hubuk.ng
+
+    steps:
+      - name: Deploy EMR Frontend
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /root/apps
+
+            # Pull latest image
+            docker pull hubuk/rednoxx-emr-frontend:latest
+
+            # Update the frontend service
+            docker compose pull emr_frontend
+            docker compose up -d emr_frontend
+
+            # Verify deployment
+            sleep 10
+            curl -f http://localhost:3000/ || exit 1
