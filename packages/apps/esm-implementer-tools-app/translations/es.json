@@ -33,14 +33,14 @@
   "resetToDefaultValueButtonText": "Restablecer a los valores predeterminados",
   "searchConceptHelperText": "Buscar conceptos",
   "searchConfiguration": "Buscar configuración",
-  "searching": "Searching",
-  "searchPersonAttributeHelperText": "Person attribute type name",
-  "stringValidationMessage": "Value must be a string",
+  "searching": "Buscando",
+  "searchPersonAttributeHelperText": "Nombre del tipo de atributo de la persona",
+  "stringValidationMessage": "El valor debe ser una cadena",
   "toggleImplementerTools": "Activar/desactivar herramientas de implementador",
   "uiEditor": "Editor por UI",
   "unknownVersion": "desconocido",
   "updateConfig": "Actualizar configuración",
-  "uuidValidationMessage": "Value must be a valid UUID string",
+  "uuidValidationMessage": "El valor debe ser una cadena UUID válida",
   "value": "Valor",
   "viewModules": "Ver módulos"
 }
