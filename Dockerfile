@@ -64,6 +64,9 @@ RUN mkdir -p /app/openmrs/spa
 # Copy built application to the correct path
 COPY --from=builder --chown=openmrs:openmrs /app/spa /app/openmrs/spa
 
+# Copy serve configuration for SPA routing
+COPY --chown=openmrs:openmrs serve.json ./
+
 # Switch to non-root user
 USER openmrs
 
@@ -74,6 +77,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:3000/openmrs/spa/ || exit 1
 
-# Start serve in SPA mode, serving from /app root
-# The -s flag enables SPA mode (rewrites to index.html for client-side routing)
-CMD ["serve", "-s", ".", "-l", "3000"]
+# Start serve with config file (handles SPA routing for /openmrs/spa/*)
+CMD ["serve", "-c", "serve.json", "-l", "3000"]
