@@ -84,12 +84,6 @@ jobs:
       - name: 🏗️ Build apps
         run: yarn turbo run build --color --concurrency=5
 
-      - name: 🖥️ Run dev server
-        run: bash e2e/support/github/run-e2e-docker-env.sh
-
-      - name: 📄 Copy test environment variables
-        run: cp example.env .env
-
       - name: 💾 Cache Playwright Browsers
         id: playwright-cache
         uses: actions/cache@v4
@@ -100,8 +94,8 @@ jobs:
       - name: 🎭 Install Playwright Browsers
         run: npx playwright install chromium --with-deps
 
-      - name: ⏳ Wait for the OpenMRS instance to start
-        run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
+      - name: 🖥️ Start dev server and wait for backend
+        run: bash e2e/support/github/run-e2e-docker-env.sh
 
       - name: 🧪 Run E2E tests
         run: yarn playwright test
@@ -154,7 +148,7 @@ jobs:
       - name: 🏗️ Build apps
         run: yarn turbo run build --color --concurrency=5
 
-      - name: 🖥️ Run dev server
+      - name: 🖥️ Start dev server and wait for backend
         run: bash e2e/support/github/run-e2e-docker-env.sh
 
       - name: 📥 Checkout to the ${{ matrix.repo }} main branch
@@ -190,9 +184,6 @@ jobs:
       - name: 🎭 Install Playwright Browsers for ${{ matrix.repo }}
         run: yarn playwright install --with-deps
         working-directory: e2e_repo
-
-      - name: ⏳ Wait for the OpenMRS instance to start
-        run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
 
       - name: 🧪 Run E2E tests for ${{ matrix.repo }}
         run: yarn playwright test
