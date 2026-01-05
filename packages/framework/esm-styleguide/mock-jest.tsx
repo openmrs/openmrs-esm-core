@@ -133,7 +133,32 @@ export const XrayPictogram = () => <span>XrayPictogram</span>;
 export const MaybeIcon = ({ icon }) => <span>{icon}</span>;
 export const MaybePictogram = ({ pictogram }) => <span>{pictogram}</span>;
 
-export { CardHeader, EmptyCard, ErrorCard, EmptyCardIllustration, Pagination, PageHeader, PageHeaderContent } from '.';
+// EmptyCardIllustration needs mocking because it uses SVG symbols registered by setupEmptyCard()
+export const EmptyCardIllustration = ({ width = '64', height = '64' }: { width?: string; height?: string }) => (
+  <svg width={width} height={height} data-testid="empty-card-illustration">
+    <rect width={width} height={height} />
+  </svg>
+);
+
+// EmptyCard needs mocking because it uses EmptyCardIllustration internally
+export const EmptyCard = ({
+  displayText,
+  headerTitle,
+  launchForm,
+}: {
+  displayText: string;
+  headerTitle: string;
+  launchForm?(): void;
+}) => (
+  <div data-testid="empty-card">
+    <h4>{headerTitle}</h4>
+    <EmptyCardIllustration />
+    <p>There are no {displayText} to display</p>
+    {launchForm && <button onClick={launchForm}>Record {displayText}</button>}
+  </div>
+);
+
+export { CardHeader, ErrorCard, Pagination, PageHeader, PageHeaderContent } from '@openmrs/esm-styleguide/src/internal';
 
 export const OpenmrsDatePicker = () => <span>OpenmrsDatePicker</span>;
 export const OpenmrsDateRangePicker = () => <span>OpenmrsDateRangePicker</span>;
