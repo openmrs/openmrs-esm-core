@@ -1,13 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { subscribeOpenmrsEvent } from '@openmrs/esm-emr-api';
+import { navigate } from '@openmrs/esm-navigation';
 import classNames from 'classnames';
 import { createRoot } from 'react-dom/client';
 import { ActionMenu } from './action-menu2/action-menu2.component';
 import { closeWorkspaceGroup2, useWorkspace2Store } from './workspace2';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import styles from './workspace-windows-and-menu.module.scss';
-import { subscribeOpenmrsEvent } from '@openmrs/esm-emr-api';
-import { ComponentContext } from '@openmrs/esm-react-utils';
-import { navigate } from '@openmrs/esm-navigation';
 
 export function renderWorkspaceWindowsAndMenu(target: HTMLElement | null) {
   if (target) {
@@ -25,20 +24,18 @@ function WorkspaceWindowsAndMenu() {
 
   useEffect(() => {
     const unsubscribe = subscribeOpenmrsEvent('before-page-changed', (pageChangedEvent) => {
-      if (pageChangedEvent) {
-        const { newPage, newUrl, cancelNavigation } = pageChangedEvent;
-        if (openedGroup && newPage) {
-          // first cancel the navigation request
-          // re-do the navigation when workspace group is successfully closed
-          cancelNavigation();
-          closeWorkspaceGroup2().then((isClosed) => {
-            if (isClosed) {
-              // the closeWorkspaceGroup2() promise resolves too soon for some reason;
-              // wrap the navigate() in Promise.resolve to avoid conflict with cancelNavigation()
-              Promise.resolve().then(() => navigate({ to: newUrl }));
-            }
-          });
-        }
+      const { newPage, newUrl, cancelNavigation } = pageChangedEvent;
+      if (openedGroup && newPage) {
+        // first cancel the navigation request
+        // re-do the navigation when workspace group is successfully closed
+        cancelNavigation();
+        closeWorkspaceGroup2().then((isClosed) => {
+          if (isClosed) {
+            // the closeWorkspaceGroup2() promise resolves too soon for some reason;
+            // wrap the navigate() in Promise.resolve to avoid conflict with cancelNavigation()
+            Promise.resolve().then(() => navigate({ to: newUrl }));
+          }
+        });
       }
     });
 
