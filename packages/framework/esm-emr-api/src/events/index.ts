@@ -1,4 +1,10 @@
-import { type EventsWithPayload, type OpenmrsEvent, type EventsWithoutPayload, type EventTypes } from './types';
+import {
+  type EventsWithPayload,
+  type OpenmrsEvent,
+  type EventsWithoutPayload,
+  type EventTypes,
+  type PageChanged,
+} from './types';
 export { type OpenmrsEvent, type EventTypes as OpenmrsEventTypes } from './types';
 
 export function fireOpenmrsEvent<T extends EventsWithoutPayload>(event: T, payload?: never): boolean;
@@ -21,9 +27,11 @@ export function fireOpenmrsEvent<T extends OpenmrsEvent>(event: T, payload?: Eve
  * @param event The name of the event to listen to
  * @param handler The callback to be called when the event fires
  */
+export function subscribeOpenmrsEvent(event: 'started', handler: (payload: undefined) => void);
+export function subscribeOpenmrsEvent(event: 'before-page-changed', handler: (payload: PageChanged) => void);
 export function subscribeOpenmrsEvent<T extends OpenmrsEvent>(
   event: T,
-  handler: (payload?: EventTypes[T]) => boolean | void,
+  handler: (payload?: EventTypes[T]) => void,
 ): () => void {
   const internalHandler = (event: Event) => {
     const detail = 'detail' in event && event.detail !== null ? event.detail : undefined;
