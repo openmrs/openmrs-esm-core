@@ -302,6 +302,11 @@ if [[ "${CI:-}" == "true" || "${GITHUB_ACTIONS:-}" == "true" ]]; then
   echo ""
   echo "CI environment detected - backend ready, exiting for CI to run tests"
   echo "Base URL: $base_url"
+  # Export environment variables for GitHub Actions
+  if [[ -n "${GITHUB_ENV:-}" ]]; then
+    echo "E2E_BASE_URL=$base_url" >> "$GITHUB_ENV"
+    echo "E2E_PORT=$E2E_PORT" >> "$GITHUB_ENV"
+  fi
   exit 0
 fi
 
