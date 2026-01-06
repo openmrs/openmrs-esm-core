@@ -14,10 +14,6 @@
     color: $text-02;
   }
 
-  &:focus {
-    border-color: $interactive-01;
-  }
-
   & > span {
     margin-top: layout.$spacing-02;
     @include type.type-style('body-compact-01');
@@ -63,11 +59,6 @@
     @include brand-03(border-color);
     border-radius: 50%;
     background-color: $ui-02;
-
-    &.focused {
-      border-color: var(--brand-03) !important;
-      box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--brand-03) 80%, black 20%) !important;
-    }
   }
 
   .container {

@@ -4,7 +4,7 @@
 
 > **launchWorkspaceGroup2**\<`GroupProps`\>(`groupName`, `groupProps`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L32)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L33)
 
 **`Experimental`**
 
