@@ -48,8 +48,8 @@
   },
   "devDependencies": {
     "@openmrs/esm-framework": "workspace:*",
-    "@rspack/cli": "^1.4.5",
-    "@rspack/core": "^1.4.5",
+    "@rspack/cli": "^1.7.1",
+    "@rspack/core": "^1.7.1",
     "cross-env": "^7.0.3",
     "happy-dom": "^17.4.7",
     "openmrs": "workspace:*",

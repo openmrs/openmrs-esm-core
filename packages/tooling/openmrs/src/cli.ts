@@ -69,16 +69,19 @@ yargs.command(
         default: [],
         describe: 'The URL to a valid frontend configuration. Can be used multiple times.',
         type: 'array',
+        string: true,
       })
       .option('config-file', {
         default: [],
         describe: 'The path to a frontend configuration file. Can be used multiple times.',
         type: 'array',
+        string: true,
       })
       .option('sources', {
         default: ['.'],
         describe: 'Runs the projects from the provided source directories. Can be used multiple times.',
         type: 'array',
+        string: true,
       })
       .option('shared-dependencies', {
         default: [],
@@ -177,6 +180,7 @@ yargs.command(
         describe:
           'The URL to a frontend configuration. Can be used multiple times. Resolved by the client during initialization.',
         type: 'array',
+        string: true,
       })
       .option('config-path', {
         default: [],
