@@ -118,6 +118,7 @@ jobs:
           - openmrs-esm-patient-management
           - openmrs-esm-patient-chart
           - openmrs-esm-form-builder
+      fail-fast: false
 
     steps:
       - name: 📥 Checkout esm-core repo
