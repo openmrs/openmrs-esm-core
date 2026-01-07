@@ -170,56 +170,61 @@ yarn turbo run test --force
 
 #### Running End-to-End (E2E) tests
 
-Before running the E2E tests, you need to set up the test environment. Install Playwright browsers and set up the default test environment variables by running the following commands:
+E2E tests run against a complete OpenMRS stack in Docker containers. The test runner handles everything automatically: building the frontend, starting containers, running tests, and cleanup.
+
+**Prerequisites:**
+
+Install Playwright browsers before your first run:
 
 ```bash
 npx playwright install
-cp example.env .env
 ```
 
-By default, tests run against a local backend at http://localhost:8080/openmrs. To test local changes, make sure your dev server is running before executing tests. For example, to test local changes to the Login app:
-
-```bash
-yarn start --sources packages/apps/esm-login-app # or any other app in the packages/apps directory
-```
-
-To test against a remote instance (such as the OpenMRS RefApp hosted on dev3.openmrs.org), update the `E2E_BASE_URL` environment variable in your `.env` file:
-
-```env
-E2E_BASE_URL=https://dev3.openmrs.org/openmrs
-```
-
-To run E2E tests:
+**Running E2E tests:**
 
 ```bash
 yarn test-e2e
 ```
 
-This will run all the E2E tests (files in the e2e/specs directory with the `*.spec.ts` extension) in headless mode. That means no browser UI will be visible.
+This single command will:
+1. Build the frontend with your local changes
+2. Start Docker containers (backend, database, gateway, frontend)
+3. Wait for the backend to be ready
+4. Run all E2E tests in headless mode
+5. Automatically stop and remove containers when done
 
-To run tests in headed mode (shows the browser while tests run), use:
-
-```bash
-yarn test-e2e --headed
-```
-
-To run tests in Playwright's UI mode (interactive debugger), use:
-
-```bash
-yarn test-e2e --ui
-```
-
-You'll most often want to run tests in both headed and UI mode:
+**Common options:**
 
 ```bash
-yarn test-e2e --headed --ui
+# Run tests with browser visible
+yarn test-e2e -- --headed
+
+# Run tests in Playwright's interactive UI mode
+yarn test-e2e -- --ui
+
+# Run a specific test file
+yarn test-e2e -- login.spec.ts
+
+# Keep containers running on test failure (for debugging)
+yarn test-e2e --keep-on-failure
+
+# CLI-friendly output (no browser popup, useful for LLM tools)
+yarn test-e2e --list
 ```
 
-To run a specific test file:
+**Running tests on multiple branches:**
+
+You can run E2E tests on different branches simultaneously in separate terminal windows. Each run automatically uses a unique port and container names based on your git branch, so there's no interference between concurrent test runs.
+
+**Testing against a remote instance:**
+
+To test against a remote instance instead of Docker containers, set the `E2E_BASE_URL` environment variable:
 
 ```bash
-yarn test-e2e <test-name> # for example, yarn test-e2e login.spec.ts
+E2E_BASE_URL=https://dev3.openmrs.org/openmrs yarn playwright test
 ```
+
+Note: When testing against a remote instance, use `yarn playwright test` directly (not `yarn test-e2e`) since you don't need the Docker environment.
 
 Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3) to learn more about End-to-End tests in this project.
 

@@ -4,25 +4,28 @@ version: "3.7"
 
 services:
   gateway:
-    container_name: gateway
     image: openmrs/openmrs-reference-application-3-gateway:${TAG:-nightly}
+    hostname: gateway
+    depends_on:
+      - frontend
+      - backend
     ports:
-      - "8080:80"
+      - "${E2E_PORT:-8080}:80"
 
   frontend:
-    container_name: frontend
     build:
       context: .
+    hostname: frontend
     environment:
       SPA_PATH: /openmrs/spa
       API_URL: /openmrs
 
   backend:
-    container_name: backend
     image: openmrs/openmrs-reference-application-3-backend:nightly-with-data
+    hostname: backend
     depends_on:
       - db
 
   db:
-    container_name: db
     image: openmrs/openmrs-reference-application-3-db:nightly-with-data
+    hostname: db
