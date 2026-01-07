@@ -74,17 +74,9 @@ export function resetAllRoutesOverrides() {
     return;
   }
 
-  const localStorage = window.localStorage;
-  // Collect keys first to avoid skipping items during iteration
-  const keysToRemove: string[] = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key?.startsWith(localStorageRoutesPrefix)) {
-      keysToRemove.push(key);
-    }
-  }
-  // Remove collected keys
-  keysToRemove.forEach((key) => localStorage.removeItem(key));
+  Object.keys(localStorage)
+    .filter((key) => key.startsWith(localStorageRoutesPrefix))
+    .forEach((key) => localStorage.removeItem(key));
 }
 
 function addRouteOverrideInternal(moduleName: string, routes: OpenmrsAppRoutes | string) {
