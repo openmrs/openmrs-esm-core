@@ -21,7 +21,7 @@
     "verify": "turbo run lint test typescript",
     "postinstall": "husky install",
     "test": "turbo run test",
-    "test-e2e": "playwright test",
+    "test-e2e": "./e2e/support/github/run-e2e-docker-env.sh",
     "coverage": "turbo run test --coverage"
   },
   "devDependencies": {
