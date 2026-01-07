@@ -22,16 +22,31 @@ export enum Type {
 
 export let configSchema = {};
 
+// Track extension-specific config schemas
+export const extensionConfigSchemas: Record<string, object> = {};
+
 export const getConfig = vi.fn(() => Promise.resolve(getDefaultsFromConfigSchema(configSchema)));
 
 export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
 }
 
-export function defineExtensionConfigSchema(extensionName, schema) {
+export function defineExtensionConfigSchema(extensionName: string, schema) {
+  extensionConfigSchemas[extensionName] = schema;
+  // Also set as the current schema for backwards compatibility
   configSchema = schema;
 }
 
-export const extensionHasOwnConfigSchema = vi.fn(() => false);
+export const extensionHasOwnConfigSchema = vi.fn((extensionName: string) => {
+  return !!extensionConfigSchemas[extensionName];
+});
 
 export const clearConfigErrors = vi.fn();
+
+/**
+ * Resets the mock state - useful in test cleanup
+ */
+export function resetMockConfig() {
+  configSchema = {};
+  Object.keys(extensionConfigSchemas).forEach((key) => delete extensionConfigSchemas[key]);
+}
