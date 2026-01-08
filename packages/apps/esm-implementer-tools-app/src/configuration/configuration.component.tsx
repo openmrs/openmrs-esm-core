@@ -60,7 +60,11 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({ isConfigToolbarOp
   />
 );
 
-export const Configuration: React.FC = () => {
+export interface ConfigurationProps {
+  isExpanded?: boolean;
+}
+
+export const Configuration: React.FC<ConfigurationProps> = ({ isExpanded = false }) => {
   const { t } = useTranslation();
   const {
     isUIEditorEnabled,
@@ -114,7 +118,8 @@ export const Configuration: React.FC = () => {
     return filterText ? getRelatedBranches(combinedConfig, filterText) : combinedConfig;
   }, [filterText, combinedConfig]);
 
-  const mainContentHeight = isConfigToolbarOpen ? 'calc(50vh - 7rem)' : 'calc(50vh - 2rem)';
+  const mainContentClass = isExpanded ? `${styles.mainContent} ${styles.expandedContent}` : styles.mainContent;
+
   return (
     <>
       <div className={styles.tools}>
@@ -183,9 +188,22 @@ export const Configuration: React.FC = () => {
           </FlexGrid>
         ) : null}
       </div>
-      <div className={styles.mainContent} style={{ height: mainContentHeight }}>
+      <div
+        className={mainContentClass}
+        style={{
+          height: isConfigToolbarOpen
+            ? `calc(${isExpanded ? '80vh' : '50vh'} - 7rem)`
+            : `calc(${isExpanded ? '80vh' : '50vh'} - 2rem)`,
+        }}
+      >
         {isJsonModeEnabled ? (
-          <JsonEditor height={mainContentHeight} />
+          <JsonEditor
+            height={
+              isConfigToolbarOpen
+                ? `calc(${isExpanded ? '80vh' : '50vh'} - 7rem)`
+                : `calc(${isExpanded ? '80vh' : '50vh'} - 2rem)`
+            }
+          />
         ) : (
           <>
             <div className={styles.configTreePane}>
