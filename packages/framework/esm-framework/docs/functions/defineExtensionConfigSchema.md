@@ -24,8 +24,8 @@ for more information about defining a config schema.
 `string`
 
 Name of the extension the schema is being defined for.
-  Should match the `name` of one of the `extensions` entries being returned
-  by `setupOpenMRS`.
+  Should match the `name` of one of the `extensions` entries defined in
+  the app's `routes.json` file.
 
 ### schema
 
