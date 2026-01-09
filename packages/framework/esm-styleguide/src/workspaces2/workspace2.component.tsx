@@ -115,7 +115,8 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   }
 
   const { icon, canMaximize } = windowDef;
-  const canHide = !!icon;
+  const canCloseGroup = group.persistence === 'closable';
+  const canHide = !!icon && !canCloseGroup;
   const { maximized } = openedWindow;
   const width = windowDef?.width ?? 'narrow';
 
@@ -173,12 +174,14 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
                         <ArrowRightIcon />
                       </HeaderGlobalAction>
                     ) : (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('close')}
-                        onClick={() => closeWorkspace({ closeWindow: true })}
-                      >
-                        <CloseIcon />
-                      </HeaderGlobalAction>
+                      !canCloseGroup && (
+                        <HeaderGlobalAction
+                          aria-label={getCoreTranslation('close')}
+                          onClick={() => closeWorkspace({ closeWindow: true })}
+                        >
+                          <CloseIcon />
+                        </HeaderGlobalAction>
+                      )
                     )}
                   </>
                 ) : (
