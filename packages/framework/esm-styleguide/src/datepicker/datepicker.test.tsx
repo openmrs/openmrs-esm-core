@@ -41,15 +41,17 @@ describe('OpenmrsDatePicker', () => {
     expect(group).toBeInTheDocument();
 
     // Should not render a visible label element
+
     expect(screen.queryByText('Select appointment date')).not.toBeInTheDocument();
   });
 
   it('should render visible label when labelText is provided', () => {
     render(<OpenmrsDatePicker labelText="Appointment date" />);
     const labelText = screen.getByText('Appointment date');
+    // Check that the label text is visible
     expect(labelText).toBeInTheDocument();
     expect(labelText).toHaveClass('cds--label');
-
+// Check that the group exists
     const group = screen.getByRole('group');
     expect(group).toBeInTheDocument();
   });
