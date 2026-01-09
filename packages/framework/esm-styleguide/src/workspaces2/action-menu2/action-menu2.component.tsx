@@ -4,15 +4,16 @@ import Parcel from 'single-spa-react/parcel';
 import { IconButton } from '@carbon/react';
 import { mountRootParcel } from 'single-spa';
 import { loadLifeCycles } from '@openmrs/esm-routes';
-import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
+import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { type WorkspaceGroupDefinition2 } from '@openmrs/esm-globals';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { closeWorkspaceGroup2, useWorkspace2Store } from '../workspace2';
 import { CloseIcon } from '../../icons';
 import styles from './action-menu2.module.scss';
+import { ExtensionSlot } from '@openmrs/esm-framework';
 
 export interface ActionMenuProps {
-  workspaceGroup: WorkspaceGroupDefinition2;
+  workspaceGroup: WorkspaceGroupDefinition2 & { moduleName: string };
   groupProps: Record<string, any> | null;
 }
 
@@ -48,15 +49,14 @@ export function ActionMenu({ workspaceGroup, groupProps }: ActionMenuProps) {
             <CloseIcon />
           </IconButton>
         )}
-        {windowsWithIcons.map((window) => (
-          <Parcel
-            key={window.icon}
-            config={() => loadLifeCycles(window.moduleName, window.icon)}
-            mountParcel={mountRootParcel}
-            windowName={window.name}
-            groupProps={groupProps}
-          />
-        ))}
+        <ComponentContext.Provider
+          value={{
+            moduleName: workspaceGroup.moduleName,
+            featureName: workspaceGroup.name,
+          }}
+        >
+          <ExtensionSlot name={workspaceGroup.name} state={{ groupProps }} />
+        </ComponentContext.Provider>
       </div>
       {isClosable && !isDesktop(layout) && (
         <IconButton

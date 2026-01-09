@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { Button, IconButton } from '@carbon/react';
 import { SingleSpaContext } from 'single-spa-react';
-import { useLayoutType } from '@openmrs/esm-react-utils';
+import { ComponentContext, useLayoutType } from '@openmrs/esm-react-utils';
 import { type OpenedWindow } from '@openmrs/esm-extensions';
 import { launchWorkspace2, useWorkspace2Store } from '../workspace2';
 import styles from './action-menu-button2.module.scss';
@@ -72,10 +72,8 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   const layout = useLayoutType();
   const { openedWindows, restoreWindow, isMostRecentlyOpenedWindowHidden } = useWorkspace2Store();
 
-  // name of the window that the button is associated with
-  const { windowName } = useContext(SingleSpaContext);
-
-  const openedWindowIndex = openedWindows.findIndex((w) => w.windowName === windowName);
+  const { extension } = useContext(ComponentContext);
+  const openedWindowIndex = openedWindows.findIndex((w) => w.windowName === extension?.extensionId);
   // can be undefined if the window is not opened
   const window: OpenedWindow | undefined = openedWindows[openedWindowIndex];
   const isWindowOpened = window != null;

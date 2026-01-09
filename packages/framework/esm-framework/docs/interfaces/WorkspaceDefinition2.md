@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceDefinition2
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:320
+Defined in: packages/framework/esm-globals/dist/types.d.ts:318
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:320
 
 > **component**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:322
+Defined in: packages/framework/esm-globals/dist/types.d.ts:320
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:322
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:321
+Defined in: packages/framework/esm-globals/dist/types.d.ts:319
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:321
 
 > **window**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:323
+Defined in: packages/framework/esm-globals/dist/types.d.ts:321
