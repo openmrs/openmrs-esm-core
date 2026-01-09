@@ -63,6 +63,7 @@ const Login: React.FC = () => {
   const continueLogin = useCallback(() => {
     const currentUsername = usernameInputRef.current?.value?.trim();
     if (currentUsername) {
+      // If credentials were autofilled, input onChange might not have been called
       setUsername(currentUsername);
       setShowPasswordField(true);
     } else {
@@ -78,6 +79,7 @@ const Login: React.FC = () => {
       evt.preventDefault();
       evt.stopPropagation();
 
+      // If credentials were autofilled, input onChange might not have been called
       const currentUsername = usernameInputRef.current?.value?.trim() || username;
       const currentPassword = passwordInputRef.current?.value || password;
 
