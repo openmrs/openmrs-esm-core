@@ -156,3 +156,12 @@
   bottom: 100%;
   left: 0;
 }
+
+// Keep password field in DOM for browser autofill
+.hiddenPasswordField {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  pointer-events: none;
+}
