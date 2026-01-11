@@ -74,9 +74,11 @@ export function resetAllRoutesOverrides() {
     return;
   }
 
-  Object.keys(localStorage)
-    .filter((key) => key.startsWith(localStorageRoutesPrefix))
-    .forEach((key) => localStorage.removeItem(key));
+  for (const key of Object.keys(localStorage)) {
+    if (key.startsWith(localStorageRoutesPrefix)) {
+      localStorage.removeItem(key);
+    }
+  }
 }
 
 function addRouteOverrideInternal(moduleName: string, routes: OpenmrsAppRoutes | string) {
