@@ -51,7 +51,9 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (showPasswordOnSeparateScreen) {
       if (showPasswordField) {
-        passwordInputRef.current?.focus();
+        if (!passwordInputRef.current?.value) {
+          passwordInputRef.current?.focus();
+        }
       } else {
         usernameInputRef.current?.focus();
       }
@@ -59,12 +61,13 @@ const Login: React.FC = () => {
   }, [showPasswordField, showPasswordOnSeparateScreen]);
 
   const continueLogin = useCallback(() => {
-    const usernameField = usernameInputRef.current;
-
-    if (usernameField?.value.trim()) {
+    const currentUsername = usernameInputRef.current?.value?.trim();
+    if (currentUsername) {
+      // If credentials were autofilled, input onChange might not have been called
+      setUsername(currentUsername);
       setShowPasswordField(true);
     } else {
-      usernameField?.focus();
+      usernameInputRef.current?.focus();
     }
   }, []);
 
@@ -76,19 +79,23 @@ const Login: React.FC = () => {
       evt.preventDefault();
       evt.stopPropagation();
 
+      // If credentials were autofilled, input onChange might not have been called
+      const currentUsername = usernameInputRef.current?.value?.trim() || username;
+      const currentPassword = passwordInputRef.current?.value || password;
+
       if (showPasswordOnSeparateScreen && !showPasswordField) {
         continueLogin();
         return false;
       }
 
-      if (!password || !password.trim()) {
+      if (!currentPassword || !currentPassword.trim()) {
         passwordInputRef.current?.focus();
         return false;
       }
 
       try {
         setIsLoggingIn(true);
-        const sessionStore = await refetchCurrentUser(username, password);
+        const sessionStore = await refetchCurrentUser(currentUsername, currentPassword);
         const session = sessionStore.session;
         const authenticated = sessionStore?.session?.authenticated;
 
@@ -132,7 +139,17 @@ const Login: React.FC = () => {
         setIsLoggingIn(false);
       }
     },
-    [username, password, navigate, showPasswordOnSeparateScreen],
+    [
+      username,
+      password,
+      navigate,
+      showPasswordOnSeparateScreen,
+      showPasswordField,
+      loginLinks,
+      location,
+      t,
+      continueLogin,
+    ],
   );
 
   if (!loginProvider || loginProvider.type === 'basic') {
@@ -157,6 +174,8 @@ const Login: React.FC = () => {
               <TextInput
                 id="username"
                 type="text"
+                name="username"
+                autoComplete="username"
                 labelText={t('username', 'Username')}
                 value={username}
                 onChange={changeUsername}
@@ -165,19 +184,24 @@ const Login: React.FC = () => {
                 autoFocus
               />
               {showPasswordOnSeparateScreen ? (
-                showPasswordField ? (
-                  <>
+                <>
+                  <div className={showPasswordField ? undefined : styles.hiddenPasswordField}>
                     <PasswordInput
                       id="password"
                       labelText={t('password', 'Password')}
                       name="password"
+                      autoComplete="current-password"
                       onChange={changePassword}
                       ref={passwordInputRef}
                       required
                       value={password}
                       showPasswordLabel={t('showPassword', 'Show password')}
                       invalidText={t('validValueRequired', 'A valid value is required')}
+                      aria-hidden={!showPasswordField}
+                      tabIndex={showPasswordField ? 0 : -1}
                     />
+                  </div>
+                  {showPasswordField ? (
                     <Button
                       type="submit"
                       className={styles.continueButton}
@@ -191,24 +215,29 @@ const Login: React.FC = () => {
                         t('login', 'Log in')
                       )}
                     </Button>
-                  </>
-                ) : (
-                  <Button
-                    className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                    iconDescription="Continue to password"
-                    onClick={continueLogin}
-                    disabled={!isLoginEnabled}
-                  >
-                    {t('continue', 'Continue')}
-                  </Button>
-                )
+                  ) : (
+                    <Button
+                      type="submit"
+                      className={styles.continueButton}
+                      renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                      iconDescription="Continue to password"
+                      onClick={(evt) => {
+                        evt.preventDefault();
+                        continueLogin();
+                      }}
+                      disabled={!isLoginEnabled}
+                    >
+                      {t('continue', 'Continue')}
+                    </Button>
+                  )}
+                </>
               ) : (
                 <>
                   <PasswordInput
                     id="password"
                     labelText={t('password', 'Password')}
                     name="password"
+                    autoComplete="current-password"
                     onChange={changePassword}
                     ref={passwordInputRef}
                     required
