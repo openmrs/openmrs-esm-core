@@ -3,16 +3,15 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { HeaderPanel } from '@carbon/react';
 import { Launch } from '@carbon/react/icons';
-import { ExtensionSlot, useOnClickOutside, useConfig } from '@openmrs/esm-framework';
+import { ExtensionSlot, useConfig } from '@openmrs/esm-framework';
 import styles from './app-menu-panel.scss';
 
 interface AppMenuProps {
   expanded: boolean;
-  hidePanel: Parameters<typeof useOnClickOutside>[0];
+  hidePanel: () => void;
 }
 
 const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
-  const appMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel, expanded);
   const config = useConfig();
   const { t } = useTranslation();
 
@@ -23,7 +22,7 @@ const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
 
   return (
     expanded && (
-      <div ref={appMenuRef} style={{ display: 'inline' }}>
+      <div style={{ display: 'inline' }}>
         <HeaderPanel
           className={classNames({ [styles.headerPanel]: expanded })}
           aria-label="App Menu Panel"

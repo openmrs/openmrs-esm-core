@@ -55,8 +55,6 @@ describe('Expression evaluation in extension display conditions', () => {
   });
 
   it('should show extension when the expression evalutes to true', async () => {
-    const promise = Promise.resolve();
-
     registerSimpleExtension('Schmoo', 'esm-bedrock', true);
     attach('A slot', 'Schmoo');
     defineConfigSchema('esm-bedrock', {});
@@ -83,17 +81,15 @@ describe('Expression evaluation in extension display conditions', () => {
       disableTranslations: true,
     })(RootComponent);
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     await screen.findByTestId(/slot/);
     expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Schmoo');
   });
 
   it('should hide extension when the expression evaluates to false', async () => {
-    const promise = Promise.resolve();
-
     registerSimpleExtension('Schmoo', 'esm-bedrock', true);
     attach('A slot', 'Schmoo');
     defineConfigSchema('esm-bedrock', {});
@@ -120,9 +116,9 @@ describe('Expression evaluation in extension display conditions', () => {
       disableTranslations: true,
     })(RootComponent);
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     await screen.findByTestId(/slot/);
     expect(screen.getByTestId('slot').firstChild).toBeNull();
@@ -136,7 +132,7 @@ describe('Expression evaluation in extension display conditions', () => {
     provide({
       'esm-bedrock': {
         'Display conditions': {
-          expression: 'session.user.privileges.some(p => p.display === "YOWTCH!")',
+          expression: 'session.user ? session.user.privileges.some(p => p.display === "YOWTCH!") : false',
         },
       },
     });

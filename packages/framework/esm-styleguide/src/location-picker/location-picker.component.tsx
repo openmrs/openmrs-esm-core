@@ -1,7 +1,14 @@
-import React, { useState, useRef, useCallback, useMemo } from 'react';
+import React, { useCallback, useId, useMemo, useState } from 'react';
+import {
+  InlineLoading,
+  InlineNotification,
+  RadioButton,
+  RadioButtonGroup,
+  RadioButtonSkeleton,
+  Search,
+} from '@carbon/react';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { useOnVisible } from '@openmrs/esm-framework';
-import { useTranslation } from 'react-i18next';
-import { InlineLoading, RadioButton, RadioButtonGroup, RadioButtonSkeleton, Search } from '@carbon/react';
 import { useLocationByUuid, useLocations } from './location-picker.resource';
 import styles from './location-picker.module.scss';
 
@@ -20,69 +27,83 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   locationsPerRequest = 50,
   onChange,
 }) => {
-  const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const searchId = useId();
 
-  let defaultLocation = useLocationByUuid(defaultLocationUuid).location;
+  const { location: defaultLocation } = useLocationByUuid(defaultLocationUuid);
 
   const {
     locations: fetchedLocations,
     isLoading,
     hasMore,
     loadingNewData,
+    error,
     setPage,
   } = useLocations(locationTag, locationsPerRequest, searchTerm);
 
   const locations = useMemo(() => {
-    if (defaultLocation && !searchTerm) {
-      return [defaultLocation, ...fetchedLocations?.filter(({ resource }) => resource.id !== defaultLocationUuid)];
+    if (defaultLocation && !searchTerm && defaultLocationUuid) {
+      return [defaultLocation, ...fetchedLocations.filter(({ resource }) => resource.id !== defaultLocationUuid)];
     }
-    return fetchedLocations;
-  }, [defaultLocation, fetchedLocations]);
+    return fetchedLocations ?? [];
+  }, [defaultLocation, fetchedLocations, defaultLocationUuid, searchTerm]);
 
-  const search = (location: string) => {
-    onChange();
-    setSearchTerm(location);
-  };
+  const handleSearchChange = useCallback(
+    (searchQuery: string) => {
+      onChange();
+      setSearchTerm(searchQuery.trim());
+    },
+    [onChange],
+  );
 
   const loadMore = useCallback(() => {
     if (loadingNewData || !hasMore) {
       return;
-    } else {
-      setPage((page) => page + 1);
     }
+    setPage((page) => page + 1);
   }, [loadingNewData, hasMore, setPage]);
 
   const loadingIconRef = useOnVisible(loadMore);
 
-  const reloadIndex = hasMore ? locations.length - locationsPerRequest / 2 : -1;
+  const infiniteScrollTriggerIndex = hasMore ? Math.max(0, Math.floor(locations.length - locationsPerRequest / 2)) : -1;
 
   return (
-    <div>
+    <>
       <Search
-        labelText={t('searchForLocation', 'Search for a location')}
-        id="search-1"
-        placeholder={t('searchForLocation', 'Search for a location')}
-        onChange={(event) => search(event.target.value)}
+        aria-describedby={error ? `${searchId}-error` : undefined}
+        labelText={getCoreTranslation('searchForLocation')}
+        id={searchId}
+        placeholder={getCoreTranslation('searchForLocation')}
+        onChange={(event) => handleSearchChange(event.target.value)}
         size="lg"
       />
+      {error && (
+        <div className={styles.errorNotification} id={`${searchId}-error`}>
+          <InlineNotification
+            kind="error"
+            subtitle={getCoreTranslation(
+              'errorLoadingLoginLocations',
+              'Unable to load login locations. Please try again or contact support if the problem persists.',
+            )}
+            title={getCoreTranslation('error', 'Error')}
+          />
+        </div>
+      )}
       <div className={styles.searchResults}>
         {isLoading ? (
           <div className={styles.loadingContainer}>
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+            {Array.from({ length: 5 }).map((_, index) => (
+              <RadioButtonSkeleton key={index} className={styles.radioButtonSkeleton} role="progressbar" />
+            ))}
           </div>
         ) : (
           <>
             <div className={styles.locationResultsContainer}>
-              {locations?.length > 0 ? (
+              {locations.length > 0 ? (
                 <RadioButtonGroup
                   name="loginLocations"
-                  onChange={(ev) => {
-                    onChange(ev?.toString());
+                  onChange={(value) => {
+                    onChange(value?.toString());
                   }}
                   orientation="vertical"
                   valueSelected={selectedLocationUuid}
@@ -90,28 +111,32 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
                   {locations.map((entry, i) => (
                     <RadioButton
                       className={styles.locationRadioButton}
-                      key={entry.resource.id}
                       id={entry.resource.id}
+                      key={entry.resource.id}
+                      labelText={
+                        <span ref={i === infiniteScrollTriggerIndex ? loadingIconRef : null}>
+                          {entry.resource.name}
+                        </span>
+                      }
                       name={entry.resource.name}
-                      labelText={<span ref={i == reloadIndex ? loadingIconRef : null}>{entry.resource.name}</span>}
                       value={entry.resource.id}
                     />
                   ))}
                 </RadioButtonGroup>
               ) : (
                 <div className={styles.emptyState}>
-                  <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
+                  <p className={styles.locationNotFound}>{getCoreTranslation('noResultsToDisplay')}</p>
                 </div>
               )}
             </div>
             {loadingNewData && (
               <div className={styles.loadingIcon}>
-                <InlineLoading description={t('loading', 'Loading')} />
+                <InlineLoading description={getCoreTranslation('loading')} />
               </div>
             )}
           </>
         )}
       </div>
-    </div>
+    </>
   );
 };

@@ -18,7 +18,6 @@ export interface OpenedWindow {
   openedWorkspaces: Array<OpenedWorkspace>;
   props: Record<string, any> | null;
   maximized: boolean;
-  hidden: boolean;
 }
 
 export interface OpenedGroup {
@@ -26,12 +25,18 @@ export interface OpenedGroup {
   props: Record<string, any> | null;
 }
 export interface WorkspaceStoreState2 {
-  registeredGroupsByName: Record<string, WorkspaceGroupDefinition2>;
+  registeredGroupsByName: Record<string, WorkspaceGroupDefinition2 & { moduleName: string }>;
   registeredWindowsByName: Record<string, WorkspaceWindowDefinition2 & { moduleName: string }>;
   registeredWorkspacesByName: Record<string, WorkspaceDefinition2 & { moduleName: string }>;
   openedGroup: OpenedGroup | null;
   /** Most recently opened window at the end of array. Each element has a unique windowName */
   openedWindows: Array<OpenedWindow>;
+
+  /**
+   * While there can be multiple openedWindows, only the most recently opened window can be
+   * toggled shown or hidden, the rest are implicitly hidden.
+   **/
+  isMostRecentlyOpenedWindowHidden: boolean;
 
   workspaceTitleByWorkspaceName: Record<string, string>;
 }
@@ -43,6 +48,7 @@ const initialState: WorkspaceStoreState2 = {
   openedGroup: null,
   openedWindows: [],
   workspaceTitleByWorkspaceName: {},
+  isMostRecentlyOpenedWindowHidden: false,
 };
 
 export const workspace2Store = createGlobalStore<WorkspaceStoreState2>('workspace2', initialState);
@@ -94,7 +100,7 @@ export function getOpenedWindowIndexByWorkspace(workspaceName: string) {
   );
 }
 
-export function registerWorkspaceGroups2(workspaceGroupDefs: Array<WorkspaceGroupDefinition2>) {
+export function registerWorkspaceGroups2(appName: string, workspaceGroupDefs: Array<WorkspaceGroupDefinition2>) {
   if (workspaceGroupDefs.length == 0) {
     return;
   }
@@ -104,7 +110,7 @@ export function registerWorkspaceGroups2(workspaceGroupDefs: Array<WorkspaceGrou
     if (newRegisteredGroupsByName[workspaceGroupDef.name]) {
       throw new Error(`Cannot register workspace group ${workspaceGroupDef.name} more than once`);
     }
-    newRegisteredGroupsByName[workspaceGroupDef.name] = workspaceGroupDef;
+    newRegisteredGroupsByName[workspaceGroupDef.name] = { ...workspaceGroupDef, moduleName: appName };
   }
 
   workspace2Store.setState({

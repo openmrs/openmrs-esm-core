@@ -166,7 +166,7 @@ export async function launchWorkspace2<
 
   // if current opened group is not the same as the requested group, or if the group props are different, then prompt for unsaved changes
   if (openedGroup && (openedGroup.groupName !== groupDef.name || !arePropsCompatible(openedGroup.props, groupProps))) {
-    const okToCloseWorkspaces = await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: false });
+    const okToCloseWorkspaces = await promptForClosingWorkspaces({ reason: 'CLOSE_WORKSPACE_GROUP', explicit: true });
     if (okToCloseWorkspaces) {
       workspace2Store.setState({
         ...storeState,
@@ -182,9 +182,9 @@ export async function launchWorkspace2<
             openedWorkspaces: [newOpenedWorkspace(workspaceName, workspaceProps)], // root workspace at index 0
             props: windowProps,
             maximized: false,
-            hidden: false,
           },
         ],
+        isMostRecentlyOpenedWindowHidden: false,
       });
       return true;
     } else {
@@ -193,6 +193,7 @@ export async function launchWorkspace2<
   } else if (isWindowAlreadyOpened) {
     const openedWindow = storeState.openedWindows[openedWindowIndex];
     const groupProps = storeState.openedGroup?.props ?? {};
+    const isMostRecentlyOpenedWindowHidden = storeState.isMostRecentlyOpenedWindowHidden;
     const { openedWorkspaces } = openedWindow;
 
     if (arePropsCompatible(openedWindow.props, windowProps)) {
@@ -204,7 +205,7 @@ export async function launchWorkspace2<
       const openedWorkspace = openedWorkspaces.find((w) => w.workspaceName === workspaceName);
       if (openedWorkspace && arePropsCompatible(openedWorkspace.props, workspaceProps)) {
         // restore the window if it is hidden or not the most recently opened one
-        if (openedWindow.hidden || openedWindowIndex !== storeState.openedWindows.length - 1) {
+        if (isMostRecentlyOpenedWindowHidden || openedWindowIndex !== storeState.openedWindows.length - 1) {
           workspace2Store.setState(workspace2StoreActions.restoreWindow(storeState, windowName));
         }
         return true;
@@ -230,9 +231,9 @@ export async function launchWorkspace2<
                 openedWorkspaces: [newOpenedWorkspace(workspaceName, workspaceProps)],
                 props: openedWindow?.props ?? windowProps,
                 maximized: false,
-                hidden: false,
               },
             ],
+            isMostRecentlyOpenedWindowHidden: false,
           });
           return true;
         } else {
@@ -262,14 +263,41 @@ export async function launchWorkspace2<
               openedWorkspaces: [newOpenedWorkspace(workspaceName, workspaceProps)],
               props: windowProps,
               maximized: false,
-              hidden: false,
             },
           ],
+          isMostRecentlyOpenedWindowHidden: false,
         });
         return true;
       } else {
         return false;
       }
+    }
+  } else if (groupDef.persistence == 'closable') {
+    const okToCloseWorkspaces = await promptForClosingWorkspaces({
+      reason: 'CLOSE_OTHER_WINDOWS',
+      explicit: false,
+      windowNameToSpare: windowDef.name,
+    });
+    if (okToCloseWorkspaces) {
+      workspace2Store.setState({
+        ...storeState,
+        openedGroup: {
+          groupName: groupDef.name,
+          props: groupProps ?? storeState?.openedGroup?.props ?? null,
+        },
+        openedWindows: [
+          {
+            windowName: windowName,
+            openedWorkspaces: [newOpenedWorkspace(workspaceName, workspaceProps)], // root workspace at index 0
+            props: windowProps,
+            maximized: false,
+          },
+        ],
+        isMostRecentlyOpenedWindowHidden: false,
+      });
+      return true;
+    } else {
+      return false;
     }
   } else {
     workspace2Store.setState({
@@ -286,9 +314,9 @@ export async function launchWorkspace2<
           openedWorkspaces: [newOpenedWorkspace(workspaceName, workspaceProps)], // root workspace at index 0
           props: windowProps,
           maximized: false,
-          hidden: false,
         },
       ],
+      isMostRecentlyOpenedWindowHidden: false,
     });
     return true;
   }
@@ -315,7 +343,8 @@ function arePropsCompatible(a: Record<string, any> | null, b: Record<string, any
 type PromptReason =
   | { reason: 'CLOSE_WORKSPACE_GROUP'; explicit: boolean }
   | { reason: 'CLOSE_WINDOW'; explicit: boolean; windowName: string }
-  | { reason: 'CLOSE_WORKSPACE'; explicit: boolean; windowName: string; workspaceName: string };
+  | { reason: 'CLOSE_WORKSPACE'; explicit: boolean; windowName: string; workspaceName: string }
+  | { reason: 'CLOSE_OTHER_WINDOWS'; explicit: false; windowNameToSpare: string };
 
 /**
  * A user can perform actions that explicitly result in closing workspaces
@@ -339,7 +368,7 @@ export function promptForClosingWorkspaces(promptReason: PromptReason): Promise<
     for (let i = openedWindow.openedWorkspaces.length - 1; i >= 0; i--) {
       const openedWorkspace = openedWindow.openedWorkspaces[i];
 
-      if (openedWorkspace.hasUnsavedChanges || !promptReason.explicit) {
+      if (openedWorkspace.hasUnsavedChanges) {
         ret.push(openedWorkspace);
       }
       if (onlyUpToThisWorkspace && openedWorkspace.workspaceName === onlyUpToThisWorkspace) {
@@ -370,6 +399,12 @@ export function promptForClosingWorkspaces(promptReason: PromptReason): Promise<
         throw new Error(`Window ${promptReason.windowName} not found in opened windows.`);
       }
       affectedWorkspaces = getAffectedWorkspacesInWindow(openedWindow, promptReason.workspaceName);
+      break;
+    }
+    case 'CLOSE_OTHER_WINDOWS': {
+      const windowsToClose = openedWindows.filter((window) => window.windowName !== promptReason.windowNameToSpare);
+      affectedWorkspaces = windowsToClose.flatMap((w) => getAffectedWorkspacesInWindow(w));
+      break;
     }
   }
 
@@ -407,25 +442,21 @@ const workspace2StoreActions = {
       openedWindows,
     };
   },
-  hideWindow(state: WorkspaceStoreState2, windowName: string) {
-    const openedWindowIndex = state.openedWindows.findIndex((a) => a.windowName === windowName);
-    const openedWindows = [...state.openedWindows];
-    const currentWindow = { ...openedWindows[openedWindowIndex], hidden: true };
-
-    openedWindows[openedWindowIndex] = currentWindow;
-
+  // hides the most recently opened window (all other opened windows are implicitly hidden)
+  hideWindow(state: WorkspaceStoreState2) {
     return {
       ...state,
-      openedWindows,
+      isMostRecentlyOpenedWindowHidden: true,
     };
   },
   restoreWindow(state: WorkspaceStoreState2, windowName: string) {
     const openedWindowIndex = state.openedWindows.findIndex((a) => a.windowName === windowName);
-    const currentWindow = { ...state.openedWindows[openedWindowIndex], hidden: false };
+    const currentWindow = state.openedWindows[openedWindowIndex];
     const openedWindows = [...state.openedWindows.filter((_, i) => i !== openedWindowIndex), currentWindow];
     return {
       ...state,
       openedWindows,
+      isMostRecentlyOpenedWindowHidden: false,
     };
   },
   closeWorkspace(state, workspaceName: string) {
@@ -440,9 +471,16 @@ const workspace2StoreActions = {
     // close all children of the input workspace as well
     window.openedWorkspaces = window.openedWorkspaces.slice(0, workspaceIndex);
 
+    let hidden = state.isMostRecentlyOpenedWindowHidden;
     if (window.openedWorkspaces.length === 0) {
+      const wasMostRecentWindow = openedWindowIndex === state.openedWindows.length - 1;
       // if no workspaces left, remove the window
       openedWindows.splice(openedWindowIndex, 1);
+      // If we removed the most recent window and there are still windows left,
+      // the new most recent window should be shown
+      if (wasMostRecentWindow && openedWindows.length > 0) {
+        hidden = false;
+      }
     } else {
       // if there are still workspaces left, just update the window
       openedWindows[openedWindowIndex] = window;
@@ -451,6 +489,7 @@ const workspace2StoreActions = {
     return {
       ...state,
       openedWindows,
+      isMostRecentlyOpenedWindowHidden: hidden,
     };
   },
   openChildWorkspace(

@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import classNames from 'classnames';
+import Parcel from 'single-spa-react/parcel';
+import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import { InlineLoading } from '@carbon/react';
 import { type OpenedWindow, type OpenedWorkspace, workspace2Store } from '@openmrs/esm-extensions';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { mountRootParcel, type ParcelConfig } from 'single-spa';
-import Parcel from 'single-spa-react/parcel';
 import { promptForClosingWorkspaces, useWorkspace2Store } from './workspace2';
 import { type Workspace2DefinitionProps } from './workspace2.component';
+import styles from './workspace2.module.scss';
 
 interface WorkspaceWindowProps {
   openedWindow: OpenedWindow;
@@ -35,7 +37,7 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow })
           key={openedWorkspace.uuid}
           openedWorkspace={openedWorkspace}
           openedWindow={openedWindow}
-          lifeCycle={lifeCycles?.[i]}
+          lifeCycle={lifeCycles && lifeCycles[i] ? lifeCycles[i] : undefined}
           isRootWorkspace={i === 0}
           isLeafWorkspace={i === openedWorkspaces.length - 1}
         />
@@ -97,12 +99,12 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
         },
         launchChildWorkspace: (childWorkspaceName, childWorkspaceProps) => {
           const parentWorkspaceName = openedWorkspace.workspaceName;
-          openChildWorkspace(parentWorkspaceName, childWorkspaceName, childWorkspaceProps ?? {});
+          openChildWorkspace(parentWorkspaceName, childWorkspaceName, childWorkspaceProps || {});
         },
         workspaceName: openedWorkspace.workspaceName,
         workspaceProps: openedWorkspace.props,
         windowProps: openedWindow.props,
-        groupProps: openedGroup?.props ?? null,
+        groupProps: openedGroup && openedGroup.props ? openedGroup.props : null,
         isRootWorkspace,
         isLeafWorkspace,
         windowName: openedWindow.windowName,
@@ -110,11 +112,41 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
     [openedWorkspace, closeWorkspace, openedGroup, openedWindow],
   );
 
-  return lifeCycle ? (
-    <Parcel key={openedWorkspace.workspaceName} config={lifeCycle} mountParcel={mountRootParcel} {...props} />
-  ) : (
-    <InlineLoading description={`${getCoreTranslation('loading')} ...`} />
-  );
+  if (!lifeCycle) {
+    const { registeredWorkspacesByName } = workspace2Store.getState();
+    const workspaceDef = registeredWorkspacesByName[openedWorkspace.workspaceName];
+    const windowName = workspaceDef && workspaceDef.window ? workspaceDef.window : undefined;
+    const { registeredWindowsByName } = workspace2Store.getState();
+    const windowDef = windowName ? registeredWindowsByName[windowName] : undefined;
+    const width = windowDef && windowDef.width ? windowDef.width : 'narrow';
+
+    return (
+      <div
+        className={classNames(styles.workspaceOuterContainer, {
+          [styles.narrowWorkspace]: width === 'narrow',
+          [styles.widerWorkspace]: width === 'wider',
+          [styles.extraWideWorkspace]: width === 'extra-wide',
+        })}
+      >
+        <div className={styles.workspaceSpacer} />
+        <div
+          className={classNames(styles.workspaceMiddleContainer, {
+            [styles.isRootWorkspace]: isRootWorkspace,
+          })}
+        >
+          <div
+            className={classNames(styles.workspaceInnerContainer, {
+              [styles.isRootWorkspace]: isRootWorkspace,
+            })}
+          >
+            <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading')} ...`} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return <Parcel key={openedWorkspace.workspaceName} config={lifeCycle} mountParcel={mountRootParcel} {...props} />;
 };
 
 export default ActiveWorkspaceWindow;

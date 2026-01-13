@@ -46,7 +46,8 @@ body {
   position: sticky;
   height: calc(100vh - var(--omrs-navbar-height));
   top: var(--omrs-navbar-height);
-  z-index: 9000;
+  z-index: 1000;
+  will-change: contents;
 }
 
 #omrs-top-nav-app-container {

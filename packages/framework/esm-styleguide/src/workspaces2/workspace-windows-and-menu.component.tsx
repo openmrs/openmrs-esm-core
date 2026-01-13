@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { subscribeOpenmrsEvent } from '@openmrs/esm-emr-api';
+import { navigate } from '@openmrs/esm-navigation';
+import classNames from 'classnames';
 import { createRoot } from 'react-dom/client';
 import { ActionMenu } from './action-menu2/action-menu2.component';
+import { closeWorkspaceGroup2, useWorkspace2Store } from './workspace2';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
-import { useWorkspace2Store } from './workspace2';
 import styles from './workspace-windows-and-menu.module.scss';
-import classNames from 'classnames';
 
 export function renderWorkspaceWindowsAndMenu(target: HTMLElement | null) {
   if (target) {
@@ -20,16 +22,38 @@ export function renderWorkspaceWindowsAndMenu(target: HTMLElement | null) {
 function WorkspaceWindowsAndMenu() {
   const { openedGroup, openedWindows, registeredGroupsByName } = useWorkspace2Store();
 
+  useEffect(() => {
+    const unsubscribe = subscribeOpenmrsEvent('before-page-changed', (pageChangedEvent) => {
+      const { newPage, newUrl, cancelNavigation } = pageChangedEvent;
+      if (openedGroup && newPage) {
+        // first cancel the navigation request
+        // re-do the navigation when workspace group is successfully closed
+        cancelNavigation();
+        closeWorkspaceGroup2().then((isClosed) => {
+          if (isClosed) {
+            // the closeWorkspaceGroup2() promise resolves too soon for some reason;
+            // wrap the navigate() in Promise.resolve to avoid conflict with cancelNavigation()
+            Promise.resolve().then(() => navigate({ to: newUrl }));
+          }
+        });
+      }
+    });
+
+    return unsubscribe;
+  }, [openedGroup]);
+
   if (!openedGroup) {
     return null;
   }
 
   const group = registeredGroupsByName[openedGroup.groupName];
+  const hasMaximizedWindow = openedWindows.some((window) => window.maximized);
 
   return (
     <div
       className={classNames(styles.workspaceWindowsAndMenuContainer, {
         [styles.overlay]: group.overlay,
+        [styles.hasMaximizedWindow]: hasMaximizedWindow,
       })}
     >
       <div className={styles.workspaceWindowsContainer}>
@@ -37,7 +61,7 @@ function WorkspaceWindowsAndMenu() {
           return <ActiveWorkspaceWindow key={openedWindow.windowName} openedWindow={openedWindow} />;
         })}
       </div>
-      <ActionMenu workspaceGroup={openedGroup} />
+      <ActionMenu workspaceGroup={group} groupProps={openedGroup.props} />
     </div>
   );
 }

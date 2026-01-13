@@ -31,6 +31,7 @@
     "document": "../../../document.sh esm-framework",
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "concurrently \"rspack --mode=production\" \"tsc --project tsconfig.build.json\"",
     "build:development": "concurrently \"rspack --mode=development\" \"tsc --project tsconfig.build.json\"",
     "analyze": "rspack --mode=production --env analyze=true",
@@ -92,6 +93,7 @@
     "@openmrs/typedoc-plugin-file-categories": "workspace:*",
     "@rspack/cli": "^1.3.11",
     "@rspack/core": "^1.3.11",
+    "@vitest/coverage-v8": "^4.0.7",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
@@ -102,6 +104,6 @@
     "typedoc-plugin-markdown": "^4.6.3",
     "typedoc-plugin-no-inherit": "^1.6.1",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.4"
+    "vitest": "^4.0.7"
   }
 }

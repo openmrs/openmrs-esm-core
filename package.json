@@ -11,8 +11,8 @@
   "scripts": {
     "run:omrs": "openmrs",
     "run:shell": "yarn workspace @openmrs/esm-app-shell watch",
-    "ci:publish-next": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag next",
-    "ci:publish": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag latest",
+    "ci:publish-next": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --tolerate-republish --access public --tag next",
+    "ci:publish": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --tolerate-republish --access public --tag latest",
     "release": "yarn workspaces foreach --all --topological version",
     "build": "turbo run build",
     "build:apps": "turbo run build --filter='@openmrs/*-app'",
@@ -21,7 +21,7 @@
     "verify": "turbo run lint test typescript",
     "postinstall": "husky install",
     "test": "turbo run test",
-    "test-e2e": "playwright test",
+    "test-e2e": "./e2e/support/github/run-e2e-docker-env.sh",
     "coverage": "turbo run test --coverage"
   },
   "devDependencies": {

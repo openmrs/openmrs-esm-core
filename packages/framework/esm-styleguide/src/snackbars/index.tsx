@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import type { SnackbarDescriptor, SnackbarMeta } from './snackbar.component';
 import ActiveSnackbars from './active-snackbar.component';
 
+export { type SnackbarDescriptor, type SnackbarType, type SnackbarMeta } from './snackbar.component';
+
 const snackbarsSubject = new Subject<SnackbarMeta>();
 let snackbarId = 0;
 

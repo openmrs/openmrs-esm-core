@@ -1,13 +1,14 @@
 import React, { useEffect, type ReactNode } from 'react';
+import classNames from 'classnames';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import classNames from 'classnames';
+import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { ArrowRightIcon, CloseIcon } from '../icons';
-import styles from './workspace2.module.scss';
 import { useWorkspace2Store, useWorkspace2Context } from './workspace2';
+import styles from './workspace2.module.scss';
+
 interface Workspace2Props {
   title: string;
   children: ReactNode;
@@ -76,6 +77,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     registeredWorkspacesByName,
     workspaceTitleByWorkspaceName,
     setWorkspaceTitle,
+    isMostRecentlyOpenedWindowHidden,
   } = useWorkspace2Store();
   const { workspaceName, isRootWorkspace, closeWorkspace } = useWorkspace2Context();
 
@@ -113,13 +115,16 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   }
 
   const { icon, canMaximize } = windowDef;
-  const canHide = !!icon;
+  const canCloseGroup = group.persistence === 'closable';
+  const canHide = !!icon && !canCloseGroup;
   const { maximized } = openedWindow;
   const width = windowDef?.width ?? 'narrow';
 
   const isActionMenuOpened = Object.values(registeredWindowsByName).some(
     (window) => window.group === openedGroup.groupName && window.icon !== undefined,
   );
+
+  const isWindowHidden = openedWindowIndex < openedWindows.length - 1 || isMostRecentlyOpenedWindowHidden;
 
   return (
     <div
@@ -132,20 +137,20 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     >
       <div
         className={classNames(styles.workspaceSpacer, {
-          [styles.hidden]: openedWindow.hidden,
+          [styles.hidden]: isWindowHidden,
         })}
       />
       <div
         className={classNames(styles.workspaceMiddleContainer, {
           [styles.maximized]: maximized,
-          [styles.hidden]: openedWindow.hidden,
+          [styles.hidden]: isWindowHidden,
           [styles.isRootWorkspace]: isRootWorkspace,
         })}
       >
         <div
           className={classNames(styles.workspaceInnerContainer, {
             [styles.maximized]: maximized,
-            [styles.hidden]: openedWindow.hidden,
+            [styles.hidden]: isWindowHidden,
             [styles.isRootWorkspace]: isRootWorkspace,
           })}
         >
@@ -165,28 +170,24 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
                       </HeaderGlobalAction>
                     )}
                     {canHide ? (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('hide')}
-                        onClick={() => hideWindow(windowName)}
-                      >
+                      <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
                         <ArrowRightIcon />
                       </HeaderGlobalAction>
                     ) : (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('close')}
-                        onClick={() => closeWorkspace({ closeWindow: true })}
-                      >
-                        <CloseIcon />
-                      </HeaderGlobalAction>
+                      !canCloseGroup && (
+                        <HeaderGlobalAction
+                          aria-label={getCoreTranslation('close')}
+                          onClick={() => closeWorkspace({ closeWindow: true })}
+                        >
+                          <CloseIcon />
+                        </HeaderGlobalAction>
+                      )
                     )}
                   </>
                 ) : (
                   <>
                     {canHide && (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('hide')}
-                        onClick={() => hideWindow(windowName)}
-                      >
+                      <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
                         <DownToBottom />
                       </HeaderGlobalAction>
                     )}

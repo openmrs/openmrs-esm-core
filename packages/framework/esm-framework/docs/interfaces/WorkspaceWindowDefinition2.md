@@ -2,23 +2,15 @@
 
 # Interface: WorkspaceWindowDefinition2
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:302
+Defined in: packages/framework/esm-globals/dist/types.d.ts:310
 
 ## Properties
 
-### canHide
+### canMaximize?
 
-> **canHide**: `boolean`
+> `optional` **canMaximize**: `boolean`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:305
-
-***
-
-### canMaximize
-
-> **canMaximize**: `boolean`
-
-Defined in: packages/framework/esm-globals/dist/types.d.ts:306
+Defined in: packages/framework/esm-globals/dist/types.d.ts:313
 
 ***
 
@@ -26,7 +18,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:306
 
 > **group**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:308
+Defined in: packages/framework/esm-globals/dist/types.d.ts:314
 
 ***
 
@@ -34,7 +26,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:308
 
 > `optional` **icon**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:304
+Defined in: packages/framework/esm-globals/dist/types.d.ts:312
 
 ***
 
@@ -42,7 +34,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:304
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:303
+Defined in: packages/framework/esm-globals/dist/types.d.ts:311
 
 ***
 
@@ -50,15 +42,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:303
 
 > `optional` **order**: `number`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:309
-
-***
-
-### overlay
-
-> **overlay**: `boolean`
-
-Defined in: packages/framework/esm-globals/dist/types.d.ts:307
+Defined in: packages/framework/esm-globals/dist/types.d.ts:315
 
 ***
 
@@ -66,4 +50,4 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:307
 
 > `optional` **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:310
+Defined in: packages/framework/esm-globals/dist/types.d.ts:316
