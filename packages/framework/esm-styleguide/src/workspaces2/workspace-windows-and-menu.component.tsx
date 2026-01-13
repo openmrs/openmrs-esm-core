@@ -28,7 +28,6 @@ function WorkspaceWindowsAndMenu() {
         // Prompt to close the workspaces
         // should only cancel navigation if the user cancels the prompt
         cancelNavigation(closeWorkspaceGroup2().then((isClosed) => !isClosed));
-        }));
       }
     });
 
