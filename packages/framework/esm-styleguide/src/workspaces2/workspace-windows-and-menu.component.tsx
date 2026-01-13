@@ -28,8 +28,8 @@ function WorkspaceWindowsAndMenu() {
       if (openedGroup && newPage) {
         // Prompt to close the workspaces
         // should only cancel navigation if the user cancels the prompt
-        cancelNavigation(new Promise(async (resolve) => {
-          resolve(!(await closeWorkspaceGroup2()));
+        cancelNavigation(new Promise((resolve, reject) => {
+          closeWorkspaceGroup2().then((isClosed) => resolve(!isClosed)).catch((e) => reject(e));
         }));
       }
     });
