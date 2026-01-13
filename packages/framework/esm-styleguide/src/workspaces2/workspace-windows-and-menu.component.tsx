@@ -26,16 +26,11 @@ function WorkspaceWindowsAndMenu() {
     const unsubscribe = subscribeOpenmrsEvent('before-page-changed', (pageChangedEvent) => {
       const { newPage, newUrl, cancelNavigation } = pageChangedEvent;
       if (openedGroup && newPage) {
-        // first cancel the navigation request
-        // re-do the navigation when workspace group is successfully closed
-        cancelNavigation();
-        closeWorkspaceGroup2().then((isClosed) => {
-          if (isClosed) {
-            // the closeWorkspaceGroup2() promise resolves too soon for some reason;
-            // wrap the navigate() in Promise.resolve to avoid conflict with cancelNavigation()
-            Promise.resolve().then(() => navigate({ to: newUrl }));
-          }
-        });
+        // Prompt to close the workspaces
+        // should only cancel navigation if the user cancels the prompt
+        cancelNavigation(new Promise(async (resolve) => {
+          resolve(!(await closeWorkspaceGroup2()));
+        }));
       }
     });
 
