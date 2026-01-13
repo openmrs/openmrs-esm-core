@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { subscribeOpenmrsEvent } from '@openmrs/esm-emr-api';
-import { navigate } from '@openmrs/esm-navigation';
 import classNames from 'classnames';
 import { createRoot } from 'react-dom/client';
 import { ActionMenu } from './action-menu2/action-menu2.component';
@@ -24,7 +23,7 @@ function WorkspaceWindowsAndMenu() {
 
   useEffect(() => {
     const unsubscribe = subscribeOpenmrsEvent('before-page-changed', (pageChangedEvent) => {
-      const { newPage, newUrl, cancelNavigation } = pageChangedEvent;
+      const { newPage, cancelNavigation } = pageChangedEvent;
       if (openedGroup && newPage) {
         // Prompt to close the workspaces
         // should only cancel navigation if the user cancels the prompt
