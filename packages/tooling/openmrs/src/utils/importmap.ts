@@ -7,6 +7,7 @@ import { exec } from 'child_process';
 import { logFail, logInfo, logWarn } from './logger';
 import { startDevServer } from './devserver';
 import { getMainBundle, getAppRoutes } from './dependencies';
+import { getAvailablePort } from './port';
 
 async function readImportmap(path: string, backend?: string, spaPath?: string) {
   if (path.startsWith('http://') || path.startsWith('https://')) {
@@ -178,6 +179,9 @@ export async function runProject(
   const routes = {};
   const watchedRoutesPaths = {};
 
+  // Track the starting port, which is one more than the last used port
+  let nextPortToCheck = basePort + 1;
+
   logInfo('Loading dynamic import map and routes ...');
 
   for (let i = 0; i < sourceDirectories.length; i++) {
@@ -189,8 +193,6 @@ export async function runProject(
     const rspackConfigPath = resolve(sourceDirectory, 'rspack.config.js');
     const hasConfig = typeof useRspack !== 'undefined' ? !useRspack : existsSync(configPath);
     const hasRspackConfig = typeof useRspack !== 'undefined' ? useRspack : existsSync(rspackConfigPath);
-
-    const port = basePort + i + 1;
 
     logInfo(`Looking in directory "${sourceDirectory}" ...`);
 
@@ -220,8 +222,16 @@ export async function runProject(
       // try to locate and run via default webpack
       logWarn(`No "webpack.config.js" found in directory "${sourceDirectory}". Trying to use default config ...`);
 
+      // Find next available port
+      const port = await getAvailablePort(nextPortToCheck);
+      nextPortToCheck = port + 1;
+
       runProjectDevServer(defaultConfigPath, port, project, sourceDirectory, importMap, routes);
     } else {
+      // Find next available port
+      const port = await getAvailablePort(nextPortToCheck);
+      nextPortToCheck = port + 1;
+
       if (hasConfig) {
         // run via specialized webpack.config.js
         runProjectDevServer(configPath, port, project, sourceDirectory, importMap, routes);
