@@ -1,21 +1,12 @@
+name: 🔄 Push Translations to Transifex
+
 on:
   workflow_dispatch:
   push:
-    branches: [main]
-
-name: "Update Transifex on Push"
+    branches: [$default-branch]
 
 jobs:
-  push-translations-to-transifex:
-    name: push-translations-to-transifex
-
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: 📥 Push source file using transifex client
-        uses: transifex/cli-action@v2
-        with:
-          token: ${{ secrets.TRANSIFEX_TOKEN }}
+  push-translations:
+    uses: openmrs/openmrs-contrib-gha-workflows/.github/workflows/tx-push.yml@main
+    secrets:
+      TRANSIFEX_TOKEN: ${{ secrets.TRANSIFEX_TOKEN }}

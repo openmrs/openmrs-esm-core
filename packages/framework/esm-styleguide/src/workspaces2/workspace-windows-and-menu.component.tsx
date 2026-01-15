@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { subscribeOpenmrsEvent } from '@openmrs/esm-emr-api';
-import { navigate } from '@openmrs/esm-navigation';
 import classNames from 'classnames';
 import { createRoot } from 'react-dom/client';
 import { ActionMenu } from './action-menu2/action-menu2.component';
@@ -24,18 +23,11 @@ function WorkspaceWindowsAndMenu() {
 
   useEffect(() => {
     const unsubscribe = subscribeOpenmrsEvent('before-page-changed', (pageChangedEvent) => {
-      const { newPage, newUrl, cancelNavigation } = pageChangedEvent;
+      const { newPage, cancelNavigation } = pageChangedEvent;
       if (openedGroup && newPage) {
-        // first cancel the navigation request
-        // re-do the navigation when workspace group is successfully closed
-        cancelNavigation();
-        closeWorkspaceGroup2().then((isClosed) => {
-          if (isClosed) {
-            // the closeWorkspaceGroup2() promise resolves too soon for some reason;
-            // wrap the navigate() in Promise.resolve to avoid conflict with cancelNavigation()
-            Promise.resolve().then(() => navigate({ to: newUrl }));
-          }
-        });
+        // Prompt to close the workspaces
+        // should only cancel navigation if the user cancels the prompt
+        cancelNavigation(closeWorkspaceGroup2().then((isClosed) => !isClosed));
       }
     });
 

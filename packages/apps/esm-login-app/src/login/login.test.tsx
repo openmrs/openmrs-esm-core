@@ -172,7 +172,7 @@ describe('Login', () => {
     expect(loginButton).toBeInTheDocument();
   });
 
-  it('should not render the password field when the showPasswordOnSeparateScreen config is true (default)', async () => {
+  it('should render password field hidden but present for autofill when showPasswordOnSeparateScreen config is true (default)', async () => {
     mockUseConfig.mockReturnValue({
       ...mockConfig,
     });
@@ -187,12 +187,14 @@ describe('Login', () => {
 
     const usernameInput = screen.queryByRole('textbox', { name: /username/i });
     const continueButton = screen.queryByRole('button', { name: /Continue/i });
-    const passwordInput = screen.queryByLabelText(/password/i);
+    const passwordInput = screen.queryByLabelText(/^password$/i);
     const loginButton = screen.queryByRole('button', { name: /log in/i });
 
     expect(usernameInput).toBeInTheDocument();
     expect(continueButton).toBeInTheDocument();
-    expect(passwordInput).not.toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(passwordInput).toHaveAttribute('aria-hidden', 'true');
+    expect(passwordInput).toHaveAttribute('tabIndex', '-1');
     expect(loginButton).not.toBeInTheDocument();
   });
 
