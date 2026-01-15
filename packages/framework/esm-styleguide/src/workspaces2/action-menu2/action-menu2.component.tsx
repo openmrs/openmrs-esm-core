@@ -55,7 +55,7 @@ export function ActionMenu({ workspaceGroup, groupProps }: ActionMenuProps) {
             featureName: workspaceGroup.name,
           }}
         >
-          <ExtensionSlot name={workspaceGroup.name} state={{ groupProps }} />
+          <ExtensionSlot className={styles.container} name={workspaceGroup.name} state={{ groupProps }} />
         </ComponentContext.Provider>
       </div>
       {isClosable && !isDesktop(layout) && (
