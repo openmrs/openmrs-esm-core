@@ -8,7 +8,8 @@ export type FulfillerStatus =
   | 'ON_HOLD'
   | 'DECLINED'
   | 'COMPLETED'
-  | 'DISCONINTUED';
+  | 'DISCONTINUED'
+  | 'DRAFT';
 
 export type OrderAction = 'NEW' | 'REVISE' | 'DISCONTINUE' | 'RENEW';
 
