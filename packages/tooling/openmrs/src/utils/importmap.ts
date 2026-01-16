@@ -184,8 +184,8 @@ export async function runProject(
 
   logInfo('Loading dynamic import map and routes ...');
 
-  for (let i = 0; i < sourceDirectories.length; i++) {
-    const sourceDirectory = resolve(baseDir, sourceDirectories[i]);
+  for (const sourceDir of sourceDirectories) {
+    const sourceDirectory = resolve(baseDir, sourceDir);
     const projectFile = resolve(sourceDirectory, 'package.json');
     const routesFile = resolve(sourceDirectory, 'src', 'routes.json');
 

@@ -111,14 +111,15 @@ yargs.command(
       }),
   async (args) => {
     let port: number;
-    if (args.port !== undefined) {
+    if (args.port === undefined) {
+      port = await getAvailablePort(8080);
+    } else {
+      // handle case where user has specified a port to run on
       if (!(await isPortAvailable(args.port))) {
         console.error(`Error: Port ${args.port} is already in use. Please choose a different port.`);
         process.exit(1);
       }
       port = args.port;
-    } else {
-      port = await getAvailablePort(8080);
     }
 
     runCommand('runDebug', {
@@ -222,14 +223,15 @@ yargs.command(
       }),
   async (args) => {
     let port: number;
-    if (args.port !== undefined) {
+    if (args.port === undefined) {
+      port = await getAvailablePort(8080);
+    } else {
+      // handle case where user has specified a port to run on
       if (!(await isPortAvailable(args.port))) {
         console.error(`Error: Port ${args.port} is already in use. Please choose a different port.`);
         process.exit(1);
       }
       port = args.port;
-    } else {
-      port = await getAvailablePort(8080);
     }
 
     runCommand('runDevelop', {
