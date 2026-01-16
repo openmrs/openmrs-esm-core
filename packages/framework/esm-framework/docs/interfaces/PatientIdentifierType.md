@@ -4,9 +4,13 @@
 
 Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L3)
 
+Superclass for all Openmrs Resources, with strict typings.
+If the subclass does not have all attributes (including optional ones)
+accounted for, use OpenmrsResource instead.
+
 ## Extends
 
-- `OpenmrsResourceStrict`
+- [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
 
 ## Properties
 
@@ -18,7 +22,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
 
 #### Inherited from
 
-`OpenmrsResourceStrict.auditInfo`
+[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`auditInfo`](OpenmrsResourceStrict.md#auditinfo)
 
 ***
 
@@ -38,7 +42,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
 
 #### Inherited from
 
-`OpenmrsResourceStrict.display`
+[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`display`](OpenmrsResourceStrict.md#display)
 
 ***
 
@@ -66,7 +70,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 #### Inherited from
 
-`OpenmrsResourceStrict.links`
+[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`links`](OpenmrsResourceStrict.md#links)
 
 ***
 
@@ -102,7 +106,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
 
 #### Inherited from
 
-`OpenmrsResourceStrict.resourceVersion`
+[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`resourceVersion`](OpenmrsResourceStrict.md#resourceversion)
 
 ***
 
@@ -130,7 +134,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
 
 #### Inherited from
 
-`OpenmrsResourceStrict.uuid`
+[`OpenmrsResourceStrict`](OpenmrsResourceStrict.md).[`uuid`](OpenmrsResourceStrict.md#uuid)
 
 ***
 
