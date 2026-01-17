@@ -6,7 +6,7 @@
 
 - [ ] My work is based on designs, which are linked or shown either in the Jira ticket or the description below.
 - [ ] My work includes tests or is validated by existing tests.
-- [ ] I have updated the [esm-framework mock](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/mock.tsx) to reflect any API changes I have made.
+- [ ] I have updated the esm-framework mocks ([mock.tsx](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/mock.tsx) and [mock-jest.tsx](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/mock-jest.tsx)) to reflect any API changes.
 
 ## Summary
 <!-- Please describe what problems your PR addresses. -->
