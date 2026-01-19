@@ -9,6 +9,7 @@ export * from './error-state';
 export * from './icons/icons';
 export * from './left-nav';
 export * from './location-picker';
+export * from './numeric-observation';
 export { showModal } from './modals';
 export { showNotification, showActionableNotification } from './notifications';
 export {
