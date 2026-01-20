@@ -58,16 +58,6 @@ export function ActionMenu({ workspaceGroup, groupProps }: ActionMenuProps) {
           <ExtensionSlot className={styles.container} name={workspaceGroup.name} state={{ groupProps }} />
         </ComponentContext.Provider>
       </div>
-      {isClosable && !isDesktop(layout) && (
-        <IconButton
-          align="left"
-          onClick={() => closeWorkspaceGroup2()}
-          label={getCoreTranslation('close')}
-          kind="ghost"
-        >
-          <CloseIcon />
-        </IconButton>
-      )}
     </aside>
   );
 }

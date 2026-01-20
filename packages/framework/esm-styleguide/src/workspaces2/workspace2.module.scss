@@ -166,8 +166,18 @@ $extraWideWorkspaceWidth: 48.25rem;
     }
   }
 
+  // fallback for browsers that don't support the container CSS feature,
+  // the width is slightly off if <body> has a vertical scrollbar
   .workspaceOuterContainer {
-    width: 100vw !important;
+    width: 100vw;
+  }
+
+  // using the container CSS feature, for browser that support it
+  //  get the container query width (i.e. width of <body>, without the scrollbars)
+  @supports (width: 100cqw) {
+    .workspaceOuterContainer {
+      width: 100cqw;
+    }
   }
 
   .workspaceMiddleContainer {
@@ -175,14 +185,22 @@ $extraWideWorkspaceWidth: 48.25rem;
     &.hidden {
       display: none;
     }
+
+    // in tablet mode, reduce the height to of the workspace window to accommodate the workspace menu (bottom nav)
+    height: calc(100% - layout.$spacing-10);
   }
 
   .workspaceInnerContainer {
-    width: 100vw !important;
+    width: 100% !important;
   }
 
   .marginWorkspaceContent {
     margin-bottom: var(--bottom-nav-height);
+  }
+
+  .workspaceContent {
+    overflow-y: auto;
+    height: 100%;
   }
 }
 
