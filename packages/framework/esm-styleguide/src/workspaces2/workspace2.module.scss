@@ -187,7 +187,9 @@ $extraWideWorkspaceWidth: 48.25rem;
     }
 
     // in tablet mode, reduce the height to of the workspace window to accommodate the workspace menu (bottom nav)
-    height: calc(100% - layout.$spacing-10);
+    &.showActionMenu {
+      height: calc(100% - layout.$spacing-10);
+    }
   }
 
   .workspaceInnerContainer {

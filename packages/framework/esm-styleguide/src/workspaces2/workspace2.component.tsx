@@ -46,6 +46,7 @@ export interface Workspace2DefinitionProps<
   workspaceName: string;
   windowName: string;
   isRootWorkspace: boolean;
+  showActionMenu: boolean;
 }
 
 /**
@@ -79,7 +80,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     setWorkspaceTitle,
     isMostRecentlyOpenedWindowHidden,
   } = useWorkspace2Store();
-  const { workspaceName, isRootWorkspace, closeWorkspace } = useWorkspace2Context();
+  const { workspaceName, isRootWorkspace, closeWorkspace, showActionMenu } = useWorkspace2Context();
 
   const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
 
@@ -145,6 +146,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
           [styles.maximized]: maximized,
           [styles.hidden]: isWindowHidden,
           [styles.isRootWorkspace]: isRootWorkspace,
+          [styles.showActionMenu]: showActionMenu,
         })}
       >
         <div

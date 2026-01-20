@@ -42,6 +42,16 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ***
 
+### showActionMenu
+
+> **showActionMenu**: `boolean`
+
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L49)
+
+**`Experimental`**
+
+***
+
 ### windowName
 
 > **windowName**: `string`

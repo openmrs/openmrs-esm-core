@@ -23,17 +23,9 @@ export interface ActionMenuProps {
  * window in the workspace group has an icon defined.
  */
 export function ActionMenu({ workspaceGroup, groupProps }: ActionMenuProps) {
-  const { registeredWindowsByName } = useWorkspace2Store();
   const layout = useLayoutType();
-  const { name: groupName, persistence } = workspaceGroup;
+  const { name: persistence } = workspaceGroup;
 
-  const windowsWithIcons = Object.values(registeredWindowsByName)
-    .filter((window): window is Required<typeof window> => window.group === groupName && window.icon !== undefined)
-    .sort((a, b) => (a.order ?? Number.MAX_VALUE) - (b.order ?? Number.MAX_VALUE));
-
-  if (windowsWithIcons.length === 0) {
-    return null; // No icons to display
-  }
   const isClosable = persistence == 'closable';
 
   return (
