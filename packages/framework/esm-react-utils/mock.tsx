@@ -17,6 +17,7 @@ import {
   useVisitContextStore as realUseVisitContextStore,
 } from './src/index';
 export { ConfigurableLink } from './src/ConfigurableLink';
+export { RenderIfValueIsTruthy } from './src/RenderIfValueIsTruthy';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
 import * as utils from '@openmrs/esm-utils';
 
