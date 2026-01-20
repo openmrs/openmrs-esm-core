@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter, useLocation } from 'react-router-dom';
-import { shallowEqual } from '@openmrs/esm-utils';
 import { ConfigurableLink, MaybeIcon } from '@openmrs/esm-framework';
 import { type IconId } from '../icons';
 import styles from './dashboard.module.scss';
@@ -28,11 +27,12 @@ export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExt
     }
     const paths = p.split('/').map((s) => decodeURIComponent(s));
 
-    const localPath = (location.pathname ?? '')
+    const localPaths = (location.pathname ?? '')
       .split('/')
-      .slice(-1 * paths.length)
+      .slice(1)
       .map((s) => decodeURIComponent(s));
-    return shallowEqual(paths, localPath);
+
+    return localPaths.some((localPath) => paths.includes(localPath));
   }, [location.pathname, path]);
 
   return (
