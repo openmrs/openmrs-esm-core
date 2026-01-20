@@ -25,14 +25,14 @@ export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExt
     if (p.startsWith('http')) {
       return p === window.location.href;
     }
-    const paths = p.split('/').map((s) => decodeURIComponent(s));
+    const paths = new Set(p.split('/').map((s) => decodeURIComponent(s)));
 
     const localPaths = (location.pathname ?? '')
       .split('/')
       .slice(1)
       .map((s) => decodeURIComponent(s));
 
-    return localPaths.some((localPath) => paths.includes(localPath));
+    return localPaths.some((localPath) => paths.has(localPath));
   }, [location.pathname, path]);
 
   return (
