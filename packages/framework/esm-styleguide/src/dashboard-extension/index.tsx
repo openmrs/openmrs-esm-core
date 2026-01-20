@@ -25,14 +25,14 @@ export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExt
     if (p.startsWith('http')) {
       return p === window.location.href;
     }
-    const paths = new Set(p.split('/').map((s) => decodeURIComponent(s)));
-
-    const localPaths = (location.pathname ?? '')
+    const pathSegments = p.split('/').map((s) => decodeURIComponent(s));
+    const localSegments = (location.pathname ?? '')
       .split('/')
       .slice(1)
       .map((s) => decodeURIComponent(s));
 
-    return localPaths.some((localPath) => paths.has(localPath));
+    // Check if pathSegments appear as a contiguous slice anywhere in localSegments
+    return localSegments.some((_, i) => pathSegments.every((seg, j) => localSegments[i + j] === seg));
   }, [location.pathname, path]);
 
   return (

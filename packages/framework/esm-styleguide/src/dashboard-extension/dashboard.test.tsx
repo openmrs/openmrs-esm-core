@@ -20,16 +20,6 @@ describe('DashboardExtension', () => {
       const link = screen.getByRole('link');
       expect(link).toHaveAttribute('href', '/base/dashboard');
     });
-
-    // it('renders icon when provided', () => {
-    //   render(
-    //     <MemoryRouter initialEntries={['/base']}>
-    //       <DashboardExtension path="dashboard" title="Dashboard" basePath="/base" icon="omrs-icon-calendar" />
-    //     </MemoryRouter>,
-    //   );
-
-    //   expect(screen.getByText('omrs-icon-calendar')).toBeInTheDocument();
-    // });
   });
 
   describe('Active State Logic', () => {
@@ -71,10 +61,10 @@ describe('DashboardExtension', () => {
   });
 });
 
-const renderDashboardExtension = (browserPath: string,path: string, title: string, basePath: string) => {
+const renderDashboardExtension = (browserPath: string, path: string, title: string, basePath: string) => {
   render(
     <MemoryRouter initialEntries={[browserPath]}>
       <DashboardExtension path={path} title={title} basePath={basePath} />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
