@@ -5,11 +5,6 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-}
-
 .omrs-app-error {
   padding: layout.$spacing-11;
   width: 100%;
@@ -61,4 +56,5 @@ body {
     'topNav topNav topNav'
     'leftNav appRoots workspace';
   grid-template-columns: min-content 1fr min-content;
+  container-type: inline-size;
 }

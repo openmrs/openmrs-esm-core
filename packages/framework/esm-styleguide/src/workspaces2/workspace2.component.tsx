@@ -6,7 +6,7 @@ import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { ArrowRightIcon, CloseIcon } from '../icons';
-import { useWorkspace2Store, useWorkspace2Context } from './workspace2';
+import { useWorkspace2Store, useWorkspace2Context, closeWorkspaceGroup2 } from './workspace2';
 import styles from './workspace2.module.scss';
 
 interface Workspace2Props {
@@ -154,56 +154,66 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
             [styles.isRootWorkspace]: isRootWorkspace,
           })}
         >
-          <>
-            <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
-              <HeaderName prefix="">{title}</HeaderName>
-              <div className={styles.overlayHeaderSpacer} />
-              <HeaderGlobalBar className={styles.headerButtons}>
-                {isDesktop(layout) ? (
-                  <>
-                    {(canMaximize || maximized) && (
+          <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
+            <HeaderName prefix="">{title}</HeaderName>
+            <div className={styles.overlayHeaderSpacer} />
+            <HeaderGlobalBar className={styles.headerButtons}>
+              {isDesktop(layout) ? (
+                <>
+                  {(canMaximize || maximized) && (
+                    <HeaderGlobalAction
+                      aria-label={maximized ? getCoreTranslation('minimize') : getCoreTranslation('maximize')}
+                      onClick={() => setWindowMaximized(windowName, !maximized)}
+                    >
+                      {maximized ? <Minimize /> : <Maximize />}
+                    </HeaderGlobalAction>
+                  )}
+                  {canHide ? (
+                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
+                      <ArrowRightIcon />
+                    </HeaderGlobalAction>
+                  ) : (
+                    // in desktop mode, if the group is closeable, the close button
+                    // is rendered in the side nav, not in the workspace
+                    !canCloseGroup && (
                       <HeaderGlobalAction
-                        aria-label={maximized ? getCoreTranslation('minimize') : getCoreTranslation('maximize')}
-                        onClick={() => setWindowMaximized(windowName, !maximized)}
+                        aria-label={getCoreTranslation('close')}
+                        onClick={() => closeWorkspace({ closeWindow: true })}
                       >
-                        {maximized ? <Minimize /> : <Maximize />}
+                        <CloseIcon />
                       </HeaderGlobalAction>
-                    )}
-                    {canHide ? (
-                      <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
-                        <ArrowRightIcon />
-                      </HeaderGlobalAction>
-                    ) : (
-                      !canCloseGroup && (
-                        <HeaderGlobalAction
-                          aria-label={getCoreTranslation('close')}
-                          onClick={() => closeWorkspace({ closeWindow: true })}
-                        >
-                          <CloseIcon />
-                        </HeaderGlobalAction>
-                      )
-                    )}
-                  </>
-                ) : (
-                  <>
-                    {canHide && (
-                      <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
-                        <DownToBottom />
-                      </HeaderGlobalAction>
-                    )}
-
+                    )
+                  )}
+                </>
+              ) : (
+                <>
+                  {canHide ? (
+                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
+                      <DownToBottom />
+                    </HeaderGlobalAction>
+                  ) : (
+                    // in tablet mode, the close button is rendered regardless of
+                    // whether the group is closeable. The close button closes
+                    // the workspace group (and the side nav) if group is closeable;
+                    // otherwise it only closes the workspace window.
                     <HeaderGlobalAction
                       aria-label={getCoreTranslation('close')}
-                      onClick={() => closeWorkspace({ closeWindow: true })}
+                      onClick={() => {
+                        if (canCloseGroup) {
+                          closeWorkspaceGroup2();
+                        } else {
+                          closeWorkspace({ closeWindow: true });
+                        }
+                      }}
                     >
                       <CloseIcon />
                     </HeaderGlobalAction>
-                  </>
-                )}
-              </HeaderGlobalBar>
-            </Header>
-            <div className={classNames(styles.workspaceContent)}>{children}</div>
-          </>
+                  )}
+                </>
+              )}
+            </HeaderGlobalBar>
+          </Header>
+          <div className={classNames(styles.workspaceContent)}>{children}</div>
         </div>
       </div>
     </div>
