@@ -12,11 +12,12 @@ import styles from './workspace2.module.scss';
 
 interface WorkspaceWindowProps {
   openedWindow: OpenedWindow;
+  showActionMenu: boolean;
 }
 /**
  * Renders an opened workspace window.
  */
-const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow }) => {
+const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow, showActionMenu }) => {
   const { openedWorkspaces } = openedWindow;
   const [lifeCycles, setLifeCycles] = useState<ParcelConfig[]>();
   const { registeredWorkspacesByName } = workspace2Store.getState();
@@ -40,6 +41,7 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow })
           lifeCycle={lifeCycles && lifeCycles[i] ? lifeCycles[i] : undefined}
           isRootWorkspace={i === 0}
           isLeafWorkspace={i === openedWorkspaces.length - 1}
+          showActionMenu={showActionMenu}
         />
       ))}
     </>
@@ -52,6 +54,7 @@ interface ActiveWorkspaceProps {
   openedWindow: OpenedWindow;
   isRootWorkspace: boolean;
   isLeafWorkspace: boolean;
+  showActionMenu: boolean;
 }
 
 const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
@@ -60,6 +63,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
   openedWindow,
   isRootWorkspace,
   isLeafWorkspace,
+  showActionMenu,
 }) => {
   const { openedGroup, closeWorkspace, openChildWorkspace } = useWorkspace2Store();
 
@@ -108,6 +112,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
         isRootWorkspace,
         isLeafWorkspace,
         windowName: openedWindow.windowName,
+        showActionMenu,
       },
     [openedWorkspace, closeWorkspace, openedGroup, openedWindow],
   );
@@ -132,6 +137,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
         <div
           className={classNames(styles.workspaceMiddleContainer, {
             [styles.isRootWorkspace]: isRootWorkspace,
+            [styles.showActionMenu]: showActionMenu,
           })}
         >
           <div

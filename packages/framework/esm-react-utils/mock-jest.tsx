@@ -6,6 +6,7 @@ import { createGlobalStore } from '@openmrs/esm-state/mock';
 import {
   isDesktop as realIsDesktop,
   usePagination as realUsePagination,
+  usePaginationInfo as realUsePaginationInfo,
   useOpenmrsPagination as realUseOpenmrsrPagination,
   useOpenmrsInfinite as realUseOpenmrsInfinite,
   useOpenmrsFetchAll as realUseOpenmrsFetchAll,
@@ -76,6 +77,7 @@ export const Extension = jest.fn().mockImplementation((props: any) => <slot />);
 export const useFeatureFlag = jest.fn().mockReturnValue(true);
 
 export const usePagination = jest.fn(realUsePagination);
+export const usePaginationInfo = jest.fn(realUsePaginationInfo);
 
 export const useOpenmrsPagination = jest.fn(realUseOpenmrsrPagination);
 export const useOpenmrsInfinite = jest.fn(realUseOpenmrsInfinite);

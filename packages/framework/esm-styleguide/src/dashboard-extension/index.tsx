@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter, useLocation } from 'react-router-dom';
-import { shallowEqual } from '@openmrs/esm-utils';
 import { ConfigurableLink, MaybeIcon } from '@openmrs/esm-framework';
 import { type IconId } from '../icons';
 import styles from './dashboard.module.scss';
@@ -26,13 +25,14 @@ export const DashboardExtension = ({ path, title, basePath, icon }: DashboardExt
     if (p.startsWith('http')) {
       return p === window.location.href;
     }
-    const paths = p.split('/').map((s) => decodeURIComponent(s));
-
-    const localPath = (location.pathname ?? '')
+    const pathSegments = p.split('/').map((s) => decodeURIComponent(s));
+    const localSegments = (location.pathname ?? '')
       .split('/')
-      .slice(-1 * paths.length)
+      .slice(1)
       .map((s) => decodeURIComponent(s));
-    return shallowEqual(paths, localPath);
+
+    // Check if pathSegments appear as a contiguous slice anywhere in localSegments
+    return localSegments.some((_, i) => pathSegments.every((seg, j) => localSegments[i + j] === seg));
   }, [location.pathname, path]);
 
   return (

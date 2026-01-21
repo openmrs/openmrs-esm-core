@@ -272,6 +272,33 @@ export async function launchWorkspace2<
         return false;
       }
     }
+  } else if (groupDef.persistence == 'closable') {
+    const okToCloseWorkspaces = await promptForClosingWorkspaces({
+      reason: 'CLOSE_OTHER_WINDOWS',
+      explicit: false,
+      windowNameToSpare: windowDef.name,
+    });
+    if (okToCloseWorkspaces) {
+      workspace2Store.setState({
+        ...storeState,
+        openedGroup: {
+          groupName: groupDef.name,
+          props: groupProps ?? storeState?.openedGroup?.props ?? null,
+        },
+        openedWindows: [
+          {
+            windowName: windowName,
+            openedWorkspaces: [newOpenedWorkspace(workspaceName, workspaceProps)], // root workspace at index 0
+            props: windowProps,
+            maximized: false,
+          },
+        ],
+        isMostRecentlyOpenedWindowHidden: false,
+      });
+      return true;
+    } else {
+      return false;
+    }
   } else {
     workspace2Store.setState({
       ...storeState,
@@ -316,7 +343,8 @@ function arePropsCompatible(a: Record<string, any> | null, b: Record<string, any
 type PromptReason =
   | { reason: 'CLOSE_WORKSPACE_GROUP'; explicit: boolean }
   | { reason: 'CLOSE_WINDOW'; explicit: boolean; windowName: string }
-  | { reason: 'CLOSE_WORKSPACE'; explicit: boolean; windowName: string; workspaceName: string };
+  | { reason: 'CLOSE_WORKSPACE'; explicit: boolean; windowName: string; workspaceName: string }
+  | { reason: 'CLOSE_OTHER_WINDOWS'; explicit: false; windowNameToSpare: string };
 
 /**
  * A user can perform actions that explicitly result in closing workspaces
@@ -340,7 +368,7 @@ export function promptForClosingWorkspaces(promptReason: PromptReason): Promise<
     for (let i = openedWindow.openedWorkspaces.length - 1; i >= 0; i--) {
       const openedWorkspace = openedWindow.openedWorkspaces[i];
 
-      if (openedWorkspace.hasUnsavedChanges || !promptReason.explicit) {
+      if (openedWorkspace.hasUnsavedChanges) {
         ret.push(openedWorkspace);
       }
       if (onlyUpToThisWorkspace && openedWorkspace.workspaceName === onlyUpToThisWorkspace) {
@@ -371,6 +399,12 @@ export function promptForClosingWorkspaces(promptReason: PromptReason): Promise<
         throw new Error(`Window ${promptReason.windowName} not found in opened windows.`);
       }
       affectedWorkspaces = getAffectedWorkspacesInWindow(openedWindow, promptReason.workspaceName);
+      break;
+    }
+    case 'CLOSE_OTHER_WINDOWS': {
+      const windowsToClose = openedWindows.filter((window) => window.windowName !== promptReason.windowNameToSpare);
+      affectedWorkspaces = windowsToClose.flatMap((w) => getAffectedWorkspacesInWindow(w));
+      break;
     }
   }
 

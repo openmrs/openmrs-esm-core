@@ -74,10 +74,8 @@ export function resetAllRoutesOverrides() {
     return;
   }
 
-  const localStorage = window.localStorage;
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key?.startsWith(localStorageRoutesPrefix)) {
+  for (const key of Object.keys(localStorage)) {
+    if (key.startsWith(localStorageRoutesPrefix)) {
       localStorage.removeItem(key);
     }
   }

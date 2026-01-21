@@ -3,7 +3,6 @@
   display: flex;
   height: 100%;
   width: 100%;
-  contain: content;
 
   // When any workspace is maximized, remove containment to allow fixed positioning
   &.hasMaximizedWindow {

@@ -4,7 +4,7 @@
 
 > **EmptyCardIllustration**(`__namedParameters`): `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L18)
+Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L17)
 
 ## Parameters
 

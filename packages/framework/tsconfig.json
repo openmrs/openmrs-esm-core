@@ -9,6 +9,7 @@
     "strictNullChecks": true,
     "moduleResolution": "node",
     "declaration": true,
+    "declarationMap": true,
     "lib": ["dom", "es2022"],
     "skipLibCheck": true
   }

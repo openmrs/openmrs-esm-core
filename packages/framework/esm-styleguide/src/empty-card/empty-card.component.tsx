@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import { Button, Layer, Tile } from '@carbon/react';
 import { useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';

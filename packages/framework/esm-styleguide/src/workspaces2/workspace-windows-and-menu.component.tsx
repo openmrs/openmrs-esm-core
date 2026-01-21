@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { subscribeOpenmrsEvent } from '@openmrs/esm-emr-api';
 import classNames from 'classnames';
 import { createRoot } from 'react-dom/client';
 import { ActionMenu } from './action-menu2/action-menu2.component';
-import { useWorkspace2Store } from './workspace2';
+import { closeWorkspaceGroup2, useWorkspace2Store } from './workspace2';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import styles from './workspace-windows-and-menu.module.scss';
 
@@ -18,7 +19,20 @@ export function renderWorkspaceWindowsAndMenu(target: HTMLElement | null) {
  * and all the active workspace windows within that group.
  */
 function WorkspaceWindowsAndMenu() {
-  const { openedGroup, openedWindows, registeredGroupsByName } = useWorkspace2Store();
+  const { openedGroup, openedWindows, registeredGroupsByName, registeredWindowsByName } = useWorkspace2Store();
+
+  useEffect(() => {
+    const unsubscribe = subscribeOpenmrsEvent('before-page-changed', (pageChangedEvent) => {
+      const { newPage, cancelNavigation } = pageChangedEvent;
+      if (openedGroup && newPage) {
+        // Prompt to close the workspaces
+        // should only cancel navigation if the user cancels the prompt
+        cancelNavigation(closeWorkspaceGroup2().then((isClosed) => !isClosed));
+      }
+    });
+
+    return unsubscribe;
+  }, [openedGroup]);
 
   if (!openedGroup) {
     return null;
@@ -26,6 +40,12 @@ function WorkspaceWindowsAndMenu() {
 
   const group = registeredGroupsByName[openedGroup.groupName];
   const hasMaximizedWindow = openedWindows.some((window) => window.maximized);
+
+  const { name: groupName } = group;
+  const windowsWithIcons = Object.values(registeredWindowsByName)
+    .filter((window): window is Required<typeof window> => window.group === groupName && window.icon !== undefined)
+    .sort((a, b) => (a.order ?? Number.MAX_VALUE) - (b.order ?? Number.MAX_VALUE));
+  const showActionMenu = windowsWithIcons.length > 0;
 
   return (
     <div
@@ -36,10 +56,16 @@ function WorkspaceWindowsAndMenu() {
     >
       <div className={styles.workspaceWindowsContainer}>
         {openedWindows.map((openedWindow) => {
-          return <ActiveWorkspaceWindow key={openedWindow.windowName} openedWindow={openedWindow} />;
+          return (
+            <ActiveWorkspaceWindow
+              key={openedWindow.windowName}
+              openedWindow={openedWindow}
+              showActionMenu={showActionMenu}
+            />
+          );
         })}
       </div>
-      <ActionMenu workspaceGroup={group} groupProps={openedGroup.props} />
+      {showActionMenu && <ActionMenu workspaceGroup={group} groupProps={openedGroup.props} />}
     </div>
   );
 }

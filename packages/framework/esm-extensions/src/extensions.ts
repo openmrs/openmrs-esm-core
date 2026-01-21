@@ -188,7 +188,7 @@ export function getExtensionRegistration(extensionId: string): ExtensionRegistra
 /**
  * Extensions must be registered in order to be rendered.
  * This is handled by the app shell, when extensions are provided
- * via the `setupOpenMRS` return object.
+ * via the `routes.json` file and registered through `registerApp()`.
  * @internal
  */
 export const registerExtension: (extensionRegistration: ExtensionRegistration) => void = (extensionRegistration) =>

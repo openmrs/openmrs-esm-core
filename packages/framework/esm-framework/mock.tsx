@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { vi } from 'vitest';
+import dayjs from 'dayjs';
 import { NEVER } from 'rxjs';
+import { vi } from 'vitest';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
-import dayjs from 'dayjs';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -18,7 +18,7 @@ export * from '@openmrs/esm-state/mock';
 export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
 
-export { parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
+export { parseDate, formatDate, formatDatetime, formatTime, isOmrsDateToday } from '@openmrs/esm-utils';
 
 /* esm-globals */
 

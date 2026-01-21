@@ -15,6 +15,9 @@ accounted for, use OpenmrsResource instead.
 - [`Person`](Person.md)
 - [`PersonName`](PersonName.md)
 - [`PersonAddress`](PersonAddress.md)
+- [`PatientIdentifierType`](PatientIdentifierType.md)
+- [`Patient`](Patient.md)
+- [`PatientIdentifier`](PatientIdentifier.md)
 
 ## Properties
 
