@@ -24,7 +24,7 @@ export interface ActionMenuProps {
  */
 export function ActionMenu({ workspaceGroup, groupProps }: ActionMenuProps) {
   const layout = useLayoutType();
-  const { name: persistence } = workspaceGroup;
+  const { persistence } = workspaceGroup;
 
   const isClosable = persistence == 'closable';
 
