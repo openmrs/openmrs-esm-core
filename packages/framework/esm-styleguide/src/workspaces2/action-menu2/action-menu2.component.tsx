@@ -1,16 +1,13 @@
 /** @module @category Workspace */
 import React from 'react';
-import Parcel from 'single-spa-react/parcel';
 import { IconButton } from '@carbon/react';
-import { mountRootParcel } from 'single-spa';
-import { loadLifeCycles } from '@openmrs/esm-routes';
+import { ExtensionSlot } from '@openmrs/esm-framework';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { type WorkspaceGroupDefinition2 } from '@openmrs/esm-globals';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { closeWorkspaceGroup2, useWorkspace2Store } from '../workspace2';
+import { closeWorkspaceGroup2 } from '../workspace2';
 import { CloseIcon } from '../../icons';
 import styles from './action-menu2.module.scss';
-import { ExtensionSlot } from '@openmrs/esm-framework';
 
 export interface ActionMenuProps {
   workspaceGroup: WorkspaceGroupDefinition2 & { moduleName: string };

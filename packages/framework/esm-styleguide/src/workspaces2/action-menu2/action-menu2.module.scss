@@ -72,6 +72,10 @@ $actionPanelOffset: layout.$spacing-09;
     align-items: center;
     width: 100%;
     flex: 1;
+
+    > div {
+      flex: 1;
+    }
   }
 }
 
