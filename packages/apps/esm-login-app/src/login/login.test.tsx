@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { waitFor, screen } from '@testing-library/react';
-import { useNavigate } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { getSessionStore, refetchCurrentUser, type SessionStore, useConfig, useSession } from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
