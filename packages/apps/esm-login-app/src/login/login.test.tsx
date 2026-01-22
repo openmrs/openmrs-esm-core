@@ -159,7 +159,8 @@ describe('Login', () => {
     await screen.findByLabelText(/^password$/i);
     await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(screen.getByRole('button', { name: /log in/i }));
-    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/login/location'));
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+    expect(mockNavigate).toHaveBeenCalledWith('/login/location');
   });
 
   it('should render the both the username and password fields when the showPasswordOnSeparateScreen config is false', async () => {
