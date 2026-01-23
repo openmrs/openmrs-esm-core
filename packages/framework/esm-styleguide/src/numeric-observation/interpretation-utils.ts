@@ -1,27 +1,26 @@
-/**
- * Observation interpretation type from test results (uppercase with underscores)
- */
-export type OBSERVATION_INTERPRETATION =
-  | 'NORMAL'
-  | 'HIGH'
-  | 'CRITICALLY_HIGH'
-  | 'OFF_SCALE_HIGH'
-  | 'LOW'
-  | 'CRITICALLY_LOW'
-  | 'OFF_SCALE_LOW'
-  | '--';
+const backendObservationInterpretations = [
+  'NORMAL',
+  'HIGH',
+  'CRITICALLY_HIGH',
+  'OFF_SCALE_HIGH',
+  'LOW',
+  'CRITICALLY_LOW',
+  'OFF_SCALE_LOW',
+] as const;
 
-/**
- * Observation interpretation type from vitals app (lowercase with underscores)
- */
-export type ObservationInterpretation =
-  | 'critically_low'
-  | 'critically_high'
-  | 'high'
-  | 'low'
-  | 'normal'
-  | 'off_scale_low'
-  | 'off_scale_high';
+const observationInterpretations = [
+  'critically_low',
+  'critically_high',
+  'high',
+  'low',
+  'normal',
+  'off_scale_low',
+  'off_scale_high',
+] as const;
+
+export type OBSERVATION_INTERPRETATION = (typeof backendObservationInterpretations)[number];
+
+export type ObservationInterpretation = (typeof observationInterpretations)[number];
 
 /**
  * Reference range values for calculating interpretation
@@ -41,43 +40,21 @@ export interface ObsReferenceRanges {
  * Normalizes interpretation between lowercase (ObservationInterpretation) and uppercase (OBSERVATION_INTERPRETATION) formats
  */
 export function normalizeInterpretation(
-  interpretation: ObservationInterpretation | OBSERVATION_INTERPRETATION | undefined,
+  interpretation: ObservationInterpretation | OBSERVATION_INTERPRETATION | '--' | undefined,
 ): ObservationInterpretation | undefined {
   if (!interpretation) {
     return undefined;
   }
 
-  if (
-    interpretation === 'critically_low' ||
-    interpretation === 'critically_high' ||
-    interpretation === 'high' ||
-    interpretation === 'low' ||
-    interpretation === 'normal' ||
-    interpretation === 'off_scale_low' ||
-    interpretation === 'off_scale_high'
-  ) {
-    return interpretation;
+  if (interpretation === '--') {
+    return 'normal';
   }
 
-  switch (interpretation) {
-    case 'CRITICALLY_LOW':
-      return 'critically_low';
-    case 'OFF_SCALE_LOW':
-      return 'off_scale_low';
-    case 'CRITICALLY_HIGH':
-      return 'critically_high';
-    case 'OFF_SCALE_HIGH':
-      return 'off_scale_high';
-    case 'HIGH':
-      return 'high';
-    case 'LOW':
-      return 'low';
-    case 'NORMAL':
-    case '--':
-      return 'normal';
-    default:
-      return 'normal';
+  if (backendObservationInterpretations.includes(interpretation as OBSERVATION_INTERPRETATION)) {
+    return interpretation.toLowerCase() as ObservationInterpretation;
   }
+
+  return interpretation as ObservationInterpretation;
 }
 
 /**

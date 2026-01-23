@@ -18,7 +18,7 @@ Concept UUID to fetch reference range from
 
 ### interpretation?
 
-> `optional` **interpretation**: [`OBSERVATION_INTERPRETATION`](../type-aliases/OBSERVATION_INTERPRETATION.md) \| [`ObservationInterpretation`](../type-aliases/ObservationInterpretation.md)
+> `optional` **interpretation**: `"high"` \| `"low"` \| `"normal"` \| `"NORMAL"` \| `"HIGH"` \| `"CRITICALLY_HIGH"` \| `"OFF_SCALE_HIGH"` \| `"LOW"` \| `"CRITICALLY_LOW"` \| `"OFF_SCALE_LOW"` \| `"critically_low"` \| `"critically_high"` \| `"off_scale_low"` \| `"off_scale_high"`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L23)
 
@@ -32,7 +32,15 @@ Pre-calculated interpretation (either ObservationInterpretation or OBSERVATION_I
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L21)
 
-Label for the observation
+Label for the observation (only shown for card variant)
+
+***
+
+### patientUuid
+
+> **patientUuid**: `string`
+
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L34)
 
 ***
 
@@ -46,19 +54,9 @@ Reference range for calculating interpretation
 
 ***
 
-### showLabel?
-
-> `optional` **showLabel**: `boolean`
-
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L35)
-
-Whether to show the label
-
-***
-
 ### unit?
 
-> `optional` **unit**: `ReactNode`
+> `optional` **unit**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L19)
 

@@ -2,7 +2,7 @@
 
 # Interface: ObsReferenceRanges
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L32)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L30)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpret
 
 > **hiAbsolute**: [`ReferenceRangeValue`](../type-aliases/ReferenceRangeValue.md)
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L33)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L31)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpret
 
 > **hiCritical**: [`ReferenceRangeValue`](../type-aliases/ReferenceRangeValue.md)
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L34)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L32)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpret
 
 > **hiNormal**: [`ReferenceRangeValue`](../type-aliases/ReferenceRangeValue.md)
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L35)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L33)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpret
 
 > **lowAbsolute**: [`ReferenceRangeValue`](../type-aliases/ReferenceRangeValue.md)
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L38)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L36)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpret
 
 > **lowCritical**: [`ReferenceRangeValue`](../type-aliases/ReferenceRangeValue.md)
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L37)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L35)
 
 ***
 
@@ -50,4 +50,4 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpret
 
 > **lowNormal**: [`ReferenceRangeValue`](../type-aliases/ReferenceRangeValue.md)
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L36)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L34)

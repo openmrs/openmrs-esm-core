@@ -2,9 +2,9 @@
 
 # Function: calculateInterpretation()
 
-> **calculateInterpretation**(`value`, `range?`): [`ObservationInterpretation`](../type-aliases/ObservationInterpretation.md)
+> **calculateInterpretation**(`value`, `range?`): `"high"` \| `"low"` \| `"normal"` \| `"critically_low"` \| `"critically_high"` \| `"off_scale_low"` \| `"off_scale_high"`
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L90)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L64)
 
 Calculates interpretation from a numeric value and reference range
 Returns lowercase ObservationInterpretation format
@@ -21,4 +21,4 @@ Returns lowercase ObservationInterpretation format
 
 ## Returns
 
-[`ObservationInterpretation`](../type-aliases/ObservationInterpretation.md)
+`"high"` \| `"low"` \| `"normal"` \| `"critically_low"` \| `"critically_high"` \| `"off_scale_low"` \| `"off_scale_high"`

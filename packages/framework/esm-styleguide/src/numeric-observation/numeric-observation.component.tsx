@@ -1,7 +1,7 @@
 /** @module @category UI */
 import React, { useMemo, useId } from 'react';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import {
   calculateInterpretation,
   normalizeInterpretation,
@@ -17,7 +17,7 @@ export interface NumericObservationProps {
   value: string | number;
   /** Unit of measurement */
   unit?: string;
-  /** Label for the observation */
+  /** Label for the observation (only shown for card variant)*/
   label?: string;
   /** Pre-calculated interpretation (either ObservationInterpretation or OBSERVATION_INTERPRETATION format) */
   interpretation?: ObservationInterpretation | OBSERVATION_INTERPRETATION;
@@ -31,8 +31,7 @@ export interface NumericObservationProps {
    * - 'cell': Table cell styling with background colors, typically used in data tables (e.g., test results table). If using the cell variant inside a Carbon Table Cell, make sure to set the padding to 0.
    */
   variant?: 'card' | 'cell';
-  /** Whether to show the label */
-  showLabel?: boolean;
+  patientUuid: string;
 }
 
 /**
@@ -47,12 +46,14 @@ export const NumericObservation: React.FC<NumericObservationProps> = ({
   referenceRange: providedReferenceRange,
   conceptUuid,
   variant = 'card',
-  showLabel = true,
+  patientUuid,
 }) => {
-  const { t } = useTranslation();
   const generatedId = useId();
 
-  const { referenceRange: fetchedReferenceRange, isLoading: isLoadingConcept } = useConceptReferenceRange(conceptUuid);
+  const { referenceRange: fetchedReferenceRange, isLoading: isLoadingConcept } = useConceptReferenceRange(
+    providedReferenceRange ? undefined : conceptUuid,
+    patientUuid,
+  );
 
   const referenceRange = providedReferenceRange ?? fetchedReferenceRange;
 
@@ -65,7 +66,7 @@ export const NumericObservation: React.FC<NumericObservationProps> = ({
       return calculateInterpretation(value, referenceRange);
     }
 
-    return 'normal' as ObservationInterpretation;
+    return 'normal';
   }, [providedInterpretation, referenceRange, value, isLoadingConcept]);
 
   const interpretation = calculatedInterpretation ?? 'normal';
@@ -83,7 +84,7 @@ export const NumericObservation: React.FC<NumericObservationProps> = ({
   const valueId = `omrs-numeric-obs-value-${generatedId}`;
   const unitId = `omrs-numeric-obs-unit-${generatedId}`;
 
-  const displayValue = value || t('notAvailable', 'Not available');
+  const displayValue = value || getCoreTranslation('notAvailable', 'Not available');
 
   const interpretationClasses = classNames({
     [styles['critically-low']]: interpretation === 'critically_low' || interpretation === 'off_scale_low',
@@ -116,13 +117,16 @@ export const NumericObservation: React.FC<NumericObservationProps> = ({
 
   return (
     <section className={cardContainerClasses} data-testid="numeric-observation-card">
-      {showLabel && label && (
+      {label && (
         <div className={styles['label-container']}>
           <span id={labelId} className={styles.label}>
             {label}
           </span>
           {flaggedAbnormal && (
-            <span className={styles[interpretation.replace('_', '-')]} title={t('abnormalValue', 'Abnormal value')} />
+            <span
+              className={styles[interpretation.replace('_', '-')]}
+              title={getCoreTranslation('abnormalValue', 'Abnormal value')}
+            />
           )}
         </div>
       )}

@@ -2,9 +2,9 @@
 
 # Function: normalizeInterpretation()
 
-> **normalizeInterpretation**(`interpretation`): `undefined` \| [`ObservationInterpretation`](../type-aliases/ObservationInterpretation.md)
+> **normalizeInterpretation**(`interpretation`): `undefined` \| `"high"` \| `"low"` \| `"normal"` \| `"critically_low"` \| `"critically_high"` \| `"off_scale_low"` \| `"off_scale_high"`
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L44)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L42)
 
 Normalizes interpretation between lowercase (ObservationInterpretation) and uppercase (OBSERVATION_INTERPRETATION) formats
 
@@ -12,8 +12,8 @@ Normalizes interpretation between lowercase (ObservationInterpretation) and uppe
 
 ### interpretation
 
-`undefined` | [`OBSERVATION_INTERPRETATION`](../type-aliases/OBSERVATION_INTERPRETATION.md) | [`ObservationInterpretation`](../type-aliases/ObservationInterpretation.md)
+`undefined` | `"high"` | `"low"` | `"normal"` | `"NORMAL"` | `"HIGH"` | `"CRITICALLY_HIGH"` | `"OFF_SCALE_HIGH"` | `"LOW"` | `"CRITICALLY_LOW"` | `"OFF_SCALE_LOW"` | `"critically_low"` | `"critically_high"` | `"off_scale_low"` | `"off_scale_high"` | `"--"`
 
 ## Returns
 
-`undefined` \| [`ObservationInterpretation`](../type-aliases/ObservationInterpretation.md)
+`undefined` \| `"high"` \| `"low"` \| `"normal"` \| `"critically_low"` \| `"critically_high"` \| `"off_scale_low"` \| `"off_scale_high"`

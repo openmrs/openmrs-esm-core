@@ -28,8 +28,13 @@ interface ConceptReferenceRangeResponse {
  * @param conceptUuid - The UUID of the concept to fetch reference range for
  * @returns Reference range data, loading state, and error
  */
-export function useConceptReferenceRange(conceptUuid: string | undefined): UseConceptReferenceRangeResult {
-  const apiUrl = conceptUuid ? `${restBaseUrl}/conceptreferencerange/?concept=${conceptUuid}&v=full` : null;
+export function useConceptReferenceRange(
+  conceptUuid: string | undefined,
+  patientUuid: string | undefined,
+): UseConceptReferenceRangeResult {
+  const apiUrl = conceptUuid
+    ? `${restBaseUrl}/conceptreferencerange/?patient=${patientUuid}&concept=${conceptUuid}&v=full`
+    : null;
 
   const { data, error, isLoading } = useSWRImmutable<{ data: ConceptReferenceRangeResponse }, Error>(
     apiUrl,
