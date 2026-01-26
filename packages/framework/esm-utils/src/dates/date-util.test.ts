@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
 import type { i18n } from 'i18next';
@@ -13,6 +13,11 @@ import {
   formatPartialDate,
   formatDuration,
 } from './date-util';
+import { getConfigStore } from '@openmrs/esm-config';
+
+vi.mock('@openmrs/esm-config', () => ({
+  getConfigStore: vi.fn(),
+}));
 
 window.i18next = { language: 'en' } as i18n;
 
@@ -80,6 +85,32 @@ describe('Openmrs Dates', () => {
     expect(formatDate(testDate)).toEqual('09 Des 2021');
     window.i18next.language = 'ru';
     expect(formatDate(testDate, { mode: 'wide' })).toMatch(/09\s—\sдек\.\s—\s2021\sг\./);
+  });
+
+  it('uses preferredDateLocale from styleguide config when available', () => {
+    timezoneMock.register('UTC');
+    const testDate = new Date('2021-12-09T13:15:33');
+    globalThis.i18next.language = 'en';
+
+    // Mock getConfigStore to return a store with preferredDateLocale config
+    const mockGetState = vi.fn(() => ({
+      loaded: true,
+      config: {
+        preferredDateLocale: {
+          en: 'fr',
+        },
+      },
+    }));
+
+    vi.mocked(getConfigStore).mockReturnValue({
+      getState: mockGetState,
+    } as any);
+
+    // When preferredDateLocale maps 'en' to 'fr', the date should be formatted in French
+    expect(formatDate(testDate)).toEqual('09 déc. 2021');
+
+    // Clean up
+    vi.mocked(getConfigStore).mockReset();
   });
 
   it('formats partial dates', () => {
