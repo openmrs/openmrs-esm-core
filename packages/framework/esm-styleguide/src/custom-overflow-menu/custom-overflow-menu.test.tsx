@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { useLayoutType } from '@openmrs/esm-react-utils';
-import { CustomOverflowMenu } from './custom-overflow-menu.component';
+import { CustomOverflowMenu, CustomOverflowMenuItem, useCustomOverflowMenu } from './custom-overflow-menu.component';
 
 const mockUseLayoutType = vi.mocked(useLayoutType);
 
@@ -92,5 +92,52 @@ describe('CustomOverflowMenu', () => {
 
     const menu = screen.getByRole('menu');
     expect(menu).toHaveAttribute('data-floating-menu-direction', 'bottom');
+  });
+});
+
+describe('CustomOverflowMenuItem', () => {
+  beforeEach(() => {
+    mockUseLayoutType.mockReturnValue('small-desktop');
+  });
+
+  it('should render within CustomOverflowMenu', async () => {
+    render(
+      <CustomOverflowMenu menuTitle="Menu">
+        <CustomOverflowMenuItem itemText="Test Item" />
+      </CustomOverflowMenu>,
+    );
+
+    expect(screen.getByText('Test Item')).toBeInTheDocument();
+  });
+
+  it('should close menu when clicked', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <CustomOverflowMenu menuTitle="Menu">
+        <CustomOverflowMenuItem itemText="Click Me" />
+      </CustomOverflowMenu>,
+    );
+
+    const triggerButton = screen.getByRole('button', { name: /menu/i });
+
+    // Open the menu
+    await user.click(triggerButton);
+    expect(triggerButton).toHaveAttribute('aria-expanded', 'true');
+
+    // Click the menu item
+    await user.click(screen.getByText('Click Me'));
+    expect(triggerButton).toHaveAttribute('aria-expanded', 'false');
+  });
+});
+
+describe('useCustomOverflowMenu', () => {
+  it('should throw error when used outside CustomOverflowMenu', () => {
+    const TestComponent = () => {
+      useCustomOverflowMenu();
+      return null;
+    };
+
+    expect(() => render(<TestComponent />)).toThrow('useCustomOverflowMenu must be used within a CustomOverflowMenu');
   });
 });
