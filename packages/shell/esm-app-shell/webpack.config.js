@@ -207,7 +207,9 @@ module.exports = (env, argv = []) => {
            * @param {Response} proxyRes
            */
           onProxyRes(proxyRes) {
-            proxyRes.headers && delete proxyRes.headers['content-security-policy'];
+            if (proxyRes.headers) {
+              delete proxyRes.headers['content-security-policy'];
+            }
           },
           /**
            * @param {string} path
