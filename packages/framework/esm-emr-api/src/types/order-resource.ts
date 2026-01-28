@@ -2,18 +2,18 @@ import { type Concept, type OpenmrsResource } from '@openmrs/esm-api';
 import { type Drug } from './drug-resource';
 
 export type FulfillerStatus =
-  | 'RECEIVED'
-  | 'IN_PROGRESS'
-  | 'EXCEPTION'
-  | 'ON_HOLD'
-  | 'DECLINED'
   | 'COMPLETED'
+  | 'DECLINED'
   | 'DISCONTINUED'
-  | 'DRAFT';
+  | 'DRAFT'
+  | 'EXCEPTION'
+  | 'IN_PROGRESS'
+  | 'ON_HOLD'
+  | 'RECEIVED';
 
-export type OrderAction = 'NEW' | 'REVISE' | 'DISCONTINUE' | 'RENEW';
+export type OrderAction = 'DISCONTINUE' | 'NEW' | 'RENEW' | 'REVISE';
 
-export type OrderUrgency = 'ROUTINE' | 'STAT' | 'ON_SCHEDULED_DATE';
+export type OrderUrgency = 'ON_SCHEDULED_DATE' | 'ROUTINE' | 'STAT';
 
 export interface Order extends OpenmrsResource {
   uuid: string;
@@ -40,7 +40,7 @@ export interface Order extends OpenmrsResource {
   instructions?: string | null;
   numRefills: number;
   orderNumber: string;
-  orderReason: string | null;
+  orderReason: Concept | null;
   orderReasonNonCoded: string | null;
   orderType: {
     conceptClasses: Array<any>;
@@ -63,7 +63,6 @@ export interface Order extends OpenmrsResource {
   quantity: number;
   quantityUnits: OpenmrsResource;
   route: OpenmrsResource;
-  scheduleDate: null;
   urgency: OrderUrgency;
 
   // additional properties
@@ -72,9 +71,9 @@ export interface Order extends OpenmrsResource {
   display: string;
   fulfillerStatus: FulfillerStatus;
   fulfillerComment: string;
-  specimenSource: string;
+  specimenSource: Concept | null;
   laterality: string;
   clinicalHistory: string;
-  numberOfRepeats: string;
+  numberOfRepeats: number;
   type: string;
 }
