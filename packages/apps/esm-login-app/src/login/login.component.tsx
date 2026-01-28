@@ -220,7 +220,7 @@ const Login: React.FC = () => {
                       type="submit"
                       className={styles.continueButton}
                       renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                      iconDescription="Continue to password"
+                      iconDescription={t('continueToPassword', 'Continue to password')}
                       onClick={(evt) => {
                         evt.preventDefault();
                         continueLogin();
@@ -249,7 +249,7 @@ const Login: React.FC = () => {
                     type="submit"
                     className={styles.continueButton}
                     renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                    iconDescription="Log in"
+                    iconDescription={t('login', 'Log in')}
                     disabled={!isLoginEnabled || isLoggingIn}
                   >
                     {isLoggingIn ? (
