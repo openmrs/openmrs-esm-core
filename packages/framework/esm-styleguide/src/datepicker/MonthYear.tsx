@@ -1,4 +1,11 @@
-import React, { forwardRef, type HTMLAttributes, type PropsWithChildren, useCallback, useContext } from 'react';
+import React, {
+  forwardRef,
+  type HTMLAttributes,
+  type PropsWithChildren,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
 import {
   Button,
   CalendarStateContext,
@@ -11,6 +18,7 @@ import { getLocalTimeZone } from '@internationalized/date';
 import { formatDate } from '@openmrs/esm-utils';
 import { useIntlLocale } from './locale-context';
 import { CaretDownIcon, CaretUpIcon } from '../icons';
+import styles from './datepicker.module.scss';
 
 function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
   return parseInt(
@@ -25,12 +33,15 @@ function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
   );
 }
 
-/**
- * Custom component to render the month and year on the DatePicker and provide the standard Carbon
- * UI to change them.
- *
- * Should work with any calendar system supported by the @internationalized/date package.
- */
+function getLocalizedMonthNames(intlLocale: Intl.Locale): string[] {
+  const formatter = new Intl.DateTimeFormat(intlLocale.baseName, {
+    month: 'short',
+    calendar: intlLocale.calendar,
+  });
+
+  return Array.from({ length: 12 }, (_, i) => formatter.format(new Date(2024, i, 1)));
+}
+
 export const MonthYear = /*#__PURE__*/ forwardRef<HTMLSpanElement, PropsWithChildren<HTMLAttributes<HTMLSpanElement>>>(
   function MonthYear(props, ref) {
     const { className } = props;
@@ -41,6 +52,11 @@ export const MonthYear = /*#__PURE__*/ forwardRef<HTMLSpanElement, PropsWithChil
 
     const intlLocale = useIntlLocale();
     const tz = getLocalTimeZone();
+
+    const [showMonthPicker, setShowMonthPicker] = useState(false);
+
+    const monthNames = getLocalizedMonthNames(intlLocale);
+    const currentMonthIndex = state.focusedDate.month - 1;
 
     const month = formatDate(state.visibleRange.start.toDate(tz), {
       calendar: intlLocale.calendar,
@@ -55,19 +71,50 @@ export const MonthYear = /*#__PURE__*/ forwardRef<HTMLSpanElement, PropsWithChil
     const maxYear = state.maxValue ? getYearAsNumber(state.maxValue.toDate(tz), intlLocale) : undefined;
     const minYear = state.minValue ? getYearAsNumber(state.minValue.toDate(tz), intlLocale) : undefined;
 
-    const changeHandler = useCallback((value: number) => {
-      state.setFocusedDate(state.focusedDate.cycle('year', value - state.focusedDate.year));
-    }, []);
+    const changeYearHandler = useCallback(
+      (value: number) => {
+        state.setFocusedDate(state.focusedDate.cycle('year', value - state.focusedDate.year));
+      },
+      [state],
+    );
+
+    const handleMonthSelect = useCallback(
+      (monthIndex: number) => {
+        state.setFocusedDate(state.focusedDate.set({ month: monthIndex + 1 }));
+        setShowMonthPicker(false);
+      },
+      [state],
+    );
 
     return (
       state && (
         <span ref={ref} className={className}>
-          <span>{month}</span>
+          <span className={styles.monthPickerContainer}>
+            <button type="button" className={styles.monthButton} onClick={() => setShowMonthPicker((open) => !open)}>
+              {month}
+            </button>
+
+            {showMonthPicker && (
+              <div className={styles.monthPickerGrid}>
+                {monthNames.map((name, index) => (
+                  <button
+                    key={name}
+                    type="button"
+                    className={index === currentMonthIndex ? styles.monthPickerItemSelected : styles.monthPickerItem}
+                    onClick={() => handleMonthSelect(index)}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </span>
+
           <NumberField
             formatOptions={{ useGrouping: false }}
             maxValue={maxYear}
             minValue={minYear}
-            onChange={changeHandler}
+            onChange={changeYearHandler}
             value={year}
           >
             <Input />
