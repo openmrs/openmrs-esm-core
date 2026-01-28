@@ -191,7 +191,7 @@ To fix this, ensure that you define the "name" field inside the workspace defini
 }
 
 export function tryRegisterWorkspaceGroups2(appName: string, workspaceGroupDefs: Array<WorkspaceGroupDefinition2>) {
-  registerWorkspaceGroups2(workspaceGroupDefs);
+  registerWorkspaceGroups2(appName, workspaceGroupDefs);
 }
 
 export function tryRegisterWorkspace2(appName: string, workspaceDefs: Array<WorkspaceDefinition2>) {
@@ -200,6 +200,21 @@ export function tryRegisterWorkspace2(appName: string, workspaceDefs: Array<Work
 
 export function tryRegisterWorkspaceWindows2(appName: string, workspaceWindowDefs: Array<WorkspaceWindowDefinition2>) {
   registerWorkspaceWindows2(appName, workspaceWindowDefs);
+
+  // register each window with icon as an extension to the slot with
+  // its workspace group name as slotName. This allows for configuration
+  // of the icons in the group, similar to extensions in extension slots
+  for (const windowDef of workspaceWindowDefs) {
+    if (windowDef.icon) {
+      const extension: ExtensionDefinition = {
+        name: windowDef.name,
+        component: windowDef.icon,
+        slot: windowDef.group,
+        order: windowDef.order,
+      };
+      tryRegisterExtension(appName, extension);
+    }
+  }
 }
 
 /**

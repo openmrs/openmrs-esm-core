@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { Button, IconButton } from '@carbon/react';
 import { SingleSpaContext } from 'single-spa-react';
-import { useLayoutType } from '@openmrs/esm-react-utils';
+import { ComponentContext, useLayoutType } from '@openmrs/esm-react-utils';
 import { type OpenedWindow } from '@openmrs/esm-extensions';
 import { launchWorkspace2, useWorkspace2Store } from '../workspace2';
 import styles from './action-menu-button2.module.scss';
@@ -70,21 +70,19 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   onBeforeWorkspaceLaunch,
 }) => {
   const layout = useLayoutType();
-  const { openedWindows, restoreWindow } = useWorkspace2Store();
+  const { openedWindows, restoreWindow, isMostRecentlyOpenedWindowHidden } = useWorkspace2Store();
 
-  // name of the window that the button is associated with
-  const { windowName } = useContext(SingleSpaContext);
-
+  const { extension } = useContext(ComponentContext);
+  const openedWindowIndex = openedWindows.findIndex((w) => w.windowName === extension?.extensionId);
   // can be undefined if the window is not opened
-  const window = openedWindows.find((w) => w.windowName === windowName);
-
+  const window: OpenedWindow | undefined = openedWindows[openedWindowIndex];
   const isWindowOpened = window != null;
-  const isWindowHidden = window?.hidden ?? false;
-  const isFocused = isCurrentWindowFocused(openedWindows, window);
+  const isWindowHidden =
+    isWindowOpened && (openedWindowIndex < openedWindows.length - 1 || isMostRecentlyOpenedWindowHidden);
 
   const onClick = async () => {
     if (isWindowOpened) {
-      if (!isFocused) {
+      if (isWindowHidden) {
         restoreWindow(window.windowName);
       }
     } else {
@@ -121,7 +119,6 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
       aria-label={label}
       className={classNames(styles.container, {
         [styles.active]: isWindowOpened,
-        [styles.focused]: isFocused,
       })}
       enterDelayMs={300}
       kind="ghost"
@@ -135,15 +132,3 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
     </IconButton>
   );
 };
-
-function isCurrentWindowFocused(openedWindows: Array<OpenedWindow>, currentWindow: OpenedWindow | undefined): boolean {
-  // openedWindows array is sorted with most recently opened window appearing last.
-  // We check if the current window is the last one in the array that is not hidden.
-  for (let i = openedWindows.length - 1; i >= 0; i--) {
-    const win = openedWindows[i];
-    if (!win.hidden) {
-      return win.windowName === currentWindow?.windowName;
-    }
-  }
-  return false;
-}

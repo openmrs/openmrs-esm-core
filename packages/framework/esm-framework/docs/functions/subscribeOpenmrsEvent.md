@@ -2,36 +2,54 @@
 
 # Function: subscribeOpenmrsEvent()
 
-> **subscribeOpenmrsEvent**\<`T`\>(`event`, `handler`): () => `void`
+## Call Signature
 
-Defined in: [packages/framework/esm-emr-api/src/events/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/index.ts#L24)
+> **subscribeOpenmrsEvent**(`event`, `handler`): `any`
+
+Defined in: [packages/framework/esm-emr-api/src/events/index.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/index.ts#L30)
 
 Subscribes to a custom OpenMRS event
 
-## Type Parameters
+### Parameters
 
-### T
+#### event
 
-`T` *extends* keyof [`OpenmrsEventTypes`](../interfaces/OpenmrsEventTypes.md)
-
-## Parameters
-
-### event
-
-`T`
+`"started"`
 
 The name of the event to listen to
 
-### handler
+#### handler
 
-(`payload?`) => `boolean` \| `void`
+(`payload`) => `void`
 
 The callback to be called when the event fires
 
-## Returns
+### Returns
 
-> (): `void`
+`any`
+
+## Call Signature
+
+> **subscribeOpenmrsEvent**(`event`, `handler`): `any`
+
+Defined in: [packages/framework/esm-emr-api/src/events/index.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/index.ts#L31)
+
+Subscribes to a custom OpenMRS event
+
+### Parameters
+
+#### event
+
+`"before-page-changed"`
+
+The name of the event to listen to
+
+#### handler
+
+(`payload`) => `void`
+
+The callback to be called when the event fires
 
 ### Returns
 
-`void`
+`any`

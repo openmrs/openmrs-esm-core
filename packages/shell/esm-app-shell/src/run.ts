@@ -248,14 +248,12 @@ function renderFatalErrorPage(e?: Error) {
 }
 
 function clearDevOverrides() {
-  for (const key of Object.keys(localStorage)) {
-    if (
+  const keysToRemove = Object.keys(localStorage).filter(
+    (key) =>
       key.startsWith('import-map-override:') &&
-      !['import-map-override:react', 'import-map-override:react-dom'].includes(key)
-    ) {
-      localStorage.removeItem(key);
-    }
-  }
+      !['import-map-override:react', 'import-map-override:react-dom'].includes(key),
+  );
+  keysToRemove.forEach((key) => localStorage.removeItem(key));
   location.reload();
 }
 
