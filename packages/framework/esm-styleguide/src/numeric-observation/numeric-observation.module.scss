@@ -1,0 +1,156 @@
+@use '@carbon/colors';
+@use '@carbon/type';
+@use '@carbon/layout';
+@use '../vars' as *;
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  flex-direction: column;
+  margin: layout.$spacing-03 0 0;
+  min-inline-size: max-content;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  gap: layout.$spacing-02;
+  padding: layout.$spacing-02;
+}
+
+.card.abnormal-value {
+  border: solid 1px colors.$orange-20-hover;
+  background-color: colors.$orange-10;
+}
+
+.card.critical-value {
+  border: 1px solid colors.$red-60;
+  background-color: colors.$red-20;
+}
+
+.cell {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: layout.$spacing-03 layout.$spacing-05;
+}
+
+.cell.critically-high,
+.cell.critically-low {
+  background-color: colors.$red-20 !important;
+  border-top: 1px solid colors.$red-20-hover !important;
+
+  p {
+    @include type.type-style('heading-compact-01');
+    color: $ui-05;
+  }
+}
+
+.cell.high,
+.cell.low {
+  background-color: colors.$orange-10 !important;
+  border-top: 1px solid colors.$orange-20 !important;
+
+  p {
+    @include type.type-style('heading-compact-01');
+    color: $ui-05;
+  }
+}
+
+.cell.off-scale-low,
+.cell.off-scale-high {
+  p {
+    @include type.type-style('heading-compact-01');
+    color: $ui-05;
+  }
+}
+
+.label-container {
+  flex-grow: 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  gap: layout.$spacing-02;
+  padding: 0;
+}
+
+.value-container {
+  @extend .label-container;
+  margin-top: layout.$spacing-02;
+}
+
+.label {
+  @include type.type-style('label-01');
+  color: $text-02;
+}
+
+.value {
+  @include type.type-style('body-compact-02');
+}
+
+.units {
+  @include type.type-style('body-compact-01');
+  color: $text-02;
+}
+
+.pad-right {
+  margin-right: layout.$spacing-01;
+}
+
+.critically-low,
+.critically-high,
+.low,
+.high,
+.off-scale-low,
+.off-scale-high {
+  font-weight: bold;
+
+  &::after {
+    @include type.type-style('heading-compact-01');
+    color: $text-02;
+  }
+}
+
+.arrow {
+  color: colors.$gray-100;
+  font-weight: bold;
+}
+
+.low::after {
+  @extend .arrow;
+  content: ' ↓';
+  font-weight: bold;
+}
+
+.critically-low::after {
+  @extend .arrow;
+  content: ' ↓↓';
+  font-weight: bold;
+}
+
+.off-scale-low::after {
+  @extend .arrow;
+  content: ' ↓↓↓';
+  font-weight: bold;
+}
+
+.high::after {
+  @extend .arrow;
+  content: ' ↑';
+  font-weight: bold;
+}
+
+.critically-high::after {
+  @extend .arrow;
+  content: ' ↑↑';
+  font-weight: bold;
+}
+
+.off-scale-high::after {
+  @extend .arrow;
+  content: ' ↑↑↑';
+  font-weight: bold;
+}
