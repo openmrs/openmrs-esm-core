@@ -4,7 +4,7 @@
 
 > **CustomOverflowMenuItem**(`props`): `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L76)
+Defined in: [packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:162](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L162)
 
 ## Parameters
 
