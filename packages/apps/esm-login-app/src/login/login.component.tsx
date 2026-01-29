@@ -249,7 +249,7 @@ const Login: React.FC = () => {
                     type="submit"
                     className={styles.continueButton}
                     renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                    iconDescription={t('login', 'Log in')}
+                    iconDescription={t('loginButtonIconDescription', 'Log in button')}
                     disabled={!isLoginEnabled || isLoggingIn}
                   >
                     {isLoggingIn ? (
