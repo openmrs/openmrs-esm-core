@@ -4,7 +4,12 @@
 
 > **CustomOverflowMenu**(`__namedParameters`): `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L27)
+Defined in: [packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L45)
+
+A custom overflow menu that supports a text/icon trigger button instead of
+Carbon's icon-only OverflowMenu trigger. Uses CSS-based show/hide rather
+than Carbon's FloatingMenu portal, so keyboard behavior (Escape, arrow keys,
+auto-focus) is implemented here to match the WAI-ARIA menu button pattern.
 
 ## Parameters
 
