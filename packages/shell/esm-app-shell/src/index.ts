@@ -1,6 +1,16 @@
 import '@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css';
 import 'import-map-overrides';
 import type { SpaConfig } from '@openmrs/esm-framework/src/internal';
+import { appName } from './ui';
+
+export function breadcrumbs() {
+  return import('@openmrs/esm-framework').then(({ getAsyncLifecycle }) =>
+    getAsyncLifecycle(() => import('./ui/breadcrumbs'), {
+      featureName: 'app-shell',
+      moduleName: appName,
+    })(),
+  );
+}
 
 function _createSpaBase(baseUrl: string) {
   return () => baseUrl;
