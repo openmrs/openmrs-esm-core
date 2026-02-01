@@ -68,25 +68,92 @@ export const unsetLeftNav = jest.fn();
 export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
 export const ErrorState = jest.fn(() => <div>Error State</div>);
 
-export const CustomOverflowMenu = jest.fn(({ menuTitle, children }) => (
-  <div>
-    <button>{menuTitle}</button>
-    {children}
+export { CustomOverflowMenu, CustomOverflowMenuItem } from '@openmrs/esm-styleguide/src/public';
+export const PatientBannerActionsMenu = jest.fn(
+  ({ patient, patientUuid, actionsSlotName, additionalActionsSlotState }) => {
+    const [menuIsOpen, setMenuIsOpen] = React.useState(false);
+    return (
+      <div data-testid="patient-banner-actions-menu">
+        <button aria-expanded={menuIsOpen} aria-haspopup="true" onClick={() => setMenuIsOpen(!menuIsOpen)}>
+          <span>Actions</span>
+        </button>
+        {menuIsOpen && (
+          <div role="menu">
+            <div data-extension-slot={actionsSlotName} data-patient-uuid={patientUuid} />
+          </div>
+        )}
+      </div>
+    );
+  },
+);
+export const PatientBannerContactDetails = jest.fn(({ patientId, deceased }) => (
+  <div data-testid="patient-banner-contact-details" data-patient-id={patientId} data-deceased={deceased}>
+    <div>
+      <p>Patient Lists (0)</p>
+      <ul>
+        <li>--</li>
+      </ul>
+    </div>
+    <div>
+      <p>Address</p>
+      <ul>
+        <li>--</li>
+      </ul>
+    </div>
+    <div>
+      <p>Contact Details</p>
+      <ul>
+        <li>--</li>
+      </ul>
+    </div>
   </div>
 ));
-export const CustomOverflowMenuItem = jest.fn(({ itemText, ...props }) => (
-  <button role="menuitem" {...props}>
-    {itemText}
-  </button>
-));
-export const PatientBannerActionsMenu = jest.fn(() => <div>Patient Banner Actions Menu</div>);
-export const PatientBannerContactDetails = jest.fn(() => <div>Patient Banner Contact Details</div>);
-export const PatientBannerPatientInfo = jest.fn(() => <div>Patient Banner Patient Info</div>);
-export const PatientBannerPatientIdentifiers = jest.fn(() => <div>Patient Banner Patient Identifier</div>);
-export const PatientBannerToggleContactDetailsButton = jest.fn(() => (
-  <div>Patient Banner Toggle Contact Details Button</div>
-));
-export const PatientPhoto = jest.fn(() => <div>Patient Photo</div>);
+export const PatientBannerPatientInfo = jest.fn(({ patient, renderedFrom }) => {
+  const name = patient?.name?.[0]
+    ? `${patient.name[0].given?.join(' ') || ''} ${patient.name[0].family || ''}`.trim()
+    : 'Unknown';
+  const genderMap = { male: 'Male', female: 'Female', other: 'Other', unknown: 'Unknown' };
+  const gender = patient?.gender ? genderMap[patient.gender.toLowerCase()] || patient.gender : 'Unknown';
+
+  return (
+    <div data-testid="patient-banner-patient-info">
+      <div>
+        <span>{name}</span>
+        <div>
+          <span>{gender}</span>
+        </div>
+      </div>
+      <div>{patient?.birthDate && <span>{patient.birthDate}</span>}</div>
+    </div>
+  );
+});
+export const PatientBannerPatientIdentifiers = jest.fn(({ identifiers, showIdentifierLabel }) => {
+  if (!identifiers || identifiers.length === 0) {
+    return null;
+  }
+
+  return (
+    <div data-testid="patient-banner-identifiers">
+      {identifiers.map((identifier, index) => (
+        <span key={index}>
+          {showIdentifierLabel && identifier.type?.text && <span>{identifier.type.text}: </span>}
+          <span>{identifier.value}</span>
+        </span>
+      ))}
+    </div>
+  );
+});
+export { PatientBannerToggleContactDetailsButton } from '@openmrs/esm-styleguide/src/public';
+export const PatientPhoto = jest.fn(({ patientUuid, patientName, alt }) => {
+  const altText = alt || `Avatar for ${patientName}`;
+  return (
+    <div data-testid="patient-photo" aria-label={altText}>
+      <div>
+        <span>{patientName?.charAt(0)?.toUpperCase()}</span>
+      </div>
+    </div>
+  );
+});
 export const usePatientPhoto = jest.fn(() => ({
   isLoading: true,
   data: null,
