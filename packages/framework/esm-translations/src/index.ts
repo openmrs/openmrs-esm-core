@@ -60,8 +60,11 @@ export type CoreTranslationKey = keyof typeof coreTranslations;
  * The complete set of core translations is available on the `CoreTranslationKey` type. Providing an
  * invalid key to this function will result in a type error.
  *
+ * @param key The translation key from the set of core translations.
+ * @param defaultText Optional fallback text if the translation is not found.
  * @param options Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options
  *           for more information. `ns` and `defaultValue` are already set and may not be used.
+ * @returns The translated string.
  */
 export function getCoreTranslation(
   key: CoreTranslationKey,

@@ -31,9 +31,6 @@ function handleClick(
   }
 }
 
-/**
- * @noInheritDoc
- */
 export interface ConfigurableLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   /** The target path or URL. Supports interpolation. See [[navigate]] */
   to: string;

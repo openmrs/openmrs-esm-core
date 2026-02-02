@@ -4,7 +4,7 @@
 
 > **IconProps** = `object`
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L101)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L102)
 
 ## Properties
 
@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:101](https://
 
 > `optional` **className**: `Argument`
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L102)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L103)
 
 ***
 
@@ -20,7 +20,7 @@ Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:102](https://
 
 > `optional` **fill**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L103)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L104)
 
 ***
 
@@ -28,4 +28,4 @@ Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:103](https://
 
 > `optional` **size**: `number`
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L104)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L105)

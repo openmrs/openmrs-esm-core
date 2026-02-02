@@ -192,6 +192,8 @@
 - [getFhirServerPaginationHandlers](functions/getFhirServerPaginationHandlers.md)
 - [useLayoutType](functions/useLayoutType.md)
 - [isDesktop](functions/isDesktop.md)
+- [useLeftNav](functions/useLeftNav.md)
+- [useLeftNavStore](functions/useLeftNavStore.md)
 - [useOnClickOutside](functions/useOnClickOutside.md)
 - [useOnVisible](functions/useOnVisible.md)
 - [usePagination](functions/usePagination.md)

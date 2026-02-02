@@ -4,7 +4,7 @@
 
 > **formatDate**(`date`, `options?`): `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:125
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:135
 
 Formats the input date according to the current locale and the
 given options.
@@ -30,10 +30,16 @@ locales.
 
 `Date`
 
+The date to format.
+
 ### options?
 
 `Partial`\<[`FormatDateOptions`](../type-aliases/FormatDateOptions.md)\>
 
+Optional formatting options.
+
 ## Returns
 
 `string`
+
+The formatted date string.
