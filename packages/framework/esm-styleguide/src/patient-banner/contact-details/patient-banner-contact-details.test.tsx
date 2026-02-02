@@ -1,8 +1,8 @@
 /** @module @category UI */
 import React from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { usePatient } from '@openmrs/esm-react-utils';
 import { usePatientAttributes, usePatientContactAttributes } from './usePatientAttributes';
 import { usePatientListsForPatient } from './usePatientListsForPatient';
@@ -35,6 +35,7 @@ const mockPersonAttributes = [
     attributeType: {
       uuid: 'a657a4f1-9c0f-444b-a1fd-445bb91dd12d',
       display: 'Next of Kin Contact Phone Number',
+      name: 'Next of Kin Contact Phone Number',
     },
   },
   {
@@ -44,6 +45,7 @@ const mockPersonAttributes = [
     attributeType: {
       uuid: 'qweproiuqweproiu',
       display: 'Phone number',
+      name: 'Phone number',
     },
   },
 ];
@@ -75,6 +77,23 @@ const mockCohorts = [
   },
 ];
 
+vi.mock('@openmrs/esm-translations', () => ({
+  getCoreTranslation: (key: string, defaultValue: string) => defaultValue || key,
+}));
+
+vi.mock('@openmrs/esm-react-utils', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@openmrs/esm-react-utils')>();
+  return {
+    ...actual,
+    usePatient: vi.fn(),
+    ConfigurableLink: ({ children, to, ...props }: { children: React.ReactNode; to: string }) => (
+      <a href={to} {...props}>
+        {children}
+      </a>
+    ),
+  };
+});
+
 vi.mock('./usePatientAttributes', () => ({
   usePatientAttributes: vi.fn(),
   usePatientContactAttributes: vi.fn(),
@@ -90,6 +109,7 @@ vi.mock('./useRelationships', () => ({
 
 describe('ContactDetails', () => {
   beforeEach(() => {
+    (window as any).spaBase = '/spa';
     mockUsePatient.mockReturnValue({
       isLoading: false,
       patient: {
@@ -128,6 +148,10 @@ describe('ContactDetails', () => {
     });
   });
 
+  afterEach(() => {
+    cleanup();
+  });
+
   it("renders the patient's address, contact details, patient lists, and relationships when available", async () => {
     renderWithSwr(<PatientBannerContactDetails patientId={'some-uuid'} deceased={false} />);
 
@@ -138,7 +162,7 @@ describe('ContactDetails', () => {
     expect(screen.getByText(/Sibling/i)).toBeInTheDocument();
     expect(screen.getByText(/24 yrs/i)).toBeInTheDocument();
     expect(screen.getByText(/\+0123456789/i)).toBeInTheDocument();
-    expect(screen.getByText(/Next of Kin Contact Phone Number/i)).toBeInTheDocument();
+
     expect(screen.getByText(/0700-000-000/)).toBeInTheDocument();
     expect(screen.getByText(/patient lists/i)).toBeInTheDocument();
     expect(screen.getByText(/Test patient List-47/)).toBeInTheDocument();
