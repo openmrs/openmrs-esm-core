@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:18](http
 
 > **accessionNumber**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L70)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L69)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:25](http
 
 > **clinicalHistory**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L77)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L76)
 
 ***
 
@@ -134,7 +134,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:30](http
 
 > **display**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L72)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L71)
 
 #### Overrides
 
@@ -218,7 +218,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:39](http
 
 > **fulfillerComment**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L74)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L73)
 
 ***
 
@@ -226,7 +226,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:74](http
 
 > **fulfillerStatus**: [`FulfillerStatus`](../type-aliases/FulfillerStatus.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L73)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L72)
 
 ***
 
@@ -242,7 +242,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:40](http
 
 > **laterality**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L76)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L75)
 
 ***
 
@@ -260,9 +260,9 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 ### numberOfRepeats
 
-> **numberOfRepeats**: `string`
+> **numberOfRepeats**: `number`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L78)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L77)
 
 ***
 
@@ -308,7 +308,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:42](http
 
 ### orderReason
 
-> **orderReason**: `null` \| `string`
+> **orderReason**: `null` \| `Concept`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L43)
 
@@ -410,27 +410,19 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:65](http
 
 ***
 
-### scheduleDate
-
-> **scheduleDate**: `null`
-
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L66)
-
-***
-
 ### scheduledDate
 
 > **scheduledDate**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L71)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L70)
 
 ***
 
 ### specimenSource
 
-> **specimenSource**: `string`
+> **specimenSource**: `null` \| `Concept`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L75)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L74)
 
 ***
 
@@ -438,7 +430,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:75](http
 
 > **type**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L79)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L78)
 
 ***
 
@@ -446,7 +438,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:79](http
 
 > **urgency**: [`OrderUrgency`](../type-aliases/OrderUrgency.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L67)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L66)
 
 ***
 

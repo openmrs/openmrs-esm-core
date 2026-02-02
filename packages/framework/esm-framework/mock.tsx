@@ -75,6 +75,11 @@ export const CustomOverflowMenu = vi.fn(({ menuTitle, children }) => (
     {children}
   </div>
 ));
+export const CustomOverflowMenuItem = vi.fn(({ itemText, ...props }) => (
+  <button role="menuitem" {...props}>
+    {itemText}
+  </button>
+));
 export const PatientBannerActionsMenu = vi.fn(() => <div>Patient Banner Actions Menu</div>);
 export const PatientBannerContactDetails = vi.fn(() => <div>Patient Banner Contact Details</div>);
 export const PatientBannerPatientInfo = vi.fn(() => <div>Patient Banner Patient Info</div>);
