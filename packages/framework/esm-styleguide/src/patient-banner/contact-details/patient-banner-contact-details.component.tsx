@@ -106,17 +106,22 @@ const Contact: React.FC<{ patientUuid: string; deceased?: boolean }> = ({ patien
     () =>
       contactAttributes
         ? [
-            ...contactAttributes?.map((contact) => [
-              contact.attributeType.display
-                ? getCoreTranslation(
-                    /** TODO: We should probably add translation strings for some of these */
-                    contact.attributeType.display as CoreTranslationKey,
-                    contact.attributeType.display,
-                  )
+          ...contactAttributes?.map((contact) => {
+            const attributeType = contact.attributeType;
+
+            // Translation hints for extraction
+            // t('Telephone Number', 'Telephone Number')
+            // t('Email Address', 'Email Address')
+            // t('Next of Kin Phone', 'Next of Kin Phone')
+
+            return [
+              attributeType?.name
+                ? getCoreTranslation(attributeType.name as CoreTranslationKey, attributeType.name)
                 : '',
               contact.value,
-            ]),
-          ]
+            ];
+          }),
+        ]
         : [],
     [contactAttributes],
   );
@@ -164,13 +169,12 @@ const Relationships: React.FC<{ patientId: string }> = ({ patientId }) => {
                   </div>
                   <div>{r.relationshipType}</div>
                   <div>
-                    {`${r.relativeAge ? r.relativeAge : '--'} ${
-                      r.relativeAge
-                        ? r.relativeAge === 1
-                          ? getCoreTranslation('yearAbbreviation', 'yr')
-                          : getCoreTranslation('yearsAbbreviation', 'yrs')
-                        : ''
-                    }`}
+                    {`${r.relativeAge ? r.relativeAge : '--'} ${r.relativeAge
+                      ? r.relativeAge === 1
+                        ? getCoreTranslation('yearAbbreviation', 'yr')
+                        : getCoreTranslation('yearsAbbreviation', 'yrs')
+                      : ''
+                      }`}
                   </div>
                 </li>
               ))}
