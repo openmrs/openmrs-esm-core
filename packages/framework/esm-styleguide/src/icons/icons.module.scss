@@ -3,3 +3,6 @@
     transform: scaleX(-1);
   }
 }
+.omrs-icon {
+  fill: var(--omrs-icon-fill, currentColor) !important;
+}
