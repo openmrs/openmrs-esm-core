@@ -30,7 +30,7 @@ $actionPanelOffset: layout.$spacing-09;
       background: $ui-01;
       width: $actionPanelOffset;
       height: 100%;
-      border-left: 1px solid $text-03;
+      border-inline-start: 1px solid $text-03;
       display: flex;
       align-items: center;
       flex-direction: column;
