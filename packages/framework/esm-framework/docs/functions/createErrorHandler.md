@@ -4,7 +4,7 @@
 
 > **createErrorHandler**(): (`incomingErr`) => `void`
 
-Defined in: packages/framework/esm-error-handling/dist/index.d.ts:44
+Defined in: packages/framework/esm-error-handling/dist/index.d.ts:42
 
 Creates an error handler function that captures the current stack trace at
 the time of creation. When the returned handler is invoked with an error,

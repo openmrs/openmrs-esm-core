@@ -31,6 +31,7 @@ function handleClick(
   }
 }
 
+/** @noInheritDoc */
 export interface ConfigurableLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   /** The target path or URL. Supports interpolation. See [[navigate]] */
   to: string;
@@ -41,7 +42,7 @@ export interface ConfigurableLinkProps extends AnchorHTMLAttributes<HTMLAnchorEl
 }
 
 /**
- * A React link component which calls [[navigate]] when clicked
+ * A React link component which calls {@link navigate} when clicked
  */
 export function ConfigurableLink({
   to,
