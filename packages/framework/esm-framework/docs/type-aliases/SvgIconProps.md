@@ -4,7 +4,7 @@
 
 > **SvgIconProps** = `object`
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:897](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L897)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:898](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L898)
 
 ## Properties
 
@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:897](https://
 
 > **icon**: [`IconId`](IconId.md)
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:898](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L898)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:899](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L899)
 
 ***
 
@@ -20,4 +20,4 @@ Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:898](https://
 
 > **iconProps**: [`IconProps`](IconProps.md)
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:899](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L899)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:900](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L900)

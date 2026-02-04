@@ -4,7 +4,7 @@
 
 > `const` **validators**: `object`
 
-Defined in: [packages/framework/esm-config/src/validators/validators.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L65)
+Defined in: [packages/framework/esm-config/src/validators/validators.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L69)
 
 ## Type declaration
 
@@ -28,6 +28,8 @@ To be added to `openmrsBase` and `openmrsSpaBase`
 ##### Returns
 
 [`Validator`](../type-aliases/Validator.md)
+
+A validator function that checks if a URL contains only allowed template parameters.
 
 ## Other
 
@@ -55,6 +57,8 @@ Maximum acceptable value
 
 [`Validator`](../type-aliases/Validator.md)
 
+A validator function that checks if a value is within the specified range.
+
 #### isUrl
 
 > **isUrl**: [`Validator`](../type-aliases/Validator.md)
@@ -76,3 +80,5 @@ The list of allowable values
 ##### Returns
 
 [`Validator`](../type-aliases/Validator.md)
+
+A validator function that checks if a value is in the allowed list.

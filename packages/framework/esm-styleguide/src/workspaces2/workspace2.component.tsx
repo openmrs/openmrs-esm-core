@@ -34,8 +34,9 @@ export interface Workspace2DefinitionProps<
 
   /**
    * closes the current workspace, along with its children.
-   * @param closeWindow If true, the workspace's window, along with all workspaces within it, will be closed as well
-   * @param discardUnsavedChanges If true, the "unsaved changes" modal will be supressed, and the value of `hasUnsavedChanges` will be ignored. Use this when closing the workspace immediately after changes are saved.
+   * @param options Optional configuration for closing the workspace.
+   * @param options.closeWindow If true, the workspace's window, along with all workspaces within it, will be closed as well.
+   * @param options.discardUnsavedChanges If true, the "unsaved changes" modal will be suppressed, and the value of `hasUnsavedChanges` will be ignored. Use this when closing the workspace immediately after changes are saved.
    * @returns a Promise that resolves to true if the workspace is closed, false otherwise.
    */
   closeWorkspace(options?: { closeWindow?: boolean; discardUnsavedChanges?: boolean }): Promise<boolean>;

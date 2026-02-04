@@ -4,7 +4,7 @@
 
 > **openmrsFetch**\<`T`\>(`path`, `fetchInit`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`T`\>\>
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L83)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L90)
 
 The openmrsFetch function is a wrapper around the
 [browser's built-in fetch function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch),
@@ -45,7 +45,8 @@ A [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Gl
   downloaded the HTTP response body as json, and has an additional
   `data` property with the HTTP response json as a javascript object.
 
-#### Example
+## Example
+
 ```js
 import { openmrsFetch } from '@openmrs/esm-api'
 const abortController = new AbortController();

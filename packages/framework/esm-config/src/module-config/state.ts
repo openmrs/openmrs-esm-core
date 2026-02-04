@@ -109,7 +109,15 @@ function initializeConfigStore() {
   };
 }
 
-/** @internal */
+/**
+ * Returns the configuration store for a specific module. Each module has its
+ * own store that tracks the loading state and resolved configuration values.
+ *
+ * @param moduleName The name of the module whose config store to retrieve.
+ * @returns A Zustand store containing the module's configuration state.
+ *
+ * @internal
+ */
 export function getConfigStore(moduleName: string) {
   // We use a store for each module's config, named `config-module-${moduleName}`
   return getGlobalStore<ConfigStore>(`config-module-${moduleName}`, initializeConfigStore());

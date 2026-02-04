@@ -173,9 +173,9 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
 /**
  * @internal
  *
- * Used to load the current import map
+ * Used to load the current import map.
  *
- * @returns The current page map
+ * @returns The current import map.
  */
 export async function getCurrentImportMap() {
   return window.importMapOverrides.getCurrentPageMap();
