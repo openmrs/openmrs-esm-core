@@ -4,7 +4,7 @@
 
 Defined in: [packages/framework/esm-offline/src/sync.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L52)
 
-Additional data which can be used for synchronizing data in a [[ProcessSyncItem]] function.
+Additional data which can be used for synchronizing data in a ProcessSyncItem function.
 
 ## Type Parameters
 

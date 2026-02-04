@@ -47,7 +47,7 @@ export interface QueueItemDescriptor {
 export type ProcessSyncItem<T> = (item: T, options: SyncProcessOptions<T>) => Promise<any>;
 
 /**
- * Additional data which can be used for synchronizing data in a [[ProcessSyncItem]] function.
+ * Additional data which can be used for synchronizing data in a {@link ProcessSyncItem} function.
  */
 export interface SyncProcessOptions<T> {
   abort: AbortController;
