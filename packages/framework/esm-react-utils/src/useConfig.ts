@@ -9,7 +9,6 @@ import {
   getConfigStore,
   getExtensionsConfigStore,
   getExtensionConfigFromStore,
-  extensionHasOwnConfigSchema,
 } from '@openmrs/esm-config';
 import { type ExtensionData } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
@@ -157,31 +156,12 @@ export function useConfig<T = Record<string, any>>(options?: UseConfigOptions) {
   const normalConfig = useNormalConfig(moduleName);
   const extensionConfig = useExtensionConfig(extension);
 
-  // Determine if this extension has its own config schema
-  const extensionName = extension?.extensionId ? getExtensionNameFromId(extension.extensionId) : null;
-  const hasOwnSchema = extensionName ? extensionHasOwnConfigSchema(extensionName) : false;
-
   const config = useMemo(() => {
-    if (options?.externalModuleName && moduleName === options.externalModuleName) {
-      // When explicitly loading external module config, only return module config
-      return { ...normalConfig };
-    } else if (hasOwnSchema) {
-      // When extension has its own config schema, use ONLY extension config
+    if (extension && !options?.externalModuleName) {
       return { ...extensionConfig };
-    } else {
-      // Otherwise merge module config with extension config
-      return { ...normalConfig, ...extensionConfig };
     }
-  }, [moduleName, options?.externalModuleName, normalConfig, extensionConfig, hasOwnSchema]);
+    return { ...normalConfig };
+  }, [normalConfig, extensionConfig, extension, options?.externalModuleName]);
 
   return config as T;
-}
-
-/**
- * Helper function to extract extension name from extension ID.
- * Copied from esm-extensions to avoid circular dependency.
- */
-function getExtensionNameFromId(extensionId: string): string {
-  const [extensionName] = extensionId.split('#');
-  return extensionName;
 }
