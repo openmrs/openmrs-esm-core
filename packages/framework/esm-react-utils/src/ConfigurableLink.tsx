@@ -63,12 +63,10 @@ export function ConfigurableLink({
       );
     }
   }, []);
+  const href = interpolateUrl(to, templateParams).replace(/#$/, '');
+
   return (
-    <a
-      onClick={(event) => handleClick(event, to, templateParams, onBeforeNavigate)}
-      href={interpolateUrl(to, templateParams)}
-      {...otherProps}
-    >
+    <a onClick={(event) => handleClick(event, to, templateParams, onBeforeNavigate)} href={href} {...otherProps}>
       {children}
     </a>
   );
