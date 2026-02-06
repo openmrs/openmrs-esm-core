@@ -329,6 +329,17 @@ export interface WorkspaceGroupDefinition2 {
    * with any opened windows / workspaces.
    */
   persistence?: 'app-wide' | 'closable';
+
+  /**
+   * URL pattern that defines the scope where workspaces in this group should persist.
+   * - If not defined: workspaces close only when navigating to a different app
+   * - If defined without capture groups: workspaces close when URL doesn't match pattern
+   * - If defined with capture groups: workspaces close when captured values change
+   *
+   * @example "^/home/appointments" - static scope for appointments dashboard
+   * @example "^/patient/([^/]+)/chart" - dynamic scope by patient UUID
+   */
+  scopePattern?: string;
 }
 
 export interface WorkspaceWindowDefinition2 {
