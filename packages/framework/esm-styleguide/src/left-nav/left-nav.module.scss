@@ -3,7 +3,7 @@
 @use '../vars' as *;
 
 .leftNav {
-  border-inline-end: 1px solid $text-03 !important;
+  border-inline-end: 1px solid $color-gray-30;
   padding-top: layout.$spacing-05;
 
   // Left nav menu item
@@ -20,7 +20,7 @@
     // Active menu item
     &:global(.active-left-nav-link) {
       color: $ui-05;
-      border-left: layout.$spacing-02 solid var(--brand-01);
+      border-inline-start: layout.$spacing-02 solid var(--brand-01);
       background-color: $ui-03;
       outline: none;
       padding: 0 layout.$spacing-04;
