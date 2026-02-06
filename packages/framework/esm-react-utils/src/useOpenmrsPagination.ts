@@ -146,15 +146,15 @@ export function useServerPagination<T, R>(
         console.warn('Invalid attempt to go to out of bounds page: ' + page);
       }
     },
-    [url, currentPage, totalPages],
+    [currentPage, totalPages],
   );
   const goToNext = useCallback(() => {
     goTo(currentPage + 1);
-  }, [url, currentPage, totalPages]);
+  }, [currentPage, totalPages]);
 
   const goToPrevious = useCallback(() => {
     goTo(currentPage - 1);
-  }, [url, currentPage, totalPages]);
+  }, [currentPage, totalPages]);
 
   return {
     data: getData(data?.data),
