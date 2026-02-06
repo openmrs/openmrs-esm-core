@@ -3,7 +3,7 @@
 @use '../vars' as *;
 
 .leftNav {
-  border-right: 1px solid $ui-03;
+  border-inline-end: 1px solid $text-03 !important;
   padding-top: layout.$spacing-05;
 
   // Left nav menu item
