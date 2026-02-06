@@ -1,5 +1,4 @@
-// jest.config.js maps '@openmrs/esm-framework/src/internal' to the real
-// esm-emr-api events module, so the event listener registration works as-is.
+import { afterEach, beforeAll, beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 import './routing-events';
 
 function dispatchSingleSpaEvent(detail: {
@@ -28,13 +27,13 @@ function makeEventDetail(overrides: Partial<Parameters<typeof dispatchSingleSpaE
     totalAppChanges: 0,
     oldUrl: 'http://localhost/patient/abc-123/chart/vitals',
     newUrl: 'http://localhost/patient/abc-123/chart/conditions',
-    cancelNavigation: jest.fn(),
+    cancelNavigation: vi.fn(),
     ...overrides,
   };
 }
 
 describe('routing-events', () => {
-  let pageChangedHandler: jest.Mock;
+  let pageChangedHandler: Mock;
 
   beforeAll(() => {
     // Enable routing events by dispatching the 'started' event
@@ -42,7 +41,7 @@ describe('routing-events', () => {
   });
 
   beforeEach(() => {
-    pageChangedHandler = jest.fn();
+    pageChangedHandler = vi.fn();
     window.addEventListener('openmrs:before-page-changed', pageChangedHandler);
   });
 

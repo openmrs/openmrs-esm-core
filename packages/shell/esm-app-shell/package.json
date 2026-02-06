@@ -5,7 +5,7 @@
   "main": "dist/openmrs.js",
   "scripts": {
     "start": "yarn run watch",
-    "test": "jest --passWithNoTests --color",
+    "test": "vitest run",
     "watch": "cross-env OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" OMRS_OFFLINE=\"disable\" webpack serve --mode development",
     "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"disable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" webpack serve --mode development",
     "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"production\" webpack --mode production",
@@ -64,6 +64,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "jest": "^29.7.0"
+    "vitest": "^4.0.18"
   }
 }
