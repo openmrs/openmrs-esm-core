@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import { NEVER } from 'rxjs';
 import { vi } from 'vitest';
@@ -70,42 +70,40 @@ export const ResponsiveWrapper = vi.fn(({ children }) => <>{children}</>);
 export const ErrorState = vi.fn(() => <div>Error State</div>);
 
 export { CustomOverflowMenu, CustomOverflowMenuItem } from '@openmrs/esm-styleguide/src/public';
-export const PatientBannerActionsMenu = vi.fn(
-  ({ patient, patientUuid, actionsSlotName, additionalActionsSlotState }) => {
-    const [menuIsOpen, setMenuIsOpen] = React.useState(false);
-    return (
-      <div data-testid="patient-banner-actions-menu">
-        <button aria-expanded={menuIsOpen} aria-haspopup="true" onClick={() => setMenuIsOpen(!menuIsOpen)}>
-          <span>Actions</span>
-        </button>
-        {menuIsOpen && (
-          <div role="menu">
-            <div data-extension-slot={actionsSlotName} data-patient-uuid={patientUuid} />
-          </div>
-        )}
-      </div>
-    );
-  },
-);
-export const PatientBannerContactDetails = vi.fn(({ patientId, deceased }) => (
+export const PatientBannerActionsMenu = vi.fn(({ patient, patientUuid }) => (
+  <div data-testid="patient-banner-actions-menu">
+    <button aria-label="Actions">Actions</button>
+  </div>
+));
+export const PatientBannerContactDetails = vi.fn(({ patientId, deceased, address, telecom }) => (
   <div data-testid="patient-banner-contact-details" data-patient-id={patientId} data-deceased={deceased}>
     <div>
-      <p>Patient Lists (0)</p>
-      <ul>
-        <li>--</li>
-      </ul>
-    </div>
-    <div>
       <p>Address</p>
-      <ul>
-        <li>--</li>
-      </ul>
+      {address && address.length > 0 ? (
+        <ul>
+          {address.map((addr, index) => (
+            <li key={index}>
+              {[addr.city, addr.state, addr.postalCode, addr.country].filter(Boolean).join(', ') || 'N/A'}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No address on file</p>
+      )}
     </div>
     <div>
       <p>Contact Details</p>
-      <ul>
-        <li>--</li>
-      </ul>
+      {telecom && telecom.length > 0 ? (
+        <ul>
+          {telecom.map((contact, index) => (
+            <li key={index}>
+              {contact.system}: {contact.value}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No contact details on file</p>
+      )}
     </div>
   </div>
 ));
