@@ -35,16 +35,12 @@ export function usePagination<T>(data: Array<T> = [], resultsPerPage = defaultRe
     [setPage, totalPages],
   );
   const goToNext = useCallback(() => {
-    if (page < totalPages) {
-      setPage(page + 1);
-    }
-  }, [page, totalPages, setPage]);
+    setPage(prev => (prev < totalPages ? prev + 1 : prev));
+  }, [totalPages]);
 
   const goToPrevious = useCallback(() => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  }, [page, setPage]);
+    setPage(prev => prev > 1 ? prev - 1 : prev);
+  }, []);
 
   const memoisedPaginatedData = useMemo(
     () => ({
