@@ -63,6 +63,7 @@
     "workbox-window": "^6.1.5"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0"
   }
 }
