@@ -3397,6 +3397,7 @@ __metadata:
     single-spa: "npm:^6.0.3"
     swc-loader: "npm:^0.2.6"
     swr: "npm:2.2.5"
+    vitest: "npm:^4.0.18"
     webpack: "npm:^5.99.9"
     webpack-pwa-manifest: "npm:^4.3.0"
     workbox-core: "npm:^6.1.5"
@@ -21199,7 +21200,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^4.0.7":
+"vitest@npm:^4.0.18, vitest@npm:^4.0.7":
   version: 4.0.18
   resolution: "vitest@npm:4.0.18"
   dependencies:

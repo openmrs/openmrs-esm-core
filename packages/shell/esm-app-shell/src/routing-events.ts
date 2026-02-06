@@ -34,24 +34,30 @@ subscribeOpenmrsEvent('started', () => (isEnabled = true));
 // for the page about to be rendered
 window.addEventListener('single-spa:before-routing-event', (event: Event) => {
   if (isEnabled && isBeforeRoutingEvent(event)) {
-    if (event.detail.totalAppChanges > 0) {
-      const mountedApp = event.detail.appsByNewStatus.MOUNTED.find(
-        (it) =>
-          !it.startsWith('@openmrs/esm-primary-navigation-app') &&
-          !it.startsWith('@openmrs/esm-devtools-app') &&
-          !it.startsWith('@openmrs/esm-help-menu-app'),
-      );
+    const oldPathname = new URL(event.detail.oldUrl, window.location.origin).pathname;
+    const newPathname = new URL(event.detail.newUrl, window.location.origin).pathname;
+    const pathnameChanged = oldPathname !== newPathname;
+
+    if (event.detail.totalAppChanges > 0 || pathnameChanged) {
+      // Only resolve newPage when apps actually changed (a new app is mounting).
+      // For pathname-only changes within the same app (e.g., switching dashboard tabs),
+      // newPage must be undefined so consumers don't treat it as an app change.
+      const newPage =
+        event.detail.totalAppChanges > 0
+          ? event.detail.appsByNewStatus.MOUNTED.find(
+              (it) =>
+                !it.startsWith('@openmrs/esm-primary-navigation-app') &&
+                !it.startsWith('@openmrs/esm-devtools-app') &&
+                !it.startsWith('@openmrs/esm-help-menu-app'),
+            )
+          : undefined;
 
       const payload: OpenmrsEventTypes['before-page-changed'] = {
         cancelNavigation: event.detail.cancelNavigation,
-        newPage: undefined,
+        newPage,
         oldUrl: event.detail.oldUrl,
         newUrl: event.detail.newUrl,
       };
-
-      if (mountedApp) {
-        payload.newPage = mountedApp;
-      }
 
       fireOpenmrsEvent('before-page-changed', payload);
     }
