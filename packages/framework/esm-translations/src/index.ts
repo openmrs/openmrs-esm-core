@@ -77,3 +77,34 @@ export function getCoreTranslation(
   }
   return translateFrom('core', key, defaultText ?? coreTranslations[key], options);
 }
+
+
+/**
+ * Creates a translateWithId function for Carbon Design System components that require
+ * translation of their internal strings. This is particularly useful for components like
+ * TableBatchActions, Pagination, Dropdown, etc. that use the translateWithId prop.
+ *
+ * Carbon components call translateWithId with:
+ * - id: A string identifier (e.g., 'carbon.table.batch.items.selected')
+ * - state: An optional object with interpolation values (e.g., { totalSelected: 5 })
+ *
+ * @param translationMap Optional mapping of Carbon translation IDs to custom CoreTranslationKeys.
+ *                       If not provided, uses the Carbon IDs directly as CoreTranslationKeys.
+ * @returns A function compatible with Carbon's translateWithId prop
+ *
+ */
+export function getCarbonTranslateWithId(
+  translationMap?: Record<string, CoreTranslationKey>,
+): (id: string, state?: Record<string, any>) => string {
+  return (id: string, state?: Record<string, any>) => {
+    const key = translationMap?.[id] ?? id;
+
+    if (key in coreTranslations) {
+      return getCoreTranslation(key as CoreTranslationKey, undefined, state);
+    }
+    console.warn(
+      `Carbon translation key '${id}' not found in core translations. Using the key as fallback.`,
+    );
+    return id;
+  };
+}
