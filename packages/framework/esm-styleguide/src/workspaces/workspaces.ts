@@ -381,10 +381,11 @@ export function launchWorkspace<
 /**
  * Use this function to navigate to a new page and launch a workspace on that page.
  *
- * @param options.targetUrl: The URL to navigate to. Will be passed to [[navigate]].
- * @param options.contextKey: The context key used by the target page.
- * @param options.workspaceName: The name of the workspace to launch.
- * @param options.additionalProps: Additional props to pass to the workspace component being launched.
+ * @param options The options for navigating and launching the workspace.
+ * @param options.targetUrl The URL to navigate to. Will be passed to [[navigate]].
+ * @param options.contextKey The context key used by the target page.
+ * @param options.workspaceName The name of the workspace to launch.
+ * @param options.additionalProps Additional props to pass to the workspace component being launched.
  */
 export function navigateAndLaunchWorkspace({
   targetUrl,

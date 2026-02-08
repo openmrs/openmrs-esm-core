@@ -250,6 +250,11 @@ export function attach(slotName: string, extensionId: string) {
 }
 
 /**
+ * Detaches an extension from an extension slot.
+ *
+ * @param extensionSlotName The name of the extension slot to detach from.
+ * @param extensionId The ID of the extension to detach.
+ *
  * @deprecated Avoid using this. Extension attachments should be considered declarative.
  */
 export function detach(extensionSlotName: string, extensionId: string) {
@@ -274,6 +279,10 @@ export function detach(extensionSlotName: string, extensionId: string) {
 }
 
 /**
+ * Detaches all extensions from an extension slot.
+ *
+ * @param extensionSlotName The name of the extension slot to clear.
+ *
  * @deprecated Avoid using this. Extension attachments should be considered declarative.
  */
 export function detachAll(extensionSlotName: string) {

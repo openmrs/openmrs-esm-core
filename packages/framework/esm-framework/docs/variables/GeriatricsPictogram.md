@@ -4,4 +4,4 @@
 
 > `const` **GeriatricsPictogram**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`PictogramProps`](../type-aliases/PictogramProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L102)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L103)

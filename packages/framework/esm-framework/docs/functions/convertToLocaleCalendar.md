@@ -4,7 +4,7 @@
 
 > **convertToLocaleCalendar**(`date`, `locale`): `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:145
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:162
 
 Converts a calendar date to the equivalent locale calendar date.
 

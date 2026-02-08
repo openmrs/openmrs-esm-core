@@ -80,17 +80,27 @@ export function cleanupObsoleteFeatureFlags() {
     });
 }
 
-/** Use this function to access the current value of the feature flag
+/**
+ * Use this function to access the current value of the feature flag.
  *
  * If you are using React, use `useFeatureFlag` instead.
+ *
+ * @param flagName The name of the feature flag to check.
+ * @returns `true` if the feature flag is enabled, `false` otherwise.
  */
 export function getFeatureFlag(flagName: string) {
   return featureFlagsStore.getState().flags[flagName].enabled;
 }
 
-/** Use this function to subscribe to the value of the feature flag
+/**
+ * Use this function to subscribe to the value of the feature flag.
+ * The callback will be invoked immediately with the current value and
+ * again whenever the flag value changes.
  *
  * If you are using React, use `useFeatureFlag` instead.
+ *
+ * @param flagName The name of the feature flag to subscribe to.
+ * @param callback A function that will be called with the current flag value.
  */
 export function subscribeToFeatureFlag(flagName: string, callback: (value: boolean) => void) {
   featureFlagsStore.subscribe((state) => {

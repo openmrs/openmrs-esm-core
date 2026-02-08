@@ -4,7 +4,7 @@
 
 > **extractVariableNames**(`expression`): `string`[]
 
-Defined in: [packages/framework/esm-expression-evaluator/src/extractor.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/extractor.ts#L44)
+Defined in: [packages/framework/esm-expression-evaluator/src/extractor.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/extractor.ts#L47)
 
 `extractVariableNames()` is a companion function for `evaluate()` and `evaluateAsync()` which extracts the
 names of all unbound identifiers used in the expression. The idea is to be able to extract all of the names
@@ -14,11 +14,15 @@ of variables that will need to be supplied in order to correctly process the exp
 
 ### expression
 
+The expression to analyze, either as a string or pre-parsed expression.
+
 `string` | `Expression`
 
 ## Returns
 
 `string`[]
+
+An array of variable names that are unbound in the expression.
 
 ## Examples
 

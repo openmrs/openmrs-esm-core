@@ -4,7 +4,7 @@
 
 > **getContext**\<`T`\>(`namespace`): `null` \| `Readonly`\<`T`\>
 
-Defined in: [packages/framework/esm-context/src/context.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L63)
+Defined in: [packages/framework/esm-context/src/context.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L64)
 
 Returns an _immutable_ version of the state of the namespace as it is currently
 
@@ -27,3 +27,5 @@ The namespace to load properties from
 ## Returns
 
 `null` \| `Readonly`\<`T`\>
+
+The immutable state of the namespace, or `null` if the namespace is not registered.

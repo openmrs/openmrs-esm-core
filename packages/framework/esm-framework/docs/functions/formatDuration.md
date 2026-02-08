@@ -4,7 +4,7 @@
 
 > **formatDuration**(`duration`, `options?`): `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:153
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:170
 
 Formats the input duration according to the current locale.
 

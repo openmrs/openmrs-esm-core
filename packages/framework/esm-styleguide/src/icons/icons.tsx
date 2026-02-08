@@ -4,6 +4,7 @@ import classNames, { type Argument } from 'classnames';
 import { RenderIfValueIsTruthy } from '@openmrs/esm-react-utils';
 import style from './icons.module.scss';
 
+/** Array of all available OpenMRS icon IDs that can be used with the Icon component. */
 export const iconIds = [
   'omrs-icon-activity',
   'omrs-icon-add',

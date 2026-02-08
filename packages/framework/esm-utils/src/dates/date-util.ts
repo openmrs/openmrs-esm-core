@@ -58,8 +58,10 @@ export function isOmrsDateStrict(omrsPayloadString: string): boolean {
 }
 
 /**
+ * Checks if the provided date is today.
  *
- * @param date Checks if the provided date is today.
+ * @param date The date to check.
+ * @returns `true` if the date is today, `false` otherwise.
  */
 export function isOmrsDateToday(date: DateInput) {
   return dayjs(date).isToday();
@@ -232,6 +234,10 @@ const defaultOptions: FormatDateOptions = {
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
  * locales.
+ *
+ * @param dateString The date string to parse and format.
+ * @param options Optional formatting options.
+ * @returns The formatted date string, or `null` if the input cannot be parsed.
  */
 // TODO: Shouldn't throw on null input
 export function formatPartialDate(dateString: string, options: Partial<FormatDateOptions> = {}) {
@@ -293,6 +299,10 @@ export function formatPartialDate(dateString: string, options: Partial<FormatDat
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
  * locales.
+ *
+ * @param date The date to format.
+ * @param options Optional formatting options.
+ * @returns The formatted date string.
  */
 // TODO: Shouldn't throw on null input
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
@@ -381,6 +391,9 @@ const formatParts = (separator: string) => {
 /**
  * Formats the input as a time, according to the current locale.
  * 12-hour or 24-hour clock depends on locale.
+ *
+ * @param date The date whose time portion should be formatted.
+ * @returns The formatted time string (e.g., "2:30 PM" or "14:30").
  */
 export function formatTime(date: Date) {
   return date.toLocaleTimeString(getLocale(), {
@@ -397,6 +410,10 @@ export function formatTime(date: Date) {
  * This is created by concatenating the results of `formatDate`
  * and `formatTime` with a comma and space. This agrees with the
  * output of `Date.prototype.toLocaleString` for *most* locales.
+ *
+ * @param date The date to format.
+ * @param options Optional formatting options (same as formatDate, except time is always included).
+ * @returns The formatted date and time string.
  */
 export function formatDatetime(date: Date, options?: Partial<Omit<FormatDateOptions, 'time'>>) {
   return formatDate(date, { ...options, time: true });
