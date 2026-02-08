@@ -9,7 +9,7 @@
   "continue": "Continue",
   "errorChangingPassword": "Error changing password",
   "footerlogo": "Footer Logo",
-  "invalidCredentials": "Invalid username or password",
+  "invalidCredentials": "Invalid username or password. Please try again",
   "learnMore": "Learn more",
   "locationPreferenceRemoved": "Login location preference removed",
   "locationPreferenceRemovedMessage": "You will need to select a location on each login",
