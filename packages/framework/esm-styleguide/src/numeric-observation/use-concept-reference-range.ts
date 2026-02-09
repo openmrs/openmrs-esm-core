@@ -32,11 +32,14 @@ export function useConceptReferenceRange(
   conceptUuid: string | undefined,
   patientUuid: string | undefined,
 ): UseConceptReferenceRangeResult {
-  const apiUrl = conceptUuid
-    ? patientUuid
-      ? `${restBaseUrl}/conceptreferencerange/?patient=${patientUuid}&concept=${conceptUuid}&v=full`
-      : `${restBaseUrl}/conceptreferencerange/?concept=${conceptUuid}&v=full`
-    : null;
+  let apiUrl: string | null = null;
+  if (conceptUuid) {
+    if (patientUuid) {
+      apiUrl = `${restBaseUrl}/conceptreferencerange/?patient=${patientUuid}&concept=${conceptUuid}&v=full`;
+    } else {
+      apiUrl = `${restBaseUrl}/conceptreferencerange/?concept=${conceptUuid}&v=full`;
+    }
+  }
 
   const { data, error, isLoading } = useSWRImmutable<{ data: ConceptReferenceRangeResponse }, Error>(
     apiUrl,

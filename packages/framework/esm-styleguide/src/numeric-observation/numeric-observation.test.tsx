@@ -233,7 +233,7 @@ describe('NumericObservation', () => {
         lowAbsolute: 10,
       };
 
-      renderNumericObservation(125, 'mmHg', 'BP', '123');
+      renderNumericObservation(125, 'mmHg', 'BP', '123', undefined, referenceRange);
 
       expect(screen.getByText('125')).toBeInTheDocument();
     });
@@ -248,7 +248,7 @@ describe('NumericObservation', () => {
         lowAbsolute: 10,
       };
 
-      renderNumericObservation(75, 'mmHg', 'BP', '123');
+      renderNumericObservation(75, 'mmHg', 'BP', '123', undefined, referenceRange);
 
       expect(screen.getByText('75')).toBeInTheDocument();
     });
@@ -261,6 +261,16 @@ const renderNumericObservation = (
   label: string,
   patientUuid: string,
   variant?: 'card' | 'cell',
+  referenceRange?: ObsReferenceRanges,
 ) => {
-  render(<NumericObservation value={value} unit={unit} label={label} patientUuid={patientUuid} variant={variant} />);
+  render(
+    <NumericObservation
+      value={value}
+      unit={unit}
+      label={label}
+      patientUuid={patientUuid}
+      variant={variant}
+      referenceRange={referenceRange}
+    />,
+  );
 };
