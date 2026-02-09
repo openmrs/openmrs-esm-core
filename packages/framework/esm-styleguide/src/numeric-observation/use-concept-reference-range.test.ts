@@ -18,8 +18,8 @@ const mockConceptReferenceRange = {
   lowAbsolute: 10,
 };
 
-const renderUseConceptReferenceRange = (conceptUuid?: string) => {
-  return renderHook(() => useConceptReferenceRange(conceptUuid), {
+const renderUseConceptReferenceRange = (conceptUuid?: string, patientUuid?: string) => {
+  return renderHook(() => useConceptReferenceRange(conceptUuid, patientUuid), {
     wrapper: swrWrapper,
   });
 };

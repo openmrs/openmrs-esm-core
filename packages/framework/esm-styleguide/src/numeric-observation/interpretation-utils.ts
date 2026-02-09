@@ -54,7 +54,11 @@ export function normalizeInterpretation(
     return interpretation.toLowerCase() as ObservationInterpretation;
   }
 
-  return interpretation as ObservationInterpretation;
+  if (observationInterpretations.includes(interpretation as ObservationInterpretation)) {
+    return interpretation as ObservationInterpretation;
+  }
+
+  return 'normal';
 }
 
 /**

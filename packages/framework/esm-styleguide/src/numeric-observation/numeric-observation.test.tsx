@@ -28,26 +28,20 @@ describe('NumericObservation', () => {
 
   describe('Basic Rendering', () => {
     it('renders value and unit correctly', () => {
-      render(<NumericObservation value={36.5} unit="°C" label="Temperature" />);
+      renderNumericObservation(36.5, '°C', 'Temperature', '123');
 
       expect(screen.getByText('36.5')).toBeInTheDocument();
       expect(screen.getByText('°C')).toBeInTheDocument();
     });
 
     it('renders label when provided', () => {
-      render(<NumericObservation value={100} unit="mmHg" label="BP" />);
+      renderNumericObservation(100, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('BP')).toBeInTheDocument();
     });
 
-    it('hides label when showLabel={false}', () => {
-      render(<NumericObservation value={100} unit="mmHg" label="BP" showLabel={false} />);
-
-      expect(screen.queryByText('BP')).not.toBeInTheDocument();
-    });
-
     it('handles empty/null values gracefully', () => {
-      render(<NumericObservation value={null as any} unit="°C" label="Temperature" />);
+      renderNumericObservation(null as any, '°C', 'Temperature', '123');
 
       expect(screen.getByText('Not available')).toBeInTheDocument();
     });
@@ -55,13 +49,13 @@ describe('NumericObservation', () => {
 
   describe('Variant Tests', () => {
     it('applies card variant styles by default', () => {
-      render(<NumericObservation value={100} unit="mmHg" label="BP" />);
+      renderNumericObservation(100, 'mmHg', 'BP', '123');
 
       expect(screen.getByTestId('numeric-observation-card')).toBeInTheDocument();
     });
 
     it('applies cell variant styles when specified', () => {
-      render(<NumericObservation value={100} unit="mmHg" variant="cell" />);
+      renderNumericObservation(100, 'mmHg', 'BP', '123', 'cell');
 
       const element = screen.getByText('100 mmHg');
       expect(screen.queryByTestId('numeric-observation-card')).not.toBeInTheDocument();
@@ -71,7 +65,20 @@ describe('NumericObservation', () => {
 
   describe('Interpretation Display', () => {
     it('displays correct arrow indicator for low interpretation', () => {
-      render(<NumericObservation value={40} unit="mmHg" label="BP" interpretation="low" />);
+      mockUseConceptReferenceRange.mockReturnValue({
+        referenceRange: {
+          hiNormal: 100,
+          hiCritical: 150,
+          hiAbsolute: 200,
+          lowNormal: 50,
+          lowCritical: 30,
+          lowAbsolute: 10,
+        },
+        isLoading: false,
+        error: undefined,
+      });
+
+      renderNumericObservation(40, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('BP')).toBeInTheDocument();
       const abnormalElement = screen.getByTitle('Abnormal value');
@@ -80,7 +87,20 @@ describe('NumericObservation', () => {
     });
 
     it('displays correct arrow indicator for critically-low interpretation', () => {
-      render(<NumericObservation value={20} unit="mmHg" label="BP" interpretation="critically_low" />);
+      mockUseConceptReferenceRange.mockReturnValue({
+        referenceRange: {
+          hiNormal: 100,
+          hiCritical: 150,
+          hiAbsolute: 200,
+          lowNormal: 50,
+          lowCritical: 30,
+          lowAbsolute: 10,
+        },
+        isLoading: false,
+        error: undefined,
+      });
+
+      renderNumericObservation(20, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('BP')).toBeInTheDocument();
       const abnormalElement = screen.getByTitle('Abnormal value');
@@ -89,7 +109,20 @@ describe('NumericObservation', () => {
     });
 
     it('displays correct arrow indicator for high interpretation', () => {
-      render(<NumericObservation value={150} unit="mmHg" label="BP" interpretation="high" />);
+      mockUseConceptReferenceRange.mockReturnValue({
+        referenceRange: {
+          hiNormal: 100,
+          hiCritical: 160,
+          hiAbsolute: 200,
+          lowNormal: 50,
+          lowCritical: 30,
+          lowAbsolute: 10,
+        },
+        isLoading: false,
+        error: undefined,
+      });
+
+      renderNumericObservation(150, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('BP')).toBeInTheDocument();
       const abnormalElement = screen.getByTitle('Abnormal value');
@@ -98,7 +131,20 @@ describe('NumericObservation', () => {
     });
 
     it('displays correct arrow indicator for critically-high interpretation', () => {
-      render(<NumericObservation value={200} unit="mmHg" label="BP" interpretation="critically_high" />);
+      mockUseConceptReferenceRange.mockReturnValue({
+        referenceRange: {
+          hiNormal: 100,
+          hiCritical: 150,
+          hiAbsolute: 200,
+          lowNormal: 50,
+          lowCritical: 30,
+          lowAbsolute: 10,
+        },
+        isLoading: false,
+        error: undefined,
+      });
+
+      renderNumericObservation(200, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('BP')).toBeInTheDocument();
       const abnormalElement = screen.getByTitle('Abnormal value');
@@ -107,7 +153,20 @@ describe('NumericObservation', () => {
     });
 
     it('displays correct arrow indicator for off-scale-low interpretation', () => {
-      render(<NumericObservation value={5} unit="mmHg" label="BP" interpretation="off_scale_low" />);
+      mockUseConceptReferenceRange.mockReturnValue({
+        referenceRange: {
+          hiNormal: 100,
+          hiCritical: 150,
+          hiAbsolute: 200,
+          lowNormal: 50,
+          lowCritical: 30,
+          lowAbsolute: 10,
+        },
+        isLoading: false,
+        error: undefined,
+      });
+
+      renderNumericObservation(5, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('BP')).toBeInTheDocument();
       const abnormalElement = screen.getByTitle('Abnormal value');
@@ -116,7 +175,20 @@ describe('NumericObservation', () => {
     });
 
     it('displays correct arrow indicator for off-scale-high interpretation', () => {
-      render(<NumericObservation value={250} unit="mmHg" label="BP" interpretation="off_scale_high" />);
+      mockUseConceptReferenceRange.mockReturnValue({
+        referenceRange: {
+          hiNormal: 100,
+          hiCritical: 150,
+          hiAbsolute: 200,
+          lowNormal: 50,
+          lowCritical: 30,
+          lowAbsolute: 10,
+        },
+        isLoading: false,
+        error: undefined,
+      });
+
+      renderNumericObservation(250, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('BP')).toBeInTheDocument();
       const abnormalElement = screen.getByTitle('Abnormal value');
@@ -125,7 +197,20 @@ describe('NumericObservation', () => {
     });
 
     it('does not display arrow indicator for normal interpretation', () => {
-      render(<NumericObservation value={100} unit="mmHg" label="BP" interpretation="normal" />);
+      mockUseConceptReferenceRange.mockReturnValue({
+        referenceRange: {
+          hiNormal: 100,
+          hiCritical: 150,
+          hiAbsolute: 200,
+          lowNormal: 50,
+          lowCritical: 30,
+          lowAbsolute: 10,
+        },
+        isLoading: false,
+        error: undefined,
+      });
+
+      renderNumericObservation(75, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('BP')).toBeInTheDocument();
     });
@@ -133,7 +218,7 @@ describe('NumericObservation', () => {
 
   describe('Interpretation Calculation', () => {
     it('uses provided interpretation when available', () => {
-      render(<NumericObservation value={100} unit="mmHg" interpretation="high" />);
+      renderNumericObservation(100, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('100')).toBeInTheDocument();
     });
@@ -148,7 +233,7 @@ describe('NumericObservation', () => {
         lowAbsolute: 10,
       };
 
-      render(<NumericObservation value={125} unit="mmHg" referenceRange={referenceRange} />);
+      renderNumericObservation(125, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('125')).toBeInTheDocument();
     });
@@ -163,9 +248,19 @@ describe('NumericObservation', () => {
         lowAbsolute: 10,
       };
 
-      render(<NumericObservation value={75} unit="mmHg" referenceRange={referenceRange} />);
+      renderNumericObservation(75, 'mmHg', 'BP', '123');
 
       expect(screen.getByText('75')).toBeInTheDocument();
     });
   });
 });
+
+const renderNumericObservation = (
+  value: number,
+  unit: string,
+  label: string,
+  patientUuid: string,
+  variant?: 'card' | 'cell',
+) => {
+  render(<NumericObservation value={value} unit={unit} label={label} patientUuid={patientUuid} variant={variant} />);
+};

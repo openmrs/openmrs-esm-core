@@ -33,7 +33,9 @@ export function useConceptReferenceRange(
   patientUuid: string | undefined,
 ): UseConceptReferenceRangeResult {
   const apiUrl = conceptUuid
-    ? `${restBaseUrl}/conceptreferencerange/?patient=${patientUuid}&concept=${conceptUuid}&v=full`
+    ? patientUuid
+      ? `${restBaseUrl}/conceptreferencerange/?patient=${patientUuid}&concept=${conceptUuid}&v=full`
+      : `${restBaseUrl}/conceptreferencerange/?concept=${conceptUuid}&v=full`
     : null;
 
   const { data, error, isLoading } = useSWRImmutable<{ data: ConceptReferenceRangeResponse }, Error>(

@@ -80,6 +80,6 @@ The observation value to display
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L33)
 
-Display style variant
+Display style variant, defaults to 'card'
 - 'card': Card-style container with colored borders and backgrounds, typically used in header/summary views (e.g., vitals header)
 - 'cell': Table cell styling with background colors, typically used in data tables (e.g., test results table). If using the cell variant inside a Carbon Table Cell, make sure to set the padding to 0.
