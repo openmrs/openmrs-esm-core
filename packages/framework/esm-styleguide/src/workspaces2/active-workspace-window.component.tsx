@@ -124,6 +124,9 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
     const { registeredWindowsByName } = workspace2Store.getState();
     const windowDef = windowName ? registeredWindowsByName[windowName] : undefined;
     const width = windowDef && windowDef.width ? windowDef.width : 'narrow';
+    const isActionMenuOpened = Object.values(registeredWindowsByName).some(
+      (window) => window.group === openedGroup?.groupName && window.icon !== undefined,
+    );
 
     return (
       <div
@@ -131,6 +134,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
           [styles.narrowWorkspace]: width === 'narrow',
           [styles.widerWorkspace]: width === 'wider',
           [styles.extraWideWorkspace]: width === 'extra-wide',
+          [styles.isActionMenuOpened]: isActionMenuOpened,
         })}
       >
         <div className={styles.workspaceSpacer} />
