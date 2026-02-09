@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback, useRef, useId } from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
@@ -68,80 +68,15 @@ export const unsetLeftNav = jest.fn();
 export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
 export const ErrorState = jest.fn(() => <div>Error State</div>);
 
-export { CustomOverflowMenu, CustomOverflowMenuItem } from '@openmrs/esm-styleguide/src/public';
-export const PatientBannerActionsMenu = jest.fn(({ patient, patientUuid }) => (
-  <div data-testid="patient-banner-actions-menu">
-    <button aria-label="Actions">Actions</button>
-  </div>
-));
-export const PatientBannerContactDetails = jest.fn(({ patientId, deceased, address, telecom }) => (
-  <div data-testid="patient-banner-contact-details" data-patient-id={patientId} data-deceased={deceased}>
-    <div>
-      <p>Address</p>
-      {address && address.length > 0 ? (
-        <ul>
-          {address.map((addr, index) => (
-            <li key={index}>
-              {[addr.city, addr.state, addr.postalCode, addr.country].filter(Boolean).join(', ') || 'N/A'}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No address on file</p>
-      )}
-    </div>
-    <div>
-      <p>Contact Details</p>
-      {telecom && telecom.length > 0 ? (
-        <ul>
-          {telecom.map((contact, index) => (
-            <li key={index}>
-              {contact.system}: {contact.value}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No contact details on file</p>
-      )}
-    </div>
-  </div>
-));
-export const PatientBannerPatientInfo = jest.fn(({ patient, renderedFrom }) => {
-  const name = patient?.name?.[0]
-    ? `${patient.name[0].given?.join(' ') || ''} ${patient.name[0].family || ''}`.trim()
-    : 'Unknown';
-  const genderMap = { male: 'Male', female: 'Female', other: 'Other', unknown: 'Unknown' };
-  const gender = patient?.gender ? genderMap[patient.gender.toLowerCase()] || patient.gender : 'Unknown';
-
-  return (
-    <div data-testid="patient-banner-patient-info">
-      <div>
-        <span>{name}</span>
-        <div>
-          <span>{gender}</span>
-        </div>
-      </div>
-      <div>{patient?.birthDate && <span>{patient.birthDate}</span>}</div>
-    </div>
-  );
-});
-export const PatientBannerPatientIdentifiers = jest.fn(({ identifiers, showIdentifierLabel }) => {
-  if (!identifiers || identifiers.length === 0) {
-    return null;
-  }
-
-  return (
-    <div data-testid="patient-banner-identifiers">
-      {identifiers.map((identifier, index) => (
-        <span key={index}>
-          {showIdentifierLabel && identifier.type?.text && <span>{identifier.type.text}: </span>}
-          <span>{identifier.value}</span>
-        </span>
-      ))}
-    </div>
-  );
-});
-export { PatientBannerToggleContactDetailsButton } from '@openmrs/esm-styleguide/src/public';
+export {
+  CustomOverflowMenu,
+  CustomOverflowMenuItem,
+  PatientBannerActionsMenu,
+  PatientBannerContactDetails,
+  PatientBannerPatientInfo,
+  PatientBannerPatientIdentifiers,
+  PatientBannerToggleContactDetailsButton,
+} from '@openmrs/esm-styleguide/src/public';
 export const PatientPhoto = jest.fn(({ patientUuid, patientName, alt }) => {
   const altText = alt || `Avatar for ${patientName}`;
   return (
