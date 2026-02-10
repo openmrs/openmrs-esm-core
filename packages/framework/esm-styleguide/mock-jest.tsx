@@ -206,3 +206,5 @@ export const Workspace2 = jest.fn(({ title, children }) => (
     {children}
   </div>
 ));
+
+export const showModal = jest.fn();
