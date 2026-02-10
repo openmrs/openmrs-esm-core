@@ -65,7 +65,7 @@
   "save": "Enregistrer",
   "scriptLoadingError": "Échec du chargement du script depuis {{url}}. Veuillez vérifier que le script est disponible à l'URL spécifiée. Cliquez sur le bouton ci-dessous pour réinitialiser l'import map",
   "scriptLoadingFailed": "Erreur : Le chargement du script a échoué",
-  "searchForLocation": "Search for a location",
+  "searchForLocation": "Rechercher un lieu",
   "seeAll": "See all",
   "seeMoreLists": "Voir {{count}} listes de plus",
   "sex": "Sexe",
