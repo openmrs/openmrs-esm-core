@@ -929,7 +929,6 @@ export const Icon = memo(
         height={size}
         width={size}
         viewBox="0 0 16 16"
-        style={{ fill: 'var(--omrs-icon-fill, currentColor)' }}
       >
         <use href={`#${icon}`} />
       </svg>
