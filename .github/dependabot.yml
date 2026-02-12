@@ -45,6 +45,8 @@ updates:
       # Zustand v5 API changes affect all consumers
       - dependency-name: "zustand"
         update-types: ["version-update:semver-major"]
+      # Workbox — handled manually; tightly coupled to service worker implementation
+      - dependency-name: "workbox-*"
       # ESM-only in newer major versions, breaks CJS tooling
       - dependency-name: "inquirer"
         update-types: ["version-update:semver-major"]
@@ -115,9 +117,6 @@ updates:
           - "postcss"
           - "autoprefixer"
           - "cssnano"
-      workbox:
-        patterns:
-          - "workbox-*"
       i18next:
         patterns:
           - "i18next"
@@ -133,6 +132,9 @@ updates:
         patterns:
           - "jsep"
           - "@jsep-plugin/*"
+      swr:
+        patterns:
+          - "swr"
       build-tooling:
         patterns:
           - "turbo"
