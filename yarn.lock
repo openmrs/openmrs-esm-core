@@ -3385,7 +3385,7 @@ __metadata:
     html-webpack-plugin: "npm:^5.5.0"
     i18next: "npm:^25.5.3"
     i18next-browser-languagedetector: "npm:^8.2.0"
-    import-map-overrides: "npm:^3.0.0"
+    import-map-overrides: "npm:^6.1.0"
     lodash-es: "npm:^4.17.21"
     mini-css-extract-plugin: "npm:^2.9.1"
     react: "npm:^18.3.1"
@@ -10000,10 +10000,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.4.1":
-  version: 0.4.2
-  resolution: "cookie@npm:0.4.2"
-  checksum: 10/2e1de9fdedca54881eab3c0477aeb067f281f3155d9cfee9d28dfb252210d09e85e9d175c0a60689661feb9e35e588515352f2456bc1f8e8db4267e05fd70137
+"cookie@npm:^1.0.2":
+  version: 1.1.1
+  resolution: "cookie@npm:1.1.1"
+  checksum: 10/85538153054791155cf4d38d2e807e3b9382d71bf71d92fc46fca348515ea574049d0d9ef8eb84d2d54a681ad1d7a7316b1989b901dace50a6c0f4c3858dbdb2
   languageName: node
   linkType: hard
 
@@ -13702,12 +13702,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-map-overrides@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "import-map-overrides@npm:3.0.0"
+"import-map-overrides@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "import-map-overrides@npm:6.1.0"
   dependencies:
-    cookie: "npm:^0.4.1"
-  checksum: 10/c7906c0e20e50a290c0ecd307c57e6107d70f18087fa61280b75e7c51fc8f780eaac0e378ca660a5c6520fae29d6574103139b852fb9e0ed9c127a7c21cf279d
+    cookie: "npm:^1.0.2"
+  checksum: 10/52ad38662227820761dd1d39444c59426b3a8f1b6c304b934a4396856fffb4dad57bb343b96d7fa0b985a22c7bf20d25668903b896ee35a88688c72d28e4ea68
   languageName: node
   linkType: hard
 
