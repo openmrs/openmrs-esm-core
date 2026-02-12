@@ -1,0 +1,181 @@
+version: 2
+
+updates:
+  # npm dependencies (covers all Yarn workspaces)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 20
+    commit-message:
+      prefix: "(chore)"
+      prefix-development: "(chore)"
+    ignore:
+      # Carbon Design System — handled manually; updates risk UI regressions
+      - dependency-name: "@carbon/*"
+      # ESLint v9 requires flat config migration
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint-plugin-react-hooks"
+        update-types: ["version-update:semver-major"]
+      # Husky v9 changed configuration approach
+      - dependency-name: "husky"
+        update-types: ["version-update:semver-major"]
+      # React 19 requires coordinated ecosystem-wide migration
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react-dom"
+        update-types: ["version-update:semver-major"]
+      # single-spa is the core microfrontend framework
+      - dependency-name: "single-spa"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "single-spa-react"
+        update-types: ["version-update:semver-major"]
+      # RxJS v7 migration deliberately deferred
+      - dependency-name: "rxjs"
+        update-types: ["version-update:semver-major"]
+      # Dexie v4 has breaking API changes
+      - dependency-name: "dexie"
+        update-types: ["version-update:semver-major"]
+      # Zustand v5 API changes affect all consumers
+      - dependency-name: "zustand"
+        update-types: ["version-update:semver-major"]
+      # ESM-only in newer major versions, breaks CJS tooling
+      - dependency-name: "inquirer"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "chalk"
+        update-types: ["version-update:semver-major"]
+    groups:
+      react-ecosystem:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+          - "react-i18next"
+          - "react-router-dom"
+          - "react-hook-form"
+          - "@hookform/*"
+          - "react-*"
+      testing:
+        patterns:
+          - "@testing-library/*"
+          - "@vitest/*"
+          - "vitest"
+          - "vitest-*"
+          - "jest"
+          - "jest-cli"
+          - "jest-environment-jsdom"
+          - "@types/jest"
+          - "happy-dom"
+          - "jsdom"
+          - "fake-indexeddb"
+          - "identity-obj-proxy"
+          - "timezone-mock"
+      playwright:
+        patterns:
+          - "@playwright/test"
+          - "eslint-plugin-playwright"
+      typescript-and-linting:
+        patterns:
+          - "@typescript-eslint/*"
+          - "eslint-plugin-*"
+        exclude-patterns:
+          - "eslint-plugin-playwright"
+      swc:
+        patterns:
+          - "@swc/*"
+          - "swc-loader"
+      rspack:
+        patterns:
+          - "@rspack/*"
+      webpack-ecosystem:
+        patterns:
+          - "webpack"
+          - "webpack-cli"
+          - "webpack-dev-server"
+          - "webpack-bundle-analyzer"
+          - "webpack-stats-plugin"
+          - "webpack-pwa-manifest"
+          - "html-webpack-plugin"
+          - "html-webpack-tags-plugin"
+          - "mini-css-extract-plugin"
+          - "copy-webpack-plugin"
+          - "clean-webpack-plugin"
+          - "fork-ts-checker-webpack-plugin"
+          - "css-loader"
+          - "style-loader"
+          - "sass-loader"
+          - "postcss-loader"
+          - "postcss"
+          - "autoprefixer"
+          - "cssnano"
+      workbox:
+        patterns:
+          - "workbox-*"
+      i18next:
+        patterns:
+          - "i18next"
+          - "i18next-*"
+      type-definitions:
+        patterns:
+          - "@types/*"
+        exclude-patterns:
+          - "@types/react"
+          - "@types/react-dom"
+          - "@types/jest"
+      jsep:
+        patterns:
+          - "jsep"
+          - "@jsep-plugin/*"
+      build-tooling:
+        patterns:
+          - "turbo"
+          - "typescript"
+          - "prettier"
+          - "husky"
+          - "lint-staged"
+          - "cross-env"
+          - "dotenv"
+      minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    commit-message:
+      prefix: "(chore)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # Docker: Playwright (Bamboo)
+  - package-ecosystem: "docker"
+    directory: "/e2e/support/bamboo"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    commit-message:
+      prefix: "(chore)"
+
+  # Docker: E2E environment (GitHub)
+  - package-ecosystem: "docker"
+    directory: "/e2e/support/github"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    commit-message:
+      prefix: "(chore)"
