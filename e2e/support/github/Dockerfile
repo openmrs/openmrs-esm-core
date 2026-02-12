@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.3
-FROM --platform=$BUILDPLATFORM node:22-alpine as dev
+FROM --platform=$BUILDPLATFORM node:25-alpine as dev
 
 ARG APP_SHELL_VERSION=next
 
