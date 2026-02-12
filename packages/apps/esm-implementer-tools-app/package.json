@@ -53,13 +53,13 @@
   "devDependencies": {
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/webpack-config": "workspace:*",
-    "ace-builds": "^1.43.3",
+    "ace-builds": "^1.43.6",
     "react": "^18.3.1",
     "react-ace": "^14.0.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
     "rxjs": "^6.5.3",
-    "swr": "2.2.5",
+    "swr": "2.4.0",
     "webpack": "^5.99.9"
   }
 }

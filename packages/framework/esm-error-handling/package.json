@@ -54,7 +54,7 @@
     "@vitest/coverage-v8": "^4.0.7",
     "cross-env": "^7.0.3",
     "happy-dom": "^20.5.0",
-    "rimraf": "^6.0.1",
+    "rimraf": "^6.1.2",
     "vitest": "^4.0.7"
   }
 }
