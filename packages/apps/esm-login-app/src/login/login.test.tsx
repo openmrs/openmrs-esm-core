@@ -11,6 +11,16 @@ const mockLogin = jest.mocked(refetchCurrentUser);
 const mockUseConfig = jest.mocked(useConfig);
 const mockUseSession = jest.mocked(useSession);
 
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+
 mockLogin.mockResolvedValue({} as SessionStore);
 mockGetSessionStore.mockImplementation(() => {
   return {
@@ -36,6 +46,10 @@ mockUseSession.mockReturnValue({ authenticated: false, sessionId: '123' });
 mockUseConfig.mockReturnValue(mockConfig);
 
 describe('Login', () => {
+  beforeEach(() => {
+    mockNavigate.mockClear();
+  });
+
   it('renders the login form', () => {
     renderWithRouter(
       Login,
@@ -115,14 +129,13 @@ describe('Login', () => {
     await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
-  // TODO: Complete the test
-  it('sends the user to the location select page on login if there is more than one location', async () => {
+  it('sends the user to the location select page on login if no session location is set', async () => {
     let refreshUser = (user: any) => {};
     mockLogin.mockImplementation(() => {
       refreshUser({
         display: 'my name',
       });
-      return Promise.resolve({ data: { authenticated: true } } as unknown as SessionStore);
+      return Promise.resolve({ session: { authenticated: true } } as unknown as SessionStore);
     });
     mockUseSession.mockImplementation(() => {
       const [user, setUser] = useState();
@@ -145,6 +158,8 @@ describe('Login', () => {
     await screen.findByLabelText(/^password$/i);
     await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(screen.getByRole('button', { name: /log in/i }));
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+    expect(mockNavigate).toHaveBeenCalledWith('/login/location');
   });
 
   it('should render the both the username and password fields when the showPasswordOnSeparateScreen config is false', async () => {
