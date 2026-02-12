@@ -1257,6 +1257,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.28.4":
+  version: 7.28.6
+  resolution: "@babel/runtime@npm:7.28.6"
+  checksum: 10/fbcd439cb74d4a681958eb064c509829e3f46d8a4bfaaf441baa81bb6733d1e680bccc676c813883d7741bcaada1d0d04b15aa320ef280b5734e2192b50decf9
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.18.10, @babel/template@npm:^7.22.15":
   version: 7.24.0
   resolution: "@babel/template@npm:7.24.0"
@@ -3112,7 +3119,7 @@ __metadata:
     dayjs: "npm:^1.11.13"
     dexie: "npm:^3.0.3"
     html-webpack-plugin: "npm:^5.5.0"
-    i18next: "npm:^25.5.3"
+    i18next: "npm:^25.8.6"
     i18next-browser-languagedetector: "npm:^8.2.0"
     import-map-overrides: "npm:^3.0.0"
     lodash-es: "npm:^4.17.21"
@@ -3668,7 +3675,7 @@ __metadata:
     cross-env: "npm:^7.0.3"
     dayjs: "npm:^1.11.13"
     happy-dom: "npm:^20.6.0"
-    i18next: "npm:^25.5.3"
+    i18next: "npm:^25.8.6"
     lodash-es: "npm:^4.17.21"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
@@ -3779,7 +3786,7 @@ __metadata:
     d3: "npm:^7.8.0"
     geopattern: "npm:^1.2.3"
     happy-dom: "npm:^20.6.0"
-    i18next: "npm:^25.5.3"
+    i18next: "npm:^25.8.6"
     lodash-es: "npm:^4.17.21"
     react: "npm:^18.3.1"
     react-aria-components: "npm:^1.7.1"
@@ -3820,7 +3827,7 @@ __metadata:
     "@swc/cli": "npm:^0.7.7"
     "@swc/core": "npm:^1.11.29"
     concurrently: "npm:^9.1.2"
-    i18next: "npm:^25.5.3"
+    i18next: "npm:^25.8.6"
     i18next-parser: "npm:^9.3.0"
     rimraf: "npm:^6.0.1"
   peerDependencies:
@@ -12855,17 +12862,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^25.5.3":
-  version: 25.5.3
-  resolution: "i18next@npm:25.5.3"
+"i18next@npm:^25.8.6":
+  version: 25.8.6
+  resolution: "i18next@npm:25.8.6"
   dependencies:
-    "@babel/runtime": "npm:^7.27.6"
+    "@babel/runtime": "npm:^7.28.4"
   peerDependencies:
     typescript: ^5
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/eb7312b3261af4477b7e4d09ec1636372a79a8f81bb5ac9531bbb9aa498ca07f337f9ec2c89507f0d895ce6c0b1352a2ea4fbe47f665ab4feba3df2de79cbeab
+  checksum: 10/99314b712150dd1ec6238ee16f73fc10d7ccf49c09004706f111e75eef62c37a0fd3a8eef6c9f1f7645cf1649d4049c638fb8c90e1142c46f8a55cbe39eefddb
   languageName: node
   linkType: hard
 
