@@ -52,7 +52,7 @@
     "rxjs": "^6.5.3",
     "semver": "^7.7.3",
     "single-spa": "^6.0.3",
-    "swc-loader": "^0.2.6",
+    "swc-loader": "^0.2.7",
     "swr": "2.2.5",
     "webpack": "^5.99.9",
     "webpack-pwa-manifest": "^4.3.0",

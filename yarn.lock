@@ -2247,12 +2247,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/create-cache-key-function@npm:^29.7.0":
-  version: 29.7.0
-  resolution: "@jest/create-cache-key-function@npm:29.7.0"
+"@jest/create-cache-key-function@npm:^30.0.0":
+  version: 30.2.0
+  resolution: "@jest/create-cache-key-function@npm:30.2.0"
   dependencies:
-    "@jest/types": "npm:^29.6.3"
-  checksum: 10/061ef63b13ec8c8e5d08e4456f03b5cf8c7f9c1cab4fed8402e1479153cafce6eea80420e308ef62027abb7e29b825fcfa06551856bd021d98e92e381bf91723
+    "@jest/types": "npm:30.2.0"
+  checksum: 10/7a2dd0efe747c1b2e61825e51ace11e42f278203fae37a3b9462c8d2132394978682ed7094f5ce3d9f5a9e5f2855e6d1d933e5f3ac5165b127c36591f3d98d85
   languageName: node
   linkType: hard
 
@@ -2313,6 +2313,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jest/pattern@npm:30.0.1":
+  version: 30.0.1
+  resolution: "@jest/pattern@npm:30.0.1"
+  dependencies:
+    "@types/node": "npm:*"
+    jest-regex-util: "npm:30.0.1"
+  checksum: 10/afd03b4d3eadc9c9970cf924955dee47984a7e767901fe6fa463b17b246f0ddeec07b3e82c09715c54bde3c8abb92074160c0d79967bd23778724f184e7f5b7b
+  languageName: node
+  linkType: hard
+
 "@jest/reporters@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/reporters@npm:29.7.0"
@@ -2347,6 +2357,15 @@ __metadata:
     node-notifier:
       optional: true
   checksum: 10/a17d1644b26dea14445cedd45567f4ba7834f980be2ef74447204e14238f121b50d8b858fde648083d2cd8f305f81ba434ba49e37a5f4237a6f2a61180cc73dc
+  languageName: node
+  linkType: hard
+
+"@jest/schemas@npm:30.0.5":
+  version: 30.0.5
+  resolution: "@jest/schemas@npm:30.0.5"
+  dependencies:
+    "@sinclair/typebox": "npm:^0.34.0"
+  checksum: 10/40df4db55d4aeed09d1c7e19caf23788309cea34490a1c5d584c913494195e698b9967e996afc27226cac6d76e7512fe73ae6b9584480695c60dd18a5459cdba
   languageName: node
   linkType: hard
 
@@ -2414,6 +2433,21 @@ __metadata:
     slash: "npm:^3.0.0"
     write-file-atomic: "npm:^4.0.2"
   checksum: 10/30f42293545ab037d5799c81d3e12515790bb58513d37f788ce32d53326d0d72ebf5b40f989e6896739aa50a5f77be44686e510966370d58511d5ad2637c68c1
+  languageName: node
+  linkType: hard
+
+"@jest/types@npm:30.2.0":
+  version: 30.2.0
+  resolution: "@jest/types@npm:30.2.0"
+  dependencies:
+    "@jest/pattern": "npm:30.0.1"
+    "@jest/schemas": "npm:30.0.5"
+    "@types/istanbul-lib-coverage": "npm:^2.0.6"
+    "@types/istanbul-reports": "npm:^3.0.4"
+    "@types/node": "npm:*"
+    "@types/yargs": "npm:^17.0.33"
+    chalk: "npm:^4.1.2"
+  checksum: 10/f50fcaea56f873a51d19254ab16762f2ea8ca88e3e08da2e496af5da2b67c322915a4fcd0153803cc05063ffe87ebef2ab4330e0a1b06ab984a26c916cbfc26b
   languageName: node
   linkType: hard
 
@@ -3353,8 +3387,8 @@ __metadata:
     "@openmrs/esm-error-handling": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-navigation": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -3395,7 +3429,7 @@ __metadata:
     rxjs: "npm:^6.5.3"
     semver: "npm:^7.7.3"
     single-spa: "npm:^6.0.3"
-    swc-loader: "npm:^0.2.6"
+    swc-loader: "npm:^0.2.7"
     swr: "npm:2.2.5"
     vitest: "npm:^4.0.18"
     webpack: "npm:^5.99.9"
@@ -3415,8 +3449,8 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@types/ramda": "npm:^0.26.44"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
@@ -3440,8 +3474,8 @@ __metadata:
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
   peerDependencies:
@@ -3455,8 +3489,8 @@ __metadata:
   resolution: "@openmrs/esm-core@workspace:."
   dependencies:
     "@playwright/test": "npm:^1.55.1"
-    "@swc/core": "npm:^1.11.29"
-    "@swc/jest": "npm:^0.2.38"
+    "@swc/core": "npm:^1.15.11"
+    "@swc/jest": "npm:^0.2.39"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.8.0"
     "@testing-library/react": "npm:^16.3.0"
@@ -3487,7 +3521,7 @@ __metadata:
     lint-staged: "npm:^15.2.9"
     openmrs: "workspace:*"
     prettier: "npm:^3.1.0"
-    swc-loader: "npm:^0.2.6"
+    swc-loader: "npm:^0.2.7"
     timezone-mock: "npm:^1.2.2"
     turbo: "npm:^2.5.2"
     typescript: "npm:^5.8.3"
@@ -3527,8 +3561,8 @@ __metadata:
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-translations": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
   peerDependencies:
@@ -3544,8 +3578,8 @@ __metadata:
     "@openmrs/esm-api": "workspace:*"
     "@openmrs/esm-offline": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@types/fhir": "npm:0.0.31"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
@@ -3567,8 +3601,8 @@ __metadata:
   resolution: "@openmrs/esm-error-handling@workspace:packages/framework/esm-error-handling"
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     cross-env: "npm:^7.0.3"
     happy-dom: "npm:^20.5.0"
@@ -3589,8 +3623,8 @@ __metadata:
     "@jsep-plugin/regex": "npm:^1.0.4"
     "@jsep-plugin/template": "npm:^1.0.5"
     "@jsep-plugin/ternary": "npm:^1.1.4"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -3612,8 +3646,8 @@ __metadata:
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -3639,8 +3673,8 @@ __metadata:
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
     single-spa: "npm:^6.0.3"
@@ -3704,8 +3738,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-globals@workspace:packages/framework/esm-globals"
   dependencies:
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@types/fhir": "npm:0.0.31"
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
@@ -3807,8 +3841,8 @@ __metadata:
   resolution: "@openmrs/esm-navigation@workspace:packages/framework/esm-navigation"
   dependencies:
     "@openmrs/esm-state": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -3859,8 +3893,8 @@ __metadata:
     "@openmrs/esm-api": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@types/uuid": "npm:^9.0.1"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
@@ -3924,8 +3958,8 @@ __metadata:
     "@openmrs/esm-navigation": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -3973,8 +4007,8 @@ __metadata:
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -4000,8 +4034,8 @@ __metadata:
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -4082,8 +4116,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-translations@workspace:packages/framework/esm-translations"
   dependencies:
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     concurrently: "npm:^9.1.2"
     i18next: "npm:^25.5.3"
     i18next-parser: "npm:^9.3.0"
@@ -4100,8 +4134,8 @@ __metadata:
     "@formatjs/intl-durationformat": "npm:^0.7.3"
     "@internationalized/date": "npm:^3.8.0"
     "@openmrs/esm-globals": "workspace:*"
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@types/lodash-es": "npm:^4.17.12"
     "@types/semver": "npm:^7.3.4"
     "@vitest/coverage-v8": "npm:^4.0.7"
@@ -4129,7 +4163,7 @@ __metadata:
   dependencies:
     "@rspack/cli": "npm:^1.3.11"
     "@rspack/core": "npm:^1.3.11"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/core": "npm:^1.15.11"
     "@types/lodash-es": "npm:^4.17.12"
     clean-webpack-plugin: "npm:^4.0.0"
     copy-webpack-plugin: "npm:^11.0.0"
@@ -4138,7 +4172,7 @@ __metadata:
     sass-embedded: "npm:^1.89.0"
     sass-loader: "npm:^16.0.5"
     style-loader: "npm:^3.3.4"
-    swc-loader: "npm:^0.2.6"
+    swc-loader: "npm:^0.2.7"
     ts-checker-rspack-plugin: "npm:^1.1.1"
     typescript: "npm:^5.8.3"
     webpack-bundle-analyzer: "npm:^4.10.2"
@@ -4150,8 +4184,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories"
   dependencies:
-    "@swc/cli": "npm:^0.7.7"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/cli": "npm:^0.8.0"
+    "@swc/core": "npm:^1.15.11"
     "@vitest/coverage-v8": "npm:^4.0.7"
     rimraf: "npm:^6.0.1"
     typedoc: "npm:^0.28.5"
@@ -4166,7 +4200,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/webpack-config@workspace:packages/tooling/webpack-config"
   dependencies:
-    "@swc/core": "npm:^1.11.29"
+    "@swc/core": "npm:^1.15.11"
     "@types/lodash-es": "npm:^4.17.12"
     clean-webpack-plugin: "npm:^4.0.0"
     copy-webpack-plugin: "npm:^11.0.0"
@@ -4177,7 +4211,7 @@ __metadata:
     sass-embedded: "npm:^1.89.0"
     sass-loader: "npm:^16.0.5"
     style-loader: "npm:^3.3.4"
-    swc-loader: "npm:^0.2.6"
+    swc-loader: "npm:^0.2.7"
     typescript: "npm:^5.8.3"
     webpack: "npm:^5.99.9"
     webpack-bundle-analyzer: "npm:^4.10.2"
@@ -6507,6 +6541,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sinclair/typebox@npm:^0.34.0":
+  version: 0.34.48
+  resolution: "@sinclair/typebox@npm:0.34.48"
+  checksum: 10/186eebb338255db7cfd77c2f94be0ad91816c7b5ee994c3adb95e0474ae98b769574c2b6b1f26a81613d7148ed20b11e02528f4263d8d95e3ca8dcf8faaf5306
+  languageName: node
+  linkType: hard
+
 "@sindresorhus/is@npm:^5.2.0":
   version: 5.6.0
   resolution: "@sindresorhus/is@npm:5.6.0"
@@ -6551,22 +6592,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/cli@npm:^0.7.7":
-  version: 0.7.7
-  resolution: "@swc/cli@npm:0.7.7"
+"@swc/cli@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "@swc/cli@npm:0.8.0"
   dependencies:
     "@swc/counter": "npm:^0.1.3"
     "@xhmikosr/bin-wrapper": "npm:^13.0.5"
     commander: "npm:^8.3.0"
-    fast-glob: "npm:^3.2.5"
     minimatch: "npm:^9.0.3"
     piscina: "npm:^4.3.1"
     semver: "npm:^7.3.8"
     slash: "npm:3.0.0"
     source-map: "npm:^0.7.3"
+    tinyglobby: "npm:^0.2.13"
   peerDependencies:
     "@swc/core": ^1.2.66
-    chokidar: ^4.0.1
+    chokidar: ^5.0.0
   peerDependenciesMeta:
     chokidar:
       optional: true
@@ -6574,96 +6615,96 @@ __metadata:
     spack: bin/spack.js
     swc: bin/swc.js
     swcx: bin/swcx.js
-  checksum: 10/b13f148b934675051fad664690fd8be322eb5da7d0235f368fe1baf651ca58605c1f5b47f7ec498933c8dca96729ac370ef7071f0a5c6ac9e3b446553e9da6f9
+  checksum: 10/cbaa81df940c9229fe5ac8e5fe65bc81dd882aad621dd51119288b2998d7a95cae6d179aab596308674a3de05ffe12c53f54012409b3665790b31c33beba40e9
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-darwin-arm64@npm:1.12.6"
+"@swc/core-darwin-arm64@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-darwin-arm64@npm:1.15.11"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-darwin-x64@npm:1.12.6"
+"@swc/core-darwin-x64@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-darwin-x64@npm:1.15.11"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.12.6"
+"@swc/core-linux-arm-gnueabihf@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.15.11"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.12.6"
+"@swc/core-linux-arm64-gnu@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.15.11"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-linux-arm64-musl@npm:1.12.6"
+"@swc/core-linux-arm64-musl@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-linux-arm64-musl@npm:1.15.11"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-linux-x64-gnu@npm:1.12.6"
+"@swc/core-linux-x64-gnu@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-linux-x64-gnu@npm:1.15.11"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-linux-x64-musl@npm:1.12.6"
+"@swc/core-linux-x64-musl@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-linux-x64-musl@npm:1.15.11"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.12.6"
+"@swc/core-win32-arm64-msvc@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.15.11"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.12.6"
+"@swc/core-win32-ia32-msvc@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.15.11"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.12.6":
-  version: 1.12.6
-  resolution: "@swc/core-win32-x64-msvc@npm:1.12.6"
+"@swc/core-win32-x64-msvc@npm:1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core-win32-x64-msvc@npm:1.15.11"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.11.29":
-  version: 1.12.6
-  resolution: "@swc/core@npm:1.12.6"
+"@swc/core@npm:^1.15.11":
+  version: 1.15.11
+  resolution: "@swc/core@npm:1.15.11"
   dependencies:
-    "@swc/core-darwin-arm64": "npm:1.12.6"
-    "@swc/core-darwin-x64": "npm:1.12.6"
-    "@swc/core-linux-arm-gnueabihf": "npm:1.12.6"
-    "@swc/core-linux-arm64-gnu": "npm:1.12.6"
-    "@swc/core-linux-arm64-musl": "npm:1.12.6"
-    "@swc/core-linux-x64-gnu": "npm:1.12.6"
-    "@swc/core-linux-x64-musl": "npm:1.12.6"
-    "@swc/core-win32-arm64-msvc": "npm:1.12.6"
-    "@swc/core-win32-ia32-msvc": "npm:1.12.6"
-    "@swc/core-win32-x64-msvc": "npm:1.12.6"
+    "@swc/core-darwin-arm64": "npm:1.15.11"
+    "@swc/core-darwin-x64": "npm:1.15.11"
+    "@swc/core-linux-arm-gnueabihf": "npm:1.15.11"
+    "@swc/core-linux-arm64-gnu": "npm:1.15.11"
+    "@swc/core-linux-arm64-musl": "npm:1.15.11"
+    "@swc/core-linux-x64-gnu": "npm:1.15.11"
+    "@swc/core-linux-x64-musl": "npm:1.15.11"
+    "@swc/core-win32-arm64-msvc": "npm:1.15.11"
+    "@swc/core-win32-ia32-msvc": "npm:1.15.11"
+    "@swc/core-win32-x64-msvc": "npm:1.15.11"
     "@swc/counter": "npm:^0.1.3"
-    "@swc/types": "npm:^0.1.23"
+    "@swc/types": "npm:^0.1.25"
   peerDependencies:
     "@swc/helpers": ">=0.5.17"
   dependenciesMeta:
@@ -6690,7 +6731,7 @@ __metadata:
   peerDependenciesMeta:
     "@swc/helpers":
       optional: true
-  checksum: 10/e5522a38b3b83999e4fe50cb8f6a2886dbf6054c227251930d83dd6002e11f83b09b2d50cd6e1be30a0313fa6dee68d26c8232f901e96ae7513204addb11eb43
+  checksum: 10/2ee702f6ee39fc68f1e4d03a19191eaa3762d54ab917d5617741196bbe3beba9fb50b1e878af2735f8a42ecdef3632f44acc090611ebf01a0df4dc533a71f5d2
   languageName: node
   linkType: hard
 
@@ -6710,25 +6751,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/jest@npm:^0.2.38":
-  version: 0.2.38
-  resolution: "@swc/jest@npm:0.2.38"
+"@swc/jest@npm:^0.2.39":
+  version: 0.2.39
+  resolution: "@swc/jest@npm:0.2.39"
   dependencies:
-    "@jest/create-cache-key-function": "npm:^29.7.0"
+    "@jest/create-cache-key-function": "npm:^30.0.0"
     "@swc/counter": "npm:^0.1.3"
     jsonc-parser: "npm:^3.2.0"
   peerDependencies:
     "@swc/core": "*"
-  checksum: 10/3aaf557425e806890ebefea35334b7795e9f8ddf6f82d634d865ef917333cca4208190af1a9610c134c0e3b7a6a1aea4ec77a659e3ca5965be7aace65ce80c97
+  checksum: 10/a2b7ed6fbb908867e673d1bbff9efde7eee225a57ad75735216ce2005e40c5cfb92285bd807d2058f1c0317e3d48ed71f5577fe85b28bebc80c1bc2c3a03306e
   languageName: node
   linkType: hard
 
-"@swc/types@npm:^0.1.23":
-  version: 0.1.23
-  resolution: "@swc/types@npm:0.1.23"
+"@swc/types@npm:^0.1.25":
+  version: 0.1.25
+  resolution: "@swc/types@npm:0.1.25"
   dependencies:
     "@swc/counter": "npm:^0.1.3"
-  checksum: 10/8d9d73dd1fc9335105105da57595ab913bad6addd4fbcb2eb147300694630232225eb7dc74b733205af33352803e4fcefc18e3a36f8924cf821ef91384767670
+  checksum: 10/f6741450224892d12df43e5ca7f3cc0287df644dcd672626eb0cc2a3a8e3e875f4b29eb11336f37c7240cf6e010ba59eb3a79f4fb8bee5cbd168dfc1326ff369
   languageName: node
   linkType: hard
 
@@ -7339,6 +7380,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/istanbul-lib-coverage@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@types/istanbul-lib-coverage@npm:2.0.6"
+  checksum: 10/3feac423fd3e5449485afac999dcfcb3d44a37c830af898b689fadc65d26526460bedb889db278e0d4d815a670331796494d073a10ee6e3a6526301fe7415778
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-report@npm:*":
   version: 3.0.0
   resolution: "@types/istanbul-lib-report@npm:3.0.0"
@@ -7354,6 +7402,15 @@ __metadata:
   dependencies:
     "@types/istanbul-lib-report": "npm:*"
   checksum: 10/f1ad54bc68f37f60b30c7915886b92f86b847033e597f9b34f2415acdbe5ed742fa559a0a40050d74cdba3b6a63c342cac1f3a64dba5b68b66a6941f4abd7903
+  languageName: node
+  linkType: hard
+
+"@types/istanbul-reports@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@types/istanbul-reports@npm:3.0.4"
+  dependencies:
+    "@types/istanbul-lib-report": "npm:*"
+  checksum: 10/93eb18835770b3431f68ae9ac1ca91741ab85f7606f310a34b3586b5a34450ec038c3eed7ab19266635499594de52ff73723a54a72a75b9f7d6a956f01edee95
   languageName: node
   linkType: hard
 
@@ -7776,6 +7833,15 @@ __metadata:
   version: 21.0.0
   resolution: "@types/yargs-parser@npm:21.0.0"
   checksum: 10/c4caec730c1ee09466588389ba4ac83d85a01423c539b9565bb5b5a084bff3f4e47bfb7c06e963c0ef8d4929cf6fca0bc2923a33ef16727cdba60e95c8cdd0d0
+  languageName: node
+  linkType: hard
+
+"@types/yargs@npm:^17.0.33":
+  version: 17.0.35
+  resolution: "@types/yargs@npm:17.0.35"
+  dependencies:
+    "@types/yargs-parser": "npm:*"
+  checksum: 10/47bcd4476a4194ea11617ea71cba8a1eddf5505fc39c44336c1a08d452a0de4486aedbc13f47a017c8efbcb5a8aa358d976880663732ebcbc6dbcbbecadb0581
   languageName: node
   linkType: hard
 
@@ -12192,7 +12258,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.5, fast-glob@npm:^3.3.2":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.3.2":
   version: 3.3.3
   resolution: "fast-glob@npm:3.3.3"
   dependencies:
@@ -14657,6 +14723,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jest-regex-util@npm:30.0.1":
+  version: 30.0.1
+  resolution: "jest-regex-util@npm:30.0.1"
+  checksum: 10/fa8dac80c3e94db20d5e1e51d1bdf101cf5ede8f4e0b8f395ba8b8ea81e71804ffd747452a6bb6413032865de98ac656ef8ae43eddd18d980b6442a2764ed562
+  languageName: node
+  linkType: hard
+
 "jest-regex-util@npm:^29.6.3":
   version: 29.6.3
   resolution: "jest-regex-util@npm:29.6.3"
@@ -16576,7 +16649,7 @@ __metadata:
     "@rspack/cli": "npm:^1.3.11"
     "@rspack/core": "npm:^1.3.11"
     "@rspack/dev-server": "npm:^1.1.2"
-    "@swc/core": "npm:^1.11.29"
+    "@swc/core": "npm:^1.15.11"
     "@types/express": "npm:^4.11.1"
     "@types/glob": "npm:^7.1.1"
     "@types/lodash-es": "npm:^4.17.12"
@@ -16611,7 +16684,7 @@ __metadata:
     sass-loader: "npm:^16.0.5"
     semver: "npm:^7.7.3"
     style-loader: "npm:^3.3.4"
-    swc-loader: "npm:^0.2.6"
+    swc-loader: "npm:^0.2.7"
     tar: "npm:^6.0.5"
     typescript: "npm:^5.8.3"
     webpack: "npm:^5.99.9"
@@ -19995,15 +20068,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-loader@npm:^0.2.6":
-  version: 0.2.6
-  resolution: "swc-loader@npm:0.2.6"
+"swc-loader@npm:^0.2.7":
+  version: 0.2.7
+  resolution: "swc-loader@npm:0.2.7"
   dependencies:
     "@swc/counter": "npm:^0.1.3"
   peerDependencies:
     "@swc/core": ^1.2.147
     webpack: ">=2"
-  checksum: 10/fe90948c02a51bb8ffcff1ce3590e01dc12860b0bb7c9e22052b14fa846ed437781ae265614a5e14344bea22001108780f00a6e350e28c0b3499bc4cd11335fb
+  checksum: 10/15cbc3769209f7e2f927e49c19a5ef30fe03663bd34688289c003d966c7dfe782eec39de77c454aa7465ce84138d8bc31257b736b32ff3be10191f1de88cbbf5
   languageName: node
   linkType: hard
 
@@ -20254,7 +20327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.15":
+"tinyglobby@npm:^0.2.13, tinyglobby@npm:^0.2.15":
   version: 0.2.15
   resolution: "tinyglobby@npm:0.2.15"
   dependencies:
