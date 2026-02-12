@@ -64,7 +64,7 @@
     "semver": "^7.7.3",
     "style-loader": "^3.3.4",
     "swc-loader": "^0.2.6",
-    "tar": "^6.0.5",
+    "tar": "^7.5.7",
     "typescript": "^5.8.3",
     "webpack": "^5.99.9",
     "webpack-bundle-analyzer": "^4.10.2",
