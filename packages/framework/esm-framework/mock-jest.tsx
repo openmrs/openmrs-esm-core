@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useId } from 'react';
+import React, { useState } from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
@@ -76,17 +76,8 @@ export {
   PatientBannerPatientInfo,
   PatientBannerPatientIdentifiers,
   PatientBannerToggleContactDetailsButton,
+  PatientPhoto,
 } from '@openmrs/esm-styleguide/src/public';
-export const PatientPhoto = jest.fn(({ patientUuid, patientName, alt }) => {
-  const altText = alt || `Avatar for ${patientName}`;
-  return (
-    <div data-testid="patient-photo" aria-label={altText}>
-      <div>
-        <span>{patientName?.charAt(0)?.toUpperCase()}</span>
-      </div>
-    </div>
-  );
-});
 export const usePatientPhoto = jest.fn(() => ({
   isLoading: true,
   data: null,

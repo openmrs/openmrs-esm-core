@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useId } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { NEVER } from 'rxjs';
 import { vi } from 'vitest';
@@ -77,17 +77,8 @@ export {
   PatientBannerPatientInfo,
   PatientBannerPatientIdentifiers,
   PatientBannerToggleContactDetailsButton,
+  PatientPhoto,
 } from '@openmrs/esm-styleguide/src/public';
-export const PatientPhoto = vi.fn(({ patientUuid, patientName, alt }) => {
-  const altText = alt || `Avatar for ${patientName}`;
-  return (
-    <div data-testid="patient-photo" aria-label={altText}>
-      <div>
-        <span>{patientName?.charAt(0)?.toUpperCase()}</span>
-      </div>
-    </div>
-  );
-});
 export const usePatientPhoto = vi.fn(() => ({
   isLoading: true,
   data: null,
