@@ -163,21 +163,3 @@ updates:
       github-actions:
         patterns:
           - "*"
-
-  # Docker: Playwright (Bamboo)
-  - package-ecosystem: "docker"
-    directory: "/e2e/support/bamboo"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    commit-message:
-      prefix: "(chore)"
-
-  # Docker: E2E environment (GitHub)
-  - package-ecosystem: "docker"
-    directory: "/e2e/support/github"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    commit-message:
-      prefix: "(chore)"
