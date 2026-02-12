@@ -58,7 +58,7 @@
     "dexie": "^3.0.3",
     "lodash-es": "^4.17.21",
     "uuid": "^9.0.1",
-    "workbox-window": "^6.1.5"
+    "workbox-window": "^7.4.0"
   },
   "devDependencies": {
     "@openmrs/esm-api": "workspace:*",

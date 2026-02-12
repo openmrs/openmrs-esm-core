@@ -72,7 +72,7 @@
     "webpack-dev-server": "^5.2.1",
     "webpack-pwa-manifest": "^4.3.0",
     "webpack-stats-plugin": "^1.1.3",
-    "workbox-webpack-plugin": "^6.4.1",
+    "workbox-webpack-plugin": "^7.4.0",
     "yargs": "^17.6.2"
   },
   "devDependencies": {
