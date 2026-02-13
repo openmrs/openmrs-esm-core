@@ -3178,7 +3178,6 @@ __metadata:
     timezone-mock: "npm:^1.2.2"
     turbo: "npm:^2.5.2"
     typescript: "npm:^5.8.3"
-    webpack: "npm:^5.99.9"
   languageName: unknown
   linkType: soft
 
@@ -3197,7 +3196,6 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-i18next: "npm:^16.0.0"
     vitest: "npm:^4.0.18"
-    webpack: "npm:^5.99.9"
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
@@ -3417,7 +3415,6 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-i18next: "npm:^16.0.0"
     vitest: "npm:^4.0.18"
-    webpack: "npm:^5.99.9"
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
@@ -3447,7 +3444,6 @@ __metadata:
     rxjs: "npm:^6.5.3"
     swr: "npm:2.2.5"
     vitest: "npm:^4.0.18"
-    webpack: "npm:^5.99.9"
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
@@ -3466,9 +3462,7 @@ __metadata:
     "@carbon/react": "npm:^1.92.1"
     "@hookform/resolvers": "npm:^3.6.0"
     "@openmrs/esm-framework": "workspace:*"
-    "@openmrs/webpack-config": "workspace:*"
-    "@rspack/cli": "npm:^1.3.11"
-    "@rspack/core": "npm:^1.3.11"
+    "@openmrs/rspack-config": "workspace:*"
     "@vitest/coverage-v8": "npm:^4.0.18"
     cross-env: "npm:^7.0.3"
     happy-dom: "npm:^20.6.0"
@@ -3481,7 +3475,6 @@ __metadata:
     rxjs: "npm:^6.5.3"
     swr: "npm:2.2.5"
     vitest: "npm:^4.0.18"
-    webpack: "npm:^5.99.9"
     zod: "npm:^3.23.8"
   peerDependencies:
     "@carbon/react": 1.x
@@ -3594,7 +3587,6 @@ __metadata:
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
     vitest: "npm:^4.0.18"
-    webpack: "npm:^5.99.9"
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
@@ -3839,6 +3831,8 @@ __metadata:
     typescript: "npm:^5.8.3"
     webpack-bundle-analyzer: "npm:^4.10.2"
     webpack-stats-plugin: "npm:^1.1.3"
+  bin:
+    rspack: ./bin/rspack.js
   languageName: unknown
   linkType: soft
 
@@ -3877,9 +3871,10 @@ __metadata:
     typescript: "npm:^5.8.3"
     webpack: "npm:^5.99.9"
     webpack-bundle-analyzer: "npm:^4.10.2"
+    webpack-cli: "npm:^6.0.1"
     webpack-stats-plugin: "npm:^1.1.3"
-  peerDependencies:
-    webpack: 5.x
+  bin:
+    webpack: ./bin/webpack.js
   languageName: unknown
   linkType: soft
 

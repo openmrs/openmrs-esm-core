@@ -63,7 +63,6 @@
     "react-i18next": "^16.0.0",
     "react-router-dom": "^6.3.0",
     "rxjs": "^6.5.3",
-    "vitest": "^4.0.18",
-    "webpack": "^5.99.9"
+    "vitest": "^4.0.18"
   }
 }

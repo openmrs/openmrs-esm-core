@@ -56,8 +56,7 @@
     "swc-loader": "^0.2.6",
     "timezone-mock": "^1.2.2",
     "turbo": "^2.5.2",
-    "typescript": "^5.8.3",
-    "webpack": "^5.99.9"
+    "typescript": "^5.8.3"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix --max-warnings 0",
