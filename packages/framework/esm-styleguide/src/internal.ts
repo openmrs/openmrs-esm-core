@@ -14,6 +14,7 @@ export * from './modals';
 export * from './notifications';
 export * from './notifications/actionable-notification.component';
 export * from './notifications/notification.component';
+export * from './numeric-observation/numeric-observation.component';
 export * from './page-header';
 export * from './pagination';
 export * from './patient-banner';
