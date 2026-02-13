@@ -61,6 +61,12 @@
     background-color: $ui-02;
   }
 
+  .focused {
+    border: layout.$spacing-01 solid $interactive-01;
+    border-radius: 50%;
+    background-color: $ui-02;
+  }
+
   .container {
     & svg {
       transform: scale(1.25);
@@ -99,5 +105,9 @@
     svg {
       fill: $interactive-01;
     }
+  }
+
+  .focused {
+    @extend .active;
   }
 }

@@ -1,41 +1,52 @@
 import { useState } from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getSessionStore, refetchCurrentUser, type SessionStore, useConfig, useSession } from '@openmrs/esm-framework';
+import {
+  getSessionStore,
+  refetchCurrentUser,
+  type SessionStore,
+  useConfig,
+  useConnectivity,
+  useSession,
+} from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
 
-const mockGetSessionStore = jest.mocked(getSessionStore);
-const mockLogin = jest.mocked(refetchCurrentUser);
-const mockUseConfig = jest.mocked(useConfig);
-const mockUseSession = jest.mocked(useSession);
-
-mockLogin.mockResolvedValue({} as SessionStore);
-mockGetSessionStore.mockImplementation(() => {
-  return {
-    getState: jest.fn().mockReturnValue({
-      loaded: true,
-      session: {
-        authenticated: true,
-      },
-    }),
-    setState: jest.fn(),
-    getInitialState: jest.fn(),
-    subscribe: jest.fn(),
-    destroy: jest.fn(),
-  };
-});
+const mockGetSessionStore = vi.mocked(getSessionStore);
+const mockLogin = vi.mocked(refetchCurrentUser);
+const mockUseConfig = vi.mocked(useConfig);
+const mockUseConnectivity = vi.mocked(useConnectivity);
+const mockUseSession = vi.mocked(useSession);
 
 const loginLocations = [
   { uuid: '111', display: 'Earth' },
   { uuid: '222', display: 'Mars' },
 ];
 
-mockUseSession.mockReturnValue({ authenticated: false, sessionId: '123' });
-mockUseConfig.mockReturnValue(mockConfig);
-
 describe('Login', () => {
+  beforeEach(() => {
+    mockUseConnectivity.mockReturnValue(true);
+    mockLogin.mockResolvedValue({} as SessionStore);
+    mockGetSessionStore.mockImplementation(() => {
+      return {
+        getState: vi.fn().mockReturnValue({
+          loaded: true,
+          session: {
+            authenticated: true,
+          },
+        }),
+        setState: vi.fn(),
+        getInitialState: vi.fn(),
+        subscribe: vi.fn(),
+        destroy: vi.fn(),
+      };
+    });
+    mockUseSession.mockReturnValue({ authenticated: false, sessionId: '123' });
+    mockUseConfig.mockReturnValue(mockConfig);
+  });
+
   it('renders the login form', () => {
     renderWithRouter(
       Login,

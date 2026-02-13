@@ -64,13 +64,13 @@
     "@swc/core": "^1.11.29",
     "@types/lodash-es": "^4.17.12",
     "@types/semver": "^7.3.4",
-    "@vitest/coverage-v8": "^4.0.7",
+    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
-    "happy-dom": "^20.5.0",
+    "happy-dom": "^20.6.0",
     "rimraf": "^6.0.1",
     "rxjs": "^6.5.3",
-    "vitest": "^4.0.7"
+    "vitest": "^4.0.18"
   }
 }

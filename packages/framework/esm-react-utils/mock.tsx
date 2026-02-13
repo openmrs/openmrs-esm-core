@@ -33,12 +33,15 @@ export const useAttachments = vi.fn(() => ({
   isValidating: true,
 }));
 
-export const useConfig = vi.fn((options?: { externalModuleName?: string }) => {
-  if (options?.externalModuleName) {
-    console.warn(`Mock useConfig called with externalModuleName: ${options.externalModuleName}`);
-  }
-  return utils.getDefaultsFromConfigSchema(configSchema);
-});
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+export const useConfig = vi.fn<typeof import('@openmrs/esm-react-utils').useConfig>(
+  (options?: { externalModuleName?: string }) => {
+    if (options?.externalModuleName) {
+      console.warn(`Mock useConfig called with externalModuleName: ${options.externalModuleName}`);
+    }
+    return utils.getDefaultsFromConfigSchema(configSchema);
+  },
+);
 
 export const useCurrentPatient = vi.fn(() => []);
 
