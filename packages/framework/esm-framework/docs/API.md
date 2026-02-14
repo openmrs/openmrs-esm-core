@@ -229,6 +229,9 @@
 - [showToast](functions/showToast.md)
 - [ToastDescriptor](interfaces/ToastDescriptor.md)
 - [ToastNotificationMeta](interfaces/ToastNotificationMeta.md)
+- [NumericObservationProps](interfaces/NumericObservationProps.md)
+- [useConceptReferenceRange](functions/useConceptReferenceRange.md)
+- [UseConceptReferenceRangeResult](interfaces/UseConceptReferenceRangeResult.md)
 
 ## Config
 

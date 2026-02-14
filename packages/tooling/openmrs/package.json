@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node ./dist/cli.js",
-    "test": "jest --passWithNoTests --color",
+    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "build": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
@@ -83,6 +83,7 @@
     "@types/pacote": "^11.1.8",
     "@types/react": "^18.3.21",
     "@types/semver": "^7",
-    "@types/tar": "^4.0.3"
+    "@types/tar": "^4.0.3",
+    "vitest": "^4.0.18"
   }
 }

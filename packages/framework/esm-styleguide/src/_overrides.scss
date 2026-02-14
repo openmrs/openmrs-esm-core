@@ -748,3 +748,7 @@ html[dir='rtl'] {
 .omrs-icon {
   fill: var(--omrs-icon-fill, currentColor);
 }
+
+.cds--btn--ghost:not([disabled]) .omrs-icon {
+  fill: var(--omrs-icon-fill, currentColor);
+}

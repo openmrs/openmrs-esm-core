@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
@@ -6,6 +8,7 @@ import {
   setUserProperties,
   showSnackbar,
   useConfig,
+  useConnectivity,
   useSession,
   type LoggedInUser,
   type Session,
@@ -33,15 +36,17 @@ const secondLocation = {
 const invalidLocationUuid = '2gf1b7d4-c865-4178-82b0-5932e51503d6';
 const userUuid = '90bd24b3-e700-46b0-a5ef-c85afdfededd';
 
-const mockOpenmrsFetch = jest.mocked(openmrsFetch);
-const mockUseConfig = jest.mocked(useConfig);
-const mockUseSession = jest.mocked(useSession);
-const mockSetSessionLocation = jest.mocked(setSessionLocation);
-const mockSetUserProperties = jest.mocked(setUserProperties);
-const mockShowSnackbar = jest.mocked(showSnackbar);
+const mockOpenmrsFetch = vi.mocked(openmrsFetch);
+const mockUseConfig = vi.mocked(useConfig);
+const mockUseSession = vi.mocked(useSession);
+const mockSetSessionLocation = vi.mocked(setSessionLocation);
+const mockSetUserProperties = vi.mocked(setUserProperties);
+const mockUseConnectivity = vi.mocked(useConnectivity);
+const mockShowSnackbar = vi.mocked(showSnackbar);
 
 describe('LocationPickerView', () => {
   beforeEach(() => {
+    mockUseConnectivity.mockReturnValue(true);
     mockUseConfig.mockReturnValue(mockConfig);
 
     mockUseSession.mockReturnValue({

@@ -1,17 +1,23 @@
 import React from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
+import { type FetchResponse } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
 import ChangePasswordModal from './change-password.modal';
 
-const mockClose = jest.fn();
-const mockChangeUserPassword = jest.mocked(changeUserPassword);
+const mockClose = vi.fn();
+const mockChangeUserPassword = vi.mocked(changeUserPassword);
 
-jest.mock('./change-password.resource', () => ({
-  changeUserPassword: jest.fn().mockResolvedValue({}),
+vi.mock('./change-password.resource', () => ({
+  changeUserPassword: vi.fn().mockResolvedValue({}),
 }));
 
 describe('ChangePasswordModal', () => {
+  beforeEach(() => {
+    mockChangeUserPassword.mockResolvedValue({} as FetchResponse<any>);
+  });
+
   it('validates the form before submitting', async () => {
     const user = userEvent.setup();
 
