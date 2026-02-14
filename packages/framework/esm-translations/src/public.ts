@@ -1,1 +1,1 @@
-export { type CoreTranslationKey, getCoreTranslation, getCarbonTranslateWithId, translateFrom } from './index';
+export { type CoreTranslationKey, getCoreTranslation, carbonTranslateWithId, translateFrom } from './index';
