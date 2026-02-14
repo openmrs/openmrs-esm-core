@@ -80,6 +80,7 @@ export const coreTranslations = {
   loading: 'Loading',
   male: 'Male',
   noResultsToDisplay: 'No results to display',
+  notAvailable: 'Not available',
   other: 'Other',
   paginationItemsCount: '{{pageItemsCount}} / {{totalItems}} items',
   paginationOfPages: 'of {{count}} pages',
