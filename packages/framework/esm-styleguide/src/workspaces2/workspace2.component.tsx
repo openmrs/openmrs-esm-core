@@ -30,7 +30,7 @@ export interface Workspace2DefinitionProps<
    * @param workspaceName
    * @param workspaceProps
    */
-  launchChildWorkspace<Props extends object>(workspaceName: string, workspaceProps?: Props): void;
+  launchChildWorkspace<Props extends object>(workspaceName: string, workspaceProps?: Props): Promise<void>;
 
   /**
    * closes the current workspace, along with its children.
