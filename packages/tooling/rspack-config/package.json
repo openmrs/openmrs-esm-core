@@ -4,9 +4,6 @@
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": {
-    "rspack": "./bin/rspack.js"
-  },
   "engines": {
     "node": ">= 12.0.0"
   },

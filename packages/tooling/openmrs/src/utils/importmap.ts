@@ -13,17 +13,32 @@ async function readImportmap(path: string, backend?: string, spaPath?: string) {
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return fetchRemoteImportmap(path);
   } else if (path === 'importmap.json') {
-    if (backend && spaPath) {
+    const backendUrl = backend && spaPath ? `${backend}${spaPath}importmap.json` : null;
+    const fallbackUrl = 'https://dev3.openmrs.org/openmrs/spa/importmap.json';
+
+    if (backendUrl) {
       try {
-        return await fetchRemoteImportmap(`${backend}${spaPath}importmap.json`);
+        return await fetchRemoteImportmap(backendUrl);
       } catch (e) {
-        logWarn(
-          `Could not read importmap from ${backend}${spaPath}importmap.json. Falling back to import map from https://dev3.openmrs.org/openmrs/spa/importmap.json: ${e}`,
-        );
+        // Only try the dev3 fallback if it's a different URL than what we already tried
+        if (backendUrl !== fallbackUrl) {
+          logWarn(`Could not read importmap from ${backendUrl}. Falling back to ${fallbackUrl}. Error: ${e}`);
+          try {
+            return await fetchRemoteImportmap(fallbackUrl);
+          } catch (e2) {
+            logWarn(`Could not read importmap from ${fallbackUrl} either. Using empty import map. Error: ${e2}`);
+          }
+        } else {
+          logWarn(`Could not read importmap from ${backendUrl}. Using empty import map. Error: ${e}`);
+        }
+      }
+    } else {
+      try {
+        return await fetchRemoteImportmap(fallbackUrl);
+      } catch (e) {
+        logWarn(`Could not read importmap from ${fallbackUrl}. Using empty import map. Error: ${e}`);
       }
     }
-
-    return fetchRemoteImportmap('https://dev3.openmrs.org/openmrs/spa/importmap.json');
   }
 
   return '{"imports":{}}';
@@ -33,17 +48,33 @@ async function readRoutes(path: string, backend?: string, spaPath?: string) {
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return fetchRemoteRoutes(path);
   } else if (path === 'routes.registry.json') {
-    if (backend && spaPath) {
+    const backendUrl = backend && spaPath ? `${backend}${spaPath}routes.registry.json` : null;
+    const fallbackUrl = 'https://dev3.openmrs.org/openmrs/spa/routes.registry.json';
+
+    if (backendUrl) {
       try {
-        return await fetchRemoteRoutes(`${backend}${spaPath}routes.registry.json`);
+        return await fetchRemoteRoutes(backendUrl);
       } catch (e) {
-        logWarn(
-          `Could not read routes registry from ${backend}${spaPath}routes.registry.json. Falling back to routes registry from https://dev3.openmrs.org/openmrs/spa/routes.registry.json: ${e}`,
-        );
+        if (backendUrl !== fallbackUrl) {
+          logWarn(`Could not read routes registry from ${backendUrl}. Falling back to ${fallbackUrl}. Error: ${e}`);
+          try {
+            return await fetchRemoteRoutes(fallbackUrl);
+          } catch (e2) {
+            logWarn(
+              `Could not read routes registry from ${fallbackUrl} either. Using empty routes registry. Error: ${e2}`,
+            );
+          }
+        } else {
+          logWarn(`Could not read routes registry from ${backendUrl}. Using empty routes registry. Error: ${e}`);
+        }
+      }
+    } else {
+      try {
+        return await fetchRemoteRoutes(fallbackUrl);
+      } catch (e) {
+        logWarn(`Could not read routes registry from ${fallbackUrl}. Using empty routes registry. Error: ${e}`);
       }
     }
-
-    return fetchRemoteRoutes('https://dev3.openmrs.org/openmrs/spa/routes.registry.json');
   }
 
   return '{}';
@@ -311,13 +342,23 @@ export async function getImportmapAndRoutes(
   importMapPath: string,
   routesPath: string,
   basePort?: number,
+  backend?: string,
+  spaPath?: string,
 ): Promise<ImportmapAndRoutes> {
-  return Promise.all([getImportMap(importMapPath, basePort), getRoutes(routesPath)]).then(([importMap, routes]) => {
+  return Promise.all([
+    getImportMap(importMapPath, basePort, backend, spaPath),
+    getRoutes(routesPath, backend, spaPath),
+  ]).then(([importMap, routes]) => {
     return { importMap, routes };
   });
 }
 
-export async function getImportMap(importMapPath: string, basePort?: number): Promise<ImportmapDeclaration> {
+export async function getImportMap(
+  importMapPath: string,
+  basePort?: number,
+  backend?: string,
+  spaPath?: string,
+): Promise<ImportmapDeclaration> {
   if (importMapPath === '@' && basePort) {
     logWarn('Using the "@" import map is deprecated. Switch to use the "--run-project" flag.');
 
@@ -350,6 +391,13 @@ export async function getImportMap(importMapPath: string, basePort?: number): Pr
         value: importMapPath,
       };
     }
+
+    // Path doesn't exist locally and isn't valid inline JSON.
+    // Try to resolve it from the backend, falling back to an empty import map.
+    return {
+      type: 'inline',
+      value: await readImportmap(importMapPath, backend, spaPath),
+    };
   }
 
   return {
@@ -358,7 +406,7 @@ export async function getImportMap(importMapPath: string, basePort?: number): Pr
   };
 }
 
-export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> {
+export async function getRoutes(routesPath: string, backend?: string, spaPath?: string): Promise<RoutesDeclaration> {
   if (!/https?:\/\//.test(routesPath)) {
     const path = resolve(process.cwd(), routesPath);
 
@@ -380,6 +428,13 @@ export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> 
         value: routesPath,
       };
     }
+
+    // Path doesn't exist locally and isn't valid inline JSON.
+    // Try to resolve it from the backend, falling back to an empty routes registry.
+    return {
+      type: 'inline',
+      value: await readRoutes(routesPath, backend, spaPath),
+    };
   }
 
   return {
