@@ -128,7 +128,7 @@ yargs.command(
       port,
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
-          await getImportmapAndRoutes(args.importmap, args.routes, port, args.backend, args.spaPath),
+          await getImportmapAndRoutes(args.importmap, args.routes, port),
           await runProject(port, args.sources),
         ),
         args.backend,
@@ -241,7 +241,7 @@ yargs.command(
       port,
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
-          await getImportmapAndRoutes(args.importmap, args.routes, port, args.backend, args.spaPath),
+          await getImportmapAndRoutes(args.importmap, args.routes, port),
           await runProject(port, args.sources, args['use-rspack']),
           args.backend,
           args.spaPath,
