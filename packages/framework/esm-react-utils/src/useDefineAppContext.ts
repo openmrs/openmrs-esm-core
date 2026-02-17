@@ -54,7 +54,7 @@ export function useDefineAppContext<T extends NonNullable<object> = NonNullable<
       // The previous instance's cleanup effect hasn't run before this new instance
       // mounts (e.g., during navigation when extensions unmount/remount across
       // separate single-spa lifecycles). Update the existing context instead.
-      console.error(
+      console.warn(
         `Namespace ${namespace} is already registered in the app context. ` +
           `This is likely a race condition during navigation, but may indicate two components ` +
           `are trying to own the same namespace. Updating the existing context.`,

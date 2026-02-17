@@ -34,7 +34,7 @@ describe('useDefineAppContext', () => {
   });
 
   it('recovers when a new instance mounts before the previous cleanup runs', () => {
-    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     // First instance registers the context
     const { unmount: unmountFirst } = renderHook(() => useDefineAppContext(namespace, { version: 'old' }));
@@ -48,7 +48,7 @@ describe('useDefineAppContext', () => {
 
     // The second instance should have updated the context, not crashed
     expect(getContext(namespace)).toEqual({ version: 'new' });
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
       expect.stringContaining(`Namespace ${namespace} is already registered`),
     );
 
@@ -62,6 +62,6 @@ describe('useDefineAppContext', () => {
 
     expect(getContext(namespace)).toBeNull();
 
-    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
   });
 });
