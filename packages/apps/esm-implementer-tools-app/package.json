@@ -52,12 +52,11 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "@openmrs/esm-framework": "workspace:*",
-    "@openmrs/webpack-config": "workspace:*",
     "@vitest/coverage-v8": "^4.0.18",
     "ace-builds": "^1.43.3",
     "cross-env": "^7.0.3",
     "happy-dom": "^20.6.0",
+    "openmrs": "workspace:*",
     "react": "^18.3.1",
     "react-ace": "^14.0.1",
     "react-dom": "^18.3.1",
