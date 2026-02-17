@@ -8292,6 +8292,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"async@npm:^3.2.6":
+  version: 3.2.6
+  resolution: "async@npm:3.2.6"
+  checksum: 10/cb6e0561a3c01c4b56a799cc8bab6ea5fef45f069ab32500b6e19508db270ef2dffa55e5aed5865c5526e9907b1f8be61b27530823b411ffafb5e1538c86c368
+  languageName: node
+  linkType: hard
+
 "asynckit@npm:^0.4.0":
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
@@ -10551,7 +10558,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ejs@npm:^3.1.6, ejs@npm:^3.1.8":
+"ejs@npm:^3.1.6":
   version: 3.1.8
   resolution: "ejs@npm:3.1.8"
   dependencies:
@@ -10559,6 +10566,17 @@ __metadata:
   bin:
     ejs: bin/cli.js
   checksum: 10/879f84c8ee56d06dea7b47a8b493e1b398dba578ec7a701660cf77c8a6d565b932c5896639d1dc4a3be29204eccdb70ee4e1bdf634647c2490227f727d5d6a3d
+  languageName: node
+  linkType: hard
+
+"ejs@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "ejs@npm:4.0.1"
+  dependencies:
+    jake: "npm:^10.9.1"
+  bin:
+    ejs: bin/cli.js
+  checksum: 10/5ce609bcabaf16ca85d6323b0069d17a6b7825a0b6c5cf5a2c1b0adb93e28602bfaf09b3b7cadf4303ed7c548d7868ff9df422a5229f9899ecb779a6b0ad2365
   languageName: node
   linkType: hard
 
@@ -11497,7 +11515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"filelist@npm:^1.0.1":
+"filelist@npm:^1.0.1, filelist@npm:^1.0.4":
   version: 1.0.4
   resolution: "filelist@npm:1.0.4"
   dependencies:
@@ -13500,6 +13518,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jake@npm:^10.9.1":
+  version: 10.9.4
+  resolution: "jake@npm:10.9.4"
+  dependencies:
+    async: "npm:^3.2.6"
+    filelist: "npm:^1.0.4"
+    picocolors: "npm:^1.1.1"
+  bin:
+    jake: bin/cli.js
+  checksum: 10/97e48f73f5e315a3b6e1a48b4bcc0cdf2c2cf82100ec9e76a032fd5d614dcd32c4315572cfcb66e9f9bdecca3900aaa61fe72b781a74b06aefd3ec4c1c917f0b
+  languageName: node
+  linkType: hard
+
 "jest-worker@npm:^26.2.1":
   version: 26.6.2
   resolution: "jest-worker@npm:26.6.2"
@@ -15141,7 +15172,7 @@ __metadata:
     copy-webpack-plugin: "npm:11.0.0"
     css-loader: "npm:^5.2.7"
     cssnano: "npm:^5.0.16"
-    ejs: "npm:^3.1.8"
+    ejs: "npm:^4.0.1"
     glob: "npm:^7.1.3"
     html-webpack-plugin: "npm:5.5.3"
     html-webpack-tags-plugin: "npm:3.0.2"
