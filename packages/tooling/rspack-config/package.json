@@ -4,6 +4,9 @@
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "rspack": "./bin/rspack.js"
+  },
   "engines": {
     "node": ">= 12.0.0"
   },
@@ -30,8 +33,8 @@
   ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "@rspack/cli": "^1.3.11",
-    "@rspack/core": "^1.3.11",
+    "@rspack/cli": "~1.3.11",
+    "@rspack/core": "~1.3.11",
     "@swc/core": "^1.11.29",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
