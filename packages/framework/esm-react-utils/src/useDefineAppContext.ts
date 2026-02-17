@@ -50,7 +50,9 @@ export function useDefineAppContext<T extends NonNullable<object> = NonNullable<
     const initialValue = value ?? ({} as T);
     const token = ownerToken.current;
 
-    if (getContext(namespace) !== null) {
+    if (getContext(namespace) === null) {
+      registerContext(namespace, initialValue);
+    } else {
       // The previous instance's cleanup effect hasn't run before this new instance
       // mounts (e.g., during navigation when extensions unmount/remount across
       // separate single-spa lifecycles). Update the existing context instead.
@@ -60,8 +62,6 @@ export function useDefineAppContext<T extends NonNullable<object> = NonNullable<
           `are trying to own the same namespace. Updating the existing context.`,
       );
       updateContext<T>(namespace, () => initialValue);
-    } else {
-      registerContext(namespace, initialValue);
     }
 
     namespaceOwners.set(namespace, token);
