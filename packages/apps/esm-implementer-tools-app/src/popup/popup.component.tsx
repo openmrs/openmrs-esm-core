@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from 'react';
+import { ContentSwitcher, IconButton, Switch } from '@carbon/react';
+import { ChevronUp, ChevronDown } from '@carbon/react/icons';
 import { ContentSwitcher, IconButton, Switch, Theme } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { CloseIcon } from '@openmrs/esm-framework';
@@ -31,9 +33,15 @@ export default function Popup({
 }: DevToolsPopupProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(visibleTabIndex ? visibleTabIndex : 0);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleHeight = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   const tabContent = useMemo(() => {
-    if (activeTab == 0) {
-      return <Configuration />;
+    if (activeTab === 0) {
+      return <Configuration isExpanded={isExpanded} />;
     } else if (activeTab === 1) {
       return <FrontendModules frontendModules={frontendModules} />;
     } else if (activeTab === 2) {
@@ -41,49 +49,55 @@ export default function Popup({
     } else {
       return <FeatureFlags />;
     }
-  }, [activeTab, backendDependencies, frontendModules]);
+  }, [activeTab, backendDependencies, frontendModules, isExpanded]);
 
   return (
-    <div className={styles.popup}>
-      <Theme theme="g90">
-        <div className={styles.topBar}>
-          <div className={styles.tabs}>
-            <ContentSwitcher
-              className={styles.contentSwitcher}
-              selectedIndex={activeTab}
-              onChange={(switcherItem: SwitcherItem) => {
-                setActiveTab(switcherItem.index);
-              }}
-              size="lg"
-            >
-              <Switch name="configuration-tab" text={t('configuration', 'Configuration')} className="darkThemeSwitch" />
-              <Switch
-                name="frontend-modules-tab"
-                text={t('frontendModules', 'Frontend modules')}
-                className="darkThemeSwitch"
-              />
-              <Switch
-                name="backend-modules-tab"
-                text={t('backendModules', 'Backend modules')}
-                className="darkThemeSwitch"
-              />
-              <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature flags')} className="darkThemeSwitch" />
-            </ContentSwitcher>
-          </div>
-          <div>
-            <IconButton
-              align="left"
-              className={styles.closeButton}
-              kind="secondary"
-              label={t('close', 'Close')}
-              onClick={close}
-            >
-              <CloseIcon />
-            </IconButton>
-          </div>
+    <div className={`${styles.popup} ${isExpanded ? styles.expanded : ''}`}>
+      <div className={styles.topBar}>
+        <div className={styles.tabs}>
+          <ContentSwitcher
+            selectedIndex={activeTab}
+            onChange={(switcherItem: SwitcherItem) => {
+              setActiveTab(switcherItem.index);
+            }}
+            size="lg"
+          >
+            <Switch name="configuration-tab" text={t('configuration', 'Configuration')} className="darkThemeSwitch" />
+            <Switch
+              name="frontend-modules-tab"
+              text={t('frontendModules', 'Frontend modules')}
+              className="darkThemeSwitch"
+            />
+            <Switch
+              name="backend-modules-tab"
+              text={t('backendModules', 'Backend modules')}
+              className="darkThemeSwitch"
+            />
+            <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature flags')} className="darkThemeSwitch" />
+          </ContentSwitcher>
         </div>
-        <div className={styles.content}>{tabContent}</div>
-      </Theme>
+        <div>
+          <IconButton
+            align="left"
+            className={styles.toggleButton}
+            kind="secondary"
+            label={isExpanded ? t('collapse', 'Collapse') : t('expand', 'Expand')}
+            onClick={toggleHeight}
+          >
+            {isExpanded ? <ChevronDown /> : <ChevronUp />}
+          </IconButton>
+          <IconButton
+            align="left"
+            className={styles.closeButton}
+            kind="secondary"
+            label={t('close', 'Close')}
+            onClick={close}
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
+      </div>
+      <div className={styles.content}>{tabContent}</div>
     </div>
   );
 }

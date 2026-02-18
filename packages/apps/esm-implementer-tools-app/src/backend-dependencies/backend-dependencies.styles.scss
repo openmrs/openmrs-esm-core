@@ -1,7 +1,7 @@
 @use '@carbon/type';
 
 .container {
-  height: 50vh;
+  height: 100%;
   overflow-y: auto;
 
   :global(.cds--data-table-container) {

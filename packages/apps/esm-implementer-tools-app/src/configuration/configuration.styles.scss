@@ -39,16 +39,34 @@
 }
 
 .mainContent {
-  max-height: 50vh;
   background-color: $ui-01;
   width: 100%;
   display: flex;
-  overflow-y: auto;
+  overflow: hidden;
+  flex: 1;
+  transition: max-height 0.3s ease;
+
+  :global(.ace_scroller) {
+    background-color: theme.$background;
+    color: theme.$text-secondary;
+  }
+
+  :global(.ace_gutter) {
+    background-color: theme.$background;
+    color: theme.$text-secondary;
+  }
+
+  :global(.ace_active-line) {
+    background-color: theme.$layer-accent !important;
+  }
+  :global(.ace_cursor) {
+    color: theme.$text-secondary;
+  }
 }
 
 .configTreePane {
   width: 65%;
-  // overflow-wrap: break-word;
+  height: 100%;
   overflow-x: auto;
   overflow-y: auto;
   background: theme.$background;
@@ -56,6 +74,7 @@
 
 .descriptionPane {
   width: 35%;
+  height: 100%;
   background-color: theme.$background;
   color: theme.$text-secondary;
   padding: layout.$spacing-05 layout.$spacing-07;
