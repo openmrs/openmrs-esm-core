@@ -1,3 +1,4 @@
+import merge from 'lodash/merge';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
@@ -6,7 +7,6 @@ import { prompt, type Question } from 'inquirer';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
 import semver from 'semver';
-import merge from 'lodash/merge';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 

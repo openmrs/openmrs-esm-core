@@ -116,6 +116,7 @@ export function checkRoutesJson(value: string) {
     const content = JSON.parse(value);
     return (
       typeof content === 'object' &&
+      !Array.isArray(content) &&
       Object.entries(content).every(([key, value]) => typeof key === 'string' && typeof value === 'object')
     );
   } catch {
@@ -322,7 +323,7 @@ export async function getImportMap(importMapPath: string, basePort?: number): Pr
         imports,
       }),
     };
-  } else if (!/https?:\/\//.test(importMapPath)) {
+  } else if (!/^https?:\/\//.test(importMapPath)) {
     const path = resolve(process.cwd(), importMapPath);
 
     if (existsSync(path)) {
@@ -352,7 +353,7 @@ export async function getImportMap(importMapPath: string, basePort?: number): Pr
 }
 
 export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> {
-  if (!/https?:\/\//.test(routesPath)) {
+  if (!/^https?:\/\//.test(routesPath)) {
     const path = resolve(process.cwd(), routesPath);
 
     if (existsSync(path)) {
