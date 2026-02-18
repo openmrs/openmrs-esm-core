@@ -54,7 +54,7 @@
     "access": "public"
   },
   "dependencies": {
-    "i18next": "^25.5.3"
+    "i18next": "^25.8.11"
   },
   "peerDependencies": {
     "i18next": "25.x"
