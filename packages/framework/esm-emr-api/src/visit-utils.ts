@@ -47,7 +47,7 @@ export const defaultVisitCustomRepresentation =
   'form:(uuid,name),location:ref,' +
   'encounterType:ref,' +
   'encounterProviders:(uuid,display,' +
-  'provider:(uuid,display))),' +
+  'provider:(uuid,display)),diagnoses),' +
   'patient:(uuid,display),' +
   'visitType:(uuid,name,display),' +
   'attributes:(uuid,display,attributeType:(name,datatypeClassname,uuid),value),' +
