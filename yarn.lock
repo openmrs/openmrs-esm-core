@@ -2121,6 +2121,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@isaacs/fs-minipass@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "@isaacs/fs-minipass@npm:4.0.1"
+  dependencies:
+    minipass: "npm:^7.0.4"
+  checksum: 10/4412e9e6713c89c1e66d80bb0bb5a2a93192f10477623a27d08f228ba0316bb880affabc5bfe7f838f58a34d26c2c190da726e576cdfc18c49a72e89adabdcf5
+  languageName: node
+  linkType: hard
+
 "@jimp/bmp@npm:^0.16.2":
   version: 0.16.2
   resolution: "@jimp/bmp@npm:0.16.2"
@@ -6981,15 +6990,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minipass@npm:*":
-  version: 3.1.2
-  resolution: "@types/minipass@npm:3.1.2"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10/ff01e47e37fd75f945bdc50fceabbafdd8df26e85701feb864edfa39f39d245015ef5c64bfd307cb171f107436a616ea1c00c0d8a62c5613f41e77af916cf0df
-  languageName: node
-  linkType: hard
-
 "@types/node-fetch@npm:*":
   version: 3.0.2
   resolution: "@types/node-fetch@npm:3.0.2"
@@ -7204,13 +7204,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/tar@npm:^4.0.3":
-  version: 4.0.5
-  resolution: "@types/tar@npm:4.0.5"
+"@types/tar@npm:^7.0.87":
+  version: 7.0.87
+  resolution: "@types/tar@npm:7.0.87"
   dependencies:
-    "@types/minipass": "npm:*"
-    "@types/node": "npm:*"
-  checksum: 10/c489e0cf722939105690ad760fa41399f7db7ddea6cffb4f42d5f6927556082af757ccc19cb966530d75ad015df6b0b57d55aa26d8a669b10be64b45bbd64367
+    tar: "npm:*"
+  checksum: 10/f53a63d49d1775928a60afee5524c8d58052cf0896c0e051461f4faf4131caa0cec1d2e3d711374d91d55a59de3e898c43243e5026e5faca9436b69cb5e414b0
   languageName: node
   linkType: hard
 
@@ -8954,6 +8953,13 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: 10/c57cf9dd0791e2f18a5ee9c1a299ae6e801ff58fee96dc8bfd0dcb4738a6ce58dd252a3605b1c93c6418fe4f9d5093b28ffbf4d66648cb2a9c67eaef9679be2f
+  languageName: node
+  linkType: hard
+
+"chownr@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "chownr@npm:3.0.0"
+  checksum: 10/b63cb1f73d171d140a2ed8154ee6566c8ab775d3196b0e03a2a94b5f6a0ce7777ee5685ca56849403c8d17bd457a6540672f9a60696a6137c7a409097495b82c
   languageName: node
   linkType: hard
 
@@ -14522,7 +14528,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minipass@npm:^7.1.2":
+"minipass@npm:^7.0.4, minipass@npm:^7.1.2":
   version: 7.1.2
   resolution: "minipass@npm:7.1.2"
   checksum: 10/c25f0ee8196d8e6036661104bacd743785b2599a21de5c516b32b3fa2b83113ac89a2358465bc04956baab37ffb956ae43be679b2262bf7be15fce467ccd7950
@@ -14536,6 +14542,15 @@ __metadata:
     minipass: "npm:^3.0.0"
     yallist: "npm:^4.0.0"
   checksum: 10/ae0f45436fb51344dcb87938446a32fbebb540d0e191d63b35e1c773d47512e17307bf54aa88326cc6d176594d00e4423563a091f7266c2f9a6872cdc1e234d1
+  languageName: node
+  linkType: hard
+
+"minizlib@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "minizlib@npm:3.1.0"
+  dependencies:
+    minipass: "npm:^7.1.2"
+  checksum: 10/f47365cc2cb7f078cbe7e046eb52655e2e7e97f8c0a9a674f4da60d94fb0624edfcec9b5db32e8ba5a99a5f036f595680ae6fe02a262beaa73026e505cc52f99
   languageName: node
   linkType: hard
 
@@ -15139,7 +15154,7 @@ __metadata:
     "@types/pacote": "npm:^11.1.8"
     "@types/react": "npm:^18.3.21"
     "@types/semver": "npm:^7"
-    "@types/tar": "npm:^4.0.3"
+    "@types/tar": "npm:^7.0.87"
     autoprefixer: "npm:10.4.20"
     axios: "npm:^1.13.4"
     browserslist-config-openmrs: "npm:^1.0.1"
@@ -15166,7 +15181,7 @@ __metadata:
     semver: "npm:^7.7.3"
     style-loader: "npm:3.3.4"
     swc-loader: "npm:0.2.6"
-    tar: "npm:^6.0.5"
+    tar: "npm:^7.5.9"
     typescript: "npm:5.8.3"
     vitest: "npm:^4.0.18"
     webpack: "npm:5.99.9"
@@ -18495,7 +18510,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:^6.0.5, tar@npm:^6.1.11, tar@npm:^6.1.2":
+"tar@npm:*, tar@npm:^7.5.9":
+  version: 7.5.9
+  resolution: "tar@npm:7.5.9"
+  dependencies:
+    "@isaacs/fs-minipass": "npm:^4.0.0"
+    chownr: "npm:^3.0.0"
+    minipass: "npm:^7.1.2"
+    minizlib: "npm:^3.1.0"
+    yallist: "npm:^5.0.0"
+  checksum: 10/1213cdde9c22d6acf8809ba5d2a025212ce3517bc99c4a4c6981b7dc0489bf3b164db9c826c9517680889194c9ba57448c8ff0da35eca9a60bb7689bf0b3897d
+  languageName: node
+  linkType: hard
+
+"tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.1.11
   resolution: "tar@npm:6.1.11"
   dependencies:
@@ -20397,6 +20425,13 @@ __metadata:
   version: 4.0.0
   resolution: "yallist@npm:4.0.0"
   checksum: 10/4cb02b42b8a93b5cf50caf5d8e9beb409400a8a4d85e83bb0685c1457e9ac0b7a00819e9f5991ac25ffabb56a78e2f017c1acc010b3a1babfe6de690ba531abd
+  languageName: node
+  linkType: hard
+
+"yallist@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "yallist@npm:5.0.0"
+  checksum: 10/1884d272d485845ad04759a255c71775db0fac56308764b4c77ea56a20d56679fad340213054c8c9c9c26fcfd4c4b2a90df993b7e0aaf3cdb73c618d1d1a802a
   languageName: node
   linkType: hard
 
