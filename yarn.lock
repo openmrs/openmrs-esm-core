@@ -3054,10 +3054,10 @@ __metadata:
     rxjs: "npm:^6.5.3"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-error-handling": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-navigation": 6.x
+    "@openmrs/esm-config": 9.x
+    "@openmrs/esm-error-handling": 9.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-navigation": 9.x
   languageName: unknown
   linkType: soft
 
@@ -3117,9 +3117,9 @@ __metadata:
     single-spa: "npm:^6.0.3"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-state": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-state": 9.x
+    "@openmrs/esm-utils": 9.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -3137,8 +3137,8 @@ __metadata:
     rimraf: "npm:^6.0.1"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-state": 9.x
   languageName: unknown
   linkType: soft
 
@@ -3197,7 +3197,7 @@ __metadata:
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": "*"
+    "@openmrs/esm-framework": 9.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3218,8 +3218,8 @@ __metadata:
     rimraf: "npm:^6.0.1"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-translations": 6.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-translations": 9.x
   languageName: unknown
   linkType: soft
 
@@ -3242,9 +3242,9 @@ __metadata:
     rxjs: "npm:^6.5.3"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-offline": 6.x
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-api": 9.x
+    "@openmrs/esm-offline": 9.x
+    "@openmrs/esm-state": 9.x
   languageName: unknown
   linkType: soft
 
@@ -3261,7 +3261,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-globals": 9.x
   languageName: unknown
   linkType: soft
 
@@ -3307,12 +3307,12 @@ __metadata:
     single-spa: "npm:^6.0.3"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-expression-evaluator": 6.x
-    "@openmrs/esm-feature-flags": 6.x
-    "@openmrs/esm-state": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-api": 9.x
+    "@openmrs/esm-config": 9.x
+    "@openmrs/esm-expression-evaluator": 9.x
+    "@openmrs/esm-feature-flags": 9.x
+    "@openmrs/esm-state": 9.x
+    "@openmrs/esm-utils": 9.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -3329,8 +3329,8 @@ __metadata:
     rimraf: "npm:^6.0.1"
     single-spa: "npm:^6.0.3"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-state": 9.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -3415,7 +3415,7 @@ __metadata:
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": "*"
+    "@openmrs/esm-framework": 9.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3443,7 +3443,7 @@ __metadata:
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": "*"
+    "@openmrs/esm-framework": 9.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3474,7 +3474,7 @@ __metadata:
     zod: "npm:^3.23.8"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": "*"
+    "@openmrs/esm-framework": 9.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3501,7 +3501,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-state": 9.x
   languageName: unknown
   linkType: soft
 
@@ -3526,7 +3526,7 @@ __metadata:
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": "*"
+    "@openmrs/esm-framework": 9.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3558,9 +3558,9 @@ __metadata:
     vitest: "npm:^4.0.18"
     workbox-window: "npm:^6.1.5"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-state": 6.x
+    "@openmrs/esm-api": 9.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-state": 9.x
     rxjs: 6.x
   languageName: unknown
   linkType: soft
@@ -3583,7 +3583,7 @@ __metadata:
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": "*"
+    "@openmrs/esm-framework": 9.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3626,17 +3626,17 @@ __metadata:
     swr: "npm:2.2.5"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-context": 6.x
-    "@openmrs/esm-emr-api": 6.x
-    "@openmrs/esm-error-handling": 6.x
-    "@openmrs/esm-extensions": 6.x
-    "@openmrs/esm-feature-flags": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-navigation": 6.x
-    "@openmrs/esm-state": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-api": 9.x
+    "@openmrs/esm-config": 9.x
+    "@openmrs/esm-context": 9.x
+    "@openmrs/esm-emr-api": 9.x
+    "@openmrs/esm-error-handling": 9.x
+    "@openmrs/esm-extensions": 9.x
+    "@openmrs/esm-feature-flags": 9.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-navigation": 9.x
+    "@openmrs/esm-state": 9.x
+    "@openmrs/esm-utils": 9.x
     dayjs: 1.x
     i18next: 25.x
     react: 18.x
@@ -3668,12 +3668,12 @@ __metadata:
     vitest: "npm:^4.0.18"
     vitest-fetch-mock: "npm:^0.4.5"
   peerDependencies:
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-dynamic-loading": 6.x
-    "@openmrs/esm-extensions": 6.x
-    "@openmrs/esm-feature-flags": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-config": 9.x
+    "@openmrs/esm-dynamic-loading": 9.x
+    "@openmrs/esm-extensions": 9.x
+    "@openmrs/esm-feature-flags": 9.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-utils": 9.x
     single-spa: 6.x
   languageName: unknown
   linkType: soft
@@ -3693,8 +3693,8 @@ __metadata:
     vitest: "npm:^4.0.18"
     zustand: "npm:^4.5.5"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-utils": 9.x
   languageName: unknown
   linkType: soft
 
@@ -3739,17 +3739,17 @@ __metadata:
     typescript: "npm:^5.8.3"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-api": 6.x
-    "@openmrs/esm-config": 6.x
-    "@openmrs/esm-emr-api": 6.x
-    "@openmrs/esm-error-handling": 6.x
-    "@openmrs/esm-extensions": 6.x
-    "@openmrs/esm-globals": 6.x
-    "@openmrs/esm-navigation": 6.x
-    "@openmrs/esm-react-utils": 6.x
-    "@openmrs/esm-state": 6.x
-    "@openmrs/esm-translations": 6.x
-    "@openmrs/esm-utils": 6.x
+    "@openmrs/esm-api": 9.x
+    "@openmrs/esm-config": 9.x
+    "@openmrs/esm-emr-api": 9.x
+    "@openmrs/esm-error-handling": 9.x
+    "@openmrs/esm-extensions": 9.x
+    "@openmrs/esm-globals": 9.x
+    "@openmrs/esm-navigation": 9.x
+    "@openmrs/esm-react-utils": 9.x
+    "@openmrs/esm-state": 9.x
+    "@openmrs/esm-translations": 9.x
+    "@openmrs/esm-utils": 9.x
     dayjs: 1.x
     i18next: 25.x
     react: 18.x
@@ -3798,7 +3798,7 @@ __metadata:
     semver: "npm:^7.7.3"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    "@openmrs/esm-globals": 6.x
+    "@openmrs/esm-globals": 9.x
     dayjs: 1.x
     i18next: 25.x
     rxjs: 6.x
@@ -6113,10 +6113,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rspack/lite-tapable@npm:1.0.1, @rspack/lite-tapable@npm:^1.0.0":
+"@rspack/lite-tapable@npm:1.0.1":
   version: 1.0.1
   resolution: "@rspack/lite-tapable@npm:1.0.1"
   checksum: 10/240b7832965bca5a52d1f03a8539dab5810958ce24b5a670405b2505d81350f10d668f4055648f5918bc18ac033e637bcb7f92189345f0f2f671b546019c2f9e
+  languageName: node
+  linkType: hard
+
+"@rspack/lite-tapable@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "@rspack/lite-tapable@npm:1.1.0"
+  checksum: 10/41ff73fe5e1b8dccaad746c9c1bd36dd67649e1ad35776f311b5ba94333a397704e11158579e25a6a7e677c51abe35e66987b1b000faef48d4e4ad2470fea150
   languageName: node
   linkType: hard
 
@@ -8836,9 +8843,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001646, caniuse-lite@npm:^1.0.30001716":
-  version: 1.0.30001770
-  resolution: "caniuse-lite@npm:1.0.30001770"
-  checksum: 10/a85fb0895881d31f0b7ae246725a8b67ab8590601a08027439be1d53418352b58896418145b4da2eaae7130d59877b487eeef9e4434fa1069225b9e50d00f79b
+  version: 1.0.30001760
+  resolution: "caniuse-lite@npm:1.0.30001760"
+  checksum: 10/ac5c13d00b946c3ace331d25379ed9d85743b1028aba79ae80402cb128b4b491122585144898fefb836d4d9879c13c717a081ae241a00420cbbc7e1b934ec685
   languageName: node
   linkType: hard
 
@@ -15137,6 +15144,7 @@ __metadata:
     axios: "npm:^1.13.4"
     browserslist-config-openmrs: "npm:^1.0.1"
     chalk: "npm:^4.1.2"
+    clean-webpack-plugin: "npm:4.0.0"
     copy-webpack-plugin: "npm:11.0.0"
     css-loader: "npm:^5.2.7"
     cssnano: "npm:^5.0.16"

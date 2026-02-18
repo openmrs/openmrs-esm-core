@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-context",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "license": "MPL-2.0",
   "description": "Utilities for managing the current execution context",
   "type": "module",
@@ -50,8 +50,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "6.x",
-    "@openmrs/esm-state": "6.x"
+    "@openmrs/esm-globals": "9.x",
+    "@openmrs/esm-state": "9.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",

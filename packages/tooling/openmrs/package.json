@@ -1,6 +1,6 @@
 {
   "name": "openmrs",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": {
@@ -45,6 +45,7 @@
     "axios": "^1.13.4",
     "browserslist-config-openmrs": "^1.0.1",
     "chalk": "^4.1.2",
+    "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "^5.2.7",
     "cssnano": "^5.0.16",
