@@ -8,46 +8,150 @@
 @use '@carbon/styles/scss/utilities/focus-outline' as focus;
 @use '../vars' as *;
 
-.calendarGrid {
-  width: 17rem;
+// Text field for dates
+.inputGroup {
+  align-items: center;
+  background-color: var(--cds-field);
+  border-block-end: 1px solid var(--cds-border-strong);
+  color: var(--cds-text-primary);
+  display: flex;
+  position: relative;
 
-  & tr,
-  & tr > th,
-  & tr > td {
-    height: 2.428rem;
-    width: 2.428rem;
+  &:focus-within,
+  &.cds--focused {
+    @include focus.focus-outline('outline');
   }
 
-  & > thead > tr > th {
-    @include type.type-style('body-compact-01');
-    cursor: default;
-    text-align: center;
-    vertical-align: middle;
+  &[data-invalid] {
+    @include focus.focus-outline('invalid');
+
+    & {
+      color: theme.$support-error;
+    }
   }
 
-  & > tbody > tr > td {
-    @include type.type-style('body-compact-01');
-    cursor: pointer;
-    text-align: center;
-    vertical-align: middle;
+  &[data-disabled] {
+    border-block-end: 1px solid rgba(0, 0, 0, 0);
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+}
 
-    & > div {
-      outline: unset;
-    }
+// Shared segment styles used by both single and range inputs
+%inputSegmentStyles {
+  caret-color: var(--cds-text-primary);
 
-    &:hover:not(:has([aria-disabled], [data-selected])) {
-      background-color: theme.$layer-hover;
-    }
+  &:focus {
+    outline: unset;
+    background-color: theme.$layer-selected-hover;
+  }
 
-    &:has([data-selected]) {
-      background-color: $color-blue-60-2;
-      color: $ui-background;
-    }
+  &[data-placeholder] {
+    color: theme.$text-disabled;
+  }
 
-    &[aria-disabled] {
-      color: theme.$text-disabled;
-      cursor: default;
-    }
+  &[data-focused='true'] {
+    animation: cursor-blink 1s step-end infinite;
+  }
+}
+
+// Shared rules for dimming read-only separators (/, -, etc.) adjacent to
+// unfilled placeholders so they don't look "active" before the user starts typing.
+%readonlyPlaceholderDimming {
+  [data-readonly]:has(+ [data-placeholder]) {
+    color: theme.$text-disabled;
+  }
+
+  [data-placeholder] + [data-readonly] {
+    color: theme.$text-disabled;
+  }
+}
+
+@keyframes cursor-blink {
+  from,
+  to {
+    border-inline-end: 1px solid transparent;
+  }
+  50% {
+    border-inline-end: 1px solid currentColor;
+  }
+}
+
+// Single date picker input
+.inputWrapper {
+  inline-size: 15rem;
+  margin-left: layout.$spacing-05;
+  min-width: layout.$spacing-13;
+  max-width: 15rem;
+
+  & .inputSegment {
+    @extend %inputSegmentStyles;
+  }
+
+  @extend %readonlyPlaceholderDimming;
+}
+
+.inputWrapperMd {
+  block-size: layout.$spacing-08;
+}
+
+// Range date picker inputs
+.inputsWrapper {
+  display: flex;
+  min-width: 10rem;
+  max-width: 15rem;
+  margin-inline-start: 1rem;
+  inline-size: 15rem;
+}
+
+.dateInputWrapper {
+  @extend .inputWrapper;
+  min-width: unset;
+  margin: 0px;
+}
+
+.startInput {
+  flex-basis: fit-content;
+}
+
+.endInput {
+  padding-right: unset;
+}
+
+.separator {
+  margin-inline: 0.5rem;
+}
+
+.inputGroup:has([data-placeholder]) > .inputsWrapper > .separator > span {
+  color: theme.$text-disabled;
+}
+
+.invalidText {
+  color: theme.$text-error !important;
+  font-size: layout.$spacing-04;
+  font-weight: 400 !important;
+  margin: layout.$spacing-02 0 0;
+  overflow: hidden;
+}
+
+// Used for calendar pop-over
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.popover[data-entering] {
+  animation: fade-in-down motion.$duration-fast-02 motion.motion(entrance, productive);
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
@@ -56,6 +160,16 @@
   background-color: theme.$layer-01;
   overflow: hidden;
   padding: layout.$spacing-02 layout.$spacing-02 layout.$spacing-03 layout.$spacing-02;
+}
+
+// Navigation header (prev/next buttons + month/year display)
+.header {
+  margin-top: layout.$spacing-03;
+  margin-bottom: layout.$spacing-03;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 .flatButton {
@@ -88,93 +202,6 @@
 .flatButtonMd {
   height: layout.$spacing-08;
   width: layout.$spacing-08;
-}
-
-.header {
-  margin-top: layout.$spacing-03;
-  margin-bottom: layout.$spacing-03;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-}
-
-.inputGroup {
-  align-items: center;
-  background-color: var(--cds-field);
-  border-block-end: 1px solid var(--cds-border-strong);
-  color: var(--cds-text-primary);
-  display: flex;
-  position: relative;
-
-  &:focus-within,
-  &.cds--focused {
-    @include focus.focus-outline('outline');
-  }
-
-  &[data-invalid] {
-    @include focus.focus-outline('invalid');
-
-    & {
-      color: theme.$support-error;
-    }
-  }
-
-  &[data-disabled] {
-    border-block-end: 1px solid rgba(0, 0, 0, 0);
-    color: theme.$text-disabled;
-    cursor: not-allowed;
-  }
-}
-
-.inputWrapper {
-  inline-size: 15rem;
-  margin-left: layout.$spacing-05;
-  min-width: layout.$spacing-13;
-  max-width: 15rem;
-
-  & .inputSegment {
-    caret-color: var(--cds-text-primary);
-
-    &:focus {
-      outline: unset;
-      background-color: theme.$layer-selected-hover;
-    }
-
-    &[data-placeholder] {
-      color: theme.$text-disabled;
-    }
-
-    &[data-focused='true'] {
-      animation: cursor-blink 1s step-end infinite;
-    }
-  }
-
-  /*
-   * These next two style rules try to render the read-only parts of the date in the disabled color
-   * unless they ware surrounded by two filled-in entries.
-   */
-  [data-readonly]:has(+ [data-placeholder]) {
-    color: theme.$text-disabled;
-  }
-
-  [data-placeholder] + [data-readonly] {
-    color: theme.$text-disabled;
-  }
-
-  @keyframes cursor-blink {
-    from,
-    to {
-      border-right: 1px solid transparent;
-    }
-    50% {
-      border-right: 1px solid currentColor;
-    }
-  }
-}
-
-.inputWrapperMd {
-  block-size: layout.$spacing-08;
 }
 
 .monthYear {
@@ -255,7 +282,9 @@
 
       & {
         position: absolute;
-        padding: 0 layout.$spacing-02 0 layout.$spacing-01;
+        padding-block: 0;
+        padding-inline-start: layout.$spacing-01;
+        padding-inline-end: layout.$spacing-02;
         border: none;
         block-size: 50%;
         cursor: pointer;
@@ -296,61 +325,49 @@
   }
 }
 
-@keyframes fade-in-down {
-  from {
-    opacity: 0;
-    transform: translate3d(0, -20px, 0);
+// Calendar grid and day cells
+
+.calendarGrid {
+  width: 17rem;
+
+  & tr,
+  & tr > th,
+  & tr > td {
+    height: 2.428rem;
+    width: 2.428rem;
   }
 
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.popover[data-entering] {
-  animation: fade-in-down motion.$duration-fast-02 motion.motion(entrance, productive);
-
-  @media screen and (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
-}
-
-:global([dir='rtl']) {
-  .inputWrapper {
-    padding-left: unset;
-    padding-right: layout.$spacing-04;
+  & > thead > tr > th {
+    @include type.type-style('body-compact-01');
+    cursor: default;
+    text-align: center;
+    vertical-align: middle;
   }
 
-  .monthYear {
-    & div:has(input[inputmode='numeric']) {
-      > input[inputmode='numeric'] {
-        padding-right: layout.$spacing-02;
-      }
+  & > tbody > tr > td {
+    @include type.type-style('body-compact-01');
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+
+    & > div {
+      outline: unset;
     }
 
-    & button {
-      &[slot='increment'] {
-        top: 0;
-        left: unset;
-        right: 0;
-      }
+    &:hover:not(:has([aria-disabled], [data-selected])) {
+      background-color: theme.$layer-hover;
+    }
 
-      &[slot='decrement'] {
-        top: layout.$spacing-04;
-        left: unset;
-        right: 0;
-      }
+    &:has([data-selected]) {
+      background-color: $color-blue-60-2;
+      color: $ui-background;
+    }
+
+    &[aria-disabled] {
+      color: theme.$text-disabled;
+      cursor: default;
     }
   }
-}
-
-.invalidText {
-  color: theme.$text-error !important;
-  font-size: layout.$spacing-04;
-  font-weight: 400 !important;
-  margin: layout.$spacing-02 0 0;
-  overflow: hidden;
 }
 
 .today:not([data-selected]) {
@@ -385,5 +402,39 @@
 
   &:not([data-disabled])::after {
     background-color: var(--cds-link-primary, theme.$link-primary);
+  }
+}
+
+// RTL overrides
+:global([dir='rtl']) {
+  .inputWrapper {
+    padding-left: unset;
+    padding-right: layout.$spacing-04;
+  }
+
+  .endInput {
+    padding-right: 0;
+  }
+
+  .monthYear {
+    & div:has(input[inputmode='numeric']) {
+      > input[inputmode='numeric'] {
+        padding-right: layout.$spacing-02;
+      }
+    }
+
+    & button {
+      &[slot='increment'] {
+        top: 0;
+        left: unset;
+        right: 0;
+      }
+
+      &[slot='decrement'] {
+        top: layout.$spacing-04;
+        left: unset;
+        right: 0;
+      }
+    }
   }
 }

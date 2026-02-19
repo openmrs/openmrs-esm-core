@@ -8,7 +8,7 @@ import {
   type Calendar,
   type DateValue,
 } from '@internationalized/date';
-import { type DateInputValue } from './OpenmrsDatePicker';
+import { type DateInputValue } from './types';
 
 /**
  * Function to convert relatively arbitrary date values into a React Aria `DateValue`,

@@ -5,14 +5,13 @@ import styles from './datepicker.module.scss';
 
 interface AutoCloseDialogProps {
   children: React.ReactNode;
-  isRangePicker?: boolean;
 }
 
-export function AutoCloseDialog({ children, isRangePicker = false }: AutoCloseDialogProps) {
+export function AutoCloseDialog({ children }: AutoCloseDialogProps) {
   const datePickerState = useContext(DatePickerStateContext);
   const rangePickerState = useContext(DateRangePickerStateContext);
 
-  const state = isRangePicker ? rangePickerState : datePickerState;
+  const state = (datePickerState ?? rangePickerState)!;
 
   const boundaryRef = useOnClickOutside<HTMLDivElement>(() => state?.close());
 

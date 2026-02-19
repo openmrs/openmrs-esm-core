@@ -1,57 +1,32 @@
-import React, { forwardRef, type ReactElement, useId, useMemo } from 'react';
-import classNames, { type Argument } from 'classnames';
-import { createCalendar, getLocalTimeZone, toCalendar, today, type CalendarDate } from '@internationalized/date';
+import React, { forwardRef, useId, useMemo } from 'react';
+import classNames from 'classnames';
 import {
   Button,
-  CalendarCell,
-  CalendarGrid,
   DateInput,
   DateRangePicker,
   type DateRangePickerProps,
   FieldError,
   Label,
-  Popover,
   Provider,
-  RangeCalendar,
   type DateRange,
   Group,
 } from 'react-aria-components';
-import { DateSegment } from '../DateSegment';
-import styles from './date-range-picker.module.scss';
-import { MonthYear } from '../MonthYear';
-import { OpenmrsIntlLocaleContext } from '../locale-context';
-import { type DateInputValue, I18nWrapper } from '../OpenmrsDatePicker';
-import { DateRangePickerIcon } from './date-range-icon.component';
-import { dateToInternationalizedDate, internationalizedDateToDate } from '../utils';
-import { ChevronLeftIcon, ChevronRightIcon } from '../../icons';
-import { useConfig } from '@openmrs/esm-react-utils';
-import { getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
-import { type StyleguideConfigObject } from '../../config-schema';
-import { AutoCloseDialog } from '../auto-close-dialog.component';
+import { type CalendarDate } from '@internationalized/date';
+import { DateSegment } from './date-segment.component';
+import styles from './datepicker.module.scss';
+import { OpenmrsIntlLocaleContext, useDatepickerContext } from './hooks';
+import { type DateInputValue, type DatePickerBaseProps } from './types';
+import { I18nWrapper } from './i18n-wrapper.component';
+import { DatePickerIcon } from './date-picker-icon.component';
+import { CalendarPopover } from './calendar-popover.component';
+import { dateToInternationalizedDate, internationalizedDateToDate } from './utils';
 
+/** Properties for the OpenmrsDateRangePicker */
 export interface OpenmrsDateRangePickerProps
-  extends Omit<DateRangePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'> {
-  /** Any CSS classes to add to the outer div of the date picker */
-  className?: Argument;
+  extends Omit<DateRangePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'>,
+    DatePickerBaseProps {
   /** The default value (uncontrolled) */
   defaultValue?: [DateInputValue, DateInputValue];
-  /** Whether the input value is invalid. */
-  invalid?: boolean;
-  /** Text to show if the input is invalid e.g. an error message */
-  invalidText?: string;
-  /**
-   * The label for this DatePicker element
-   * @deprecated Use labelText instead
-   */
-  label?: string | ReactElement;
-  /** The label for this DatePicker element. */
-  labelText?: string | ReactElement;
-  /** 'true' to use the light version. */
-  light?: boolean;
-  /** The latest date it is possible to select */
-  maxDate?: DateInputValue;
-  /** The earliest date it is possible to select */
-  minDate?: DateInputValue;
   /** Handler that is called when the value changes. */
   onChange?: (value: [Date | null | undefined, Date | null | undefined]) => void;
   /** Handler that is called when the value changes. Note that this provides types from @internationalized/date. */
@@ -84,8 +59,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
     },
     ref,
   ) {
-    const config = useConfig<StyleguideConfigObject>({ externalModuleName: '@openmrs/esm-styleguide' });
-    const preferredDateLocaleMap = config.preferredDateLocale;
+    const { calendar, intlLocale, today_ } = useDatepickerContext();
 
     const id = useId();
     const hasVisibleLabel = !!(labelText ?? label);
@@ -99,23 +73,6 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
       }
     }
 
-    const locale = useMemo(() => {
-      let locale = getLocale();
-      if (preferredDateLocaleMap[locale]) {
-        locale = preferredDateLocaleMap[locale];
-      }
-
-      return locale;
-      // Notes: Adding a dependency on "window.i18next.language" is not ideal,
-      // but it's the only way I managed to get the locale to update consistently when the language changes.
-    }, [window.i18next.language]);
-
-    const calendar = useMemo(() => {
-      const cal = getDefaultCalendar(locale);
-      return typeof cal !== 'undefined' ? createCalendar(cal) : undefined;
-    }, [locale]);
-
-    const intlLocale = useMemo(() => new Intl.Locale(locale, { calendar: calendar?.identifier }), [locale, calendar]);
     const value = useMemo(() => {
       if (rawValue) {
         return {
@@ -125,6 +82,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
       }
       return undefined;
     }, [rawValue]);
+
     const defaultValue = useMemo(() => {
       if (rawDefaultValue) {
         return {
@@ -134,10 +92,10 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
       }
       return undefined;
     }, [rawDefaultValue]);
+
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, calendar, true), [rawMinDate]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar, true), [rawMaxDate]);
     const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
-    const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
 
     const innerOnChange = useMemo(() => {
       if (onChangeRaw && onChange) {
@@ -208,36 +166,11 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                     </DateInput>
                   </div>
                   <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
-                    <DateRangePickerIcon />
+                    <DatePickerIcon />
                   </Button>
                 </Group>
                 {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
-                <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
-                  <AutoCloseDialog isRangePicker>
-                    <RangeCalendar minValue={minDate} maxValue={maxDate} className="cds--date-picker__calendar">
-                      <header className={styles.header}>
-                        <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
-                          <ChevronLeftIcon size={16} />
-                        </Button>
-                        <MonthYear className={styles.monthYear} />
-                        <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
-                          <ChevronRightIcon size={16} />
-                        </Button>
-                      </header>
-                      <CalendarGrid className={styles.calendarGrid}>
-                        {(date) => (
-                          <CalendarCell
-                            key={date.toString()}
-                            className={classNames('cds--date-picker__day', {
-                              [styles.today]: today_.compare(date) === 0,
-                            })}
-                            date={date}
-                          />
-                        )}
-                      </CalendarGrid>
-                    </RangeCalendar>
-                  </AutoCloseDialog>
-                </Popover>
+                <CalendarPopover variant="range" today_={today_} minDate={minDate} maxDate={maxDate} />
               </div>
             </DateRangePicker>
           </Provider>
