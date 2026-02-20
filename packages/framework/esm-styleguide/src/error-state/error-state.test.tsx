@@ -45,6 +45,26 @@ describe('ErrorState', () => {
   it('should handle error with partial response data', () => {
     const error = { response: { status: 404 } };
     render(<ErrorState headerTitle="test" error={error} />);
-    expect(screen.getByText(/Error 404:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Error 404/i)).toBeInTheDocument();
+  });
+
+  it('should handle an Error instance', () => {
+    render(<ErrorState headerTitle="test" error={new Error('Something went wrong')} />);
+    expect(screen.getByText(/Error Something went wrong/i)).toBeInTheDocument();
+  });
+
+  it('should handle a string error', () => {
+    render(<ErrorState headerTitle="test" error="boom" />);
+    expect(screen.getByText(/Error boom/i)).toBeInTheDocument();
+  });
+
+  it('should handle an arbitrary object error', () => {
+    render(<ErrorState headerTitle="test" error={{ code: 42 }} />);
+    expect(screen.getByText('Error')).toBeInTheDocument();
+  });
+
+  it('should handle a null error', () => {
+    render(<ErrorState headerTitle="test" error={null} />);
+    expect(screen.getByText('Error')).toBeInTheDocument();
   });
 });
