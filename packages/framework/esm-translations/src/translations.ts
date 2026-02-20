@@ -40,11 +40,18 @@ const workspace2Translations = {
   closeWorkspaces2PromptBody: 'You are about to close the following workspace(s), which might have unsaved changes:',
 };
 
+const carbonTableBatchTranslations = {
+  'carbon.table.batch.cancel': 'Cancel',
+  'carbon.table.batch.items.selected': '{{totalSelected}} items selected',
+  'carbon.table.batch.item.selected': '{{totalSelected}} item selected',
+  'carbon.table.batch.selectAll': 'Select all',
+};
+
 export const coreTranslations = {
   ...addressFields,
   ...workspaceTranslations,
   ...workspace2Translations,
-  abnormalValue: 'Abnormal value',
+  ...carbonTableBatchTranslations,
   actions: 'Actions',
   actionableNotification: 'Actionable notification',
   address: 'Address',
@@ -104,5 +111,5 @@ export const coreTranslations = {
   toggleDevTools: 'Toggle dev tools',
   unknown: 'Unknown',
   yearAbbreviation: 'yr',
-  yearsAbbreviation: 'yrs',
+  yearsAbbreviation: 'yrs'
 };
