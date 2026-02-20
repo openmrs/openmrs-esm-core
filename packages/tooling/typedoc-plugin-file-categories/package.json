@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/typedoc-plugin-file-categories",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "license": "MPL-2.0",
   "type": "module",
   "main": "dist/index.js",
@@ -16,10 +16,10 @@
   "devDependencies": {
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
-    "@vitest/coverage-v8": "^4.0.7",
+    "@vitest/coverage-v8": "^4.0.18",
     "rimraf": "^6.0.1",
     "typedoc": "^0.28.5",
     "typescript": "^5.8.3",
-    "vitest": "^4.0.7"
+    "vitest": "^4.0.18"
   }
 }

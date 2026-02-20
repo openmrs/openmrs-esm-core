@@ -30,7 +30,7 @@ export interface Workspace2DefinitionProps<
    * @param workspaceName
    * @param workspaceProps
    */
-  launchChildWorkspace<Props extends object>(workspaceName: string, workspaceProps?: Props): void;
+  launchChildWorkspace<Props extends object>(workspaceName: string, workspaceProps?: Props): Promise<void>;
 
   /**
    * closes the current workspace, along with its children.
@@ -92,13 +92,13 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     if (openedWorkspace?.hasUnsavedChanges != hasUnsavedChanges) {
       setHasUnsavedChanges(workspaceName, hasUnsavedChanges ?? false);
     }
-  }, [openedWorkspace, hasUnsavedChanges]);
+  }, [openedWorkspace?.hasUnsavedChanges, hasUnsavedChanges, workspaceName, setHasUnsavedChanges]);
 
   useEffect(() => {
     if (workspaceTitleByWorkspaceName[workspaceName] !== title) {
       setWorkspaceTitle(workspaceName, title);
     }
-  }, [openedWorkspace, title]);
+  }, [workspaceTitleByWorkspaceName, workspaceName, title, setWorkspaceTitle]);
 
   if (openedWindowIndex < 0 || openedGroup == null || openedWorkspace == null) {
     // workspace window / group has likely just closed
@@ -171,47 +171,39 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
                       {maximized ? <Minimize /> : <Maximize />}
                     </HeaderGlobalAction>
                   )}
-                  {canHide ? (
+                  {canHide && (
                     <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
                       <ArrowRightIcon />
                     </HeaderGlobalAction>
-                  ) : (
-                    // in desktop mode, if the group is closeable, the close button
-                    // is rendered in the side nav, not in the workspace
-                    !canCloseGroup && (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('close')}
-                        onClick={() => closeWorkspace({ closeWindow: true })}
-                      >
-                        <CloseIcon />
-                      </HeaderGlobalAction>
-                    )
                   )}
-                </>
-              ) : (
-                <>
-                  {canHide ? (
-                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
-                      <DownToBottom />
-                    </HeaderGlobalAction>
-                  ) : (
-                    // in tablet mode, the close button is rendered regardless of
-                    // whether the group is closeable. The close button closes
-                    // the workspace group (and the side nav) if group is closeable;
-                    // otherwise it only closes the workspace window.
+                  {!canCloseGroup && (
                     <HeaderGlobalAction
                       aria-label={getCoreTranslation('close')}
-                      onClick={() => {
-                        if (canCloseGroup) {
-                          closeWorkspaceGroup2();
-                        } else {
-                          closeWorkspace({ closeWindow: true });
-                        }
-                      }}
+                      onClick={() => closeWorkspace({ closeWindow: true })}
                     >
                       <CloseIcon />
                     </HeaderGlobalAction>
                   )}
+                </>
+              ) : (
+                <>
+                  {canHide && (
+                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
+                      <DownToBottom />
+                    </HeaderGlobalAction>
+                  )}
+                  <HeaderGlobalAction
+                    aria-label={getCoreTranslation('close')}
+                    onClick={() => {
+                      if (canCloseGroup) {
+                        closeWorkspaceGroup2();
+                      } else {
+                        closeWorkspace({ closeWindow: true });
+                      }
+                    }}
+                  >
+                    <CloseIcon />
+                  </HeaderGlobalAction>
                 </>
               )}
             </HeaderGlobalBar>
