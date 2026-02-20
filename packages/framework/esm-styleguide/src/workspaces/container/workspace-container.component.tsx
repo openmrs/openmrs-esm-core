@@ -12,6 +12,9 @@ import { WorkspaceRenderer } from './workspace-renderer.component';
 import ActionMenu from './action-menu.component';
 import styles from './workspace.module.scss';
 
+/**
+ * @deprecated Workspace container is no longer needed with workspace v2.
+ */
 export interface WorkspaceContainerProps {
   /**
    * The context key is a path element that identifies the pages on which workspaces should
@@ -72,6 +75,8 @@ export interface WorkspaceContainerProps {
  * `action-menu-patient-chart-items-slot`.
  *
  * This component also provides everything needed for workspace notifications to be rendered.
+ *
+ * @deprecated Workspace container is no longer needed with workspace v2.
  */
 export function WorkspaceContainer({
   contextKey,
