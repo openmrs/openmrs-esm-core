@@ -90,7 +90,6 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
         [styles.animated]: applyAnimation,
         [styles.slideOut]: isClosing,
       })}
-      inline
       kind={kind as SnackbarType}
       lowContrast={isLowContrast}
       onActionButtonClick={handleActionClick}
