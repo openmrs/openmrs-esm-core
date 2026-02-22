@@ -192,6 +192,8 @@
 - [getFhirServerPaginationHandlers](functions/getFhirServerPaginationHandlers.md)
 - [useLayoutType](functions/useLayoutType.md)
 - [isDesktop](functions/isDesktop.md)
+- [useLeftNav](functions/useLeftNav.md)
+- [useLeftNavStore](functions/useLeftNavStore.md)
 - [useOnClickOutside](functions/useOnClickOutside.md)
 - [useOnVisible](functions/useOnVisible.md)
 - [usePagination](functions/usePagination.md)
@@ -227,6 +229,9 @@
 - [showToast](functions/showToast.md)
 - [ToastDescriptor](interfaces/ToastDescriptor.md)
 - [ToastNotificationMeta](interfaces/ToastNotificationMeta.md)
+- [NumericObservationProps](interfaces/NumericObservationProps.md)
+- [useConceptReferenceRange](functions/useConceptReferenceRange.md)
+- [UseConceptReferenceRangeResult](interfaces/UseConceptReferenceRangeResult.md)
 
 ## Config
 
@@ -246,11 +251,11 @@
 ## Workspace
 
 - [ActionMenuButtonProps](interfaces/ActionMenuButtonProps.md)
-- [closeWorkspace](functions/closeWorkspace.md)
-- [launchWorkspace](functions/launchWorkspace.md)
-- [navigateAndLaunchWorkspace](functions/navigateAndLaunchWorkspace.md)
-- [useWorkspaces](functions/useWorkspaces.md)
-- [launchWorkspaceGroup](functions/launchWorkspaceGroup.md)
+- [~~closeWorkspace~~](functions/closeWorkspace.md)
+- [~~launchWorkspace~~](functions/launchWorkspace.md)
+- [~~navigateAndLaunchWorkspace~~](functions/navigateAndLaunchWorkspace.md)
+- [~~useWorkspaces~~](functions/useWorkspaces.md)
+- [~~launchWorkspaceGroup~~](functions/launchWorkspaceGroup.md)
 - [DefaultWorkspaceProps](interfaces/DefaultWorkspaceProps.md)
 - [CloseWorkspaceOptions](interfaces/CloseWorkspaceOptions.md)
 - [OpenWorkspace](interfaces/OpenWorkspace.md)

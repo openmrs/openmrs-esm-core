@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-state",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "license": "MPL-2.0",
   "description": "Frontend stores & state management for OpenMRS",
   "type": "module",
@@ -57,18 +57,18 @@
     "zustand": "^4.5.5"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "6.x",
-    "@openmrs/esm-utils": "6.x"
+    "@openmrs/esm-globals": "9.x",
+    "@openmrs/esm-utils": "9.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
-    "@vitest/coverage-v8": "^4.0.7",
+    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "rimraf": "^6.0.1",
-    "vitest": "^4.0.7"
+    "vitest": "^4.0.18"
   }
 }

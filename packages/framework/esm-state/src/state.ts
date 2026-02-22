@@ -111,6 +111,20 @@ export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> 
 
 type SubscribeToArgs<T, U> = [StoreApi<T>, (state: T) => void] | [StoreApi<T>, (state: T) => U, (state: U) => void];
 
+/**
+ * Subscribes to a store and invokes a callback when the state changes.
+ * The callback is also immediately invoked with the current state upon subscription.
+ * Uses shallow equality comparison to determine if the state has changed.
+ *
+ * This function has two overloads:
+ * 1. Subscribe to the entire store state
+ * 2. Subscribe to a selected portion of the state using a selector function
+ *
+ * @param store The store to subscribe to.
+ * @param handle A callback function that receives the state (or selected state) when it changes.
+ * @returns An unsubscribe function to stop listening for changes.
+ *
+ */
 export function subscribeTo<T, U = T>(store: StoreApi<T>, handle: (state: T) => void): () => void;
 export function subscribeTo<T, U>(
   store: StoreApi<T>,

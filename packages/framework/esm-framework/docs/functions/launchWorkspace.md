@@ -1,10 +1,10 @@
 [O3 Framework](../API.md) / launchWorkspace
 
-# Function: launchWorkspace()
+# Function: ~~launchWorkspace()~~
 
 > **launchWorkspace**\<`T`\>(`name`, `additionalProps?`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:296](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L296)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:305](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L305)
 
 This launches a workspace by its name. The workspace must have been registered.
 Workspaces should be registered in the `routes.json` file.
@@ -54,3 +54,8 @@ Props to pass to the workspace component being launched. Passing
 ## Returns
 
 `void`
+
+## Deprecated
+
+migrate to workspace v2 and use launchWorkspace2 instead. See:
+https://openmrs.atlassian.net/wiki/spaces/docs/pages/615677981/Workspace+v2+Migration+Guide

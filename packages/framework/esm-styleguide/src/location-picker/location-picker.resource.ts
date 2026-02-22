@@ -29,6 +29,15 @@ export interface LoginLocationData {
   setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[] | undefined>;
 }
 
+/**
+ * A React hook that fetches a location by its UUID using the FHIR API.
+ *
+ * @param locationUuid Optional UUID of the location to fetch. If not provided,
+ *   the hook returns null for the location without making a request.
+ * @returns An object containing the location data, loading state, and any error.
+ *
+ * @category API
+ */
 export function useLocationByUuid(locationUuid?: string) {
   const url = locationUuid ? `/ws/fhir2/R4/Location?_id=${locationUuid}` : null;
 
@@ -51,6 +60,18 @@ export function useLocationByUuid(locationUuid?: string) {
   );
 }
 
+/**
+ * A React hook that fetches locations from the FHIR API with support for
+ * pagination, filtering by tag, and searching by name. Uses SWR infinite
+ * loading for efficient pagination.
+ *
+ * @param locationTag Optional tag to filter locations (e.g., 'Login Location').
+ * @param count The number of locations to fetch per page. Defaults to 0 (no limit).
+ * @param searchQuery Optional search string to filter locations by name.
+ * @returns An object containing the locations array, loading states, pagination info, and any error.
+ *
+ * @category API
+ */
 export function useLocations(locationTag?: string, count: number = 0, searchQuery: string = ''): LoginLocationData {
   const debouncedSearchQuery = useDebounce(searchQuery);
   function constructUrl(page: number, prevPageData: FetchResponse<LocationResponse>) {

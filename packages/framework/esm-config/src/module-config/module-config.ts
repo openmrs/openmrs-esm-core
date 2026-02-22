@@ -267,6 +267,15 @@ export function defineExtensionConfigSchema(extensionName: string, schema: Confi
   }));
 }
 
+/**
+ * Provides configuration values programmatically. This is an alternative to
+ * providing configuration through the config-file. Configuration provided this
+ * way will be merged with configuration from other sources.
+ *
+ * @param config A configuration object to merge into the existing configuration.
+ * @param sourceName An optional name to identify the source of this configuration,
+ *   used for debugging purposes. Defaults to 'provided'.
+ */
 export function provide(config: Config, sourceName = 'provided') {
   configInternalStore.setState((state) => ({
     ...state,
@@ -301,7 +310,19 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
   });
 }
 
-/** @internal */
+/**
+ * Retrieves translation overrides for an extension, optionally scoped to a specific
+ * extension slot. When called with only a module name, retrieves module-level overrides.
+ * Translation overrides allow customizing translated strings without modifying the
+ * original translation files.
+ *
+ * @param moduleName The name of the module providing the translation context.
+ * @param slotName Optional extension slot name to include slot-specific overrides.
+ * @param extensionId Optional extension ID to include extension-specific overrides.
+ * @returns A Promise resolving to an array of translation override objects.
+ *
+ * @internal
+ */
 export function getTranslationOverrides(
   moduleName: string,
   slotName?: string,
@@ -353,8 +374,9 @@ export function getTranslationOverrides(
  *
  * @param schema  a configuration schema
  * @param providedConfig  an object of config values (without the top-level module name)
- * @param keyPathContext  a dot-deparated string which helps the user figure out where
+ * @param keyPathContext  a dot-separated string which helps the user figure out where
  *     the provided config came from
+ * @returns The validated and processed configuration object with defaults applied.
  * @internal
  */
 export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject, keyPathContext: string) {

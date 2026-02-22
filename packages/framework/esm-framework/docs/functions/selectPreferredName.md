@@ -4,14 +4,14 @@
 
 > **selectPreferredName**(`patient`, ...`preferredNames`): `undefined` \| `HumanName`
 
-Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:41
+Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:44
 
 Select the preferred name from the collection of names associated with a patient.
 
 Names may be specified with a usage such as 'usual', 'official', 'nickname', 'maiden', etc.
 A name with no usage specified is treated as the 'usual' name.
 
-The chosen name will be selected according to the priority order of `preferredNames`,
+The chosen name will be selected according to the priority order of `preferredNames`.
 
 ## Parameters
 
@@ -31,16 +31,14 @@ Optional ordered sequence of preferred name usages; defaults to 'usual' if not s
 
 `undefined` \| `HumanName`
 
-the preferred name for the patient, or undefined if no acceptable name could be found.
+The preferred name for the patient, or undefined if no acceptable name could be found.
 
-## Examples
+## Example
 
 ```ts
 // normal use case; prefer usual name, fallback to official name
-displayNameByUsage(patient, 'usual', 'official')
-```
+selectPreferredName(patient, 'usual', 'official')
 
-```ts
 // prefer usual name over nickname, fallback to official name
-displayNameByUsage(patient, 'usual', 'nickname', 'official')
+selectPreferredName(patient, 'usual', 'nickname', 'official')
 ```

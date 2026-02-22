@@ -1,21 +1,23 @@
 /* eslint-disable */
 import React from 'react';
+import { describe, expect, it, afterEach, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { implementerToolsConfigStore, temporaryConfigStore, Type } from '@openmrs/esm-framework/src/internal';
 import { Configuration } from './configuration.component';
 import { useConceptLookup, useGetConceptByUuid } from './interactive-editor/value-editors/concept-search.resource';
 
-const mockUseConceptLookup = jest.mocked(useConceptLookup);
-const mockUseGetConceptByUuid = jest.mocked(useGetConceptByUuid);
+const mockUseConceptLookup = vi.mocked(useConceptLookup);
+const mockUseGetConceptByUuid = vi.mocked(useGetConceptByUuid);
 
-jest.mock('./interactive-editor/value-editors/concept-search.resource', () => ({
-  useConceptLookup: jest.fn().mockImplementation(() => ({
+vi.mock('./interactive-editor/value-editors/concept-search.resource', () => ({
+  useConceptLookup: vi.fn().mockImplementation(() => ({
     concepts: [],
     error: null,
     isSearchingConcepts: false,
   })),
-  useGetConceptByUuid: jest.fn().mockImplementation(() => ({
+  useGetConceptByUuid: vi.fn().mockImplementation(() => ({
     concept: null,
     error: null,
     isLoadingConcept: false,

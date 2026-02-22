@@ -4,7 +4,7 @@
 
 > **CustomOverflowMenu**(`__namedParameters`): `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L45)
+Defined in: [packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L47)
 
 A custom overflow menu that supports a text/icon trigger button instead of
 Carbon's icon-only OverflowMenu trigger. Uses CSS-based show/hide rather

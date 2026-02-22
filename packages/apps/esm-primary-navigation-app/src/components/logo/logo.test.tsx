@@ -1,12 +1,21 @@
 import React from 'react';
+import { vi, describe, it, expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { useConfig } from '@openmrs/esm-framework';
 import { type ConfigSchema } from '../../config-schema';
 import Logo from './logo.component';
 
-// FIXME: Figure out why I can't annotate this mock like so: jest.mocked(useConfig<ConfigSchema>);
-const mockUseConfig = jest.mocked(useConfig);
+vi.mock('@openmrs/esm-framework', async (importOriginal) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+  const actual = await importOriginal<typeof import('@openmrs/esm-framework')>();
+  return {
+    ...actual,
+    useConfig: vi.fn(),
+  };
+});
+
+const mockUseConfig = vi.mocked(useConfig);
 
 describe('Logo', () => {
   it('should display the OpenMRS logo by default', () => {
@@ -55,7 +64,7 @@ describe('Logo', () => {
 
   it('should handle image load errors', () => {
     const user = userEvent.setup();
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const mockConfig = {
       logo: {
         src: 'invalid-image.png',

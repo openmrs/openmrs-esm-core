@@ -59,6 +59,7 @@ export function unregisterContext(namespace: string) {
  *
  * @typeParam T The type of the value stored in the namespace
  * @param namespace The namespace to load properties from
+ * @returns The immutable state of the namespace, or `null` if the namespace is not registered.
  */
 export function getContext<T extends NonNullable<object> = NonNullable<object>>(namespace: string): Readonly<T> | null;
 /**
@@ -68,6 +69,7 @@ export function getContext<T extends NonNullable<object> = NonNullable<object>>(
  * @typeParam U The return type of this hook which is mostly relevant when using a selector
  * @param namespace The namespace to load properties from
  * @param selector An optional function which extracts the relevant part of the state
+ * @returns The immutable state (or selected portion) of the namespace, or `null` if the namespace is not registered.
  */
 export function getContext<T extends NonNullable<object> = NonNullable<object>, U extends NonNullable<object> = T>(
   namespace: string,

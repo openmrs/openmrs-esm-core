@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { createRoot } from 'react-dom/client';
 import { ActionMenu } from './action-menu2/action-menu2.component';
 import { closeWorkspaceGroup2, useWorkspace2Store } from './workspace2';
+import { shouldCloseOnUrlChange } from './scope-utils';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import styles from './workspace-windows-and-menu.module.scss';
 
@@ -23,8 +24,34 @@ function WorkspaceWindowsAndMenu() {
 
   useEffect(() => {
     const unsubscribe = subscribeOpenmrsEvent('before-page-changed', (pageChangedEvent) => {
-      const { newPage, cancelNavigation } = pageChangedEvent;
-      if (openedGroup && newPage) {
+      const { newPage, cancelNavigation, oldUrl, newUrl } = pageChangedEvent;
+
+      if (!openedGroup) {
+        return;
+      }
+
+      // Always close on app change - this takes precedence as a safety boundary
+      if (newPage) {
+        cancelNavigation(closeWorkspaceGroup2().then((isClosed) => !isClosed));
+        return;
+      }
+
+      const group = registeredGroupsByName[openedGroup.groupName];
+      const scopePattern = group?.scopePattern;
+
+      // No scopePattern means no additional scope-based closing (original behavior)
+      if (!scopePattern) {
+        return;
+      }
+
+      if (process.env.NODE_ENV !== 'production' && !scopePattern.startsWith('^')) {
+        console.warn(
+          `Workspace group "${openedGroup.groupName}" has a scopePattern without a start anchor (^). ` +
+            `This may cause unexpected behavior. Pattern: "${scopePattern}"`,
+        );
+      }
+
+      if (shouldCloseOnUrlChange(scopePattern, oldUrl, newUrl)) {
         // Prompt to close the workspaces
         // should only cancel navigation if the user cancels the prompt
         cancelNavigation(closeWorkspaceGroup2().then((isClosed) => !isClosed));
@@ -32,7 +59,7 @@ function WorkspaceWindowsAndMenu() {
     });
 
     return unsubscribe;
-  }, [openedGroup]);
+  }, [openedGroup, registeredGroupsByName]);
 
   if (!openedGroup) {
     return null;

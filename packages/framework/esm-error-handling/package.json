@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-error-handling",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "license": "MPL-2.0",
   "description": "An ES module to help with error handling",
   "type": "module",
@@ -45,16 +45,16 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "6.x"
+    "@openmrs/esm-globals": "9.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
-    "@vitest/coverage-v8": "^4.0.7",
+    "@vitest/coverage-v8": "^4.0.18",
     "cross-env": "^7.0.3",
-    "happy-dom": "^17.4.7",
+    "happy-dom": "^20.6.0",
     "rimraf": "^6.0.1",
-    "vitest": "^4.0.7"
+    "vitest": "^4.0.18"
   }
 }

@@ -15,6 +15,11 @@ function getPatientUuidFromUrl() {
  * as a parameter, then the patient for that UUID is returned. If the parameter
  * is not provided, the patient UUID is obtained from the current route, and
  * a route listener is set up to update the patient whenever the route changes.
+ *
+ * @param patientUuid Optional UUID of the patient to fetch. If not provided,
+ *   the UUID is extracted from the current URL path.
+ * @returns An object containing the patient data, loading state, current patient UUID, and any error.
+ *
  */
 export function usePatient(patientUuid?: string) {
   const [currentPatientUuid, setCurrentPatientUuid] = useState(patientUuid ?? getPatientUuidFromUrl());

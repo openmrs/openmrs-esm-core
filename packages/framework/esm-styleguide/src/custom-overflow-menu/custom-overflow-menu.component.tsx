@@ -32,7 +32,9 @@ export function useCustomOverflowMenu() {
 }
 
 interface CustomOverflowMenuProps {
+  /** The content to display as the menu trigger button. */
   menuTitle: React.ReactNode;
+  /** The menu items to display when the menu is open. */
   children: React.ReactNode;
 }
 

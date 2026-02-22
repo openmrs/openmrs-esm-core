@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-react-utils",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "license": "MPL-2.0",
   "description": "React utilities for OpenMRS.",
   "type": "module",
@@ -59,17 +59,17 @@
     "single-spa-react": "^6.0.2"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "6.x",
-    "@openmrs/esm-config": "6.x",
-    "@openmrs/esm-context": "6.x",
-    "@openmrs/esm-emr-api": "6.x",
-    "@openmrs/esm-error-handling": "6.x",
-    "@openmrs/esm-extensions": "6.x",
-    "@openmrs/esm-feature-flags": "6.x",
-    "@openmrs/esm-globals": "6.x",
-    "@openmrs/esm-navigation": "6.x",
-    "@openmrs/esm-state": "6.x",
-    "@openmrs/esm-utils": "6.x",
+    "@openmrs/esm-api": "9.x",
+    "@openmrs/esm-config": "9.x",
+    "@openmrs/esm-context": "9.x",
+    "@openmrs/esm-emr-api": "9.x",
+    "@openmrs/esm-error-handling": "9.x",
+    "@openmrs/esm-extensions": "9.x",
+    "@openmrs/esm-feature-flags": "9.x",
+    "@openmrs/esm-globals": "9.x",
+    "@openmrs/esm-navigation": "9.x",
+    "@openmrs/esm-state": "9.x",
+    "@openmrs/esm-utils": "9.x",
     "dayjs": "1.x",
     "i18next": "25.x",
     "react": "18.x",
@@ -92,11 +92,11 @@
     "@openmrs/esm-utils": "workspace:*",
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
-    "@vitest/coverage-v8": "^4.0.7",
+    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
-    "happy-dom": "^17.4.7",
+    "happy-dom": "^20.6.0",
     "i18next": "^25.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -104,6 +104,6 @@
     "rimraf": "^6.0.1",
     "rxjs": "^6.5.3",
     "swr": "2.2.5",
-    "vitest": "^4.0.7"
+    "vitest": "^4.0.18"
   }
 }

@@ -12,6 +12,20 @@ export function toVisitTypeObject(openmrsRestForm: any): VisitType {
   };
 }
 
+/**
+ * Fetches all available visit types from the OpenMRS REST API.
+ *
+ * @returns An Observable that emits an array of VisitType objects and then completes.
+ *   The Observable will emit exactly one value containing all visit types.
+ *
+ * @example
+ * ```ts
+ * import { getVisitTypes } from '@openmrs/esm-framework';
+ * getVisitTypes().subscribe((visitTypes) => {
+ *   console.log('Available visit types:', visitTypes);
+ * });
+ * ```
+ */
 export function getVisitTypes(): Observable<Array<VisitType>> {
   return openmrsObservableFetch<any>(`${restBaseUrl}/visittype`)
     .pipe(
