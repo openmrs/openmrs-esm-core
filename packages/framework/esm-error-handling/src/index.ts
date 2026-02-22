@@ -106,39 +106,26 @@ export function extractErrorMessagesFromResponse(error: unknown): Array<string> 
   }
 
   const { fieldErrors, globalErrors, message, translatedMessage } = restError.error;
-  const messages: Array<string> = [];
-
-  if (fieldErrors) {
-    for (const fieldName of Object.keys(fieldErrors)) {
-      for (const entry of fieldErrors[fieldName]) {
-        if (entry.message) {
-          messages.push(entry.message);
-        }
-      }
-    }
-  }
-
-  if (globalErrors) {
-    for (const entry of globalErrors) {
-      if (entry.message) {
-        messages.push(entry.message);
-      }
-    }
-  }
+  const messages: Array<string> = [
+    ...(fieldErrors ? collectFieldErrorMessages(fieldErrors) : []),
+    ...(globalErrors ? collectGlobalErrorMessages(globalErrors) : []),
+  ];
 
   if (messages.length > 0) {
     return messages;
   }
 
-  if (translatedMessage) {
-    return [translatedMessage];
-  }
+  return [translatedMessage || message || getFallbackMessage(error)];
+}
 
-  if (message) {
-    return [message];
-  }
+/** Collects human-readable messages from REST field-level validation errors. */
+function collectFieldErrorMessages(fieldErrors: Record<string, Array<RestFieldError>>): Array<string> {
+  return Object.values(fieldErrors).flatMap((errors) => errors.map((e) => e.message).filter(Boolean));
+}
 
-  return [getFallbackMessage(error)];
+/** Collects human-readable messages from REST global validation errors. */
+function collectGlobalErrorMessages(globalErrors: Array<RestFieldError>): Array<string> {
+  return globalErrors.map((e) => e.message).filter(Boolean);
 }
 
 /**
@@ -185,7 +172,7 @@ function getFallbackMessage(error: unknown): string {
     }
   }
 
-  return String(error) || 'Unknown error';
+  return typeof error === 'string' ? error : 'Unknown error';
 }
 
 function ensureErrorObject(thing: any) {
