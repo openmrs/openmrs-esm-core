@@ -3086,7 +3086,7 @@ __metadata:
     semver: "npm:^7.7.3"
     single-spa: "npm:^6.0.3"
     swc-loader: "npm:^0.2.6"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.0"
     vitest: "npm:^4.0.18"
     webpack: "npm:^5.99.9"
     webpack-pwa-manifest: "npm:^4.3.0"
@@ -3439,7 +3439,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-i18next: "npm:^16.0.0"
     rxjs: "npm:^6.5.3"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.0"
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
@@ -3469,7 +3469,7 @@ __metadata:
     react-i18next: "npm:^16.0.0"
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.0"
     vitest: "npm:^4.0.18"
     zod: "npm:^3.23.8"
   peerDependencies:
@@ -3522,7 +3522,7 @@ __metadata:
     react-i18next: "npm:^16.0.0"
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.0"
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
@@ -3623,7 +3623,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     rxjs: "npm:^6.5.3"
     single-spa-react: "npm:^6.0.2"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.0"
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@openmrs/esm-api": 9.x
@@ -3735,7 +3735,7 @@ __metadata:
     rxjs: "npm:^6.5.3"
     sass-embedded: "npm:1.89.0"
     svgo-loader: "npm:4.0.0"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.0"
     typescript: "npm:^5.8.3"
     vitest: "npm:^4.0.18"
   peerDependencies:
@@ -18421,15 +18421,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:2.2.5":
-  version: 2.2.5
-  resolution: "swr@npm:2.2.5"
+"swr@npm:2.4.0":
+  version: 2.4.0
+  resolution: "swr@npm:2.4.0"
   dependencies:
-    client-only: "npm:^0.0.1"
-    use-sync-external-store: "npm:^1.2.0"
+    dequal: "npm:^2.0.3"
+    use-sync-external-store: "npm:^1.6.0"
   peerDependencies:
-    react: ^16.11.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/f02b3bd5a198a0f62f9a53d7c0528c4a58aa61a43310bea169614b6e873dadb52599e856ef0775405b6aa7409835343da0cf328948aa892aa309bf4b7e7d6902
+    react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/3536db25748b49659d87450ed40e391b0a8c2cfe387e41224ee505a18ae739477bd60caba1d8ff7bd961db923cf3d6771e4aee13de822855436a7bca9e343ccc
   languageName: node
   linkType: hard
 
@@ -19302,12 +19302,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.0, use-sync-external-store@npm:^1.4.0":
+"use-sync-external-store@npm:^1.4.0":
   version: 1.5.0
   resolution: "use-sync-external-store@npm:1.5.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   checksum: 10/ddae7c4572511f7f641d6977bd0725340aa7dbeda8250418b54c1a57ec285083d96cf50d1a1acbd6cf729f7a87071b2302c6fbd29310432bf1b21a961a313279
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "use-sync-external-store@npm:1.6.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/b40ad2847ba220695bff2d4ba4f4d60391c0fb4fb012faa7a4c18eb38b69181936f5edc55a522c4d20a788d1a879b73c3810952c9d0fd128d01cb3f22042c09e
   languageName: node
   linkType: hard
 
