@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^4.0.18",
-    "ace-builds": "^1.43.3",
+    "ace-builds": "^1.43.6",
     "cross-env": "^7.0.3",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",
