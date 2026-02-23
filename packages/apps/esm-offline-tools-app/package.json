@@ -57,7 +57,7 @@
     "@carbon/react": "^1.92.1",
     "@types/lodash-es": "^4.17.12",
     "@vitest/coverage-v8": "^4.0.18",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.1.0",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",
     "react": "^18.3.1",
