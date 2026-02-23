@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-dynamic-loading",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "license": "MPL-2.0",
   "description": "Utilities for dynamically loading code in OpenMRS",
   "type": "module",
