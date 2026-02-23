@@ -61,8 +61,8 @@
     "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
-    "happy-dom": "^20.6.0",
-    "jsdom": "^26.1.0",
+    "happy-dom": "^20.7.0",
+    "jsdom": "^28.1.0",
     "lodash": "^4.17.21",
     "rimraf": "^6.0.1",
     "vitest": "^4.0.18"
