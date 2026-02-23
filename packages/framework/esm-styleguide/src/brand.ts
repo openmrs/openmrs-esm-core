@@ -1,5 +1,11 @@
 import { getConfigStore } from '@openmrs/esm-config';
 
+/**
+ * Sets up the branding CSS variables by applying the configured brand colors
+ * to the document root.
+ *
+ * @internal
+ */
 export function setupBranding() {
   getConfigStore('@openmrs/esm-styleguide').subscribe((store) => {
     if (store.loaded && store.config) {

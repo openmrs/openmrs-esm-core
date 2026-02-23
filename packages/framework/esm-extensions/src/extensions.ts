@@ -188,7 +188,7 @@ export function getExtensionRegistration(extensionId: string): ExtensionRegistra
 /**
  * Extensions must be registered in order to be rendered.
  * This is handled by the app shell, when extensions are provided
- * via the `setupOpenMRS` return object.
+ * via the `routes.json` file and registered through `registerApp()`.
  * @internal
  */
 export const registerExtension: (extensionRegistration: ExtensionRegistration) => void = (extensionRegistration) =>
@@ -250,6 +250,11 @@ export function attach(slotName: string, extensionId: string) {
 }
 
 /**
+ * Detaches an extension from an extension slot.
+ *
+ * @param extensionSlotName The name of the extension slot to detach from.
+ * @param extensionId The ID of the extension to detach.
+ *
  * @deprecated Avoid using this. Extension attachments should be considered declarative.
  */
 export function detach(extensionSlotName: string, extensionId: string) {
@@ -274,6 +279,10 @@ export function detach(extensionSlotName: string, extensionId: string) {
 }
 
 /**
+ * Detaches all extensions from an extension slot.
+ *
+ * @param extensionSlotName The name of the extension slot to clear.
+ *
  * @deprecated Avoid using this. Extension attachments should be considered declarative.
  */
 export function detachAll(extensionSlotName: string) {

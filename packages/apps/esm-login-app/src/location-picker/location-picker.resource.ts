@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import useSwrImmutable from 'swr/immutable';
 import { type FetchResponse, openmrsFetch, setUserProperties, showSnackbar, useSession } from '@openmrs/esm-framework';
 import { useValidateLocationUuid } from '../login.resource';
-import useSwrImmutable from 'swr/immutable';
 import { type LocationResponse } from '../types';
 
 export function useDefaultLocation(isUpdateFlow: boolean) {

@@ -2,24 +2,24 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { Button, IconButton } from '@carbon/react';
-import { useLayoutType } from '@openmrs/esm-react-utils';
 import { SingleSpaContext } from 'single-spa-react';
+import { ComponentContext, useLayoutType } from '@openmrs/esm-react-utils';
 import { type OpenedWindow } from '@openmrs/esm-extensions';
-import styles from './action-menu-button2.module.scss';
 import { launchWorkspace2, useWorkspace2Store } from '../workspace2';
+import styles from './action-menu-button2.module.scss';
 
 interface TagsProps {
   getIcon: (props: object) => JSX.Element;
-  isWindowHidden: boolean;
+  hasUnsavedChanges: boolean;
   tagContent?: React.ReactNode;
 }
 
-function Tags({ getIcon, isWindowHidden, tagContent }: TagsProps) {
+function Tags({ getIcon, hasUnsavedChanges, tagContent }: TagsProps) {
   return (
     <>
       {getIcon({ size: 16 })}
 
-      {isWindowHidden ? (
+      {hasUnsavedChanges ? (
         <span className={styles.interruptedTag}>!</span>
       ) : (
         <span className={styles.countTag}>{tagContent}</span>
@@ -52,13 +52,15 @@ export interface ActionMenuButtonProps2 {
 /**
  * The ActionMenuButton2 component is used to render a button in the action menu of a workspace group.
  * The button is associated with a specific workspace window, defined in routes.json of the app with the button.
- * When one or more workspaces within the window are opened, the button will be highlighted.
- * If the window is hidden, either `tagContent` (if defined) or an exclamation mark will be displayed
+ * When one or more workspaces within the window are opened, the button will be highlighted:
+ * bold blue when the window is focused (un-minimized and in front), green when unfocused.
+ * If any workspace in the window has unsaved changes, an exclamation mark will be displayed
  * on top of the icon.
  *
  * On clicked, The button either:
- * 1. restores the workspace window if it is opened and hidden; or
- * 2. launch a workspace from within that window, if the window is not opened.
+ * 1. hides the workspace window if it is opened and focused; or
+ * 2. restores the workspace window if it is opened and unfocused; or
+ * 3. launches a workspace from within that window, if the window is not opened.
  *
  * @experimental
  */
@@ -70,22 +72,24 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   onBeforeWorkspaceLaunch,
 }) => {
   const layout = useLayoutType();
-  const { openedWindows, restoreWindow } = useWorkspace2Store();
+  const { openedWindows, restoreWindow, hideWindow, isMostRecentlyOpenedWindowHidden } = useWorkspace2Store();
 
-  // name of the window that the button is associated with
-  const { windowName } = useContext(SingleSpaContext);
-
+  const { extension } = useContext(ComponentContext);
+  const openedWindowIndex = openedWindows.findIndex((w) => w.windowName === extension?.extensionId);
   // can be undefined if the window is not opened
-  const window = openedWindows.find((w) => w.windowName === windowName);
-
+  const window: OpenedWindow | undefined = openedWindows[openedWindowIndex];
   const isWindowOpened = window != null;
-  const isWindowHidden = window?.hidden ?? false;
-  const isFocused = isCurrentWindowFocused(openedWindows, window);
+  const isWindowHidden =
+    isWindowOpened && (openedWindowIndex < openedWindows.length - 1 || isMostRecentlyOpenedWindowHidden);
+  const isWindowFocused = isWindowOpened && !isWindowHidden;
+  const hasUnsavedChanges = window?.openedWorkspaces.some((w) => w.hasUnsavedChanges) ?? false;
 
   const onClick = async () => {
     if (isWindowOpened) {
-      if (!isFocused) {
+      if (isWindowHidden) {
         restoreWindow(window.windowName);
+      } else {
+        hideWindow();
       }
     } else {
       const shouldLaunch = await (onBeforeWorkspaceLaunch?.() ?? true);
@@ -99,7 +103,10 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   if (layout === 'tablet' || layout === 'phone') {
     return (
       <Button
-        className={classNames(styles.container, { [styles.active]: isWindowOpened })}
+        className={classNames(styles.container, {
+          [styles.active]: isWindowOpened && !isWindowFocused,
+          [styles.focused]: isWindowFocused,
+        })}
         iconDescription={label}
         kind="ghost"
         onClick={onClick}
@@ -108,7 +115,7 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
         size="md"
       >
         <span className={styles.elementContainer}>
-          <Tags isWindowHidden={isWindowHidden} getIcon={getIcon} tagContent={tagContent} />
+          <Tags hasUnsavedChanges={hasUnsavedChanges} getIcon={getIcon} tagContent={tagContent} />
         </span>
         <span>{label}</span>
       </Button>
@@ -120,8 +127,8 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
       align="left"
       aria-label={label}
       className={classNames(styles.container, {
-        [styles.active]: isWindowOpened,
-        [styles.focused]: isFocused,
+        [styles.active]: isWindowOpened && !isWindowFocused,
+        [styles.focused]: isWindowFocused,
       })}
       enterDelayMs={300}
       kind="ghost"
@@ -130,20 +137,8 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
       size="md"
     >
       <div className={styles.elementContainer}>
-        <Tags isWindowHidden={isWindowHidden} getIcon={getIcon} tagContent={tagContent} />
+        <Tags hasUnsavedChanges={hasUnsavedChanges} getIcon={getIcon} tagContent={tagContent} />
       </div>
     </IconButton>
   );
 };
-
-function isCurrentWindowFocused(openedWindows: Array<OpenedWindow>, currentWindow: OpenedWindow | undefined): boolean {
-  // openedWindows array is sorted with most recently opened window appearing last.
-  // We check if the current window is the last one in the array that is not hidden.
-  for (let i = openedWindows.length - 1; i >= 0; i--) {
-    const win = openedWindows[i];
-    if (!win.hidden) {
-      return win.windowName === currentWindow?.windowName;
-    }
-  }
-  return false;
-}

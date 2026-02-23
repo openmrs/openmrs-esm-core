@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-utils",
-  "version": "8.0.0",
+  "version": "9.0.1",
   "license": "MPL-2.0",
   "description": "Helper utilities for OpenMRS",
   "type": "module",
@@ -17,6 +17,7 @@
   "scripts": {
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "typescript": "tsc --project tsconfig.build.json",
@@ -49,10 +50,10 @@
     "@internationalized/date": "^3.8.0",
     "any-date-parser": "^2.0.3",
     "lodash-es": "^4.17.21",
-    "semver": "7.3.2"
+    "semver": "^7.7.3"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "6.x",
+    "@openmrs/esm-globals": "9.x",
     "dayjs": "1.x",
     "i18next": "25.x",
     "rxjs": "6.x"
@@ -63,12 +64,13 @@
     "@swc/core": "^1.11.29",
     "@types/lodash-es": "^4.17.12",
     "@types/semver": "^7.3.4",
+    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
-    "happy-dom": "^17.4.7",
+    "happy-dom": "^20.6.0",
     "rimraf": "^6.0.1",
     "rxjs": "^6.5.3",
-    "vitest": "^3.1.4"
+    "vitest": "^4.0.18"
   }
 }

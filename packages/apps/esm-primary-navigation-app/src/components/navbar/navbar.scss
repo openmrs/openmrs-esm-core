@@ -43,6 +43,9 @@
 }
 
 .topNavInfoSlot {
-  display: flex;
   gap: layout.$spacing-03;
+}
+
+.panelWrapper {
+  display: contents;
 }

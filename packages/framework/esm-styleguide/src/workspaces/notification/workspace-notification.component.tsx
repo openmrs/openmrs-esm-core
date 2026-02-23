@@ -1,10 +1,10 @@
 /** @module @category Workspace */
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Button, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
+import { escapeRegExp } from 'lodash-es';
 import { navigate } from '@openmrs/esm-navigation';
 import { reportError } from '@openmrs/esm-error-handling';
-import { escapeRegExp } from 'lodash-es';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { type SingleSpaCustomEventDetail } from 'single-spa';
 import {
   cancelPrompt,
@@ -22,7 +22,6 @@ export interface WorkspaceNotificationProps {
 }
 
 export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps) {
-  const { t } = useTranslation();
   const { prompt } = useWorkspaces();
 
   useEffect(() => {
@@ -91,10 +90,10 @@ export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps
       </ModalBody>
       <ModalFooter>
         <Button kind="secondary" onClick={cancelPrompt}>
-          {prompt.cancelText ?? t('cancel', 'Cancel')}
+          {prompt.cancelText ?? getCoreTranslation('cancel')}
         </Button>
         <Button kind="danger" onClick={prompt.onConfirm}>
-          {prompt.confirmText ?? t('confirm', 'Confirm')}
+          {prompt.confirmText ?? getCoreTranslation('confirm')}
         </Button>
       </ModalFooter>
     </ComposedModal>

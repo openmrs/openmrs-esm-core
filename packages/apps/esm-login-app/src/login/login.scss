@@ -38,6 +38,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  min-height: calc(100vh - var(--omrs-navbar-height));
 }
 
 .center {
@@ -93,24 +94,6 @@
   min-height: fit-content;
 }
 
-@media only screen and (min-width: 481px) {
-  .container {
-    height: 100vh;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .container {
-    height: 100vh;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .container {
-    height: 100vh;
-  }
-}
-
 .inputGroup {
   display: flex;
   justify-content: center;
@@ -155,4 +138,13 @@
   position: absolute;
   bottom: 100%;
   left: 0;
+}
+
+// Keep password field in DOM for browser autofill
+.hiddenPasswordField {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  pointer-events: none;
 }

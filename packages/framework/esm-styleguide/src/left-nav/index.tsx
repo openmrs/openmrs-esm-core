@@ -8,6 +8,7 @@ import {
   useAssignedExtensions,
   useLeftNavStore,
 } from '@openmrs/esm-react-utils';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import styles from './left-nav.module.scss';
 
 /**
@@ -33,10 +34,19 @@ export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>((prop
   const { slotName, basePath, componentContext, state } = useLeftNavStore();
   const currentPath = window.location ?? { pathname: '' };
   const navMenuItems = useAssignedExtensions(slotName ?? '');
+  const { inert, ...restProps } = props;
 
   if (props.isChildOfHeader && slotName && navMenuItems.length > 0) {
     return (
-      <SideNav ref={ref} expanded aria-label="Left navigation" className={styles.leftNav} {...props}>
+      <SideNav
+        aria-label={getCoreTranslation('leftNavigation', 'Left navigation')}
+        className={styles.leftNav}
+        expanded
+        isFixedNav
+        inert={typeof inert === 'boolean' ? inert : undefined}
+        ref={ref}
+        {...restProps}
+      >
         <ExtensionSlot name="global-nav-menu-slot" />
         {slotName ? (
           <RenderIfValueIsTruthy

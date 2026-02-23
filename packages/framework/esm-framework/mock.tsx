@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { vi } from 'vitest';
+import dayjs from 'dayjs';
 import { NEVER } from 'rxjs';
+import { vi } from 'vitest';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
-import dayjs from 'dayjs';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -18,7 +18,7 @@ export * from '@openmrs/esm-state/mock';
 export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
 
-export { parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
+export { parseDate, formatDate, formatDatetime, formatTime, isOmrsDateToday } from '@openmrs/esm-utils';
 
 /* esm-globals */
 
@@ -75,6 +75,11 @@ export const CustomOverflowMenu = vi.fn(({ menuTitle, children }) => (
     {children}
   </div>
 ));
+export const CustomOverflowMenuItem = vi.fn(({ itemText, ...props }) => (
+  <button role="menuitem" {...props}>
+    {itemText}
+  </button>
+));
 export const PatientBannerActionsMenu = vi.fn(() => <div>Patient Banner Actions Menu</div>);
 export const PatientBannerContactDetails = vi.fn(() => <div>Patient Banner Contact Details</div>);
 export const PatientBannerPatientInfo = vi.fn(() => <div>Patient Banner Patient Info</div>);
@@ -101,8 +106,10 @@ export const closeWorkspace = vi.fn();
 export const launchWorkspace = vi.fn();
 export const launchWorkspace2 = vi.fn();
 export const launchWorkspaceGroup = vi.fn();
+export const closeWorkspaceGroup2 = vi.fn();
 export const navigateAndLaunchWorkspace = vi.fn();
 export const useWorkspaces = vi.fn();
+export const useWorkspace2Context = vi.fn();
 
 export const OpenmrsDatePicker = vi.fn(({ id, labelText, value, onChange, isInvalid, invalidText }) => (
   <>

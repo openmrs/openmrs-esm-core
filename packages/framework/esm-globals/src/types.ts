@@ -318,14 +318,34 @@ export interface WorkspaceGroupDefinition2 {
   name: string;
   closeable?: boolean;
   overlay?: boolean;
+
+  /**
+   * In app-wide persistence mode, a workspace group renders its
+   * action menu without a close button. This is for
+   * workspace groups that are meant to be opened for the entire duration of the app
+   *
+   * In closable persistence mode, a workspace group renders its
+   * action menu with a close button. User may explicitly close the group, along
+   * with any opened windows / workspaces.
+   */
+  persistence?: 'app-wide' | 'closable';
+
+  /**
+   * URL pattern that defines the scope where workspaces in this group should persist.
+   * - If not defined: workspaces close only when navigating to a different app
+   * - If defined without capture groups: workspaces close when URL doesn't match pattern
+   * - If defined with capture groups: workspaces close when captured values change
+   *
+   * @example "^/home/appointments" - static scope for appointments dashboard
+   * @example "^/patient/([^/]+)/chart" - dynamic scope by patient UUID
+   */
+  scopePattern?: string;
 }
 
 export interface WorkspaceWindowDefinition2 {
   name: string;
   icon?: string;
-  canHide: boolean;
-  canMaximize: boolean;
-  overlay: boolean;
+  canMaximize?: boolean;
   group: string;
   order?: number;
   width?: 'narrow' | 'wider' | 'extra-wide';

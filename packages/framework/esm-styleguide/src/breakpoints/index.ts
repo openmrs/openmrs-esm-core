@@ -19,7 +19,13 @@ function setBodyCssClasses() {
   document.body.classList.toggle('omrs-breakpoint-gt-small-desktop', window.innerWidth > Breakpoint.SMALL_DESKTOP_MAX);
 }
 
+let isIntegrated = false;
+
 export function integrateBreakpoints() {
+  if (isIntegrated) {
+    return;
+  }
   window.addEventListener('resize', setBodyCssClasses);
   setBodyCssClasses();
+  isIntegrated = true;
 }

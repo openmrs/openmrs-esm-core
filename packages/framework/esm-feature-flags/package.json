@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-feature-flags",
-  "version": "8.0.0",
+  "version": "9.0.1",
   "license": "MPL-2.0",
   "description": "A feature flag system for the OpenMRS Single-Spa framework.",
   "module": "dist/index.js",
@@ -45,8 +45,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "6.x",
-    "@openmrs/esm-state": "6.x",
+    "@openmrs/esm-globals": "9.x",
+    "@openmrs/esm-state": "9.x",
     "single-spa": "6.x"
   },
   "devDependencies": {

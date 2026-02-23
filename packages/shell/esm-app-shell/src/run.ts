@@ -3,10 +3,11 @@ import { type CalendarIdentifier } from '@internationalized/date';
 import {
   activateOfflineCapability,
   canAccessStorage,
-  cleanupObsoleteFeatureFlags,
   dispatchConnectivityChanged,
   dispatchPrecacheStaticDependencies,
+  type ExtensionDefinition,
   finishRegisteringAllApps,
+  fireOpenmrsEvent,
   getConfig,
   getCurrentUser,
   integrateBreakpoints,
@@ -47,7 +48,8 @@ import {
   type StyleguideConfigObject,
 } from '@openmrs/esm-framework/src/internal';
 import { setupI18n } from './locale';
-import { registerOptionalDependencyHandler } from './optionaldeps';
+import './routing-events';
+import './events';
 import { appName, getCoreExtensions } from './ui';
 import { setupCoreConfig } from './core-config';
 
@@ -246,14 +248,12 @@ function renderFatalErrorPage(e?: Error) {
 }
 
 function clearDevOverrides() {
-  for (const key of Object.keys(localStorage)) {
-    if (
+  const keysToRemove = Object.keys(localStorage).filter(
+    (key) =>
       key.startsWith('import-map-override:') &&
-      !['import-map-override:react', 'import-map-override:react-dom'].includes(key)
-    ) {
-      localStorage.removeItem(key);
-    }
-  }
+      !['import-map-override:react', 'import-map-override:react-dom'].includes(key),
+  );
+  keysToRemove.forEach((key) => localStorage.removeItem(key));
   location.reload();
 }
 
@@ -314,7 +314,8 @@ function showLoadingSpinner() {
 function registerCoreExtensions() {
   const extensions = getCoreExtensions();
   for (const extension of extensions) {
-    tryRegisterExtension(appName, extension);
+    // FIXME This "core extensions" concept should likely be retired
+    tryRegisterExtension(appName, extension as unknown as ExtensionDefinition);
   }
 }
 
@@ -439,7 +440,9 @@ export function run(configUrls: Array<string>) {
       .catch(handleInitFailure)
       .then(closeLoading)
       .then(offlineEnabled ? setupOffline : undefined)
-      .then(registerOptionalDependencyHandler)
-      .then(cleanupObsoleteFeatureFlags);
+      .then(() => {
+        // intentionally not returned so that processing the "started" event doesn't block
+        fireOpenmrsEvent('started');
+      });
   });
 }

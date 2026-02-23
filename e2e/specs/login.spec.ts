@@ -19,6 +19,7 @@ test('Login as Admin user', async ({ page }) => {
   });
 
   await test.step('And I enter my password', async () => {
+    await page.getByLabel(/^password$/i).waitFor({ state: 'visible', timeout: 10000 });
     await page.getByLabel(/^password$/i).fill(`${process.env.E2E_USER_ADMIN_PASSWORD}`);
   });
 

@@ -14,7 +14,7 @@ import { useConceptLookup } from './concept-search.resource';
 import styles from './uuid-search.scss';
 
 interface ConceptSearchBoxProps {
-  setConcept: (concept) => void;
+  setConcept: (concept: Concept) => void;
   value: string;
 }
 
@@ -25,11 +25,11 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const [selectedConcept, setSelectedConcept] = useState<string>(value);
   const { concepts, isSearchingConcepts } = useConceptLookup(conceptToLookup);
 
-  const handleSearchTermChange = (event) => {
+  const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConceptToLookup(event.target.value);
   };
 
-  const handleConceptUuidChange = (concept) => {
+  const handleConceptUuidChange = (concept: Concept) => {
     setSelectedConcept(concept.uuid);
     setConcept(concept);
     setConceptToLookup('');
@@ -47,7 +47,6 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           autoComplete="off"
           autoCapitalize="off"
           aria-autocomplete="list"
-          role="combobox"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
           aria-controls={`searchbox-${id}`}
           aria-expanded={concepts.length > 0}

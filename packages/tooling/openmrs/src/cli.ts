@@ -3,7 +3,15 @@
 import yargs from 'yargs';
 import { fork } from 'child_process';
 import { resolve } from 'node:path';
-import { getImportmapAndRoutes, mergeImportmapAndRoutes, proxyImportmapAndRoutes, runProject, trimEnd } from './utils';
+import {
+  getAvailablePort,
+  getImportmapAndRoutes,
+  isPortAvailable,
+  mergeImportmapAndRoutes,
+  proxyImportmapAndRoutes,
+  runProject,
+  trimEnd,
+} from './utils';
 
 import type * as commands from './commands';
 
@@ -30,8 +38,7 @@ yargs.command(
   (argv) =>
     argv
       .option('port', {
-        default: 8080,
-        describe: 'The port where the dev server should run.',
+        describe: 'The port where the dev server should run. Defaults to 8080, or the next available port.',
         type: 'number',
       })
       .option('host', {
@@ -102,19 +109,33 @@ yargs.command(
         describe: 'Determines if a service worker should be installed for offline support.',
         type: 'boolean',
       }),
-  async (args) =>
+  async (args) => {
+    let port: number;
+    if (args.port === undefined) {
+      port = await getAvailablePort(8080);
+    } else {
+      // handle case where user has specified a port to run on
+      if (!(await isPortAvailable(args.port))) {
+        console.error(`Error: Port ${args.port} is already in use. Please choose a different port.`);
+        process.exit(1);
+      }
+      port = args.port;
+    }
+
     runCommand('runDebug', {
       configUrls: args['config-url'],
       ...args,
+      port,
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
-          await getImportmapAndRoutes(args.importmap, args.routes, args.port),
-          await runProject(args.port, args.sources),
+          await getImportmapAndRoutes(args.importmap, args.routes, port),
+          await runProject(port, args.sources),
         ),
         args.backend,
         args.spaPath,
       ),
-    }),
+    });
+  },
 );
 
 yargs.command(
@@ -123,8 +144,7 @@ yargs.command(
   (argv) =>
     argv
       .option('port', {
-        default: 8080,
-        describe: 'The port where the dev server should run.',
+        describe: 'The port where the dev server should run. Defaults to 8080, or the next available port.',
         type: 'number',
       })
       .option('host', {
@@ -201,22 +221,36 @@ yargs.command(
           "Set this flag to force the CLI to attempt to use the Rspack Dev Server. Note that this will fail if the project you are using it in doesn't use Rspack.",
         type: 'boolean',
       }),
-  async (args) =>
+  async (args) => {
+    let port: number;
+    if (args.port === undefined) {
+      port = await getAvailablePort(8080);
+    } else {
+      // handle case where user has specified a port to run on
+      if (!(await isPortAvailable(args.port))) {
+        console.error(`Error: Port ${args.port} is already in use. Please choose a different port.`);
+        process.exit(1);
+      }
+      port = args.port;
+    }
+
     runCommand('runDevelop', {
       configUrls: args['config-url'],
       configFiles: args['config-file'],
       ...args,
+      port,
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
-          await getImportmapAndRoutes(args.importmap, args.routes, args.port),
-          await runProject(args.port, args.sources, args['use-rspack']),
+          await getImportmapAndRoutes(args.importmap, args.routes, port),
+          await runProject(port, args.sources, args['use-rspack']),
           args.backend,
           args.spaPath,
         ),
         args.backend,
         args.spaPath,
       ),
-    }),
+    });
+  },
 );
 
 yargs.command(

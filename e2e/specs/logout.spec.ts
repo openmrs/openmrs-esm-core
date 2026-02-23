@@ -23,7 +23,16 @@ test('Logout as Admin user', async ({ page }) => {
   });
 
   await test.step('And I should not see any error messages', async () => {
-    await expect(page.getByText('error')).toBeHidden();
+    // Note the complexity here is because we are ensuring that there are no elements
+    // with the text "error" that are visible regardless of how many elements with
+    // matching text may be in the DOM.
+    const promises: Array<Promise<void>> = [];
+    for (const elm of await page.getByText('error').all()) {
+      // eslint-disable-next-line playwright/missing-playwright-await
+      promises.push(expect(elm).toBeHidden());
+    }
+
+    await Promise.all(promises);
   });
 });
 

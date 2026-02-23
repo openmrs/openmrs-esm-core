@@ -1,21 +1,23 @@
 /* eslint-disable */
 import React from 'react';
+import { describe, expect, it, afterEach, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { implementerToolsConfigStore, temporaryConfigStore, Type } from '@openmrs/esm-framework/src/internal';
 import { Configuration } from './configuration.component';
 import { useConceptLookup, useGetConceptByUuid } from './interactive-editor/value-editors/concept-search.resource';
 
-const mockUseConceptLookup = jest.mocked(useConceptLookup);
-const mockUseGetConceptByUuid = jest.mocked(useGetConceptByUuid);
+const mockUseConceptLookup = vi.mocked(useConceptLookup);
+const mockUseGetConceptByUuid = vi.mocked(useGetConceptByUuid);
 
-jest.mock('./interactive-editor/value-editors/concept-search.resource', () => ({
-  useConceptLookup: jest.fn().mockImplementation(() => ({
+vi.mock('./interactive-editor/value-editors/concept-search.resource', () => ({
+  useConceptLookup: vi.fn().mockImplementation(() => ({
     concepts: [],
     error: null,
     isSearchingConcepts: false,
   })),
-  useGetConceptByUuid: jest.fn().mockImplementation(() => ({
+  useGetConceptByUuid: vi.fn().mockImplementation(() => ({
     concept: null,
     error: null,
     isLoadingConcept: false,
@@ -126,7 +128,6 @@ describe('Configuration', () => {
 
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const value = row.getByText('false');
       const editButton = row.getByText('Edit').parentElement as any;
       await user.click(editButton);
       const editor = row.getByRole('button', { name: /edit/i });
@@ -179,9 +180,7 @@ describe('Configuration', () => {
 
       await user.click(editButton);
 
-      const searchbox = await row.findByRole('combobox', {
-        name: /search concepts/i,
-      });
+      const searchbox = await row.findByPlaceholderText(/search concepts/i);
 
       await user.type(searchbox, 'fedora');
 
@@ -325,7 +324,6 @@ describe('Configuration', () => {
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
 
-      const inputs = row.getByText('[ 4, 12 ]');
       const editButton = row.getByRole('button', { name: /edit/i });
 
       await user.click(editButton);
@@ -360,5 +358,39 @@ describe('Configuration', () => {
       // user.click(row.getByText("Save"));
       // expect(mockSetTemporaryConfigValue).toHaveBeenCalledWith(["@openmrs/luigi", "favoriteNumbers"], [5, 11, 13]);
     }
+  });
+
+  it('handles hovering over config tree items without crashing', async () => {
+    const user = userEvent.setup();
+
+    implementerToolsConfigStore.setState({
+      config: {
+        '@openmrs/mario': {
+          hasHat: mockImplToolsConfig['@openmrs/mario'].hasHat,
+          weapons: {
+            gloves: {
+              _type: Type.Number,
+              _default: 0,
+              _value: 2,
+              _source: 'provided',
+            },
+          },
+        },
+      },
+    });
+
+    renderConfiguration();
+
+    // Find and hover over a leaf node (hasHat)
+    const hasHatElement = await screen.findByText('hasHat');
+    await user.hover(hasHatElement);
+
+    // Find and hover over a branch node (weapons) - this should not crash
+    const weaponsElement = await screen.findByText('weapons');
+    await user.hover(weaponsElement);
+
+    // Both elements should still be in the document (no crash occurred)
+    expect(hasHatElement).toBeInTheDocument();
+    expect(weaponsElement).toBeInTheDocument();
   });
 });

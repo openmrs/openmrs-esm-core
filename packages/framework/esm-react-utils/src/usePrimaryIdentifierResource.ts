@@ -10,6 +10,14 @@ interface PrimaryIdentifierResponse {
   results: Array<PrimaryIdentifier>;
 }
 
+/**
+ * A React hook that retrieves the UUID of the primary patient identifier type
+ * from the metadata mapping configuration. This identifier type is commonly used
+ * to display the main identifier for a patient, such as their medical record number.
+ *
+ * @returns An object containing the primary identifier type UUID, loading state, and any error.
+ *
+ */
 export function usePrimaryIdentifierCode(): {
   primaryIdentifierCode: string | undefined;
   isLoading: boolean;

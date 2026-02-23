@@ -50,7 +50,6 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it('Config should add, order, and remove extensions within slots', async () => {
-    const promise = Promise.resolve();
     registerSimpleExtension('Fred', 'esm-flintstone');
     registerSimpleExtension('Wilma', 'esm-flintstone');
     registerSimpleExtension('Barney', 'esm-rubble');
@@ -79,15 +78,14 @@ describe('Interaction between configuration and extension systems', () => {
       disableTranslations: true,
     })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-    await act(async () => await promise);
+    act(() => {
+      render(<App />);
+    });
 
-    render(<App />);
-
-    await screen.findByText('Betty');
-    const slot = screen.getByTestId('slot');
-    const extensions = slot.childNodes;
-
-    await waitFor(() => {
+    await waitFor(async () => {
+      await screen.findByText('Betty');
+      const slot = screen.getByTestId('slot');
+      const extensions = slot.childNodes;
       expect(extensions[0]).toHaveTextContent('Betty');
       expect(extensions[1]).toHaveTextContent('Wilma');
       expect(extensions[2]).toHaveTextContent('Barney');
@@ -96,7 +94,6 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it("Extensions should recieve config from module and from 'configure' key", async () => {
-    const promise = Promise.resolve();
     registerSimpleExtension('Pebbles', 'esm-flintstone', true);
     defineConfigSchema('esm-flintstone', {
       town: { _type: Type.String, _default: 'Bedrock' },
@@ -131,9 +128,9 @@ describe('Interaction between configuration and extension systems', () => {
       </>
     ));
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     screen.findAllByText(/.*Pebbles.*/);
     const flintstonePebbles = screen.getByTestId('flintstone-slot');
@@ -146,8 +143,6 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it('Should be possible to attach the same extension twice with different configurations', async () => {
-    const promise = Promise.resolve();
-
     registerSimpleExtension('pet', 'esm-characters', true);
     defineConfigSchema('esm-characters', {
       name: { _type: Type.String, _default: '(no-name)' },
@@ -183,9 +178,9 @@ describe('Interaction between configuration and extension systems', () => {
       </>
     ));
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     screen.findAllByText(/.*Dino.*/);
     const slot = screen.getByTestId('flintstone-slot');
@@ -197,7 +192,6 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it('Slot config should update with temporary config', async () => {
-    const promise = Promise.resolve();
     registerSimpleExtension('Pearl', 'esm-slaghoople');
     attach('A slot', 'Pearl');
     defineConfigSchema('esm-slaghoople', {});
@@ -209,9 +203,9 @@ describe('Interaction between configuration and extension systems', () => {
       disableTranslations: true,
     })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     await screen.findByText('Pearl');
 
@@ -233,7 +227,6 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it('Extension config should update with temporary config', async () => {
-    const promise = Promise.resolve();
     registerSimpleExtension('Mr. Slate', 'esm-flintstone', true);
     attach('A slot', 'Mr. Slate');
     defineConfigSchema('esm-flintstone', { tie: { _default: 'green' } });
@@ -245,9 +238,9 @@ describe('Interaction between configuration and extension systems', () => {
       disableTranslations: true,
     })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
     await screen.findByText(/Mr. Slate/);
     expect(screen.getByTestId('slot')).toHaveTextContent(/green/);
 
@@ -273,7 +266,6 @@ describe('Interaction between configuration and extension systems', () => {
 
   // TODO restore this test
   it.skip('Extension config should be available in extension store', async () => {
-    const promise = Promise.resolve();
     registerSimpleExtension('Bamm-Bamm', 'esm-flintstone', false);
     attach('A slot', 'Bamm-Bamm');
     defineConfigSchema('esm-flintstone', { clothes: { _default: 'leopard' } });
@@ -297,9 +289,9 @@ describe('Interaction between configuration and extension systems', () => {
       disableTranslations: true,
     })(RootComponent);
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     await screen.findByTestId(/slot/);
     expect(screen.getByText(/clothes/)).toHaveTextContent(/leopard/);
@@ -324,7 +316,6 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it('should not show extension when user lacks configured privilege', async () => {
-    const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,
       session: {
@@ -379,9 +370,9 @@ describe('Interaction between configuration and extension systems', () => {
       disableTranslations: true,
     })(RootComponent);
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     await waitFor(() => {
       const slot = screen.getByTestId('slot');
@@ -391,7 +382,6 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   it('should show extension when user has configured privilege', async () => {
-    const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,
       session: {
@@ -439,9 +429,9 @@ describe('Interaction between configuration and extension systems', () => {
       disableTranslations: true,
     })(RootComponent);
 
-    await act(async () => await promise);
-
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     await screen.findByTestId(/slot/);
     expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Schmoo');
@@ -449,27 +439,25 @@ describe('Interaction between configuration and extension systems', () => {
 
   it('should only show extensions users have default privilege for', async () => {
     // Set up initial session state before registering extensions
-    await act(async () => {
-      mockSessionStore.setState({
-        loaded: true,
-        session: {
-          authenticated: true,
-          sessionId: '1',
-          user: {
-            uuid: '1',
-            display: 'Non-Admin',
-            username: 'nonadmin',
-            systemId: 'nonadmin',
-            userProperties: {},
-            person: {} as Person,
-            privileges: [{ uuid: '1', display: 'YOWTCH!' }],
-            roles: [],
-            retired: false,
-            locale: 'en',
-            allowedLocales: ['en'],
-          },
+    mockSessionStore.setState({
+      loaded: true,
+      session: {
+        authenticated: true,
+        sessionId: '1',
+        user: {
+          uuid: '1',
+          display: 'Non-Admin',
+          username: 'nonadmin',
+          systemId: 'nonadmin',
+          userProperties: {},
+          person: {} as Person,
+          privileges: [{ uuid: '1', display: 'YOWTCH!' }],
+          roles: [],
+          retired: false,
+          locale: 'en',
+          allowedLocales: ['en'],
         },
-      });
+      },
     });
 
     registerSimpleExtension('Schmoo', 'esm-bedrock', true, 'Yabadabadoo!');
@@ -497,7 +485,9 @@ describe('Interaction between configuration and extension systems', () => {
       disableTranslations: true,
     })(RootComponent);
 
-    render(<App />);
+    act(() => {
+      render(<App />);
+    });
 
     await waitFor(() => {
       const slot = screen.getByTestId('slot');

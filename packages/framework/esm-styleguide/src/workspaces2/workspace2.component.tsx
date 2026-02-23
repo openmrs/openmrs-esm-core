@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, type ReactNode } from 'react';
-import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
-import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
-import { SingleSpaContext } from 'single-spa-react';
-import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
-import { getCoreTranslation } from '@openmrs/esm-translations';
+import React, { useEffect, type ReactNode } from 'react';
 import classNames from 'classnames';
-import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../icons';
+import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderName } from '@carbon/react';
+import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
+import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
+import { getCoreTranslation } from '@openmrs/esm-translations';
+import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
+import { ArrowRightIcon, CloseIcon } from '../icons';
+import { useWorkspace2Store, useWorkspace2Context, closeWorkspaceGroup2 } from './workspace2';
 import styles from './workspace2.module.scss';
-import { useWorkspace2Store } from './workspace2';
+
 interface Workspace2Props {
   title: string;
   children: ReactNode;
@@ -30,12 +30,13 @@ export interface Workspace2DefinitionProps<
    * @param workspaceName
    * @param workspaceProps
    */
-  launchChildWorkspace<Props extends object>(workspaceName: string, workspaceProps?: Props): void;
+  launchChildWorkspace<Props extends object>(workspaceName: string, workspaceProps?: Props): Promise<void>;
 
   /**
    * closes the current workspace, along with its children.
-   * @param closeWindow If true, the workspace's window, along with all workspaces within it, will be closed as well
-   * @param discardUnsavedChanges If true, the "unsaved changes" modal will be supressed, and the value of `hasUnsavedChanges` will be ignored. Use this when closing the workspace immediately after changes are saved.
+   * @param options Optional configuration for closing the workspace.
+   * @param options.closeWindow If true, the workspace's window, along with all workspaces within it, will be closed as well.
+   * @param options.discardUnsavedChanges If true, the "unsaved changes" modal will be suppressed, and the value of `hasUnsavedChanges` will be ignored. Use this when closing the workspace immediately after changes are saved.
    * @returns a Promise that resolves to true if the workspace is closed, false otherwise.
    */
   closeWorkspace(options?: { closeWindow?: boolean; discardUnsavedChanges?: boolean }): Promise<boolean>;
@@ -44,6 +45,9 @@ export interface Workspace2DefinitionProps<
   windowProps: WindowProps | null;
   groupProps: GroupProps | null;
   workspaceName: string;
+  windowName: string;
+  isRootWorkspace: boolean;
+  showActionMenu: boolean;
 }
 
 /**
@@ -75,8 +79,9 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     registeredWorkspacesByName,
     workspaceTitleByWorkspaceName,
     setWorkspaceTitle,
+    isMostRecentlyOpenedWindowHidden,
   } = useWorkspace2Store();
-  const { workspaceName, isRootWorkspace, closeWorkspace } = useContext(SingleSpaContext);
+  const { workspaceName, isRootWorkspace, closeWorkspace, showActionMenu } = useWorkspace2Context();
 
   const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
 
@@ -87,13 +92,13 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     if (openedWorkspace?.hasUnsavedChanges != hasUnsavedChanges) {
       setHasUnsavedChanges(workspaceName, hasUnsavedChanges ?? false);
     }
-  }, [openedWorkspace, hasUnsavedChanges]);
+  }, [openedWorkspace?.hasUnsavedChanges, hasUnsavedChanges, workspaceName, setHasUnsavedChanges]);
 
   useEffect(() => {
     if (workspaceTitleByWorkspaceName[workspaceName] !== title) {
       setWorkspaceTitle(workspaceName, title);
     }
-  }, [openedWorkspace, title]);
+  }, [workspaceTitleByWorkspaceName, workspaceName, title, setWorkspaceTitle]);
 
   if (openedWindowIndex < 0 || openedGroup == null || openedWorkspace == null) {
     // workspace window / group has likely just closed
@@ -112,13 +117,16 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   }
 
   const { icon, canMaximize } = windowDef;
-  const canHide = !!icon;
+  const canCloseGroup = group.persistence === 'closable';
+  const canHide = !!icon && !canCloseGroup;
   const { maximized } = openedWindow;
   const width = windowDef?.width ?? 'narrow';
 
   const isActionMenuOpened = Object.values(registeredWindowsByName).some(
     (window) => window.group === openedGroup.groupName && window.icon !== undefined,
   );
+
+  const isWindowHidden = openedWindowIndex < openedWindows.length - 1 || isMostRecentlyOpenedWindowHidden;
 
   return (
     <div
@@ -131,77 +139,76 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
     >
       <div
         className={classNames(styles.workspaceSpacer, {
-          [styles.hidden]: openedWindow.hidden,
+          [styles.hidden]: isWindowHidden,
         })}
       />
       <div
         className={classNames(styles.workspaceMiddleContainer, {
           [styles.maximized]: maximized,
-          [styles.hidden]: openedWindow.hidden,
+          [styles.hidden]: isWindowHidden,
           [styles.isRootWorkspace]: isRootWorkspace,
+          [styles.showActionMenu]: showActionMenu,
         })}
       >
         <div
           className={classNames(styles.workspaceInnerContainer, {
             [styles.maximized]: maximized,
-            [styles.hidden]: openedWindow.hidden,
+            [styles.hidden]: isWindowHidden,
             [styles.isRootWorkspace]: isRootWorkspace,
           })}
         >
-          <>
-            <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
-              <HeaderName prefix="">{title}</HeaderName>
-              <div className={styles.overlayHeaderSpacer} />
-              <HeaderGlobalBar className={styles.headerButtons}>
-                {isDesktop(layout) ? (
-                  <>
-                    {(canMaximize || maximized) && (
-                      <HeaderGlobalAction
-                        aria-label={maximized ? getCoreTranslation('minimize') : getCoreTranslation('maximize')}
-                        onClick={() => setWindowMaximized(windowName, !maximized)}
-                      >
-                        {maximized ? <Minimize /> : <Maximize />}
-                      </HeaderGlobalAction>
-                    )}
-                    {canHide ? (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('hide')}
-                        onClick={() => hideWindow(windowName)}
-                      >
-                        <ArrowRightIcon />
-                      </HeaderGlobalAction>
-                    ) : (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('close')}
-                        onClick={() => closeWorkspace({ closeWindow: true })}
-                      >
-                        <CloseIcon />
-                      </HeaderGlobalAction>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    {canHide && (
-                      <HeaderGlobalAction
-                        aria-label={getCoreTranslation('hide')}
-                        onClick={() => hideWindow(windowName)}
-                      >
-                        <DownToBottom />
-                      </HeaderGlobalAction>
-                    )}
-
+          <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
+            <HeaderName prefix="">{title}</HeaderName>
+            <div className={styles.overlayHeaderSpacer} />
+            <HeaderGlobalBar className={styles.headerButtons}>
+              {isDesktop(layout) ? (
+                <>
+                  {(canMaximize || maximized) && (
+                    <HeaderGlobalAction
+                      aria-label={maximized ? getCoreTranslation('minimize') : getCoreTranslation('maximize')}
+                      onClick={() => setWindowMaximized(windowName, !maximized)}
+                    >
+                      {maximized ? <Minimize /> : <Maximize />}
+                    </HeaderGlobalAction>
+                  )}
+                  {canHide && (
+                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
+                      <ArrowRightIcon />
+                    </HeaderGlobalAction>
+                  )}
+                  {!canCloseGroup && (
                     <HeaderGlobalAction
                       aria-label={getCoreTranslation('close')}
                       onClick={() => closeWorkspace({ closeWindow: true })}
                     >
                       <CloseIcon />
                     </HeaderGlobalAction>
-                  </>
-                )}
-              </HeaderGlobalBar>
-            </Header>
-            <div className={classNames(styles.workspaceContent)}>{children}</div>
-          </>
+                  )}
+                </>
+              ) : (
+                <>
+                  {canHide && (
+                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
+                      <DownToBottom />
+                    </HeaderGlobalAction>
+                  )}
+                  <HeaderGlobalAction
+                    aria-label={getCoreTranslation('close')}
+                    onClick={() => {
+                      if (canCloseGroup) {
+                        closeWorkspaceGroup2();
+                      } else {
+                        closeWorkspace({ closeWindow: true });
+                      }
+                    }}
+                  >
+                    <CloseIcon />
+                  </HeaderGlobalAction>
+                </>
+              )}
+            </HeaderGlobalBar>
+          </Header>
+          <div className={classNames(styles.workspaceContent)}>{children}</div>
         </div>
       </div>
     </div>

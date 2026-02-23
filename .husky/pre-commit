@@ -3,6 +3,6 @@
 
 set -e  # die on error
 
-npx lint-staged
+yarn lint-staged --no-stash
 yarn turbo run extract-translations
 yarn turbo run document -- --since main

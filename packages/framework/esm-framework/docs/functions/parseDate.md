@@ -4,7 +4,7 @@
 
 > **parseDate**(`dateString`): `Date`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:31
+Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:33
 
 Utility function to parse an arbitrary string into a date.
 Uses `dayjs(dateString)`.

@@ -5,11 +5,6 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-}
-
 .omrs-app-error {
   padding: layout.$spacing-11;
   width: 100%;
@@ -46,7 +41,8 @@ body {
   position: sticky;
   height: calc(100vh - var(--omrs-navbar-height));
   top: var(--omrs-navbar-height);
-  z-index: 9000;
+  z-index: 1000;
+  will-change: contents;
 }
 
 #omrs-top-nav-app-container {
@@ -60,4 +56,24 @@ body {
     'topNav topNav topNav'
     'leftNav appRoots workspace';
   grid-template-columns: min-content 1fr min-content;
+  container-type: inline-size;
+}
+
+@media print {
+  body {
+    display: block;
+    container-type: normal;
+  }
+
+  #omrs-left-nav-container,
+  #omrs-workspaces-container,
+  #omrs-top-nav-app-container {
+    display: none;
+  }
+
+  #omrs-apps-container {
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+  }
 }

@@ -4,6 +4,7 @@ import classNames, { type Argument } from 'classnames';
 import { RenderIfValueIsTruthy } from '@openmrs/esm-react-utils';
 import style from './pictograms.module.scss';
 
+/** Array of all available OpenMRS pictogram IDs that can be used with the Pictogram component. */
 export const pictogramIds = [
   'omrs-pict-appointments',
   'omrs-pict-assessment-1',
@@ -218,7 +219,7 @@ export const PatientListsPictogram = PatientsPictogram;
  * ```
  */
 export const MaybePictogram = memo(
-  forwardRef<SVGSVGElement, { pictogram: string; fallback?: React.ReactNode } & PictogramProps>(function MaybeIcon(
+  forwardRef<SVGSVGElement, { pictogram: string; fallback?: React.ReactNode } & PictogramProps>(function MaybePictogram(
     { pictogram, fallback, ...pictogramProps },
     ref,
   ) {

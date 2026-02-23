@@ -1,0 +1,8 @@
+@use '@carbon/layout';
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: layout.$spacing-02;
+}

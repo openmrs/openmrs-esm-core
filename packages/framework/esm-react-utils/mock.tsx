@@ -7,6 +7,7 @@ import { createGlobalStore } from '@openmrs/esm-state/mock';
 import {
   isDesktop as realIsDesktop,
   usePagination as realUsePagination,
+  usePaginationInfo as realUsePaginationInfo,
   useOpenmrsPagination as realUseOpenmrsrPagination,
   useOpenmrsInfinite as realUseOpenmrsInfinite,
   useOpenmrsFetchAll as realUseOpenmrsFetchAll,
@@ -16,6 +17,7 @@ import {
   useVisitContextStore as realUseVisitContextStore,
 } from './src/index';
 export { ConfigurableLink } from './src/ConfigurableLink';
+export { RenderIfValueIsTruthy } from './src/RenderIfValueIsTruthy';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
 import * as utils from '@openmrs/esm-utils';
 
@@ -31,12 +33,15 @@ export const useAttachments = vi.fn(() => ({
   isValidating: true,
 }));
 
-export const useConfig = vi.fn((options?: { externalModuleName?: string }) => {
-  if (options?.externalModuleName) {
-    console.warn(`Mock useConfig called with externalModuleName: ${options.externalModuleName}`);
-  }
-  return utils.getDefaultsFromConfigSchema(configSchema);
-});
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+export const useConfig = vi.fn<typeof import('@openmrs/esm-react-utils').useConfig>(
+  (options?: { externalModuleName?: string }) => {
+    if (options?.externalModuleName) {
+      console.warn(`Mock useConfig called with externalModuleName: ${options.externalModuleName}`);
+    }
+    return utils.getDefaultsFromConfigSchema(configSchema);
+  },
+);
 
 export const useCurrentPatient = vi.fn(() => []);
 
@@ -77,6 +82,7 @@ export const Extension = vi.fn((props: any) => <slot />);
 export const useFeatureFlag = vi.fn().mockReturnValue(true);
 
 export const usePagination = vi.fn(realUsePagination);
+export const usePaginationInfo = vi.fn(realUsePaginationInfo);
 
 export const useOpenmrsPagination = vi.fn(realUseOpenmrsrPagination);
 export const useOpenmrsInfinite = vi.fn(realUseOpenmrsInfinite);

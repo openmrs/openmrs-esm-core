@@ -4,6 +4,7 @@ import { shallowEqual } from '@openmrs/esm-utils';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { StoreApi } from 'zustand/vanilla';
 import { createStore } from 'zustand/vanilla';
+import { isTestEnvironment } from './utils';
 
 interface StoreEntity {
   value: StoreApi<unknown>;
@@ -14,8 +15,8 @@ const availableStores: Record<string, StoreEntity> = {};
 
 // spaEnv isn't available immediately. Wait a bit before making stores available
 // on window in development mode.
-setTimeout(() => {
-  if (window && window.spaEnv === 'development') {
+globalThis.setTimeout?.(() => {
+  if (typeof window !== 'undefined' && window.spaEnv === 'development') {
     window['stores'] = availableStores;
   }
 }, 1000);
@@ -35,7 +36,9 @@ export function createGlobalStore<T>(name: string, initialState: T, storageType:
 
   if (available) {
     if (available.active) {
-      console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
+      if (!isTestEnvironment()) {
+        console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
+      }
     } else {
       available.value.setState(initialState, true);
     }
@@ -67,7 +70,9 @@ export function registerGlobalStore<T>(name: string, store: StoreApi<T>): StoreA
 
   if (available) {
     if (available.active) {
-      console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
+      if (!isTestEnvironment()) {
+        console.error(`Attempted to override the existing store ${name}. Make sure that stores are only created once.`);
+      }
     } else {
       available.value = store;
     }
@@ -113,6 +118,20 @@ export function getGlobalStore<T>(
 
 type SubscribeToArgs<T, U> = [StoreApi<T>, (state: T) => void] | [StoreApi<T>, (state: T) => U, (state: U) => void];
 
+/**
+ * Subscribes to a store and invokes a callback when the state changes.
+ * The callback is also immediately invoked with the current state upon subscription.
+ * Uses shallow equality comparison to determine if the state has changed.
+ *
+ * This function has two overloads:
+ * 1. Subscribe to the entire store state
+ * 2. Subscribe to a selected portion of the state using a selector function
+ *
+ * @param store The store to subscribe to.
+ * @param handle A callback function that receives the state (or selected state) when it changes.
+ * @returns An unsubscribe function to stop listening for changes.
+ *
+ */
 export function subscribeTo<T, U = T>(store: StoreApi<T>, handle: (state: T) => void): () => void;
 export function subscribeTo<T, U>(
   store: StoreApi<T>,
@@ -124,11 +143,13 @@ export function subscribeTo<T, U>(...args: SubscribeToArgs<T, U>): () => void {
   const handler = typeof handle === 'undefined' ? (select as unknown as (state: U) => void) : handle;
   const selector = typeof handle === 'undefined' ? (state: T) => state as unknown as U : (select as (state: T) => U);
 
-  handler(selector(store.getState()));
-  return store.subscribe((state, previous) => {
+  let previous = selector(store.getState());
+  handler(previous);
+  return store.subscribe((state) => {
     const current = selector(state);
 
     if (!shallowEqual(previous, current)) {
+      previous = current;
       handler(current);
     }
   });

@@ -1,7 +1,7 @@
 @use '@carbon/layout';
 
 .omrs-snackbars-container {
-  z-index: 1000;
+  z-index: 9001;
   position: fixed;
   width: 20rem;
   bottom: layout.$spacing-05;

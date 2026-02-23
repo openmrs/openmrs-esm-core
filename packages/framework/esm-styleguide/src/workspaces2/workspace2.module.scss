@@ -36,32 +36,24 @@ $extraWideWorkspaceWidth: 48.25rem;
     inset-inline-end: var(--actionPanelOffset);
     z-index: 100;
 
-    &.isRootWorkspace {
-      animation: growToWidth 0.5s ease-in-out;
-    }
-
-    transition: width 0.5s ease-in-out;
-
     &.maximized {
-      width: calc(100vw - var(--actionPanelOffset));
+      position: fixed !important;
+      top: var(--omrs-navbar-height) !important;
+      inset-inline-start: 0 !important;
+      inset-inline-end: var(--actionPanelOffset) !important;
+      width: calc(100vw - var(--actionPanelOffset)) !important;
+      bottom: 0 !important;
+      transform: none !important;
+      will-change: auto !important;
+      transition: none !important;
     }
     &.hidden {
       width: 0;
     }
-
-    @keyframes growToWidth {
-      from {
-        width: 0;
-      }
-      to {
-        width: inherit;
-      }
-    }
   }
 
   // This container contains the actual workspace content
-  // it has sliding transitions when hidden / restored, and
-  // changes size (width) when maximized
+  // and changes size (width) when maximized
   .workspaceInnerContainer {
     display: flex;
     flex-direction: column;
@@ -69,11 +61,12 @@ $extraWideWorkspaceWidth: 48.25rem;
     width: var(--workspaceWidth);
     border-inline-start: 1px solid $text-03;
     background-color: #fff;
-
+    will-change: width;
     transition: width 0.5s ease-in-out;
 
     &.maximized {
-      width: calc(100vw - var(--actionPanelOffset));
+      width: 100%;
+      transition: none !important;
     }
   }
 
@@ -85,37 +78,18 @@ $extraWideWorkspaceWidth: 48.25rem;
   .workspaceSpacer {
     width: inherit;
     height: 100%;
-    animation: growToWidth 0.5s ease-in-out;
 
     &.hidden {
-      animation: shrinkWidth 0.5s ease-in-out forwards;
-    }
-
-    @keyframes growToWidth {
-      from {
-        width: 0;
-      }
-      to {
-        width: inherit;
-      }
-    }
-
-    @keyframes shrinkWidth {
-      from {
-        width: inherit;
-      }
-      to {
-        width: 0;
-      }
+      width: 0;
     }
   }
 }
 
 .loader {
   display: flex;
-  background-color: $openmrs-background-grey;
   justify-content: center;
-  min-height: layout.$spacing-09;
+  align-items: center;
+  min-height: 50%;
 }
 
 .hiddenExtraWorkspace {
@@ -192,8 +166,18 @@ $extraWideWorkspaceWidth: 48.25rem;
     }
   }
 
+  // fallback for browsers that don't support the container CSS feature,
+  // the width is slightly off if <body> has a vertical scrollbar
   .workspaceOuterContainer {
-    width: 100vw !important;
+    width: 100vw;
+  }
+
+  // using the container CSS feature, for browser that support it
+  //  get the container query width (i.e. width of <body>, without the scrollbars)
+  @supports (width: 100cqw) {
+    .workspaceOuterContainer {
+      width: 100cqw;
+    }
   }
 
   .workspaceMiddleContainer {
@@ -201,38 +185,24 @@ $extraWideWorkspaceWidth: 48.25rem;
     &.hidden {
       display: none;
     }
+
+    // in tablet mode, reduce the height to of the workspace window to accommodate the workspace menu (bottom nav)
+    &.showActionMenu {
+      height: calc(100% - layout.$spacing-10);
+    }
   }
 
   .workspaceInnerContainer {
-    width: 100vw !important;
-
-    &.isRootWorkspace {
-      animation: slideFromBottom 0.5s ease-in-out;
-    }
+    width: 100% !important;
   }
 
   .marginWorkspaceContent {
     margin-bottom: var(--bottom-nav-height);
   }
 
-  @keyframes slideFromBottom {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0%);
-    }
-  }
-
-  @keyframes slideToBottom {
-    from {
-      transform: translateX(0%);
-      width: $narrowWorkspaceWidth;
-    }
-    to {
-      transform: translateX($narrowWorkspaceWidth);
-      width: 0;
-    }
+  .workspaceContent {
+    overflow-y: auto;
+    height: 100%;
   }
 }
 
