@@ -14,8 +14,8 @@
     "typedoc": ">=0.28.0"
   },
   "devDependencies": {
-    "@swc/cli": "^0.7.7",
-    "@swc/core": "^1.11.29",
+    "@swc/cli": "^0.8.0",
+    "@swc/core": "^1.15.13",
     "@vitest/coverage-v8": "^4.0.18",
     "rimraf": "^6.0.1",
     "typedoc": "^0.28.5",
