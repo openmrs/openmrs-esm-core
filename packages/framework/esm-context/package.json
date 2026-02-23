@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-context",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "license": "MPL-2.0",
   "description": "Utilities for managing the current execution context",
   "type": "module",
