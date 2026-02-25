@@ -1,5 +1,5 @@
 /** @module @category Error Handling */
-import { dispatchToastShown } from '@openmrs/esm-globals';
+import { dispatchToastShown, dispatchSnackbarShown } from '@openmrs/esm-globals';
 
 window.onerror = function (error) {
   console.error('Unexpected error: ', error);
@@ -106,43 +106,54 @@ export interface RestErrorResponse {
 }
 
 /**
- * Extracts human-readable error messages from an OpenMRS REST error response.
+ * Reports a REST API error to the user via a snackbar notification.
+ *
+ * This function integrates directly with the existing error handling pipeline.
+ * While {@link reportError} handles generic JS errors (via `window.onerror` →
+ * toast), `reportRestError` handles structured REST API errors by parsing the
+ * OpenMRS REST error response and dispatching a {@link dispatchSnackbarShown}
+ * event with the extracted human-readable messages.
  *
  * Handles the two main REST exception shapes:
  * - **ValidationException**: `{ error: { fieldErrors, globalErrors } }`
  * - **Other exceptions**: `{ error: { message, translatedMessage } }`
  *
- * The function inspects the `responseBody` property of an {@link OpenmrsFetchError}
- * (or any object with a compatible shape) and returns a flat array of message strings.
- *
- * @param error — An error caught from {@link openmrsFetch}. Typically an `OpenmrsFetchError`
+ * @param error — An error caught from `openmrsFetch`. Typically an `OpenmrsFetchError`
  *   whose `responseBody` contains the REST error JSON, but any shape is handled gracefully.
- * @returns An array of human-readable error message strings, never empty.
+ * @param title — The snackbar title. Defaults to `'Error'`.
  *
  * @example
  * ```ts
- * import { openmrsFetch, showSnackbar } from '@openmrs/esm-framework';
- * import { extractErrorMessagesFromResponse } from '@openmrs/esm-framework';
+ * import { reportRestError } from '@openmrs/esm-framework';
  *
  * try {
  *   await openmrsFetch(`${restBaseUrl}/order`, { method: 'POST', body });
  * } catch (error) {
- *   const messages = extractErrorMessagesFromResponse(error);
- *   showSnackbar({
- *     title: t('orderError', 'Error placing order'),
- *     subtitle: messages.join(', '),
- *     kind: 'error',
- *   });
+ *   reportRestError(error, 'Error placing order');
  * }
  * ```
  *
  * @category Error Handling
  */
-export function extractErrorMessagesFromResponse(error: unknown): Array<string> {
+export function reportRestError(error: unknown, title = 'Error'): void {
+  const messages = extractMessages(error);
+  const subtitle = messages.join('; ');
+
+  console.error(`${title}:`, error);
+
+  dispatchSnackbarShown({
+    title,
+    subtitle,
+    kind: 'error',
+  });
+}
+
+/** Extracts human-readable messages from a REST error response (internal). */
+function extractMessages(error: unknown): Array<string> {
   const restError = getRestErrorBody(error);
 
   if (!restError?.error) {
-    return [getFallbackMessage(error)];
+    return [ensureErrorObject(error).message];
   }
 
   const { fieldErrors, globalErrors, message, translatedMessage } = restError.error;
@@ -155,7 +166,7 @@ export function extractErrorMessagesFromResponse(error: unknown): Array<string> 
     return messages;
   }
 
-  return [translatedMessage || message || getFallbackMessage(error)];
+  return [translatedMessage || message || ensureErrorObject(error).message];
 }
 
 /** Collects human-readable messages from REST field-level validation errors. */
@@ -190,29 +201,6 @@ function getRestErrorBody(error: unknown): RestErrorResponse | null {
   }
 
   return null;
-}
-
-/** Produces a reasonable fallback message string from any error shape. */
-function getFallbackMessage(error: unknown): string {
-  if (error == null) {
-    return 'Unknown error';
-  }
-
-  if (error instanceof Error) {
-    return error.message || 'Unknown error';
-  }
-
-  if (typeof error === 'object') {
-    const err = error as Record<string, unknown>;
-    if (typeof err.message === 'string' && err.message) {
-      return err.message;
-    }
-    if (typeof err.statusText === 'string' && err.statusText) {
-      return err.statusText;
-    }
-  }
-
-  return typeof error === 'string' ? error : 'Unknown error';
 }
 
 function ensureErrorObject(thing: any) {
