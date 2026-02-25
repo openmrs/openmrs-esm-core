@@ -1,7 +1,7 @@
 import React, { type ReactElement, forwardRef, useId, useMemo } from 'react';
 import classNames, { type Argument } from 'classnames';
 import {
-  type CalendarDate,
+  CalendarDate,
   type CalendarDateTime,
   type ZonedDateTime,
   createCalendar,
@@ -148,8 +148,11 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
     const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue, calendar), [rawDefaultValue]);
     const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar, true), [rawValue]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar), [rawMaxDate]);
-    const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, calendar), [rawMinDate]);
-    const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
+    const minDate = useMemo(
+      () => dateToInternationalizedDate(rawMinDate, calendar) ?? new CalendarDate(1000, 1, 1),
+      [rawMinDate],
+    );
+    const isInvalid = useMemo(() => invalid || isInvalidRaw, [invalid, isInvalidRaw]);
     const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
 
     const onChange = useMemo(() => {
@@ -206,7 +209,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                     <DatePickerIcon />
                   </Button>
                 </Group>
-                {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
+                <FieldError className={styles.invalidText}>{invalidText}</FieldError>
               </div>
               <Popover className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
                 <AutoCloseDialog>
