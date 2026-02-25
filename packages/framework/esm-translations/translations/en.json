@@ -1,4 +1,5 @@
 {
+  "abnormalValue": "Abnormal value",
   "actionableNotification": "Actionable notification",
   "actions": "Actions",
   "address": "Address",
@@ -44,6 +45,7 @@
   "maximize": "Maximize",
   "minimize": "Minimize",
   "noResultsToDisplay": "No results to display",
+  "notAvailable": "Not available",
   "openAnyway": "Open Anyway",
   "other": "Other",
   "paginationItemsCount": "{{pageItemsCount}} / {{totalItems}} items",

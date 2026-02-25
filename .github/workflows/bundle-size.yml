@@ -14,7 +14,7 @@ jobs:
       TURBO_TEAM: ${{ github.repository_owner }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: 🚀 Setup a local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
@@ -23,7 +23,7 @@ jobs:
           server-token: ${{ env.TURBO_TOKEN }}
 
       - name: 📊 Compute bundle size report
-        uses: preactjs/compressed-size-action@v2
+        uses: preactjs/compressed-size-action@v3
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           minimum-change-threshold: 10000 # 10 KB

@@ -207,3 +207,6 @@ export const Workspace2 = vi.fn(({ title, children }) => (
     {children}
   </div>
 ));
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+export const showModal = vi.fn<typeof import('@openmrs/esm-styleguide').showModal>();

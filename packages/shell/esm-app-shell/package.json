@@ -1,11 +1,11 @@
 {
   "name": "@openmrs/esm-app-shell",
-  "version": "8.0.0",
+  "version": "9.0.1",
   "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
     "start": "yarn run watch",
-    "test": "vitest run",
+    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "watch": "cross-env OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" OMRS_OFFLINE=\"disable\" webpack serve --mode development",
     "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"disable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" webpack serve --mode development",
     "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"production\" webpack --mode production",

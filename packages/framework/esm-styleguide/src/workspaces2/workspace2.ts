@@ -429,7 +429,7 @@ export function promptForClosingWorkspaces(promptReason: PromptReason): Promise<
   });
 }
 
-const workspace2StoreActions = {
+export const workspace2StoreActions = {
   setWindowMaximized(state: WorkspaceStoreState2, windowName: string, maximized: boolean) {
     const openedWindowIndex = state.openedWindows.findIndex((a) => a.windowName === windowName);
     const openedWindows = [...state.openedWindows];
@@ -522,18 +522,22 @@ const workspace2StoreActions = {
     }
     const openedWindow = state.openedWindows[openedWindowIndex];
     const { openedWorkspaces } = openedWindow;
-    if (openedWorkspaces[openedWorkspaces.length - 1].workspaceName !== parentWorkspaceName) {
+    const parentIndex = openedWorkspaces.findIndex((w) => w.workspaceName === parentWorkspaceName);
+    if (parentIndex === -1) {
       throw new Error(
-        `Cannot open child workspace ${childWorkspaceName} from parent workspace ${parentWorkspaceName} as the parent is not the most recently opened workspace within the workspace window`,
+        `Cannot open child workspace ${childWorkspaceName} from parent workspace ${parentWorkspaceName} as the parent is not opened within the workspace window`,
       );
     }
+
+    // Close any workspaces above the parent (analogous to closeWorkspace's slice behavior)
+    const trimmedWorkspaces = openedWorkspaces.slice(0, parentIndex + 1);
 
     return {
       openedWindows: state.openedWindows.map((w, i) => {
         if (i == openedWindowIndex) {
           return {
             ...w,
-            openedWorkspaces: [...w.openedWorkspaces, newOpenedWorkspace(childWorkspaceName, childWorkspaceProps)],
+            openedWorkspaces: [...trimmedWorkspaces, newOpenedWorkspace(childWorkspaceName, childWorkspaceProps)],
           };
         } else {
           return w;

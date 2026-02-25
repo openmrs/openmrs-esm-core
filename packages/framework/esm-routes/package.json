@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-routes",
-  "version": "8.0.0",
+  "version": "9.0.1",
   "license": "MPL-2.0",
   "description": "Utilities for working with the routes registry",
   "type": "module",
@@ -46,12 +46,12 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-config": "6.x",
-    "@openmrs/esm-dynamic-loading": "6.x",
-    "@openmrs/esm-extensions": "6.x",
-    "@openmrs/esm-feature-flags": "6.x",
-    "@openmrs/esm-globals": "6.x",
-    "@openmrs/esm-utils": "6.x",
+    "@openmrs/esm-config": "9.x",
+    "@openmrs/esm-dynamic-loading": "9.x",
+    "@openmrs/esm-extensions": "9.x",
+    "@openmrs/esm-feature-flags": "9.x",
+    "@openmrs/esm-globals": "9.x",
+    "@openmrs/esm-utils": "9.x",
     "single-spa": "6.x"
   },
   "devDependencies": {
@@ -63,13 +63,13 @@
     "@openmrs/esm-utils": "workspace:*",
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
-    "@vitest/coverage-v8": "^4.0.7",
+    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
-    "happy-dom": "^20.5.0",
+    "happy-dom": "^20.6.0",
     "rimraf": "^6.0.1",
     "single-spa": "^6.0.3",
-    "vitest": "^4.0.7",
+    "vitest": "^4.0.18",
     "vitest-fetch-mock": "^0.4.5"
   }
 }
