@@ -11,6 +11,7 @@ import {
   useConnectivity,
   useSession,
 } from '@openmrs/esm-framework';
+import { getSessionStore } from '@openmrs/esm-api';
 import { type ConfigSchema } from '../config-schema';
 import Logo from '../logo.component';
 import Footer from '../footer.component';
@@ -39,14 +40,28 @@ const Login: React.FC = () => {
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!user) {
-      if (loginProvider.type === 'oauth2') {
-        openmrsNavigate({ to: loginProvider.loginUrl });
-      } else if (!username && location.pathname === '/login/confirm') {
-        navigate('/login');
+    async function redirectIfLoggedIn() {
+      if (!user) {
+        if (loginProvider.type === 'oauth2') {
+          openmrsNavigate({ to: loginProvider.loginUrl });
+        } else if (!username && location.pathname === '/login/confirm') {
+          navigate('/login');
+        }
+      } else {
+        const session = getSessionStore().getState();
+        const locationSet = session?.session?.sessionLocation != null;
+
+        if (locationSet) {
+          const to = loginLinks?.loginSuccess || '/home';
+          openmrsNavigate({ to });
+        } else {
+          navigate('/login/location');
+        }
       }
     }
-  }, [username, navigate, location, user, loginProvider]);
+
+    redirectIfLoggedIn();
+  }, [user, loginProvider, username, location.pathname, navigate, loginLinks]);
 
   useEffect(() => {
     if (showPasswordOnSeparateScreen) {
