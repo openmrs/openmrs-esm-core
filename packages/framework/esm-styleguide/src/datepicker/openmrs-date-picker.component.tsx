@@ -2,7 +2,7 @@ import React, { forwardRef, useId, useMemo } from 'react';
 import classNames from 'classnames';
 import { type DateValue } from 'react-aria';
 import { Button, DatePicker, type DatePickerProps, FieldError, Group, Provider, Label } from 'react-aria-components';
-import { type CalendarDate } from '@internationalized/date';
+import { CalendarDate } from '@internationalized/date';
 import { type DateInputValue, type DatePickerBaseProps } from './types';
 import { I18nWrapper } from './i18n-wrapper.component';
 import { dateToInternationalizedDate, internationalizedDateToDate } from './utils';
@@ -80,8 +80,11 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
     const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue, calendar), [rawDefaultValue]);
     const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar, true), [rawValue]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar), [rawMaxDate]);
-    const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, calendar), [rawMinDate]);
-    const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
+    const minDate = useMemo(
+      () => dateToInternationalizedDate(rawMinDate ?? new CalendarDate(1793, 1, 1), calendar),
+      [rawMinDate, calendar],
+    );
+    const isInvalid = useMemo(() => invalid || isInvalidRaw, [invalid, isInvalidRaw]);
 
     const onChange = useMemo(() => {
       if (onChangeRaw && rawOnChange) {
@@ -137,7 +140,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                     <DatePickerIcon />
                   </Button>
                 </Group>
-                {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
+                <FieldError className={styles.invalidText}>{invalidText}</FieldError>
               </div>
               <CalendarPopover variant="single" today_={today_} />
             </DatePicker>

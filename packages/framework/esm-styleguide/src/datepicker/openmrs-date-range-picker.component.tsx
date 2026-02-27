@@ -11,7 +11,7 @@ import {
   type DateRange,
   Group,
 } from 'react-aria-components';
-import { type CalendarDate } from '@internationalized/date';
+import { CalendarDate } from '@internationalized/date';
 import { DateSegment } from './date-segment.component';
 import styles from './datepicker.module.scss';
 import { OpenmrsIntlLocaleContext, useDatepickerContext } from './hooks';
@@ -93,9 +93,12 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
       return undefined;
     }, [rawDefaultValue]);
 
-    const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, calendar, true), [rawMinDate]);
+    const minDate = useMemo(
+      () => dateToInternationalizedDate(rawMinDate ?? new CalendarDate(1793, 1, 1), calendar, true),
+      [rawMinDate, calendar],
+    );
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar, true), [rawMaxDate]);
-    const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
+    const isInvalid = useMemo(() => invalid || isInvalidRaw, [invalid, isInvalidRaw]);
 
     const innerOnChange = useMemo(() => {
       if (onChangeRaw && onChange) {
@@ -171,7 +174,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                     <DatePickerIcon />
                   </Button>
                 </Group>
-                {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
+                <FieldError className={styles.invalidText}>{invalidText}</FieldError>
                 <CalendarPopover variant="range" today_={today_} minDate={minDate} maxDate={maxDate} />
               </div>
             </DateRangePicker>
