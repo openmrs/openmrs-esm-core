@@ -9,11 +9,11 @@ import {
 } from 'react-aria-components';
 import { getLocalTimeZone } from '@internationalized/date';
 import { formatDate } from '@openmrs/esm-utils';
-import { useIntlLocale } from './locale-context';
+import { useIntlLocale } from './hooks';
 import { CaretDownIcon, CaretUpIcon } from '../icons';
 
 function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
-  return parseInt(
+  return Number.parseInt(
     formatDate(date, {
       calendar: intlLocale.calendar,
       locale: intlLocale.baseName,

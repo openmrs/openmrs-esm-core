@@ -1,16 +1,58 @@
-import {
-  type CSSProperties,
-  type ReactNode,
-  type RefCallback,
-  useCallback,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { createContext, type CSSProperties, type ReactNode, useContext, useMemo } from 'react';
+import { createCalendar, getLocalTimeZone, toCalendar, today, type Calendar } from '@internationalized/date';
 import { type AriaLabelingProps, type DOMProps } from '@react-types/shared';
+import { useConfig } from '@openmrs/esm-react-utils';
+import { getLocale, getDefaultCalendar } from '@openmrs/esm-utils';
+import { type StyleguideConfigObject } from '../config-schema';
 
-// This file contains hooks largely copied from non-exported hooks that are part of
+export const OpenmrsIntlLocaleContext = createContext<Intl.Locale | null>(null);
+
+export const useIntlLocale = () => useContext(OpenmrsIntlLocaleContext)!;
+
+/**
+ * This is the context provided to the OpenmrsDatePicker and OpenmrsDateRangePicker
+ */
+interface DatepickerContext {
+  calendar: Calendar | undefined;
+  intlLocale: Intl.Locale;
+  today_: ReturnType<typeof today>;
+}
+
+/**
+ * Resolves the active locale, calendar system, and "today" value for use
+ * in both OpenmrsDatePicker and OpenmrsDateRangePicker.
+ *
+ * The locale is resolved from i18next, mapped through the user's preferred
+ * date locale config, and then used to derive the calendar system. This
+ * supports non-Gregorian calendars (e.g., Ethiopic) based on locale settings.
+ *
+ * Depends on `window.i18next.language` to re-compute when the UI language changes.
+ */
+export function useDatepickerContext(): DatepickerContext {
+  const config = useConfig<StyleguideConfigObject>({ externalModuleName: '@openmrs/esm-styleguide' });
+  const preferredDateLocaleMap = config.preferredDateLocale;
+
+  const locale = useMemo(() => {
+    let loc = getLocale();
+    if (preferredDateLocaleMap[loc]) {
+      loc = preferredDateLocaleMap[loc];
+    }
+    return loc;
+  }, [window.i18next.language]);
+
+  const calendar = useMemo(() => {
+    const cal = getDefaultCalendar(locale);
+    return cal !== undefined ? createCalendar(cal) : undefined;
+  }, [locale]);
+
+  const intlLocale = useMemo(() => new Intl.Locale(locale, { calendar: calendar?.identifier }), [locale, calendar]);
+
+  const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
+
+  return { calendar, intlLocale, today_ };
+}
+
+// These are largely copied from non-exported hooks that are part of
 // React Aria Components which we need versions of for some of our components.
 
 interface RenderPropsHookOptions<T> extends DOMProps, AriaLabelingProps {
@@ -72,27 +114,4 @@ export function useRenderProps<T>(props: RenderPropsHookOptions<T>) {
       'data-rac': '',
     };
   }, [className, style, children, defaultClassName, defaultChildren, defaultStyle, values]);
-}
-
-export function useSlot(initialState: boolean | (() => boolean) = true): [RefCallback<Element>, boolean] {
-  // Initial state is typically based on the parent having an aria-label or aria-labelledby.
-  // If it does, this value should be false so that we don't update the state and cause a rerender when we go through the layoutEffect
-  let [hasSlot, setHasSlot] = useState(initialState);
-  let hasRun = useRef(false);
-
-  // A callback ref which will run when the slotted element mounts.
-  // This should happen before the useLayoutEffect below.
-  let ref = useCallback((el: Element) => {
-    hasRun.current = true;
-    setHasSlot(!!el);
-  }, []);
-
-  // If the callback hasn't been called, then reset to false.
-  useLayoutEffect(() => {
-    if (!hasRun.current) {
-      setHasSlot(false);
-    }
-  }, []);
-
-  return [ref, hasSlot];
 }

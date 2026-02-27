@@ -5,12 +5,12 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
-import { OpenmrsDatePicker } from './index';
+import { OpenmrsDateRangePicker } from './index';
 
-window.i18next = { language: 'en' } as i18n;
-
-describe('OpenmrsDatePicker', () => {
+describe('OpenmrsDateRangePicker', () => {
   beforeEach(() => {
+    window.i18next = { language: 'en' } as i18n;
+
     useConfig.mockReturnValue({
       preferredDateLocale: {
         en: 'en-GB',
@@ -20,9 +20,10 @@ describe('OpenmrsDatePicker', () => {
 
   describe('locale and format', () => {
     it('uses dd/mm/yyyy for english by default', () => {
-      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      render(<OpenmrsDateRangePicker aria-label="datepicker" />);
+
       const input = screen.getByLabelText('datepicker');
-      expect(input).toHaveTextContent('dd/mm/yyyy');
+      expect(input).toHaveTextContent('dd/mm/yyyy–dd/mm/yyyy');
     });
 
     it('should respect the preferred date locale', () => {
@@ -31,49 +32,43 @@ describe('OpenmrsDatePicker', () => {
           en: 'en-US',
         },
       });
-      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      render(<OpenmrsDateRangePicker aria-label="datepicker" />);
       const input = screen.getByLabelText('datepicker');
-      expect(input).toHaveTextContent('mm/dd/yyyy');
+      expect(input).toHaveTextContent('mm/dd/yyyy–mm/dd/yyyy');
     });
 
     it('should render RTL layout for Arabic locale', () => {
       window.i18next = { language: 'ar' } as i18n;
-      useConfig.mockReturnValue({ preferredDateLocale: {} });
 
-      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      render(<OpenmrsDateRangePicker aria-label="datepicker" />);
       const input = screen.getByLabelText('datepicker');
       const text = input.textContent?.replace(/\u200F/g, '');
 
-      expect(text).toBe('يوم/شهر/سنة');
-
-      window.i18next = { language: 'en' } as i18n;
+      expect(text).toBe('يوم/شهر/سنة–يوم/شهر/سنة');
     });
 
     it('should render RTL layout for Amharic locale', () => {
       window.i18next = { language: 'am' } as i18n;
-      useConfig.mockReturnValue({ preferredDateLocale: {} });
 
-      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      render(<OpenmrsDateRangePicker aria-label="datepicker" />);
       const input = screen.getByLabelText('datepicker');
       const text = input.textContent?.replace(/\u200F/g, '');
 
-      expect(text).toBe('ቀቀ/ሚሜ/ዓዓዓዓ');
-
-      window.i18next = { language: 'en' } as i18n;
+      expect(text).toBe('ቀቀ/ሚሜ/ዓዓዓዓ–ቀቀ/ሚሜ/ዓዓዓዓ');
     });
   });
 
   describe('labels and accessibility', () => {
     it('should work with aria-label when labelText is empty', () => {
-      render(<OpenmrsDatePicker aria-label="Select appointment date" labelText="" />);
-      const group = screen.getByRole('group', { name: /Select appointment date/i });
+      render(<OpenmrsDateRangePicker aria-label="Select date range" labelText="" />);
+      const group = screen.getByRole('group', { name: /Select date range/i });
       expect(group).toBeInTheDocument();
-      expect(screen.queryByText('Select appointment date')).not.toBeInTheDocument();
+      expect(screen.queryByText('Select date range')).not.toBeInTheDocument();
     });
 
     it('should render visible label when labelText is provided', () => {
-      render(<OpenmrsDatePicker labelText="Appointment date" />);
-      const labelText = screen.getByText('Appointment date');
+      render(<OpenmrsDateRangePicker labelText="Date range" />);
+      const labelText = screen.getByText('Date range');
       expect(labelText).toBeInTheDocument();
       expect(labelText).toHaveClass('cds--label');
       const group = screen.getByRole('group');
@@ -82,49 +77,61 @@ describe('OpenmrsDatePicker', () => {
 
     it('should warn in development when neither labelText nor aria-label is provided', () => {
       const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-      render(<OpenmrsDatePicker labelText="" />);
+      render(<OpenmrsDateRangePicker labelText="" />);
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        'OpenmrsDatePicker: You must provide either a visible label (labelText/label) or an aria-label for accessibility.',
+        'OpenmrsDateRangePicker: You must provide either a visible label (labelText/label) or an aria-label for accessibility.',
       );
       consoleWarnSpy.mockRestore();
     });
   });
 
   describe('value display', () => {
-    it('should display a prefilled date from the value prop', () => {
-      render(<OpenmrsDatePicker aria-label="datepicker" value={new Date(2025, 2, 15)} />);
+    it('should display prefilled date range from form value', () => {
+      render(
+        <OpenmrsDateRangePicker
+          aria-label="datepicker"
+          startName="start"
+          endName="end"
+          value={[new Date(2025, 2, 15), new Date(2025, 5, 18)]}
+        />,
+      );
       const input = screen.getByLabelText('datepicker');
-      expect(input).toHaveTextContent('15/03/2025');
+      expect(input).toHaveTextContent('15/03/2025–18/06/2025');
     });
 
-    it('should display a prefilled date from the defaultValue prop', () => {
-      render(<OpenmrsDatePicker aria-label="datepicker" defaultValue={new Date(2025, 5, 18)} />);
+    it('should display prefilled date range from defaultValue prop', () => {
+      render(
+        <OpenmrsDateRangePicker
+          aria-label="datepicker"
+          defaultValue={[new Date(2024, 0, 1), new Date(2024, 11, 31)]}
+        />,
+      );
       const input = screen.getByLabelText('datepicker');
-      expect(input).toHaveTextContent('18/06/2025');
+      expect(input).toHaveTextContent('01/01/2024–31/12/2024');
     });
   });
 
   describe('invalid state', () => {
     it('should display invalidText when invalid is true', () => {
-      render(<OpenmrsDatePicker aria-label="datepicker" invalid={true} invalidText="Date is required" />);
-      expect(screen.getByText('Date is required')).toBeInTheDocument();
+      render(<OpenmrsDateRangePicker aria-label="datepicker" invalid={true} invalidText="Invalid date range" />);
+      expect(screen.getByText('Invalid date range')).toBeInTheDocument();
     });
 
     it('should not display invalidText when invalid is false', () => {
-      render(<OpenmrsDatePicker aria-label="datepicker" invalid={false} invalidText="Date is required" />);
-      expect(screen.queryByText('Date is required')).not.toBeInTheDocument();
+      render(<OpenmrsDateRangePicker aria-label="datepicker" invalid={false} invalidText="Invalid date range" />);
+      expect(screen.queryByText('Invalid date range')).not.toBeInTheDocument();
     });
 
     it('should display invalidText when isInvalid is true', () => {
-      render(<OpenmrsDatePicker aria-label="datepicker" isInvalid={true} invalidText="Bad date" />);
-      expect(screen.getByText('Bad date')).toBeInTheDocument();
+      render(<OpenmrsDateRangePicker aria-label="datepicker" isInvalid={true} invalidText="Bad range" />);
+      expect(screen.getByText('Bad range')).toBeInTheDocument();
     });
   });
 
   describe('disabled state', () => {
     it('should render disabled label styling when isDisabled is true', () => {
-      render(<OpenmrsDatePicker labelText="Date" isDisabled={true} />);
-      const label = screen.getByText('Date');
+      render(<OpenmrsDateRangePicker labelText="Date range" isDisabled={true} />);
+      const label = screen.getByText('Date range');
       expect(label).toHaveClass('cds--label--disabled');
     });
   });
@@ -135,10 +142,10 @@ describe('OpenmrsDatePicker', () => {
       const onChange = vi.fn();
       const onChangeRaw = vi.fn();
 
-      render(<OpenmrsDatePicker aria-label="datepicker" onChange={onChange} onChangeRaw={onChangeRaw} />);
+      render(<OpenmrsDateRangePicker aria-label="datepicker" onChange={onChange} onChangeRaw={onChangeRaw} />);
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'An OpenmrsDatePicker component was created with both onChange and onChangeRaw handlers defined. Only onChangeRaw will be used.',
+        'An OpenmrsDateRangePicker component was created with both onChange and onChangeRaw handlers defined. Only onChangeRaw will be used.',
       );
       consoleErrorSpy.mockRestore();
     });
@@ -147,7 +154,7 @@ describe('OpenmrsDatePicker', () => {
   describe('calendar popover', () => {
     it('should open the calendar popover when the calendar button is clicked', async () => {
       const user = userEvent.setup();
-      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      render(<OpenmrsDateRangePicker aria-label="datepicker" />);
 
       const button = screen.getByRole('button');
       await user.click(button);
