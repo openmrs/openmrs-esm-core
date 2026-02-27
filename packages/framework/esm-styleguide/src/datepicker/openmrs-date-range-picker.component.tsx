@@ -76,28 +76,28 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
     const value = useMemo(() => {
       if (rawValue) {
         return {
-          start: dateToInternationalizedDate(rawValue[0], calendar, true),
-          end: dateToInternationalizedDate(rawValue[1], calendar, true),
-        } as DateRange;
+          start: dateToInternationalizedDate(rawValue[0], calendar, false)!,
+          end: dateToInternationalizedDate(rawValue[1], calendar, false)!,
+        };
       }
       return undefined;
-    }, [rawValue]);
+    }, [rawValue, calendar]);
 
     const defaultValue = useMemo(() => {
       if (rawDefaultValue) {
         return {
-          start: dateToInternationalizedDate(rawDefaultValue[0], calendar, true),
-          end: dateToInternationalizedDate(rawDefaultValue[1], calendar, true),
-        } as DateRange;
+          start: dateToInternationalizedDate(rawDefaultValue[0], calendar, false)!,
+          end: dateToInternationalizedDate(rawDefaultValue[1], calendar, false)!,
+        };
       }
       return undefined;
-    }, [rawDefaultValue]);
+    }, [rawDefaultValue, calendar]);
 
     const minDate = useMemo(
       () => dateToInternationalizedDate(rawMinDate ?? new CalendarDate(1793, 1, 1), calendar, true),
       [rawMinDate, calendar],
     );
-    const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar, true), [rawMaxDate]);
+    const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar, true), [rawMaxDate, calendar]);
     const isInvalid = useMemo(() => invalid || isInvalidRaw, [invalid, isInvalidRaw]);
 
     const innerOnChange = useMemo(() => {

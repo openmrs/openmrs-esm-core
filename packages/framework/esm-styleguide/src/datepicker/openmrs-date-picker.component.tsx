@@ -77,9 +77,12 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
       }
     }
 
-    const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue, calendar), [rawDefaultValue]);
-    const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar, true), [rawValue]);
-    const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar), [rawMaxDate]);
+    const defaultValue = useMemo(
+      () => dateToInternationalizedDate(rawDefaultValue, calendar),
+      [rawDefaultValue, calendar],
+    );
+    const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar, true), [rawValue, calendar]);
+    const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar), [rawMaxDate, calendar]);
     const minDate = useMemo(
       () => dateToInternationalizedDate(rawMinDate ?? new CalendarDate(1793, 1, 1), calendar),
       [rawMinDate, calendar],
