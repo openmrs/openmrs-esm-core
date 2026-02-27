@@ -7,7 +7,7 @@ interface AutoCloseDialogProps {
   children: React.ReactNode;
 }
 
-export function AutoCloseDialog({ children }: AutoCloseDialogProps) {
+export function AutoCloseDialog({ children }: Readonly<AutoCloseDialogProps>) {
   const datePickerState = useContext(DatePickerStateContext);
   const rangePickerState = useContext(DateRangePickerStateContext);
 

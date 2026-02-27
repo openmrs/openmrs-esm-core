@@ -103,10 +103,12 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
           'An OpenmrsDateRangePicker component was created with both onChange and onChangeRaw handlers defined. Only onChangeRaw will be used.',
         );
       }
-      return onChangeRaw
-        ? onChangeRaw
-        : (range: DateRange) =>
-            onChange?.([internationalizedDateToDate(range.start), internationalizedDateToDate(range.end)]);
+
+      return (
+        onChangeRaw ??
+        ((range: DateRange) =>
+          onChange?.([internationalizedDateToDate(range.start), internationalizedDateToDate(range.end)]))
+      );
     }, [onChangeRaw, onChange]);
 
     return (

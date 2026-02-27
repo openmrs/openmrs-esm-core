@@ -61,7 +61,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
       size,
       value: rawValue,
       ...datePickerProps
-    } = Object.assign({}, defaultProps, props);
+    } = { ...defaultProps, ...props };
 
     const { calendar, intlLocale, today_ } = useDatepickerContext();
 
@@ -89,7 +89,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
           'An OpenmrsDatePicker component was created with both onChange and onChangeRaw handlers defined. Only onChangeRaw will be used.',
         );
       }
-      return onChangeRaw ? onChangeRaw : (value: DateValue) => rawOnChange?.(internationalizedDateToDate(value));
+      return onChangeRaw ?? ((value: DateValue) => rawOnChange?.(internationalizedDateToDate(value)));
     }, [onChangeRaw, rawOnChange]);
 
     return (

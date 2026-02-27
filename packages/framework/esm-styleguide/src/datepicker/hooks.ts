@@ -1,15 +1,4 @@
-import {
-  createContext,
-  type CSSProperties,
-  type ReactNode,
-  type RefCallback,
-  useCallback,
-  useContext,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { createContext, type CSSProperties, type ReactNode, useContext, useMemo } from 'react';
 import { createCalendar, getLocalTimeZone, toCalendar, today, type Calendar } from '@internationalized/date';
 import { type AriaLabelingProps, type DOMProps } from '@react-types/shared';
 import { useConfig } from '@openmrs/esm-react-utils';
@@ -53,7 +42,7 @@ export function useDatepickerContext(): DatepickerContext {
 
   const calendar = useMemo(() => {
     const cal = getDefaultCalendar(locale);
-    return typeof cal !== 'undefined' ? createCalendar(cal) : undefined;
+    return cal !== undefined ? createCalendar(cal) : undefined;
   }, [locale]);
 
   const intlLocale = useMemo(() => new Intl.Locale(locale, { calendar: calendar?.identifier }), [locale, calendar]);

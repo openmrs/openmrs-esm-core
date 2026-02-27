@@ -13,7 +13,7 @@ import { useIntlLocale } from './hooks';
 import { CaretDownIcon, CaretUpIcon } from '../icons';
 
 function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
-  return parseInt(
+  return Number.parseInt(
     formatDate(date, {
       calendar: intlLocale.calendar,
       locale: intlLocale.baseName,
