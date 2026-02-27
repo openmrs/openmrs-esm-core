@@ -3,7 +3,7 @@
 const stores: Record<string, any> = {};
 
 export function createGlobalStore<T>(name: string, initialState: T) {
-  const state = { ...initialState } as T;
+  const state = { ...initialState };
   const listeners = new Set<(state: T) => void>();
 
   const store = {

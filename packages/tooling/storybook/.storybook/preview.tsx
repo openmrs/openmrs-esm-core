@@ -6,10 +6,12 @@ import { setLayoutType } from '../mocks/esm-react-utils';
 // styles, OpenMRS brand variables, component-specific styles, and overrides.
 import '../../../framework/esm-styleguide/src/_all.scss';
 
-// Global setup: window variables and SVG sprite registration.
+// Global setup: window variables, calendar registration, and SVG sprite.
 // These must run before any story renders.
 import '../mocks/globals-setup';
 import '../mocks/svg-setup';
+
+const RTL_LOCALES = new Set(['ar', 'he', 'fa', 'ur']);
 
 const preview: Preview = {
   decorators: [
@@ -17,8 +19,15 @@ const preview: Preview = {
       const layoutType = context.globals.layoutType ?? 'small-desktop';
       setLayoutType(layoutType);
 
-      const dir = context.globals.textDirection ?? 'ltr';
-      document.documentElement.dir = dir;
+      const locale = context.globals.locale ?? 'en';
+      (window as any).i18next.language = locale;
+
+      const textDirection = context.globals.textDirection ?? 'auto';
+      if (textDirection === 'auto') {
+        document.documentElement.dir = RTL_LOCALES.has(locale) ? 'rtl' : 'ltr';
+      } else {
+        document.documentElement.dir = textDirection;
+      }
 
       return <Story />;
     },
@@ -38,12 +47,32 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    locale: {
+      description: 'Active locale — affects date formatting, calendar system, and text direction',
+      toolbar: {
+        title: 'Locale',
+        icon: 'globe',
+        items: [
+          { value: 'en', title: 'English', right: 'en' },
+          { value: 'fr', title: 'French', right: 'fr' },
+          { value: 'es', title: 'Spanish', right: 'es' },
+          { value: 'pt', title: 'Portuguese', right: 'pt' },
+          { value: 'am', title: 'Amharic (Ethiopian calendar)', right: 'am' },
+          { value: 'hi', title: 'Hindi', right: 'hi' },
+          { value: 'km', title: 'Khmer', right: 'km' },
+          { value: 'ar', title: 'Arabic (RTL)', right: 'ar' },
+          { value: 'he', title: 'Hebrew (RTL)', right: 'he' },
+        ],
+        dynamicTitle: true,
+      },
+    },
     textDirection: {
-      description: 'Text direction (LTR or RTL)',
+      description: 'Text direction override (auto derives from locale)',
       toolbar: {
         title: 'Direction',
         icon: 'paragraph',
         items: [
+          { value: 'auto', title: 'Auto (from locale)' },
           { value: 'ltr', title: 'LTR' },
           { value: 'rtl', title: 'RTL' },
         ],
@@ -53,7 +82,8 @@ const preview: Preview = {
   },
   initialGlobals: {
     layoutType: 'small-desktop',
-    textDirection: 'ltr',
+    locale: 'en',
+    textDirection: 'auto',
   },
   parameters: {
     controls: {

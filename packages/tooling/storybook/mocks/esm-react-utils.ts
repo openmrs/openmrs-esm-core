@@ -84,7 +84,7 @@ export const RenderIfValueIsTruthy: React.FC<PropsWithChildren<{ value: unknown;
   value,
   fallback,
 }) => {
-  if (Boolean(value)) {
+  if (value) {
     return React.createElement(React.Fragment, null, children);
   }
   return fallback ? React.createElement(React.Fragment, null, fallback) : null;
