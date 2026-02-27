@@ -1,6 +1,8 @@
 import React from 'react';
+import { Button } from '@carbon/react';
 import type { Meta, StoryObj } from 'storybook-react-rsbuild';
 import { CardHeader } from './card-header.component';
+import { AddIcon } from '../icons';
 
 const meta: Meta<typeof CardHeader> = {
   title: 'Components/CardHeader',
@@ -17,13 +19,15 @@ export const Default: Story = {
   },
 };
 
-export const WithChildren: Story = {
+export const WithAction: Story = {
   args: {
     title: 'Medications',
   },
   render: (args) => (
     <CardHeader {...args}>
-      <button style={{ padding: '4px 12px' }}>Add</button>
+      <Button kind="ghost" renderIcon={AddIcon} iconDescription="Add Medication">
+        Add
+      </Button>
     </CardHeader>
   ),
 };

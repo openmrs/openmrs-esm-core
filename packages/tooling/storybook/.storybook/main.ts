@@ -16,6 +16,7 @@ const config: StorybookConfig = {
   stories: [path.resolve(frameworkRoot, 'esm-styleguide/src/**/*.stories.@(ts|tsx)')],
   addons: ['@storybook/addon-links'],
   framework: 'storybook-react-rsbuild',
+  disableTelemetry: true,
   rsbuildFinal: (config) => {
     return mergeRsbuildConfig(config, {
       plugins: [
@@ -42,6 +43,10 @@ const config: StorybookConfig = {
           '@openmrs/esm-globals': path.resolve(mocksRoot, 'esm-globals.ts'),
           '@openmrs/esm-navigation': path.resolve(mocksRoot, 'esm-navigation.ts'),
           '@openmrs/esm-error-handling': path.resolve(mocksRoot, 'esm-error-handling.ts'),
+
+          // Barrel re-export mock so that `import { X } from '@openmrs/esm-framework'`
+          // resolves through our mocks instead of pulling in the real framework.
+          '@openmrs/esm-framework': path.resolve(mocksRoot, 'esm-framework.ts'),
 
           // Direct source-path aliases that bypass package.json exports
           // restrictions. Needed because mocks and preview setup import
@@ -80,6 +85,16 @@ const config: StorybookConfig = {
             use: [require.resolve('svgo-loader')],
             type: 'asset/source',
           });
+
+          // Ensure @openmrs/esm-framework alias is applied at the rspack level.
+          // The rsbuild-level resolve.alias may not override workspace package
+          // resolution for this barrel package.
+          rspackConfig.resolve ??= {};
+          rspackConfig.resolve.alias ??= {};
+          if (typeof rspackConfig.resolve.alias === 'object' && !Array.isArray(rspackConfig.resolve.alias)) {
+            rspackConfig.resolve.alias['@openmrs/esm-framework$'] = path.resolve(mocksRoot, 'esm-framework.ts');
+          }
+
           return rspackConfig;
         },
       },

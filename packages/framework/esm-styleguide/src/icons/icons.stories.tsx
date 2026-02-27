@@ -39,5 +39,5 @@ export const AllAvailableIcons: Story = {
 };
 
 export const LargeIcons: Story = {
-  args: { size: 48, fill: '#005d5d' },
+  args: { size: 48, fill: 'currentColor' },
 };

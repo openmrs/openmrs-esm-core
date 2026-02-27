@@ -2,7 +2,7 @@
 // Provides working implementations of the hooks and components that
 // styleguide components actually import, without depending on the
 // full OpenMRS runtime.
-import React, { type PropsWithChildren, useMemo, useRef } from 'react';
+import React, { type PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 
 // --- Layout type (controllable from Storybook toolbar) ---
 
@@ -114,8 +114,29 @@ export function useDebounce<T>(value: T) {
   return value;
 }
 
-export function useOnClickOutside<T extends HTMLElement>(_handler: () => void, _active?: boolean) {
-  return useRef<T>(null);
+export function useOnClickOutside<T extends HTMLElement>(handler: (event: MouseEvent) => void, active = true) {
+  const ref = useRef<T>(null);
+
+  useEffect(() => {
+    const listener = (event: MouseEvent | TouchEvent) => {
+      if (!active || !ref.current || !event.target || !(event.target instanceof Node)) {
+        return;
+      }
+      if (ref.current.contains(event.target)) {
+        return;
+      }
+      handler(event as MouseEvent);
+    };
+
+    window.addEventListener('mousedown', listener);
+    window.addEventListener('touchstart', listener);
+    return () => {
+      window.removeEventListener('mousedown', listener);
+      window.removeEventListener('touchstart', listener);
+    };
+  }, [handler, active]);
+
+  return ref;
 }
 
 export function useOnVisible() {

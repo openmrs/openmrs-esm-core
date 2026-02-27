@@ -4,3 +4,4 @@
 (window as any).openmrsBase = '/openmrs';
 (window as any).spaBase = '/openmrs/spa';
 (window as any).getOpenmrsSpaBase = () => '/openmrs/spa/';
+(window as any).i18next = { language: 'en' };
