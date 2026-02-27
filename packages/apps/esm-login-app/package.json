@@ -12,13 +12,13 @@
     "debug": "npm run serve",
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
-    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rspack --mode=production",
     "build:development": "rspack --mode=development",
     "analyze": "rspack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx",
-    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.extension.tsx' 'src/**/*.modal.tsx' 'src/**/*.resource.ts' --config='../../../tools/i18next-parser.config.js'"
+    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.extension.tsx' 'src/**/*.modal.tsx' 'src/**/*.resource.ts' --config='../../../tools/i18next-parser.config.js'",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests"
   },
   "keywords": [
     "openmrs",

@@ -1,12 +1,8 @@
+const { CssExtractRspackPlugin, CopyRspackPlugin, DefinePlugin, container } = require('@rspack/core');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const { InjectManifest } = require('workbox-webpack-plugin');
-const { DefinePlugin, container } = require('webpack');
 const { basename, dirname, resolve } = require('path');
 const { readdirSync, statSync, readFileSync } = require('fs');
 const semver = require('semver');
@@ -40,9 +36,7 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || '')
   .filter((url) => url.length > 0)
   .map((url) => JSON.stringify(url))
   .join(', ');
-const openmrsJsCssAssets = (process.env.OMRS_JS_CSS_ASSETS || '')
-  .split(';')
-  .filter((filePath) => filePath.length > 0);
+const openmrsJsCssAssets = (process.env.OMRS_JS_CSS_ASSETS || '').split(';').filter((filePath) => filePath.length > 0);
 
 const openmrsCleanBeforeBuild =
   (() => {
@@ -100,7 +94,7 @@ function escapeRegExp(string) {
 /**
  * @param {Record<string, string>} env
  * @param {Array<string>} argv
- * @returns {import("webpack").Configuration}
+ * @returns {import("@rspack/core").Configuration}
  */
 module.exports = (env, argv = []) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
@@ -141,7 +135,7 @@ module.exports = (env, argv = []) => {
     });
   }
 
-  const assetsPatterns = openmrsJsCssAssets.map(asset => ({from: asset, to: 'assets'}));
+  const assetsPatterns = openmrsJsCssAssets.map((asset) => ({ from: asset, to: 'assets' }));
 
   return {
     entry: resolve(__dirname, 'src/index.ts'),
@@ -153,6 +147,8 @@ module.exports = (env, argv = []) => {
       hashFunction: 'xxhash64',
     },
     target: 'web',
+    // Module Federation v1.5 is incompatible with lazy compilation
+    lazyCompilation: false,
     devServer: {
       compress: true,
       open: [`${openmrsPublicPath}/`.substring(1)],
@@ -241,7 +237,7 @@ module.exports = (env, argv = []) => {
           test: /openmrs-esm-styleguide\.css$/,
           use: [
             isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              ? { loader: require.resolve(CssExtractRspackPlugin.loader) }
               : { loader: require.resolve('style-loader') },
             { loader: require.resolve('css-loader') },
           ],
@@ -251,7 +247,7 @@ module.exports = (env, argv = []) => {
           exclude: [/openmrs-esm-styleguide\.css$/],
           use: [
             isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              ? { loader: require.resolve(CssExtractRspackPlugin.loader) }
               : { loader: require.resolve('style-loader') },
             { loader: require.resolve('css-loader') },
           ],
@@ -260,7 +256,7 @@ module.exports = (env, argv = []) => {
           test: /\.s[ac]ss$/,
           use: [
             isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              ? { loader: require.resolve(CssExtractRspackPlugin.loader) }
               : { loader: require.resolve('style-loader') },
             { loader: require.resolve('css-loader') },
             {
@@ -281,7 +277,7 @@ module.exports = (env, argv = []) => {
           test: /\.(j|t)sx?$/,
           use: [
             {
-              loader: 'swc-loader',
+              loader: 'builtin:swc-loader',
             },
           ],
         },
@@ -304,6 +300,7 @@ module.exports = (env, argv = []) => {
         url: false,
       },
       alias: {
+        '@openmrs/esm-framework': '@openmrs/esm-framework/src/internal',
         'lodash.debounce': 'lodash-es/debounce',
         'lodash.findlast': 'lodash-es/findLast',
         'lodash.isequal': 'lodash-es/isEqual',
@@ -338,16 +335,16 @@ module.exports = (env, argv = []) => {
           openmrsConfigUrls,
           openmrsCoreImportmap: appPatterns.length > 0 && JSON.stringify(coreImportmap),
           openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
+          openmrsExtraAssets: openmrsJsCssAssets.map((fileName) => 'assets/' + basename(fileName)),
         },
       }),
-      new HtmlWebpackTagsPlugin({ tags: openmrsJsCssAssets.map(fileName => 'assets/' + basename(fileName)) }),
       new WebpackPwaManifest({
-        name: 'OpenMRS',
-        short_name: 'OpenMRS',
+        name: openmrsPageTitle,
+        short_name: openmrsPageTitle,
         publicPath: openmrsPublicPath,
         description: 'Open source Health IT by and for the entire planet, starting with the developing world.',
         background_color: '#ffffff',
-        theme_color: '#000000',
+        theme_color: '#005d5d',
         icons: [
           {
             src: resolve(__dirname, 'src/assets/logo-512.png'),
@@ -355,7 +352,7 @@ module.exports = (env, argv = []) => {
           },
         ],
       }),
-      new CopyWebpackPlugin({
+      new CopyRspackPlugin({
         patterns: [{ from: resolve(__dirname, 'src/assets') }, ...appPatterns, ...assetsPatterns],
       }),
       new ModuleFederationPlugin({
@@ -375,8 +372,6 @@ module.exports = (env, argv = []) => {
             }
           }
 
-          const eager = depName === 'dayjs';
-
           if (depName === 'swr') {
             // SWR is annoying with Module Federation
             // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
@@ -384,7 +379,6 @@ module.exports = (env, argv = []) => {
               requiredVersion: version,
               strictVersion: false,
               singleton: true,
-              eager: false,
               import: 'swr/_internal',
               shareKey: 'swr/_internal',
               shareScope: 'default',
@@ -395,7 +389,6 @@ module.exports = (env, argv = []) => {
               requiredVersion: version ?? false,
               strictVersion: false,
               singleton: true,
-              eager: eager,
               import: depName,
               shareKey: depName,
               shareScope: 'default',
@@ -405,7 +398,7 @@ module.exports = (env, argv = []) => {
         }, {}),
       }),
       isProd &&
-        new MiniCssExtractPlugin({
+        new CssExtractRspackPlugin({
           filename: 'openmrs.[contenthash].css',
           ignoreOrder: true,
         }),
@@ -417,23 +410,6 @@ module.exports = (env, argv = []) => {
       new BundleAnalyzerPlugin({
         analyzerMode: env?.analyze ? 'static' : 'disabled',
       }),
-      openmrsOffline
-        ? new InjectManifest({
-            swSrc: resolve(__dirname, './src/service-worker/index.ts'),
-            swDest: 'service-worker.js',
-            maximumFileSizeToCacheInBytes: mode === production ? undefined : Number.MAX_SAFE_INTEGER,
-            additionalManifestEntries: [
-              { url: openmrsImportmapUrl, revision: null },
-              { url: openmrsRoutesUrl, revision: null },
-            ],
-          })
-        : new InjectManifest({
-            swSrc: resolve(__dirname, './src/service-worker/noop.ts'),
-            swDest: 'service-worker.js',
-            // this is a no-op service worker, so we don't want to cache anything
-            maximumFileSizeToCacheInBytes: 0,
-            exclude: [/.*/],
-          }),
     ].filter(Boolean),
     ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };
