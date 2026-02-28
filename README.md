@@ -369,3 +369,12 @@ For documentation about our design patterns, please visit our [design system doc
 
 Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes.
 Also, ensure you specify fixed (pinned) versions of Playwright in the `package.json` file to maintain consistency between the Playwright version used in the Docker image for Bamboo test execution and the version used in the codebase.
+
+## 🌈 Quick Start for New Contributors
+
+Welcome to the OpenMRS community! 🏥 If you are a first-time contributor, follow these steps to get started with the ESM Core:
+
+1. **Fork** this repository to your own GitHub account.
+2. **Clone** your fork locally:
+   ```bash
+   git clone [https://github.com/](https://github.com/)<your-username>/openmrs-esm-core.git
