@@ -47,7 +47,10 @@ export function useDatepickerContext(): DatepickerContext {
 
   const intlLocale = useMemo(() => new Intl.Locale(locale, { calendar: calendar?.identifier }), [locale, calendar]);
 
-  const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
+  const today_ = useMemo(
+    () => (calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone())),
+    [calendar],
+  );
 
   return { calendar, intlLocale, today_ };
 }
