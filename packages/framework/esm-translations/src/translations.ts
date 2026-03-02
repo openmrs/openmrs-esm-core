@@ -52,6 +52,7 @@ export const coreTranslations = {
   ...workspaceTranslations,
   ...workspace2Translations,
   ...carbonTableBatchTranslations,
+  abnormalValue: 'Abnormal value',
   actions: 'Actions',
   actionableNotification: 'Actionable notification',
   address: 'Address',
@@ -111,5 +112,5 @@ export const coreTranslations = {
   toggleDevTools: 'Toggle dev tools',
   unknown: 'Unknown',
   yearAbbreviation: 'yr',
-  yearsAbbreviation: 'yrs'
+  yearsAbbreviation: 'yrs',
 };

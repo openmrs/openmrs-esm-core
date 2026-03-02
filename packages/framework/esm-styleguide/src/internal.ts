@@ -1,6 +1,7 @@
 export * from './breakpoints';
 export * from './cards';
 export * from './config-schema';
+export * from './data-table-batch-actions';
 export * from './custom-overflow-menu';
 export * from './dashboard-extension';
 export * from './datepicker';

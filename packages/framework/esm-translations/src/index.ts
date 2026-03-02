@@ -79,12 +79,8 @@ export function getCoreTranslation(
 }
 
 /**
- * A translation function for Carbon Design System components that use the `translateWithId` prop.
- * This handles components like TableBatchActions, Pagination, Dropdown, etc.
- *
- * @param id A Carbon translation string identifier (e.g., 'carbon.table.batch.items.selected')
- * @param state An optional object with interpolation values (e.g., { totalSelected: 5 })
- * @returns The translated string
+ * @internal
+ * Translation bridge for Carbon Design System components that use `translateWithId`.
  */
 export function carbonTranslateWithId(id: string, state?: Record<string, any>): string {
   if (id in coreTranslations) {
