@@ -2,10 +2,11 @@ import React from 'react';
 import type { i18n } from 'i18next';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
 import { OpenmrsDateRangePicker } from './index';
+import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
 
 describe('OpenmrsDateRangePicker', () => {
   beforeEach(() => {
@@ -161,6 +162,27 @@ describe('OpenmrsDateRangePicker', () => {
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(screen.getByRole('grid')).toBeInTheDocument();
+    });
+
+    it('should clamp previous-month navigation at the default minDate floor when minDate is omitted', async () => {
+      const user = userEvent.setup();
+      render(
+        <OpenmrsDateRangePicker
+          aria-label="datepicker"
+          value={[
+            new Date(DEFAULT_MIN_DATE_FLOOR.year, DEFAULT_MIN_DATE_FLOOR.month - 1, DEFAULT_MIN_DATE_FLOOR.day),
+            new Date(DEFAULT_MIN_DATE_FLOOR.year, DEFAULT_MIN_DATE_FLOOR.month - 1, DEFAULT_MIN_DATE_FLOOR.day + 1),
+          ]}
+        />,
+      );
+
+      await user.click(screen.getByRole('button'));
+
+      const dialog = screen.getByRole('dialog');
+      const previousButton = within(dialog).getByRole('button', { name: /previous/i });
+
+      expect(previousButton).toBeInTheDocument();
+      expect(previousButton).toBeDisabled();
     });
   });
 });

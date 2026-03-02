@@ -2,11 +2,12 @@ import React, { forwardRef, useId, useMemo } from 'react';
 import classNames from 'classnames';
 import { type DateValue } from 'react-aria';
 import { Button, DatePicker, type DatePickerProps, FieldError, Group, Provider, Label } from 'react-aria-components';
-import { CalendarDate } from '@internationalized/date';
+import { type CalendarDate } from '@internationalized/date';
 import { type DateInputValue, type DatePickerBaseProps } from './types';
 import { I18nWrapper } from './i18n-wrapper.component';
 import { dateToInternationalizedDate, internationalizedDateToDate } from './utils';
 import { OpenmrsIntlLocaleContext, useDatepickerContext } from './hooks';
+import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
 import { CalendarPopover } from './calendar-popover.component';
 import { DatePickerInput } from './date-picker-input.component';
 import { DatePickerIcon } from './date-picker-icon.component';
@@ -84,7 +85,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
     const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar, true), [rawValue, calendar]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar), [rawMaxDate, calendar]);
     const minDate = useMemo(
-      () => dateToInternationalizedDate(rawMinDate ?? new CalendarDate(1793, 1, 1), calendar),
+      () => dateToInternationalizedDate(rawMinDate ?? DEFAULT_MIN_DATE_FLOOR, calendar),
       [rawMinDate, calendar],
     );
     const isInvalid = useMemo(() => invalid || isInvalidRaw, [invalid, isInvalidRaw]);

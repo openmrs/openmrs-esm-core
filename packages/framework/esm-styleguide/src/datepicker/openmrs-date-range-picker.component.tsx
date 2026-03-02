@@ -11,7 +11,7 @@ import {
   type DateRange,
   Group,
 } from 'react-aria-components';
-import { CalendarDate } from '@internationalized/date';
+import { type CalendarDate } from '@internationalized/date';
 import { DateSegment } from './date-segment.component';
 import styles from './datepicker.module.scss';
 import { OpenmrsIntlLocaleContext, useDatepickerContext } from './hooks';
@@ -20,6 +20,7 @@ import { I18nWrapper } from './i18n-wrapper.component';
 import { DatePickerIcon } from './date-picker-icon.component';
 import { CalendarPopover } from './calendar-popover.component';
 import { dateToInternationalizedDate, internationalizedDateToDate } from './utils';
+import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
 
 /** Properties for the OpenmrsDateRangePicker */
 export interface OpenmrsDateRangePickerProps
@@ -94,7 +95,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
     }, [rawDefaultValue, calendar]);
 
     const minDate = useMemo(
-      () => dateToInternationalizedDate(rawMinDate ?? new CalendarDate(1793, 1, 1), calendar, true),
+      () => dateToInternationalizedDate(rawMinDate ?? DEFAULT_MIN_DATE_FLOOR, calendar, true),
       [rawMinDate, calendar],
     );
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar, true), [rawMaxDate, calendar]);

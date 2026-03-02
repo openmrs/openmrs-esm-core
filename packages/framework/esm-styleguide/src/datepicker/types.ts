@@ -27,6 +27,6 @@ export interface DatePickerBaseProps {
   light?: boolean;
   /** The latest date it is possible to select */
   maxDate?: DateInputValue;
-  /** The earliest date it is possible to select */
+  /** The earliest date it is possible to select. Defaults to January 1, 1793 when omitted. */
   minDate?: DateInputValue;
 }

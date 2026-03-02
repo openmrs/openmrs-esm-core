@@ -2,7 +2,7 @@
 
 # Interface: OpenmrsDateRangePickerProps
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L25)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L26)
 
 Properties for the OpenmrsDateRangePicker
 
@@ -143,7 +143,7 @@ Whether the overlay is open by default (uncontrolled).
 
 > `optional` **defaultValue**: \[`DateInputValue`, `DateInputValue`\]
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L29)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L30)
 
 The default value (uncontrolled)
 
@@ -441,7 +441,7 @@ The maximum allowed date that a user may select.
 
 Defined in: [packages/framework/esm-styleguide/src/datepicker/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/types.ts#L31)
 
-The earliest date it is possible to select
+The earliest date it is possible to select. Defaults to January 1, 1793 when omitted.
 
 #### Inherited from
 
@@ -491,7 +491,7 @@ Handler that is called when the element loses focus.
 
 > `optional` **onChange**: (`value`) => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L31)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L32)
 
 Handler that is called when the value changes.
 
@@ -511,7 +511,7 @@ Handler that is called when the value changes.
 
 > `optional` **onChangeRaw**: (`value`) => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L33)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L34)
 
 Handler that is called when the value changes. Note that this provides types from @internationalized/date.
 
@@ -812,6 +812,6 @@ or invalid via ARIA.
 
 > `optional` **value**: \[`DateInputValue`, `DateInputValue`\]
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L35)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L36)
 
 The value (controlled)
