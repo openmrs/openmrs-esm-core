@@ -30,7 +30,7 @@ describe('useDebounce', () => {
     });
     expect(result.current).toBe('initial');
 
-    // Advance the rest of the 300ms
+    // Advance the rest of the 300ms default delay
     act(() => {
       vi.advanceTimersByTime(100);
     });
@@ -53,7 +53,6 @@ describe('useDebounce', () => {
     act(() => {
       vi.advanceTimersByTime(300);
     });
-
     expect(result.current).toBe(4);
   });
 
@@ -66,13 +65,13 @@ describe('useDebounce', () => {
 
     rerender({ value: 'b', delay: 500 });
 
-    // Default 300ms passed, should still be 'a'
+    // 300ms into the 500ms custom delay — should still be 'a'
     act(() => {
       vi.advanceTimersByTime(300);
     });
     expect(result.current).toBe('a');
 
-    // Remaining 200ms passed, should be 'b'
+    // Remaining 200ms of the 500ms custom delay elapsed — should now be 'b'
     act(() => {
       vi.advanceTimersByTime(200);
     });
@@ -80,29 +79,36 @@ describe('useDebounce', () => {
   });
 
   it('clears pending timeout on unmount', () => {
+    const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
+
     const { rerender, unmount } = renderHook(({ value }) => useDebounce(value), {
       initialProps: { value: 'start' },
     });
 
     rerender({ value: 'changed' });
 
+    // Unmount before the debounce delay fires
     unmount();
 
-    // Advance time, shouldn't trigger state update errors
-    expect(() => {
-      act(() => {
-        vi.advanceTimersByTime(300);
-      });
-    }).not.toThrow();
+    // The pending timeout should have been cleared on unmount
+    expect(clearTimeoutSpy).toHaveBeenCalled();
+
+    // Advancing time after unmount should not trigger any state updates
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+
+    clearTimeoutSpy.mockRestore();
   });
 
   it('should preserve generic object typing and references correctly', () => {
     const initialObj = { id: 1, name: 'Test' };
     const updatedObj = { id: 1, name: 'Test Updated' };
 
-    const { result, rerender } = renderHook(({ value }) => useDebounce<{ id: number; name: string }>(value), {
-      initialProps: { value: initialObj },
-    });
+    const { result, rerender } = renderHook(
+      ({ value }) => useDebounce<{ id: number; name: string }>(value),
+      { initialProps: { value: initialObj } },
+    );
 
     expect(result.current).toEqual(initialObj);
 
