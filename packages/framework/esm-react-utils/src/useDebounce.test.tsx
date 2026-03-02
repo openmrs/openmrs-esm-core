@@ -8,7 +8,7 @@ describe('useDebounce', () => {
   });
 
   afterEach(() => {
-    vi.runOnlyPendingTimers();
+    vi.clearAllTimers();
     vi.useRealTimers();
     vi.restoreAllMocks();
   });
@@ -20,7 +20,6 @@ describe('useDebounce', () => {
     );
 
     rerender({ value: 'updated' });
-
     expect(result.current).toBe('initial');
 
     await act(async () => {
@@ -47,7 +46,7 @@ describe('useDebounce', () => {
     expect(result.current).toBe(4);
   });
 
-  it('clears timeout on unmount', async () => {
+  it('clears timeout on unmount', () => {
     const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
 
     const { rerender, unmount } = renderHook(
@@ -57,10 +56,10 @@ describe('useDebounce', () => {
 
     rerender({ value: 'changed' });
 
+    const callsBefore = clearTimeoutSpy.mock.calls.length;
     unmount();
 
-    expect(clearTimeoutSpy).toHaveBeenCalled();
-
+    expect(clearTimeoutSpy.mock.calls.length).toBeGreaterThan(callsBefore);
     clearTimeoutSpy.mockRestore();
   });
 
@@ -79,5 +78,26 @@ describe('useDebounce', () => {
     });
 
     expect(result.current).toBe(updatedObj);
+  });
+
+  it('respects custom delay', async () => {
+    const { result, rerender } = renderHook(
+      ({ value }) => useDebounce(value, 500),
+      { initialProps: { value: 'initial' } },
+    );
+
+    rerender({ value: 'updated' });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300);
+    });
+
+    expect(result.current).toBe('initial');
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(200);
+    });
+
+    expect(result.current).toBe('updated');
   });
 });
