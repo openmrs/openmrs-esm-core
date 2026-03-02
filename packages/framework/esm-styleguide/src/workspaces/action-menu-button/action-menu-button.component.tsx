@@ -35,6 +35,10 @@ export interface ActionMenuButtonProps {
   tagContent?: string | React.ReactNode;
 }
 
+/**
+ * @depcreated migrate to workspace v2 and use ActionMenuButton2. See:
+ * https://openmrs.atlassian.net/wiki/spaces/docs/pages/615677981/Workspace+v2+Migration+Guide
+ */
 export const ActionMenuButton: React.FC<ActionMenuButtonProps> = ({
   getIcon,
   label,

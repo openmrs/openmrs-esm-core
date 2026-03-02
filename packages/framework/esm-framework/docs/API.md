@@ -251,11 +251,11 @@
 ## Workspace
 
 - [ActionMenuButtonProps](interfaces/ActionMenuButtonProps.md)
-- [closeWorkspace](functions/closeWorkspace.md)
-- [launchWorkspace](functions/launchWorkspace.md)
-- [navigateAndLaunchWorkspace](functions/navigateAndLaunchWorkspace.md)
-- [useWorkspaces](functions/useWorkspaces.md)
-- [launchWorkspaceGroup](functions/launchWorkspaceGroup.md)
+- [~~closeWorkspace~~](functions/closeWorkspace.md)
+- [~~launchWorkspace~~](functions/launchWorkspace.md)
+- [~~navigateAndLaunchWorkspace~~](functions/navigateAndLaunchWorkspace.md)
+- [~~useWorkspaces~~](functions/useWorkspaces.md)
+- [~~launchWorkspaceGroup~~](functions/launchWorkspaceGroup.md)
 - [DefaultWorkspaceProps](interfaces/DefaultWorkspaceProps.md)
 - [CloseWorkspaceOptions](interfaces/CloseWorkspaceOptions.md)
 - [OpenWorkspace](interfaces/OpenWorkspace.md)
