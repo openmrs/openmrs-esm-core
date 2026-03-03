@@ -1,6 +1,6 @@
 import { describe, expect, it, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useLayoutType, isDesktop, LayoutType } from './useLayoutType';
+import { useLayoutType, isDesktop, type LayoutType } from './useLayoutType';
 
 const BREAKPOINT_CLASSES = [
   'omrs-breakpoint-lt-tablet',
