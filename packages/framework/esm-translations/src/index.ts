@@ -77,16 +77,3 @@ export function getCoreTranslation(
   }
   return translateFrom('core', key, defaultText ?? coreTranslations[key], options);
 }
-
-/**
- * @internal
- * Translation bridge for Carbon Design System components that use `translateWithId`.
- */
-export function carbonTranslateWithId(id: string, state?: Record<string, any>): string {
-  if (id in coreTranslations) {
-    return getCoreTranslation(id as CoreTranslationKey, undefined, state);
-  }
-
-  console.warn(`Carbon translation key '${id}' not found in core translations. Using the key as fallback.`);
-  return id;
-}
