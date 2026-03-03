@@ -49,6 +49,8 @@ export const coreTranslations = {
   actionableNotification: 'Actionable notification',
   address: 'Address',
   age: 'Age',
+  batchActionItemSelected: '{{totalSelected}} item selected',
+  batchActionsItemsSelected: '{{totalSelected}} items selected',
   cancel: 'Cancel',
   change: 'Change',
   // Default value for the implementationName config property
@@ -97,6 +99,7 @@ export const coreTranslations = {
   searchForLocation: 'Search for a location',
   seeAll: 'See all',
   seeMoreLists: 'See {{count}} more lists',
+  selectAll: 'Select all',
   sex: 'Sex',
   showLess: 'Show less',
   showMore: 'Show more',
