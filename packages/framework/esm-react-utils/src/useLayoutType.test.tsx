@@ -1,6 +1,6 @@
 import { describe, expect, it, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useLayoutType, isDesktop } from './useLayoutType';
+import { useLayoutType, isDesktop, LayoutType } from './useLayoutType';
 
 const BREAKPOINT_CLASSES = [
   'omrs-breakpoint-lt-tablet',
@@ -25,7 +25,7 @@ describe('useLayoutType', () => {
     expect(result.current).toBe('tablet');
   });
 
-  it.each([
+  it.each<[string, LayoutType]>([
     ['omrs-breakpoint-lt-tablet', 'phone'],
     ['omrs-breakpoint-gt-tablet', 'small-desktop'],
     ['omrs-breakpoint-gt-small-desktop', 'large-desktop'],
@@ -40,20 +40,16 @@ describe('useLayoutType', () => {
     expect(result.current).toBe('tablet');
 
     document.body.classList.add('omrs-breakpoint-lt-tablet');
-
     act(() => {
       window.dispatchEvent(new Event('resize'));
     });
-
     expect(result.current).toBe('phone');
 
     document.body.classList.remove('omrs-breakpoint-lt-tablet');
     document.body.classList.add('omrs-breakpoint-gt-small-desktop');
-
     act(() => {
       window.dispatchEvent(new Event('resize'));
     });
-
     expect(result.current).toBe('large-desktop');
 
     unmount();
@@ -61,12 +57,14 @@ describe('useLayoutType', () => {
 });
 
 describe('isDesktop', () => {
-  it.each([
+  const cases: Array<[LayoutType, boolean]> = [
     ['phone', false],
     ['tablet', false],
     ['small-desktop', true],
     ['large-desktop', true],
-  ])('returns %s for %s', (layout, expected) => {
-    expect(isDesktop(layout as any)).toBe(expected);
+  ];
+
+  it.each(cases)('returns %s for %s', (layout, expected) => {
+    expect(isDesktop(layout)).toBe(expected);
   });
 });
