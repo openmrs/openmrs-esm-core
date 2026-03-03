@@ -13,7 +13,7 @@
 export function getDefaultsFromConfigSchema<T = Record<string, any>>(
   schema: Record<string | number | symbol, unknown>,
 ): T {
-  let tmp = {};
+  let tmp: Record<string, unknown> = {};
   for (let k of Object.keys(schema)) {
     if (
       isOrdinaryObject(schema[k]) &&
@@ -31,6 +31,6 @@ export function getDefaultsFromConfigSchema<T = Record<string, any>>(
   return tmp as T;
 }
 
-function isOrdinaryObject(x: any): x is Record<string | number | symbol, unknown> {
+function isOrdinaryObject(x: unknown): x is Record<string | number | symbol, unknown> {
   return !!x && x.constructor === Object;
 }

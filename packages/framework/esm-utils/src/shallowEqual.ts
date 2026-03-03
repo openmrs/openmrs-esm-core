@@ -42,5 +42,8 @@ export function shallowEqual(a: unknown, b: unknown) {
   const objAKeys = Object.getOwnPropertyNames(a);
   const objBKeys = Object.getOwnPropertyNames(b);
 
-  return objAKeys.length === objBKeys.length && objAKeys.every((key) => a[key] === b[key]);
+  return (
+    objAKeys.length === objBKeys.length &&
+    objAKeys.every((key) => (a as Record<string, unknown>)[key] === (b as Record<string, unknown>)[key])
+  );
 }
