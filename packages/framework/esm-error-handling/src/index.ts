@@ -180,6 +180,55 @@ function collectGlobalErrorMessages(globalErrors: Array<RestFieldError>): Array<
 }
 
 /**
+ * Runtime type guard that validates whether a value conforms to the
+ * {@link RestErrorResponse} shape.  Performs field-level narrowing so that
+ * no unsafe `as unknown as …` cast is required.
+ */
+function isRestErrorResponse(value: unknown): value is RestErrorResponse {
+  if (value == null || typeof value !== 'object') {
+    return false;
+  }
+
+  if (!('error' in value)) {
+    return false;
+  }
+
+  const errorField = (value as Record<string, unknown>).error;
+
+  // `error` may be absent (`error?:`), which still satisfies the interface
+  if (errorField == null) {
+    return true;
+  }
+
+  if (typeof errorField !== 'object') {
+    return false;
+  }
+
+  const err = errorField as Record<string, unknown>;
+
+  if ('message' in err && err.message != null && typeof err.message !== 'string') {
+    return false;
+  }
+  if ('code' in err && err.code != null && typeof err.code !== 'string') {
+    return false;
+  }
+  if ('detail' in err && err.detail != null && typeof err.detail !== 'string') {
+    return false;
+  }
+  if ('translatedMessage' in err && err.translatedMessage != null && typeof err.translatedMessage !== 'string') {
+    return false;
+  }
+  if ('fieldErrors' in err && err.fieldErrors != null && typeof err.fieldErrors !== 'object') {
+    return false;
+  }
+  if ('globalErrors' in err && err.globalErrors != null && !Array.isArray(err.globalErrors)) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  * Attempts to locate the REST error JSON from the error object.
  * Handles both `OpenmrsFetchError.responseBody` (which may be the parsed JSON
  * directly) and nested `responseBody.error` structures.
@@ -193,10 +242,10 @@ function getRestErrorBody(error: unknown): RestErrorResponse | null {
 
   // OpenmrsFetchError stores the parsed response JSON in `responseBody`
   if (err.responseBody != null && typeof err.responseBody === 'object') {
-    const body = err.responseBody as Record<string, unknown>;
-    // If responseBody itself has an `error` key, it's the REST error envelope
-    if ('error' in body) {
-      return body as unknown as RestErrorResponse;
+    const body = err.responseBody;
+    // Validate the shape with a proper type guard — no force-cast needed
+    if (isRestErrorResponse(body)) {
+      return body;
     }
   }
 

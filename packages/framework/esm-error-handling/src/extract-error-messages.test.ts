@@ -192,7 +192,7 @@ describe('reportRestError', () => {
     // No field or global error messages → falls back via ensureErrorObject
     expect(mockDispatchSnackbarShown).toHaveBeenCalledWith({
       title: 'Error',
-      subtitle: expect.any(String),
+      subtitle: `Object thrown as error: ${JSON.stringify(error)}`,
       kind: 'error',
     });
   });
