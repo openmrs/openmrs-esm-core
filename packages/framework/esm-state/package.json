@@ -63,8 +63,8 @@
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
-    "@swc/cli": "^0.7.7",
-    "@swc/core": "^1.11.29",
+    "@swc/cli": "0.8.0",
+    "@swc/core": "1.15.13",
     "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",

@@ -68,6 +68,14 @@ function initializeSpa(config: SpaConfig) {
   setupPaths(config);
   wireSpaPaths();
   return Promise.resolve(__webpack_init_sharing__('default')).then(async () => {
+    const shareScope = __webpack_share_scopes__.default;
+    // MF will deduplicate these as they're aliased at build time, but at runtime
+    // apps try to load `@openmrs/esm-framework`, so here we provide a runtime
+    // alias that resolves to the "internal" copy of the framework
+    if (shareScope['@openmrs/esm-framework/src/internal'] && !shareScope['@openmrs/esm-framework']) {
+      shareScope['@openmrs/esm-framework'] = shareScope['@openmrs/esm-framework/src/internal'];
+    }
+
     const { configUrls = [], offline = false } = config;
     window.offlineEnabled = offline;
 

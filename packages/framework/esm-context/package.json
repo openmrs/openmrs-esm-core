@@ -21,11 +21,11 @@
   "scripts": {
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
-    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "typescript": "tsc --project tsconfig.build.json",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests"
   },
   "keywords": [
     "openmrs",
@@ -56,8 +56,8 @@
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
-    "@swc/cli": "^0.7.7",
-    "@swc/core": "^1.11.29",
+    "@swc/cli": "0.8.0",
+    "@swc/core": "1.15.13",
     "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "rimraf": "^6.0.1",
