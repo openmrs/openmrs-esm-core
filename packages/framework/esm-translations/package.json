@@ -54,7 +54,7 @@
     "access": "public"
   },
   "dependencies": {
-    "i18next": "^25.5.3"
+    "i18next": "^25.8.13"
   },
   "peerDependencies": {
     "i18next": "25.x"
@@ -63,7 +63,7 @@
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
     "concurrently": "^9.1.2",
-    "i18next-parser": "^9.3.0",
+    "i18next-parser": "^9.4.0",
     "rimraf": "^6.0.1"
   }
 }

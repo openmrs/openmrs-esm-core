@@ -48,7 +48,7 @@
     "fake-indexeddb": "^4.0.2",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "husky": "^8.0.3",
-    "i18next-parser": "^9.3.0",
+    "i18next-parser": "^9.4.0",
     "identity-obj-proxy": "^3.0.0",
     "lint-staged": "^15.2.9",
     "openmrs": "workspace:*",
