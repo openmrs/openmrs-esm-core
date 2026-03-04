@@ -8,8 +8,8 @@ import styles from './help.styles.scss';
 export default function HelpMenu() {
   const { user } = useSession();
   const [helpMenuOpen, setHelpMenuOpen] = useState(false);
-  const helpMenuButtonRef = useRef(null);
-  const popupRef = useRef(null);
+  const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
   const helpMenuItems = useAssignedExtensions('help-menu-slot');
 
   const toggleHelpMenu = () => {
@@ -17,12 +17,12 @@ export default function HelpMenu() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (
         helpMenuButtonRef.current &&
-        !helpMenuButtonRef.current.contains(event.target) &&
+        !helpMenuButtonRef.current.contains(event.target as Node | null) &&
         popupRef.current &&
-        !popupRef.current.contains(event.target)
+        !popupRef.current.contains(event.target as Node | null)
       ) {
         setHelpMenuOpen(false);
       }
