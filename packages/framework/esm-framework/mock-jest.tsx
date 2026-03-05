@@ -68,25 +68,16 @@ export const unsetLeftNav = jest.fn();
 export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
 export const ErrorState = jest.fn(() => <div>Error State</div>);
 
-export const CustomOverflowMenu = jest.fn(({ menuTitle, children }) => (
-  <div>
-    <button>{menuTitle}</button>
-    {children}
-  </div>
-));
-export const CustomOverflowMenuItem = jest.fn(({ itemText, ...props }) => (
-  <button role="menuitem" {...props}>
-    {itemText}
-  </button>
-));
-export const PatientBannerActionsMenu = jest.fn(() => <div>Patient Banner Actions Menu</div>);
-export const PatientBannerContactDetails = jest.fn(() => <div>Patient Banner Contact Details</div>);
-export const PatientBannerPatientInfo = jest.fn(() => <div>Patient Banner Patient Info</div>);
-export const PatientBannerPatientIdentifiers = jest.fn(() => <div>Patient Banner Patient Identifier</div>);
-export const PatientBannerToggleContactDetailsButton = jest.fn(() => (
-  <div>Patient Banner Toggle Contact Details Button</div>
-));
-export const PatientPhoto = jest.fn(() => <div>Patient Photo</div>);
+export {
+  CustomOverflowMenu,
+  CustomOverflowMenuItem,
+  PatientBannerActionsMenu,
+  PatientBannerContactDetails,
+  PatientBannerPatientInfo,
+  PatientBannerPatientIdentifiers,
+  PatientBannerToggleContactDetailsButton,
+  PatientPhoto,
+} from '@openmrs/esm-styleguide/src/public';
 export const usePatientPhoto = jest.fn(() => ({
   isLoading: true,
   data: null,
