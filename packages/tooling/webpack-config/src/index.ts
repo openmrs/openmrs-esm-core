@@ -199,7 +199,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         merge(
           {
             test: /\.m?(js|ts|tsx)$/,
-            exclude: /node_modules(?![\/\\]@openmrs)/,
+            exclude: /node_modules/,
             use: require.resolve('swc-loader'),
           },
           scriptRuleConfig,
@@ -231,11 +231,15 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         ),
         merge(
           {
-            test: /\.(png|jpe?g|gif|svg)$/i,
+            test: /\.(png|jpe?g|gif)$/i,
             type: 'asset/resource',
           },
           assetRuleConfig,
         ),
+        merge({
+          test: /\.svg$/i,
+          type: 'asset/source',
+        }),
       ],
     },
     mode,
