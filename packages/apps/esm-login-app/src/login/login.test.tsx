@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { waitFor, screen } from '@testing-library/react';
@@ -122,9 +121,7 @@ describe('Login', () => {
     await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(screen.getByRole('button', { name: /log in/i }));
 
-    await waitFor(() =>
-      expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'),
-    );
+    await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
   it('shows error message when invalid credentials are entered', async () => {
@@ -139,12 +136,17 @@ describe('Login', () => {
     const user = userEvent.setup();
 
     const usernameInput = screen.getByRole('textbox', { name: /username/i });
-    const passwordInput = screen.getByLabelText(/^password$/i);
-    const loginButton = screen.getByRole('button', { name: /log in/i });
+    const continueButton = screen.getByRole('button', { name: /continue/i });
 
+    // Step 1: enter username
     await user.type(usernameInput, 'wronguser');
+    await user.click(continueButton);
+
+    // Step 2: wait for password field
+    const passwordInput = await screen.findByLabelText(/^password$/i);
+
     await user.type(passwordInput, 'wrongpass');
-    await user.click(loginButton);
+    await user.click(screen.getByRole('button', { name: /log in/i }));
 
     const errorMessage = await screen.findByText(/invalid username or password/i);
     expect(errorMessage).toBeInTheDocument();
