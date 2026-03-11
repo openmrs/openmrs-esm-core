@@ -21,13 +21,14 @@ globalThis.setTimeout?.(() => {
   }
 }, 1000);
 
-type StorageType = 'none' | 'sessionStorage' | 'localStorage';
+type StorageType = 'none' | 'sessionStorage';
 
 /**
  * Creates a Zustand store.
  *
  * @param name A name by which the store can be looked up later.
  *    Must be unique across the entire application.
+ * @param storageType The type of storage to use for persisting the store's state. Defaults to 'none'.
  * @param initialState An object which will be the initial state of the store.
  * @returns The newly created store.
  */
@@ -95,6 +96,7 @@ export function registerGlobalStore<T>(name: string, store: StoreApi<T>): StoreA
  *
  * @param name The name of the store to look up.
  * @param fallbackState The initial value of the new store if no store named `name` exists.
+ * @param fallbackStorageType The type of storage to use for the new store if no store named `name` exists. Defaults to 'none'.
  * @returns The found or newly created store.
  */
 export function getGlobalStore<T>(
@@ -160,10 +162,8 @@ export function subscribeTo<T, U>(...args: SubscribeToArgs<T, U>): () => void {
  */
 function createStoreHelper<T>(name: string, initialState: T, storageType: StorageType) {
   let store: StoreApi<T>;
-  if (storageType == 'sessionStorage') {
+  if (storageType === 'sessionStorage') {
     store = createStore<T>()(persist(() => initialState, { name, storage: createJSONStorage(() => sessionStorage) }));
-  } else if (storageType == 'localStorage') {
-    store = createStore<T>()(persist(() => initialState, { name, storage: createJSONStorage(() => localStorage) }));
   } else {
     store = createStore<T>()(() => initialState);
   }
