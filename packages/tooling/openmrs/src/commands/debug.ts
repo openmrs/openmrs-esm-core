@@ -1,5 +1,5 @@
 import type { ImportmapDeclaration } from '../utils';
-import { loadWebpackConfig, logInfo, logWarn } from '../utils';
+import { loadBundlerConfig, logInfo, logWarn } from '../utils';
 
 export interface DebugArgs {
   port: number;
@@ -19,7 +19,7 @@ export function runDebug(args: DebugArgs) {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const WebpackDevServer = require('webpack-dev-server');
 
-  const config = loadWebpackConfig({
+  const config = loadBundlerConfig({
     importmap: args.importmap,
     backend: args.backend,
     apiUrl: args.apiUrl,
