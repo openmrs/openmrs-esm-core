@@ -32,7 +32,7 @@
   "dependencies": {
     "@rspack/cli": "1.7.6",
     "@rspack/core": "1.7.6",
-    "@swc/core": "1.15.13",
+    "@swc/core": "1.15.18",
     "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "5.2.7",
