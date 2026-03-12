@@ -101,21 +101,24 @@ const Login: React.FC = () => {
 
         if (authenticated) {
           if (session.sessionLocation) {
-            let to = loginLinks?.loginSuccess || '/home';
+            let to: string;
+
+            // 1️⃣ Highest priority: return user to the page they came from
             if (location?.state?.referrer) {
               to = location.state.referrer;
+
+              // 2️⃣ Next priority: configured login success page
+            } else if (loginLinks?.loginSuccess) {
+              to = loginLinks.loginSuccess;
+
+              // 3️⃣ Fallback: default home route
+            } else {
+              to = '/home';
             }
 
             openmrsNavigate({ to });
           } else {
             navigate('/login/location');
-          }
-        } else {
-          setErrorMessage('invalidCredentials');
-          setUsername('');
-          setPassword('');
-          if (showPasswordOnSeparateScreen) {
-            setShowPasswordField(false);
           }
         }
 
