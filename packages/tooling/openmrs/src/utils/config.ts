@@ -1,8 +1,8 @@
+import type { Configuration as RspackConfig } from '@rspack/core';
 import type { ImportmapDeclaration, RoutesDeclaration } from './importmap';
 import { setEnvVariables } from './variables';
-import type { Configuration as WebpackConfig } from 'webpack';
 
-export interface WebpackOptions {
+export interface BuildOptions {
   backend?: string;
   defaultLocale?: string;
   importmap?: ImportmapDeclaration;
@@ -19,7 +19,7 @@ export interface WebpackOptions {
   assets?: Array<string>;
 }
 
-export function loadWebpackConfig(options: WebpackOptions = {}) {
+export function loadBundlerConfig(options: BuildOptions = {}) {
   const variables: Record<string, unknown> = {};
 
   if (typeof options.backend === 'string') {
@@ -96,9 +96,9 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
   setEnvVariables(variables);
 
   const config:
-    | ((env: Record<string, unknown>) => WebpackConfig)
+    | ((env: Record<string | number | symbol, unknown>) => RspackConfig)
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    | WebpackConfig = require('@openmrs/esm-app-shell/webpack.config.js');
+    | RspackConfig = require('@openmrs/esm-app-shell/rspack.config.js');
 
   if (typeof config === 'function') {
     return config({});

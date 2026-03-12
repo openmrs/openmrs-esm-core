@@ -198,8 +198,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         merge(
           {
             test: /\.m?(js|ts|tsx)$/,
-            exclude: /node_modules(?![\/\\]@openmrs)/,
-            loader: 'swc-loader',
+            exclude: /node_modules/,
+            loader: 'builtin:swc-loader',
             options: {
               jsc: {
                 parser: {
@@ -238,11 +238,15 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         ),
         merge(
           {
-            test: /\.(png|jpe?g|gif|svg)$/i,
+            test: /\.(png|jpe?g|gif)$/i,
             type: 'asset/resource',
           },
           assetRuleConfig,
         ),
+        {
+          test: /\.svg$/i,
+          type: 'asset/source',
+        },
       ],
     },
     mode,

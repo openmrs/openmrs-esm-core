@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from 'storybook-react-rsbuild';
-import { OpenmrsDatePicker } from './OpenmrsDatePicker';
+import { OpenmrsDatePicker } from './openmrs-date-picker.component';
 
 const meta: Meta<typeof OpenmrsDatePicker> = {
   title: 'Components/DatePicker',

@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-expression-evaluator",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "license": "MPL-2.0",
   "description": "Utilities for evaluating user-defined expressions",
   "type": "module",
@@ -59,8 +59,8 @@
     "jsep": "^1.4.0"
   },
   "devDependencies": {
-    "@swc/cli": "^0.7.7",
-    "@swc/core": "^1.11.29",
+    "@swc/cli": "0.8.0",
+    "@swc/core": "1.15.18",
     "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
