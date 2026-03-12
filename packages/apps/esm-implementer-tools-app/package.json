@@ -52,8 +52,8 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "@rspack/cli": "1.7.6",
-    "@rspack/core": "1.7.6",
+    "@rspack/cli": "1.7.8",
+    "@rspack/core": "1.7.8",
     "@vitest/coverage-v8": "^4.0.18",
     "ace-builds": "^1.43.3",
     "cross-env": "^7.0.3",
