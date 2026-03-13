@@ -3,27 +3,28 @@
   "version": "9.0.2",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
-  "main": "dist/openmrs-esm-styleguide.js",
+  "module": "dist/internal.js",
   "types": "dist/public.d.ts",
   "exports": {
     ".": {
       "types": "./src/internal.ts",
-      "default": "./src/internal.ts"
+      "default": "./dist/internal.js"
     },
     "./src/internal": {
       "types": "./src/internal.ts",
-      "default": "./src/internal.ts"
-    },
-    "./dist/openmrs-esm-styleguide.css": {
-      "default": "./dist/openmrs-esm-styleguide.css"
+      "default": "./dist/internal.js"
     },
     "./src/public": {
       "types": "./src/public.ts",
-      "default": "./src/public.ts"
+      "default": "./dist/public.js"
     },
     "./src/index": {
       "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "default": "./dist/index.js"
+    },
+    "./styles": {
+      "sass": "./dist/_all.scss",
+      "default": "./dist/_all.scss"
     },
     "./src/vars": {
       "sass": "./src/_vars.scss"
@@ -38,9 +39,8 @@
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
-    "build": "concurrently \"rspack --mode=production\" \"tsc --project tsconfig.build.json\"",
-    "build:development": "concurrently \"rspack --mode=development\" \"tsc --project tsconfig.build.json\"",
-    "analyze": "rspack --mode=production --env analyze=true",
+    "build": "rimraf dist && concurrently \"swc --strip-leading-paths --copy-files src -d dist && svgo -rf dist --quiet\" \"tsc --project tsconfig.build.json\"",
+    "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths --copy-files src -d dist\" \"tsc --project tsconfig.build.json\"",
     "lint": "eslint src"
   },
   "keywords": [
@@ -109,8 +109,8 @@
     "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-translations": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
-    "@rspack/cli": "1.3.15",
-    "@rspack/core": "1.3.15",
+    "@swc/cli": "0.8.0",
+    "@swc/core": "1.15.18",
     "@types/geopattern": "^1.2.9",
     "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.2",
@@ -119,9 +119,9 @@
     "i18next": "^25.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
     "rxjs": "^6.5.3",
-    "sass-embedded": "1.89.0",
-    "svgo-loader": "4.0.0",
+    "svgo": "^3.3.2",
     "swr": "2.2.5",
     "typescript": "^5.8.3",
     "vitest": "^4.0.18"

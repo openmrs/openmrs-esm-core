@@ -8,17 +8,17 @@
   "source": true,
   "scripts": {
     "start": "openmrs develop",
-    "serve": "webpack serve --mode=development",
+    "serve": "rspack serve --mode=development",
     "debug": "npm run serve",
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
-    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
-    "build": "webpack --mode=production",
-    "build:development": "webpack --mode=development",
-    "analyze": "webpack --mode=production --env analyze=true",
+    "build": "rspack --mode=production",
+    "build:development": "rspack --mode=development",
+    "analyze": "rspack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx",
-    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.extension.tsx' 'src/**/*.modal.tsx' --config='../../../tools/i18next-parser.config.js'"
+    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.extension.tsx' 'src/**/*.modal.tsx' --config='../../../tools/i18next-parser.config.js'",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests"
   },
   "keywords": [
     "openmrs",
@@ -53,8 +53,9 @@
     "single-spa": "6.x"
   },
   "devDependencies": {
+    "@rspack/cli": "1.7.6",
+    "@rspack/core": "1.7.6",
     "@vitest/coverage-v8": "^4.0.18",
-    "cross-env": "^7.0.3",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",
     "react": "^18.3.1",
