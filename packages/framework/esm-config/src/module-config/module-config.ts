@@ -189,7 +189,7 @@ function computeExtensionConfigs(
  */
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
-  const enhancedSchema = mergeDeepReplace(schema, implicitConfigSchema) as ConfigSchema;
+  const enhancedSchema = mergeDeepReplace(schema, implicitConfigSchema);
 
   configInternalStore.setState((state) => ({
     ...state,
@@ -265,7 +265,7 @@ export function registerTranslationNamespace(namespace: string) {
  */
 export function defineExtensionConfigSchema(extensionName: string, schema: ConfigSchema) {
   validateConfigSchema(extensionName, schema);
-  const enhancedSchema = mergeDeepReplace(schema, implicitConfigSchema) as ConfigSchema;
+  const enhancedSchema = mergeDeepReplace(schema, implicitConfigSchema);
 
   const state = configInternalStore.getState();
   if (state.schemas[extensionName]) {
