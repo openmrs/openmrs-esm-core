@@ -2,69 +2,106 @@ import { describe, expect, it, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useLayoutType, isDesktop, type LayoutType } from './useLayoutType';
 
-const BREAKPOINT_CLASSES = [
-  'omrs-breakpoint-lt-tablet',
-  'omrs-breakpoint-gt-tablet',
-  'omrs-breakpoint-gt-small-desktop',
+// Breakpoint class → layout mapping used across tests
+
+const LAYOUT_CASES: Array<[string, LayoutType]> = [
+  ['omrs-breakpoint-lt-tablet', 'phone'],
+  ['omrs-breakpoint-gt-tablet', 'small-desktop'],
+  ['omrs-breakpoint-gt-small-desktop', 'large-desktop'],
 ];
 
-function renderWithLayoutClass(className?: string) {
+const ALL_BREAKPOINT_CLASSES = LAYOUT_CASES.map(([className]) => className);
+
+// Helper to apply a breakpoint class to the body
+
+function setBreakpoint(className?: string) {
+  document.body.classList.remove(...ALL_BREAKPOINT_CLASSES);
   if (className) {
     document.body.classList.add(className);
   }
+}
+
+function renderWithBreakpoint(className?: string) {
+  setBreakpoint(className);
   return renderHook(() => useLayoutType());
 }
 
 describe('useLayoutType', () => {
   afterEach(() => {
-    document.body.classList.remove(...BREAKPOINT_CLASSES);
+    document.body.classList.remove(...ALL_BREAKPOINT_CLASSES);
   });
 
-  it('returns tablet by default when no breakpoint classes are present', () => {
-    const { result } = renderWithLayoutClass();
+  it('returns "tablet" by default when no breakpoint class is present', () => {
+    const { result } = renderWithBreakpoint();
     expect(result.current).toBe('tablet');
   });
 
-  it.each<[string, LayoutType]>([
-    ['omrs-breakpoint-lt-tablet', 'phone'],
-    ['omrs-breakpoint-gt-tablet', 'small-desktop'],
-    ['omrs-breakpoint-gt-small-desktop', 'large-desktop'],
-  ])('maps %s to %s', (className, expectedLayout) => {
-    const { result } = renderWithLayoutClass(className);
+  it.each(LAYOUT_CASES)('maps class "%s" to layout "%s"', (className, expectedLayout) => {
+    const { result } = renderWithBreakpoint(className);
     expect(result.current).toBe(expectedLayout);
   });
 
-  it('updates layout when resize event is dispatched', () => {
-    const { result, unmount } = renderHook(() => useLayoutType());
-
+  it('updates layout when breakpoint class changes on resize', () => {
+    const { result } = renderHook(() => useLayoutType());
     expect(result.current).toBe('tablet');
 
-    document.body.classList.add('omrs-breakpoint-lt-tablet');
     act(() => {
+      setBreakpoint('omrs-breakpoint-lt-tablet');
       window.dispatchEvent(new Event('resize'));
     });
     expect(result.current).toBe('phone');
 
-    document.body.classList.remove('omrs-breakpoint-lt-tablet');
-    document.body.classList.add('omrs-breakpoint-gt-small-desktop');
     act(() => {
+      setBreakpoint('omrs-breakpoint-gt-small-desktop');
       window.dispatchEvent(new Event('resize'));
     });
     expect(result.current).toBe('large-desktop');
+  });
 
-    unmount();
+  it('falls back to "tablet" when all breakpoint classes are removed', () => {
+    const { result } = renderHook(() => useLayoutType());
+
+    act(() => {
+      setBreakpoint('omrs-breakpoint-gt-tablet');
+      window.dispatchEvent(new Event('resize'));
+    });
+    expect(result.current).toBe('small-desktop');
+
+    act(() => {
+      setBreakpoint(); // clears all classes
+      window.dispatchEvent(new Event('resize'));
+    });
+    expect(result.current).toBe('tablet');
+  });
+
+  it('ignores unrelated window events', () => {
+    const { result } = renderHook(() => useLayoutType());
+
+    act(() => {
+      setBreakpoint('omrs-breakpoint-lt-tablet');
+      window.dispatchEvent(new Event('scroll'));
+      window.dispatchEvent(new Event('click'));
+    });
+
+    // DOM changed but no resize fired — hook should not have re-read the class
+    expect(result.current).toBe('tablet');
   });
 });
 
 describe('isDesktop', () => {
-  const cases: Array<[LayoutType, boolean]> = [
+  it.each<[LayoutType, boolean]>([
     ['phone', false],
     ['tablet', false],
     ['small-desktop', true],
     ['large-desktop', true],
-  ];
-
-  it.each(cases)('returns %s for %s', (layout, expected) => {
+  ])('returns %s for layout "%s"', (layout, expected) => {
     expect(isDesktop(layout)).toBe(expected);
+  });
+
+  it('identifies non-desktop layouts correctly', () => {
+    const nonDesktopLayouts = LAYOUT_CASES.map(([, layout]) => layout).filter(
+      (layout) => !isDesktop(layout),
+    );
+    expect(nonDesktopLayouts).toEqual(['phone']);
   });
 });
