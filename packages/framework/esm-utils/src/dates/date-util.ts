@@ -10,7 +10,6 @@ import {
   createCalendar,
   toCalendar,
 } from '@internationalized/date';
-import { DurationFormat } from '@formatjs/intl-durationformat';
 import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday.js';
@@ -18,7 +17,6 @@ import objectSupport from 'dayjs/plugin/objectSupport.js';
 import utc from 'dayjs/plugin/utc.js';
 import { isNil, omit } from 'lodash-es';
 import { getLocale } from '../';
-import type { DurationFormatOptions, DurationInput } from '@formatjs/intl-durationformat/src/types';
 
 dayjs.extend(isToday);
 dayjs.extend(utc);
@@ -440,7 +438,7 @@ export function convertToLocaleCalendar(
  * @param options Optional options for formatting.
  * @returns The formatted duration string.
  */
-export function formatDuration(duration: DurationInput, options?: DurationFormatOptions) {
-  const formatter = new DurationFormat(getLocale(), options);
+export function formatDuration(duration: Intl.DurationInput, options?: Intl.DurationFormatOptions) {
+  const formatter = new Intl.DurationFormat(getLocale(), options);
   return formatter.format(duration);
 }

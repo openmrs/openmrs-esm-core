@@ -1,4 +1,3 @@
-import '@openmrs/esm-styleguide/styles';
 import 'import-map-overrides';
 import type { SpaConfig } from '@openmrs/esm-framework/src/internal';
 

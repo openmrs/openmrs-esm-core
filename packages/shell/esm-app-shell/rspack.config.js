@@ -1,10 +1,17 @@
-const { CssExtractRspackPlugin, CopyRspackPlugin, DefinePlugin, container } = require('@rspack/core');
+const {
+  CssExtractRspackPlugin,
+  CopyRspackPlugin,
+  DefinePlugin,
+  container,
+  util: { createHash },
+} = require('@rspack/core');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const { basename, dirname, resolve } = require('path');
-const { readdirSync, statSync, readFileSync } = require('fs');
+const { mkdirSync, readdirSync, statSync, readFileSync, writeFileSync } = require('node:fs');
+const sass = require('sass-embedded');
 const semver = require('semver');
 const { removeTrailingSlash, getTimestamp } = require('./tools/helpers');
 
@@ -136,6 +143,57 @@ module.exports = (env, argv = []) => {
   }
 
   const assetsPatterns = openmrsJsCssAssets.map((asset) => ({ from: asset, to: 'assets' }));
+
+  // Compile the styleguide SCSS to CSS outside of rspack so it's a pure static file
+  // with no JS involvement. The result is content-hashed for long-term caching.
+  // Sass preserves @import of .css files as plain CSS @import rules rather than
+  // inlining them, so we strip those out and prepend the actual file contents.
+  const sassOutput = sass.compile(require.resolve('@openmrs/esm-styleguide/styles'), {
+    style: isProd ? 'compressed' : 'expanded',
+    quietDeps: true,
+    loadPaths: [resolve(__dirname, '..', '..', '..', 'node_modules')],
+  }).css;
+
+  const cssImportRegex = /@import\s*["']([^"']+)["']\s*;?\n?/g;
+  const inlinedImports = [];
+  const nodeModulesDir = resolve(__dirname, '..', '..', '..', 'node_modules');
+  const strippedCSS = sassOutput.replace(cssImportRegex, (_, importPath) => {
+    const resolvedPath = resolve(nodeModulesDir, importPath);
+    if (checkFileExists(resolvedPath)) {
+      inlinedImports.push(readFileSync(resolvedPath, 'utf-8'));
+    } else {
+      console.warn(`Could not resolve CSS import: ${importPath}`);
+      return `@import "${importPath}";\n`;
+    }
+    return '';
+  });
+  // Rewrite url("~package/path") references to url("fonts/filename") and collect
+  // the actual font file paths so they can be copied to dist/fonts/.
+  const fontAssets = new Set();
+  const resolvedCSS = (inlinedImports.join('\n') + strippedCSS).replace(
+    /url\(["']?~([^"')]+)["']?\)/g,
+    (_, assetPath) => {
+      const resolvedPath = resolve(nodeModulesDir, assetPath);
+      if (checkFileExists(resolvedPath)) {
+        fontAssets.add(resolvedPath);
+        return `url("fonts/${basename(resolvedPath)}")`;
+      }
+      console.warn(`Could not resolve font asset: ${assetPath}`);
+      return `url("${assetPath}")`;
+    },
+  );
+  const styleguideCSS = resolvedCSS;
+  let openmrsCssFilename = 'openmrs.css';
+  if (isProd) {
+    const cssHash = createHash('sha256').update(styleguideCSS).digest('hex').slice(0, 16);
+    openmrsCssFilename = `openmrs.${cssHash}.css`;
+  }
+
+  const cssTmpDir = resolve(__dirname, '.tmp');
+  mkdirSync(cssTmpDir, { recursive: true });
+  writeFileSync(resolve(cssTmpDir, openmrsCssFilename), styleguideCSS);
+
+  const fontPatterns = [...fontAssets].map((fontPath) => ({ from: fontPath, to: 'fonts' }));
 
   return {
     entry: resolve(__dirname, 'src/index.ts'),
@@ -285,8 +343,14 @@ module.exports = (env, argv = []) => {
     },
     optimization: {
       splitChunks: {
-        maxAsyncRequests: 3,
+        maxAsyncRequests: Infinity,
         maxInitialRequests: 1,
+        cacheGroups: {
+          default: {
+            minChunks: 1,
+            reuseExistingChunk: true,
+          },
+        },
       },
     },
     resolve: {
@@ -335,6 +399,7 @@ module.exports = (env, argv = []) => {
           openmrsConfigUrls,
           openmrsCoreImportmap: appPatterns.length > 0 && JSON.stringify(coreImportmap),
           openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
+          openmrsCssFilename,
           openmrsExtraAssets: openmrsJsCssAssets.map((fileName) => 'assets/' + basename(fileName)),
         },
       }),
@@ -353,7 +418,13 @@ module.exports = (env, argv = []) => {
         ],
       }),
       new CopyRspackPlugin({
-        patterns: [{ from: resolve(__dirname, 'src/assets') }, ...appPatterns, ...assetsPatterns],
+        patterns: [
+          { from: resolve(__dirname, 'src/assets') },
+          { from: resolve(cssTmpDir, openmrsCssFilename), to: openmrsCssFilename },
+          ...fontPatterns,
+          ...appPatterns,
+          ...assetsPatterns,
+        ],
       }),
       new ModuleFederationPlugin({
         name,
@@ -399,7 +470,7 @@ module.exports = (env, argv = []) => {
       }),
       isProd &&
         new CssExtractRspackPlugin({
-          filename: 'openmrs.[contenthash].css',
+          filename: '[contenthash].css',
           ignoreOrder: true,
         }),
       new DefinePlugin({

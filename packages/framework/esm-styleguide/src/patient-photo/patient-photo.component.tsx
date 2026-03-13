@@ -1,6 +1,5 @@
 /** @module @category UI */
 import React, { useEffect, useMemo, useState } from 'react';
-import Avatar from 'react-avatar';
 import GeoPattern from 'geopattern';
 import { SkeletonIcon } from '@carbon/react';
 import { getCoreTranslation } from '@openmrs/esm-translations';
@@ -14,6 +13,15 @@ export interface PatientPhotoProps {
   alt?: string;
 }
 
+function getInitials(name: string, maxInitials = 3): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, maxInitials)
+    .map((part) => part[0])
+    .join('');
+}
+
 /**
  * A component which displays the patient photo https://zeroheight.com/23a080e38/p/6663f3-patient-header. If there is no photo, it will display a generated avatar. The default size is 56px.
  */
@@ -25,12 +33,14 @@ export function PatientPhoto({ patientUuid, patientName, alt }: PatientPhotoProp
 
   useEffect(() => {
     if (photo?.imageSrc) {
+      const imageSrc = new URL(photo.imageSrc, window.location.origin).pathname;
+
       setIsValidating(true);
       let cancelled = false;
       const img = new Image();
       img.onload = () => {
         if (!cancelled) {
-          setValidImageSrc(photo.imageSrc);
+          setValidImageSrc(imageSrc);
           setIsValidating(false);
         }
       };
@@ -40,7 +50,7 @@ export function PatientPhoto({ patientUuid, patientName, alt }: PatientPhotoProp
           setIsValidating(false);
         }
       };
-      img.src = photo.imageSrc;
+      img.src = imageSrc;
 
       return () => {
         cancelled = true;
@@ -75,25 +85,26 @@ export function PatientPhoto({ patientUuid, patientName, alt }: PatientPhotoProp
     );
   }
 
+  if (validImageSrc) {
+    return (
+      <div aria-label={altText}>
+        <img className={styles.avatar} src={validImageSrc} alt={altText} title={patientName} />
+      </div>
+    );
+  }
+
   return (
     <div aria-label={altText}>
-      <Avatar
-        alt={altText}
-        color="rgba(0,0,0,0)"
-        maxInitials={3}
-        name={patientName}
-        size="56"
-        src={validImageSrc ?? undefined}
-        style={
-          !validImageSrc
-            ? {
-                backgroundImage: pattern.toDataUrl(),
-                backgroundRepeat: 'round',
-              }
-            : undefined
-        }
-        textSizeRatio={2}
-      />
+      <div
+        className={styles.avatar}
+        title={patientName}
+        style={{
+          backgroundImage: pattern.toDataUrl(),
+          backgroundRepeat: 'round',
+        }}
+      >
+        <span className={styles.initials}>{getInitials(patientName)}</span>
+      </div>
     </div>
   );
 }
