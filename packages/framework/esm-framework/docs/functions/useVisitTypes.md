@@ -2,7 +2,7 @@
 
 # Function: useVisitTypes()
 
-> **useVisitTypes**(): `VisitType`[]
+> **useVisitTypes**(): [`VisitType`](../interfaces/VisitType.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/useVisitTypes.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitTypes.ts#L27)
 
@@ -11,7 +11,7 @@ OpenMRS server. The data is fetched once when the component mounts.
 
 ## Returns
 
-`VisitType`[]
+[`VisitType`](../interfaces/VisitType.md)[]
 
 An array of VisitType objects. Returns an empty array while loading
   or if an error occurs.

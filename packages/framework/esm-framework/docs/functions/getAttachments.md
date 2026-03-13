@@ -2,7 +2,7 @@
 
 # Function: getAttachments()
 
-> **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`): `Promise`\<`FetchResponse`\<`any`\>\>
+> **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
 Defined in: [packages/framework/esm-emr-api/src/attachments.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L46)
 
@@ -31,7 +31,7 @@ An AbortController to allow cancellation of the request.
 
 ## Returns
 
-`Promise`\<`FetchResponse`\<`any`\>\>
+`Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
 A Promise that resolves with the FetchResponse containing an array of attachments.
 

@@ -2,4 +2,4 @@
 
 # Interface: PrecacheStaticDependenciesEvent
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:10
+Defined in: [packages/framework/esm-globals/src/events.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L30)

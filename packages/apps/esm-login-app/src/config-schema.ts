@@ -6,20 +6,14 @@ export const configSchema = {
       _type: Type.String,
       _default: 'basic',
       _description:
-        "Selects the login mechanism to use. Choices are 'basic' and 'oauth2'. " +
-        "For 'oauth2' you'll also need to set the 'loginUrl'",
-      _validators: [validators.oneOf(['basic', 'oauth2'])],
+        "Selects the login mechanism to use. Choices are 'basic', 'oauth2' and 'custom'. On log out, the user is redirected to the login Url in 'custom' mode, but NOT in 'oauth2' mode. " +
+        "For 'custom' and 'oauth2', you'll also need to set the 'loginUrl' property.",
+      _validators: [validators.oneOf(['basic', 'custom', 'oauth2'])],
     },
     loginUrl: {
       _type: Type.String,
       _default: '${openmrsSpaBase}/login',
-      _description: 'The URL to use to login. This is only needed if you are using OAuth2.',
-      _validators: [validators.isUrl],
-    },
-    logoutUrl: {
-      _type: Type.String,
-      _default: '${openmrsSpaBase}/logout',
-      _description: 'The URL to use to login. This is only needed if you are using OAuth2.',
+      _description: "The URL to use to login. This is only used if the login type is 'oauth2' or 'custom'.",
       _validators: [validators.isUrl],
     },
   },
@@ -123,8 +117,7 @@ export interface ConfigSchema {
   };
   provider: {
     loginUrl: string;
-    logoutUrl: string;
-    type: 'basic' | 'oauth2';
+    type: 'basic' | 'oauth2' | 'custom';
   };
   showPasswordOnSeparateScreen: boolean;
 }

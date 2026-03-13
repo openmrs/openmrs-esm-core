@@ -2,7 +2,7 @@
 
 # Function: updateVisit()
 
-> **updateVisit**(`uuid`, `payload`, `abortController`): `Promise`\<`FetchResponse`\<[`Visit`](../interfaces/Visit.md)\>\>
+> **updateVisit**(`uuid`, `payload`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`Visit`](../interfaces/Visit.md)\>\>
 
 Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L162)
 
@@ -30,7 +30,7 @@ An AbortController to allow cancellation of the request.
 
 ## Returns
 
-`Promise`\<`FetchResponse`\<[`Visit`](../interfaces/Visit.md)\>\>
+`Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`Visit`](../interfaces/Visit.md)\>\>
 
 A Promise that resolves with the FetchResponse containing the updated Visit.
 
