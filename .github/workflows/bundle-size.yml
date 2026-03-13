@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: 🚀 Setup a local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v3
+        uses: felixmosh/turborepo-gh-artifacts@v4
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
