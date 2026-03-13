@@ -1,6 +1,4 @@
 /** @module @category Utility */
-import { DurationFormat } from '@formatjs/intl-durationformat';
-import { type DurationFormatOptions, type DurationInput } from '@formatjs/intl-durationformat/src/types';
 import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
 import objectSupport from 'dayjs/plugin/objectSupport.js';
@@ -62,8 +60,8 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
   const monthDiff = to.diff(from, 'months');
   const yearDiff = to.diff(from, 'years');
 
-  const duration: DurationInput = {};
-  const options: DurationFormatOptions = { style: 'short', localeMatcher: 'lookup' };
+  const duration: Intl.DurationInput = {};
+  const options: Intl.DurationFormatOptions = { style: 'short', localeMatcher: 'lookup' };
 
   if (hourDiff < 2) {
     const minuteDiff = to.diff(from, 'minutes');
@@ -91,5 +89,5 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
     duration['years'] = yearDiff;
   }
 
-  return new DurationFormat(locale, options).format(duration);
+  return new Intl.DurationFormat(locale, options).format(duration);
 }

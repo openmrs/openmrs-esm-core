@@ -431,8 +431,17 @@ export function run(configUrls: Array<string>) {
     registerCoreExtensions();
     setupCoreConfig();
 
-    return setupApps()
-      .then(finishRegisteringAllApps)
+    const polyfillReady =
+      typeof Intl !== 'undefined' && 'DurationFormat' in Intl
+        ? Promise.resolve()
+        : import(
+            /* webpackChunkName: "intl-durationformat-polyfill" */
+            '@formatjs/intl-durationformat/lib/polyfill'
+          ).then(() => undefined);
+
+    return polyfillReady
+      .then(setupApps)
+      .then(() => finishRegisteringAllApps())
       .then(offlineEnabled ? setupOfflineCssClasses : undefined)
       .then(offlineEnabled ? registerOfflineHandlers : undefined)
       .then(provideConfigs)
