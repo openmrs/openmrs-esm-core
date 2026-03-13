@@ -4,7 +4,7 @@
 
 > **reportError**(`err`): `void`
 
-Defined in: packages/framework/esm-error-handling/dist/index.d.ts:21
+Defined in: [packages/framework/esm-error-handling/src/index.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L43)
 
 Reports an error to the global error handler. The error will be displayed
 to the user as a toast notification. This function ensures the error is

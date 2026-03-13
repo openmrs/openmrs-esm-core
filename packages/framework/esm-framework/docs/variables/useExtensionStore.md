@@ -2,27 +2,27 @@
 
 # Variable: useExtensionStore()
 
-> `const` **useExtensionStore**: \{(): `ExtensionStore`; \<`A`\>(`actions`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>; \<`A`\>(`actions?`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>; \}
+> `const` **useExtensionStore**: \{(): [`ExtensionStore`](../interfaces/ExtensionStore.md); \<`A`\>(`actions`): [`ExtensionStore`](../interfaces/ExtensionStore.md) & [`BoundActions`](../type-aliases/BoundActions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md), `A`\>; \<`A`\>(`actions?`): [`ExtensionStore`](../interfaces/ExtensionStore.md) & [`BoundActions`](../type-aliases/BoundActions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md), `A`\>; \}
 
 Defined in: [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ## Call Signature
 
-> (): `ExtensionStore`
+> (): [`ExtensionStore`](../interfaces/ExtensionStore.md)
 
 ### Returns
 
-`ExtensionStore`
+[`ExtensionStore`](../interfaces/ExtensionStore.md)
 
 ## Call Signature
 
-> \<`A`\>(`actions`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>
+> \<`A`\>(`actions`): [`ExtensionStore`](../interfaces/ExtensionStore.md) & [`BoundActions`](../type-aliases/BoundActions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md), `A`\>
 
 ### Type Parameters
 
 #### A
 
-`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`ExtensionStore`\>
+`A` *extends* [`Actions`](../type-aliases/Actions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md)\>
 
 ### Parameters
 
@@ -32,17 +32,17 @@ Defined in: [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](http
 
 ### Returns
 
-`ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>
+[`ExtensionStore`](../interfaces/ExtensionStore.md) & [`BoundActions`](../type-aliases/BoundActions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md), `A`\>
 
 ## Call Signature
 
-> \<`A`\>(`actions?`): `ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>
+> \<`A`\>(`actions?`): [`ExtensionStore`](../interfaces/ExtensionStore.md) & [`BoundActions`](../type-aliases/BoundActions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md), `A`\>
 
 ### Type Parameters
 
 #### A
 
-`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`ExtensionStore`\>
+`A` *extends* [`Actions`](../type-aliases/Actions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md)\>
 
 ### Parameters
 
@@ -52,4 +52,4 @@ Defined in: [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](http
 
 ### Returns
 
-`ExtensionStore` & [`BoundActions`](../type-aliases/BoundActions.md)\<`ExtensionStore`, `A`\>
+[`ExtensionStore`](../interfaces/ExtensionStore.md) & [`BoundActions`](../type-aliases/BoundActions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md), `A`\>
