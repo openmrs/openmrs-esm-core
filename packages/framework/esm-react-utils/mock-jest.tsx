@@ -3,18 +3,14 @@ import { openmrsFetch } from '@openmrs/esm-api/mock';
 import { configSchema } from '@openmrs/esm-config/mock';
 import { getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
-import {
-  isDesktop as realIsDesktop,
-  usePagination as realUsePagination,
-  usePaginationInfo as realUsePaginationInfo,
-  useOpenmrsPagination as realUseOpenmrsrPagination,
-  useOpenmrsInfinite as realUseOpenmrsInfinite,
-  useOpenmrsFetchAll as realUseOpenmrsFetchAll,
-  useFhirPagination as realUseFhirPagination,
-  useFhirInfinite as realUseFhirInfinite,
-  useFhirFetchAll as realUseFhirFetchAll,
-  useVisitContextStore as realUseVisitContextStore,
-} from './src/index';
+import { isDesktop as realIsDesktop } from './src/useLayoutType';
+import { useFhirFetchAll as realUseFhirFetchAll } from './src/useFhirFetchAll';
+import { useFhirInfinite as realUseFhirInfinite } from './src/useFhirInfinite';
+import { useFhirPagination as realUseFhirPagination } from './src/useFhirPagination';
+import { useOpenmrsFetchAll as realUseOpenmrsFetchAll } from './src/useOpenmrsFetchAll';
+import { useOpenmrsInfinite as realUseOpenmrsInfinite } from './src/useOpenmrsInfinite';
+import { useOpenmrsPagination as realUseOpenmrsrPagination } from './src/useOpenmrsPagination';
+import { useVisitContextStore as realUseVisitContextStore } from './src/useVisitContextStore';
 export { ConfigurableLink } from './src/ConfigurableLink';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
 import * as utils from '@openmrs/esm-utils';
