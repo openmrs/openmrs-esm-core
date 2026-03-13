@@ -69,25 +69,16 @@ export const unsetLeftNav = vi.fn();
 export const ResponsiveWrapper = vi.fn(({ children }) => <>{children}</>);
 export const ErrorState = vi.fn(() => <div>Error State</div>);
 
-export const CustomOverflowMenu = vi.fn(({ menuTitle, children }) => (
-  <div>
-    <button>{menuTitle}</button>
-    {children}
-  </div>
-));
-export const CustomOverflowMenuItem = vi.fn(({ itemText, ...props }) => (
-  <button role="menuitem" {...props}>
-    {itemText}
-  </button>
-));
-export const PatientBannerActionsMenu = vi.fn(() => <div>Patient Banner Actions Menu</div>);
-export const PatientBannerContactDetails = vi.fn(() => <div>Patient Banner Contact Details</div>);
-export const PatientBannerPatientInfo = vi.fn(() => <div>Patient Banner Patient Info</div>);
-export const PatientBannerPatientIdentifiers = vi.fn(() => <div>Patient Banner Patient Identifier</div>);
-export const PatientBannerToggleContactDetailsButton = vi.fn(() => (
-  <div>Patient Banner Toggle Contact Details Button</div>
-));
-export const PatientPhoto = vi.fn(() => <div>Patient Photo</div>);
+export {
+  CustomOverflowMenu,
+  CustomOverflowMenuItem,
+  PatientBannerActionsMenu,
+  PatientBannerContactDetails,
+  PatientBannerPatientInfo,
+  PatientBannerPatientIdentifiers,
+  PatientBannerToggleContactDetailsButton,
+  PatientPhoto,
+} from '@openmrs/esm-styleguide/src/public';
 export const usePatientPhoto = vi.fn(() => ({
   isLoading: true,
   data: null,
