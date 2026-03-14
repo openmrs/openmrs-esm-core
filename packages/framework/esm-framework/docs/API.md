@@ -71,6 +71,11 @@
 - [useAppContext](functions/useAppContext.md)
 - [useDefineAppContext](functions/useDefineAppContext.md)
 
+## Error Handling
+
+- [reportError](functions/reportError.md)
+- [createErrorHandler](functions/createErrorHandler.md)
+
 ## Breadcrumb
 
 - [registerBreadcrumb](functions/registerBreadcrumb.md)
@@ -174,6 +179,7 @@
 - [useAbortController](functions/useAbortController.md)
 - [useDebounce](functions/useDebounce.md)
 - [useOpenmrsSWR](functions/useOpenmrsSWR.md)
+- [age](functions/age.md)
 - [getPatientName](functions/getPatientName.md)
 - [~~displayName~~](functions/displayName.md)
 - [formatPatientName](functions/formatPatientName.md)
@@ -182,6 +188,7 @@
 - [shallowEqual](functions/shallowEqual.md)
 - [canAccessStorage](functions/canAccessStorage.md)
 - [getDefaultsFromConfigSchema](functions/getDefaultsFromConfigSchema.md)
+- [isVersionSatisfied](functions/isVersionSatisfied.md)
 - [retry](functions/retry.md)
 - [RetryOptions](interfaces/RetryOptions.md)
 

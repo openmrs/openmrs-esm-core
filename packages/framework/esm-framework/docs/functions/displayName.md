@@ -4,7 +4,7 @@
 
 > **displayName**(`patient`): `string`
 
-Defined in: packages/framework/esm-utils/dist/patient-helpers.d.ts:14
+Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L20)
 
 ## Parameters
 

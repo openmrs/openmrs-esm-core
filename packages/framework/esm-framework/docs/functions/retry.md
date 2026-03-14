@@ -2,9 +2,9 @@
 
 # Function: retry()
 
-> **retry**\<`T`\>(`fn`, `options?`): `Promise`\<`T`\>
+> **retry**\<`T`\>(`fn`, `options`): `Promise`\<`T`\>
 
-Defined in: packages/framework/esm-utils/dist/retry.d.ts:38
+Defined in: [packages/framework/esm-utils/src/retry.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L40)
 
 Executes the specified function and retries executing on failure with a custom backoff strategy
 defined by the options.
@@ -27,9 +27,9 @@ If not configured otherwise, this function uses the following default options:
 
 The function to be executed and retried on failure.
 
-### options?
+### options
 
-[`RetryOptions`](../interfaces/RetryOptions.md)
+[`RetryOptions`](../interfaces/RetryOptions.md) = `{}`
 
 Additional options which configure the retry behavior.
 

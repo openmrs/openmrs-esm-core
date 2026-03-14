@@ -99,7 +99,7 @@ The error object thrown by the fetcher function.
 
 ### mutate
 
-> **mutate**: `KeyedMutator`\<`FetchResponse`\<`Bundle`\>\>
+> **mutate**: `KeyedMutator`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`Bundle`\>\>
 
 ### paginated
 

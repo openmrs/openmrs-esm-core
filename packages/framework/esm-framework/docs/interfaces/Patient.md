@@ -16,9 +16,9 @@ accounted for, use OpenmrsResource instead.
 
 ### auditInfo?
 
-> `optional` **auditInfo**: `AuditInfo`
+> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
 
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
 #### Inherited from
 
@@ -30,7 +30,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:14
 
 > `optional` **display**: `string`
 
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:12
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
 #### Inherited from
 
@@ -48,9 +48,9 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:16](ht
 
 ### links?
 
-> `optional` **links**: `Link`[]
+> `optional` **links**: [`Link`](Link.md)[]
 
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
 #### Inherited from
 
@@ -60,7 +60,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:13
 
 ### person?
 
-> `optional` **person**: `Person`
+> `optional` **person**: [`Person`](Person.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L17)
 
@@ -70,7 +70,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:17](ht
 
 > `optional` **resourceVersion**: `string`
 
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
 #### Inherited from
 
@@ -82,7 +82,7 @@ Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:15
 
 > **uuid**: `string`
 
-Defined in: packages/framework/esm-api/dist/types/openmrs-resource.d.ts:11
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
 
 #### Inherited from
 

@@ -21,7 +21,7 @@ The UUID of the patient to fetch, or `null`.
 
 ### fetchInit?
 
-`FetchConfig`
+[`FetchConfig`](../interfaces/FetchConfig.md)
 
 Optional fetch configuration options to pass to the request.
 

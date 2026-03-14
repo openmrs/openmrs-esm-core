@@ -2,7 +2,7 @@
 
 # Interface: ShowToastEvent
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:32
+Defined in: [packages/framework/esm-globals/src/events.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L64)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:32
 
 > `optional` **actionButtonLabel**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:36
+Defined in: [packages/framework/esm-globals/src/events.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L68)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:36
 
 > **description**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:33
+Defined in: [packages/framework/esm-globals/src/events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L65)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:33
 
 > `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:34
+Defined in: [packages/framework/esm-globals/src/events.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L66)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:34
 
 > `optional` **onActionButtonClick**: () => `void`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:37
+Defined in: [packages/framework/esm-globals/src/events.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L69)
 
 #### Returns
 
@@ -46,4 +46,4 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:37
 
 > `optional` **title**: `string`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:35
+Defined in: [packages/framework/esm-globals/src/events.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L67)

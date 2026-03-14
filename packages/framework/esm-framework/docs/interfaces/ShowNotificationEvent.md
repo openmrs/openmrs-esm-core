@@ -2,7 +2,7 @@
 
 # Interface: ShowNotificationEvent
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:16
+Defined in: [packages/framework/esm-globals/src/events.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L46)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:16
 
 > `optional` **action**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:20
+Defined in: [packages/framework/esm-globals/src/events.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L50)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:20
 
 > **description**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:17
+Defined in: [packages/framework/esm-globals/src/events.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L47)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:17
 
 > `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:18
+Defined in: [packages/framework/esm-globals/src/events.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L48)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:18
 
 > `optional` **millis**: `number`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:21
+Defined in: [packages/framework/esm-globals/src/events.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L51)
 
 ***
 
@@ -42,4 +42,4 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:21
 
 > `optional` **title**: `string`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:19
+Defined in: [packages/framework/esm-globals/src/events.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L49)

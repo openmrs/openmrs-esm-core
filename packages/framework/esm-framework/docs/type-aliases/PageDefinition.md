@@ -4,7 +4,7 @@
 
 > **PageDefinition** = `object` & \{ `route`: `string` \| `boolean`; `routeRegex?`: `never`; \} \| \{ `route?`: `never`; `routeRegex`: `string`; \}
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:112
+Defined in: [packages/framework/esm-globals/src/types.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L120)
 
 A definition of a page extracted from an app's routes.json
 

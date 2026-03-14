@@ -2,7 +2,7 @@
 
 # Function: useAssignedExtensions()
 
-> **useAssignedExtensions**(`slotName`): `AssignedExtension`[]
+> **useAssignedExtensions**(`slotName`): [`AssignedExtension`](../interfaces/AssignedExtension.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/useAssignedExtensions.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L8)
 
@@ -18,4 +18,4 @@ The name of the slot to get the assigned extensions for.
 
 ## Returns
 
-`AssignedExtension`[]
+[`AssignedExtension`](../interfaces/AssignedExtension.md)[]
