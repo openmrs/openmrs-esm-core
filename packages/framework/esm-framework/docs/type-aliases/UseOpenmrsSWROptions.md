@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:11](https:/
 
 ### fetchInit?
 
-> `optional` **fetchInit**: `FetchConfig`
+> `optional` **fetchInit**: [`FetchConfig`](../interfaces/FetchConfig.md)
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L12)
 

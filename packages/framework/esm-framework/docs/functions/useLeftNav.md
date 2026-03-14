@@ -17,7 +17,7 @@ unregistered when it unmounts.
 
 ### params
 
-`Omit`\<`SetLeftNavParams`, `"module"`\>
+`Omit`\<[`SetLeftNavParams`](../interfaces/SetLeftNavParams.md), `"module"`\>
 
 Configuration parameters for the left navigation, excluding the
   module name which is automatically determined from the component context.

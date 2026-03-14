@@ -4,7 +4,7 @@
 
 > **ExtensionDefinition** = `object`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:168
+Defined in: [packages/framework/esm-globals/src/types.ts:181](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L181)
 
 A definition of an extension as extracted from an app's routes.json
 
@@ -14,7 +14,7 @@ A definition of an extension as extracted from an app's routes.json
 
 > **component**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:214
+Defined in: [packages/framework/esm-globals/src/types.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L227)
 
 The name of the component exported by this frontend module.
 
@@ -24,7 +24,7 @@ The name of the component exported by this frontend module.
 
 > `optional` **displayExpression**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:200
+Defined in: [packages/framework/esm-globals/src/types.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L213)
 
 The expression that determines whether the extension is displayed.
 
@@ -34,7 +34,7 @@ The expression that determines whether the extension is displayed.
 
 > `optional` **featureFlag**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:204
+Defined in: [packages/framework/esm-globals/src/types.ts:217](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L217)
 
 If supplied, the extension will only be rendered when this feature flag is enabled.
 
@@ -44,7 +44,7 @@ If supplied, the extension will only be rendered when this feature flag is enabl
 
 > `optional` **meta**: `object`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:208
+Defined in: [packages/framework/esm-globals/src/types.ts:221](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L221)
 
 Meta describes any properties that are passed down to the extension when it is loaded
 
@@ -58,7 +58,7 @@ Meta describes any properties that are passed down to the extension when it is l
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:172
+Defined in: [packages/framework/esm-globals/src/types.ts:185](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L185)
 
 The name of this extension. This is used to refer to the extension in configuration.
 
@@ -68,7 +68,7 @@ The name of this extension. This is used to refer to the extension in configurat
 
 > `optional` **offline**: `boolean`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:188
+Defined in: [packages/framework/esm-globals/src/types.ts:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L201)
 
 Determines whether the component renders while the browser is not connected to the internet. If false, this page will never render while offline.
 
@@ -78,7 +78,7 @@ Determines whether the component renders while the browser is not connected to t
 
 > `optional` **online**: `boolean`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:184
+Defined in: [packages/framework/esm-globals/src/types.ts:197](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L197)
 
 Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
 
@@ -88,7 +88,7 @@ Determines whether the component renders while the browser is connected to the i
 
 > `optional` **order**: `number`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:192
+Defined in: [packages/framework/esm-globals/src/types.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L205)
 
 Determines the order in which this component renders in its default extension slot. Note that this can be overridden by configuration.
 
@@ -98,7 +98,7 @@ Determines the order in which this component renders in its default extension sl
 
 > `optional` **privileges**: `string` \| `string`[]
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:196
+Defined in: [packages/framework/esm-globals/src/types.ts:209](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L209)
 
 The user must have ANY of these privileges to see this extension.
 
@@ -108,7 +108,7 @@ The user must have ANY of these privileges to see this extension.
 
 > `optional` **slot**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:176
+Defined in: [packages/framework/esm-globals/src/types.ts:189](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L189)
 
 If supplied, the slot that this extension is rendered into by default.
 
@@ -118,6 +118,6 @@ If supplied, the slot that this extension is rendered into by default.
 
 > `optional` **slots**: `string`[]
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:180
+Defined in: [packages/framework/esm-globals/src/types.ts:193](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L193)
 
 If supplied, the slots that this extension is rendered into by default.

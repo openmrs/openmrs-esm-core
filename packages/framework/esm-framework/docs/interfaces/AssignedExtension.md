@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:77](https://github.c
 
 ### config
 
-> `readonly` **config**: `null` \| `Readonly`\<`ConfigObject`\>
+> `readonly` **config**: `null` \| `Readonly`\<[`ConfigObject`](ConfigObject.md)\>
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L83)
 

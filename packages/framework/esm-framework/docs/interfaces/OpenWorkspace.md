@@ -4,11 +4,11 @@
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L113)
 
-The default parameters received by all workspaces
+See [[WorkspaceDefinition]] for more information about these properties
 
 ## Extends
 
-- `WorkspaceRegistration`.[`DefaultWorkspaceProps`](DefaultWorkspaceProps.md)
+- [`WorkspaceRegistration`](WorkspaceRegistration.md).[`DefaultWorkspaceProps`](DefaultWorkspaceProps.md)
 
 ## Properties
 
@@ -24,11 +24,11 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:114]
 
 > **canHide**: `boolean`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:10
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L14)
 
 #### Inherited from
 
-`WorkspaceRegistration.canHide`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`canHide`](WorkspaceRegistration.md#canhide)
 
 ***
 
@@ -36,11 +36,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:10
 
 > **canMaximize**: `boolean`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:11
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L15)
 
 #### Inherited from
 
-`WorkspaceRegistration.canMaximize`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`canMaximize`](WorkspaceRegistration.md#canmaximize)
 
 ***
 
@@ -56,11 +56,11 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:115]
 
 > **groups**: `string`[]
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:16
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 #### Inherited from
 
-`WorkspaceRegistration.groups`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`groups`](WorkspaceRegistration.md#groups)
 
 ***
 
@@ -68,11 +68,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:16
 
 > **moduleName**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:15
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
 
 #### Inherited from
 
-`WorkspaceRegistration.moduleName`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`moduleName`](WorkspaceRegistration.md#modulename)
 
 ***
 
@@ -80,11 +80,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:15
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:6
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L10)
 
 #### Inherited from
 
-`WorkspaceRegistration.name`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`name`](WorkspaceRegistration.md#name)
 
 ***
 
@@ -92,11 +92,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:6
 
 > **preferredWindowSize**: [`WorkspaceWindowState`](../type-aliases/WorkspaceWindowState.md)
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:13
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
 
 #### Inherited from
 
-`WorkspaceRegistration.preferredWindowSize`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`preferredWindowSize`](WorkspaceRegistration.md#preferredwindowsize)
 
 ***
 
@@ -104,11 +104,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:13
 
 > **title**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:7
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L11)
 
 #### Inherited from
 
-`WorkspaceRegistration.title`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`title`](WorkspaceRegistration.md#title)
 
 ***
 
@@ -116,11 +116,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:7
 
 > `optional` **titleNode**: `ReactNode`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:8
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L12)
 
 #### Inherited from
 
-`WorkspaceRegistration.titleNode`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`titleNode`](WorkspaceRegistration.md#titlenode)
 
 ***
 
@@ -128,11 +128,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:8
 
 > **type**: `string`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:9
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L13)
 
 #### Inherited from
 
-`WorkspaceRegistration.type`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`type`](WorkspaceRegistration.md#type)
 
 ***
 
@@ -140,11 +140,11 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:9
 
 > **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:12
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L16)
 
 #### Inherited from
 
-`WorkspaceRegistration.width`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`width`](WorkspaceRegistration.md#width)
 
 ## Methods
 
@@ -205,7 +205,7 @@ will directly close the workspace without any prompt
 
 > **load**(): `Promise`\<`LifeCycles`\>
 
-Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:14
+Defined in: [packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
 
 #### Returns
 
@@ -213,7 +213,7 @@ Defined in: packages/framework/esm-extensions/dist/workspaces.d.ts:14
 
 #### Inherited from
 
-`WorkspaceRegistration.load`
+[`WorkspaceRegistration`](WorkspaceRegistration.md).[`load`](WorkspaceRegistration.md#load)
 
 ***
 
