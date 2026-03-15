@@ -56,7 +56,7 @@ export const coreTranslations = {
   // Default value for the implementationName config property
   Clinic: 'Clinic',
   close: 'Close',
-  closesActionableNotification: 'Closes actionable notification',
+  closesActionableNotification: 'Close actionable notification',
   closeSnackbar: 'Close snackbar',
   confirm: 'Confirm',
   contactAdministratorIfIssuePersists: 'Contact your system administrator if the problem persists.',

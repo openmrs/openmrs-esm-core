@@ -1,0 +1,21 @@
+{
+  "$schema": "https://swc.rs/schema.json",
+  "exclude": [".*\\.test\\..*", "setup-tests\\..*"],
+  "module": {
+    "type": "es6",
+    "resolveFully": true
+  },
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    "target": "es2020",
+    "baseUrl": "src",
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  }
+}
