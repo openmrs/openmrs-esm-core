@@ -59,10 +59,14 @@ jobs:
         uses: actions/jekyll-build-pages@v1
         with:
           source: packages/framework/esm-framework/docs
-          destination: _site
+          destination: _api_site
 
-      - name: Add Storybook to site
-        run: cp -r packages/tooling/storybook/dist _site/storybook
+      - name: Assemble final site (API docs + Storybook)
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -a _api_site/. _site/
+          cp -a packages/tooling/storybook/dist _site/storybook
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
