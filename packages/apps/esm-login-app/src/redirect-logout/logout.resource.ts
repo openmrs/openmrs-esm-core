@@ -11,4 +11,9 @@ export async function performLogout() {
   mutate(() => true, undefined, { revalidate: false });
 
   clearCurrentUser();
+  try {
+    await refetchCurrentUser();
+  } catch (_) {
+    // do nothing, silence the user-visible error
+  }
 }
