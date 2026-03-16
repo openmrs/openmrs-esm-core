@@ -40,6 +40,6 @@
     "storybook-react-rsbuild": "^3.3.0",
     "svgo-loader": "4.0.0",
     "swr": "2.2.5",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   }
 }
