@@ -71,6 +71,10 @@
       ],
       "outputs": ["coverage/**"]
     },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
     "watch": {},
     "lint": {
       "inputs": [

@@ -22,7 +22,8 @@
     "postinstall": "husky install",
     "test": "turbo run test",
     "test-e2e": "./e2e/support/github/run-e2e-docker-env.sh",
-    "coverage": "turbo run test --coverage"
+    "coverage": "turbo run test --coverage",
+    "storybook": "yarn workspace @openmrs/storybook storybook"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.1",
