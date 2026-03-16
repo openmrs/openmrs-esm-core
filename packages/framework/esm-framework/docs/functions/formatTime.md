@@ -4,7 +4,7 @@
 
 > **formatTime**(`date`): `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:143
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:398](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L398)
 
 Formats the input as a time, according to the current locale.
 12-hour or 24-hour clock depends on locale.

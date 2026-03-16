@@ -37,7 +37,7 @@ An object containing:
 
 ### data
 
-> **data**: `AttachmentResponse`[]
+> **data**: [`AttachmentResponse`](../interfaces/AttachmentResponse.md)[]
 
 ### error
 
@@ -53,7 +53,7 @@ An object containing:
 
 ### mutate
 
-> **mutate**: `KeyedMutator`\<`FetchResponse`\<\{ `results`: `AttachmentResponse`[]; \}\>\>
+> **mutate**: `KeyedMutator`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<\{ `results`: [`AttachmentResponse`](../interfaces/AttachmentResponse.md)[]; \}\>\>
 
 ## Example
 

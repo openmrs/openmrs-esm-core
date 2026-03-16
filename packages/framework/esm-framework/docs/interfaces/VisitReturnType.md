@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:12](https://gith
 
 ### activeVisit
 
-> **activeVisit**: `null` \| `Visit`
+> **activeVisit**: `null` \| [`Visit`](Visit.md)
 
 Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L16)
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:16](https://gith
 
 ### currentVisit
 
-> **currentVisit**: `null` \| `Visit`
+> **currentVisit**: `null` \| [`Visit`](Visit.md)
 
 Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L17)
 

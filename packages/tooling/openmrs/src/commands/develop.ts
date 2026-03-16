@@ -64,9 +64,12 @@ export async function runDevelop(args: DevelopArgs) {
     .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`)
     .replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\/importmap\.json/g, `${spaPath}/importmap.json`);
 
-  const sw = resolve(source, 'service-worker.js');
-  // remove any full references to dev3.openmrs.org
-  const swContent = readFileSync(sw, 'utf-8').replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g, `${spaPath}`);
+  const swContent = supportOffline
+    ? readFileSync(resolve(source, 'service-worker.js'), 'utf-8').replace(
+        /https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g,
+        `${spaPath}`,
+      )
+    : '';
 
   const pageUrl = `http://${host}:${port}${spaPath}`;
 

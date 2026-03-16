@@ -17,7 +17,7 @@
   "Clinic": "Clinic",
   "close": "Close",
   "closeAllOpenedWorkspaces": "Discard changes in {{count}} workspaces",
-  "closesActionableNotification": "Closes actionable notification",
+  "closesActionableNotification": "Close actionable notification",
   "closeSnackbar": "Close snackbar",
   "closeWorkspaces2PromptBody": "You are about to close the following workspace(s), which might have unsaved changes:",
   "closeWorkspaces2PromptTitle": "Close workspace(s)",

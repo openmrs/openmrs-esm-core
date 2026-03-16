@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:20](http
 
 ### attributes?
 
-> `optional` **attributes**: `OpenmrsResource`[]
+> `optional` **attributes**: [`OpenmrsResource`](OpenmrsResource.md)[]
 
 Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L29)
 
