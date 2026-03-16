@@ -4,7 +4,7 @@
 
 > **isOmrsDateToday**(`date`): `boolean`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L66)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L64)
 
 Checks if the provided date is today.
 

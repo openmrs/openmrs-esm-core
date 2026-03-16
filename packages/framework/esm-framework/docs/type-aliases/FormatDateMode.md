@@ -4,4 +4,4 @@
 
 > **FormatDateMode** = `"standard"` \| `"wide"`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L172)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:170](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L170)
