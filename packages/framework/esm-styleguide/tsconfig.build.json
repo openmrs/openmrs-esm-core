@@ -6,5 +6,5 @@
     "skipLibCheck": true
   },
   "extends": "./tsconfig.json",
-  "exclude": ["**/*.test.*", "**/setup-tests.ts", "**/__mocks__/*"]
+  "exclude": ["**/*.test.*", "**/*.stories.*", "**/setup-tests.ts", "**/__mocks__/*"]
 }
