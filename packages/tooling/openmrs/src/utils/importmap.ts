@@ -159,9 +159,11 @@ function runProjectDevServer(
   const bundle = getMainBundle(project);
   const host = `http://localhost:${port}`;
 
-  startDevServer(configPath, port, sourceDirectory, useRspack);
+  const { ready } = startDevServer(configPath, port, sourceDirectory, useRspack);
   importMap[project.name] = `${host}/${bundle.name}`;
   routes[project.name] = getAppRoutes(sourceDirectory, project);
+
+  return ready;
 }
 
 export async function runProject(
@@ -178,6 +180,7 @@ export async function runProject(
   const importMap = {};
   const routes = {};
   const watchedRoutesPaths = {};
+  const devServerReadyPromises: Array<Promise<void>> = [];
 
   // Track the starting port, which is one more than the last used port
   let nextPortToCheck = basePort + 1;
@@ -226,7 +229,9 @@ export async function runProject(
       const port = await getAvailablePort(nextPortToCheck);
       nextPortToCheck = port + 1;
 
-      runProjectDevServer(defaultConfigPath, port, project, sourceDirectory, importMap, routes);
+      devServerReadyPromises.push(
+        runProjectDevServer(defaultConfigPath, port, project, sourceDirectory, importMap, routes),
+      );
     } else {
       // Find next available port
       const port = await getAvailablePort(nextPortToCheck);
@@ -234,12 +239,16 @@ export async function runProject(
 
       if (hasConfig) {
         // run via specialized webpack.config.js
-        runProjectDevServer(configPath, port, project, sourceDirectory, importMap, routes);
+        devServerReadyPromises.push(runProjectDevServer(configPath, port, project, sourceDirectory, importMap, routes));
       } else {
-        runProjectDevServer(rspackConfigPath, port, project, sourceDirectory, importMap, routes, true);
+        devServerReadyPromises.push(
+          runProjectDevServer(rspackConfigPath, port, project, sourceDirectory, importMap, routes, true),
+        );
       }
     }
   }
+
+  await Promise.all(devServerReadyPromises);
 
   logInfo(`Assembled dynamic import map and routes for packages (${Object.keys(importMap).join(', ')}).`);
 
