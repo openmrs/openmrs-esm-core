@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:13](
 
 ### fetcher()?
 
-> `optional` **fetcher**: (`key`) => `Promise`\<`FetchResponse`\<`R`\>\>
+> `optional` **fetcher**: (`key`) => `Promise`\<[`FetchResponse`](FetchResponse.md)\<`R`\>\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L22)
 
@@ -28,7 +28,7 @@ The fetcher to use. Defaults to openmrsFetch
 
 #### Returns
 
-`Promise`\<`FetchResponse`\<`R`\>\>
+`Promise`\<[`FetchResponse`](FetchResponse.md)\<`R`\>\>
 
 ***
 

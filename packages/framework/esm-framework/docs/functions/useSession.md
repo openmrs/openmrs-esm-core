@@ -2,7 +2,7 @@
 
 # Function: useSession()
 
-> **useSession**(): `Session`
+> **useSession**(): [`Session`](../interfaces/Session.md)
 
 Defined in: [packages/framework/esm-react-utils/src/useSession.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L17)
 
@@ -14,6 +14,6 @@ or throw for Suspense. It will never return `null`/`undefined`.
 
 ## Returns
 
-`Session`
+[`Session`](../interfaces/Session.md)
 
 Current user session information

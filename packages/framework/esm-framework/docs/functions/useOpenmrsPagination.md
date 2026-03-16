@@ -110,7 +110,7 @@ The error object thrown by the fetcher function.
 
 ### mutate
 
-> **mutate**: `KeyedMutator`\<`FetchResponse`\<`OpenMRSPaginatedResponse`\<`T`\>\>\>
+> **mutate**: `KeyedMutator`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`OpenMRSPaginatedResponse`\<`T`\>\>\>
 
 ### paginated
 

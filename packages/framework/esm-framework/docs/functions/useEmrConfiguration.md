@@ -32,4 +32,4 @@ Object containing:
 
 ### mutateEmrConfiguration
 
-> **mutateEmrConfiguration**: `KeyedMutator`\<`FetchResponse`\<[`EmrApiConfigurationResponse`](../interfaces/EmrApiConfigurationResponse.md)\>\> = `swrData.mutate`
+> **mutateEmrConfiguration**: `KeyedMutator`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`EmrApiConfigurationResponse`](../interfaces/EmrApiConfigurationResponse.md)\>\> = `swrData.mutate`

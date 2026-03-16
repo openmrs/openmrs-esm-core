@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceDefinition2
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:330
+Defined in: [packages/framework/esm-globals/src/types.ts:354](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L354)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:330
 
 > **component**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:332
+Defined in: [packages/framework/esm-globals/src/types.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L356)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:332
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:331
+Defined in: [packages/framework/esm-globals/src/types.ts:355](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L355)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:331
 
 > **window**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:333
+Defined in: [packages/framework/esm-globals/src/types.ts:357](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L357)

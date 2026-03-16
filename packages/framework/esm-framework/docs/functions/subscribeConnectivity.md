@@ -4,7 +4,7 @@
 
 > **subscribeConnectivity**(`cb`): () => `void`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:9
+Defined in: [packages/framework/esm-globals/src/events.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L24)
 
 ## Parameters
 

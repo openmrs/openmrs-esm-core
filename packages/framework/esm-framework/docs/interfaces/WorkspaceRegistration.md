@@ -6,6 +6,10 @@ Defined in: [packages/framework/esm-extensions/src/workspaces.ts:9](https://gith
 
 See [[WorkspaceDefinition]] for more information about these properties
 
+## Extended by
+
+- [`OpenWorkspace`](OpenWorkspace.md)
+
 ## Properties
 
 ### canHide

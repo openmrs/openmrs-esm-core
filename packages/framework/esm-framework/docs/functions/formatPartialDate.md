@@ -2,9 +2,9 @@
 
 # Function: formatPartialDate()
 
-> **formatPartialDate**(`dateString`, `options?`): `null` \| `string`
+> **formatPartialDate**(`dateString`, `options`): `null` \| `string`
 
-Defined in: packages/framework/esm-utils/dist/dates/date-util.d.ts:111
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L243)
 
 Formats the string representing a date, including partial representations of dates, according to the current
 locale and the given options.
@@ -32,9 +32,9 @@ locales.
 
 The date string to parse and format.
 
-### options?
+### options
 
-`Partial`\<[`FormatDateOptions`](../type-aliases/FormatDateOptions.md)\>
+`Partial`\<[`FormatDateOptions`](../type-aliases/FormatDateOptions.md)\> = `{}`
 
 Optional formatting options.
 
