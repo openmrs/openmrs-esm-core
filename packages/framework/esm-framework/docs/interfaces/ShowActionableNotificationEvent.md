@@ -2,7 +2,7 @@
 
 # Interface: ShowActionableNotificationEvent
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:23
+Defined in: [packages/framework/esm-globals/src/events.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L54)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:23
 
 > **actionButtonLabel**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:27
+Defined in: [packages/framework/esm-globals/src/events.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L58)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:27
 
 > `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:25
+Defined in: [packages/framework/esm-globals/src/events.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L56)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:25
 
 > **onActionButtonClick**: () => `void`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:28
+Defined in: [packages/framework/esm-globals/src/events.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L59)
 
 #### Returns
 
@@ -38,7 +38,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:28
 
 > `optional` **progressActionLabel**: `string`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:29
+Defined in: [packages/framework/esm-globals/src/events.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L60)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:29
 
 > **subtitle**: `any`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:24
+Defined in: [packages/framework/esm-globals/src/events.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L55)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: packages/framework/esm-globals/dist/events.d.ts:24
 
 > `optional` **title**: `string`
 
-Defined in: packages/framework/esm-globals/dist/events.d.ts:26
+Defined in: [packages/framework/esm-globals/src/events.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L57)

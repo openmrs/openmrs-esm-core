@@ -12,7 +12,7 @@ Extract meta data from all extension for a given extension slot.
 
 ### T
 
-`T` = `ExtensionMeta`
+`T` = [`ExtensionMeta`](../interfaces/ExtensionMeta.md)
 
 ## Parameters
 

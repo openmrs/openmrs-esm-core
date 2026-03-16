@@ -2,7 +2,7 @@
 
 # Function: saveVisit()
 
-> **saveVisit**(`payload`, `abortController`): `Promise`\<`FetchResponse`\<[`Visit`](../interfaces/Visit.md)\>\>
+> **saveVisit**(`payload`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`Visit`](../interfaces/Visit.md)\>\>
 
 Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L134)
 
@@ -25,7 +25,7 @@ An AbortController to allow cancellation of the request.
 
 ## Returns
 
-`Promise`\<`FetchResponse`\<[`Visit`](../interfaces/Visit.md)\>\>
+`Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`Visit`](../interfaces/Visit.md)\>\>
 
 A Promise that resolves with the FetchResponse containing the created Visit.
 

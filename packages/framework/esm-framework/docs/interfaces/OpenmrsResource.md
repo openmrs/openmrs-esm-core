@@ -19,6 +19,15 @@ accounted for, use OpenmrsResource instead.
 - [`ConceptName`](ConceptName.md)
 - [`ConceptClass`](ConceptClass.md)
 - [`User`](User.md)
+- [`Diagnosis`](Diagnosis.md)
+- [`Drug`](Drug.md)
+- [`Encounter`](Encounter.md)
+- [`EncounterType`](EncounterType.md)
+- [`EncounterProvider`](EncounterProvider.md)
+- [`EncounterRole`](EncounterRole.md)
+- [`Location`](Location.md)
+- [`Obs`](Obs.md)
+- [`Order`](Order.md)
 
 ## Indexable
 

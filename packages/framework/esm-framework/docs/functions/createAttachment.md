@@ -2,7 +2,7 @@
 
 # Function: createAttachment()
 
-> **createAttachment**(`patientUuid`, `fileToUpload`): `Promise`\<`FetchResponse`\<`any`\>\>
+> **createAttachment**(`patientUuid`, `fileToUpload`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
 Defined in: [packages/framework/esm-emr-api/src/attachments.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L73)
 
@@ -27,7 +27,7 @@ An object containing the file data and metadata to upload.
 
 ## Returns
 
-`Promise`\<`FetchResponse`\<`any`\>\>
+`Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
 A Promise that resolves with the FetchResponse containing the created
   attachment data.

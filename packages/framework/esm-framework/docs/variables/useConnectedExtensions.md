@@ -2,7 +2,7 @@
 
 # Variable: ~~useConnectedExtensions()~~
 
-> `const` **useConnectedExtensions**: (`slotName`) => `ConnectedExtension`[]
+> `const` **useConnectedExtensions**: (`slotName`) => [`ConnectedExtension`](../interfaces/ConnectedExtension.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/useConnectedExtensions.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L10)
 
@@ -18,7 +18,7 @@ The name of the slot to get the assigned extensions for.
 
 ## Returns
 
-`ConnectedExtension`[]
+[`ConnectedExtension`](../interfaces/ConnectedExtension.md)[]
 
 ## Deprecated
 
