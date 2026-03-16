@@ -44,16 +44,11 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: Build Typedoc plugin
-        run: |
-            yarn workspace @openmrs/typedoc-plugin-file-categories install
-            yarn workspace @openmrs/typedoc-plugin-file-categories build
-
-      - name: Generate API docs
-        run: yarn turbo run document --filter=@openmrs/esm-framework
-
       - name: Build Storybook
         run: yarn turbo run build --filter=@openmrs/storybook
+
+      - name: Rename API.md to index.md so Jekyll renders it as index.html
+        run: mv packages/framework/esm-framework/docs/API.md packages/framework/esm-framework/docs/index.md
 
       - name: Render API docs to HTML via Jekyll
         uses: actions/jekyll-build-pages@v1
