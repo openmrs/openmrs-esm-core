@@ -100,6 +100,15 @@
   .value {
     font-weight: bold;
   }
+
+  :global(.cds--tag) {
+    max-inline-size: none;
+  }
+
+  :global(.cds--tag__label) {
+    overflow: visible;
+    text-overflow: unset;
+  }
 }
 
 .secondaryIdentifier {
