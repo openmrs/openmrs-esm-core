@@ -2,9 +2,9 @@
 
 # Function: createGlobalStore()
 
-> **createGlobalStore**\<`T`\>(`name`, `initialState`): `StoreApi`\<`T`\>
+> **createGlobalStore**\<`T`\>(`name`, `initialState`, `storageType`): `StoreApi`\<`T`\>
 
-Defined in: [packages/framework/esm-state/src/state.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L31)
+Defined in: [packages/framework/esm-state/src/state.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L35)
 
 Creates a Zustand store.
 
@@ -28,6 +28,12 @@ A name by which the store can be looked up later.
 `T`
 
 An object which will be the initial state of the store.
+
+### storageType
+
+`StorageType` = `'none'`
+
+The type of storage to use for persisting the store's state. Defaults to 'none'.
 
 ## Returns
 
