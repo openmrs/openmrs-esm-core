@@ -60,6 +60,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }
