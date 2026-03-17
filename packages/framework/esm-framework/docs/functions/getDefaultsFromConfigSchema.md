@@ -4,7 +4,7 @@
 
 > **getDefaultsFromConfigSchema**\<`T`\>(`schema`): `T`
 
-Defined in: packages/framework/esm-utils/dist/test-helpers.d.ts:12
+Defined in: [packages/framework/esm-utils/src/test-helpers.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/test-helpers.ts#L13)
 
 Given a config schema, this returns an object like is returned by `useConfig`
 with all default values.

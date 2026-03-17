@@ -2,7 +2,7 @@
 
 # Function: useLocations()
 
-> **useLocations**(`tagUuidOrName`, `query`): `Location`[]
+> **useLocations**(`tagUuidOrName`, `query`): [`Location`](../interfaces/Location.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/useLocations.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.tsx#L29)
 
@@ -27,7 +27,7 @@ Optional search query string to filter locations. Pass `null`
 
 ## Returns
 
-`Location`[]
+[`Location`](../interfaces/Location.md)[]
 
 An array of Location objects. Returns an empty array while loading
   or if an error occurs.

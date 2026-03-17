@@ -17,10 +17,7 @@ describe('useDebounce', () => {
   });
 
   it('updates value after default delay', async () => {
-    const { result, rerender } = renderHook(
-      ({ value }) => useDebounce(value),
-      { initialProps: { value: 'initial' } },
-    );
+    const { result, rerender } = renderHook(({ value }) => useDebounce(value), { initialProps: { value: 'initial' } });
 
     rerender({ value: 'updated' });
 
@@ -34,10 +31,7 @@ describe('useDebounce', () => {
   });
 
   it('emits only final value on rapid updates', async () => {
-    const { result, rerender } = renderHook(
-      ({ value }) => useDebounce(value),
-      { initialProps: { value: 1 } },
-    );
+    const { result, rerender } = renderHook(({ value }) => useDebounce(value), { initialProps: { value: 1 } });
 
     rerender({ value: 2 });
     rerender({ value: 3 });
@@ -53,10 +47,7 @@ describe('useDebounce', () => {
   it('clears timeout on unmount', () => {
     const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
 
-    const { rerender, unmount } = renderHook(
-      ({ value }) => useDebounce(value),
-      { initialProps: { value: 'start' } },
-    );
+    const { rerender, unmount } = renderHook(({ value }) => useDebounce(value), { initialProps: { value: 'start' } });
 
     // Trigger a value change to schedule a pending timeout,
     // so there is actually something to clean up on unmount
@@ -72,10 +63,7 @@ describe('useDebounce', () => {
   it('preserves reference identity', async () => {
     const updatedObj = { id: 1 };
 
-    const { result, rerender } = renderHook(
-      ({ value }) => useDebounce(value),
-      { initialProps: { value: { id: 0 } } },
-    );
+    const { result, rerender } = renderHook(({ value }) => useDebounce(value), { initialProps: { value: { id: 0 } } });
 
     rerender({ value: updatedObj });
 
@@ -87,10 +75,9 @@ describe('useDebounce', () => {
   });
 
   it('respects custom delay', async () => {
-    const { result, rerender } = renderHook(
-      ({ value }) => useDebounce(value, 500),
-      { initialProps: { value: 'initial' } },
-    );
+    const { result, rerender } = renderHook(({ value }) => useDebounce(value, 500), {
+      initialProps: { value: 'initial' },
+    });
 
     rerender({ value: 'updated' });
 

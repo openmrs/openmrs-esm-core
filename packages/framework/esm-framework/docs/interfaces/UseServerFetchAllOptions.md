@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:14](ht
 
 ### fetcher()?
 
-> `optional` **fetcher**: (`key`) => `Promise`\<`FetchResponse`\<`R`\>\>
+> `optional` **fetcher**: (`key`) => `Promise`\<[`FetchResponse`](FetchResponse.md)\<`R`\>\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L18)
 
@@ -32,7 +32,7 @@ The fetcher to use. Defaults to openmrsFetch
 
 #### Returns
 
-`Promise`\<`FetchResponse`\<`R`\>\>
+`Promise`\<[`FetchResponse`](FetchResponse.md)\<`R`\>\>
 
 #### Inherited from
 

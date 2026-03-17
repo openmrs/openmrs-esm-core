@@ -2,7 +2,7 @@
 
 # Function: deleteAttachmentPermanently()
 
-> **deleteAttachmentPermanently**(`attachmentUuid`, `abortController`): `Promise`\<`FetchResponse`\<`any`\>\>
+> **deleteAttachmentPermanently**(`attachmentUuid`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
 Defined in: [packages/framework/esm-emr-api/src/attachments.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L107)
 
@@ -25,7 +25,7 @@ An AbortController to allow cancellation of the request.
 
 ## Returns
 
-`Promise`\<`FetchResponse`\<`any`\>\>
+`Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
 A Promise that resolves with the FetchResponse confirming deletion.
 
