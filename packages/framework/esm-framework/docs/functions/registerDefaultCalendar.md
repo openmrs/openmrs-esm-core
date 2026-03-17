@@ -4,7 +4,7 @@
 
 > **registerDefaultCalendar**(`locale`, `calendar`): `void`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L157)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:155](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L155)
 
 Provides the name of the calendar to associate, as a default, with the given base locale.
 

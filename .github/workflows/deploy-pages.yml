@@ -46,6 +46,8 @@ jobs:
 
       - name: Build Storybook
         run: yarn turbo run build --filter=@openmrs/storybook
+        env:
+          STORYBOOK_BASE_PATH: /${{ github.event.repository.name }}/storybook/
 
       - name: Rename API.md to index.md so Jekyll renders it as index.html
         run: mv packages/framework/esm-framework/docs/API.md packages/framework/esm-framework/docs/index.md

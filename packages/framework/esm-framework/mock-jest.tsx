@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
-import * as utils from '@openmrs/esm-utils';
+import * as utils from '@openmrs/esm-utils/mock';
 import dayjs from 'dayjs';
 
 window.i18next = { ...window.i18next, language: 'en' };

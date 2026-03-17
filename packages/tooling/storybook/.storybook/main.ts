@@ -19,6 +19,9 @@ const config: StorybookConfig = {
   disableTelemetry: true,
   rsbuildFinal: (config) => {
     return mergeRsbuildConfig(config, {
+      output: {
+        assetPrefix: process.env.STORYBOOK_BASE_PATH || '/',
+      },
       plugins: [
         pluginSass({
           sassLoaderOptions: {
