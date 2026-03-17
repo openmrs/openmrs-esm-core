@@ -39,13 +39,23 @@ function startDevServer(configPath: string, port: number, useRspack: boolean = f
     static: dirname(configPath),
   };
 
+  let firstCompilationDone = false;
+  function onFirstCompilationDone() {
+    if (!firstCompilationDone) {
+      firstCompilationDone = true;
+      process.send?.({ type: 'compilation-complete' });
+    }
+  }
+
   let server: WebpackDevServer | RspackDevServer;
   if (!useRspack) {
     const compiler = webpack(config as WebpackConfiguration);
+    compiler.hooks.done.tap('OpenMRSDevServer', onFirstCompilationDone);
 
     server = new WebpackDevServer(devServerOptions as WebpackDevServer.Configuration, compiler);
   } else {
     const compiler = rspack(config as RspackConfiguration);
+    compiler.hooks.done.tap('OpenMRSDevServer', onFirstCompilationDone);
 
     server = new RspackDevServer(devServerOptions as RspackDevServerConfiguration, compiler);
   }
