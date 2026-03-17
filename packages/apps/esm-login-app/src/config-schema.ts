@@ -17,6 +17,18 @@ export const configSchema = {
       _validators: [validators.isUrl],
     },
   },
+  _validators: [
+    validator(
+      (provider: { type: string; loginUrl: string }) => {
+        if (provider.type === 'custom' || provider.type === 'oauth2') {
+          return provider.loginUrl !== '${openmrsSpaBase}/login';
+        }
+        return true;
+      },
+      (provider: { type: string }) =>
+        `Provider type '${provider.type}' requires an explicit loginUrl that is not the default SPA login route.`,
+    ),
+  ],
   chooseLocation: {
     enabled: {
       _type: Type.Boolean,

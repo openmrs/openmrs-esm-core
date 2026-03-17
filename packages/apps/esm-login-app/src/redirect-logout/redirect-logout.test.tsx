@@ -180,4 +180,20 @@ describe('RedirectLogout', () => {
 
     expect(mockNavigate).toHaveBeenCalledWith({ to: 'http://custom-url.com' });
   });
+
+  it('should redirect to login if user is authenticated and the provider is custom', async () => {
+    mockUseSession.mockReturnValue({
+      authenticated: true,
+    } as Session);
+    mockUseConfig.mockReturnValue({
+      provider: {
+        type: 'custom',
+        loginUrl: 'http://custom-url.com',
+      },
+    });
+
+    render(<RedirectLogout />);
+
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith({ to: 'http://custom-url.com' }));
+  });
 });
