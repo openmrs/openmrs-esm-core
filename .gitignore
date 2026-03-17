@@ -63,6 +63,7 @@ typings/
 
 lib
 dist
+.tmp
 .DS_Store
 
 # Intellij integration
