@@ -39,7 +39,7 @@
     "storybook": "^10.2.13",
     "storybook-react-rsbuild": "^3.3.0",
     "svgo-loader": "4.0.0",
-    "swr": "2.2.5",
+    "swr": "2.4.1",
     "typescript": "^5.8.3"
   }
 }

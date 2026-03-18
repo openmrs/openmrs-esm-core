@@ -2437,7 +2437,7 @@ __metadata:
     semver: "npm:^7.7.3"
     single-spa: "npm:^6.0.3"
     swc-loader: "npm:0.2.7"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.1"
     vitest: "npm:^4.0.18"
     webpack-pwa-manifest: "npm:4.3.0"
   languageName: unknown
@@ -2787,7 +2787,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-i18next: "npm:^16.0.0"
     rxjs: "npm:^6.5.3"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.1"
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
@@ -2817,7 +2817,7 @@ __metadata:
     react-i18next: "npm:^16.0.0"
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.1"
     vitest: "npm:^4.0.18"
     zod: "npm:^3.23.8"
   peerDependencies:
@@ -2872,7 +2872,7 @@ __metadata:
     react-i18next: "npm:^16.0.0"
     react-router-dom: "npm:^6.3.0"
     rxjs: "npm:^6.5.3"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.1"
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@carbon/react": 1.x
@@ -2974,7 +2974,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     rxjs: "npm:^6.5.3"
     single-spa-react: "npm:^6.0.2"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.1"
     vitest: "npm:^4.0.18"
   peerDependencies:
     "@openmrs/esm-api": 9.x
@@ -3084,7 +3084,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     rxjs: "npm:^6.5.3"
     svgo: "npm:^3.3.2"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.1"
     typescript: "npm:^5.8.3"
     vitest: "npm:^4.0.18"
   peerDependencies:
@@ -3211,7 +3211,7 @@ __metadata:
     storybook: "npm:^10.2.13"
     storybook-react-rsbuild: "npm:^3.3.0"
     svgo-loader: "npm:4.0.0"
-    swr: "npm:2.2.5"
+    swr: "npm:2.4.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
@@ -18357,15 +18357,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:2.2.5":
-  version: 2.2.5
-  resolution: "swr@npm:2.2.5"
+"swr@npm:2.4.1":
+  version: 2.4.1
+  resolution: "swr@npm:2.4.1"
   dependencies:
-    client-only: "npm:^0.0.1"
-    use-sync-external-store: "npm:^1.2.0"
+    dequal: "npm:^2.0.3"
+    use-sync-external-store: "npm:^1.6.0"
   peerDependencies:
-    react: ^16.11.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/f02b3bd5a198a0f62f9a53d7c0528c4a58aa61a43310bea169614b6e873dadb52599e856ef0775405b6aa7409835343da0cf328948aa892aa309bf4b7e7d6902
+    react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/611c0a39d42abb7d7eae37eb36e6a30a8a2c387bab6026d8db13ae41b9f8f3c2a187486008781de3f083ef5b39e6d90af1f275a73ade882a567e338166266356
   languageName: node
   linkType: hard
 
@@ -19227,7 +19227,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.0, use-sync-external-store@npm:^1.4.0, use-sync-external-store@npm:^1.5.0":
+"use-sync-external-store@npm:^1.4.0, use-sync-external-store@npm:^1.5.0, use-sync-external-store@npm:^1.6.0":
   version: 1.6.0
   resolution: "use-sync-external-store@npm:1.6.0"
   peerDependencies:
