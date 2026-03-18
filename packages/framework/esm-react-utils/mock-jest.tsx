@@ -11,6 +11,8 @@ import { useOpenmrsFetchAll as realUseOpenmrsFetchAll } from './src/useOpenmrsFe
 import { useOpenmrsInfinite as realUseOpenmrsInfinite } from './src/useOpenmrsInfinite';
 import { useOpenmrsPagination as realUseOpenmrsrPagination } from './src/useOpenmrsPagination';
 import { useVisitContextStore as realUseVisitContextStore } from './src/useVisitContextStore';
+import { usePagination as realUsePagination } from './src/usePagination';
+import { usePaginationInfo as realUsePaginationInfo } from './src/usePaginationInfo';
 export { ConfigurableLink } from './src/ConfigurableLink';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
 import * as utils from '@openmrs/esm-utils';
