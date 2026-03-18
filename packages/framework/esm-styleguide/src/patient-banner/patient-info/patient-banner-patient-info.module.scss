@@ -101,11 +101,11 @@
     font-weight: bold;
   }
 
-  :global(.cds--tag) {
+  .tag {
     max-inline-size: none;
   }
 
-  :global(.cds--tag__label) {
+  span {
     overflow: visible;
     text-overflow: unset;
   }
