@@ -4,7 +4,6 @@ import {
   type DevServer as RspackDevServerConfiguration,
 } from '@rspack/core';
 import { RspackDevServer } from '@rspack/dev-server';
-import { dirname } from 'node:path';
 import webpack, { type Configuration as WebpackConfiguration } from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import { logInfo } from './logger';
@@ -36,13 +35,13 @@ function startDevServer(configPath: string, port: number, useRspack: boolean = f
   const devServerOptions = {
     ...config.devServer,
     port,
-    static: dirname(configPath),
   };
 
-  let firstCompilationDone = false;
-  function onFirstCompilationDone() {
-    if (!firstCompilationDone) {
-      firstCompilationDone = true;
+  let compilationDone = false;
+  let serverListening = false;
+
+  function signalReadyIfBothDone() {
+    if (compilationDone && serverListening) {
       process.send?.({ type: 'compilation-complete' });
     }
   }
@@ -50,18 +49,30 @@ function startDevServer(configPath: string, port: number, useRspack: boolean = f
   let server: WebpackDevServer | RspackDevServer;
   if (!useRspack) {
     const compiler = webpack(config as WebpackConfiguration);
-    compiler.hooks.done.tap('OpenMRSDevServer', onFirstCompilationDone);
+    compiler.hooks.done.tap('OpenMRSDevServer', () => {
+      if (!compilationDone) {
+        compilationDone = true;
+        signalReadyIfBothDone();
+      }
+    });
 
     server = new WebpackDevServer(devServerOptions as WebpackDevServer.Configuration, compiler);
   } else {
     const compiler = rspack(config as RspackConfiguration);
-    compiler.hooks.done.tap('OpenMRSDevServer', onFirstCompilationDone);
+    compiler.hooks.done.tap('OpenMRSDevServer', () => {
+      if (!compilationDone) {
+        compilationDone = true;
+        signalReadyIfBothDone();
+      }
+    });
 
     server = new RspackDevServer(devServerOptions as RspackDevServerConfiguration, compiler);
   }
 
   server.startCallback(() => {
     logInfo(`Listening at http://localhost:${port}`);
+    serverListening = true;
+    signalReadyIfBothDone();
   });
 }
 
