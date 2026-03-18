@@ -50,12 +50,12 @@
     "@rspack/cli": "1.7.9",
     "@rspack/core": "1.7.9",
     "cross-env": "^7.0.3",
-    "happy-dom": "^20.6.0",
+    "happy-dom": "^20.8.4",
     "openmrs": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   },
   "dependencies": {
     "@carbon/react": "^1.92.1",

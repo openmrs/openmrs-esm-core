@@ -58,13 +58,13 @@
     "@openmrs/esm-state": "workspace:*",
     "@swc/cli": "0.8.0",
     "@swc/core": "1.15.18",
-    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/coverage-v8": "^4.1.0",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
-    "happy-dom": "^20.6.0",
-    "jsdom": "^26.1.0",
+    "happy-dom": "^20.8.4",
+    "jsdom": "^29.0.0",
     "lodash": "4.17.21",
     "rimraf": "^6.0.1",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }
