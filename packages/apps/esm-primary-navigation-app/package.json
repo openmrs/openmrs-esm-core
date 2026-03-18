@@ -53,8 +53,8 @@
     "single-spa": "6.x"
   },
   "devDependencies": {
-    "@rspack/cli": "1.7.6",
-    "@rspack/core": "1.7.6",
+    "@rspack/cli": "1.7.9",
+    "@rspack/core": "1.7.9",
     "@vitest/coverage-v8": "^4.0.18",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",

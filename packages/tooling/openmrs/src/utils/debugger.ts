@@ -4,6 +4,7 @@ import {
   type DevServer as RspackDevServerConfiguration,
 } from '@rspack/core';
 import { RspackDevServer } from '@rspack/dev-server';
+import { dirname } from 'node:path';
 import webpack, { type Configuration as WebpackConfiguration } from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import { logInfo } from './logger';
@@ -35,6 +36,7 @@ function startDevServer(configPath: string, port: number, useRspack: boolean = f
   const devServerOptions = {
     ...config.devServer,
     port,
+    static: dirname(configPath),
   };
 
   let compilationDone = false;
