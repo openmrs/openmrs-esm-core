@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@openmrs/esm-api": ["../esm-api/src/index.ts"],
+      "@openmrs/esm-api/src/public": ["../esm-api/src/public.ts"],
+      "@openmrs/esm-config": ["../esm-config/src/index.ts"],
+      "@openmrs/esm-config/src/public": ["../esm-config/src/public.ts"],
+      "@openmrs/esm-context": ["../esm-context/src/index.ts"],
+      "@openmrs/esm-context/src/public": ["../esm-context/src/public.ts"],
+      "@openmrs/esm-dynamic-loading": ["../esm-dynamic-loading/src/index.ts"],
+      "@openmrs/esm-dynamic-loading/src/public": ["../esm-dynamic-loading/src/public.ts"],
+      "@openmrs/esm-emr-api": ["../esm-emr-api/src/index.ts"],
+      "@openmrs/esm-emr-api/src/public": ["../esm-emr-api/src/public.ts"],
+      "@openmrs/esm-error-handling": ["../esm-error-handling/src/index.ts"],
+      "@openmrs/esm-expression-evaluator": ["../esm-expression-evaluator/src/index.ts"],
+      "@openmrs/esm-expression-evaluator/src/public": ["../esm-expression-evaluator/src/public.ts"],
+      "@openmrs/esm-extensions": ["../esm-extensions/src/index.ts"],
+      "@openmrs/esm-extensions/src/public": ["../esm-extensions/src/public.ts"],
+      "@openmrs/esm-feature-flags": ["../esm-feature-flags/src/index.ts"],
+      "@openmrs/esm-feature-flags/src/public": ["../esm-feature-flags/src/public.ts"],
+      "@openmrs/esm-globals": ["../esm-globals/src/index.ts"],
+      "@openmrs/esm-navigation": ["../esm-navigation/src/index.ts"],
+      "@openmrs/esm-navigation/src/public": ["../esm-navigation/src/public.ts"],
+      "@openmrs/esm-offline": ["../esm-offline/src/index.ts"],
+      "@openmrs/esm-offline/src/public": ["../esm-offline/src/public.ts"],
+      "@openmrs/esm-react-utils": ["../esm-react-utils/src/index.ts"],
+      "@openmrs/esm-react-utils/src/public": ["../esm-react-utils/src/public.ts"],
+      "@openmrs/esm-routes": ["../esm-routes/src/index.ts"],
+      "@openmrs/esm-state": ["../esm-state/src/index.ts"],
+      "@openmrs/esm-state/src/public": ["../esm-state/src/public.ts"],
+      "@openmrs/esm-styleguide/src/internal": ["../esm-styleguide/src/internal.ts"],
+      "@openmrs/esm-styleguide/src/public": ["../esm-styleguide/src/public.ts"],
+      "@openmrs/esm-translations": ["../esm-translations/src/index.ts"],
+      "@openmrs/esm-translations/src/public": ["../esm-translations/src/public.ts"],
+      "@openmrs/esm-utils": ["../esm-utils/src/index.ts"]
+    }
+  },
+  "extends": "./tsconfig.build.json"
+}
