@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
+import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 import type { Session } from '@openmrs/esm-api';
+import { sessionStore, userHasAccess } from '@openmrs/esm-api';
 import {
   attach,
   detach,
@@ -479,5 +481,347 @@ describe('getAssignedExtensions', () => {
     const result = getAssignedExtensions(slotName);
 
     expect(result[0].meta).toEqual(meta);
+  });
+});
+
+describe('getAssignedExtensions — display condition evaluation', () => {
+  // Helper to set up the mock session store with a user session
+  function setSessionWithUser(overrides: Record<string, any> = {}) {
+    (sessionStore as any).setState({
+      loaded: true,
+      session: {
+        authenticated: true,
+        sessionId: 'test-session',
+        user: {
+          uuid: 'user-uuid',
+          display: 'Test User',
+          username: 'testuser',
+          systemId: 'testuser',
+          userProperties: null,
+          person: { uuid: 'person-uuid' } as any,
+          privileges: [{ uuid: 'priv-1', name: 'Some Privilege', display: 'Some Privilege' }],
+          roles: [{ uuid: 'role-1', name: 'Nurse', display: 'Nurse' }],
+          retired: false,
+          locale: 'en',
+          allowedLocales: ['en'],
+          ...overrides,
+        },
+      } as Session,
+    });
+  }
+
+  // Helper to set up a session with no user (not logged in)
+  function clearSession() {
+    (sessionStore as any).setState({
+      loaded: true,
+      session: {
+        authenticated: false,
+        sessionId: 'test-session',
+      } as Session,
+    });
+  }
+
+  // Group A: Privilege Checks
+
+  describe('privilege checks', () => {
+    it('should include extension when no privileges required', () => {
+      const slotName = getUniqueName('priv-slot-none');
+      const extensionName = getUniqueName('priv-ext-none');
+
+      const mockExtension = createMockExtension(extensionName);
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should include extension when user has required privilege', () => {
+      const slotName = getUniqueName('priv-slot-has');
+      const extensionName = getUniqueName('priv-ext-has');
+
+      setSessionWithUser({
+        privileges: [{ uuid: 'priv-1', name: 'Some Privilege', display: 'Some Privilege' }],
+        roles: [{ uuid: 'role-1', name: 'Nurse', display: 'Nurse' }],
+      });
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const mockExtension = createMockExtension(extensionName, {
+        privileges: ['Some Privilege'],
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should exclude extension when user lacks required privilege', () => {
+      const slotName = getUniqueName('priv-slot-lacks');
+      const extensionName = getUniqueName('priv-ext-lacks');
+
+      setSessionWithUser({
+        privileges: [{ uuid: 'priv-2', name: 'Other Privilege', display: 'Other Privilege' }],
+        roles: [{ uuid: 'role-1', name: 'Nurse', display: 'Nurse' }],
+      });
+      vi.mocked(userHasAccess).mockReturnValue(false);
+
+      const mockExtension = createMockExtension(extensionName, {
+        privileges: ['Some Privilege'],
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(0);
+    });
+
+    it('should include extension for System Developer regardless of privileges', () => {
+      const slotName = getUniqueName('priv-slot-sysdev');
+      const extensionName = getUniqueName('priv-ext-sysdev');
+
+      setSessionWithUser({
+        privileges: [],
+        roles: [{ uuid: 'role-sd', name: 'System Developer', display: 'System Developer' }],
+      });
+      // userHasAccess returns true for System Developer (matches real behavior)
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const mockExtension = createMockExtension(extensionName, {
+        privileges: ['Some Privilege'],
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+  });
+
+  // Group B: Display Expression Checks
+
+  describe('display expression checks', () => {
+    it('should include extension when no displayExpression set', () => {
+      const slotName = getUniqueName('expr-slot-none');
+      const extensionName = getUniqueName('expr-ext-none');
+
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const mockExtension = createMockExtension(extensionName);
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should include extension when displayExpression evaluates to true', () => {
+      const slotName = getUniqueName('expr-slot-true');
+      const extensionName = getUniqueName('expr-ext-true');
+
+      setSessionWithUser();
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const mockExtension = createMockExtension(extensionName, {
+        displayExpression: 'true',
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should exclude extension when displayExpression evaluates to false', () => {
+      const slotName = getUniqueName('expr-slot-false');
+      const extensionName = getUniqueName('expr-ext-false');
+
+      setSessionWithUser();
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const mockExtension = createMockExtension(extensionName, {
+        displayExpression: 'false',
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(0);
+    });
+
+    it('should evaluate displayExpression with session context', () => {
+      const slotName = getUniqueName('expr-slot-session');
+      const extensionName = getUniqueName('expr-ext-session');
+
+      setSessionWithUser();
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const mockExtension = createMockExtension(extensionName, {
+        displayExpression: 'session.authenticated === true',
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should exclude extension and log error when displayExpression is malformed', () => {
+      const slotName = getUniqueName('expr-slot-malformed');
+      const extensionName = getUniqueName('expr-ext-malformed');
+
+      setSessionWithUser();
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      const mockExtension = createMockExtension(extensionName, {
+        displayExpression: ')(invalid javascript',
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(0);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Error while evaluating expression'),
+        expect.anything(),
+      );
+
+      consoleSpy.mockRestore();
+    });
+  });
+
+  // Group C: Feature Flag Checks
+
+  describe('feature flag checks', () => {
+    it('should include extension when no featureFlag required', () => {
+      const slotName = getUniqueName('ff-slot-none');
+      const extensionName = getUniqueName('ff-ext-none');
+
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const mockExtension = createMockExtension(extensionName);
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should include extension when required featureFlag is enabled', () => {
+      const slotName = getUniqueName('ff-slot-enabled');
+      const extensionName = getUniqueName('ff-ext-enabled');
+      const flagName = getUniqueName('my-feature');
+
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      registerFeatureFlag(flagName, 'My Feature', 'A test feature flag');
+      setFeatureFlag(flagName, true);
+
+      const mockExtension = createMockExtension(extensionName, {
+        featureFlag: flagName,
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should exclude extension when required featureFlag is disabled', () => {
+      const slotName = getUniqueName('ff-slot-disabled');
+      const extensionName = getUniqueName('ff-ext-disabled');
+      const flagName = getUniqueName('disabled-feature');
+
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      registerFeatureFlag(flagName, 'Disabled Feature', 'A disabled feature flag');
+      setFeatureFlag(flagName, false);
+
+      const mockExtension = createMockExtension(extensionName, {
+        featureFlag: flagName,
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(0);
+    });
+  });
+
+  // Group D: Combined Conditions
+
+  describe('combined conditions', () => {
+    it('should include extension when all conditions pass', () => {
+      const slotName = getUniqueName('combined-slot-pass');
+      const extensionName = getUniqueName('combined-ext-pass');
+      const flagName = getUniqueName('combined-feature');
+
+      setSessionWithUser({
+        privileges: [{ uuid: 'priv-1', name: 'Some Privilege', display: 'Some Privilege' }],
+        roles: [{ uuid: 'role-1', name: 'Nurse', display: 'Nurse' }],
+      });
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      registerFeatureFlag(flagName, 'Combined Feature', 'A feature flag for combined test');
+      setFeatureFlag(flagName, true);
+
+      const mockExtension = createMockExtension(extensionName, {
+        privileges: ['Some Privilege'],
+        displayExpression: 'true',
+        featureFlag: flagName,
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should exclude extension when any condition fails', () => {
+      const slotName = getUniqueName('combined-slot-fail');
+      const extensionName = getUniqueName('combined-ext-fail');
+
+      setSessionWithUser({
+        privileges: [{ uuid: 'priv-2', name: 'Other Privilege', display: 'Other Privilege' }],
+        roles: [{ uuid: 'role-1', name: 'Nurse', display: 'Nurse' }],
+      });
+      // Privilege check fails
+      vi.mocked(userHasAccess).mockReturnValue(false);
+
+      const mockExtension = createMockExtension(extensionName, {
+        privileges: ['Some Privilege'],
+        displayExpression: 'true',
+      });
+      registerExtension(mockExtension);
+      attach(slotName, extensionName);
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(0);
+    });
   });
 });
