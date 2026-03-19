@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { Session } from '@openmrs/esm-api';
+import { type Session, sessionStore, userHasAccess } from '@openmrs/esm-api';
 import {
   attach,
   detach,
@@ -59,6 +59,39 @@ function createMockExtension(name: string, overrides: Partial<ExtensionRegistrat
     instances: [],
     ...overrides,
   };
+}
+
+function setSession(
+  roles: Array<{ uuid: string; name: string; display: string }> = [],
+  privileges: Array<{ uuid: string; name: string; display: string }> = [],
+) {
+  (sessionStore as any).setState({
+    loaded: true,
+    session: {
+      authenticated: true,
+      sessionId: 'test-session',
+      user: {
+        uuid: 'user-uuid',
+        display: 'Test User',
+        username: 'testuser',
+        systemId: 'testuser',
+        userProperties: null,
+        person: { uuid: 'person-uuid' } as any,
+        privileges,
+        roles,
+        retired: false,
+        locale: 'en',
+        allowedLocales: ['en'],
+      },
+    } as Session,
+  });
+}
+
+function setupRegisteredExtension(slotName: string, extensionName: string, overrides?: Partial<ExtensionRegistration>) {
+  const mockExtension = createMockExtension(extensionName, overrides);
+  registerExtension(mockExtension);
+  attach(slotName, extensionName);
+  return getAssignedExtensions(slotName);
 }
 
 describe('getExtensionNameFromId', () => {
@@ -447,11 +480,7 @@ describe('getAssignedExtensions', () => {
     const slotName = getUniqueName('slot-with-extensions');
     const extensionName = getUniqueName('extension');
 
-    const mockExtension = createMockExtension(extensionName);
-    registerExtension(mockExtension);
-    attach(slotName, extensionName);
-
-    const result = getAssignedExtensions(slotName);
+    const result = setupRegisteredExtension(slotName, extensionName);
 
     expect(result).toHaveLength(1);
     expect(result[0].name).toBe(extensionName);
@@ -472,12 +501,115 @@ describe('getAssignedExtensions', () => {
     const extensionName = getUniqueName('extension-meta');
     const meta = { version: '1.0', author: 'test' };
 
-    const mockExtension = createMockExtension(extensionName, { meta });
-    registerExtension(mockExtension);
-    attach(slotName, extensionName);
-
-    const result = getAssignedExtensions(slotName);
+    const result = setupRegisteredExtension(slotName, extensionName, { meta });
 
     expect(result[0].meta).toEqual(meta);
+  });
+});
+
+describe('getAssignedExtensions — hasRole and hasPrivilege helpers', () => {
+  describe('hasRole() helper', () => {
+    it('should show extension when hasRole matches user role', () => {
+      const slotName = getUniqueName('role-slot-match');
+      const extensionName = getUniqueName('role-ext-match');
+
+      setSession([{ uuid: 'role-1', name: 'Nurse', display: 'Nurse' }], []);
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const result = setupRegisteredExtension(slotName, extensionName, {
+        displayExpression: "hasRole('Nurse')",
+      });
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should hide extension when hasRole does not match user role', () => {
+      const slotName = getUniqueName('role-slot-no-match');
+      const extensionName = getUniqueName('role-ext-no-match');
+
+      setSession([{ uuid: 'role-1', name: 'Nurse', display: 'Nurse' }], []);
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const result = setupRegisteredExtension(slotName, extensionName, {
+        displayExpression: "hasRole('Doctor')",
+      });
+
+      expect(result).toHaveLength(0);
+    });
+
+    it('should return false gracefully when user has no roles', () => {
+      const slotName = getUniqueName('role-slot-empty');
+      const extensionName = getUniqueName('role-ext-empty');
+
+      setSession([], []);
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const result = setupRegisteredExtension(slotName, extensionName, {
+        displayExpression: "hasRole('Nurse')",
+      });
+
+      expect(result).toHaveLength(0);
+    });
+
+    it('should support OR logic across multiple roles', () => {
+      const slotName = getUniqueName('role-slot-or');
+      const extensionName = getUniqueName('role-ext-or');
+
+      setSession([{ uuid: 'role-1', name: 'Nurse', display: 'Nurse' }], []);
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const result = setupRegisteredExtension(slotName, extensionName, {
+        displayExpression: "hasRole('Doctor') || hasRole('Nurse')",
+      });
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+  });
+
+  describe('hasPrivilege() helper', () => {
+    it('should show extension when hasPrivilege matches user privilege', () => {
+      const slotName = getUniqueName('priv-helper-slot-match');
+      const extensionName = getUniqueName('priv-helper-ext-match');
+
+      setSession([], [{ uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' }]);
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const result = setupRegisteredExtension(slotName, extensionName, {
+        displayExpression: "hasPrivilege('Edit Orders')",
+      });
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('should hide extension when hasPrivilege does not match', () => {
+      const slotName = getUniqueName('priv-helper-slot-no-match');
+      const extensionName = getUniqueName('priv-helper-ext-no-match');
+
+      setSession([], [{ uuid: 'priv-2', name: 'View Reports', display: 'View Reports' }]);
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const result = setupRegisteredExtension(slotName, extensionName, {
+        displayExpression: "hasPrivilege('Edit Orders')",
+      });
+
+      expect(result).toHaveLength(0);
+    });
+
+    it('should return false gracefully when user has no privileges', () => {
+      const slotName = getUniqueName('priv-helper-slot-empty');
+      const extensionName = getUniqueName('priv-helper-ext-empty');
+
+      setSession([], []);
+      vi.mocked(userHasAccess).mockReturnValue(true);
+
+      const result = setupRegisteredExtension(slotName, extensionName, {
+        displayExpression: "hasPrivilege('Edit Orders')",
+      });
+
+      expect(result).toHaveLength(0);
+    });
   });
 });
