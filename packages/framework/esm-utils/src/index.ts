@@ -1,3 +1,4 @@
+/// <reference path="./intl-durationformat.d.ts" />
 export * from './age-helpers';
 export * from './dates';
 export * from './get-locale';

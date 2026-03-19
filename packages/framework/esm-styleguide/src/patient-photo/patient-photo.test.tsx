@@ -123,7 +123,7 @@ describe('PatientPhoto', () => {
 
     const avatarImage = screen.getByRole('img', { name: 'Profile photo of Freddy Mercury' });
     expect(avatarImage).toBeInTheDocument();
-    expect(avatarImage).toHaveAttribute('src', 'valid-image.jpg');
+    expect(avatarImage).toHaveAttribute('src', '/valid-image.jpg');
     expect(avatarImage).toHaveAttribute('alt', 'Profile photo of Freddy Mercury');
 
     // Restore the original Image constructor

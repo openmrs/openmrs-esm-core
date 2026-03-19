@@ -839,7 +839,7 @@ aria-posinset.
 
 ### aria-sort?
 
-> `optional` **aria-sort**: `"other"` \| `"none"` \| `"ascending"` \| `"descending"`
+> `optional` **aria-sort**: `"none"` \| `"other"` \| `"ascending"` \| `"descending"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2817
 
@@ -913,7 +913,7 @@ Defines the human readable text alternative of aria-valuenow for a range widget.
 
 ### autoCapitalize?
 
-> `optional` **autoCapitalize**: `"on"` \| `"off"` \| `string` & `object` \| `"none"` \| `"sentences"` \| `"words"` \| `"characters"`
+> `optional` **autoCapitalize**: `"none"` \| `"on"` \| `"off"` \| `string` & `object` \| `"sentences"` \| `"words"` \| `"characters"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2913
 
@@ -1105,7 +1105,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2919
 
 ### enterKeyHint?
 
-> `optional` **enterKeyHint**: `"search"` \| `"next"` \| `"enter"` \| `"done"` \| `"go"` \| `"previous"` \| `"send"`
+> `optional` **enterKeyHint**: `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2920
 
@@ -1187,7 +1187,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2942
 
 ### inputMode?
 
-> `optional` **inputMode**: `"search"` \| `"numeric"` \| `"text"` \| `"url"` \| `"none"` \| `"tel"` \| `"email"` \| `"decimal"`
+> `optional` **inputMode**: `"search"` \| `"numeric"` \| `"text"` \| `"none"` \| `"url"` \| `"tel"` \| `"email"` \| `"decimal"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2969
 

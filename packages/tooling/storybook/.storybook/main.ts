@@ -16,9 +16,14 @@ const config: StorybookConfig = {
   stories: [path.resolve(frameworkRoot, 'esm-styleguide/src/**/*.stories.@(ts|tsx)')],
   addons: ['@storybook/addon-links'],
   framework: 'storybook-react-rsbuild',
-  disableTelemetry: true,
+  core: {
+    disableTelemetry: true,
+  },
   rsbuildFinal: (config) => {
     return mergeRsbuildConfig(config, {
+      output: {
+        assetPrefix: process.env.STORYBOOK_BASE_PATH || '/',
+      },
       plugins: [
         pluginSass({
           sassLoaderOptions: {

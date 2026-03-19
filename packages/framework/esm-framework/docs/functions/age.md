@@ -4,7 +4,7 @@
 
 > **age**(`birthDate`, `currentDate`): `null` \| `string`
 
-Defined in: [packages/framework/esm-utils/src/age-helpers.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L22)
+Defined in: [packages/framework/esm-utils/src/age-helpers.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L20)
 
 Gets a human readable and locale supported representation of a person's age, given their birthDate,
 The representation logic follows the guideline here:

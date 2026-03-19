@@ -255,9 +255,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      devMiddleware: {
-        writeToDisk: true,
-      },
       static: [resolve(root, outDir)],
     },
     watchOptions: merge(

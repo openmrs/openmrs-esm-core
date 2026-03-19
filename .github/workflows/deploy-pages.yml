@@ -44,20 +44,26 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
 
-      - name: Generate API docs
-        run: yarn turbo run document --filter=@openmrs/esm-framework --color
-
       - name: Build Storybook
-        run: yarn turbo run build --filter=@openmrs/storybook --color --concurrency=5
+        run: yarn turbo run build --filter=@openmrs/storybook
+        env:
+          STORYBOOK_BASE_PATH: /${{ github.event.repository.name }}/storybook/
+
+      - name: Rename API.md to index.md so Jekyll renders it as index.html
+        run: mv packages/framework/esm-framework/docs/API.md packages/framework/esm-framework/docs/index.md
 
       - name: Render API docs to HTML via Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: packages/framework/esm-framework/docs
-          destination: _site
+          destination: _api_site
 
-      - name: Add Storybook to site
-        run: cp -r packages/tooling/storybook/dist _site/storybook
+      - name: Assemble final site (API docs + Storybook)
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -a _api_site/. _site/
+          cp -a packages/tooling/storybook/dist _site/storybook
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

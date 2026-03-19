@@ -4,7 +4,7 @@
 
 > **toOmrsIsoString**(`date`, `toUTC`): `string`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L85)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L83)
 
 Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
