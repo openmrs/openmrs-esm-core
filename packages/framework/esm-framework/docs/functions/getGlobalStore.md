@@ -1,4 +1,4 @@
-t[O3 Framework](../API.md) / getGlobalStore
+[O3 Framework](../API.md) / getGlobalStore
 
 # Function: getGlobalStore()
 
