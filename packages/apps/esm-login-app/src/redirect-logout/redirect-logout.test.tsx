@@ -188,12 +188,12 @@ describe('RedirectLogout', () => {
     mockUseConfig.mockReturnValue({
       provider: {
         type: 'custom',
-        loginUrl: 'http://custom-url.com',
+        loginUrl: 'https://custom-url.com',
       },
     });
 
     render(<RedirectLogout />);
 
-    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith({ to: 'http://custom-url.com' }));
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith({ to: 'https://custom-url.com' }));
   });
 });
