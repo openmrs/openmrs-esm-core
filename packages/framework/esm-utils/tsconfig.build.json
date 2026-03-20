@@ -2,7 +2,8 @@
   "$schema": "https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "moduleResolution": "bundler"
   },
   "extends": "./tsconfig.json",
   "exclude": ["**/*.test.*", "**/setup-tests.*"]

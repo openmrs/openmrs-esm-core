@@ -16,6 +16,7 @@ import isToday from 'dayjs/plugin/isToday.js';
 import objectSupport from 'dayjs/plugin/objectSupport.js';
 import utc from 'dayjs/plugin/utc.js';
 import { isNil, omit } from 'lodash-es';
+import { getConfigStore } from '@openmrs/esm-config';
 import { getLocale } from '../';
 
 dayjs.extend(isToday);
@@ -305,6 +306,17 @@ export function formatPartialDate(dateString: string, options: Partial<FormatDat
 // TODO: Shouldn't throw on null input
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
   let locale = options?.locale ?? getLocale();
+
+  // Check for preferredDateLocale config - if config is there use it, otherwise use locale
+  const styleguideState = getConfigStore('@openmrs/esm-styleguide')?.getState();
+  const preferredDateLocaleMap =
+    styleguideState?.loaded &&
+    (styleguideState.config as { preferredDateLocale?: Record<string, string> })?.preferredDateLocale;
+
+  if (preferredDateLocaleMap?.[locale]) {
+    locale = preferredDateLocaleMap[locale];
+  }
+
   const _locale = new Intl.Locale(locale);
 
   const { calendar, mode, time, day, month, year, noToday, numberingSystem }: FormatDateOptions = {
