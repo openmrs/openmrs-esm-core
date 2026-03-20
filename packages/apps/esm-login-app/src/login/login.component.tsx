@@ -31,6 +31,17 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [showTotpChallenge, setShowTotpChallenge] = useState(false);
+  const [totpCode, setTotpCode] = useState('');
+
+  useEffect(() => {
+    const handleTotpChallenge = () => {
+      setShowTotpChallenge(true);
+      setIsLoggingIn(false);
+    };
+    window.addEventListener('openmrs:totp-challenge', handleTotpChallenge);
+    return () => window.removeEventListener('openmrs:totp-challenge', handleTotpChallenge);
+  }, []);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -171,6 +182,34 @@ const Login: React.FC = () => {
           </div>
           <form onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
+              {showTotpChallenge ? (
+                <>
+                  <TextInput
+                    id="totpCode"
+                    type="text"
+                    name="totpCode"
+                    labelText={t('totpCode', '6-Digit Authenticator Code')}
+                    value={totpCode}
+                    onChange={(e) => setTotpCode(e.target.value)}
+                    required
+                    autoFocus
+                  />
+                  <Button
+                    type="submit"
+                    className={styles.continueButton}
+                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                    iconDescription={t('verifyTotpDescription', 'Verify Code')}
+                    disabled={!isLoginEnabled || isLoggingIn || !totpCode}
+                  >
+                    {isLoggingIn ? (
+                      <InlineLoading className={styles.loader} description={t('verifying', 'Verifying') + '...'} />
+                    ) : (
+                      t('verify', 'Verify')
+                    )}
+                  </Button>
+                </>
+              ) : (
+                <>
               <TextInput
                 id="username"
                 type="text"
@@ -259,6 +298,8 @@ const Login: React.FC = () => {
                     )}
                   </Button>
                 </>
+              )}
+              </>
               )}
             </div>
           </form>
