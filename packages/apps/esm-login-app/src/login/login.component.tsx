@@ -63,7 +63,6 @@ const Login: React.FC = () => {
   const continueLogin = useCallback(() => {
     const currentUsername = usernameInputRef.current?.value?.trim();
     if (currentUsername) {
-      // If credentials were autofilled, input onChange might not have been called
       setUsername(currentUsername);
       setShowPasswordField(true);
     } else {
@@ -79,7 +78,6 @@ const Login: React.FC = () => {
       evt.preventDefault();
       evt.stopPropagation();
 
-      // If credentials were autofilled, input onChange might not have been called
       const currentUsername = usernameInputRef.current?.value?.trim() || username;
       const currentPassword = passwordInputRef.current?.value || password;
 
@@ -104,12 +102,11 @@ const Login: React.FC = () => {
             let to = loginLinks?.loginSuccess || '/home';
             if (location?.state?.referrer) {
               if (location.state.referrer.startsWith('/')) {
-                to = `\${openmrsSpaBase}${location.state.referrer}`;
+                to = `${openmrsSpaBase}${location.state.referrer}`;
               } else {
                 to = location.state.referrer;
               }
             }
-
             openmrsNavigate({ to });
           } else {
             navigate('/login/location');
@@ -130,7 +127,7 @@ const Login: React.FC = () => {
         } else {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
         }
-      
+
         setUsername('');
         setPassword('');
         if (showPasswordOnSeparateScreen) {
@@ -161,7 +158,7 @@ const Login: React.FC = () => {
             <div className={styles.errorMessage}>
               <InlineNotification
                 kind="error"
-               subtitle={errorMessage} 
+                subtitle={errorMessage}
                 title={getCoreTranslation('error')}
                 onClick={() => setErrorMessage('')}
               />
