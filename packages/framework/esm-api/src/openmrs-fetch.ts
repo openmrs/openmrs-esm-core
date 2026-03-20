@@ -198,7 +198,12 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
       /*
        * Redirect to given url when redirect on auth failure is enabled
        */
-      if (
+      if (url === makeUrl(sessionEndpoint) && response.status === 401) {
+        // GSOC Demo: Fire event to trigger TOTP validation UI instead of standard 403 redirection
+        const event = new CustomEvent('openmrs:totp-challenge');
+        window.dispatchEvent(event);
+        return new Promise<FetchResponse>(() => {});
+      } else if (
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
         (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
       ) {
