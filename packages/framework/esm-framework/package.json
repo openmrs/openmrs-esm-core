@@ -4,14 +4,14 @@
   "license": "MPL-2.0",
   "type": "module",
   "module": "dist/index.js",
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./src/internal": {
-      "types": "./src/internal.ts",
+      "types": "./dist/internal.d.ts",
       "default": "./dist/internal.js"
     },
     "./package.json": {

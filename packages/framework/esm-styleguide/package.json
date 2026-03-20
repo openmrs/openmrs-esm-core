@@ -7,19 +7,19 @@
   "types": "dist/public.d.ts",
   "exports": {
     ".": {
-      "types": "./src/internal.ts",
+      "types": "./dist/internal.d.ts",
       "default": "./dist/internal.js"
     },
     "./src/internal": {
-      "types": "./src/internal.ts",
+      "types": "./dist/internal.d.ts",
       "default": "./dist/internal.js"
     },
     "./src/public": {
-      "types": "./src/public.ts",
+      "types": "./dist/public.d.ts",
       "default": "./dist/public.js"
     },
     "./src/index": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./styles": {

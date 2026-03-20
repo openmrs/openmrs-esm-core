@@ -41,6 +41,7 @@
       "outputs": ["dist/**"]
     },
     "document": {
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_ROOT$/packages/framework/**/src/**/*.{ts,tsx}", "!$TURBO_ROOT$/packages/framework/**/src/**/*.test.{ts,tsx}"],
       "outputs": ["docs/**/*.md"]
     },

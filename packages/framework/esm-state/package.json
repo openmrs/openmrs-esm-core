@@ -8,12 +8,12 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "require": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./src/public": {
-      "types": "./src/public.ts",
+      "types": "./dist/public.d.ts",
       "default": "./dist/public.js"
     },
     "./mock": {
