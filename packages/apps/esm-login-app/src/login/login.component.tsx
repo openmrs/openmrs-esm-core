@@ -125,7 +125,7 @@ const Login: React.FC = () => {
 
         return true;
       } catch (error: unknown) {
-        if (error instanceof Error) {
+        if (error instanceof Error && error.message && error.message.trim()) {
           setErrorMessage(error.message);
         } else {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
@@ -160,7 +160,7 @@ const Login: React.FC = () => {
             <div className={styles.errorMessage}>
               <InlineNotification
                 kind="error"
-                subtitle={t(errorMessage)}
+                subtitle={errorMessage}
                 title={getCoreTranslation('error')}
                 onClick={() => setErrorMessage('')}
               />
