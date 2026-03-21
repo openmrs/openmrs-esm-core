@@ -195,10 +195,29 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
        * to help developers understand the problem and debug
        */
 
-      /*
-       * Redirect to given url when redirect on auth failure is enabled
-       */
-      if (
+      if (response.status === 401) {
+        // GSOC Demo: Advanced Paused-Promise Resolution Protocol
+        // This pauses the current network request pending secondary authentication
+        return new Promise<FetchResponse>((resolve, reject) => {
+          const resolutionListener = (e: any) => {
+            if (e.detail?.success) {
+              window.removeEventListener('openmrs:auth-challenge-resolved', resolutionListener);
+              // Recursively retry the exactly identical fetch request that was paused
+              resolve(openmrsFetch(url, fetchInit));
+            } else if (e.detail?.cancelled) {
+              window.removeEventListener('openmrs:auth-challenge-resolved', resolutionListener);
+              reject(new Error("Authentication challenge was cancelled by the user."));
+            }
+          };
+          
+          window.addEventListener('openmrs:auth-challenge-resolved', resolutionListener);
+          
+          // Trigger the dynamic UI (e.g., TOTP or WebAuthn) to mount over the screen
+          window.dispatchEvent(new CustomEvent('openmrs:auth-challenge', { 
+            detail: { endpoint: url, challengeType: "TOTP" } 
+          }));
+        });
+      } else if (
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
         (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
       ) {
