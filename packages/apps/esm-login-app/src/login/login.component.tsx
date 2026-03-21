@@ -161,7 +161,11 @@ const Login: React.FC = () => {
             <div className={styles.errorMessage}>
               <InlineNotification
                 kind="error"
+<<<<<<< HEAD
                subtitle={errorMessage} 
+=======
+                subtitle={errorMessage}
+>>>>>>> 37db6be73f3699b0890e7a12b1493ffe2076a093
                 title={getCoreTranslation('error')}
                 onClick={() => setErrorMessage('')}
               />
