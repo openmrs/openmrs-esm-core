@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import uniqueId from 'lodash-es/uniqueId';
 import {
   InlineLoading,
+  InlineNotification,
   Search,
   StructuredListCell,
   StructuredListRow,
@@ -23,7 +24,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const id = useMemo(() => uniqueId(), []);
   const [conceptToLookup, setConceptToLookup] = useState('');
   const [selectedConcept, setSelectedConcept] = useState<string>(value);
-  const { concepts, isSearchingConcepts } = useConceptLookup(conceptToLookup);
+  const { concepts, error, isSearchingConcepts } = useConceptLookup(conceptToLookup);
 
   const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConceptToLookup(event.target.value);
@@ -55,17 +56,33 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
         />
         {(() => {
           if (!conceptToLookup) return null;
-          if (isSearchingConcepts)
-            return <InlineLoading className={styles.loader} description={t('searching', 'Searching') + '...'} />;
-          if (concepts && concepts.length && !isSearchingConcepts) {
+
+          if (error) {
+            return (
+              <InlineNotification
+                kind="error"
+                title={t('error')}
+                subtitle={error?.message || t('somethingWentWrong')}
+              />
+            );
+          }
+
+          if (isSearchingConcepts) {
+            return (
+              <InlineLoading
+                className={styles.loader}
+                description={t('searchingConcepts')}
+              />
+            );
+          }
+
+          if (concepts && concepts.length > 0) {
             return (
               <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
                 {concepts.map((concept: Concept) => (
                   <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
                     <StructuredListCell
-                      onClick={() => {
-                        handleConceptUuidChange(concept);
-                      }}
+                      onClick={() => handleConceptUuidChange(concept)}
                       className={styles.smallListCell}
                     >
                       {concept.display}
@@ -75,9 +92,10 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
               </StructuredListWrapper>
             );
           }
+
           return (
             <Tile className={styles.emptyResults}>
-              <span>{t('noConceptsFoundText', 'No matching concepts found')}</span>
+              <span>{t('noConceptsFoundText')}</span>
             </Tile>
           );
         })()}
