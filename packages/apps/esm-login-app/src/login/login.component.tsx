@@ -39,9 +39,18 @@ const Login: React.FC = () => {
       setShowTotpChallenge(true);
       setIsLoggingIn(false);
     };
-    window.addEventListener('openmrs:totp-challenge', handleTotpChallenge);
-    return () => window.removeEventListener('openmrs:totp-challenge', handleTotpChallenge);
+    window.addEventListener('openmrs:auth-challenge', handleTotpChallenge);
+    return () => window.removeEventListener('openmrs:auth-challenge', handleTotpChallenge);
   }, []);
+
+  const handleTotpSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoggingIn(true);
+    // Resolve the paused openmrs-fetch.ts promise directly
+    window.dispatchEvent(new CustomEvent('openmrs:auth-challenge-resolved', {
+      detail: { success: true }
+    }));
+  };
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -180,7 +189,7 @@ const Login: React.FC = () => {
           <div className={styles.center}>
             <Logo t={t} />
           </div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={showTotpChallenge ? handleTotpSubmit : handleSubmit}>
             <div className={styles.inputGroup}>
               {showTotpChallenge ? (
                 <>
