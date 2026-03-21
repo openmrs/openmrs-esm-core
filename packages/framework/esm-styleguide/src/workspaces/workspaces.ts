@@ -306,7 +306,10 @@ export function launchWorkspace<
   T extends DefaultWorkspaceProps | object = DefaultWorkspaceProps & { [key: string]: any },
 >(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string }) {
   const store = getWorkspaceStore();
-  const workspace = getWorkspaceRegistration(name);
+  const workspace = {
+    ...getWorkspaceRegistration(name),
+    ...(additionalProps ?? {}),
+  };
   const currentWorkspaceGroup = store.getState().workspaceGroup;
 
   if (currentWorkspaceGroup && !currentWorkspaceGroup.members?.includes(name)) {
