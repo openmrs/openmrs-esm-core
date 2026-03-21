@@ -31,6 +31,17 @@ export type VariablesMap = {
 /** The valid return types for `evaluate()` and `evaluateAsync()` */
 export type DefaultEvaluateReturnType = string | number | boolean | Date | null | undefined;
 
+const astCache = new Map<string, ReturnType<typeof jsep>>();
+
+function getOrParseAst(expression: string): ReturnType<typeof jsep> {
+  if (astCache.has(expression)) {
+    return astCache.get(expression)!;
+  }
+  const ast = jsep(expression);
+  astCache.set(expression, ast);
+  return ast;
+}
+
 /**
  * `evaluate()` implements a relatively safe version of `eval()` that is limited to evaluating synchronous
  * Javascript expressions. This allows us to safely add features that depend on user-supplied code without
@@ -254,7 +265,7 @@ export function evaluateAsType<T>(
   }
 
   const context = createSynchronousContext(variables);
-  const result = visitExpression(typeof expression === 'string' ? jsep(expression) : expression, context);
+  const result = visitExpression(typeof expression === 'string' ? getOrParseAst(expression) : expression, context);
 
   if (typePredicate(result)) {
     return result;
@@ -305,7 +316,7 @@ export async function evaluateAsTypeAsync<T>(
   }
 
   const context = createAsynchronousContext(variables);
-  return Promise.resolve(visitExpression(typeof expression === 'string' ? jsep(expression) : expression, context)).then(
+  return Promise.resolve(visitExpression(typeof expression === 'string' ? getOrParseAst(expression) : expression, context)).then(
     (result) => {
       if (typePredicate(result)) {
         return result;
@@ -336,7 +347,7 @@ export async function evaluateAsTypeAsync<T>(
  * @returns An executable AST representation of the expression
  */
 export function compile(expression: string): jsep.Expression {
-  return jsep(expression);
+  return getOrParseAst(expression);
 }
 
 // Pre-defined type guards
@@ -747,4 +758,9 @@ function getCallTargetName(expression: Expression) {
   }
   // identifier expression
   return expression.name;
+}
+
+/** Clears the AST cache. Exposed for testing purposes only. */
+export function clearAstCacheForTesting(): void {
+  astCache.clear();
 }
