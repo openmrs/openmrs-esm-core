@@ -125,11 +125,12 @@ const Login: React.FC = () => {
 
         return true;
       } catch (error: unknown) {
-        if (error instanceof Error) {
+        if (error instanceof Error && error.message?.trim()) {
           setErrorMessage(error.message);
         } else {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
         }
+      
         setUsername('');
         setPassword('');
         if (showPasswordOnSeparateScreen) {
@@ -160,7 +161,11 @@ const Login: React.FC = () => {
             <div className={styles.errorMessage}>
               <InlineNotification
                 kind="error"
-                subtitle={t(errorMessage)}
+<<<<<<< HEAD
+               subtitle={errorMessage} 
+=======
+                subtitle={errorMessage}
+>>>>>>> 37db6be73f3699b0890e7a12b1493ffe2076a093
                 title={getCoreTranslation('error')}
                 onClick={() => setErrorMessage('')}
               />
