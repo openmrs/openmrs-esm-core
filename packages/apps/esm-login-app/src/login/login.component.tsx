@@ -124,7 +124,7 @@ const Login: React.FC = () => {
             navigate('/login/location');
           }
         } else {
-          setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
+          setErrorMessage(t('invalidCredentials'));
           setUsername('');
           setPassword('');
           if (showPasswordOnSeparateScreen) {
