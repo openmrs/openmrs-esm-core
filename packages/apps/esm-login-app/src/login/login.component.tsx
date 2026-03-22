@@ -210,7 +210,7 @@ const Login: React.FC = () => {
                       disabled={!isLoginEnabled || isLoggingIn}
                     >
                       {isLoggingIn ? (
-                        <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
+                        <InlineLoading className={styles.loader} description={t('login', 'Log in') + '...'} />
                       ) : (
                         t('login', 'Log in')
                       )}
@@ -253,7 +253,7 @@ const Login: React.FC = () => {
                     disabled={!isLoginEnabled || isLoggingIn}
                   >
                     {isLoggingIn ? (
-                      <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
+                      <InlineLoading className={styles.loader} description={t('login', 'Log in') + '...'} />
                     ) : (
                       t('login', 'Log in')
                     )}
