@@ -30,9 +30,24 @@ const Login: React.FC = () => {
   };
   const navigate = useNavigate();
 
+  const getPasswordStrength = (password: string) => {
+    if (!password) return '';
+
+    let score = 0;
+    if (password.length >= 6) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    if (score <= 1) return 'Weak';
+    if (score === 2) return 'Medium';
+    return 'Strong';
+  };
+
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [password, setPassword] = useState('');
+  const passwordStrength = getPasswordStrength(password);
   const [username, setUsername] = useState('');
   const [showPasswordField, setShowPasswordField] = useState(false);
   const passwordInputRef = useRef<HTMLInputElement>(null);
@@ -180,7 +195,7 @@ const Login: React.FC = () => {
                 value={username}
                 onChange={changeUsername}
                 ref={usernameInputRef}
-                required
+                //required
                 autoFocus
               />
               {showPasswordOnSeparateScreen ? (
@@ -193,13 +208,27 @@ const Login: React.FC = () => {
                       autoComplete="current-password"
                       onChange={changePassword}
                       ref={passwordInputRef}
-                      required
+                      //required
                       value={password}
                       showPasswordLabel={t('showPassword', 'Show password')}
                       invalidText={t('validValueRequired', 'A valid value is required')}
                       aria-hidden={!showPasswordField}
                       tabIndex={showPasswordField ? 0 : -1}
                     />
+                    {password && (
+                      <div style={{ marginTop: '8px', fontSize: '14px' }}>
+                        Strength:{' '}
+                        <span
+                          style={{
+                            color:
+                              passwordStrength === 'Weak' ? 'red' : passwordStrength === 'Medium' ? 'orange' : 'green',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {passwordStrength}
+                        </span>
+                      </div>
+                    )}
                   </div>
                   {showPasswordField ? (
                     <Button
