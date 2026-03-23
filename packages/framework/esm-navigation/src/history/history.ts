@@ -5,9 +5,15 @@ const historyKey = 'openmrs:history';
 
 function getParsedHistory(action: string): Array<string> {
   try {
-    return JSON.parse(sessionStorage.getItem(historyKey) ?? '[]') || [];
+    const parsed = JSON.parse(sessionStorage.getItem(historyKey) ?? '[]');
+    if (!Array.isArray(parsed)) {
+      console.warn(`Navigation history in ${action} is not an array, returning empty array`);
+      return [];
+    }
+
+    return parsed.filter((item): item is string => typeof item === 'string');
   } catch (error) {
-    console.warn(`Failed to parse navigation history in ${action}, resetting to empty array`, error);
+    console.warn(`Failed to parse navigation history in ${action}, returning empty array`, error);
     return [];
   }
 }
