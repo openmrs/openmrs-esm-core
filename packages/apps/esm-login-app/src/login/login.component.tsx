@@ -20,6 +20,20 @@ export interface LoginReferrer {
   referrer?: string;
 }
 
+function getPasswordStrength(password: string, t: any): string {
+  if (!password) return '';
+
+  let score = 0;
+  if (password.length >= 6) score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
+  if (/[^A-Za-z0-9]/.test(password)) score++;
+
+  if (score <= 1) return t('weak', 'Weak');
+  if (score === 2) return t('medium', 'Medium');
+  return t('strong', 'Strong');
+}
+
 const Login: React.FC = () => {
   const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
@@ -29,25 +43,10 @@ const Login: React.FC = () => {
     state: LoginReferrer;
   };
   const navigate = useNavigate();
-
-  const getPasswordStrength = (password: string) => {
-    if (!password) return '';
-
-    let score = 0;
-    if (password.length >= 6) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[^A-Za-z0-9]/.test(password)) score++;
-
-    if (score <= 1) return 'Weak';
-    if (score === 2) return 'Medium';
-    return 'Strong';
-  };
-
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [password, setPassword] = useState('');
-  const passwordStrength = getPasswordStrength(password);
+  const passwordStrength = getPasswordStrength(password, t);
   const [username, setUsername] = useState('');
   const [showPasswordField, setShowPasswordField] = useState(false);
   const passwordInputRef = useRef<HTMLInputElement>(null);
