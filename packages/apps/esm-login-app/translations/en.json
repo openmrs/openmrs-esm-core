@@ -18,6 +18,7 @@
   "locationSaveMessage": "Your preferred location has been saved for future logins",
   "locationUpdated": "Location updated",
   "locationUpdateMessage": "Your preferred login location has been updated",
+  "loggingIn": "Logging in",
   "login": "Log in",
   "loginButtonIconDescription": "Log in button",
   "logout": "Logout",
