@@ -3,14 +3,17 @@ import { navigate } from '../navigation/navigate';
 
 const historyKey = 'openmrs:history';
 
-function addToHistory(newLocation: string) {
-  let history: Array<string>;
+function getParsedHistory(action: string): Array<string> {
   try {
-    history = JSON.parse(sessionStorage.getItem(historyKey) ?? '[]') || [];
+    return JSON.parse(sessionStorage.getItem(historyKey) ?? '[]') || [];
   } catch (error) {
-    console.warn('Failed to parse navigation history in addToHistory, resetting to empty array', error);
-    history = [];
+    console.warn(`Failed to parse navigation history in ${action}, resetting to empty array`, error);
+    return [];
   }
+}
+
+function addToHistory(newLocation: string) {
+  let history = getParsedHistory('addToHistory');
   history.push(newLocation);
   const maxSize = 50;
   if (history.length > maxSize) {
@@ -26,13 +29,7 @@ function addToHistory(newLocation: string) {
  * @internal
  */
 export function setupHistory() {
-  let history: Array<string>;
-  try {
-    history = JSON.parse(sessionStorage.getItem(historyKey) ?? '[]');
-  } catch (error) {
-    console.warn('Failed to parse navigation history in setupHistory, resetting to empty array', error);
-    history = [];
-  }
+  let history = getParsedHistory('setupHistory');
   if (history.length === 0 && document.referrer) {
     addToHistory(document.referrer);
   }
@@ -57,12 +54,7 @@ export function setupHistory() {
  * Returns a list of URLs representing the history of the current window session.
  */
 export function getHistory(): Array<string> {
-  try {
-    return JSON.parse(sessionStorage.getItem(historyKey) ?? '[]');
-  } catch (error) {
-    console.warn('Failed to parse navigation history in getHistory, returning empty array', error);
-    return [];
-  }
+  return getParsedHistory('getHistory');
 }
 
 /**
