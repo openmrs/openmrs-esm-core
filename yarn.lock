@@ -2393,7 +2393,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-navigation": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -2451,7 +2451,7 @@ __metadata:
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/lodash-es": "npm:^4.17.12"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
@@ -2476,7 +2476,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
@@ -2492,7 +2492,7 @@ __metadata:
   resolution: "@openmrs/esm-core@workspace:."
   dependencies:
     "@playwright/test": "npm:^1.55.1"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.8.0"
     "@testing-library/react": "npm:^16.3.0"
@@ -2558,7 +2558,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-translations": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
@@ -2577,7 +2577,7 @@ __metadata:
     "@openmrs/esm-offline": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/fhir": "npm:0.0.31"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
@@ -2600,7 +2600,7 @@ __metadata:
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     cross-env: "npm:^7.0.3"
     happy-dom: "npm:^20.6.0"
@@ -2622,7 +2622,7 @@ __metadata:
     "@jsep-plugin/template": "npm:^1.0.5"
     "@jsep-plugin/ternary": "npm:^1.1.4"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -2643,7 +2643,7 @@ __metadata:
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -2670,7 +2670,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
     single-spa: "npm:^6.0.3"
@@ -2705,7 +2705,7 @@ __metadata:
     "@openmrs/esm-utils": "workspace:*"
     "@openmrs/typedoc-plugin-file-categories": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -2734,7 +2734,7 @@ __metadata:
   resolution: "@openmrs/esm-globals@workspace:packages/framework/esm-globals"
   dependencies:
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/fhir": "npm:0.0.31"
     concurrently: "npm:^9.1.2"
     rimraf: "npm:^6.0.1"
@@ -2838,7 +2838,7 @@ __metadata:
   dependencies:
     "@openmrs/esm-state": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -2894,7 +2894,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/uuid": "npm:^9.0.1"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
@@ -2960,7 +2960,7 @@ __metadata:
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -3009,7 +3009,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -3036,7 +3036,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
     cross-env: "npm:^7.0.3"
@@ -3068,7 +3068,7 @@ __metadata:
     "@openmrs/esm-translations": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/geopattern": "npm:^1.2.9"
     "@vitest/coverage-v8": "npm:^4.0.18"
     concurrently: "npm:^9.1.2"
@@ -3114,7 +3114,7 @@ __metadata:
   resolution: "@openmrs/esm-translations@workspace:packages/framework/esm-translations"
   dependencies:
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     concurrently: "npm:^9.1.2"
     i18next: "npm:^25.5.3"
     i18next-parser: "npm:^9.3.0"
@@ -3132,7 +3132,7 @@ __metadata:
     "@internationalized/date": "npm:^3.8.0"
     "@openmrs/esm-globals": "workspace:*"
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/lodash-es": "npm:^4.17.12"
     "@types/semver": "npm:^7.3.4"
     "@vitest/coverage-v8": "npm:^4.0.18"
@@ -3160,7 +3160,7 @@ __metadata:
   dependencies:
     "@rspack/cli": "npm:1.7.9"
     "@rspack/core": "npm:1.7.9"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/lodash-es": "npm:^4.17.12"
     clean-webpack-plugin: "npm:4.0.0"
     copy-webpack-plugin: "npm:11.0.0"
@@ -3221,7 +3221,7 @@ __metadata:
   resolution: "@openmrs/typedoc-plugin-file-categories@workspace:packages/tooling/typedoc-plugin-file-categories"
   dependencies:
     "@swc/cli": "npm:0.8.0"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.0.18"
     rimraf: "npm:^6.0.1"
     typedoc: "npm:^0.28.5"
@@ -3236,7 +3236,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/webpack-config@workspace:packages/tooling/webpack-config"
   dependencies:
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/lodash-es": "npm:4.17.12"
     clean-webpack-plugin: "npm:4.0.0"
     copy-webpack-plugin: "npm:11.0.0"
@@ -5848,90 +5848,106 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-darwin-arm64@npm:1.15.18"
+"@swc/core-darwin-arm64@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-darwin-arm64@npm:1.15.21"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-darwin-x64@npm:1.15.18"
+"@swc/core-darwin-x64@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-darwin-x64@npm:1.15.21"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.15.18"
+"@swc/core-linux-arm-gnueabihf@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.15.21"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.15.18"
+"@swc/core-linux-arm64-gnu@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.15.21"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-linux-arm64-musl@npm:1.15.18"
+"@swc/core-linux-arm64-musl@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-linux-arm64-musl@npm:1.15.21"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-linux-x64-gnu@npm:1.15.18"
+"@swc/core-linux-ppc64-gnu@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-linux-ppc64-gnu@npm:1.15.21"
+  conditions: os=linux & cpu=ppc64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-s390x-gnu@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-linux-s390x-gnu@npm:1.15.21"
+  conditions: os=linux & cpu=s390x & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-gnu@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-linux-x64-gnu@npm:1.15.21"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-linux-x64-musl@npm:1.15.18"
+"@swc/core-linux-x64-musl@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-linux-x64-musl@npm:1.15.21"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.15.18"
+"@swc/core-win32-arm64-msvc@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.15.21"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.15.18"
+"@swc/core-win32-ia32-msvc@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.15.21"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core-win32-x64-msvc@npm:1.15.18"
+"@swc/core-win32-x64-msvc@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core-win32-x64-msvc@npm:1.15.21"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:1.15.18":
-  version: 1.15.18
-  resolution: "@swc/core@npm:1.15.18"
+"@swc/core@npm:1.15.21":
+  version: 1.15.21
+  resolution: "@swc/core@npm:1.15.21"
   dependencies:
-    "@swc/core-darwin-arm64": "npm:1.15.18"
-    "@swc/core-darwin-x64": "npm:1.15.18"
-    "@swc/core-linux-arm-gnueabihf": "npm:1.15.18"
-    "@swc/core-linux-arm64-gnu": "npm:1.15.18"
-    "@swc/core-linux-arm64-musl": "npm:1.15.18"
-    "@swc/core-linux-x64-gnu": "npm:1.15.18"
-    "@swc/core-linux-x64-musl": "npm:1.15.18"
-    "@swc/core-win32-arm64-msvc": "npm:1.15.18"
-    "@swc/core-win32-ia32-msvc": "npm:1.15.18"
-    "@swc/core-win32-x64-msvc": "npm:1.15.18"
+    "@swc/core-darwin-arm64": "npm:1.15.21"
+    "@swc/core-darwin-x64": "npm:1.15.21"
+    "@swc/core-linux-arm-gnueabihf": "npm:1.15.21"
+    "@swc/core-linux-arm64-gnu": "npm:1.15.21"
+    "@swc/core-linux-arm64-musl": "npm:1.15.21"
+    "@swc/core-linux-ppc64-gnu": "npm:1.15.21"
+    "@swc/core-linux-s390x-gnu": "npm:1.15.21"
+    "@swc/core-linux-x64-gnu": "npm:1.15.21"
+    "@swc/core-linux-x64-musl": "npm:1.15.21"
+    "@swc/core-win32-arm64-msvc": "npm:1.15.21"
+    "@swc/core-win32-ia32-msvc": "npm:1.15.21"
+    "@swc/core-win32-x64-msvc": "npm:1.15.21"
     "@swc/counter": "npm:^0.1.3"
     "@swc/types": "npm:^0.1.25"
   peerDependencies:
@@ -5947,6 +5963,10 @@ __metadata:
       optional: true
     "@swc/core-linux-arm64-musl":
       optional: true
+    "@swc/core-linux-ppc64-gnu":
+      optional: true
+    "@swc/core-linux-s390x-gnu":
+      optional: true
     "@swc/core-linux-x64-gnu":
       optional: true
     "@swc/core-linux-x64-musl":
@@ -5960,7 +5980,7 @@ __metadata:
   peerDependenciesMeta:
     "@swc/helpers":
       optional: true
-  checksum: 10/ef198b9feb6eee034e3a912c37988ece2885fec35419e8245d467adbc1fc47a5c3e61869d1bdbe6fff76cbd9186ef278120cbb9746d5f7446576f4a7f15c2dcd
+  checksum: 10/0b3246ef93280d536ddc230e837678da5813e2794b329506bbf03f01f355fd4d84e4e1e3e704bc151405e7606be968dbd937829739d1e9bd7bd8a6fd59e52445
   languageName: node
   linkType: hard
 
@@ -14829,7 +14849,7 @@ __metadata:
     "@rspack/cli": "npm:1.7.9"
     "@rspack/core": "npm:1.7.9"
     "@rspack/dev-server": "npm:1.1.5"
-    "@swc/core": "npm:1.15.18"
+    "@swc/core": "npm:1.15.21"
     "@types/express": "npm:^4.11.1"
     "@types/glob": "npm:^7.1.1"
     "@types/lodash": "npm:^4.17.12"
