@@ -1,14 +1,14 @@
 {
-  "AppMenuTooltip": "App Menu",
-  "cancel": "Cancel",
-  "change": "Change",
-  "changeDefaultLocale": "Update your default locale",
-  "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
-  "changeLanguage": "Change language",
-  "changingLanguage": "Changing language",
-  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
-  "notifications": "Notifications",
-  "userMenu": "User menu",
-  "userMenuOptions": "User menu options",
-  "userMenuTooltip": "My Account"
+  "AppMenuTooltip": "යෙදුම් මෙනුව",
+  "cancel": "අවලංගු කරන්න",
+  "change": "වෙනස් කරන්න",
+  "changeDefaultLocale": "ඔබේ පෙරනිමි භාෂාව යාවත්කාලීන කරන්න",
+  "changeDefaultLocaleExplanation": "මෙම සැසිය සඳහා පමණක් භාෂාව වෙනස් කිරීමට මෙය තෝරා නොගන්න",
+  "changeLanguage": "භාෂාව වෙනස් කරන්න",
+  "changingLanguage": "භාෂාව වෙනස් වෙමින් පවතී",
+  "noPathInDashboardExtension": "Configuration schema හි \"path\" property එක නොමැතිව dashboard extension එක පෙන්විය නොහැක",
+  "notifications": "දැනුම්දීම්",
+  "userMenu": "පරිශීලක මෙනුව",
+  "userMenuOptions": "පරිශීලක මෙනු විකල්ප",
+  "userMenuTooltip": "මගේ ගිණුම"
 }
