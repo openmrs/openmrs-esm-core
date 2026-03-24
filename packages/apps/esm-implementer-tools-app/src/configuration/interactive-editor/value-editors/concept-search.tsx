@@ -37,7 +37,54 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
     setConceptToLookup('');
   };
 
-  const shouldShowResults = conceptToLookup?.trim();
+  let content = null;
+
+  if (conceptToLookup?.trim()) {
+    if (isSearchingConcepts) {
+      content = (
+        <InlineLoading
+          className={styles.loader}
+          description={`${t('searchingConcepts', 'Searching concepts')}...`}
+        />
+      );
+    } else if (error) {
+      content = (
+        <InlineNotification
+          kind="error"
+          title={t('error', 'Error')}
+          subtitle={error?.message ?? t('somethingWentWrong', 'Something went wrong')}
+          lowContrast
+        />
+      );
+    } else if (concepts && concepts.length > 0) {
+      content = (
+        <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
+          {concepts.map((concept: Concept) => (
+            <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
+              <StructuredListCell
+                onClick={() => handleConceptUuidChange(concept)}
+                className={styles.smallListCell}
+              >
+                {concept.display}
+              </StructuredListCell>
+            </StructuredListRow>
+          ))}
+        </StructuredListWrapper>
+      );
+    } else {
+      content = (
+        <InlineNotification
+          kind="info"
+          title={t('noResultsFound', 'No results found')}
+          subtitle={t(
+            'noConceptsFoundText',
+            `No results found for "${conceptToLookup.trim()}"`
+          )}
+          lowContrast
+        />
+      );
+    }
+  }
 
   return (
     <div>
@@ -54,47 +101,12 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           aria-autocomplete="list"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
           aria-controls={`searchbox-${id}`}
-          aria-expanded={!!(shouldShowResults && concepts && concepts.length > 0)}
+          aria-expanded={!!(conceptToLookup?.trim() && concepts && concepts.length > 0)}
           placeholder={t('searchConceptHelperText', 'Search concepts')}
           onChange={handleSearchTermChange}
         />
 
-        {!shouldShowResults ? null : isSearchingConcepts ? (
-          <InlineLoading
-            className={styles.loader}
-            description={`${t('searchingConcepts', 'Searching concepts')}...`}
-          />
-        ) : error ? (
-          <InlineNotification
-            kind="error"
-            title={t('error', 'Error')}
-            subtitle={error?.message ?? t('somethingWentWrong', 'Something went wrong')}
-            lowContrast
-          />
-        ) : concepts && concepts.length > 0 ? (
-          <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
-            {concepts.map((concept: Concept) => (
-              <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
-                <StructuredListCell
-                  onClick={() => handleConceptUuidChange(concept)}
-                  className={styles.smallListCell}
-                >
-                  {concept.display}
-                </StructuredListCell>
-              </StructuredListRow>
-            ))}
-          </StructuredListWrapper>
-        ) : (
-          <InlineNotification
-            kind="info"
-            title={t('noResultsFound', 'No results found')}
-            subtitle={t(
-              'noConceptsFoundText',
-              `No results found for "${conceptToLookup.trim()}"`
-            )}
-            lowContrast
-          />
-        )}
+        {content}
       </div>
     </div>
   );
