@@ -8,7 +8,6 @@ import {
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-  Tile,
 } from '@carbon/react';
 import type { Concept } from './concept-search.resource';
 import { useConceptLookup } from './concept-search.resource';
@@ -39,6 +38,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   return (
     <div>
       {selectedConcept && <p className={styles.activeUuid}>{selectedConcept}</p>}
+
       <div className={styles.autocomplete}>
         <Search
           id={`searchbox-${id}`}
@@ -50,33 +50,39 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           aria-autocomplete="list"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
           aria-controls={`searchbox-${id}`}
-          aria-expanded={concepts.length > 0}
+          aria-expanded={concepts?.length > 0}
           placeholder={t('searchConceptHelperText', 'Search concepts')}
           onChange={handleSearchTermChange}
         />
+
         {(() => {
-          if (!conceptToLookup) return null;
+          // No input → show nothing
+          if (!conceptToLookup?.trim()) return null;
 
-          if (error) {
-            return (
-              <InlineNotification
-                kind="error"
-                title={t('error')}
-                subtitle={error?.message || t('somethingWentWrong')}
-              />
-            );
-          }
-
+          // Loading state
           if (isSearchingConcepts) {
             return (
               <InlineLoading
                 className={styles.loader}
-                description={t('searchingConcepts')}
+                description={t('searchingConcepts', 'Searching concepts') + '...'}
               />
             );
           }
 
-          if (concepts && concepts.length > 0) {
+          // Error state
+          if (error && !isSearchingConcepts) {
+            return (
+              <InlineNotification
+                kind="error"
+                title={t('error', 'Error')}
+                subtitle={error?.message || t('somethingWentWrong', 'Something went wrong')}
+                lowContrast
+              />
+            );
+          }
+
+          // Results found
+          if (concepts?.length > 0) {
             return (
               <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
                 {concepts.map((concept: Concept) => (
@@ -93,10 +99,17 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
             );
           }
 
+          // Empty state
           return (
-            <Tile className={styles.emptyResults}>
-              <span>{t('noConceptsFoundText')}</span>
-            </Tile>
+            <InlineNotification
+              kind="info"
+              title={t('noResultsFound', 'No results found')}
+              subtitle={t(
+                'noConceptsFoundText',
+                `No results found for "${conceptToLookup.trim()}"`
+              )}
+              lowContrast
+            />
           );
         })()}
       </div>
