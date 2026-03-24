@@ -21,8 +21,10 @@ interface ConceptSearchBoxProps {
 export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const { t } = useTranslation();
   const id = useMemo(() => uniqueId(), []);
+
   const [conceptToLookup, setConceptToLookup] = useState('');
   const [selectedConcept, setSelectedConcept] = useState<string>(value);
+
   const { concepts, error, isSearchingConcepts } = useConceptLookup(conceptToLookup);
 
   const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,38 +52,34 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           aria-autocomplete="list"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
           aria-controls={`searchbox-${id}`}
-          aria-expanded={concepts?.length > 0}
+          aria-expanded={Boolean(concepts?.length)}
           placeholder={t('searchConceptHelperText', 'Search concepts')}
           onChange={handleSearchTermChange}
         />
 
         {(() => {
-          // No input → show nothing
           if (!conceptToLookup?.trim()) return null;
 
-          // Loading state
           if (isSearchingConcepts) {
             return (
               <InlineLoading
                 className={styles.loader}
-                description={t('searchingConcepts', 'Searching concepts') + '...'}
+                description={`${t('searchingConcepts', 'Searching concepts')}...`}
               />
             );
           }
 
-          // Error state
-          if (error && !isSearchingConcepts) {
+          if (error) {
             return (
               <InlineNotification
                 kind="error"
                 title={t('error', 'Error')}
-                subtitle={error?.message || t('somethingWentWrong', 'Something went wrong')}
+                subtitle={error?.message ?? t('somethingWentWrong', 'Something went wrong')}
                 lowContrast
               />
             );
           }
 
-          // Results found
           if (concepts?.length > 0) {
             return (
               <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
@@ -99,7 +97,6 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
             );
           }
 
-          // Empty state
           return (
             <InlineNotification
               kind="info"
