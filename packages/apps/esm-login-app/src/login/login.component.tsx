@@ -21,14 +21,20 @@ export interface LoginReferrer {
 }
 
 const Login: React.FC = () => {
-  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } =
-    useConfig<ConfigSchema>();
+  const {
+    showPasswordOnSeparateScreen,
+    provider: loginProvider,
+    links: loginLinks,
+  } = useConfig<ConfigSchema>();
+
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
+
   const location = useLocation() as unknown as Omit<Location, 'state'> & {
     state: LoginReferrer;
   };
+
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -111,12 +117,9 @@ const Login: React.FC = () => {
           if (session.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
 
+            // ✅ FIXED SONAR ISSUE
             if (location?.state?.referrer) {
-              if (location.state.referrer.startsWith('/')) {
-                to = location.state.referrer;
-              } else {
-                to = location.state.referrer;
-              }
+              to = location.state.referrer;
             }
 
             openmrsNavigate({ to });
