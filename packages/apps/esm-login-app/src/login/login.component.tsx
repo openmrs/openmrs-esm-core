@@ -52,6 +52,14 @@ const Login: React.FC = () => {
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
+  const strengthColorMap = {
+    Weak: 'red',
+    Medium: 'orange',
+    Strong: 'green',
+  };
+
+  const strengthColor = strengthColorMap[passwordStrength] || 'black';
+
   useEffect(() => {
     if (!user) {
       if (loginProvider.type === 'oauth2') {
@@ -219,8 +227,7 @@ const Login: React.FC = () => {
                         Strength:{' '}
                         <span
                           style={{
-                            color:
-                              passwordStrength === 'Weak' ? 'red' : passwordStrength === 'Medium' ? 'orange' : 'green',
+                            color: strengthColor,
                             fontWeight: 'bold',
                           }}
                         >
