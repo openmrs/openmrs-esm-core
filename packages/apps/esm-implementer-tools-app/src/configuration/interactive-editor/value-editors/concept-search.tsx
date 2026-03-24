@@ -52,14 +52,16 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           aria-autocomplete="list"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
           aria-controls={`searchbox-${id}`}
-          aria-expanded={Boolean(concepts?.length)}
+          aria-expanded={!!(conceptToLookup?.trim() && concepts && concepts.length > 0)}
           placeholder={t('searchConceptHelperText', 'Search concepts')}
           onChange={handleSearchTermChange}
         />
 
         {(() => {
+          // No input
           if (!conceptToLookup?.trim()) return null;
 
+          // Loading
           if (isSearchingConcepts) {
             return (
               <InlineLoading
@@ -69,6 +71,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
             );
           }
 
+          // Error
           if (error) {
             return (
               <InlineNotification
@@ -80,7 +83,8 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
             );
           }
 
-          if (concepts?.length > 0) {
+          // Results
+          if (concepts && concepts.length > 0) {
             return (
               <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
                 {concepts.map((concept: Concept) => (
@@ -97,6 +101,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
             );
           }
 
+          // Empty
           return (
             <InlineNotification
               kind="info"
