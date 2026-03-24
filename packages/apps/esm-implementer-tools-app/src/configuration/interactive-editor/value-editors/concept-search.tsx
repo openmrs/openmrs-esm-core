@@ -37,6 +37,8 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
     setConceptToLookup('');
   };
 
+  const shouldShowResults = conceptToLookup?.trim();
+
   return (
     <div>
       {selectedConcept && <p className={styles.activeUuid}>{selectedConcept}</p>}
@@ -52,68 +54,47 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           aria-autocomplete="list"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
           aria-controls={`searchbox-${id}`}
-          aria-expanded={!!(conceptToLookup?.trim() && concepts && concepts.length > 0)}
+          aria-expanded={!!(shouldShowResults && concepts && concepts.length > 0)}
           placeholder={t('searchConceptHelperText', 'Search concepts')}
           onChange={handleSearchTermChange}
         />
 
-        {(() => {
-          // No input
-          if (!conceptToLookup?.trim()) return null;
-
-          // Loading
-          if (isSearchingConcepts) {
-            return (
-              <InlineLoading
-                className={styles.loader}
-                description={`${t('searchingConcepts', 'Searching concepts')}...`}
-              />
-            );
-          }
-
-          // Error
-          if (error) {
-            return (
-              <InlineNotification
-                kind="error"
-                title={t('error', 'Error')}
-                subtitle={error?.message ?? t('somethingWentWrong', 'Something went wrong')}
-                lowContrast
-              />
-            );
-          }
-
-          // Results
-          if (concepts && concepts.length > 0) {
-            return (
-              <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
-                {concepts.map((concept: Concept) => (
-                  <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
-                    <StructuredListCell
-                      onClick={() => handleConceptUuidChange(concept)}
-                      className={styles.smallListCell}
-                    >
-                      {concept.display}
-                    </StructuredListCell>
-                  </StructuredListRow>
-                ))}
-              </StructuredListWrapper>
-            );
-          }
-
-          // Empty
-          return (
-            <InlineNotification
-              kind="info"
-              title={t('noResultsFound', 'No results found')}
-              subtitle={t(
-                'noConceptsFoundText',
-                `No results found for "${conceptToLookup.trim()}"`
-              )}
-              lowContrast
-            />
-          );
-        })()}
+        {!shouldShowResults ? null : isSearchingConcepts ? (
+          <InlineLoading
+            className={styles.loader}
+            description={`${t('searchingConcepts', 'Searching concepts')}...`}
+          />
+        ) : error ? (
+          <InlineNotification
+            kind="error"
+            title={t('error', 'Error')}
+            subtitle={error?.message ?? t('somethingWentWrong', 'Something went wrong')}
+            lowContrast
+          />
+        ) : concepts && concepts.length > 0 ? (
+          <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
+            {concepts.map((concept: Concept) => (
+              <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
+                <StructuredListCell
+                  onClick={() => handleConceptUuidChange(concept)}
+                  className={styles.smallListCell}
+                >
+                  {concept.display}
+                </StructuredListCell>
+              </StructuredListRow>
+            ))}
+          </StructuredListWrapper>
+        ) : (
+          <InlineNotification
+            kind="info"
+            title={t('noResultsFound', 'No results found')}
+            subtitle={t(
+              'noConceptsFoundText',
+              `No results found for "${conceptToLookup.trim()}"`
+            )}
+            lowContrast
+          />
+        )}
       </div>
     </div>
   );
