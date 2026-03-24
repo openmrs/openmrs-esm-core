@@ -76,7 +76,30 @@ yarn setup
 >
 > Both commands build all the packages — once either completes successfully, you can proceed to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
 
-### Building
+
+### Beginner Friendly Quick Start
+
+If you are new to OpenMRS frontend development, follow these steps to quickly set up and run the project:
+
+### Prerequisites
+- Install Node.js (v18 or later recommended)
+- Install Yarn package manager
+
+### Setup
+
+```sh
+yarn
+yarn build --concurrency 1
+```
+
+### Run the App Shell
+
+```sh
+yarn run:shell
+```
+
+
+#### Building
 
 To build all packages in the repository, run the following command:
 
@@ -97,6 +120,7 @@ yarn run:shell
 ```
 
 `run:shell` runs only the shell and the framework (not the frontend modules).
+
 
 ### Running the frontend modules in `apps`
 
