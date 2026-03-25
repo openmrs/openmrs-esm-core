@@ -2,7 +2,7 @@
 
 # Interface: RetryOptions
 
-Defined in: [packages/framework/esm-utils/src/retry.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L6)
+Defined in: [packages/framework/esm-utils/src/retry.ts:6](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L6)
 
 Options for configuring the behavior of the [retry](../functions/retry.md) function.
 
@@ -12,7 +12,7 @@ Options for configuring the behavior of the [retry](../functions/retry.md) funct
 
 > `optional` **getDelay**(`attempt`): `number`
 
-Defined in: [packages/framework/esm-utils/src/retry.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L18)
+Defined in: [packages/framework/esm-utils/src/retry.ts:18](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L18)
 
 Calculates the next delay (in milliseconds) before a retry attempt.
 Returning a value for the inital attempt (`0`) delays the initial function invocation.
@@ -35,7 +35,7 @@ The current (zero-based) retry attempt. `0` indicates the initial attempt.
 
 > `optional` **onError**(`e`, `attempt`): `void`
 
-Defined in: [packages/framework/esm-utils/src/retry.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L25)
+Defined in: [packages/framework/esm-utils/src/retry.ts:25](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L25)
 
 Called when invoking the function resulted in an error.
 Allows running side-effects on errors, e.g. logging.
@@ -64,7 +64,7 @@ The current (zero-based) retry attempt. `0` indicates the initial attempt.
 
 > `optional` **shouldRetry**(`attempt`): `any`
 
-Defined in: [packages/framework/esm-utils/src/retry.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L12)
+Defined in: [packages/framework/esm-utils/src/retry.ts:12](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L12)
 
 Determines whether the retry function should retry executing the function after it failed
 with an error on the current attempt.

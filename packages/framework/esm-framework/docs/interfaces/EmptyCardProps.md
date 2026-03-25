@@ -2,7 +2,7 @@
 
 # Interface: EmptyCardProps
 
-Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L8)
+Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:8](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L8)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.compone
 
 > **displayText**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L10)
+Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:10](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L10)
 
 The name of the type of item that would be displayed here if not empty. This must be a pre-translated string.
 
@@ -20,7 +20,7 @@ The name of the type of item that would be displayed here if not empty. This mus
 
 > **headerTitle**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L12)
+Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:12](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L12)
 
 The title to use for this empty component. This must be a pre-translated string.
 
@@ -30,7 +30,7 @@ The title to use for this empty component. This must be a pre-translated string.
 
 > `optional` **launchForm**(): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L14)
+Defined in: [packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx:14](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/empty-card/empty-card.component.tsx#L14)
 
 A callback to invoke when the user tries to record a new item.
 

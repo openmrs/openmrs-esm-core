@@ -4,7 +4,7 @@
 
 > `const` **ShoppingCartAddItemIcon**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`IconProps`](../type-aliases/IconProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\> = `ShoppingCartArrowDownIcon`
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:854](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L854)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:854](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L854)
 
 Used as a button to add an item to the Order basket from a search
 

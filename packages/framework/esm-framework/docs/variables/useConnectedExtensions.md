@@ -4,7 +4,7 @@
 
 > `const` **useConnectedExtensions**: (`slotName`) => [`ConnectedExtension`](../interfaces/ConnectedExtension.md)[]
 
-Defined in: [packages/framework/esm-react-utils/src/useConnectedExtensions.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L10)
+Defined in: [packages/framework/esm-react-utils/src/useConnectedExtensions.ts:10](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L10)
 
 Gets the assigned extension for a given extension slot name.
 

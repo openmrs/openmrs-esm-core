@@ -4,7 +4,7 @@
 
 > **provide**(`config`, `sourceName`): `void`
 
-Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:292](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L292)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:292](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L292)
 
 Provides configuration values programmatically. This is an alternative to
 providing configuration through the config-file. Configuration provided this

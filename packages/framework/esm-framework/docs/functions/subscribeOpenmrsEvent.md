@@ -6,7 +6,7 @@
 
 > **subscribeOpenmrsEvent**(`event`, `handler`): `any`
 
-Defined in: [packages/framework/esm-emr-api/src/events/index.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/index.ts#L30)
+Defined in: [packages/framework/esm-emr-api/src/events/index.ts:30](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/index.ts#L30)
 
 Subscribes to a custom OpenMRS event
 
@@ -32,7 +32,7 @@ The callback to be called when the event fires
 
 > **subscribeOpenmrsEvent**(`event`, `handler`): `any`
 
-Defined in: [packages/framework/esm-emr-api/src/events/index.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/index.ts#L31)
+Defined in: [packages/framework/esm-emr-api/src/events/index.ts:31](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/index.ts#L31)
 
 Subscribes to a custom OpenMRS event
 

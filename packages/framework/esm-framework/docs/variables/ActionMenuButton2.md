@@ -4,7 +4,7 @@
 
 > `const` **ActionMenuButton2**: `React.FC`\<`ActionMenuButtonProps2`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/action-menu2/action-menu-button2.component.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/action-menu2/action-menu-button2.component.tsx#L67)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/action-menu2/action-menu-button2.component.tsx:67](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/action-menu2/action-menu-button2.component.tsx#L67)
 
 **`Experimental`**
 

@@ -4,7 +4,7 @@
 
 > **isOnline**(`online?`): `boolean`
 
-Defined in: [packages/framework/esm-utils/src/is-online.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/is-online.ts#L15)
+Defined in: [packages/framework/esm-utils/src/is-online.ts:15](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/is-online.ts#L15)
 
 Determines if the application should behave as if it is online.
 When offline mode is enabled (`window.offlineEnabled`), this returns the

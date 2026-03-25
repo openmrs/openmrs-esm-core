@@ -4,7 +4,7 @@
 
 > **shallowEqual**(`a`, `b`): `boolean`
 
-Defined in: [packages/framework/esm-utils/src/shallowEqual.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/shallowEqual.ts#L13)
+Defined in: [packages/framework/esm-utils/src/shallowEqual.ts:13](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/shallowEqual.ts#L13)
 
 Checks whether two objects are equal, using a shallow comparison, similar to React.
 

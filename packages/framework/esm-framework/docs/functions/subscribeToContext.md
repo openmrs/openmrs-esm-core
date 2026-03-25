@@ -4,7 +4,7 @@
 
 > **subscribeToContext**\<`T`\>(`namespace`, `callback`): () => `void`
 
-Defined in: [packages/framework/esm-context/src/context.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L114)
+Defined in: [packages/framework/esm-context/src/context.ts:114](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L114)
 
 Subscribes to updates of a given namespace. Note that the returned object is immutable.
 

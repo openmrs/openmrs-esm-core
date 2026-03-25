@@ -2,7 +2,7 @@
 
 # Interface: ConnectivityChangedEvent
 
-Defined in: [packages/framework/esm-globals/src/events.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L1)
+Defined in: [packages/framework/esm-globals/src/events.ts:1](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L1)
 
 ## Properties
 
@@ -10,4 +10,4 @@ Defined in: [packages/framework/esm-globals/src/events.ts:1](https://github.com/
 
 > **online**: `boolean`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L2)
+Defined in: [packages/framework/esm-globals/src/events.ts:2](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L2)

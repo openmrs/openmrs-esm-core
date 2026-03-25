@@ -2,7 +2,7 @@
 
 # Interface: PatientIdentifier
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L21)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:21](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L21)
 
 Superclass for all Openmrs Resources, with strict typings.
 If the subclass does not have all attributes (including optional ones)
@@ -18,7 +18,7 @@ accounted for, use OpenmrsResource instead.
 
 > `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
 #### Inherited from
 
@@ -30,7 +30,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 > `optional` **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
 #### Inherited from
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 > `optional` **identifier**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L22)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:22](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L22)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:22](ht
 
 > `optional` **identifierType**: [`PatientIdentifierType`](PatientIdentifierType.md)
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L23)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:23](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L23)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:23](ht
 
 > `optional` **links**: [`Link`](Link.md)[]
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
 #### Inherited from
 
@@ -70,7 +70,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 > `optional` **location**: `Location`
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L24)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:24](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L24)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:24](ht
 
 > `optional` **preferred**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L25)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:25](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L25)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:25](ht
 
 > `optional` **resourceVersion**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
 #### Inherited from
 
@@ -98,7 +98,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https:
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
 
 #### Inherited from
 
@@ -110,4 +110,4 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https:
 
 > `optional` **voided**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L26)
+Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:26](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L26)

@@ -2,7 +2,7 @@
 
 # Class: OpenmrsFetchError
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L311)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L311)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github
 
 > **new OpenmrsFetchError**(`url`, `response`, `responseBody`, `requestStacktrace`): `OpenmrsFetchError`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:312](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L312)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:312](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L312)
 
 #### Parameters
 
@@ -120,7 +120,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 > **response**: `Response`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L320)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:320](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L320)
 
 #### Implementation of
 
@@ -132,7 +132,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:320](https://github
 
 > **responseBody**: `null` \| `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md)
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L321)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:321](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L321)
 
 #### Implementation of
 

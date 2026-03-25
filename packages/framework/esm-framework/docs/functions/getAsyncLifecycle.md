@@ -4,7 +4,7 @@
 
 > **getAsyncLifecycle**\<`T`\>(`lazy`, `options`): () => `Promise`\<`ReactAppOrParcel`\<`T`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L52)
+Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:52](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L52)
 
 Creates a lazy-loading single-spa lifecycle for a React component. The component
 is loaded asynchronously via dynamic import only when it's needed, which helps

@@ -2,7 +2,7 @@
 
 # Interface: ImportMap
 
-Defined in: [packages/framework/esm-globals/src/types.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L77)
+Defined in: [packages/framework/esm-globals/src/types.ts:77](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L77)
 
 ## Properties
 
@@ -10,4 +10,4 @@ Defined in: [packages/framework/esm-globals/src/types.ts:77](https://github.com/
 
 > **imports**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/framework/esm-globals/src/types.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L78)
+Defined in: [packages/framework/esm-globals/src/types.ts:78](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L78)
