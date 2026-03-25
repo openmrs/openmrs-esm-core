@@ -4,4 +4,4 @@
 
 > **Key** = `string` \| [`ArgumentsTuple`](ArgumentsTuple.md) \| `undefined` \| `null`
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:9](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L9)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L9)

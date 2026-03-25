@@ -179,7 +179,6 @@
 - [useAbortController](functions/useAbortController.md)
 - [useDebounce](functions/useDebounce.md)
 - [useOpenmrsSWR](functions/useOpenmrsSWR.md)
-- [ageAsDuration](functions/ageAsDuration.md)
 - [age](functions/age.md)
 - [getPatientName](functions/getPatientName.md)
 - [~~displayName~~](functions/displayName.md)
@@ -285,11 +284,6 @@
 - [formatDatetime](functions/formatDatetime.md)
 - [convertToLocaleCalendar](functions/convertToLocaleCalendar.md)
 - [formatDuration](functions/formatDuration.md)
-- [parseDateInput](functions/parseDateInput.md)
-- [duration](functions/duration.md)
-- [formatDurationBetween](functions/formatDurationBetween.md)
-- [DurationOptions](interfaces/DurationOptions.md)
-- [DurationOptionsWithFormat](interfaces/DurationOptionsWithFormat.md)
 
 ## Dynamic Loading
 

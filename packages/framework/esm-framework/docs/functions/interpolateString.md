@@ -4,7 +4,7 @@
 
 > **interpolateString**(`template`, `params`): `string`
 
-Defined in: [packages/framework/esm-navigation/src/navigation/interpolate-string.ts:62](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L62)
+Defined in: [packages/framework/esm-navigation/src/navigation/interpolate-string.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L62)
 
 Interpolates values of `params` into the `template` string.
 

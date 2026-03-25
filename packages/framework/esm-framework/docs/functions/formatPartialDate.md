@@ -4,7 +4,7 @@
 
 > **formatPartialDate**(`dateString`, `options`): `null` \| `string`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:241](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L241)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L241)
 
 Formats the string representing a date, including partial representations of dates, according to the current
 locale and the given options.

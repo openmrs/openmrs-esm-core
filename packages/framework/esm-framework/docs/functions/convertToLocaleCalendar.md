@@ -4,7 +4,7 @@
 
 > **convertToLocaleCalendar**(`date`, `locale`): `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:424](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L424)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:424](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L424)
 
 Converts a calendar date to the equivalent locale calendar date.
 

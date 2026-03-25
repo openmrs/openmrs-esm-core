@@ -4,7 +4,7 @@
 
 > **useVisitContextStore**(`mutateVisitCallback?`): [`VisitStoreState`](../interfaces/VisitStoreState.md) & `BindFunctionsIn`\<\{ `mutateVisit`: \{ \}; `setVisitContext`: \{ `manuallySetVisitUuid`: `null`; `patientUuid?`: `undefined`; \} \| \{ `manuallySetVisitUuid`: `string`; `patientUuid`: `undefined` \| `string`; \}; \}\>
 
-Defined in: [packages/framework/esm-react-utils/src/useVisitContextStore.ts:30](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitContextStore.ts#L30)
+Defined in: [packages/framework/esm-react-utils/src/useVisitContextStore.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitContextStore.ts#L30)
 
 A hook to return the visit context store and corresponding actions.
 

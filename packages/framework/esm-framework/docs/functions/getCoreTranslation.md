@@ -4,7 +4,7 @@
 
 > **getCoreTranslation**(`key`, `defaultText?`, `options?`): `string`
 
-Defined in: [packages/framework/esm-translations/src/index.ts:69](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L69)
+Defined in: [packages/framework/esm-translations/src/index.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L69)
 
 Use this function to obtain a translation from the core translations. This is a way to avoid having
 to define common translations in your app, and to ensure that translations are consistent across

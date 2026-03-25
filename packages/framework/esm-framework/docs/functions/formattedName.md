@@ -4,7 +4,7 @@
 
 > **formattedName**(`name`): `string`
 
-Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:35](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L35)
+Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L35)
 
 ## Parameters
 

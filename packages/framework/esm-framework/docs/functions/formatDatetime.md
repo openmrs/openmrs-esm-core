@@ -4,7 +4,7 @@
 
 > **formatDatetime**(`date`, `options?`): `string`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:416](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L416)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:416](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L416)
 
 Formats the input into a string showing the date and time, according
 to the current locale. The `mode` parameter is as described for

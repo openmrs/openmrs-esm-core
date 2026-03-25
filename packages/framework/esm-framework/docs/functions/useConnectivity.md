@@ -4,7 +4,7 @@
 
 > **useConnectivity**(): `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useConnectivity.ts:22](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L22)
+Defined in: [packages/framework/esm-react-utils/src/useConnectivity.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L22)
 
 A React hook that returns the current online/offline status and automatically
 updates when connectivity changes. Useful for showing offline indicators or

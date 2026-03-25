@@ -4,7 +4,7 @@
 
 > **formatDuration**(`duration`, `options?`): `string`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:441](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L441)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:441](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L441)
 
 Formats the input duration according to the current locale.
 

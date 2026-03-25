@@ -4,7 +4,7 @@
 
 > **PatientBannerActionsMenu**(`__namedParameters`): `null` \| `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:27](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L27)
+Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L27)
 
 Overflow menu for the patient banner whose items come from an ExtensionSlot
 rather than direct React children. Because cloneElement cannot inject props

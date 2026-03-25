@@ -4,7 +4,7 @@
 
 > **useLeftNav**(`params`): `void`
 
-Defined in: [packages/framework/esm-react-utils/src/useLeftNav.ts:26](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLeftNav.ts#L26)
+Defined in: [packages/framework/esm-react-utils/src/useLeftNav.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLeftNav.ts#L26)
 
 A React hook that registers a left navigation menu for the current component.
 The navigation is automatically registered when the component mounts and

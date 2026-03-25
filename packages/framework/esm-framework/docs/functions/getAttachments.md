@@ -4,7 +4,7 @@
 
 > **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/attachments.ts:46](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L46)
+Defined in: [packages/framework/esm-emr-api/src/attachments.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L46)
 
 Fetches all attachments for a specific patient from the OpenMRS server.
 

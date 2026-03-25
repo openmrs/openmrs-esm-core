@@ -4,7 +4,7 @@
 
 > **Actions**\<`T`\> = (`store`) => `ActionFunctionsRecord`\<`T`\> \| `ActionFunctionsRecord`\<`T`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useStore.ts:9](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L9)
+Defined in: [packages/framework/esm-react-utils/src/useStore.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L9)
 
 ## Type Parameters
 

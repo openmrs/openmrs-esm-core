@@ -4,7 +4,7 @@
 
 > **closeWorkspace**(`name`, `options`): `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:448](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L448)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:448](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L448)
 
 Function to close an opened workspace
 

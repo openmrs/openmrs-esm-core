@@ -4,7 +4,7 @@
 
 > **setCurrentVisit**(`patientUuid`, `visitUuid`): `void`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:95](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L95)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L95)
 
 Sets the current visit for a patient in the global visit store. This is used
 to manually specify which visit should be considered "active" for the given patient.

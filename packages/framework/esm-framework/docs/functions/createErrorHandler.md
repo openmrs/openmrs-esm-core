@@ -4,7 +4,7 @@
 
 > **createErrorHandler**(): (`incomingErr`) => `void`
 
-Defined in: [packages/framework/esm-error-handling/src/index.ts:70](https://github.com/NitinKumar1-1/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L70)
+Defined in: [packages/framework/esm-error-handling/src/index.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L70)
 
 Creates an error handler function that captures the current stack trace at
 the time of creation. When the returned handler is invoked with an error,
