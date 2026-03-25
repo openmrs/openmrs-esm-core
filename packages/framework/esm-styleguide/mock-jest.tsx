@@ -207,4 +207,6 @@ export const Workspace2 = jest.fn(({ title, children }) => (
   </div>
 ));
 
+export const TableBatchActions = jest.fn(({ children }) => <>{children}</>);
+
 export const showModal = jest.fn();
