@@ -21,7 +21,15 @@ export interface LoginReferrer {
 }
 
 const Login: React.FC = () => {
-  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+  const {
+    showPasswordOnSeparateScreen,
+    provider: loginProvider,
+    links: loginLinks,
+    openmrsSpaBase,
+  } = useConfig<ConfigSchema>();
+
+  const spaBase = openmrsSpaBase || '';
+
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -102,7 +110,7 @@ const Login: React.FC = () => {
             let to = loginLinks?.loginSuccess || '/home';
             if (location?.state?.referrer) {
               if (location.state.referrer.startsWith('/')) {
-                to = `${openmrsSpaBase}${location.state.referrer}`;
+                to = `${spaBase}${location.state.referrer}`;
               } else {
                 to = location.state.referrer;
               }
