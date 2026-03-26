@@ -1,9 +1,8 @@
-/** @module @category UI */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export type LayoutType = 'phone' | 'tablet' | 'small-desktop' | 'large-desktop';
 
-function getLayout() {
+function getLayout(): LayoutType {
   let layout: LayoutType = 'tablet';
 
   document.body.classList.forEach((cls) => {
@@ -25,25 +24,34 @@ function getLayout() {
 
 export function useLayoutType() {
   const [type, setType] = useState<LayoutType>(getLayout);
+  const resizeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    let resizeTimeout: ReturnType<typeof setTimeout>;
+    const updateLayout = () => {
+      const newLayout = getLayout();
+
+      setType((prev) => {
+        if (prev === newLayout) {
+          return prev;
+        }
+        return newLayout;
+      });
+    };
 
     const handler = () => {
-      clearTimeout(resizeTimeout);
+      if (resizeTimeout.current !== null) {
+        clearTimeout(resizeTimeout.current);
+      }
 
-      resizeTimeout = setTimeout(() => {
-        const newLayout = getLayout();
-
-        // Prevent unnecessary re-renders
-        setType((prev) => (prev !== newLayout ? newLayout : prev));
-      }, 100);
+      resizeTimeout.current = setTimeout(updateLayout, 100);
     };
 
     window.addEventListener('resize', handler);
 
     return () => {
-      clearTimeout(resizeTimeout);
+      if (resizeTimeout.current !== null) {
+        clearTimeout(resizeTimeout.current);
+      }
       window.removeEventListener('resize', handler);
     };
   }, []);
@@ -51,4 +59,5 @@ export function useLayoutType() {
   return type;
 }
 
-export const isDesktop = (layout: LayoutType) => layout === 'small-desktop' || layout === 'large-desktop';
+export const isDesktop = (layout: LayoutType) =>
+  layout === 'small-desktop' || layout === 'large-desktop';
