@@ -27,11 +27,25 @@ export function useLayoutType() {
   const [type, setType] = useState<LayoutType>(getLayout);
 
   useEffect(() => {
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+
     const handler = () => {
-      setType(getLayout());
+      clearTimeout(resizeTimeout);
+
+      resizeTimeout = setTimeout(() => {
+        const newLayout = getLayout();
+
+        // Prevent unnecessary re-renders
+        setType((prev) => (prev !== newLayout ? newLayout : prev));
+      }, 100);
     };
+
     window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
+
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', handler);
+    };
   }, []);
 
   return type;
