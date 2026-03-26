@@ -109,7 +109,7 @@ const Login: React.FC = () => {
           if (session.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
             if (location?.state?.referrer) {
-              if (location.state.referrer.startsWith('/')) {
+              if (location.state.referrer?.startsWith('/')) {
                 to = `${spaBase}${location.state.referrer}`;
               } else {
                 to = location.state.referrer;
@@ -155,6 +155,7 @@ const Login: React.FC = () => {
       location,
       t,
       continueLogin,
+      spaBase,
     ],
   );
 
