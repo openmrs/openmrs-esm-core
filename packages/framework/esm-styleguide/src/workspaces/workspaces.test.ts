@@ -17,6 +17,7 @@ describe('workspace system', () => {
     resetWorkspaceStore();
     clearMockExtensionRegistry();
   });
+
   it('should handle undefined additionalProps without crashing', () => {
     registerWorkspace({
       name: 'test-workspace',
@@ -28,6 +29,7 @@ describe('workspace system', () => {
       launchWorkspace('test-workspace', undefined as any);
     }).not.toThrow();
   });
+
   it('should allow overriding workspace properties via additionalProps', () => {
     const store = getWorkspaceStore();
     registerWorkspace({
@@ -42,6 +44,7 @@ describe('workspace system', () => {
     const workspace = store.getState().openWorkspaces[0];
     expect(workspace.title).toBe('Updated Title');
   });
+
   it('registering, launching, and closing a workspace', () => {
     const store = getWorkspaceStore();
     registerWorkspace({ name: 'allergies', title: 'Allergies', load: vi.fn(), moduleName: '@openmrs/foo' });
