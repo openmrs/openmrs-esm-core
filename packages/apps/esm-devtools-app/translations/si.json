@@ -1,0 +1,19 @@
+{
+  "addModule": "මොඩියුලයක් එක් කරන්න",
+  "addNewModule": "නව මොඩියුලයක් එක් කරන්න",
+  "apply": "ක්‍රියාත්මක කරන්න",
+  "cancel": "අවලංගු කරන්න",
+  "default": "පෙරනිමි",
+  "defaultUrl": "පෙරනිමි URL",
+  "domain": "වසම (Domain)",
+  "editModule": "මොඩියුලය සංස්කරණය කරන්න {{- moduleName}}",
+  "externalOverride": "External Override",
+  "filename": "ගොනු නාමය",
+  "inlineOverride": "Inline Override",
+  "moduleName": "මොඩියුලයේ නම",
+  "moduleStatus": "මොඩියුලයේ තත්ත්වය",
+  "overrideDisabled": "Override අබල කර ඇත",
+  "overrideUrl": "Override URL",
+  "resetOverrides": "සියලුම overrides යළි පිහිටුවන්න",
+  "searchModules": "මොඩියුල සොයන්න"
+}
