@@ -17,6 +17,7 @@ describe('history', () => {
   ) as PropertyDescriptor;
   const mockReferrer = 'https://o3.openmrs.org/openmrs/spa/lalaland';
   let mockLocationAssign: Mock<typeof window.location.assign>;
+  let consoleWarnSpy: Mock<typeof console.warn>;
 
   beforeAll(() => {
     delete (window as any).location;
@@ -34,11 +35,13 @@ describe('history', () => {
       writable: true,
       configurable: true,
     });
+    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   beforeEach(() => {
     mockLocationAssign.mockClear();
     mockNavigate.mockClear();
+    consoleWarnSpy.mockClear();
   });
 
   afterEach(() => {
@@ -49,6 +52,7 @@ describe('history', () => {
     window.location = originalWindowLocation;
     (document as any).referrer = originalDocumentReferrer;
     Object.defineProperty(document, 'referrer', originalDocumentReferrer);
+    consoleWarnSpy.mockRestore();
   });
 
   it('should be initialized with document.referrer if available', () => {
@@ -100,6 +104,26 @@ describe('history', () => {
     window.location.href = 'https://o3.openmrs.org/openmrs/spa/home';
     dispatchRoutingEvent({ originalEvent: { singleSpa: null } });
     expect(getHistory()).toEqual([mockReferrer, 'https://o3.openmrs.org/openmrs/spa/home']);
+  });
+
+  it('should return empty history for malformed JSON', () => {
+    sessionStorage.setItem('openmrs:history', '{malformed-json');
+
+    expect(getHistory()).toEqual([]);
+    expect(consoleWarnSpy).toHaveBeenCalled();
+  });
+
+  it('should return empty history for non-array JSON values', () => {
+    sessionStorage.setItem('openmrs:history', JSON.stringify({ bad: 'shape' }));
+
+    expect(getHistory()).toEqual([]);
+    expect(consoleWarnSpy).toHaveBeenCalled();
+  });
+
+  it('should keep only string entries when history array contains mixed types', () => {
+    sessionStorage.setItem('openmrs:history', JSON.stringify(['a', 1, null, 'b', {}, true]));
+
+    expect(getHistory()).toEqual(['a', 'b']);
   });
 });
 
