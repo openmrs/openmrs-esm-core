@@ -22,6 +22,7 @@ import {
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import LocationPickerView from './location-picker-view.component';
+import { Edit, TrashCan, Save } from '@carbon/react/icons';
 
 const fistLocation = {
   uuid: 'uuid_1',

@@ -15,6 +15,7 @@ import { type ConfigSchema } from '../config-schema';
 import Logo from '../logo.component';
 import Footer from '../footer.component';
 import styles from './login.scss';
+import { Edit, TrashCan, Save, ArrowRight } from '@carbon/react/icons';
 
 export interface LoginReferrer {
   referrer?: string;
@@ -204,8 +205,9 @@ const Login: React.FC = () => {
                   {showPasswordField ? (
                     <Button
                       type="submit"
+                      renderIcon={ArrowRight}
                       className={styles.continueButton}
-                      renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                      // renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                       iconDescription={t('loginButtonIconDescription', 'Log in button')}
                       disabled={!isLoginEnabled || isLoggingIn}
                     >
@@ -219,7 +221,8 @@ const Login: React.FC = () => {
                     <Button
                       type="submit"
                       className={styles.continueButton}
-                      renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                      renderIcon={ArrowRight}
+                      // renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                       iconDescription={t('continueToPassword', 'Continue to password')}
                       onClick={(evt) => {
                         evt.preventDefault();
@@ -248,7 +251,8 @@ const Login: React.FC = () => {
                   <Button
                     type="submit"
                     className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+                    renderIcon={ArrowRight}
+                    // renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                     iconDescription={t('loginButtonIconDescription', 'Log in button')}
                     disabled={!isLoginEnabled || isLoggingIn}
                   >

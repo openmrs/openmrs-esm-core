@@ -17,6 +17,7 @@ import {
 import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
 import styles from './change-password-modal.scss';
+import { Edit, TrashCan, Save, ArrowRight } from '@carbon/react/icons';
 
 interface ChangePasswordModalProps {
   close(): () => void;

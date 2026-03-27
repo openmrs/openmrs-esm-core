@@ -15,6 +15,7 @@ import { useDefaultLocation, useLocationCount } from './location-picker.resource
 import type { ConfigSchema } from '../config-schema';
 import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker.scss';
+import { Edit, TrashCan, Save } from '@carbon/react/icons';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
@@ -156,6 +157,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
               className={styles.confirmButton}
               kind="primary"
               type="submit"
+              renderIcon={Save}
               disabled={!activeLocation || !isLoginEnabled || isSubmitting}
             >
               {isSubmitting ? (

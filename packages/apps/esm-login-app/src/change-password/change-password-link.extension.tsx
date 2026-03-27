@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, SwitcherItem } from '@carbon/react';
 import { PasswordIcon, showModal } from '@openmrs/esm-framework';
 import styles from './change-password.scss';
+import { ArrowRight } from '@carbon/react/icons';
 
 const ChangePasswordLink: React.FC = () => {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ const ChangePasswordLink: React.FC = () => {
       closeModal: () => dispose(),
       size: 'sm',
     });
-  }, []);  
+  }, []);
 
   return (
     <SwitcherItem aria-label={t('changePassword', 'ChangePassword')} className={styles.panelItemContainer}>
@@ -20,7 +21,7 @@ const ChangePasswordLink: React.FC = () => {
         <PasswordIcon size={20} />
         <p>{t('password', 'Password')}</p>
       </div>
-      <Button kind="ghost" onClick={launchChangePasswordModal}>
+      <Button kind="ghost" onClick={launchChangePasswordModal} renderIcon={ArrowRight}>
         {t('change', 'Change')}
       </Button>
     </SwitcherItem>
