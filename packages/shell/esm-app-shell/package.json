@@ -59,7 +59,7 @@
     "webpack-pwa-manifest": "4.3.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.1.0",
     "vitest": "^4.0.18"
   }
 }
