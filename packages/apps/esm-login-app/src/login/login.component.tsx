@@ -20,15 +20,16 @@ export interface LoginReferrer {
   referrer?: string;
 }
 
-const Login: React.FC = () => {
-  const {
-    showPasswordOnSeparateScreen,
-    provider: loginProvider,
-    links: loginLinks,
-    openmrsSpaBase,
-  } = useConfig<ConfigSchema>();
+export function getErrorMessage(error: unknown): string {
+  if (error instanceof Error && error.message?.trim()) {
+    return error.message;
+  }
 
-  const spaBase = openmrsSpaBase || '';
+  return 'Invalid username or password';
+}
+
+const Login: React.FC = () => {
+  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
 
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
@@ -109,8 +110,8 @@ const Login: React.FC = () => {
           if (session.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
             if (location?.state?.referrer) {
-              if (location.state.referrer?.startsWith('/')) {
-                to = `${spaBase}${location.state.referrer}`;
+              if (location.state.referrer.startsWith('/')) {
+                to = location.state.referrer;
               } else {
                 to = location.state.referrer;
               }
@@ -130,11 +131,7 @@ const Login: React.FC = () => {
 
         return true;
       } catch (error: unknown) {
-        if (error instanceof Error && error.message?.trim()) {
-          setErrorMessage(error.message);
-        } else {
-          setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
-        }
+        setErrorMessage(getErrorMessage(error));
 
         setUsername('');
         setPassword('');
@@ -155,7 +152,6 @@ const Login: React.FC = () => {
       location,
       t,
       continueLogin,
-      spaBase,
     ],
   );
 
