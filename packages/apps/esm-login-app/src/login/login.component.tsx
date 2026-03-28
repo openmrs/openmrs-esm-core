@@ -112,7 +112,9 @@ const Login: React.FC = () => {
 
             openmrsNavigate({ to });
           } else {
-            navigate('/login/location');
+            navigate('/login/location', {
+              state: { referrer: location?.state?.referrer },
+            });
           }
         } else {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
