@@ -21,9 +21,7 @@ export interface LoginReferrer {
 }
 
 export function getErrorMessage(error: unknown): string {
-  const message = error instanceof Error && error.message?.trim() ? error.message : '';
-
-  return message || 'Invalid username or password';
+  return (error instanceof Error && error.message?.trim() && error.message) || 'Invalid username or password';
 }
 
 const Login: React.FC = () => {
