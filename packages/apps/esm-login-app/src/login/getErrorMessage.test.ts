@@ -8,7 +8,7 @@ describe('getErrorMessage', () => {
   });
 
   it('returns fallback for empty string error message', () => {
-    expect(getErrorMessage(new Error(''))).toBe('Invalid username or password');
+    expect(getErrorMessage(new Error(' '))).toBe('Invalid username or password');
   });
 
   it('returns fallback for whitespace-only error message', () => {
@@ -19,4 +19,3 @@ describe('getErrorMessage', () => {
     expect(getErrorMessage({})).toBe('Invalid username or password');
   });
 });
-
