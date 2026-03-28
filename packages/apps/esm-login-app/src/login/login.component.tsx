@@ -20,8 +20,13 @@ export interface LoginReferrer {
   referrer?: string;
 }
 
+export function getErrorMessage(error: unknown): string {
+  return (error instanceof Error && error.message?.trim() && error.message) || 'Invalid username or password';
+}
+
 const Login: React.FC = () => {
   const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -63,7 +68,6 @@ const Login: React.FC = () => {
   const continueLogin = useCallback(() => {
     const currentUsername = usernameInputRef.current?.value?.trim();
     if (currentUsername) {
-      // If credentials were autofilled, input onChange might not have been called
       setUsername(currentUsername);
       setShowPasswordField(true);
     } else {
@@ -79,7 +83,6 @@ const Login: React.FC = () => {
       evt.preventDefault();
       evt.stopPropagation();
 
-      // If credentials were autofilled, input onChange might not have been called
       const currentUsername = usernameInputRef.current?.value?.trim() || username;
       const currentPassword = passwordInputRef.current?.value || password;
 
@@ -103,13 +106,8 @@ const Login: React.FC = () => {
           if (session.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
             if (location?.state?.referrer) {
-              if (location.state.referrer.startsWith('/')) {
-                to = `\${openmrsSpaBase}${location.state.referrer}`;
-              } else {
-                to = location.state.referrer;
-              }
+              to = location.state.referrer;
             }
-
             openmrsNavigate({ to });
           } else {
             navigate('/login/location');
@@ -125,11 +123,8 @@ const Login: React.FC = () => {
 
         return true;
       } catch (error: unknown) {
-        if (error instanceof Error) {
-          setErrorMessage(error.message);
-        } else {
-          setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
-        }
+        setErrorMessage(getErrorMessage(error));
+
         setUsername('');
         setPassword('');
         if (showPasswordOnSeparateScreen) {
@@ -160,7 +155,7 @@ const Login: React.FC = () => {
             <div className={styles.errorMessage}>
               <InlineNotification
                 kind="error"
-                subtitle={t(errorMessage)}
+                subtitle={errorMessage}
                 title={getCoreTranslation('error')}
                 onClick={() => setErrorMessage('')}
               />
