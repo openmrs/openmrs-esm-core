@@ -2,18 +2,15 @@
 import { coreTranslations } from './translations';
 import _i18n, { i18n, type TOptions } from 'i18next';
 
-const i18n: typeof _i18n = (_i18n as unknown as { default: typeof _i18n }).default || _i18n;
+const i18n = _i18n;
 
-declare global {
-  interface Window {
-    i18next: i18n;
-  }
+if (i18n.isInitialized) {
+  i18n.loadNamespaces(['core']);
+} else {
+  i18n.on('initialized', () => {
+    i18n.loadNamespaces(['core']);
+  });
 }
-
-i18n.on('initialized', function () {
-  window.i18next.loadNamespaces(['core']);
-});
-
 /**
  * This function is for getting a translation from a specific module. Use this only if the
  * translation is neither in the app making the call, nor in the core translations.
@@ -36,6 +33,10 @@ i18n.on('initialized', function () {
  * @param options Options object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options
  *            for more information. `ns` and `defaultValue` are already set and may not be used.
  * @returns The translated text as a string
+ */
+
+/**
+ * @deprecated Avoid using this unless absolutely necessary.
  */
 export function translateFrom(
   moduleName: string,
@@ -71,7 +72,7 @@ export function getCoreTranslation(
   defaultText?: string,
   options?: Omit<TOptions, 'ns' | 'defaultValue'>,
 ): string {
-  if (!coreTranslations[key]) {
+  if (!(key in coreTranslations)) {
     console.error(`O3 Core Translations does not provide key '${key}'. The key itself is being rendered as text.`);
     return key;
   }
