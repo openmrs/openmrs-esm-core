@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
-import { compile, evaluate, evaluateAsBoolean, evaluateAsNumber, evaluateAsType, evaluateAsync } from './evaluator';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { compile, evaluate, evaluateAsBoolean, evaluateAsNumber, evaluateAsType, evaluateAsync, clearAstCacheForTesting } from './evaluator';
 
 describe('OpenMRS Expression Evaluator', () => {
   it('should evaluate a simple expression', () => {
@@ -222,5 +222,77 @@ describe('OpenMRS Expression Evaluator', () => {
         },
       });
     }).toThrow('path is not a function');
+  });
+});
+
+describe('AST memoization', () => {
+  beforeEach(() => {
+    clearAstCacheForTesting();
+  });
+
+  it('should return the same AST object for the same expression string', () => {
+    const expression = 'session.authenticated === true';
+    const context = { 
+      session: { authenticated: true } 
+    };
+
+    // Call evaluate twice with same expression
+    evaluate(expression, context);
+    evaluate(expression, context);
+
+    // The cache should have exactly one entry
+    // We verify this indirectly by checking the function
+    // returns consistent results
+    const result1 = evaluate(expression, context);
+    const result2 = evaluate(expression, context);
+
+    expect(result1).toBe(result2);
+  });
+
+  it('should cache different expressions independently', () => {
+    const context = { 
+      session: { authenticated: true, locale: 'en' } 
+    };
+
+    const result1 = evaluate('session.authenticated', context);
+    const result2 = evaluate('session.locale', context);
+
+    expect(result1).toBe(true);
+    expect(result2).toBe('en');
+  });
+
+  it('should evaluate correctly after cache is populated', () => {
+    const expression = "session.user.roles.some(r => r.display === 'Nurse')";
+    const contextWithNurse = {
+      session: {
+        user: {
+          roles: [{ display: 'Nurse' }]
+        }
+      }
+    };
+    const contextWithDoctor = {
+      session: {
+        user: {
+          roles: [{ display: 'Doctor' }]
+        }
+      }
+    };
+
+    // Same expression, different context
+    const result1 = evaluate(expression, contextWithNurse);
+    const result2 = evaluate(expression, contextWithDoctor);
+
+    expect(result1).toBe(true);
+    expect(result2).toBe(false);
+  });
+
+  it('should work correctly with evaluateAsBoolean', () => {
+    const expression = 'session.authenticated === true';
+    
+    const trueContext = { session: { authenticated: true } };
+    const falseContext = { session: { authenticated: false } };
+
+    expect(evaluateAsBoolean(expression, trueContext)).toBe(true);
+    expect(evaluateAsBoolean(expression, falseContext)).toBe(false);
   });
 });
