@@ -4,7 +4,7 @@
 
 > **selectPreferredName**(`patient`, ...`preferredNames`): `undefined` \| `HumanName`
 
-Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L60)
+Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:60](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L60)
 
 Select the preferred name from the collection of names associated with a patient.
 

@@ -4,7 +4,7 @@
 
 > **detachAll**(`extensionSlotName`): `void`
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:288](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L288)
+Defined in: [packages/framework/esm-extensions/src/extensions.ts:288](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L288)
 
 Detaches all extensions from an extension slot.
 

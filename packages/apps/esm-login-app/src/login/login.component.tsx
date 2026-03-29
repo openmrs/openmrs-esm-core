@@ -20,6 +20,30 @@ export interface LoginReferrer {
   referrer?: string;
 }
 
+function getPasswordStrength(password: string, t: any): string {
+  if (!password) return '';
+
+  const hasMinLength = password.length >= 6;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[^A-Za-z0-9]/.test(password);
+
+  if (!hasMinLength) return t('weak', 'Weak');
+
+  if (hasUpper && hasLower && hasNumber && hasSpecial) {
+    return t('strong', 'Strong');
+  }
+
+  const criteriaCount = [hasUpper, hasLower, hasNumber, hasSpecial].filter(Boolean).length;
+
+  if (criteriaCount >= 2) {
+    return t('medium', 'Medium');
+  }
+
+  return t('weak', 'Weak');
+}
+
 const Login: React.FC = () => {
   const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
@@ -29,14 +53,22 @@ const Login: React.FC = () => {
     state: LoginReferrer;
   };
   const navigate = useNavigate();
-
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [password, setPassword] = useState('');
+  const passwordStrength = getPasswordStrength(password, t);
   const [username, setUsername] = useState('');
   const [showPasswordField, setShowPasswordField] = useState(false);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
+
+  const strengthColorMap: Record<string, string> = {
+    Weak: 'red',
+    Medium: 'orange',
+    Strong: 'green',
+  };
+
+  const strengthColor = strengthColorMap[passwordStrength] || 'black';
 
   useEffect(() => {
     if (!user) {
@@ -180,7 +212,7 @@ const Login: React.FC = () => {
                 value={username}
                 onChange={changeUsername}
                 ref={usernameInputRef}
-                required
+                //required
                 autoFocus
               />
               {showPasswordOnSeparateScreen ? (
@@ -193,13 +225,44 @@ const Login: React.FC = () => {
                       autoComplete="current-password"
                       onChange={changePassword}
                       ref={passwordInputRef}
-                      required
+                      //required
                       value={password}
                       showPasswordLabel={t('showPassword', 'Show password')}
                       invalidText={t('validValueRequired', 'A valid value is required')}
                       aria-hidden={!showPasswordField}
                       tabIndex={showPasswordField ? 0 : -1}
                     />
+                    {password && (
+                      <div style={{ marginTop: '8px', fontSize: '14px' }}>
+                        Strength:{' '}
+                        <span
+                          style={{
+                            color: strengthColor,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {passwordStrength}
+                        </span>
+                        {/* 🔥 Visual Strength Bar */}
+                        <div style={{ height: '6px', background: '#eee', marginTop: '6px', borderRadius: '4px' }}>
+                          <div
+                            style={{
+                              width:
+                                passwordStrength === 'Weak' ? '33%' : passwordStrength === 'Medium' ? '66%' : '100%',
+                              height: '100%',
+                              background:
+                                passwordStrength === 'Weak'
+                                  ? 'red'
+                                  : passwordStrength === 'Medium'
+                                    ? 'orange'
+                                    : 'green',
+                              borderRadius: '4px',
+                              transition: '0.3s',
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {showPasswordField ? (
                     <Button

@@ -4,7 +4,7 @@
 
 > **canAccessStorage**(`storage`): `boolean`
 
-Defined in: [packages/framework/esm-utils/src/storage.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/storage.ts#L11)
+Defined in: [packages/framework/esm-utils/src/storage.ts:11](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/storage.ts#L11)
 
 Simple utility function to determine if an object implementing the WebStorage API
 is actually available. Useful for testing the availability of `localStorage` or

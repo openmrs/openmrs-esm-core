@@ -4,7 +4,7 @@
 
 > **getPatientName**(`patient`): `string`
 
-Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
+Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
 
 Gets the formatted display name for a patient.
 

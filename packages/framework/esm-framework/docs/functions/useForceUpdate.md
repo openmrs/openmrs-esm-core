@@ -4,7 +4,7 @@
 
 > **useForceUpdate**(): () => `void`
 
-Defined in: [packages/framework/esm-react-utils/src/useForceUpdate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useForceUpdate.ts#L3)
+Defined in: [packages/framework/esm-react-utils/src/useForceUpdate.ts:3](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useForceUpdate.ts#L3)
 
 ## Returns
 

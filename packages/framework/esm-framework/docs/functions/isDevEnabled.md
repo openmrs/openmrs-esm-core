@@ -4,7 +4,7 @@
 
 > **isDevEnabled**(): `boolean`
 
-Defined in: [packages/framework/esm-api/src/environment.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/environment.ts#L3)
+Defined in: [packages/framework/esm-api/src/environment.ts:3](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-api/src/environment.ts#L3)
 
 ## Returns
 

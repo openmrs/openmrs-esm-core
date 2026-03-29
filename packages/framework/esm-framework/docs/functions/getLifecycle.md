@@ -4,7 +4,7 @@
 
 > **getLifecycle**\<`T`\>(`Component`, `options`): `ReactAppOrParcel`\<`T`\>
 
-Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L26)
+Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:26](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L26)
 
 Creates a single-spa lifecycle object for a React component. The component is
 wrapped with the OpenMRS component decorator which provides standard functionality

@@ -4,7 +4,7 @@
 
 > **useAttachments**(`patientUuid`, `includeEncounterless`): `object`
 
-Defined in: [packages/framework/esm-react-utils/src/useAttachments.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L32)
+Defined in: [packages/framework/esm-react-utils/src/useAttachments.ts:32](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L32)
 
 A React hook that fetches attachments for a patient using SWR for caching
 and automatic revalidation.
