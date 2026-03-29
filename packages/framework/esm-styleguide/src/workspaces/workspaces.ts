@@ -304,7 +304,16 @@ function promptBeforeLaunchingWorkspace(
  */
 export function launchWorkspace<
   T extends DefaultWorkspaceProps | object = DefaultWorkspaceProps & { [key: string]: any },
->(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string }) {
+>(
+  name: string,
+  additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & {
+    workspaceTitle?: string;
+    canHide?: boolean;
+    canMaximize?: boolean;
+    width?: 'narrow' | 'wider' | 'extra-wide';
+    preferredWindowSize?: WorkspaceWindowState;
+  },
+) {
   const store = getWorkspaceStore();
   const workspace = getWorkspaceRegistration(name);
   const currentWorkspaceGroup = store.getState().workspaceGroup;
@@ -318,6 +327,13 @@ export function launchWorkspace<
   const currentGroupName = store.getState().workspaceGroup?.name;
   const newWorkspace: OpenWorkspace = {
     ...workspace,
+
+    ...(additionalProps?.canHide !== undefined && { canHide: additionalProps.canHide }),
+    ...(additionalProps?.canMaximize !== undefined && { canMaximize: additionalProps.canMaximize }),
+    ...(additionalProps?.width !== undefined && { width: additionalProps.width }),
+    ...(additionalProps?.preferredWindowSize !== undefined && {
+      preferredWindowSize: additionalProps.preferredWindowSize,
+    }),
     title: getWorkspaceTitle(workspace, additionalProps),
     closeWorkspace: (options: CloseWorkspaceOptions = {}) => closeWorkspace(name, options),
     closeWorkspaceWithSavedChanges: (options: CloseWorkspaceOptions) =>
@@ -368,11 +384,15 @@ export function launchWorkspace<
     });
   } else if (isWorkspaceAlreadyOpen) {
     const openWorkspace = openWorkspaces[workspaceIndexInOpenWorkspaces];
-    // Only update the title if it hasn't been set by `setTitle`
+
     if (openWorkspace.title === getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
       openWorkspace.title = getWorkspaceTitle(newWorkspace, newWorkspace.additionalProps);
     }
     openWorkspace.additionalProps = newWorkspace.additionalProps;
+    openWorkspace.canHide = newWorkspace.canHide;
+    openWorkspace.canMaximize = newWorkspace.canMaximize;
+    openWorkspace.width = newWorkspace.width;
+    openWorkspace.preferredWindowSize = newWorkspace.preferredWindowSize;
     const restOfTheWorkspaces = openWorkspaces.filter((w) => w.name != name);
     updateStoreWithNewWorkspace(openWorkspaces[workspaceIndexInOpenWorkspaces], restOfTheWorkspaces);
   } else if (openedWorkspaceWithSameType) {
