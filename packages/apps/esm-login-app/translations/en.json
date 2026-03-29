@@ -22,6 +22,7 @@
   "login": "Log in",
   "loginButtonIconDescription": "Log in button",
   "logout": "Logout",
+  "medium": "Medium",
   "newPassword": "New password",
   "newPasswordRequired": "New password is required",
   "oldPassword": "Old password",
@@ -35,8 +36,10 @@
   "rememberLocationForFutureLogins": "Remember my location for future logins",
   "selectYourLocation": "Select your location from the list below. Use the search bar to find your location.",
   "showPassword": "Show password",
+  "strong": "Strong",
   "submitting": "Submitting",
   "username": "Username",
   "validValueRequired": "A valid value is required",
+  "weak": "Weak",
   "welcome": "Welcome"
 }

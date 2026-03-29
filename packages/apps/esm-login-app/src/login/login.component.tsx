@@ -23,14 +23,18 @@ export interface LoginReferrer {
 function getPasswordStrength(password: string, t: any): string {
   if (!password) return '';
 
-  let score = 0;
-  if (password.length >= 6) score++;
-  if (/[A-Z]/.test(password)) score++;
-  if (/[0-9]/.test(password)) score++;
-  if (/[^A-Za-z0-9]/.test(password)) score++;
+  const hasMinLength = password.length >= 6;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[^A-Za-z0-9]/.test(password);
 
-  if (score <= 1) return t('weak', 'Weak');
-  if (score === 2) return t('medium', 'Medium');
+  if (!hasMinLength) return t('weak', 'Weak');
+
+  const criteriaCount = [hasUpper, hasLower, hasNumber, hasSpecial].filter(Boolean).length;
+
+  if (criteriaCount <= 1) return t('weak', 'Weak');
+  if (criteriaCount === 2 || criteriaCount === 3) return t('medium', 'Medium');
   return t('strong', 'Strong');
 }
 
@@ -52,7 +56,7 @@ const Login: React.FC = () => {
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
-  const strengthColorMap = {
+  const strengthColorMap: Record<string, string> = {
     Weak: 'red',
     Medium: 'orange',
     Strong: 'green',
