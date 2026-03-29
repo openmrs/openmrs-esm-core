@@ -51,6 +51,11 @@ export function navigate({ to, templateParams }: NavigateOptions): void {
   const target = interpolateUrl(to, templateParams).replace(window.location.origin, '');
   const isSpaPath = target.startsWith(openmrsSpaBase);
 
+  if ((window as any).__hasUnsavedChanges === true) {
+    const confirmLeave = window.confirm('You have unsaved changes. Leave without saving?');
+    if (!confirmLeave) return;
+  }
+
   if (isSpaPath) {
     navigateToUrl(target);
   } else {
