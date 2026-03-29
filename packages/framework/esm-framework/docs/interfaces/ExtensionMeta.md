@@ -2,7 +2,7 @@
 
 # Interface: ExtensionMeta
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L8)
+Defined in: [packages/framework/esm-extensions/src/store.ts:8](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L8)
 
 ## Indexable
 

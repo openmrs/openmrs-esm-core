@@ -4,7 +4,7 @@
 
 > **DashboardExtension**(`__namedParameters`): `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L17)
+Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:17](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L17)
 
 ## Parameters
 

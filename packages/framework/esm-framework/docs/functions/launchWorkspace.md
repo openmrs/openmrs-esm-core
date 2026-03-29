@@ -4,7 +4,7 @@
 
 > **launchWorkspace**\<`T`\>(`name`, `additionalProps?`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:305](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L305)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:305](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L305)
 
 This launches a workspace by its name. The workspace must have been registered.
 Workspaces should be registered in the `routes.json` file.

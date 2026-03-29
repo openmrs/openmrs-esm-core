@@ -31,11 +31,17 @@ function getPasswordStrength(password: string, t: any): string {
 
   if (!hasMinLength) return t('weak', 'Weak');
 
+  if (hasUpper && hasLower && hasNumber && hasSpecial) {
+    return t('strong', 'Strong');
+  }
+
   const criteriaCount = [hasUpper, hasLower, hasNumber, hasSpecial].filter(Boolean).length;
 
-  if (criteriaCount <= 1) return t('weak', 'Weak');
-  if (criteriaCount === 2 || criteriaCount === 3) return t('medium', 'Medium');
-  return t('strong', 'Strong');
+  if (criteriaCount >= 2) {
+    return t('medium', 'Medium');
+  }
+
+  return t('weak', 'Weak');
 }
 
 const Login: React.FC = () => {
@@ -237,6 +243,24 @@ const Login: React.FC = () => {
                         >
                           {passwordStrength}
                         </span>
+                        {/* 🔥 Visual Strength Bar */}
+                        <div style={{ height: '6px', background: '#eee', marginTop: '6px', borderRadius: '4px' }}>
+                          <div
+                            style={{
+                              width:
+                                passwordStrength === 'Weak' ? '33%' : passwordStrength === 'Medium' ? '66%' : '100%',
+                              height: '100%',
+                              background:
+                                passwordStrength === 'Weak'
+                                  ? 'red'
+                                  : passwordStrength === 'Medium'
+                                    ? 'orange'
+                                    : 'green',
+                              borderRadius: '4px',
+                              transition: '0.3s',
+                            }}
+                          />
+                        </div>
                       </div>
                     )}
                   </div>

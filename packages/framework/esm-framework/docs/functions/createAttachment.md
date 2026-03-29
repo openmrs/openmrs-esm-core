@@ -4,7 +4,7 @@
 
 > **createAttachment**(`patientUuid`, `fileToUpload`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/attachments.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L73)
+Defined in: [packages/framework/esm-emr-api/src/attachments.ts:73](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L73)
 
 Creates a new attachment for a patient by uploading a file to the OpenMRS server.
 The file can be provided either as a File object or as base64-encoded content.

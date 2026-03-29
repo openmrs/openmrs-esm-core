@@ -4,4 +4,4 @@
 
 > `const` **ErrorState**: `React.FC`\<[`ErrorStateProps`](../interfaces/ErrorStateProps.md)\>
 
-Defined in: [packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L14)
+Defined in: [packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:14](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L14)
