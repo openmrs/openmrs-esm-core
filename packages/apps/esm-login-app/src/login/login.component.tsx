@@ -72,7 +72,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (!user) {
-      if (loginProvider.type === 'oauth2') {
+      if (loginProvider.type === 'oauth2' || loginProvider.type === 'custom') {
         openmrsNavigate({ to: loginProvider.loginUrl });
       } else if (!username && location.pathname === '/login/confirm') {
         navigate('/login');

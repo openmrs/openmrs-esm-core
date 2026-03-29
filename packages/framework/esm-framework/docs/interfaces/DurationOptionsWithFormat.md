@@ -2,7 +2,7 @@
 
 # Interface: DurationOptionsWithFormat
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:508](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L508)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:508](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L508)
 
 ## Extends
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:508](https://gi
 
 > `optional` **formatOptions**: `Partial`\<`ResolvedDurationFormatOptions`\>
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:510](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L510)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:510](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L510)
 
 Options passed to Intl.DurationFormat. Defaults to { style: 'short', localeMatcher: 'lookup' }.
 
@@ -24,7 +24,7 @@ Options passed to Intl.DurationFormat. Defaults to { style: 'short', localeMatch
 
 > `optional` **largestUnit**: `"auto"` \| [`DurationUnit`](../type-aliases/DurationUnit.md)
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:503](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L503)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:503](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L503)
 
 Coarsest unit to include. Accepts 'auto' (default when smallestUnit is set),
 which resolves to the largest non-zero unit or smallestUnit, whichever is greater.
@@ -40,7 +40,7 @@ Mirrors Temporal.Duration.round() behavior.
 
 > `optional` **smallestUnit**: [`DurationUnit`](../type-aliases/DurationUnit.md)
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:505](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L505)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:505](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L505)
 
 Finest unit to include. Defaults to largestUnit when largestUnit is an explicit unit, giving a single-unit result.
 
@@ -54,7 +54,7 @@ Finest unit to include. Defaults to largestUnit when largestUnit is an explicit 
 
 > `optional` **thresholds**: `Partial`\<`Record`\<[`DurationUnit`](../type-aliases/DurationUnit.md), `number`\>\>
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:497](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L497)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:497](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L497)
 
 Override auto-selection thresholds. Each value is in the unit's own terms (e.g., seconds: 30 means "use seconds if < 30 seconds").
 

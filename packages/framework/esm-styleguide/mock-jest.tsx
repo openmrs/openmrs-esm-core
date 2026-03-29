@@ -207,4 +207,13 @@ export const Workspace2 = jest.fn(({ title, children }) => (
   </div>
 ));
 
+export const NumericObservation = jest.fn(({ value, unit, label }) => (
+  <span>
+    {label && <span>{label}</span>}
+    {value} {unit}
+  </span>
+));
+
+export const TableBatchActions = jest.fn(({ children }) => <>{children}</>);
+
 export const showModal = jest.fn();

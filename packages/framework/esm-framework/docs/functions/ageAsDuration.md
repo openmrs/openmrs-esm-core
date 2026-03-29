@@ -4,7 +4,7 @@
 
 > **ageAsDuration**(`birthDate`, `currentDate`): `null` \| `DurationInput`
 
-Defined in: [packages/framework/esm-utils/src/age-helpers.ts:22](https://github.com/sarvani-701/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L22)
+Defined in: [packages/framework/esm-utils/src/age-helpers.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L22)
 
 Gets the age of a person as a structured duration object, following NHS Digital guidelines
 (Tables 7 and 8) for which units to include based on the person's age.
