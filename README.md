@@ -63,14 +63,14 @@ A set of frontend modules provides the core technical functionality of the appli
 
 To set up the repository for development, run the following commands:
 
-```sh
+```bash
 yarn
 yarn setup
 ```
 
 > **Note:** If `yarn setup` fails or causes system resource issues, use this alternative instead:
 >
-> ```sh
+> ```bash
 > yarn build --concurrency 1
 > ```
 >
@@ -80,19 +80,19 @@ yarn setup
 
 To build all packages in the repository, run the following command:
 
-```sh
+```bash
 yarn build
 ```
 
 You can also verify all packages in one step using `yarn`:
 
-```sh
+```bash
 yarn verify
 ```
 
 ### Running the app shell and the framework
 
-```sh
+```bash
 yarn run:shell
 ```
 
@@ -100,13 +100,13 @@ yarn run:shell
 
 ### Running the frontend modules in `apps`
 
-```sh
+```bash
 yarn start --sources packages/apps/<app folder>
 ```
 
 For example, to run the Login app, run:
 
-```sh
+```bash
 yarn start --sources packages/apps/esm-login-app
 ```
 
@@ -114,7 +114,7 @@ This will spin up a development server with hot module reloading so any changes 
 
 ### Running the tooling
 
-```sh
+```bash
 cd packages/tooling/openmrs
 yarn build
 ./dist/cli.js
@@ -242,7 +242,7 @@ Here are the tools at your disposal for trying to get this to work:
 
 This should be the first thing you try. To link the styleguide, for example, you would use
 
-```sh
+```bash
 yarn link ../path/to/openmrs-esm-core/packages/framework/esm-styleguide
 ```
 
@@ -259,13 +259,13 @@ This will add a line to the "resolutions" section of the `package.json` file whi
 Sometimes, the build tooling will simply not work with `yarn link`. In this case, you will need to use `yalc`.
 Install `yalc` on your computer with:
 
-```sh
+```bash
 npm install -g yalc
 ```
 
 Then, link the repository you are working on. For `esm-api`, for example, run:
 
-```sh
+```bash
 # In this repository
 cd packages/framework/esm-api
 yalc publish
@@ -285,14 +285,14 @@ Here, there are two options:
 
 In order to get your local version of the core packages to be served in your local dev server, you will need to link the tooling as well.
 
-```sh
+```bash
 yarn link /path/to/esm-core/packages/tooling/openmrs
 ```
 
 You can try using `yalc` for this as well, if `yarn link` doesn't work. Or manually create a `link:` resolution in `package.json`.
 In `packages/shell/esm-app-shell`, run:
 
-```sh
+```bash
 yarn build:development --watch
 ```
 
@@ -306,7 +306,7 @@ In this repository, start the app shell with `yarn run:shell`. Then, in the Pati
 
 Please note that any of these techniques will modify the `package.json` file. These changes must be undone before creating your PR. If you used `yarn link`, you can undo these changes by running:
 
-```sh
+```bash
 yarn unlink --all
 ```
 
@@ -318,7 +318,7 @@ We use Yarn [workspaces](https://yarnpkg.com/features/workspaces) to handle vers
 
 To increment the version, run the following command:
 
-```sh
+```bash
 yarn release [version]
 ```
 
