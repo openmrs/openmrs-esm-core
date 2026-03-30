@@ -40,10 +40,25 @@ describe('NumericObservation', () => {
       expect(screen.getByText('BP')).toBeInTheDocument();
     });
 
-    it('handles empty/null values gracefully', () => {
+    it('renders 0 as a value instead of "Not available"', () => {
+      renderNumericObservation(0, '°C', 'Temperature', '123');
+
+      expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.getByText('°C')).toBeInTheDocument();
+      expect(screen.queryByText('Not available')).not.toBeInTheDocument();
+    });
+
+    it('renders "Not available" when value is null', () => {
       renderNumericObservation(null as any, '°C', 'Temperature', '123');
 
       expect(screen.getByText('Not available')).toBeInTheDocument();
+    });
+
+    it('renders "Not available" when value is an empty string', () => {
+      renderNumericObservation('' as any, '°C', 'Temperature', '123');
+
+      expect(screen.getByText('Not available')).toBeInTheDocument();
+      expect(screen.queryByText('°C')).not.toBeInTheDocument();
     });
   });
 
@@ -60,6 +75,13 @@ describe('NumericObservation', () => {
       const element = screen.getByText('100 mmHg');
       expect(screen.queryByTestId('numeric-observation-card')).not.toBeInTheDocument();
       expect(element.tagName).toBe('DIV');
+    });
+
+    it('renders "Not available" without unit in cell variant when value is empty', () => {
+      renderNumericObservation('' as any, 'mmHg', 'BP', '123', 'cell');
+
+      expect(screen.getByText('Not available')).toBeInTheDocument();
+      expect(screen.queryByText(/mmHg/)).not.toBeInTheDocument();
     });
   });
 
