@@ -76,6 +76,8 @@ yarn setup
 >
 > Both commands build all the packages — once either completes successfully, you can proceed to [running the app shell and the framework](#running-the-app-shell-and-the-framework).
 
+**Note:** Ensure you are using Node.js v18 or v20 to avoid compatibility issues with the O3 build tools.
+
 ### Building
 
 To build all packages in the repository, run the following command:
