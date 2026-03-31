@@ -6,7 +6,7 @@
 
 > **getCurrentUser**(): `Observable`\<[`Session`](../interfaces/Session.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L66)
+Defined in: [packages/framework/esm-api/src/current-user.ts:66](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L66)
 
 The getCurrentUser function returns an observable that produces
 **zero or more values, over time**. It will produce zero values
@@ -53,7 +53,7 @@ leak and source of bugs.
 
 > **getCurrentUser**(`opts`): `Observable`\<[`Session`](../interfaces/Session.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L73)
+Defined in: [packages/framework/esm-api/src/current-user.ts:73](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L73)
 
 ### Parameters
 
@@ -78,7 +78,7 @@ An Observable that produces [Session](../interfaces/Session.md) objects.
 
 > **getCurrentUser**(`opts`): `Observable`\<[`LoggedInUser`](../interfaces/LoggedInUser.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L80)
+Defined in: [packages/framework/esm-api/src/current-user.ts:80](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L80)
 
 ### Parameters
 

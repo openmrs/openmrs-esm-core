@@ -4,7 +4,7 @@
 
 > **getSyncLifecycle**\<`T`\>(`Component`, `options`): () => `Promise`\<`ReactAppOrParcel`\<`T`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L77)
+Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:77](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L77)
 
 Creates a single-spa lifecycle for a React component that is already loaded.
 Unlike [getAsyncLifecycle](getAsyncLifecycle.md), this wraps a synchronously-available component

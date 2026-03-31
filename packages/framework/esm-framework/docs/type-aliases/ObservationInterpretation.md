@@ -4,4 +4,4 @@
 
 > **ObservationInterpretation** = *typeof* `observationInterpretations`\[`number`\]
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L23)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts:23](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/interpretation-utils.ts#L23)

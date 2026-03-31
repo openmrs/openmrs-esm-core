@@ -2,7 +2,7 @@
 
 # Interface: OpenmrsEventTypes
 
-Defined in: [packages/framework/esm-emr-api/src/events/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/types.ts#L32)
+Defined in: [packages/framework/esm-emr-api/src/events/types.ts:32](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/types.ts#L32)
 
 This is the set of events supported by the custom event system
 
@@ -12,7 +12,7 @@ This is the set of events supported by the custom event system
 
 > **before-page-changed**: `PageChanged`
 
-Defined in: [packages/framework/esm-emr-api/src/events/types.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/types.ts#L41)
+Defined in: [packages/framework/esm-emr-api/src/events/types.ts:41](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/types.ts#L41)
 
 The before-page-changed event is fired before the active page in the application changes
 
@@ -22,7 +22,7 @@ The before-page-changed event is fired before the active page in the application
 
 > **started**: `never`
 
-Defined in: [packages/framework/esm-emr-api/src/events/types.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/types.ts#L37)
+Defined in: [packages/framework/esm-emr-api/src/events/types.ts:37](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/events/types.ts#L37)
 
 The started event is fired once when the app started.
 Listeners should use this as an opportunity to do any initialization required.

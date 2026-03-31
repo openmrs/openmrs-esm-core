@@ -4,7 +4,7 @@
 
 > **useConceptReferenceRange**(`conceptUuid`, `patientUuid`): [`UseConceptReferenceRangeResult`](../interfaces/UseConceptReferenceRangeResult.md)
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L31)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:31](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L31)
 
 Hook to fetch concept reference range from OpenMRS REST API
 

@@ -4,7 +4,7 @@
 
 > **fetchCurrentPatient**(`patientUuid`, `fetchInit?`, `includeOfflinePatients?`): `Promise`\<`null` \| `Patient`\>
 
-Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L44)
+Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:44](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L44)
 
 Fetches a patient by their UUID from the FHIR API. This function first attempts
 to fetch the patient from the server. If the server request fails and offline

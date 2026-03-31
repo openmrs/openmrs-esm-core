@@ -4,7 +4,7 @@
 
 > **useWorkspaces**(): [`WorkspacesInfo`](../interfaces/WorkspacesInfo.md)
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:563](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L563)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:563](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L563)
 
 ## Returns
 
