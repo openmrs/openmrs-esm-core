@@ -401,8 +401,13 @@ describe('getAssignedExtensions — hasRole and hasPrivilege helpers', () => {
       assertDisplayExpression("hasRole('Doctor')", [nurse], [], false);
     });
 
-    it('should return false gracefully when user has no roles', () => {
-      assertDisplayExpression("hasRole('Nurse')", [], [], false);
+    it('should check inherited roles via allRoles', () => {
+      assertDisplayExpression(
+        "hasRole('Nurse')",
+        [],
+        [],
+        true
+      );
     });
 
     it('should support OR logic across multiple roles', () => {
