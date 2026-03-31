@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@swc/cli": "0.8.0",
-    "@swc/core": "1.15.18",
+    "@swc/core": "1.15.21",
     "@vitest/coverage-v8": "^4.0.18",
     "rimraf": "^6.0.1",
     "typedoc": "^0.28.5",

@@ -40,7 +40,7 @@
     "@rspack/cli": "1.7.9",
     "@rspack/core": "1.7.9",
     "@rspack/dev-server": "1.1.5",
-    "@swc/core": "1.15.18",
+    "@swc/core": "1.15.21",
     "autoprefixer": "10.4.20",
     "axios": "1.13.4",
     "browserslist-config-openmrs": "^1.0.1",
