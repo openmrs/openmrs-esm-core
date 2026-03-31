@@ -200,7 +200,8 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
        */
       if (
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
-        (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
+        (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status)) ||
+        (response.status === 401 && response.headers.has('location'))
       ) {
         clearHistory();
         // by default, redirect to the url specified in the config.
