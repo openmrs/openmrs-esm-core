@@ -42,7 +42,7 @@
     "@rspack/dev-server": "1.1.5",
     "@swc/core": "1.15.18",
     "autoprefixer": "10.4.20",
-    "axios": "^1.13.4",
+    "axios": "1.13.4",
     "browserslist-config-openmrs": "^1.0.1",
     "chalk": "^4.1.2",
     "clean-webpack-plugin": "4.0.0",
