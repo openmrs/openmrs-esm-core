@@ -100,20 +100,17 @@ function getSlotState(slotName: string) {
   return getExtensionInternalStore().getState().slots[slotName];
 }
 
-/**
- * Asserts that an extension with the given displayExpression is shown or hidden
- * based on the current session state.
- */
 function assertDisplayExpression(
   displayExpression: string,
   roles: Array<RoleEntry>,
   privileges: Array<PrivilegeEntry>,
   expectVisible: boolean,
+  allRoles: Array<RoleEntry> = roles,
 ) {
   const slotName = getUniqueName('expr-slot');
   const extensionName = getUniqueName('expr-ext');
 
-  setSession(roles, privileges);
+  setSession(roles, privileges, allRoles);
   vi.mocked(userHasAccess).mockReturnValue(true);
 
   const result = setupRegisteredExtension(slotName, extensionName, { displayExpression });
@@ -411,7 +408,8 @@ describe('getAssignedExtensions — hasRole and hasPrivilege helpers', () => {
         "hasRole('Nurse')",
         [],
         [],
-        true
+        true,
+        [nurse],
       );
     });
 
