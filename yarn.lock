@@ -8073,7 +8073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.13.4":
+"axios@npm:1.13.4":
   version: 1.13.4
   resolution: "axios@npm:1.13.4"
   dependencies:
@@ -14839,7 +14839,7 @@ __metadata:
     "@types/semver": "npm:^7"
     "@types/tar": "npm:^4.0.3"
     autoprefixer: "npm:10.4.20"
-    axios: "npm:^1.13.4"
+    axios: "npm:1.13.4"
     browserslist-config-openmrs: "npm:^1.0.1"
     chalk: "npm:^4.1.2"
     clean-webpack-plugin: "npm:4.0.0"
