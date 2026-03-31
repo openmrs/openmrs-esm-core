@@ -4,7 +4,7 @@
 
 > **subscribePrecacheStaticDependencies**(`cb`): () => `void`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L39)
+Defined in: [packages/framework/esm-globals/src/events.ts:39](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L39)
 
 ## Parameters
 

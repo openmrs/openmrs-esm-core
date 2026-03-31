@@ -4,7 +4,7 @@
 
 > **inRange**(`min`, `max`): [`Validator`](../type-aliases/Validator.md)
 
-Defined in: [packages/framework/esm-config/src/validators/validators.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L11)
+Defined in: [packages/framework/esm-config/src/validators/validators.ts:11](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L11)
 
 Verifies that the value is between the provided minimum and maximum
 

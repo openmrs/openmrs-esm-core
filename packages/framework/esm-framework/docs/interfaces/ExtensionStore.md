@@ -2,7 +2,7 @@
 
 # Interface: ExtensionStore
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L67)
+Defined in: [packages/framework/esm-extensions/src/store.ts:67](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L67)
 
 ## Properties
 
@@ -10,4 +10,4 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:67](https://github.c
 
 > **slots**: `Record`\<`string`, [`ExtensionSlotState`](ExtensionSlotState.md)\>
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L68)
+Defined in: [packages/framework/esm-extensions/src/store.ts:68](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L68)

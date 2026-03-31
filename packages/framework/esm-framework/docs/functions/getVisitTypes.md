@@ -4,7 +4,7 @@
 
 > **getVisitTypes**(): `Observable`\<[`VisitType`](../interfaces/VisitType.md)[]\>
 
-Defined in: [packages/framework/esm-emr-api/src/visit-type.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-type.ts#L29)
+Defined in: [packages/framework/esm-emr-api/src/visit-type.ts:29](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-type.ts#L29)
 
 Fetches all available visit types from the OpenMRS REST API.
 

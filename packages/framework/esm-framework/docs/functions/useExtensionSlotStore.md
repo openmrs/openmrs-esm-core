@@ -4,7 +4,7 @@
 
 > **useExtensionSlotStore**(`slot`): [`ExtensionSlotState`](../interfaces/ExtensionSlotState.md)
 
-Defined in: [packages/framework/esm-react-utils/src/useExtensionSlotStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotStore.ts#L5)
+Defined in: [packages/framework/esm-react-utils/src/useExtensionSlotStore.ts:5](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotStore.ts#L5)
 
 ## Parameters
 

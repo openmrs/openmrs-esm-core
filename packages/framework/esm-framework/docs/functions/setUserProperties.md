@@ -4,7 +4,7 @@
 
 > **setUserProperties**(`userUuid`, `userProperties`, `abortController?`): `Promise`\<[`SessionStore`](../type-aliases/SessionStore.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:387](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L387)
+Defined in: [packages/framework/esm-api/src/current-user.ts:387](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L387)
 
 Updates the user properties for a specific user. User properties are key-value
 pairs that store user-specific settings and preferences. After updating the

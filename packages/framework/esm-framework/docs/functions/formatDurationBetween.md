@@ -4,7 +4,7 @@
 
 > **formatDurationBetween**(`startDate`, `endDate`, `options?`): `null` \| `string`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:707](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L707)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:707](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L707)
 
 Calculates the duration between two dates and formats it as a locale-aware string.
 Uses the same unit-selection logic as [duration](duration.md) and delegates formatting

@@ -2,7 +2,7 @@
 
 # Interface: UseConceptReferenceRangeResult
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L6)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:6](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L6)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-conce
 
 > `optional` **error**: `Error`
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L8)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:8](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L8)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-conce
 
 > **isLoading**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L9)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:9](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L9)
 
 ***
 
@@ -26,4 +26,4 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-conce
 
 > **referenceRange**: `undefined` \| [`ObsReferenceRanges`](ObsReferenceRanges.md)
 
-Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L7)
+Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:7](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L7)

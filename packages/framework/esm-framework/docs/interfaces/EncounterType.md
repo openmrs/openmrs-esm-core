@@ -2,7 +2,7 @@
 
 # Interface: EncounterType
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L21)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:21](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L21)
 
 Superclass for all Openmrs Resources, with strict typings.
 If the subclass does not have all attributes (including optional ones)
@@ -22,7 +22,7 @@ accounted for, use OpenmrsResource instead.
 
 > `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
 #### Inherited from
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 > `optional` **description**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L23)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:23](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L23)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:23](
 
 > `optional` **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
 #### Inherited from
 
@@ -54,7 +54,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 > `optional` **links**: [`Link`](Link.md)[]
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
 #### Inherited from
 
@@ -66,7 +66,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 > `optional` **name**: `string`
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L22)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:22](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L22)
 
 ***
 
@@ -74,7 +74,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:22](
 
 > `optional` **resourceVersion**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
 #### Inherited from
 
@@ -86,7 +86,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https:
 
 > `optional` **retired**: `boolean`
 
-Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L24)
+Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:24](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L24)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:24](
 
 > **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/DushmanthaHerath1/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
 
 #### Inherited from
 
