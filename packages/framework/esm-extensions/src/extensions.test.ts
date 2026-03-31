@@ -61,7 +61,11 @@ function createMockExtension(name: string, overrides: Partial<ExtensionRegistrat
 type RoleEntry = { uuid: string; name: string; display: string };
 type PrivilegeEntry = { uuid: string; name: string; display: string };
 
-function setSession(roles: Array<RoleEntry> = [], privileges: Array<PrivilegeEntry> = []) {
+function setSession(
+  roles: Array<RoleEntry> = [],
+  privileges: Array<PrivilegeEntry> = [],
+  allRoles: Array<RoleEntry> = []
+) {
   (sessionStore as any).setState({
     loaded: true,
     session: {
@@ -76,6 +80,7 @@ function setSession(roles: Array<RoleEntry> = [], privileges: Array<PrivilegeEnt
         person: { uuid: 'person-uuid' } as any,
         privileges,
         roles,
+        allRoles,
         retired: false,
         locale: 'en',
         allowedLocales: ['en'],
