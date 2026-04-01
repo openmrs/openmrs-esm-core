@@ -1,11 +1,11 @@
-/* eslint-disable */
+/* eslint-disable testing-library/no-node-access, testing-library/no-wait-for-multiple-assertions, testing-library/no-unnecessary-act, testing-library/no-manual-cleanup, jest-dom/prefer-empty, testing-library/prefer-presence-queries */
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
-import { attach, registerExtension, updateInternalExtensionStore } from '../../../esm-extensions';
+import { attach, registerExtension, updateInternalExtensionStore } from '../../../esm-extensions/src';
 import { ExtensionSlot, getSyncLifecycle, openmrsComponentDecorator, useConfig } from '../../../esm-react-utils/src';
 import {
   configInternalStore,
@@ -167,7 +167,7 @@ describe('Expression evaluation in extension display conditions', () => {
             systemId: 'nonadmin',
             userProperties: {},
             person: {} as Person,
-            privileges: [{ uuid: '1', display: 'YOWTCH!' }],
+            privileges: [{ uuid: '1', name: 'YOWTCH!', display: 'YOWTCH!' }],
             roles: [],
             retired: false,
             locale: 'en',
@@ -226,7 +226,7 @@ describe('Expression evaluation in extension display conditions', () => {
             systemId: 'nonadmin',
             userProperties: {},
             person: {} as Person,
-            privileges: [{ uuid: '1', display: 'YOWTCH!' }],
+            privileges: [{ uuid: '1', name: 'YOWTCH!', display: 'YOWTCH!' }],
             roles: [],
             retired: false,
             locale: 'en',
