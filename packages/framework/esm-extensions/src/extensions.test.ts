@@ -43,11 +43,13 @@ vi.mock('@openmrs/esm-globals', async (importOriginal) => {
   };
 });
 
+// Helper to create unique names for test isolation
 let nameCounter = 0;
 function getUniqueName(prefix: string = 'test'): string {
   return `${prefix}-${++nameCounter}`;
 }
 
+// Helper to create a mock extension registration
 function createMockExtension(name: string, overrides: Partial<ExtensionRegistration> = {}): ExtensionInfo {
   return {
     name,
