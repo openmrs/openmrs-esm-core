@@ -157,6 +157,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const { name, version, peerDependencies, browser, main, types } = require(resolve(root, 'package.json'));
   // this typing is provably incorrect, but actually works
   const mode = (argv.mode || process.env.NODE_ENV || 'development') as OpenmrsRspackConfig['mode'];
+  const devServerPort = argv.port ? Number(argv.port) : undefined;
+  const devServerHost = argv.host || 'localhost';
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
@@ -358,6 +360,13 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         'lodash.throttle': 'lodash-es/throttle',
       },
     },
+    ...(devServerPort !== undefined && {
+      lazyCompilation: {
+        imports: true,
+        entries: false,
+        serverUrl: `http://${devServerHost}:${devServerPort}`,
+      },
+    }),
     ...overrides,
   };
   return mergeWith(baseConfig, additionalConfig, mergeFunction);
