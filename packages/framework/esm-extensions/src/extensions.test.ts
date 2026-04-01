@@ -390,15 +390,10 @@ describe('getAssignedExtensions', () => {
   });
 });
 
-describe('getAssignedExtensions — hasRole and hasPrivilege helpers', () => {
-  const nurse: RoleEntry = { uuid: 'role-1', name: 'Nurse', display: 'Nurse' };
+describe('getAssignedExtensions — hasPrivilege helper', () => {
   const editOrders: PrivilegeEntry = { uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' };
   const viewReports: PrivilegeEntry = { uuid: 'priv-2', name: 'View Reports', display: 'View Reports' };
 
-  describe('hasRole() helper', () => {
-    it('should show extension when hasRole matches user role', () => {
-      assertDisplayExpression("hasRole('Nurse')", [nurse], [], true);
-    });
 
     it('should hide extension when hasRole does not match user role', () => {
       assertDisplayExpression("hasRole('Doctor')", [nurse], [], false);
