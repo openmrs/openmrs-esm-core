@@ -353,7 +353,6 @@ function getAssignedExtensionsFromSlotData(
   const expressionContext = {
     session,
     ...(slotState && typeof slotState === 'object' ? slotState : {}),
-    hasRole: (roleName: string) => (session?.user?.allRoles ?? session?.user?.roles ?? []).some((r) => r?.display === roleName),
     hasPrivilege: (privName: string) => session?.user?.privileges?.some((p) => p.display === privName) ?? false,
   };
 
