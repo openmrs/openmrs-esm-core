@@ -16,6 +16,7 @@ import {
 import type { ExtensionInfo, ExtensionInternalStore, ExtensionRegistration } from './store';
 import { getExtensionInternalStore } from './store';
 
+// Minimal mocking - only what we need for fine-grained control
 vi.mock('@openmrs/esm-api', () => ({
   sessionStore: createGlobalStore('mock-session-store', {
     loaded: false,
