@@ -27,7 +27,7 @@ jobs:
 
       - name: 🔍 Check if any source code has changed
         id: changes
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         with:
           filters: |
             test-sources:
