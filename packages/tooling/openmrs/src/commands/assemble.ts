@@ -3,7 +3,7 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
 import { Readable } from 'node:stream';
-import { prompt, type Question } from 'inquirer';
+import { checkbox, input } from '@inquirer/prompts';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
 import semver from 'semver';
@@ -106,12 +106,12 @@ async function readConfig(
     case 'survey': {
       logInfo(`Loading available frontend modules ...`);
 
+      // see https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md#get-v1search for what these
+      // options mean; in essence, we search for anything with the keyword openmrs that has at least one
+      // stable version; quality is down-scored because that metric favours smaller apps over core
+      // community assets. Maintenance is boosted to de-score relatively unmaintained apps, as the framework
+      // still has a fair bit of churn
       const packages = await npmRegistryFetch
-        // see https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md#get-v1search for what these
-        // options mean; in essence, we search for anything with the keyword openmrs that has at least one
-        // stable version; quality is down-scored because that metric favours smaller apps over core
-        // community assets. Maintenance is boosted to de-score relatively unmaintained apps, as the framework
-        // still has a fair bit of churn
         .json(
           `/-/v1/search?text=app%20keywords:openmrs&not:unstable&quality=0.001&maintenance=3.0&size=250`,
           fetchOptions,
@@ -125,47 +125,35 @@ async function readConfig(
             .filter((m) => m.name.endsWith('-app')),
         );
 
-      const questions: Array<Question> = [];
+      const selectedPackages = await checkbox({
+        message: 'Select frontend modules to include:',
+        choices: packages.map((pckg) => ({
+          name: pckg.name,
+          value: pckg,
+        })),
+        pageSize: 20,
+      });
 
-      for (const pckg of packages) {
-        questions.push(
-          {
-            name: `include:${pckg.name}`,
-            message: `Include frontend module "${pckg.name}"?`,
-            default: false,
-            type: 'confirm',
+      const frontendModules: Record<string, string> = {};
+      for (const pckg of selectedPackages) {
+        const version = await input({
+          message: `Version for "${pckg.name}"?`,
+          default: pckg.version,
+          validate: (value) => {
+            if (!semver.valid(value)) {
+              return `${value} does not appear to be a valid semver or version range. See https://semver.npmjs.com/#syntax-examples.`;
+            }
+
+            return true;
           },
-          {
-            name: `version:${pckg.name}`,
-            message: `Version for "${pckg.name}"?`,
-            default: pckg.version,
-            type: 'string',
-            when: (ans) => ans[`include:${pckg.name}`],
-            validate: (input) => {
-              if (typeof input !== 'string') {
-                return `Expected a valid SemVer string, got ${typeof input}.`;
-              }
+        });
 
-              if (!semver.valid(input)) {
-                return `${input} does not appear to be a valid semver or version range. See https://semver.npmjs.com/#syntax-examples.`;
-              }
-
-              return true;
-            },
-          },
-        );
+        frontendModules[pckg.name] = version;
       }
-
-      const answers = await prompt(questions);
 
       return {
         publicUrl: '.',
-        frontendModules: Object.keys(answers)
-          .filter((m) => answers[m])
-          .reduce((prev, curr) => {
-            prev[curr] = answers[curr];
-            return prev;
-          }, {}),
+        frontendModules,
       };
     }
   }
