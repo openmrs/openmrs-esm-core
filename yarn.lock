@@ -2901,8 +2901,6 @@ __metadata:
   resolution: "@openmrs/esm-devtools-app@workspace:packages/apps/esm-devtools-app"
   dependencies:
     "@carbon/react": "npm:^1.92.1"
-    "@rspack/cli": "npm:1.7.9"
-    "@rspack/core": "npm:1.7.9"
     cross-env: "npm:^7.0.3"
     fuzzy: "npm:^0.1.3"
     happy-dom: "npm:^20.6.0"
@@ -3119,8 +3117,6 @@ __metadata:
   resolution: "@openmrs/esm-help-menu-app@workspace:packages/apps/esm-help-menu-app"
   dependencies:
     "@carbon/react": "npm:^1.92.1"
-    "@rspack/cli": "npm:1.7.9"
-    "@rspack/core": "npm:1.7.9"
     cross-env: "npm:^7.0.3"
     fuzzy: "npm:^0.1.3"
     happy-dom: "npm:^20.6.0"
@@ -3144,8 +3140,6 @@ __metadata:
   resolution: "@openmrs/esm-implementer-tools-app@workspace:packages/apps/esm-implementer-tools-app"
   dependencies:
     "@carbon/react": "npm:^1.92.1"
-    "@rspack/cli": "npm:1.7.9"
-    "@rspack/core": "npm:1.7.9"
     "@vitest/coverage-v8": "npm:^4.0.18"
     ace-builds: "npm:^1.43.3"
     cross-env: "npm:^7.0.3"
@@ -3229,8 +3223,6 @@ __metadata:
   dependencies:
     "@carbon/icons-react": "npm:^11.58.0"
     "@carbon/react": "npm:^1.92.1"
-    "@rspack/cli": "npm:1.7.9"
-    "@rspack/core": "npm:1.7.9"
     "@types/lodash-es": "npm:^4.17.12"
     "@vitest/coverage-v8": "npm:^4.0.18"
     cross-env: "npm:^7.0.3"
@@ -3290,8 +3282,6 @@ __metadata:
   resolution: "@openmrs/esm-primary-navigation-app@workspace:packages/apps/esm-primary-navigation-app"
   dependencies:
     "@carbon/react": "npm:^1.92.1"
-    "@rspack/cli": "npm:1.7.9"
-    "@rspack/core": "npm:1.7.9"
     "@vitest/coverage-v8": "npm:^4.0.18"
     happy-dom: "npm:^20.6.0"
     lodash-es: "npm:^4.17.21"
@@ -10238,12 +10228,12 @@ __metadata:
   linkType: hard
 
 "default-browser@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "default-browser@npm:5.2.1"
+  version: 5.5.0
+  resolution: "default-browser@npm:5.5.0"
   dependencies:
     bundle-name: "npm:^4.1.0"
     default-browser-id: "npm:^5.0.0"
-  checksum: 10/afab7eff7b7f5f7a94d9114d1ec67273d3fbc539edf8c0f80019879d53aa71e867303c6f6d7cffeb10a6f3cfb59d4f963dba3f9c96830b4540cc7339a1bf9840
+  checksum: 10/c5c5d84a4abd82850e98f06798a55dee87fc1064538bea00cc14c0fb2dccccbff5e9e07eeea80385fa653202d5d92509838b4239d610ddfa1c76a04a1f65e767
   languageName: node
   linkType: hard
 
