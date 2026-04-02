@@ -57,10 +57,16 @@ export function setupI18n() {
           const [ns, slotName, extensionId] = namespace.split('___');
           importDynamic(ns)
             .then((module) =>
-              Promise.all([getImportPromise(module, ns, language), getTranslationOverrides(ns, slotName, extensionId)]),
+              Promise.allSettled([
+                getImportPromise(module, ns, language),
+                getTranslationOverrides(ns, slotName, extensionId),
+              ]),
             )
-            .then(([json, overrides]) => {
-              let translations = json ?? {};
+            .then(([jsonResult, overridesResult]) => {
+              // If importTranslation rejects (e.g., no translation file for this locale),
+              // fall back to empty so config-provided overrides can still be applied.
+              let translations = jsonResult.status === 'fulfilled' ? jsonResult.value ?? {} : {};
+              const overrides = overridesResult.status === 'fulfilled' ? overridesResult.value : [];
 
               // if we have a slotName and extensionId, it means that we're only loading the namespace for that extension
               // in that slot, but we _also_ process the base translations for the namespace and any top-level config overrides
