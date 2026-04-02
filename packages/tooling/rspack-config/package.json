@@ -30,8 +30,8 @@
   ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "@rspack/cli": "1.7.9",
-    "@rspack/core": "1.7.9",
+    "@rspack/cli": "1.7.11",
+    "@rspack/core": "1.7.11",
     "@swc/core": "1.15.18",
     "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "11.0.0",

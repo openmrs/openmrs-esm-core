@@ -47,8 +47,8 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@rspack/cli": "1.7.9",
-    "@rspack/core": "1.7.9",
+    "@rspack/cli": "1.7.11",
+    "@rspack/core": "1.7.11",
     "cross-env": "^7.0.3",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",
