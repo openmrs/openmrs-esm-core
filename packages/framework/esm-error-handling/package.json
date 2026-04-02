@@ -49,8 +49,8 @@
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
-    "@swc/cli": "0.8.0",
-    "@swc/core": "1.15.18",
+    "@swc/cli": "0.8.1",
+    "@swc/core": "1.15.21",
     "@vitest/coverage-v8": "^4.0.18",
     "cross-env": "^7.0.3",
     "happy-dom": "^20.6.0",
