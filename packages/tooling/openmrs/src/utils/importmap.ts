@@ -57,8 +57,8 @@ async function fetchRemoteImportmap(fetchUrl: string) {
 
   const m = await res.json();
 
-  if (typeof m === 'object' && m !== null && 'imports' in m) {
-    const imports = m.imports as Record<string, string>;
+  if (typeof m === 'object' && m !== null && 'imports' in m && typeof m.imports === 'object' && m.imports !== null) {
+    const imports = m.imports;
     Object.keys(imports).forEach((key) => {
       const url = imports[key];
 
