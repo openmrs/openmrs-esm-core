@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import uniqueId from 'lodash-es/uniqueId';
 import {
   InlineLoading,
+  InlineNotification,
   Search,
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-  Tile,
 } from '@carbon/react';
 import type { Concept } from './concept-search.resource';
 import { useConceptLookup } from './concept-search.resource';
@@ -21,9 +21,11 @@ interface ConceptSearchBoxProps {
 export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const { t } = useTranslation();
   const id = useMemo(() => uniqueId(), []);
+
   const [conceptToLookup, setConceptToLookup] = useState('');
   const [selectedConcept, setSelectedConcept] = useState<string>(value);
-  const { concepts, isSearchingConcepts } = useConceptLookup(conceptToLookup);
+
+  const { concepts, error, isSearchingConcepts } = useConceptLookup(conceptToLookup);
 
   const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConceptToLookup(event.target.value);
@@ -35,9 +37,59 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
     setConceptToLookup('');
   };
 
+  let content = null;
+
+  if (conceptToLookup?.trim()) {
+    if (isSearchingConcepts) {
+      content = (
+        <InlineLoading
+          className={styles.loader}
+          description={`${t('searchingConcepts', 'Searching concepts')}...`}
+        />
+      );
+    } else if (error) {
+      content = (
+        <InlineNotification
+          kind="error"
+          title={t('error', 'Error')}
+          subtitle={error?.message ?? t('somethingWentWrong', 'Something went wrong')}
+          lowContrast
+        />
+      );
+    } else if (concepts && concepts.length > 0) {
+      content = (
+        <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
+          {concepts.map((concept: Concept) => (
+            <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
+              <StructuredListCell
+                onClick={() => handleConceptUuidChange(concept)}
+                className={styles.smallListCell}
+              >
+                {concept.display}
+              </StructuredListCell>
+            </StructuredListRow>
+          ))}
+        </StructuredListWrapper>
+      );
+    } else {
+      content = (
+        <InlineNotification
+          kind="info"
+          title={t('noResultsFound', 'No results found')}
+          subtitle={t(
+            'noConceptsFoundText',
+            `No results found for "${conceptToLookup.trim()}"`
+          )}
+          lowContrast
+        />
+      );
+    }
+  }
+
   return (
     <div>
       {selectedConcept && <p className={styles.activeUuid}>{selectedConcept}</p>}
+
       <div className={styles.autocomplete}>
         <Search
           id={`searchbox-${id}`}
@@ -49,38 +101,12 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           aria-autocomplete="list"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
           aria-controls={`searchbox-${id}`}
-          aria-expanded={concepts.length > 0}
+          aria-expanded={!!(conceptToLookup?.trim() && concepts && concepts.length > 0)}
           placeholder={t('searchConceptHelperText', 'Search concepts')}
           onChange={handleSearchTermChange}
         />
-        {(() => {
-          if (!conceptToLookup) return null;
-          if (isSearchingConcepts)
-            return <InlineLoading className={styles.loader} description={t('searching', 'Searching') + '...'} />;
-          if (concepts && concepts.length && !isSearchingConcepts) {
-            return (
-              <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
-                {concepts.map((concept: Concept) => (
-                  <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
-                    <StructuredListCell
-                      onClick={() => {
-                        handleConceptUuidChange(concept);
-                      }}
-                      className={styles.smallListCell}
-                    >
-                      {concept.display}
-                    </StructuredListCell>
-                  </StructuredListRow>
-                ))}
-              </StructuredListWrapper>
-            );
-          }
-          return (
-            <Tile className={styles.emptyResults}>
-              <span>{t('noConceptsFoundText', 'No matching concepts found')}</span>
-            </Tile>
-          );
-        })()}
+
+        {content}
       </div>
     </div>
   );
