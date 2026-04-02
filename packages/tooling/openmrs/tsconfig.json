@@ -11,5 +11,6 @@
     "outDir": "dist",
     "lib": ["es5", "es2020"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"]
 }
