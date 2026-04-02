@@ -125,5 +125,9 @@ function getImportPromise(
     );
   }
 
-  return importPromise;
+  return importPromise.catch(() => {
+    // No translation file exists for this language in the app's bundle.
+    // Return empty so that config-provided translation overrides can still be applied.
+    return {};
+  });
 }
