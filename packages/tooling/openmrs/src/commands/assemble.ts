@@ -1,10 +1,8 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
 import { Readable } from 'node:stream';
 import { prompt, type Question } from 'inquirer';
-import { rimraf } from 'rimraf';
-import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
 import semver from 'semver';
@@ -188,8 +186,11 @@ async function downloadPackage(
     const source = resolve(baseDir, esmVersion.substring(5));
     return readFile(source);
   } else if (esmVersion && /^https?:\/\//.test(esmVersion)) {
-    const response = await axios.get<Buffer>(esmVersion);
-    return response.data;
+    const response = await fetch(esmVersion);
+    if (!response.ok) {
+      throw new Error(`Failed to download package from ${esmVersion}: ${response.status} ${response.statusText}`);
+    }
+    return Buffer.from(await response.arrayBuffer());
   } else {
     const packageName = esmVersion ? `${esmName}@${esmVersion}` : esmName;
     const tarManifest = await pacote.manifest(packageName, fetchOptions);
@@ -253,7 +254,7 @@ export async function runAssemble(args: AssembleArgs) {
   const { frontendModules = {}, publicUrl = '.' } = config;
 
   if (args.fresh && existsSync(args.target)) {
-    await rimraf(args.target);
+    await rm(args.target, { recursive: true, force: true });
   }
 
   await mkdir(args.target, { recursive: true });
