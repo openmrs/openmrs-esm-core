@@ -8,6 +8,8 @@ import {
   putDynamicOfflineDataFor,
   removeDynamicOfflineData,
   removeDynamicOfflineDataFor,
+  setupDynamicOfflineDataHandler,
+  syncDynamicOfflineData,
 } from './dynamic-offline-data';
 
 const mockUserId = '00000000-0000-0000-0000-000000000000';
@@ -77,5 +79,28 @@ describe('removeDynamicOfflineData', () => {
     const entries = await getDynamicOfflineDataEntriesFor('user-id-2', 'test');
     expect(entries).toHaveLength(1);
     expect(entries[0].users).toStrictEqual(['user-id-2']);
+  });
+});
+
+describe('syncDynamicOfflineData', () => {
+  it('places a handler whose sync rejects into erroredHandlers, not succeededHandlers', async () => {
+    setupDynamicOfflineDataHandler({
+      id: 'failing-handler',
+      type: 'test',
+      displayName: 'Failing Handler',
+      isSynced: () => Promise.resolve(false),
+      sync: () => Promise.reject(new Error('network timeout')),
+    });
+
+    await syncDynamicOfflineData('test', '123');
+
+    const entries = await getDynamicOfflineDataEntries('test');
+    expect(entries).toHaveLength(1);
+    expect(entries[0].syncState).toBeDefined();
+    expect(entries[0].syncState!.erroredHandlers).toContain('failing-handler');
+    expect(entries[0].syncState!.succeededHandlers).not.toContain('failing-handler');
+    expect(entries[0].syncState!.errors).toEqual(
+      expect.arrayContaining([expect.objectContaining({ handlerId: 'failing-handler', message: 'network timeout' })]),
+    );
   });
 });

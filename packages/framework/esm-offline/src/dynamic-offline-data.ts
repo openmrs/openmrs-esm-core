@@ -276,7 +276,7 @@ export async function syncDynamicOfflineData(
   const results = await Promise.all(
     handlers.map(async (handler) => {
       try {
-        handler.sync(identifier, abortSignal);
+        await handler.sync(identifier, abortSignal);
         return { id: handler.id, error: undefined };
       } catch (e: any) {
         const errorMessage: string = e['message']?.toString() ?? e.toString();
