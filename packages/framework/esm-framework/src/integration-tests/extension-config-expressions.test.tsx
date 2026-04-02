@@ -54,6 +54,20 @@ describe('Expression evaluation in extension display conditions', () => {
     cleanup();
   });
 
+  function RootComponent() {
+    return (
+      <div>
+        <ExtensionSlot data-testid="slot" name="A slot" />
+      </div>
+    );
+  }
+
+  const App = openmrsComponentDecorator({
+    moduleName: 'esm-bedrock',
+    featureName: 'Bedrock',
+    disableTranslations: true,
+  })(RootComponent);
+
   it('should show extension when the expression evalutes to true', async () => {
     registerSimpleExtension('Schmoo', 'esm-bedrock', true);
     attach('A slot', 'Schmoo');
@@ -66,20 +80,6 @@ describe('Expression evaluation in extension display conditions', () => {
         },
       },
     });
-
-    function RootComponent() {
-      return (
-        <div>
-          <ExtensionSlot data-testid="slot" name="A slot" />
-        </div>
-      );
-    }
-
-    const App = openmrsComponentDecorator({
-      moduleName: 'esm-bedrock',
-      featureName: 'Bedrock',
-      disableTranslations: true,
-    })(RootComponent);
 
     act(() => {
       render(<App />);
@@ -102,20 +102,6 @@ describe('Expression evaluation in extension display conditions', () => {
       },
     });
 
-    function RootComponent() {
-      return (
-        <div>
-          <ExtensionSlot data-testid="slot" name="A slot" />
-        </div>
-      );
-    }
-
-    const App = openmrsComponentDecorator({
-      moduleName: 'esm-bedrock',
-      featureName: 'Bedrock',
-      disableTranslations: true,
-    })(RootComponent);
-
     act(() => {
       render(<App />);
     });
@@ -136,20 +122,6 @@ describe('Expression evaluation in extension display conditions', () => {
         },
       },
     });
-
-    function RootComponent() {
-      return (
-        <div>
-          <ExtensionSlot data-testid="slot" name="A slot" />
-        </div>
-      );
-    }
-
-    const App = openmrsComponentDecorator({
-      moduleName: 'esm-bedrock',
-      featureName: 'Bedrock',
-      disableTranslations: true,
-    })(RootComponent);
 
     render(<App />);
 
@@ -196,20 +168,6 @@ describe('Expression evaluation in extension display conditions', () => {
       },
     });
 
-    function RootComponent() {
-      return (
-        <div>
-          <ExtensionSlot data-testid="slot" name="A slot" />
-        </div>
-      );
-    }
-
-    const App = openmrsComponentDecorator({
-      moduleName: 'esm-bedrock',
-      featureName: 'Bedrock',
-      disableTranslations: true,
-    })(RootComponent);
-
     render(<App />);
 
     // Update session state after rendering so the component can react to the change
@@ -247,20 +205,6 @@ describe('Expression evaluation in extension display conditions', () => {
     attach('A slot', 'Schmoo');
     defineConfigSchema('esm-bedrock', {});
     registerModuleLoad('esm-bedrock');
-
-    function RootComponent() {
-      return (
-        <div>
-          <ExtensionSlot data-testid="slot" name="A slot" />
-        </div>
-      );
-    }
-
-    const App = openmrsComponentDecorator({
-      moduleName: 'esm-bedrock',
-      featureName: 'Bedrock',
-      disableTranslations: true,
-    })(RootComponent);
 
     render(<App />);
 

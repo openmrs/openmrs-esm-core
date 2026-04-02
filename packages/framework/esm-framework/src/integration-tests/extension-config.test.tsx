@@ -172,11 +172,7 @@ describe('Interaction between configuration and extension systems', () => {
       moduleName: 'esm-flintstone',
       featureName: 'The Flintstones',
       disableTranslations: true,
-    })(() => (
-      <>
-        <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
-      </>
-    ));
+    })(() => <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />);
 
     act(() => {
       render(<App />);
@@ -356,19 +352,11 @@ describe('Interaction between configuration and extension systems', () => {
       'esm-flintstones': {},
     });
 
-    function RootComponent() {
-      return (
-        <div>
-          <ExtensionSlot data-testid="slot" name="A slot" />
-        </div>
-      );
-    }
-
     const App = openmrsComponentDecorator({
       moduleName: 'esm-bedrock',
       featureName: 'Bedrock',
       disableTranslations: true,
-    })(RootComponent);
+    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
     act(() => {
       render(<App />);
@@ -415,19 +403,11 @@ describe('Interaction between configuration and extension systems', () => {
       },
     });
 
-    function RootComponent() {
-      return (
-        <div>
-          <ExtensionSlot data-testid="slot" name="A slot" />
-        </div>
-      );
-    }
-
     const App = openmrsComponentDecorator({
       moduleName: 'esm-bedrock',
       featureName: 'Bedrock',
       disableTranslations: true,
-    })(RootComponent);
+    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
     act(() => {
       render(<App />);
