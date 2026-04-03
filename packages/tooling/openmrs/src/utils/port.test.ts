@@ -1,11 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
+import type { Server } from 'node:net';
 import { isPortAvailable, getAvailablePort } from './port';
 
 /**
  * Creates a mock server whose listen() triggers either the 'listening' or 'error' event
  * depending on the `shouldSucceed` parameter. The close() callback fires immediately.
  */
-function createMockServer(shouldSucceed: boolean) {
+function createMockServer(shouldSucceed: boolean): Server {
   const handlers: Record<string, () => void> = {};
   return {
     once: vi.fn((event: string, handler: () => void) => {
@@ -19,7 +20,7 @@ function createMockServer(shouldSucceed: boolean) {
       }
     }),
     close: vi.fn((cb: () => void) => cb()),
-  };
+  } as unknown as Server;
 }
 
 vi.mock('node:net', () => ({
@@ -34,7 +35,7 @@ describe('isPortAvailable', () => {
   it('returns true when both IPv4 and IPv6 binds succeed', async () => {
     const ipv4Server = createMockServer(true);
     const ipv6Server = createMockServer(true);
-    mockCreateServer.mockReturnValueOnce(ipv4Server as any).mockReturnValueOnce(ipv6Server as any);
+    mockCreateServer.mockReturnValueOnce(ipv4Server).mockReturnValueOnce(ipv6Server);
 
     await expect(isPortAvailable(3000)).resolves.toBe(true);
 
@@ -44,7 +45,7 @@ describe('isPortAvailable', () => {
 
   it('returns false when the IPv4 bind fails', async () => {
     const ipv4Server = createMockServer(false);
-    mockCreateServer.mockReturnValueOnce(ipv4Server as any);
+    mockCreateServer.mockReturnValueOnce(ipv4Server);
 
     await expect(isPortAvailable(3000)).resolves.toBe(false);
 
@@ -54,7 +55,7 @@ describe('isPortAvailable', () => {
   it('returns false when the IPv6 bind fails', async () => {
     const ipv4Server = createMockServer(true);
     const ipv6Server = createMockServer(false);
-    mockCreateServer.mockReturnValueOnce(ipv4Server as any).mockReturnValueOnce(ipv6Server as any);
+    mockCreateServer.mockReturnValueOnce(ipv4Server).mockReturnValueOnce(ipv6Server);
 
     await expect(isPortAvailable(3000)).resolves.toBe(false);
   });
@@ -64,7 +65,7 @@ describe('getAvailablePort', () => {
   it('returns the start port when it is available', async () => {
     const ipv4 = createMockServer(true);
     const ipv6 = createMockServer(true);
-    mockCreateServer.mockReturnValueOnce(ipv4 as any).mockReturnValueOnce(ipv6 as any);
+    mockCreateServer.mockReturnValueOnce(ipv4).mockReturnValueOnce(ipv6);
 
     await expect(getAvailablePort(8080)).resolves.toBe(8080);
   });
@@ -76,17 +77,14 @@ describe('getAvailablePort', () => {
     const ipv4 = createMockServer(true);
     const ipv6 = createMockServer(true);
 
-    mockCreateServer
-      .mockReturnValueOnce(occupied as any)
-      .mockReturnValueOnce(ipv4 as any)
-      .mockReturnValueOnce(ipv6 as any);
+    mockCreateServer.mockReturnValueOnce(occupied).mockReturnValueOnce(ipv4).mockReturnValueOnce(ipv6);
 
     await expect(getAvailablePort(8080)).resolves.toBe(8081);
   });
 
   it('throws when no port is available up to 65535', async () => {
     // All ports fail
-    mockCreateServer.mockImplementation(() => createMockServer(false) as any);
+    mockCreateServer.mockImplementation(() => createMockServer(false));
 
     await expect(getAvailablePort(65535)).rejects.toThrow('Could not find an available port');
   });

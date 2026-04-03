@@ -47,14 +47,14 @@ import { untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 import { runAssemble, type AssembleArgs } from './assemble';
 
-const mockReadFile = vi.mocked(readFile);
-const mockWriteFile = vi.mocked(writeFile);
-const mockExistsSync = vi.mocked(existsSync);
-const mockNpmFetchJson = vi.mocked(npmRegistryFetch.json);
-const mockPacoteManifest = vi.mocked(pacote.manifest);
-const mockPacoteTarball = vi.mocked(pacote.tarball);
-const mockUntar = vi.mocked(untar);
-const mockGetNpmRegistryConfiguration = vi.mocked(getNpmRegistryConfiguration);
+const mockReadFile: vi.Mock = vi.mocked(readFile);
+const mockWriteFile: vi.Mock = vi.mocked(writeFile);
+const mockExistsSync: vi.Mock = vi.mocked(existsSync);
+const mockNpmFetchJson: vi.Mock = vi.mocked(npmRegistryFetch.json);
+const mockPacoteManifest: vi.Mock = vi.mocked(pacote.manifest);
+const mockPacoteTarball: vi.Mock = vi.mocked(pacote.tarball);
+const mockUntar: vi.Mock = vi.mocked(untar);
+const mockGetNpmRegistryConfiguration: vi.Mock = vi.mocked(getNpmRegistryConfiguration);
 
 function defaultArgs(overrides: Partial<AssembleArgs> = {}): AssembleArgs {
   return {
@@ -89,14 +89,14 @@ describe('assemble survey mode (integration with real @inquirer/prompts)', () =>
         { package: { name: '@openmrs/esm-login-app', version: '2.0.0' } },
       ],
       total: 2,
-    } as any);
+    });
 
     // Set up download mocks for the selected package
     mockPacoteManifest.mockResolvedValue({
       _resolved: 'https://registry.npmjs.org/@openmrs/esm-home-app/-/esm-home-app-1.0.0.tgz',
       _integrity: 'sha512-test',
-    } as any);
-    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball') as any);
+    });
+    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
     mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-home-app', '1.0.0'));
     mockExistsSync.mockReturnValue(false);
 
@@ -131,7 +131,7 @@ describe('assemble survey mode (integration with real @inquirer/prompts)', () =>
     mockNpmFetchJson.mockResolvedValue({
       objects: [{ package: { name: '@openmrs/esm-home-app', version: '1.0.0' } }],
       total: 1,
-    } as any);
+    });
 
     const resultPromise = runAssemble(defaultArgs());
 
@@ -158,13 +158,13 @@ describe('assemble survey mode (integration with real @inquirer/prompts)', () =>
     mockNpmFetchJson.mockResolvedValue({
       objects: [{ package: { name: '@openmrs/esm-home-app', version: '1.0.0' } }],
       total: 1,
-    } as any);
+    });
 
     mockPacoteManifest.mockResolvedValue({
       _resolved: 'https://r.test/app.tgz',
       _integrity: 'sha512-test',
-    } as any);
-    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball') as any);
+    });
+    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
     mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-home-app', '2.0.0'));
     mockExistsSync.mockReturnValue(false);
 
@@ -194,13 +194,13 @@ describe('assemble survey mode (integration with real @inquirer/prompts)', () =>
     mockNpmFetchJson.mockResolvedValue({
       objects: [{ package: { name: '@openmrs/esm-home-app', version: '1.0.0' } }],
       total: 1,
-    } as any);
+    });
 
     mockPacoteManifest.mockResolvedValue({
       _resolved: 'https://r.test/app.tgz',
       _integrity: 'sha512-test',
-    } as any);
-    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball') as any);
+    });
+    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
     mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-home-app', '1.0.0'));
     mockExistsSync.mockReturnValue(false);
 
@@ -242,13 +242,13 @@ describe('assemble survey mode (integration with real @inquirer/prompts)', () =>
         { package: { name: '@openmrs/esm-login-app', version: '2.0.0' } },
       ],
       total: 2,
-    } as any);
+    });
 
     mockPacoteManifest.mockResolvedValue({
       _resolved: 'https://r.test/app.tgz',
       _integrity: 'sha512-test',
-    } as any);
-    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball') as any);
+    });
+    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
     mockUntar
       .mockResolvedValueOnce(fakeUntarResult('@openmrs/esm-home-app', '1.0.0'))
       .mockResolvedValueOnce(fakeUntarResult('@openmrs/esm-login-app', '2.0.0'));

@@ -51,20 +51,22 @@ import { contentHash, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 import { runAssemble, type AssembleArgs } from './assemble';
 
-const mockReadFile = vi.mocked(readFile);
-const mockWriteFile = vi.mocked(writeFile);
-const mockMkdir = vi.mocked(mkdir);
-const mockExistsSync = vi.mocked(existsSync);
-const mockReadFileSync = vi.mocked(readFileSync);
-const mockCheckbox = vi.mocked(checkbox);
-const mockInput = vi.mocked(input);
-const mockNpmFetchJson = vi.mocked(npmRegistryFetch.json);
-const mockPacoteManifest = vi.mocked(pacote.manifest);
-const mockPacoteTarball = vi.mocked(pacote.tarball);
-const mockRm = vi.mocked(rm);
-const mockUntar = vi.mocked(untar);
-const mockContentHash = vi.mocked(contentHash);
-const mockGetNpmRegistryConfiguration = vi.mocked(getNpmRegistryConfiguration);
+// Many of these functions have complex overloaded signatures that make vi.mocked()
+// produce types no mock value can satisfy. Using vi.Mock lets us call mockResolvedValue
+// etc. without fighting overload resolution.
+const mockReadFile: vi.Mock = vi.mocked(readFile);
+const mockWriteFile: vi.Mock = vi.mocked(writeFile);
+const mockExistsSync: vi.Mock = vi.mocked(existsSync);
+const mockReadFileSync: vi.Mock = vi.mocked(readFileSync);
+const mockCheckbox: vi.Mock = vi.mocked(checkbox);
+const mockInput: vi.Mock = vi.mocked(input);
+const mockNpmFetchJson: vi.Mock = vi.mocked(npmRegistryFetch.json);
+const mockPacoteManifest: vi.Mock = vi.mocked(pacote.manifest);
+const mockPacoteTarball: vi.Mock = vi.mocked(pacote.tarball);
+const mockRm: vi.Mock = vi.mocked(rm);
+const mockUntar: vi.Mock = vi.mocked(untar);
+const mockContentHash: vi.Mock = vi.mocked(contentHash);
+const mockGetNpmRegistryConfiguration: vi.Mock = vi.mocked(getNpmRegistryConfiguration);
 
 function defaultArgs(overrides: Partial<AssembleArgs> = {}): AssembleArgs {
   return {
@@ -108,10 +110,10 @@ function setupSingleModuleRun(
 
   mockReadFile.mockImplementation((p: any, _enc?: any) => {
     if (String(p) === '/path/to/config.json') {
-      return Promise.resolve(JSON.stringify(config)) as any;
+      return Promise.resolve(JSON.stringify(config));
     }
     if (String(p).endsWith('routes.json') && routesJson) {
-      return Promise.resolve(JSON.stringify(routesJson)) as any;
+      return Promise.resolve(JSON.stringify(routesJson));
     }
     return Promise.reject(new Error(`Unexpected readFile call: ${p}`));
   });
@@ -119,8 +121,8 @@ function setupSingleModuleRun(
   mockPacoteManifest.mockResolvedValue({
     _resolved: `https://registry.npmjs.org/${moduleName}/-/${moduleName}-${moduleVersion}.tgz`,
     _integrity: 'sha512-fake',
-  } as any);
-  mockPacoteTarball.mockResolvedValue(Buffer.from('fake-tarball') as any);
+  });
+  mockPacoteTarball.mockResolvedValue(Buffer.from('fake-tarball'));
   mockUntar.mockResolvedValue(fakeUntarResult(moduleName, moduleVersion, entryPath));
 }
 
@@ -137,7 +139,7 @@ describe('runAssemble', () => {
     it('reads a config file and writes an empty import map when no modules are specified', async () => {
       const config = { frontendModules: {}, publicUrl: '.' };
       mockExistsSync.mockReturnValue(true);
-      mockReadFile.mockResolvedValue(JSON.stringify(config) as any);
+      mockReadFile.mockResolvedValue(JSON.stringify(config));
 
       await runAssemble(defaultArgs());
 
@@ -151,7 +153,7 @@ describe('runAssemble', () => {
     it('defaults to spa-build-config.json in cwd when no config paths are given', async () => {
       const config = { frontendModules: {}, publicUrl: '.' };
       mockExistsSync.mockReturnValue(true);
-      mockReadFile.mockResolvedValue(JSON.stringify(config) as any);
+      mockReadFile.mockResolvedValue(JSON.stringify(config));
 
       await runAssemble(defaultArgs({ config: [] }));
 
@@ -171,13 +173,11 @@ describe('runAssemble', () => {
       const config2 = { frontendModules: { '@openmrs/esm-b': '2.0.0' } };
 
       mockExistsSync.mockReturnValue(true);
-      mockReadFile
-        .mockResolvedValueOnce(JSON.stringify(config1) as any)
-        .mockResolvedValueOnce(JSON.stringify(config2) as any);
+      mockReadFile.mockResolvedValueOnce(JSON.stringify(config1)).mockResolvedValueOnce(JSON.stringify(config2));
 
       // Both modules will be downloaded; set up minimal mocks
-      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/a.tgz', _integrity: 'sha512-a' } as any);
-      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball') as any);
+      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/a.tgz', _integrity: 'sha512-a' });
+      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
       mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-a', '1.0.0'));
 
       await runAssemble(
@@ -205,12 +205,10 @@ describe('runAssemble', () => {
       };
 
       mockExistsSync.mockReturnValue(true);
-      mockReadFile
-        .mockResolvedValueOnce(JSON.stringify(config1) as any)
-        .mockResolvedValueOnce(JSON.stringify(config2) as any);
+      mockReadFile.mockResolvedValueOnce(JSON.stringify(config1)).mockResolvedValueOnce(JSON.stringify(config2));
 
-      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/b.tgz', _integrity: 'sha512-b' } as any);
-      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball') as any);
+      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/b.tgz', _integrity: 'sha512-b' });
+      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
       mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-b', '2.0.0'));
 
       await runAssemble(
@@ -237,7 +235,7 @@ describe('runAssemble', () => {
           { package: { name: '@openmrs/esm-login-app', version: '3.0.0' } },
         ],
         total: 3,
-      } as any);
+      });
 
       // User selects no packages
       mockCheckbox.mockResolvedValue([]);
@@ -247,7 +245,7 @@ describe('runAssemble', () => {
       expect(mockNpmFetchJson).toHaveBeenCalledWith(expect.stringContaining('keywords:openmrs'), expect.any(Object));
 
       // The checkbox should only list -app packages
-      const checkboxConfig = mockCheckbox.mock.calls[0][0] as any;
+      const checkboxConfig = mockCheckbox.mock.calls[0][0];
       const choiceNames = checkboxConfig.choices.map((c: any) => c.name);
       expect(choiceNames).toContain('@openmrs/esm-home-app');
       expect(choiceNames).toContain('@openmrs/esm-login-app');
@@ -258,20 +256,20 @@ describe('runAssemble', () => {
       mockNpmFetchJson.mockResolvedValue({
         objects: [{ package: { name: '@openmrs/esm-home-app', version: '1.0.0' } }],
         total: 1,
-      } as any);
+      });
 
       mockCheckbox.mockResolvedValue([{ name: '@openmrs/esm-home-app', version: '1.0.0' }]);
       mockInput.mockResolvedValue('1.2.0');
 
-      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/home.tgz', _integrity: 'sha512-h' } as any);
-      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball') as any);
+      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/home.tgz', _integrity: 'sha512-h' });
+      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
       mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-home-app', '1.2.0'));
       mockExistsSync.mockReturnValue(false);
 
       await runAssemble(defaultArgs({ mode: 'survey', config: [] }));
 
       // Should have prompted for the version of the selected package
-      const inputConfig = mockInput.mock.calls[0][0] as any;
+      const inputConfig = mockInput.mock.calls[0][0];
       expect(inputConfig.message).toContain('@openmrs/esm-home-app');
       expect(inputConfig.default).toBe('1.0.0');
 
@@ -313,7 +311,7 @@ describe('runAssemble', () => {
       });
       mockReadFile.mockImplementation((p: any) => {
         if (String(p) === '/path/to/config.json') {
-          return Promise.resolve(JSON.stringify(config)) as any;
+          return Promise.resolve(JSON.stringify(config));
         }
         return Promise.reject(new Error(`Unexpected readFile: ${p}`));
       });
@@ -346,11 +344,11 @@ describe('runAssemble', () => {
       });
       mockReadFile.mockImplementation((p: any, enc?: any) => {
         if (String(p) === '/path/to/config.json') {
-          return Promise.resolve(JSON.stringify(config)) as any;
+          return Promise.resolve(JSON.stringify(config));
         }
         // file:// path resolves relative to cwd
         if (String(p) === resolve(process.cwd(), './local-build.tgz')) {
-          return Promise.resolve(Buffer.from('local-tarball')) as any;
+          return Promise.resolve(Buffer.from('local-tarball'));
         }
         return Promise.reject(new Error(`Unexpected readFile: ${p}`));
       });
@@ -430,7 +428,7 @@ describe('runAssemble', () => {
     it('merges configFiles into openmrs-config.json', async () => {
       const config = { frontendModules: {}, publicUrl: '.' };
       mockExistsSync.mockReturnValue(true);
-      mockReadFile.mockResolvedValue(JSON.stringify(config) as any);
+      mockReadFile.mockResolvedValue(JSON.stringify(config));
       mockReadFileSync.mockReturnValue(JSON.stringify({ setting: 'value' }));
 
       await runAssemble(
@@ -468,7 +466,7 @@ describe('runAssemble', () => {
         if (String(p) === '/tmp/test-output') return true;
         return false;
       });
-      mockReadFile.mockResolvedValue(JSON.stringify(config) as any);
+      mockReadFile.mockResolvedValue(JSON.stringify(config));
 
       await runAssemble(defaultArgs({ fresh: true }));
 
@@ -478,7 +476,7 @@ describe('runAssemble', () => {
     it('does not call rm when fresh is false', async () => {
       const config = { frontendModules: {}, publicUrl: '.' };
       mockExistsSync.mockReturnValue(true);
-      mockReadFile.mockResolvedValue(JSON.stringify(config) as any);
+      mockReadFile.mockResolvedValue(JSON.stringify(config));
 
       await runAssemble(defaultArgs({ fresh: false }));
 

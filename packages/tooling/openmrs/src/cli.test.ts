@@ -13,7 +13,7 @@ vi.mock('yargs', () => {
 vi.mock('child_process');
 vi.mock('./utils');
 
-import { fork } from 'child_process';
+import { fork, type ChildProcess } from 'child_process';
 import {
   getAvailablePort,
   getImportmapAndRoutes,
@@ -30,7 +30,7 @@ beforeEach(() => {
   vi.mocked(fork).mockReturnValue({
     send: vi.fn(),
     on: vi.fn(),
-  } as any);
+  } as unknown as ChildProcess);
 
   vi.mocked(getAvailablePort).mockResolvedValue(8080);
   vi.mocked(isPortAvailable).mockResolvedValue(true);
@@ -62,7 +62,7 @@ beforeEach(() => {
 });
 
 function createCli(args: string[]) {
-  return buildCli(yargsFactory(args).exitProcess(false).fail(false) as any);
+  return buildCli(yargsFactory(args).exitProcess(false).fail(false) as unknown as Parameters<typeof buildCli>[0]);
 }
 
 describe('develop command', () => {
