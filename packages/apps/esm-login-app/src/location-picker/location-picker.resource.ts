@@ -37,8 +37,6 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
         };
         await setUserProperties(userUuid, updatedUserProperties);
       } else if (!!userProperties?.defaultLocation) {
-        // If the user doesn't want to save the preference,
-        // the old preference should be deleted
         const updatedUserProperties = { ...userProperties };
         delete updatedUserProperties.defaultLocation;
         await setUserProperties(userUuid, updatedUserProperties);
@@ -86,10 +84,11 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
 }
 
 export function useLocationCount(useLoginLocationTag: boolean) {
-  const url = `/ws/fhir2/R4/Location?_count=1`;
+  const urlParams = new URLSearchParams({ _count: '1' });
   if (useLoginLocationTag) {
-    url.concat(`&tag=Login Location`);
+    urlParams.append('_tag', 'Login Location');
   }
+  const url = `/ws/fhir2/R4/Location?${urlParams.toString()}`;
   const { data, error, isLoading } = useSwrImmutable<FetchResponse<LocationResponse>>(url, openmrsFetch, {
     shouldRetryOnError(err) {
       if (err?.response?.status) {
