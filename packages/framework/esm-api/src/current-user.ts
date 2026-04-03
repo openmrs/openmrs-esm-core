@@ -362,6 +362,36 @@ export async function setSessionLocation(locationUuid: string, abortController: 
 }
 
 /**
+ * Sets the session locale for the current user. This updates the locale for
+ * the current session only (not the user's saved default). The session store
+ * is updated with the server response, which triggers `setUserLanguage()` to
+ * update the document's `lang` attribute.
+ *
+ * @param locale The locale to set (e.g., 'en_US', 'fr').
+ * @param abortController An AbortController to allow cancellation of the request.
+ * @returns A Promise that resolves with the updated SessionStore.
+ *
+ * @example
+ * ```ts
+ * import { setSessionLocale } from '@openmrs/esm-api';
+ * const abortController = new AbortController();
+ * await setSessionLocale('fr', abortController);
+ * ```
+ */
+export async function setSessionLocale(locale: string, abortController: AbortController): Promise<any> {
+  return handleSessionResponse(
+    openmrsFetch(sessionEndpoint, {
+      method: 'POST',
+      body: { locale },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      signal: abortController.signal,
+    }),
+  );
+}
+
+/**
  * Updates the user properties for a specific user. User properties are key-value
  * pairs that store user-specific settings and preferences. After updating the
  * properties on the server, the current user session is refetched to reflect

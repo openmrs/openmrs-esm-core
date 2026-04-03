@@ -46,6 +46,7 @@
 - [getSessionStore](functions/getSessionStore.md)
 - [getSessionLocation](functions/getSessionLocation.md)
 - [refetchCurrentUser](functions/refetchCurrentUser.md)
+- [setSessionLocale](functions/setSessionLocale.md)
 - [setSessionLocation](functions/setSessionLocation.md)
 - [setUserLanguage](functions/setUserLanguage.md)
 - [setUserProperties](functions/setUserProperties.md)

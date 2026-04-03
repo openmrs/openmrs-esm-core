@@ -5,6 +5,7 @@ export {
   getSessionStore,
   getSessionLocation,
   refetchCurrentUser,
+  setSessionLocale,
   setSessionLocation,
   setUserLanguage,
   setUserProperties,
