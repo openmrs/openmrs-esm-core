@@ -86,10 +86,11 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
 }
 
 export function useLocationCount(useLoginLocationTag: boolean) {
-  const url = `/ws/fhir2/R4/Location?_count=1`;
+  const urlParams = new URLSearchParams({ _count: '1' });
   if (useLoginLocationTag) {
-    url.concat(`&tag=Login Location`);
+    urlParams.append('_tag', 'Login Location');
   }
+  const url = `/ws/fhir2/R4/Location?${urlParams.toString()}`;
   const { data, error, isLoading } = useSwrImmutable<FetchResponse<LocationResponse>>(url, openmrsFetch, {
     shouldRetryOnError(err) {
       if (err?.response?.status) {
