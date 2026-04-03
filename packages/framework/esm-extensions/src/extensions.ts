@@ -351,10 +351,6 @@ function getAssignedExtensionsFromSlotData(
   // Create context once for all extensions in this slot
   const slotState = internalState.slots[slotName]?.state;
   const helpers = {
-    hasRole: (roleName: string) =>
-      session?.user?.roles?.some((r) => r.display === roleName) ||
-      session?.user?.allRoles?.some((r) => r.display === roleName) ||
-      false,
     hasPrivilege: (privName: string) => session?.user?.privileges?.some((p) => p.display === privName) ?? false,
   };
   const expressionContext =
