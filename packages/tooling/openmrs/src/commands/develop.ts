@@ -131,10 +131,13 @@ export async function runDevelop(args: DevelopArgs) {
     });
   });
 
+  // Escape the spaPath so it can be safely used in a regex
+  const escapedSpaPath = spaPath.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
+
   // Return our custom `index.html` for all requests beginning with spaPath
   // and not ending in `.js`, `.woff`, `.woff2`, `.json`, or any two- or three-character
   // extension.
-  const indexHtmlPathMatcher = /\/openmrs\/spa\/(?!.*\.(js|woff2?|json|.{2,3}$)).*$/;
+  const indexHtmlPathMatcher = new RegExp(`${escapedSpaPath}\\/(?!.*\\.(js|woff2?|json|.{2,3}$)).*$`);
 
   // Route for custom `index.html` goes above static assets
   app.get(indexHtmlPathMatcher, (_, res) => res.contentType('text/html').send(indexContent));
@@ -184,5 +187,6 @@ export async function runDevelop(args: DevelopArgs) {
     }
   });
 
+  // Keep the promise pending so the runner process doesn't exit
   return new Promise<void>(() => {});
 }
