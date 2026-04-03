@@ -350,11 +350,15 @@ function getAssignedExtensionsFromSlotData(
 
   // Create context once for all extensions in this slot
   const slotState = internalState.slots[slotName]?.state;
-  const expressionContext = {
-    session,
-    ...(slotState && typeof slotState === 'object' ? slotState : {}),
+  const helpers = {
+    hasRole: (roleName: string) =>
+      session?.user?.roles?.some((r) => r.display === roleName) ||
+      session?.user?.allRoles?.some((r) => r.display === roleName) ||
+      false,
     hasPrivilege: (privName: string) => session?.user?.privileges?.some((p) => p.display === privName) ?? false,
   };
+  const expressionContext =
+    slotState && typeof slotState === 'object' ? { session, ...helpers, ...slotState } : { session, ...helpers };
 
   for (let id of assignedIds) {
     const { config: rawExtensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
