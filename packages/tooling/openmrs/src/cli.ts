@@ -32,7 +32,7 @@ function runCommand<T extends CommandNames>(type: T, args: Parameters<Commands[T
   ps.on('exit', (code) => process.exit(code || 0));
 }
 
-export function buildCli(y: typeof yargs) {
+export function buildCli(y: yargs.Argv) {
   y.command(
     'develop',
     'Starts a new frontend module development session with the OpenMRS app shell.',

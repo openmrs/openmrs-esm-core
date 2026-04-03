@@ -62,7 +62,7 @@ beforeEach(() => {
 });
 
 function createCli(args: string[]) {
-  return buildCli(yargsFactory(args).exitProcess(false).fail(false) as unknown as Parameters<typeof buildCli>[0]);
+  return buildCli(yargsFactory(args).exitProcess(false).fail(false));
 }
 
 describe('develop command', () => {
