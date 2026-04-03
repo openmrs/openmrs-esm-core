@@ -1,8 +1,15 @@
 import React from 'react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { mutate } from 'swr';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
-import { type LoggedInUser, type Session, useSession } from '@openmrs/esm-framework';
+import { render, screen, waitFor } from '@testing-library/react';
+import {
+  type LoggedInUser,
+  type Session,
+  setSessionLocale,
+  setUserProperties,
+  useSession,
+} from '@openmrs/esm-framework';
 import ChangeLanguageModal from './change-language.modal';
 
 const mockUser = {
@@ -12,24 +19,30 @@ const mockUser = {
   },
 };
 
-const mockUpdateUserProperties = vi.fn((...args) => Promise.resolve());
-const mockUpdateSessionLocale = vi.fn((...args) => Promise.resolve());
-
 vi.mock('@openmrs/esm-framework', async (importOriginal) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@openmrs/esm-framework')>();
   return {
     ...actual,
+    setSessionLocale: vi.fn(() => Promise.resolve()),
+    setUserProperties: vi.fn(() => Promise.resolve()),
     useSession: vi.fn(),
   };
 });
 
-vi.mock('./change-language.resource', () => ({
-  updateUserProperties: (...args) => mockUpdateUserProperties(...args),
-  updateSessionLocale: (...args) => mockUpdateSessionLocale(...args),
-}));
+vi.mock('swr', async (importOriginal) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+  const actual = await importOriginal<typeof import('swr')>();
+  return {
+    ...actual,
+    mutate: vi.fn(() => Promise.resolve()),
+  };
+});
 
 const mockUseSession = vi.mocked(useSession);
+const mockSetSessionLocale = vi.mocked(setSessionLocale);
+const mockSetUserProperties = vi.mocked(setUserProperties);
+const mockMutate = vi.mocked(mutate);
 
 describe(`Change Language Modal`, () => {
   beforeEach(() => {
@@ -60,22 +73,27 @@ describe(`Change Language Modal`, () => {
     expect(mockClose).toHaveBeenCalled();
   });
 
-  it('should change user locale when the submit button is clicked', async () => {
+  it('should update session locale and user properties when the submit button is clicked', async () => {
     const user = userEvent.setup();
+    const mockClose = vi.fn();
 
-    render(<ChangeLanguageModal close={vi.fn()} />);
+    render(<ChangeLanguageModal close={mockClose} />);
 
     expect(screen.getByRole('radio', { name: /français/i })).toBeChecked();
 
     await user.click(screen.getByRole('radio', { name: /english/i }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
-    expect(mockUpdateUserProperties).toHaveBeenCalledWith(mockUser.uuid, { defaultLocale: 'en' }, expect.anything());
+    await waitFor(() => expect(mockClose).toHaveBeenCalled());
+
+    expect(mockSetSessionLocale).toHaveBeenCalledWith('en', expect.anything());
+    expect(mockSetUserProperties).toHaveBeenCalledWith(mockUser.uuid, { defaultLocale: 'en' }, expect.anything());
+    expect(mockMutate).toHaveBeenCalledWith(expect.any(Function));
   });
 
   it('should show a loading indicator in the submit button while language change is in progress', async () => {
     const user = userEvent.setup();
-    mockUpdateUserProperties.mockImplementation(() => new Promise(() => {}));
+    mockSetSessionLocale.mockImplementation(() => new Promise(() => {}));
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
@@ -92,10 +110,11 @@ describe(`Change Language Modal`, () => {
     expect(checkbox).toBeChecked();
   });
 
-  it('should call updateSessionLocale when checkbox is unchecked and user changes locale', async () => {
+  it('should only update session locale when checkbox is unchecked', async () => {
     const user = userEvent.setup();
+    const mockClose = vi.fn();
 
-    render(<ChangeLanguageModal close={vi.fn()} />);
+    render(<ChangeLanguageModal close={mockClose} />);
 
     // Uncheck the checkbox to only update session locale
     const checkbox = screen.getByRole('checkbox', { name: /Save as my default language/i });
@@ -105,8 +124,10 @@ describe(`Change Language Modal`, () => {
     await user.click(screen.getByRole('radio', { name: /english/i }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
-    expect(mockUpdateSessionLocale).toHaveBeenCalledWith('en', expect.anything());
-    expect(mockUpdateUserProperties).not.toHaveBeenCalled();
+    await waitFor(() => expect(mockClose).toHaveBeenCalled());
+
+    expect(mockSetSessionLocale).toHaveBeenCalledWith('en', expect.anything());
+    expect(mockSetUserProperties).not.toHaveBeenCalled();
   });
 
   it('should disable submit button when selected locale is same as current locale', () => {
