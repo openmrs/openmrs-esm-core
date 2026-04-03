@@ -358,5 +358,6 @@ export function buildCli(y: Argv) {
     .strict();
 }
 
+// In ESM, the yargs default export is a factory function, not a pre-invoked Argv instance.
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-buildCli(yargs as unknown as Argv).argv;
+buildCli(yargs(process.argv.slice(2))).argv;

@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import merge from 'lodash/merge';
+import merge from 'lodash/merge.js';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';

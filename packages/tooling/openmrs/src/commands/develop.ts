@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { basename, resolve } from 'node:path';
@@ -42,6 +43,7 @@ export async function runDevelop(args: DevelopArgs) {
   const localConfigUrlPrefix = '__local_config__';
   const localConfigUrls = configFiles.map((path) => `${spaPath}/${localConfigUrlPrefix}/${basename(path)}`);
 
+  const require = createRequire(import.meta.url);
   const source = resolve(require.resolve('@openmrs/esm-app-shell/package.json'), '..', 'dist');
   const index = resolve(source, 'index.html');
   const indexContent = readFileSync(index, 'utf8')
