@@ -16,7 +16,6 @@ import {
 import type { ExtensionInfo, ExtensionInternalStore, ExtensionRegistration } from './store';
 import { getExtensionInternalStore } from './store';
 
-// Minimal mocking - only what we need for fine-grained control
 vi.mock('@openmrs/esm-api', () => ({
   sessionStore: createGlobalStore('mock-session-store', {
     loaded: false,
@@ -43,13 +42,11 @@ vi.mock('@openmrs/esm-globals', async (importOriginal) => {
   };
 });
 
-// Helper to create unique names for test isolation
 let nameCounter = 0;
 function getUniqueName(prefix: string = 'test'): string {
   return `${prefix}-${++nameCounter}`;
 }
 
-// Helper to create a mock extension registration
 function createMockExtension(name: string, overrides: Partial<ExtensionRegistration> = {}): ExtensionInfo {
   return {
     name,
@@ -69,7 +66,7 @@ function setSession(
   privileges: Array<PrivilegeEntry> = [],
   allRoles: Array<RoleEntry> = []
 ) {
-  (sessionStore as any).setState({
+  sessionStore.setState({
     loaded: true,
     session: {
       authenticated: true,
@@ -88,7 +85,7 @@ function setSession(
         locale: 'en',
         allowedLocales: ['en'],
       },
-    } as Session,
+    },
   });
 }
 
@@ -103,6 +100,10 @@ function getSlotState(slotName: string) {
   return getExtensionInternalStore().getState().slots[slotName];
 }
 
+/**
+ * Asserts that an extension with the given displayExpression is shown or hidden
+ * based on the current session state.
+ */
 function assertDisplayExpression(
   displayExpression: string,
   roles: Array<RoleEntry>,
@@ -151,6 +152,7 @@ describe('getExtensionRegistrationFrom', () => {
       slots: {},
       extensions: { 'test-extension': mockExtension },
     };
+
     expect(getExtensionRegistrationFrom(state, 'test-extension')).toBe(mockExtension);
   });
 
@@ -171,7 +173,8 @@ describe('getExtensionRegistrationFrom', () => {
 
 describe('getExtensionRegistration', () => {
   it('should return undefined for non-existent extension', () => {
-    expect(getExtensionRegistration('non-existent-extension-xyz')).toBeUndefined();
+    const result = getExtensionRegistration('non-existent-extension-xyz');
+    expect(result).toBeUndefined();
   });
 
   it('should return the extension registration for a registered extension', () => {
@@ -392,21 +395,46 @@ describe('getAssignedExtensions', () => {
   });
 });
 
-describe('getAssignedExtensions — hasPrivilege helper', () => {
+describe('getAssignedExtensions — hasRole and hasPrivilege helpers', () => {
+  const nurse: RoleEntry = { uuid: 'role-1', name: 'Nurse', display: 'Nurse' };
   const editOrders: PrivilegeEntry = { uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' };
   const viewReports: PrivilegeEntry = { uuid: 'priv-2', name: 'View Reports', display: 'View Reports' };
 
+  describe('hasRole() helper', () => {
+    it('should show extension when hasRole matches user role', () => {
+      assertDisplayExpression("hasRole('Nurse')", [nurse], [], true);
+    });
+
+    it('should hide extension when hasRole does not match user role', () => {
+      assertDisplayExpression("hasRole('Doctor')", [nurse], [], false);
+    });
+
+    it('should check inherited roles via allRoles', () => {
+      assertDisplayExpression(
+        "hasRole('Nurse')",
+        [],
+        [],
+        true,
+        [nurse],
+      );
+    });
+
+    it('should support OR logic across multiple roles', () => {
+      assertDisplayExpression("hasRole('Doctor') || hasRole('Nurse')", [nurse], [], true);
+    });
+  });
+
   describe('hasPrivilege() helper', () => {
     it('should show extension when hasPrivilege matches user privilege', () => {
-      assertDisplayExpression("hasPrivilege('Edit Orders')", [editOrders], true);
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [], [editOrders], true);
     });
 
     it('should hide extension when hasPrivilege does not match', () => {
-      assertDisplayExpression("hasPrivilege('Edit Orders')", [viewReports], false);
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [], [viewReports], false);
     });
 
     it('should return false gracefully when user has no privileges', () => {
-      assertDisplayExpression("hasPrivilege('Edit Orders')", [], false);
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [], [], false);
     });
   });
 });
