@@ -37,6 +37,8 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
         };
         await setUserProperties(userUuid, updatedUserProperties);
       } else if (!!userProperties?.defaultLocation) {
+        // If the user doesn't want to save the preference,
+        // the old preference should be deleted
         const updatedUserProperties = { ...userProperties };
         delete updatedUserProperties.defaultLocation;
         await setUserProperties(userUuid, updatedUserProperties);
