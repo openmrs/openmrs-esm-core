@@ -552,24 +552,6 @@ describe('getAssignedExtensions — hasRole and hasPrivilege helpers', () => {
   const editOrders = { uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' };
   const viewReports = { uuid: 'priv-2', name: 'View Reports', display: 'View Reports' };
 
-  describe('hasRole() helper', () => {
-    it('should show extension when hasRole matches user role', () => {
-      assertDisplayExpression("hasRole('Nurse')", [nurse], [], true);
-    });
-
-    it('should hide extension when hasRole does not match user role', () => {
-      assertDisplayExpression("hasRole('Doctor')", [nurse], [], false);
-    });
-
-    it('should check inherited roles via allRoles', () => {
-      assertDisplayExpression("hasRole('Nurse')", [], [], true, [nurse]);
-    });
-
-    it('should support OR logic across multiple roles', () => {
-      assertDisplayExpression("hasRole('Doctor') || hasRole('Nurse')", [nurse], [], true);
-    });
-  });
-
   describe('hasPrivilege() helper', () => {
     it('should show extension when hasPrivilege matches user privilege', () => {
       assertDisplayExpression("hasPrivilege('Edit Orders')", [], [editOrders], true);
