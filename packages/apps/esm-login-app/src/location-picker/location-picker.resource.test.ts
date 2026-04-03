@@ -3,9 +3,11 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { openmrsFetch, type FetchResponse } from '@openmrs/esm-framework';
 import { mockLoginLocations, mockSoleLoginLocation } from '../../__mocks__/locations.mock';
 import { useLocationCount } from './location-picker.resource';
+import { SWRConfig } from 'swr';
+import React from 'react';
 
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
-
+const wrapper = ({ children }) => React.createElement(SWRConfig, { value: { provider: () => new Map() } }, children);
 describe('useLocationCount', () => {
   beforeEach(() => {
     mockOpenmrsFetch.mockImplementation(async (url) => {
@@ -64,18 +66,14 @@ describe('useLocationCount', () => {
   });
 
   it('returns null for firstLocation when the response has no entries', async () => {
-    mockOpenmrsFetch.mockImplementation(
-      async () =>
-        ({
-          data: { total: 0, entry: undefined },
-        }) as FetchResponse<any>,
-    );
+    mockOpenmrsFetch.mockResolvedValue({
+      data: { total: 0, entry: undefined },
+    } as FetchResponse<any>);
 
-    const { result, unmount } = renderHook(() => useLocationCount(false));
-    unmount();
+    const { result } = renderHook(() => useLocationCount(false), { wrapper });
 
-    const entry = undefined;
-    const firstLocation = entry ? entry[0] : null;
-    expect(firstLocation).toBeNull();
+    await waitFor(() => {
+      expect(result.current.firstLocation).toBeNull();
+    });
   });
 });
