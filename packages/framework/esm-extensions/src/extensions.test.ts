@@ -61,70 +61,6 @@ function createMockExtension(name: string, overrides: Partial<ExtensionRegistrat
   };
 }
 
-type RoleEntry = { uuid: string; name: string; display: string };
-type PrivilegeEntry = { uuid: string; name: string; display: string };
-
-function setSession(
-  roles: Array<RoleEntry> = [],
-  privileges: Array<PrivilegeEntry> = [],
-  allRoles: Array<RoleEntry> = []
-) {
-  sessionStore.setState({
-    loaded: true,
-    session: {
-      authenticated: true,
-      sessionId: 'test-session',
-      user: {
-        uuid: 'user-uuid',
-        display: 'Test User',
-        username: 'testuser',
-        systemId: 'testuser',
-        userProperties: null,
-        person: { uuid: 'person-uuid' } as any,
-        privileges,
-        roles,
-        allRoles,
-        retired: false,
-        locale: 'en',
-        allowedLocales: ['en'],
-      },
-    },
-  });
-}
-
-function setupRegisteredExtension(
-  slotName: string,
-  extensionName: string,
-  overrides?: Partial<ExtensionRegistration>
-) {
-  const mockExtension = createMockExtension(extensionName, overrides);
-  registerExtension(mockExtension);
-  attach(slotName, extensionName);
-  return getAssignedExtensions(slotName);
-}
-
-function assertDisplayExpression(
-  displayExpression: string,
-  roles: Array<RoleEntry>,
-  privileges: Array<PrivilegeEntry>,
-  expectVisible: boolean,
-  allRoles: Array<RoleEntry> = roles
-) {
-  const slotName = getUniqueName('expr-slot');
-  const extensionName = getUniqueName('expr-ext');
-
-  setSession(roles, privileges, allRoles);
-  vi.mocked(userHasAccess).mockReturnValue(true);
-
-  const result = setupRegisteredExtension(slotName, extensionName, { displayExpression });
-
-  if (expectVisible) {
-    expect(result).toHaveLength(1);
-    expect(result[0].name).toBe(extensionName);
-  } else {
-    expect(result).toHaveLength(0);
-  }
-}
 
 describe('getExtensionNameFromId', () => {
   it('should extract the extension name from a simple ID', () => {
@@ -499,6 +435,56 @@ describe('updateExtensionSlotState', () => {
 });
 
 describe('getAssignedExtensions', () => {
+  function setSession(
+    privileges: Array<{ uuid: string; name: string; display: string }> = [],
+  ) {
+    sessionStore.setState({
+      loaded: true,
+      session: {
+        authenticated: true,
+        sessionId: 'test-session',
+        user: {
+          uuid: 'user-uuid',
+          display: 'Test User',
+          username: 'testuser',
+          systemId: 'testuser',
+          userProperties: null,
+          person: { uuid: 'person-uuid' } as any,
+          privileges,
+          roles: [],
+          allRoles: [],
+          retired: false,
+          locale: 'en',
+          allowedLocales: ['en'],
+        },
+      },
+    });
+  }
+
+  function assertDisplayExpression(
+    displayExpression: string,
+    privileges: Array<{ uuid: string; name: string; display: string }>,
+    expectVisible: boolean,
+  ) {
+    const slotName = getUniqueName('expr-slot');
+    const extensionName = getUniqueName('expr-ext');
+
+    setSession(privileges);
+    vi.mocked(userHasAccess).mockReturnValue(true);
+
+    const mockExtension = createMockExtension(extensionName, { displayExpression });
+    registerExtension(mockExtension);
+    attach(slotName, extensionName);
+    const result = getAssignedExtensions(slotName);
+
+    if (expectVisible) {
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    } else {
+      expect(result).toHaveLength(0);
+    }
+  }
+
   it('should return an empty array for a slot with no registered extensions', () => {
     const slotName = getUniqueName('empty-slot');
 
@@ -545,24 +531,20 @@ describe('getAssignedExtensions', () => {
 
     expect(result[0].meta).toEqual(meta);
   });
-});
 
-describe('getAssignedExtensions — hasRole and hasPrivilege helpers', () => {
-  const nurse = { uuid: 'role-1', name: 'Nurse', display: 'Nurse' };
-  const editOrders = { uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' };
-  const viewReports = { uuid: 'priv-2', name: 'View Reports', display: 'View Reports' };
-
-  describe('hasPrivilege() helper', () => {
-    it('should show extension when hasPrivilege matches user privilege', () => {
-      assertDisplayExpression("hasPrivilege('Edit Orders')", [], [editOrders], true);
+  describe('hasPrivilege', () => {
+    it('should show extension when privilege matches', () => {
+      const editOrders = { uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' };
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [editOrders], true);
     });
 
-    it('should hide extension when hasPrivilege does not match', () => {
-      assertDisplayExpression("hasPrivilege('Edit Orders')", [], [viewReports], false);
+    it('should hide extension when privilege does not match', () => {
+      const viewReports = { uuid: 'priv-2', name: 'View Reports', display: 'View Reports' };
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [viewReports], false);
     });
 
-    it('should return false gracefully when user has no privileges', () => {
-      assertDisplayExpression("hasPrivilege('Edit Orders')", [], [], false);
+    it('should return false when no privileges exist', () => {
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [], false);
     });
   });
 });
