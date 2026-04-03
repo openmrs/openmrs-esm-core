@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import merge from 'lodash/merge';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
@@ -229,9 +230,9 @@ export async function runAssemble(args: AssembleArgs) {
     imports: {},
   };
 
+  const require = createRequire(import.meta.url);
   const versionManifest = {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    coreVersion: require(resolve(__dirname, '..', '..', 'package.json')).version,
+    coreVersion: require(resolve(import.meta.dirname, '..', '..', 'package.json')).version,
     frontendModules: {},
   };
 

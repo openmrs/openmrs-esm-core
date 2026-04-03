@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import yargs from 'yargs';
+import yargs, { type Argv } from 'yargs';
 import { fork } from 'child_process';
 import { resolve } from 'node:path';
 import {
@@ -15,8 +15,8 @@ import {
 
 import type * as commands from './commands';
 
-const runner = resolve(__dirname, `runner.js`);
-const root = resolve(__dirname, '..');
+const runner = resolve(import.meta.dirname, `runner.js`);
+const root = resolve(import.meta.dirname, '..');
 
 type Commands = typeof commands;
 type CommandNames = keyof Commands;
@@ -32,7 +32,7 @@ function runCommand<T extends CommandNames>(type: T, args: Parameters<Commands[T
   ps.on('exit', (code) => process.exit(code || 0));
 }
 
-export function buildCli(y: yargs.Argv) {
+export function buildCli(y: Argv) {
   y.command(
     'develop',
     'Starts a new frontend module development session with the OpenMRS app shell.',
@@ -359,4 +359,4 @@ export function buildCli(y: yargs.Argv) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-buildCli(yargs).argv;
+buildCli(yargs as unknown as Argv).argv;

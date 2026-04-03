@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import { glob } from 'glob';
 import { URL } from 'url';
 import { basename, resolve } from 'path';
@@ -129,7 +130,7 @@ async function matchAny(baseDir: string, patterns: Array<string>) {
   return results.flat();
 }
 
-const defaultConfigPath = resolve(__dirname, '..', '..', 'default-rspack-config.js');
+const defaultConfigPath = resolve(import.meta.dirname, '..', '..', 'default-rspack-config.cjs');
 
 function runProjectDevServer(
   configPath: string,
@@ -188,7 +189,7 @@ export async function runProject(
       continue;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const require = createRequire(import.meta.url);
     const project: PackageJson = require(projectFile);
     const startup = project['openmrs:develop'];
 
