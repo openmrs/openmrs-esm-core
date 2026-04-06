@@ -50,8 +50,8 @@
     "single-spa": "6.x"
   },
   "devDependencies": {
-    "@swc/cli": "0.8.0",
-    "@swc/core": "1.15.18",
+    "@swc/cli": "0.8.1",
+    "@swc/core": "1.15.24",
     "concurrently": "^9.1.2",
     "rimraf": "^6.0.1",
     "single-spa": "^6.0.3"

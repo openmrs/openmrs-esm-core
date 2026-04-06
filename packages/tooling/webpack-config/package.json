@@ -30,7 +30,7 @@
   ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "@swc/core": "1.15.18",
+    "@swc/core": "1.15.24",
     "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "5.2.7",
