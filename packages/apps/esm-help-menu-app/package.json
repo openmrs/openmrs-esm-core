@@ -49,7 +49,7 @@
   "devDependencies": {
     "@rspack/cli": "1.7.9",
     "@rspack/core": "1.7.9",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.1.0",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",
     "react": "^18.3.1",

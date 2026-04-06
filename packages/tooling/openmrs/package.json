@@ -63,7 +63,7 @@
     "style-loader": "3.3.4",
     "swc-loader": "0.2.7",
     "tar": "^7.0.0",
-    "typescript": "5.8.3",
+    "typescript": "6.0.2",
     "webpack": "5.105.3",
     "webpack-bundle-analyzer": "4.10.2",
     "webpack-cli": "6.0.1",
@@ -78,7 +78,7 @@
     "@types/pacote": "^11.1.8",
     "@types/react": "^18.3.21",
     "@types/semver": "^7",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.1.0",
     "rimraf": "^6.0.1",
     "vitest": "^4.0.18"
   }
