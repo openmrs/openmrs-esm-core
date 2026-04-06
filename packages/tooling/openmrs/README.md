@@ -4,7 +4,7 @@ The one stop CLI for using the OpenMRS 3.0 Frontend app.
 
 ## Prerequisites
 
-You need Node.js with NPM. We recommend using version 22 (LTS) or later.
+You need Node.js (>= 20.11.0) with NPM. We recommend using version 22 (LTS) or later.
 
 ## Installation
 

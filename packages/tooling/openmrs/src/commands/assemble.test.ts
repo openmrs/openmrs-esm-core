@@ -273,8 +273,10 @@ describe('runAssemble', () => {
       expect(inputConfig.message).toContain('@openmrs/esm-home-app');
       expect(inputConfig.default).toBe('1.0.0');
 
-      // Verify the validation function works
+      // Verify the validation function accepts exact versions and ranges
       expect(inputConfig.validate('1.0.0')).toBe(true);
+      expect(inputConfig.validate('^1.2.3')).toBe(true);
+      expect(inputConfig.validate('>=1.0.0 <2.0.0')).toBe(true);
       expect(inputConfig.validate('not-semver')).toEqual(
         expect.stringContaining('does not appear to be a valid semver'),
       );

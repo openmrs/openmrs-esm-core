@@ -141,7 +141,7 @@ async function readConfig(
           message: `Version for "${pckg.name}"?`,
           default: pckg.version,
           validate: (value) => {
-            if (!semver.valid(value)) {
+            if (!semver.validRange(value)) {
               return `${value} does not appear to be a valid semver or version range. See https://semver.npmjs.com/#syntax-examples.`;
             }
 

@@ -321,7 +321,7 @@ export function buildCli(y: Argv) {
         .number('port')
         .default('port', 8080)
         .describe('port', 'The port where the dev server should run.')
-        .number('host')
+        .string('host')
         .default('host', 'localhost')
         .describe('host', 'The host name or IP for the server to use.')
         .string('backend')
