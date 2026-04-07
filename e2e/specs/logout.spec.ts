@@ -10,12 +10,11 @@ test('Logout as Admin user', async ({ page }) => {
     await homePage.goto();
   });
 
-  await test.step('And I click the `User` button', async () => {
+  await test.step('And I click the `User` button and log out', async () => {
     await page.getByRole('button', { name: /My Account/i }).click();
-  });
-
-  await test.step('And I click the `Logout` button', async () => {
-    await page.getByRole('button', { name: /logout/i }).click();
+    const userMenu = page.locator('[aria-label="User menu"].cds--header-panel--expanded');
+    await expect(userMenu).toBeVisible();
+    await userMenu.getByRole('button', { name: /logout/i }).click();
   });
 
   await test.step('Then I should be redirected to the login page', async () => {
