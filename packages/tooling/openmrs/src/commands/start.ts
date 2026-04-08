@@ -14,7 +14,7 @@ export interface StartArgs {
   addCookie: string;
 }
 
-export function runStart(args: StartArgs) {
+export function runStart(args: StartArgs, signal?: AbortSignal) {
   const { backend, host, port, open, addCookie } = args;
   const app = express();
   const require = createRequire(import.meta.url);
@@ -40,7 +40,7 @@ export function runStart(args: StartArgs) {
   );
   app.get('/*', (_, res) => res.sendFile(index));
 
-  app.listen(port, host, async () => {
+  const server = app.listen(port, host, async () => {
     logInfo(`Listening at http://${host}:${port}`);
     logInfo(`SPA available at ${pageUrl}`);
 
@@ -54,6 +54,8 @@ export function runStart(args: StartArgs) {
       });
     }
   });
+
+  signal?.addEventListener('abort', () => server.close());
 
   return new Promise<void>(() => {});
 }

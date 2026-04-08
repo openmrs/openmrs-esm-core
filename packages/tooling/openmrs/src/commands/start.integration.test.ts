@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { getAvailablePort } from '../utils/port';
 import { runStart, type StartArgs } from './start';
 
@@ -11,6 +11,15 @@ vi.mock('../utils/logger', () => ({
 
 // Prevent browser from opening
 vi.mock('open', () => ({ default: vi.fn().mockResolvedValue(undefined) }));
+
+const controllers: AbortController[] = [];
+
+afterEach(() => {
+  for (const controller of controllers) {
+    controller.abort();
+  }
+  controllers.length = 0;
+});
 
 function defaultArgs(overrides: Partial<StartArgs> = {}): StartArgs {
   return {
@@ -25,7 +34,9 @@ function defaultArgs(overrides: Partial<StartArgs> = {}): StartArgs {
 
 /** Starts the server and polls until it's ready. */
 async function startServer(args: StartArgs) {
-  runStart(args);
+  const controller = new AbortController();
+  controllers.push(controller);
+  runStart(args, controller.signal);
 
   const baseUrl = `http://${args.host}:${args.port}`;
   for (let i = 0; i < 50; i++) {

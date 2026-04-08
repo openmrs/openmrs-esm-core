@@ -19,6 +19,7 @@ vi.mock('node-watch', () => ({ default: vi.fn() }));
 vi.mock('open', () => ({ default: vi.fn().mockResolvedValue(undefined) }));
 
 const tempDirs: string[] = [];
+const controllers: AbortController[] = [];
 
 function createTempDir(): string {
   const dir = mkdtempSync(join(tmpdir(), 'develop-test-'));
@@ -27,6 +28,10 @@ function createTempDir(): string {
 }
 
 afterEach(() => {
+  for (const controller of controllers) {
+    controller.abort();
+  }
+  controllers.length = 0;
   for (const dir of tempDirs) {
     if (existsSync(dir)) {
       rmSync(dir, { recursive: true, force: true });
@@ -56,7 +61,9 @@ function defaultArgs(overrides: Partial<DevelopArgs> = {}): DevelopArgs {
 
 /** Starts the dev server and polls until it's ready. */
 async function startDevServer(args: DevelopArgs) {
-  runDevelop(args);
+  const controller = new AbortController();
+  controllers.push(controller);
+  runDevelop(args, controller.signal);
 
   const spaPath = args.spaPath.replace(/\/$/, '');
   const baseUrl = `http://${args.host}:${args.port}`;

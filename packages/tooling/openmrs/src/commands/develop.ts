@@ -22,7 +22,7 @@ export interface DevelopArgs {
   supportOffline: boolean;
 }
 
-export async function runDevelop(args: DevelopArgs) {
+export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
   const {
     backend,
     host,
@@ -170,7 +170,7 @@ export async function runDevelop(args: DevelopArgs) {
     ),
   );
 
-  app.listen(port, host, () => {
+  const server = app.listen(port, host, () => {
     logInfo(`Listening at http://${host}:${port}`);
     logInfo(`SPA available at ${pageUrl}`);
 
@@ -188,6 +188,8 @@ export async function runDevelop(args: DevelopArgs) {
       });
     }
   });
+
+  signal?.addEventListener('abort', () => server.close());
 
   // Keep the promise pending so the runner process doesn't exit
   return new Promise<void>(() => {});

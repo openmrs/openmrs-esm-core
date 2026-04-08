@@ -345,7 +345,7 @@ export function buildCli(y: Argv) {
         'commands. The keys used by `build` are:\n' +
         '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, and `supportOffline`;\n' +
         'each of which is equivalent to the corresponding command line argument (see `openmrs build --help`). ' +
-        'Multiple values provided to `configPaths` and `configUrls` shoud be comma-separated.\n' +
+        'Multiple values provided to `configPaths` and `configUrls` should be comma-separated.\n' +
         'The keys used by `assemble` are:\n' +
         '  frontendModules  \tAn object which specifies which frontend modules to include. It should have package names ' +
         'for keys and versions for values.\n' +

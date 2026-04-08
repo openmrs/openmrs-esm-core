@@ -89,6 +89,18 @@ describe('checkRoutesJson', () => {
   it('returns false when a value is not an object', () => {
     expect(checkRoutesJson('{"key":"string_value"}')).toBe(false);
   });
+
+  it('returns false when a value is null', () => {
+    expect(checkRoutesJson('{"@openmrs/foo":null}')).toBe(false);
+  });
+
+  it('returns false when a value is an array', () => {
+    expect(checkRoutesJson('{"@openmrs/foo":[]}')).toBe(false);
+  });
+
+  it('returns false for null', () => {
+    expect(checkRoutesJson('null')).toBe(false);
+  });
 });
 
 // ─── getImportMap ────────────────────────────────────────────────────────────

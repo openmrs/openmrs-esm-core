@@ -117,8 +117,12 @@ export function checkRoutesJson(value: string) {
     const content = JSON.parse(value);
     return (
       typeof content === 'object' &&
+      content !== null &&
       !Array.isArray(content) &&
-      Object.entries(content).every(([key, value]) => typeof key === 'string' && typeof value === 'object')
+      Object.entries(content).every(
+        ([key, value]) =>
+          typeof key === 'string' && typeof value === 'object' && value !== null && !Array.isArray(value),
+      )
     );
   } catch {
     return false;
