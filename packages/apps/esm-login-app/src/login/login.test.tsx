@@ -126,14 +126,20 @@ describe('Login', () => {
     await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
-  // TODO: Complete the test
   it('sends the user to the location select page on login if there is more than one location', async () => {
     let refreshUser = (user: any) => {};
     mockLogin.mockImplementation(() => {
       refreshUser({
         display: 'my name',
       });
-      return Promise.resolve({ data: { authenticated: true } } as unknown as SessionStore);
+      // No sessionLocation and no defaultLocation => should redirect to location picker
+      return Promise.resolve({
+        session: {
+          authenticated: true,
+          user: { userProperties: {} },
+          sessionLocation: null,
+        },
+      } as unknown as SessionStore);
     });
     mockUseSession.mockImplementation(() => {
       const [user, setUser] = useState();
@@ -156,6 +162,8 @@ describe('Login', () => {
     await screen.findByLabelText(/^password$/i);
     await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(screen.getByRole('button', { name: /log in/i }));
+
+    await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
   it('should render the both the username and password fields when the showPasswordOnSeparateScreen config is false', async () => {
