@@ -1,60 +1,97 @@
+import { describe, expect, it } from 'vitest';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import { Readable } from 'node:stream';
 import { gzipSync } from 'node:zlib';
-import { Header } from 'tar';
-import { describe, expect, it } from 'vitest';
+import * as tar from 'tar';
 import { untar } from './untar';
 
-function createTarGz(files: Record<string, string>): Buffer {
-  const chunks: Buffer[] = [];
+/**
+ * Creates a tar.gz buffer from files written to a temp directory.
+ * The archive entries will have paths relative to the temp root, prefixed
+ * with the given `prefix` directory (mimicking npm package tarballs which
+ * use "package/" as the root).
+ */
+async function createTarGz(files: Record<string, string | Buffer>, prefix: string = 'package'): Promise<Buffer> {
+  const tmpDir = mkdtempSync(join(tmpdir(), 'untar-test-'));
 
-  for (const [path, content] of Object.entries(files)) {
-    const data = Buffer.from(content);
-    const header = new Header({
-      path,
-      type: 'File',
-      mode: 0o644,
-      size: data.length,
-    });
-    header.encode();
-    chunks.push(header.block!, data);
+  try {
+    // Write files into a prefix directory inside the temp dir
+    const prefixDir = join(tmpDir, prefix);
+    mkdirSync(prefixDir, { recursive: true });
 
-    // Tar entries are padded to 512-byte blocks
-    const remainder = data.length % 512;
-    if (remainder > 0) {
-      chunks.push(Buffer.alloc(512 - remainder));
+    for (const [relativePath, content] of Object.entries(files)) {
+      const fullPath = join(prefixDir, relativePath);
+      mkdirSync(join(fullPath, '..'), { recursive: true });
+      writeFileSync(fullPath, content);
     }
+
+    // Create tar.gz into a buffer by collecting stream output
+    const chunks: Buffer[] = [];
+    const stream = tar.create({ gzip: true, cwd: tmpDir }, [prefix]);
+
+    for await (const chunk of stream) {
+      chunks.push(chunk as Buffer);
+    }
+
+    return Buffer.concat(chunks);
+  } finally {
+    rmSync(tmpDir, { recursive: true, force: true });
   }
-
-  // Two 512-byte zero blocks mark end of archive
-  chunks.push(Buffer.alloc(1024));
-
-  return gzipSync(Buffer.concat(chunks));
 }
 
 describe('untar', () => {
-  it('should extract files from a gzipped tarball', async () => {
-    const tgz = createTarGz({
-      'package/package.json': JSON.stringify({ name: 'test-package', version: '1.0.0' }),
-      'package/dist/main.js': 'console.log("hello");',
-    });
-
+  it('extracts a single file from a tar.gz archive', async () => {
+    const tgz = await createTarGz({ 'hello.txt': 'Hello, world!' });
     const stream = Readable.from(tgz);
+
     const files = await untar(stream);
 
-    expect(Object.keys(files).sort()).toEqual(['package/dist/main.js', 'package/package.json']);
-    expect(JSON.parse(files['package/package.json'].toString('utf8'))).toEqual({
-      name: 'test-package',
-      version: '1.0.0',
-    });
-    expect(files['package/dist/main.js'].toString('utf8')).toBe('console.log("hello");');
+    expect(files['package/hello.txt']).toBeDefined();
+    expect(files['package/hello.txt'].toString('utf-8')).toBe('Hello, world!');
   });
 
-  it('should return an empty object for an empty tarball', async () => {
-    const tgz = gzipSync(Buffer.alloc(1024));
-
+  it('extracts multiple files preserving directory structure', async () => {
+    const tgz = await createTarGz({
+      'dist/main.js': 'console.log("main");',
+      'dist/styles.css': 'body {}',
+      'package.json': '{"name":"test"}',
+    });
     const stream = Readable.from(tgz);
+
     const files = await untar(stream);
 
+    expect(Object.keys(files)).toEqual(
+      expect.arrayContaining(['package/dist/main.js', 'package/dist/styles.css', 'package/package.json']),
+    );
+    expect(files['package/dist/main.js'].toString('utf-8')).toBe('console.log("main");');
+    expect(files['package/package.json'].toString('utf-8')).toBe('{"name":"test"}');
+  });
+
+  it('handles binary file content', async () => {
+    const binaryContent = Buffer.from([0x00, 0x01, 0x02, 0xff, 0xfe, 0xfd]);
+    const tgz = await createTarGz({ 'data.bin': binaryContent });
+    const stream = Readable.from(tgz);
+
+    const files = await untar(stream);
+
+    expect(Buffer.compare(files['package/data.bin'], binaryContent)).toBe(0);
+  });
+
+  it('rejects on invalid gzip data', async () => {
+    const invalidData = Buffer.from('this is not gzip data');
+    const stream = Readable.from(invalidData);
+
+    await expect(untar(stream)).rejects.toThrow();
+  });
+
+  it('returns an empty object for valid gzip wrapping non-tar data', async () => {
+    // tar.Parse gracefully handles non-tar data by emitting no entries
+    const invalidTar = gzipSync(Buffer.from('this is not a tar archive'));
+    const stream = Readable.from(invalidTar);
+
+    const files = await untar(stream);
     expect(files).toEqual({});
   });
 });

@@ -1,10 +1,11 @@
+import { createRequire } from 'node:module';
 import { basename, dirname, resolve } from 'node:path';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { inc } from 'semver';
 import type { PackageJson } from './types';
 
 export function getSharedDependencies() {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const require = createRequire(import.meta.url);
   return require('@openmrs/esm-app-shell/dependencies.json');
 }
 
