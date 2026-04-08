@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 // Mock node:fs selectively -- only the functions importmap.ts uses
 vi.mock('node:fs', () => ({

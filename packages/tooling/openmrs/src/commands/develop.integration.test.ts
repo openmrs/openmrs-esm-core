@@ -135,7 +135,7 @@ describe('runDevelop', () => {
       const html = await indexRes.text();
 
       // Extract a CSS filename from the HTML and fetch it
-      const cssMatch = html.match(/openmrs\.[a-f0-9]+\.css/);
+      const cssMatch = /openmrs\.[a-f0-9]+\.css/.exec(html);
       expect(cssMatch).not.toBeNull();
 
       const cssRes = await fetch(`${baseUrl}/openmrs/spa/${cssMatch![0]}`);

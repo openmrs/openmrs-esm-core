@@ -39,7 +39,7 @@ vi.mock('../utils/npmConfig', () => ({
   getNpmRegistryConfiguration: vi.fn(),
 }));
 
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';

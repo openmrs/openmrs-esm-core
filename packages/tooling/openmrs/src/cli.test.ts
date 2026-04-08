@@ -10,10 +10,10 @@ vi.mock('yargs', () => {
   return { default: noop };
 });
 
-vi.mock('child_process');
+vi.mock('node:child_process');
 vi.mock('./utils');
 
-import { fork, type ChildProcess } from 'child_process';
+import { fork, type ChildProcess } from 'node:child_process';
 import {
   getAvailablePort,
   getImportmapAndRoutes,

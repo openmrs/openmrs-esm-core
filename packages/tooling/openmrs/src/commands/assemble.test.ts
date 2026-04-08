@@ -42,7 +42,7 @@ vi.mock('../utils/npmConfig', () => ({
   getNpmRegistryConfiguration: vi.fn().mockReturnValue({}),
 }));
 
-import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { readFile, writeFile, rm } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { checkbox, input } from '@inquirer/prompts';
 import npmRegistryFetch from 'npm-registry-fetch';
@@ -402,7 +402,7 @@ describe('runAssemble', () => {
     });
 
     it('warns and omits routes when routes.json does not exist for a module', async () => {
-      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', undefined);
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js');
       const { logWarn } = await import('../utils');
 
       await runAssemble(defaultArgs({ buildRoutes: true }));

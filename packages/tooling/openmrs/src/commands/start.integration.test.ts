@@ -60,7 +60,7 @@ describe('runStart', () => {
     const indexRes = await fetch(`${baseUrl}/openmrs/spa/`);
     const html = await indexRes.text();
 
-    const jsMatch = html.match(/openmrs\.[a-f0-9]+\.js/);
+    const jsMatch = /openmrs\.[a-f0-9]+\.js/.exec(html);
     expect(jsMatch).not.toBeNull();
 
     const jsRes = await fetch(`${baseUrl}/openmrs/spa/${jsMatch![0]}`);
@@ -75,7 +75,7 @@ describe('runStart', () => {
     const indexRes = await fetch(`${baseUrl}/openmrs/spa/`);
     const html = await indexRes.text();
 
-    const cssMatch = html.match(/openmrs\.[a-f0-9]+\.css/);
+    const cssMatch = /openmrs\.[a-f0-9]+\.css/.exec(html);
     expect(cssMatch).not.toBeNull();
 
     const cssRes = await fetch(`${baseUrl}/openmrs/spa/${cssMatch![0]}`);
