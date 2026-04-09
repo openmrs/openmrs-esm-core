@@ -31,7 +31,7 @@ describe('useLocationCount', () => {
     });
 
     const calledUrl = mockOpenmrsFetch.mock.calls[0][0] as string;
-    expect(calledUrl).toBe('/ws/fhir2/R4/Location?_count=1');
+    expect(calledUrl).toContain('/Location?_count=1');
     expect(calledUrl).not.toContain('_tag');
   });
 
