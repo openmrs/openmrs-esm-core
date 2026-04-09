@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { sessionStore, userHasAccess } from '@openmrs/esm-api';
+import type { Privilege } from '@openmrs/esm-api';
 import {
   attach,
   detach,
@@ -436,7 +437,7 @@ describe('updateExtensionSlotState', () => {
 
 describe('getAssignedExtensions', () => {
   function setSession(
-    privileges: Array<{ uuid: string; name: string; display: string }> = [],
+    privileges: Array<Privilege> = [],
   ) {
     sessionStore.setState({
       loaded: true,
@@ -463,7 +464,7 @@ describe('getAssignedExtensions', () => {
 
   function assertDisplayExpression(
     displayExpression: string,
-    privileges: Array<{ uuid: string; name: string; display: string }>,
+    privileges: Array<Privilege>,
     expectVisible: boolean,
   ) {
     const slotName = getUniqueName('expr-slot');
@@ -534,12 +535,12 @@ describe('getAssignedExtensions', () => {
 
   describe('hasPrivilege', () => {
     it('should show extension when privilege matches', () => {
-      const editOrders = { uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' };
+      const editOrders: Privilege = { uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' };
       assertDisplayExpression("hasPrivilege('Edit Orders')", [editOrders], true);
     });
 
     it('should hide extension when privilege does not match', () => {
-      const viewReports = { uuid: 'priv-2', name: 'View Reports', display: 'View Reports' };
+      const viewReports: Privilege = { uuid: 'priv-2', name: 'View Reports', display: 'View Reports' };
       assertDisplayExpression("hasPrivilege('Edit Orders')", [viewReports], false);
     });
 
