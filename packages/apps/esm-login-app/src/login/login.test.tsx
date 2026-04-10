@@ -19,11 +19,20 @@ const mockLogin = vi.mocked(refetchCurrentUser);
 const mockUseConfig = vi.mocked(useConfig);
 const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockUseSession = vi.mocked(useSession);
+const mockNavigate = vi.fn();
 
 const loginLocations = [
   { uuid: '111', display: 'Earth' },
   { uuid: '222', display: 'Mars' },
 ];
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...(actual as any),
+    useNavigate: () => mockNavigate,
+  };
+});
 
 describe('Login', () => {
   beforeEach(() => {
@@ -45,6 +54,7 @@ describe('Login', () => {
     });
     mockUseSession.mockReturnValue({ authenticated: false, sessionId: '123' });
     mockUseConfig.mockReturnValue(mockConfig);
+    mockNavigate.mockClear();
   });
 
   it('renders the login form', () => {
@@ -163,7 +173,13 @@ describe('Login', () => {
     await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(screen.getByRole('button', { name: /log in/i }));
 
+    // await waitFor(() => {
+    //   expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud');
+    //   expect(mockNavigate).toHaveBeenCalledWith('/login/location');
+    // });
+
     await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
+    expect(mockNavigate).toHaveBeenCalledWith('/login/location');
   });
 
   it('should render the both the username and password fields when the showPasswordOnSeparateScreen config is false', async () => {

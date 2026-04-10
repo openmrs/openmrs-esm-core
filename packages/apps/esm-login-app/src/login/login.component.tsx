@@ -30,7 +30,7 @@ const Login: React.FC = () => {
   } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
-  const { user } = useSession();
+  const { user, sessionLocation } = useSession();
   const location = useLocation() as unknown as Omit<Location, 'state'> & {
     state: LoginReferrer;
   };
@@ -52,12 +52,9 @@ const Login: React.FC = () => {
         navigate('/login');
       }
     } else {
-      const isOnLoginPage = ['/login', '/login/confirm', '/login/location'].some(
-        (path) => location.pathname === path || location.pathname.startsWith(path + '?'),
-      );
-      if (user.sessionLocation || !chooseLocation.enabled) {
+      if (sessionLocation || !chooseLocation.enabled) {
         openmrsNavigate({ to: loginLinks?.loginSuccess || '${openmrsSpaBase}/home' });
-      } else if (!isOnLoginPage || location.pathname === '/login') {
+      } else if (location.pathname !== '/login/location') {
         // Only redirect to location picker if not already there
         navigate('/login/location');
       }
@@ -121,7 +118,7 @@ const Login: React.FC = () => {
             if (!session.sessionLocation && userDefaultLocation) {
               await setSessionLocation(userDefaultLocation, new AbortController());
             }
-            let to = loginLinks?.loginSuccess || '/home';
+            let to = loginLinks?.loginSuccess || '${openmrsSpaBase}/home';
             if (location?.state?.referrer) {
               if (location.state.referrer.startsWith('/')) {
                 to = `\${openmrsSpaBase}${location.state.referrer}`;
