@@ -29,5 +29,5 @@ export function importMapOverridden(): boolean {
 }
 
 export function isOverriddenInImportMap(esmName: string): boolean {
-  return getImportMapOverrideMap().imports.hasOwnProperty(esmName);
+  return Object.prototype.hasOwnProperty.call(getImportMapOverrideMap().imports, esmName);
 }

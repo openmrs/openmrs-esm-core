@@ -1,5 +1,5 @@
 import createFetchMock from 'vitest-fetch-mock';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 createFetchMock(vi).enableMocks();
 
@@ -7,7 +7,14 @@ import { addRoutesOverride, isOpenmrsAppRoutes } from './routes';
 
 describe('Openmrs Routes Utilities', () => {
   describe('addRoutesOverride', () => {
-    beforeEach(() => localStorage.clear());
+    beforeEach(() => {
+      (window as any).spaEnv = 'development';
+      localStorage.clear();
+    });
+
+    afterEach(() => {
+      Object.defineProperty(window, 'spaEnv', { value: undefined, writable: true, configurable: true });
+    });
 
     it('should add routes when provided as an object', () => {
       addRoutesOverride('@openmrs/my-module', {

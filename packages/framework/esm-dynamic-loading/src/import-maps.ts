@@ -51,19 +51,24 @@ function mergeMaps(maps: ImportMap[]): ImportMap {
 /** Returns all `import-map-override:*` entries from localStorage as an {@link ImportMap}. */
 function readOverrideMap(): ImportMap {
   const imports: Record<string, string> = {};
-  const disabled = getImportMapDisabledOverrides();
 
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key?.startsWith(OVERRIDE_PREFIX)) {
-      const moduleName = key.slice(OVERRIDE_PREFIX.length);
-      if (!disabled.includes(moduleName)) {
-        const url = localStorage.getItem(key);
-        if (url) {
-          imports[moduleName] = url;
+  try {
+    const disabled = getImportMapDisabledOverrides();
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(OVERRIDE_PREFIX)) {
+        const moduleName = key.slice(OVERRIDE_PREFIX.length);
+        if (!disabled.includes(moduleName)) {
+          const url = localStorage.getItem(key);
+          if (url) {
+            imports[moduleName] = url;
+          }
         }
       }
     }
+  } catch (e) {
+    console.warn('[import-maps] Failed to read import-map overrides from localStorage', e);
   }
 
   return { imports };

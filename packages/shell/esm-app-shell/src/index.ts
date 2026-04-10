@@ -83,22 +83,21 @@ function wireSpaPaths() {
   __webpack_public_path__ = baseHref;
 }
 
-let initialized = false;
+let initPromise: Promise<void> | null = null;
 
 /**
  * Initializes the OpenMRS Frontend App Shell.
  * @param config The global configuration to apply.
  */
 function initializeSpa(config: SpaConfig) {
-  if (initialized) {
-    return Promise.resolve();
+  if (initPromise) {
+    return initPromise;
   }
-  initialized = true;
 
   setupUtils();
   setupPaths(config);
   wireSpaPaths();
-  return Promise.resolve(__webpack_init_sharing__('default')).then(async () => {
+  initPromise = Promise.resolve(__webpack_init_sharing__('default')).then(async () => {
     const shareScope = __webpack_share_scopes__.default;
     // MF will deduplicate these as they're aliased at build time, but at runtime
     // apps try to load `@openmrs/esm-framework`, so here we provide a runtime
@@ -117,6 +116,7 @@ function initializeSpa(config: SpaConfig) {
     const { run } = await import(/* webpackPreload: true */ './run');
     return run(configUrls);
   });
+  return initPromise;
 }
 
 Object.defineProperty(window, 'initializeSpa', {
