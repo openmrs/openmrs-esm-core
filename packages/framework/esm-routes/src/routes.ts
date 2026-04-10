@@ -111,30 +111,30 @@ function addRouteOverrideInternal(moduleName: string, routes: OpenmrsAppRoutes |
  */
 export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes is OpenmrsAppRoutes {
   if (routes && typeof routes === 'object') {
-    const hasOwnProperty = Object.prototype.hasOwnProperty;
+    const hasOwn = Object.hasOwn;
     // we cast maybeRoutes as OpenmrsAppRoutes mainly so we can refer to the properties it should
     // have without repeated casts
     const maybeRoutes = routes as OpenmrsAppRoutes;
 
-    if (hasOwnProperty.call(routes, 'pages')) {
+    if (hasOwn(routes, 'pages')) {
       if (!Boolean(maybeRoutes.pages) || !Array.isArray(maybeRoutes.pages)) {
         return false;
       }
     }
 
-    if (hasOwnProperty.call(routes, 'extensions')) {
+    if (hasOwn(routes, 'extensions')) {
       if (!Boolean(maybeRoutes.extensions) || !Array.isArray(maybeRoutes.extensions)) {
         return false;
       }
     }
 
-    if (hasOwnProperty.call(routes, 'workspaces')) {
+    if (hasOwn(routes, 'workspaces')) {
       if (!Boolean(maybeRoutes.workspaces) || !Array.isArray(maybeRoutes.workspaces)) {
         return false;
       }
     }
 
-    if (hasOwnProperty.call(routes, 'modals')) {
+    if (hasOwn(routes, 'modals')) {
       if (!Boolean(maybeRoutes.modals) || !Array.isArray(maybeRoutes.modals)) {
         return false;
       }
