@@ -20,6 +20,7 @@ export const iconIds = [
   'omrs-icon-caret-right',
   'omrs-icon-caret-up',
   'omrs-icon-chart-average',
+  'omrs-icon-chart-line',
   'omrs-icon-checkmark-filled',
   'omrs-icon-checkmark-outline',
   'omrs-icon-chemistry',
@@ -214,6 +215,14 @@ export const CaretUpIcon = memo(
 export const ChartAverageIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ChartAverageIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-chart-average" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const ChartLineIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ChartLineIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-chart-line" iconProps={props} />;
   }),
 );
 
