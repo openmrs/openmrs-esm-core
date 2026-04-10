@@ -52,7 +52,7 @@ export async function handleMessage(event: ExtendableMessageEvent) {
   if (!event.source || !('url' in event.source)) {
     return;
   }
-  const sourceOrigin = new URL((event.source as Client).url).origin;
+  const sourceOrigin = new URL(event.source.url).origin;
   if (sourceOrigin !== self.location.origin) {
     return;
   }
