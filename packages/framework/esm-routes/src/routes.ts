@@ -16,6 +16,11 @@ const isEnabled = canAccessStorage();
  *  JSON document that represents an {@link OpenmrsAppRoutes} object
  */
 export function addRoutesOverride(moduleName: string, routes: OpenmrsAppRoutes | string | URL) {
+  if (window.spaEnv === 'production') {
+    console.warn('[Security] Route overrides are disabled in production mode.');
+    return;
+  }
+
   if (!isEnabled) {
     return;
   }
@@ -55,6 +60,11 @@ export function addRoutesOverride(moduleName: string, routes: OpenmrsAppRoutes |
  * @param moduleName The module to remove the overrides for
  */
 export function removeRoutesOverride(moduleName: string) {
+  if (window.spaEnv === 'production') {
+    console.warn('[Security] Route overrides are disabled in production mode.');
+    return;
+  }
+
   if (!isEnabled) {
     return;
   }
@@ -70,6 +80,11 @@ export function removeRoutesOverride(moduleName: string) {
  * @internal
  */
 export function resetAllRoutesOverrides() {
+  if (window.spaEnv === 'production') {
+    console.warn('[Security] Route overrides are disabled in production mode.');
+    return;
+  }
+
   if (!isEnabled) {
     return;
   }

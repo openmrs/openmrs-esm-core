@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { getImportMapOverrideMap } from '@openmrs/esm-framework/src/internal';
 import ImportMapList from './import-map-list/list.component';
 import styles from './import-map.styles.css';
 
@@ -24,9 +25,9 @@ export default function ImportMap({ toggleOverridden }: ImportMapProps) {
 }
 
 export function importMapOverridden(): boolean {
-  return Object.keys(window.importMapOverrides.getOverrideMap().imports).length > 0;
+  return Object.keys(getImportMapOverrideMap().imports).length > 0;
 }
 
 export function isOverriddenInImportMap(esmName: string): boolean {
-  return window.importMapOverrides.getOverrideMap().imports.hasOwnProperty(esmName);
+  return getImportMapOverrideMap().imports.hasOwnProperty(esmName);
 }

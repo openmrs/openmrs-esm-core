@@ -1,4 +1,3 @@
-import 'import-map-overrides';
 import type { SpaConfig } from '@openmrs/esm-framework/src/internal';
 
 function _createSpaBase(baseUrl: string) {
@@ -27,27 +26,53 @@ function setupPaths(config: SpaConfig) {
     );
   }
 
-  window.openmrsBase = config.apiUrl;
-  window.spaBase = config.spaPath;
-  window.spaEnv = config.env || 'production';
-  window.spaVersion = process.env.BUILD_VERSION ?? 'local';
+  // Object.defineProperty used to make these read-only
+  Object.defineProperty(window, 'openmrsBase', {
+    value: config.apiUrl,
+    writable: false,
+    configurable: false,
+  });
+  Object.defineProperty(window, 'spaBase', {
+    value: config.spaPath,
+    writable: false,
+    configurable: false,
+  });
+  Object.defineProperty(window, 'spaEnv', {
+    value: config.env || 'production',
+    writable: false,
+    configurable: false,
+  });
+  Object.defineProperty(window, 'spaVersion', {
+    value: process.env.BUILD_VERSION ?? 'local',
+    writable: false,
+    configurable: false,
+  });
+
   const spaBaseWithSlash = window.spaBase.endsWith('/') ? window.spaBase : window.spaBase + '/';
-  window.getOpenmrsSpaBase = _createSpaBase(spaBaseWithSlash);
+  Object.defineProperty(window, 'getOpenmrsSpaBase', {
+    value: _createSpaBase(spaBaseWithSlash),
+    writable: false,
+    configurable: false,
+  });
 }
 
 export function setupUtils() {
-  window.copyText = (source: HTMLElement) => {
-    const sel = window.getSelection();
+  Object.defineProperty(window, 'copyText', {
+    value: (source: HTMLElement) => {
+      const sel = window.getSelection();
 
-    if (sel) {
-      const r = document.createRange();
-      r.selectNode(source);
-      sel.removeAllRanges();
-      sel.addRange(r);
-      document.execCommand('copy');
-      sel.removeAllRanges();
-    }
-  };
+      if (sel) {
+        const r = document.createRange();
+        r.selectNode(source);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        document.execCommand('copy');
+        sel.removeAllRanges();
+      }
+    },
+    writable: false,
+    configurable: false,
+  });
 }
 
 function wireSpaPaths() {
@@ -58,11 +83,18 @@ function wireSpaPaths() {
   __webpack_public_path__ = baseHref;
 }
 
+let initialized = false;
+
 /**
  * Initializes the OpenMRS Frontend App Shell.
  * @param config The global configuration to apply.
  */
 function initializeSpa(config: SpaConfig) {
+  if (initialized) {
+    return Promise.resolve();
+  }
+  initialized = true;
+
   setupUtils();
   setupPaths(config);
   wireSpaPaths();
@@ -76,11 +108,19 @@ function initializeSpa(config: SpaConfig) {
     }
 
     const { configUrls = [], offline = false } = config;
-    window.offlineEnabled = offline;
+    Object.defineProperty(window, 'offlineEnabled', {
+      value: offline,
+      writable: false,
+      configurable: false,
+    });
 
     const { run } = await import(/* webpackPreload: true */ './run');
     return run(configUrls);
   });
 }
 
-window.initializeSpa = initializeSpa;
+Object.defineProperty(window, 'initializeSpa', {
+  value: initializeSpa,
+  writable: false,
+  configurable: false,
+});

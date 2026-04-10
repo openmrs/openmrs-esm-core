@@ -9,6 +9,7 @@ import {
   finishRegisteringAllApps,
   fireOpenmrsEvent,
   getConfig,
+  getCurrentPageMap,
   getCurrentUser,
   integrateBreakpoints,
   interpolateUrl,
@@ -30,6 +31,7 @@ import {
   restBaseUrl,
   setupApiModule,
   setupHistory,
+  setupImportMapOverrides,
   setupModals,
   showActionableNotification,
   showNotification,
@@ -89,8 +91,8 @@ async function setupApps() {
     );
   }
 
-  if (canAccessStorage()) {
-    // load routes overrides from localStorage if any
+  if (window.spaEnv === 'development' && canAccessStorage()) {
+    // load routes overrides from localStorage if any (dev mode only)
     const localStorage = window.localStorage;
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
@@ -164,7 +166,11 @@ async function setupApps() {
   });
 
   window[REGISTRATION_PROMISES] = Promise.all(registrationPromises);
-  window.installedModules = modules;
+  Object.defineProperty(window, 'installedModules', {
+    value: modules,
+    writable: false,
+    configurable: false,
+  });
 }
 
 /**
@@ -385,7 +391,7 @@ async function precacheGlobalStaticDependencies() {
 }
 
 async function precacheImportMap() {
-  const importMap = await window.importMapOverrides.getCurrentPageMap();
+  const importMap = await getCurrentPageMap();
   await messageOmrsServiceWorker({
     type: 'onImportMapChanged',
     importMap,
@@ -409,6 +415,8 @@ function setupOfflineCssClasses() {
 }
 
 export function run(configUrls: Array<string>) {
+  setupImportMapOverrides();
+
   const offlineEnabled = window.offlineEnabled;
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);

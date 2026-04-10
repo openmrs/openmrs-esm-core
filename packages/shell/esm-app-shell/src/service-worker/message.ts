@@ -47,6 +47,16 @@ async function registerDynamicRoute({ pattern, url, strategy }: RegisterDynamicR
  * @param event The event data containing the message dispatched to the Service Worker.
  */
 export async function handleMessage(event: ExtendableMessageEvent) {
+  // Defense-in-depth: only process messages from same-origin Client sources.
+  // Reject messages with no source or from cross-origin sources.
+  if (!event.source || !('url' in event.source)) {
+    return;
+  }
+  const sourceOrigin = new URL((event.source as Client).url).origin;
+  if (sourceOrigin !== self.location.origin) {
+    return;
+  }
+
   const handler = messageHandlers[event.data?.type?.toString() ?? ''];
 
   if (!handler) {

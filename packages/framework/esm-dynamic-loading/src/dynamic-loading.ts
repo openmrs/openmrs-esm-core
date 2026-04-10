@@ -3,6 +3,7 @@
 // hack to make the types defined in esm-globals available here
 import { dispatchToastShown, type ImportMap } from '@openmrs/esm-globals';
 import { getCoreTranslation } from '@openmrs/esm-translations';
+import { getCurrentPageMap, resetImportMapOverrides } from './import-maps';
 
 /**
  * @internal
@@ -157,7 +158,7 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
           ),
           actionButtonLabel: getCoreTranslation('resetOverrides', 'Reset overrides'),
           onActionButtonClick() {
-            window.importMapOverrides.resetOverrides();
+            resetImportMapOverrides();
             window.location.reload();
           },
         });
@@ -178,7 +179,7 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
  * @returns The current import map.
  */
 export async function getCurrentImportMap() {
-  return window.importMapOverrides.getCurrentPageMap();
+  return getCurrentPageMap();
 }
 
 interface FederatedModule {

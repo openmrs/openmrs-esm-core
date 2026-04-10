@@ -13,7 +13,18 @@ import {
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import fuzzy from 'fuzzy';
-import { useDebounce, type ImportMap, showModal, resetAllRoutesOverrides } from '@openmrs/esm-framework/src/internal';
+import {
+  useDebounce,
+  type ImportMap,
+  showModal,
+  resetAllRoutesOverrides,
+  getCurrentPageMap,
+  getImportMapDefaultMap,
+  getImportMapNextPageMap,
+  getImportMapOverrideMap,
+  getImportMapDisabledOverrides,
+  resetImportMapOverrides,
+} from '@openmrs/esm-framework/src/internal';
 import type { Module } from './types';
 import styles from './list.scss';
 
@@ -75,8 +86,7 @@ const initialImportMapState: ImportMapListState = {
 };
 
 function updateToNext(dispatch: Dispatch<ImportMapDispatchAction>) {
-  return () =>
-    window.importMapOverrides.getNextPageMap().then((nextPageMap) => dispatch({ type: 'set_next_map', nextPageMap }));
+  return () => getImportMapNextPageMap().then((nextPageMap) => dispatch({ type: 'set_next_map', nextPageMap }));
 }
 
 function reducer(state: ImportMapListState, action: ImportMapDispatchAction) {
@@ -103,7 +113,7 @@ function reducer(state: ImportMapListState, action: ImportMapDispatchAction) {
         dialogModule: null,
       };
     case 'reset_all_overrides':
-      window.importMapOverrides.resetOverrides();
+      resetImportMapOverrides();
       resetAllRoutesOverrides();
       return state;
   }
@@ -118,13 +128,8 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
   const searchVal = useDebounce(searchQuery);
 
   useEffect(() => {
-    // load initial values from importMapOverrides
-    window.importMapOverrides
-      .getDefaultMap()
-      .then((notOverriddenMap) => dispatch({ type: 'set_default_map', notOverriddenMap }));
-    window.importMapOverrides
-      .getCurrentPageMap()
-      .then((currentPageMap) => dispatch({ type: 'set_current_map', currentPageMap }));
+    getImportMapDefaultMap().then((notOverriddenMap) => dispatch({ type: 'set_default_map', notOverriddenMap }));
+    getCurrentPageMap().then((currentPageMap) => dispatch({ type: 'set_current_map', currentPageMap }));
 
     // focus on the search box
     inputRef.current?.focus();
@@ -157,9 +162,9 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
     externalOverrideModules: Array<Module> = [],
     pendingRefreshDefaultModules: Array<Module> = [];
 
-  const overrideMap = window.importMapOverrides.getOverrideMap(true).imports;
+  const overrideMap = getImportMapOverrideMap(true).imports;
   const notOverriddenKeys = Object.keys(state.notOverriddenMap.imports);
-  const disabledModules = window.importMapOverrides.getDisabledOverrides();
+  const disabledModules = getImportMapDisabledOverrides();
 
   const searchableKeys = [...new Set([...notOverriddenKeys, ...Object.keys(overrideMap)])];
   searchableKeys.sort();

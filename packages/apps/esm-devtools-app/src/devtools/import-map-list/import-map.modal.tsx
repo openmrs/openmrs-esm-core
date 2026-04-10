@@ -1,7 +1,15 @@
 import React, { type FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Form, ModalHeader, ModalBody, ModalFooter, Stack, TextInput } from '@carbon/react';
-import { addRoutesOverride, removeRoutesOverride } from '@openmrs/esm-framework/src/internal';
+import {
+  addImportMapOverride,
+  addRoutesOverride,
+  enableImportMapOverride,
+  getImportMapNextPageMap,
+  isImportMapOverrideDisabled,
+  removeImportMapOverride,
+  removeRoutesOverride,
+} from '@openmrs/esm-framework/src/internal';
 import type { Module } from './types';
 
 type ImportMapModalProps = ({ module: Module; isNew: false } | { module: never; isNew: true }) & { close: () => void };
@@ -9,7 +17,7 @@ type ImportMapModalProps = ({ module: Module; isNew: false } | { module: never; 
 const isPortRegex = /^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/;
 
 async function getUrlFromPort(moduleName: string, port: string) {
-  const latestImportMap = await window.importMapOverrides.getNextPageMap();
+  const latestImportMap = await getImportMapNextPageMap();
   const moduleUrl = latestImportMap.imports[moduleName];
 
   if (!moduleUrl) {
@@ -38,8 +46,8 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close })
         return;
       }
 
-      if (window.importMapOverrides.isDisabled(moduleName)) {
-        window.importMapOverrides.enableOverride(moduleName);
+      if (isImportMapOverrideDisabled(moduleName)) {
+        enableImportMapOverride(moduleName);
       }
 
       if (isNew) {
@@ -49,21 +57,21 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close })
             newUrl = await getUrlFromPort(moduleName, newUrl);
           }
 
-          window.importMapOverrides.addOverride(moduleName, newUrl);
+          addImportMapOverride(moduleName, newUrl);
           const baseUrl = newUrl.substring(0, newUrl.lastIndexOf('/'));
           addRoutesOverride(moduleName, new URL('routes.json', baseUrl));
         }
       } else {
         let newUrl = inputRef.current.value || null;
         if (newUrl === null) {
-          window.importMapOverrides.removeOverride(moduleName);
+          removeImportMapOverride(moduleName);
           removeRoutesOverride(moduleName);
         } else {
           if (isPortRegex.test(newUrl)) {
             newUrl = await getUrlFromPort(moduleName, newUrl);
           }
 
-          window.importMapOverrides.addOverride(moduleName, newUrl);
+          addImportMapOverride(moduleName, newUrl);
           const baseUrl = newUrl.substring(0, newUrl.lastIndexOf('/'));
           addRoutesOverride(moduleName, new URL('routes.json', baseUrl));
         }
