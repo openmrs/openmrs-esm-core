@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import { glob } from 'glob';
 import { URL } from 'url';
 import { basename, resolve } from 'path';
@@ -116,7 +117,12 @@ export function checkRoutesJson(value: string) {
     const content = JSON.parse(value);
     return (
       typeof content === 'object' &&
-      Object.entries(content).every(([key, value]) => typeof key === 'string' && typeof value === 'object')
+      content !== null &&
+      !Array.isArray(content) &&
+      Object.entries(content).every(
+        ([key, value]) =>
+          typeof key === 'string' && typeof value === 'object' && value !== null && !Array.isArray(value),
+      )
     );
   } catch {
     return false;
@@ -128,7 +134,7 @@ async function matchAny(baseDir: string, patterns: Array<string>) {
   return results.flat();
 }
 
-const defaultConfigPath = resolve(__dirname, '..', '..', 'default-rspack-config.js');
+const defaultConfigPath = resolve(import.meta.dirname, '..', '..', 'default-rspack-config.cjs');
 
 function runProjectDevServer(
   configPath: string,
@@ -187,7 +193,7 @@ export async function runProject(
       continue;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const require = createRequire(import.meta.url);
     const project: PackageJson = require(projectFile);
     const startup = project['openmrs:develop'];
 
@@ -322,7 +328,7 @@ export async function getImportMap(importMapPath: string, basePort?: number): Pr
         imports,
       }),
     };
-  } else if (!/https?:\/\//.test(importMapPath)) {
+  } else if (!/^https?:\/\//.test(importMapPath)) {
     const path = resolve(process.cwd(), importMapPath);
 
     if (existsSync(path)) {
@@ -352,7 +358,7 @@ export async function getImportMap(importMapPath: string, basePort?: number): Pr
 }
 
 export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> {
-  if (!/https?:\/\//.test(routesPath)) {
+  if (!/^https?:\/\//.test(routesPath)) {
     const path = resolve(process.cwd(), routesPath);
 
     if (existsSync(path)) {
