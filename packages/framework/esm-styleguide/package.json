@@ -112,10 +112,10 @@
     "@swc/cli": "0.8.1",
     "@swc/core": "1.15.21",
     "@types/geopattern": "^1.2.9",
-    "@vitest/coverage-v8": "^4.1.2",
+    "@vitest/coverage-v8": "^4.1.4",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
-    "happy-dom": "^20.6.0",
+    "happy-dom": "^20.8.9",
     "i18next": "^25.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -124,6 +124,6 @@
     "svgo": "^3.3.2",
     "swr": "2.2.5",
     "typescript": "^5.8.3",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.4"
   }
 }

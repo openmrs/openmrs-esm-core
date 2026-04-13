@@ -92,16 +92,16 @@
     "@openmrs/typedoc-plugin-file-categories": "workspace:*",
     "@swc/cli": "0.8.1",
     "@swc/core": "1.15.21",
-    "@vitest/coverage-v8": "^4.1.2",
+    "@vitest/coverage-v8": "^4.1.4",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "dayjs": "^1.11.13",
-    "happy-dom": "^20.6.0",
+    "happy-dom": "^20.8.9",
     "rimraf": "^6.1.3",
     "typedoc": "^0.28.5",
     "typedoc-plugin-markdown": "^4.6.3",
     "typedoc-plugin-no-inherit": "^1.6.1",
     "typescript": "^5.8.3",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.4"
   }
 }
