@@ -116,7 +116,12 @@ const Login: React.FC = () => {
         if (authenticated) {
           if (session.sessionLocation || userDefaultLocation || !chooseLocation.enabled) {
             if (!session.sessionLocation && userDefaultLocation) {
-              await setSessionLocation(userDefaultLocation, new AbortController());
+              try {
+                await setSessionLocation(userDefaultLocation, new AbortController());
+              } catch (error) {
+                navigate('/login/location');
+                return true;
+              }
             }
             let to = loginLinks?.loginSuccess || '${openmrsSpaBase}/home';
             if (location?.state?.referrer) {
