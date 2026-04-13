@@ -236,6 +236,70 @@ describe('dynamic-loading', () => {
       await expect(preloadImport('@openmrs/esm-foo')).resolves.toBeNull();
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('already loaded'));
     });
+
+    it('resolves both callers when the same script is preloaded concurrently', async () => {
+      mockGetCurrentPageMap.mockResolvedValue({
+        imports: { '@openmrs/esm-foo': 'http://localhost/foo.js' },
+      });
+
+      // Two concurrent preloads for the same package
+      const first = preloadImport('@openmrs/esm-foo');
+      const second = preloadImport('@openmrs/esm-foo');
+
+      const script = await waitForScript('http://localhost/foo.js');
+      script.dispatchEvent(new Event('load'));
+
+      await expect(first).resolves.toBeNull();
+      await expect(second).resolves.toBeNull();
+    });
+
+    it('rejects both callers when a concurrently-loaded script fails', async () => {
+      mockGetCurrentPageMap.mockResolvedValue({
+        imports: { '@openmrs/esm-foo': 'http://localhost/foo.js' },
+      });
+
+      const first = preloadImport('@openmrs/esm-foo');
+      const second = preloadImport('@openmrs/esm-foo');
+
+      const script = await waitForScript('http://localhost/foo.js');
+      script.dispatchEvent(new ErrorEvent('error', { message: 'net::ERR_FAILED' }));
+
+      await expect(first).rejects.toBe('net::ERR_FAILED');
+      await expect(second).rejects.toBe('net::ERR_FAILED');
+    });
+
+    it('logs an error when a script takes longer than 5 seconds to load', async () => {
+      vi.useFakeTimers();
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      mockGetCurrentPageMap.mockResolvedValue({
+        imports: { '@openmrs/esm-foo': 'http://localhost/foo.js' },
+      });
+
+      preloadImport('@openmrs/esm-foo');
+      await vi.advanceTimersByTimeAsync(1);
+
+      expect(errorSpy).not.toHaveBeenCalled();
+
+      vi.advanceTimersByTime(5_000);
+      expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('did not load within 5 seconds'));
+
+      vi.useRealTimers();
+    });
+
+    it('rejects with an empty string when the error event has no message', async () => {
+      mockGetCurrentPageMap.mockResolvedValue({
+        imports: { '@openmrs/esm-foo': 'http://localhost/foo.js' },
+      });
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      const promise = preloadImport('@openmrs/esm-foo');
+      const script = await waitForScript('http://localhost/foo.js');
+
+      script.dispatchEvent(new ErrorEvent('error'));
+
+      // ErrorEvent.message defaults to '' which is not nullish, so ?? doesn't trigger
+      await expect(promise).rejects.toBe('');
+    });
   });
 
   describe('importDynamic', () => {

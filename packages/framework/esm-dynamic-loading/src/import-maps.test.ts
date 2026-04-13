@@ -200,6 +200,87 @@ describe('import-maps', () => {
       expect(map.imports['@openmrs/esm-foo']).toBe('/foo.js');
     });
 
+    it('getImportMapNextPageMap merges base map with current overrides', async () => {
+      setDomImportMaps([{ imports: { '@openmrs/esm-foo': '/foo.js', '@openmrs/esm-bar': '/bar.js' } }]);
+      localStorage.setItem('import-map-override:@openmrs/esm-foo', 'http://localhost:8080/foo.js');
+
+      const { setupImportMapOverrides, addImportMapOverride, getImportMapNextPageMap } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      // Add a new override after setup — should appear in the next-page map but not the current-page snapshot
+      addImportMapOverride('@openmrs/esm-bar', 'http://localhost:8080/bar.js');
+
+      const map = await getImportMapNextPageMap();
+      expect(map.imports['@openmrs/esm-foo']).toBe('http://localhost:8080/foo.js');
+      expect(map.imports['@openmrs/esm-bar']).toBe('http://localhost:8080/bar.js');
+    });
+
+    it('isImportMapOverrideDisabled returns true for a disabled override', async () => {
+      localStorage.setItem('import-map-override:@openmrs/esm-foo', '/foo.js');
+      localStorage.setItem('import-map-overrides-disabled', JSON.stringify(['@openmrs/esm-foo']));
+
+      const { setupImportMapOverrides, isImportMapOverrideDisabled } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      expect(isImportMapOverrideDisabled('@openmrs/esm-foo')).toBe(true);
+      expect(isImportMapOverrideDisabled('@openmrs/esm-bar')).toBe(false);
+    });
+
+    it('enableImportMapOverride re-enables a disabled override', async () => {
+      localStorage.setItem('import-map-override:@openmrs/esm-foo', '/foo.js');
+      localStorage.setItem('import-map-override:@openmrs/esm-bar', '/bar.js');
+      localStorage.setItem('import-map-overrides-disabled', JSON.stringify(['@openmrs/esm-foo', '@openmrs/esm-bar']));
+
+      const {
+        setupImportMapOverrides,
+        enableImportMapOverride,
+        getImportMapOverrideMap,
+        getImportMapDisabledOverrides,
+      } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      // Both overrides are disabled — neither appears in the active override map
+      expect(getImportMapOverrideMap().imports['@openmrs/esm-foo']).toBeUndefined();
+
+      enableImportMapOverride('@openmrs/esm-foo');
+
+      // Now foo is enabled again
+      expect(getImportMapOverrideMap().imports['@openmrs/esm-foo']).toBe('/foo.js');
+      // bar is still disabled
+      expect(getImportMapDisabledOverrides()).toEqual(['@openmrs/esm-bar']);
+    });
+
+    it('enableImportMapOverride removes the disabled key when the last override is re-enabled', async () => {
+      localStorage.setItem('import-map-override:@openmrs/esm-foo', '/foo.js');
+      localStorage.setItem('import-map-overrides-disabled', JSON.stringify(['@openmrs/esm-foo']));
+
+      const { setupImportMapOverrides, enableImportMapOverride, getImportMapDisabledOverrides } = await import(
+        './import-maps'
+      );
+      setupImportMapOverrides();
+
+      enableImportMapOverride('@openmrs/esm-foo');
+
+      expect(getImportMapDisabledOverrides()).toEqual([]);
+      expect(localStorage.getItem('import-map-overrides-disabled')).toBeNull();
+    });
+
+    it('enableImportMapOverride fires a change event', async () => {
+      localStorage.setItem('import-map-override:@openmrs/esm-foo', '/foo.js');
+      localStorage.setItem('import-map-overrides-disabled', JSON.stringify(['@openmrs/esm-foo']));
+
+      const { setupImportMapOverrides, enableImportMapOverride } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      const handler = vi.fn();
+      window.addEventListener('import-map-overrides:change', handler);
+
+      enableImportMapOverride('@openmrs/esm-foo');
+      expect(handler).toHaveBeenCalledTimes(1);
+
+      window.removeEventListener('import-map-overrides:change', handler);
+    });
+
     it('handles remote import maps via fetch', async () => {
       const script = document.createElement('script');
       script.type = 'systemjs-importmap';
@@ -213,6 +294,25 @@ describe('import-maps', () => {
 
       const map = await getCurrentPageMap();
       expect(map.imports['@openmrs/esm-remote']).toBe('/remote.js');
+    });
+
+    it('getImportMapNextPageMap does not include overrides added after setup in getCurrentPageMap', async () => {
+      setDomImportMaps([{ imports: { '@openmrs/esm-foo': '/foo.js' } }]);
+
+      const { setupImportMapOverrides, addImportMapOverride, getCurrentPageMap, getImportMapNextPageMap } =
+        await import('./import-maps');
+      setupImportMapOverrides();
+
+      // Add an override after setup
+      addImportMapOverride('@openmrs/esm-foo', 'http://localhost:8080/foo.js');
+
+      // getCurrentPageMap uses the snapshot from setup time — override not reflected
+      const currentMap = await getCurrentPageMap();
+      expect(currentMap.imports['@openmrs/esm-foo']).toBe('/foo.js');
+
+      // getImportMapNextPageMap reads the live overrides — reflects the new one
+      const nextMap = await getImportMapNextPageMap();
+      expect(nextMap.imports['@openmrs/esm-foo']).toBe('http://localhost:8080/foo.js');
     });
   });
 
@@ -231,6 +331,33 @@ describe('import-maps', () => {
 
       const map = await getCurrentPageMap();
       expect(map.imports['@openmrs/esm-foo']).toBe('/foo-v2.js');
+    });
+  });
+
+  describe('error handling', () => {
+    it('skips malformed inline import map script tags', async () => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      // One valid map, one with invalid JSON
+      const good = document.createElement('script');
+      good.type = 'systemjs-importmap';
+      good.textContent = JSON.stringify({ imports: { '@openmrs/esm-foo': '/foo.js' } });
+      document.head.appendChild(good);
+
+      const bad = document.createElement('script');
+      bad.type = 'systemjs-importmap';
+      bad.textContent = '{ not valid json';
+      document.head.appendChild(bad);
+
+      const { setupImportMapOverrides, getCurrentPageMap } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      const map = await getCurrentPageMap();
+      expect(map.imports['@openmrs/esm-foo']).toBe('/foo.js');
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse import map'), expect.anything());
     });
   });
 });
