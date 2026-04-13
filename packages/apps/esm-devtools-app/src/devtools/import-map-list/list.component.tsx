@@ -17,7 +17,7 @@ import {
   useDebounce,
   type ImportMap,
   showModal,
-  resetAllRoutesOverrides,
+  resetRouteMapOverrides,
   getCurrentPageMap,
   getImportMapDefaultMap,
   getImportMapNextPageMap,
@@ -114,7 +114,7 @@ function reducer(state: ImportMapListState, action: ImportMapDispatchAction) {
       };
     case 'reset_all_overrides':
       resetImportMapOverrides();
-      resetAllRoutesOverrides();
+      resetRouteMapOverrides();
       return state;
   }
 }

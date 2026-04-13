@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Button, Form, ModalHeader, ModalBody, ModalFooter, Stack, TextInput } from '@carbon/react';
 import {
   addImportMapOverride,
-  addRoutesOverride,
+  addRouteMapOverride,
   enableImportMapOverride,
   getImportMapNextPageMap,
   isImportMapOverrideDisabled,
   removeImportMapOverride,
-  removeRoutesOverride,
+  removeRouteMapOverride,
 } from '@openmrs/esm-framework/src/internal';
 import type { Module } from './types';
 
@@ -59,13 +59,13 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close })
 
           addImportMapOverride(moduleName, newUrl);
           const baseUrl = newUrl.substring(0, newUrl.lastIndexOf('/'));
-          addRoutesOverride(moduleName, new URL('routes.json', baseUrl));
+          addRouteMapOverride(moduleName, new URL('routes.json', baseUrl));
         }
       } else {
         let newUrl = inputRef.current.value || null;
         if (newUrl === null) {
           removeImportMapOverride(moduleName);
-          removeRoutesOverride(moduleName);
+          removeRouteMapOverride(moduleName);
         } else {
           if (isPortRegex.test(newUrl)) {
             newUrl = await getUrlFromPort(moduleName, newUrl);
@@ -73,7 +73,7 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close })
 
           addImportMapOverride(moduleName, newUrl);
           const baseUrl = newUrl.substring(0, newUrl.lastIndexOf('/'));
-          addRoutesOverride(moduleName, new URL('routes.json', baseUrl));
+          addRouteMapOverride(moduleName, new URL('routes.json', baseUrl));
         }
       }
 

@@ -1,6 +1,5 @@
 /** @module @category Dynamic Loading */
 'use strict';
-// hack to make the types defined in esm-globals available here
 import { dispatchToastShown, type ImportMap } from '@openmrs/esm-globals';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { getCurrentPageMap, getImportMapOverrideMap, resetImportMapOverrides } from './import-maps';

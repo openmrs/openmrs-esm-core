@@ -258,7 +258,14 @@ export function enableImportMapOverride(name: string): void {
  *
  * Must be called before any code that depends on the import map functions.
  */
+let initialized = false;
+
 export function setupImportMapOverrides() {
+  if (initialized) {
+    return;
+  }
+  initialized = true;
+
   devMode = window.spaEnv === 'development';
 
   if (devMode) {
