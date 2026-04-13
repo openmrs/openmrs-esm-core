@@ -174,8 +174,12 @@ export function addImportMapOverride(name: string, url: string): void {
     console.warn('[Security] Import map overrides are disabled in production mode.');
     return;
   }
-  localStorage.setItem(OVERRIDE_PREFIX + name, url);
-  window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
+  try {
+    localStorage.setItem(OVERRIDE_PREFIX + name, url);
+    window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
+  } catch (e) {
+    console.warn('[import-maps] Failed to write import-map override to localStorage', e);
+  }
 }
 
 /**
@@ -186,14 +190,18 @@ export function removeImportMapOverride(name: string): void {
     console.warn('[Security] Import map overrides are disabled in production mode.');
     return;
   }
-  localStorage.removeItem(OVERRIDE_PREFIX + name);
-  const disabled = getImportMapDisabledOverrides().filter((n) => n !== name);
-  if (disabled.length > 0) {
-    localStorage.setItem(DISABLED_KEY, JSON.stringify(disabled));
-  } else {
-    localStorage.removeItem(DISABLED_KEY);
+  try {
+    localStorage.removeItem(OVERRIDE_PREFIX + name);
+    const disabled = getImportMapDisabledOverrides().filter((n) => n !== name);
+    if (disabled.length > 0) {
+      localStorage.setItem(DISABLED_KEY, JSON.stringify(disabled));
+    } else {
+      localStorage.removeItem(DISABLED_KEY);
+    }
+    window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
+  } catch (e) {
+    console.warn('[import-maps] Failed to update import-map overrides in localStorage', e);
   }
-  window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
 }
 
 /**
@@ -204,16 +212,20 @@ export function resetImportMapOverrides(): void {
     console.warn('[Security] Import map overrides are disabled in production mode.');
     return;
   }
-  const keysToRemove: string[] = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key?.startsWith(OVERRIDE_PREFIX)) {
-      keysToRemove.push(key);
+  try {
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(OVERRIDE_PREFIX)) {
+        keysToRemove.push(key);
+      }
     }
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
+    localStorage.removeItem(DISABLED_KEY);
+    window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
+  } catch (e) {
+    console.warn('[import-maps] Failed to clear import-map overrides from localStorage', e);
   }
-  keysToRemove.forEach((key) => localStorage.removeItem(key));
-  localStorage.removeItem(DISABLED_KEY);
-  window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
 }
 
 /**
@@ -224,13 +236,17 @@ export function enableImportMapOverride(name: string): void {
     console.warn('[Security] Import map overrides are disabled in production mode.');
     return;
   }
-  const disabled = getImportMapDisabledOverrides().filter((n) => n !== name);
-  if (disabled.length > 0) {
-    localStorage.setItem(DISABLED_KEY, JSON.stringify(disabled));
-  } else {
-    localStorage.removeItem(DISABLED_KEY);
+  try {
+    const disabled = getImportMapDisabledOverrides().filter((n) => n !== name);
+    if (disabled.length > 0) {
+      localStorage.setItem(DISABLED_KEY, JSON.stringify(disabled));
+    } else {
+      localStorage.removeItem(DISABLED_KEY);
+    }
+    window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
+  } catch (e) {
+    console.warn('[import-maps] Failed to update import-map overrides in localStorage', e);
   }
-  window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
 }
 
 /**

@@ -3,7 +3,7 @@
 // hack to make the types defined in esm-globals available here
 import { dispatchToastShown, type ImportMap } from '@openmrs/esm-globals';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { getCurrentPageMap, resetImportMapOverrides } from './import-maps';
+import { getCurrentPageMap, getImportMapOverrideMap, resetImportMapOverrides } from './import-maps';
 
 /**
  * @internal
@@ -139,7 +139,7 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
       url = window.spaBase + url.substring(1);
     }
 
-    const isOverridden = !!window.localStorage.getItem(`import-map-override:${jsPackage}`);
+    const isOverridden = jsPackage in getImportMapOverrideMap().imports;
     try {
       return await new Promise<void>((resolve, reject) => {
         loadScript(url, resolve, reject);

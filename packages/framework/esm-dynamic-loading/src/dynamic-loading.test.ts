@@ -1,16 +1,23 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-const { mockGetCurrentPageMap, mockResetImportMapOverrides, mockDispatchToastShown, mockGetCoreTranslation } =
-  vi.hoisted(() => ({
-    mockGetCurrentPageMap: vi.fn(),
-    mockResetImportMapOverrides: vi.fn(),
-    mockDispatchToastShown: vi.fn(),
-    mockGetCoreTranslation: vi.fn((_key: string, fallback: string) => fallback),
-  }));
+const {
+  mockGetCurrentPageMap,
+  mockGetImportMapOverrideMap,
+  mockResetImportMapOverrides,
+  mockDispatchToastShown,
+  mockGetCoreTranslation,
+} = vi.hoisted(() => ({
+  mockGetCurrentPageMap: vi.fn(),
+  mockGetImportMapOverrideMap: vi.fn().mockReturnValue({ imports: {} }),
+  mockResetImportMapOverrides: vi.fn(),
+  mockDispatchToastShown: vi.fn(),
+  mockGetCoreTranslation: vi.fn((_key: string, fallback: string) => fallback),
+}));
 
 vi.mock('./import-maps', () => ({
   getCurrentPageMap: mockGetCurrentPageMap,
+  getImportMapOverrideMap: mockGetImportMapOverrideMap,
   resetImportMapOverrides: mockResetImportMapOverrides,
 }));
 
@@ -54,6 +61,7 @@ describe('dynamic-loading', () => {
     document.head.querySelectorAll('script').forEach((el) => el.remove());
     (globalThis as any).__webpack_share_scopes__ = { default: {} };
     (window as any).spaBase = '/openmrs/spa';
+    mockGetImportMapOverrideMap.mockReturnValue({ imports: {} });
   });
 
   afterEach(() => {
@@ -141,7 +149,9 @@ describe('dynamic-loading', () => {
       mockGetCurrentPageMap.mockResolvedValue({
         imports: { '@openmrs/esm-foo': 'http://localhost:8080/foo.js' },
       });
-      localStorage.setItem('import-map-override:@openmrs/esm-foo', 'http://localhost:8080/foo.js');
+      mockGetImportMapOverrideMap.mockReturnValue({
+        imports: { '@openmrs/esm-foo': 'http://localhost:8080/foo.js' },
+      });
 
       const promise = preloadImport('@openmrs/esm-foo');
       const script = await waitForScript('http://localhost:8080/foo.js');
@@ -160,7 +170,9 @@ describe('dynamic-loading', () => {
       mockGetCurrentPageMap.mockResolvedValue({
         imports: { '@openmrs/esm-foo': 'http://localhost:8080/foo.js' },
       });
-      localStorage.setItem('import-map-override:@openmrs/esm-foo', 'http://localhost:8080/foo.js');
+      mockGetImportMapOverrideMap.mockReturnValue({
+        imports: { '@openmrs/esm-foo': 'http://localhost:8080/foo.js' },
+      });
 
       const reloadMock = vi.fn();
       Object.defineProperty(window, 'location', {
