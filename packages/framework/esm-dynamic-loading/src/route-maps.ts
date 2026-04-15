@@ -1,6 +1,5 @@
 /** @module @category Route Map */
-import type { OpenmrsAppRoutes, OpenmrsRoutes } from '@openmrs/esm-globals';
-import { isOpenmrsAppRoutes, isOpenmrsRoutes } from '@openmrs/esm-globals';
+import { isOpenmrsAppRoutes, isOpenmrsRoutes, type OpenmrsAppRoutes, type OpenmrsRoutes } from '@openmrs/esm-globals';
 
 const OVERRIDE_PREFIX = 'openmrs-routes:';
 const CHANGE_EVENT = 'openmrs-routes:change';
