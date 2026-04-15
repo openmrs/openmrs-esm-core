@@ -3429,6 +3429,7 @@ __metadata:
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-translations": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
+    "@react-aria/utils": "npm:^3.28.2"
     "@swc/cli": "npm:0.8.1"
     "@swc/core": "npm:1.15.21"
     "@types/geopattern": "npm:^1.2.9"
