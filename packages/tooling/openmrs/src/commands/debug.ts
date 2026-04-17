@@ -1,5 +1,6 @@
+import { createRequire } from 'node:module';
 import type { ImportmapDeclaration } from '../utils';
-import { loadWebpackConfig, logInfo, logWarn } from '../utils';
+import { loadBundlerConfig, logInfo, logWarn } from '../utils';
 
 export interface DebugArgs {
   port: number;
@@ -14,12 +15,11 @@ export interface DebugArgs {
 }
 
 export function runDebug(args: DebugArgs) {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const require = createRequire(import.meta.url);
   const webpack = require('webpack');
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const WebpackDevServer = require('webpack-dev-server');
 
-  const config = loadWebpackConfig({
+  const config = loadBundlerConfig({
     importmap: args.importmap,
     backend: args.backend,
     apiUrl: args.apiUrl,

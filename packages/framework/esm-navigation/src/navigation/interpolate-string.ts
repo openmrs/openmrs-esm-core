@@ -32,6 +32,7 @@ function trimTrailingSlash(str: string) {
  *
  * @param template A string to interpolate
  * @param additionalParams Additional values to interpolate into the string template
+ * @returns The interpolated string with all template parameters replaced.
  */
 export function interpolateUrl(template: string, additionalParams?: { [key: string]: string }): string {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
@@ -56,6 +57,7 @@ export function interpolateUrl(template: string, additionalParams?: { [key: stri
  *
  * @param template With optional params wrapped in `${ }`
  * @param params Values to interpolate into the string template
+ * @returns The template string with all parameter placeholders replaced by their values.
  */
 export function interpolateString(template: string, params: { [key: string]: string }): string {
   const names = Object.keys(params);

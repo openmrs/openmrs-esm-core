@@ -31,11 +31,11 @@ export function isPortAvailable(port: number): Promise<boolean> {
           });
         });
 
-        server6.listen(port, '::');
+        server6.listen(port, '::1');
       });
     });
 
-    server.listen(port, '0.0.0.0');
+    server.listen(port, 'localhost');
   });
 }
 

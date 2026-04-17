@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-emr-api",
-  "version": "8.0.0",
+  "version": "9.0.2",
   "license": "MPL-2.0",
   "description": "The javascript module for interacting with the OpenMRS API",
   "type": "module",
@@ -8,11 +8,11 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./src/public": {
-      "types": "./src/public.ts",
+      "types": "./dist/public.d.ts",
       "default": "./dist/public.js"
     },
     "./mock": {
@@ -57,22 +57,22 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "6.x",
-    "@openmrs/esm-offline": "6.x",
-    "@openmrs/esm-state": "6.x"
+    "@openmrs/esm-api": "9.x",
+    "@openmrs/esm-offline": "9.x",
+    "@openmrs/esm-state": "9.x"
   },
   "devDependencies": {
     "@openmrs/esm-api": "workspace:*",
     "@openmrs/esm-offline": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
-    "@swc/cli": "^0.7.7",
-    "@swc/core": "^1.11.29",
-    "@vitest/coverage-v8": "^4.0.7",
-    "concurrently": "^9.1.2",
-    "cross-env": "^7.0.3",
-    "happy-dom": "^17.4.7",
-    "rimraf": "^6.0.1",
+    "@swc/cli": "0.8.1",
+    "@swc/core": "1.15.21",
+    "@vitest/coverage-v8": "^4.1.2",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "happy-dom": "^20.6.0",
+    "rimraf": "^6.1.3",
     "rxjs": "^6.5.3",
-    "vitest": "^4.0.7"
+    "vitest": "^4.1.2"
   }
 }

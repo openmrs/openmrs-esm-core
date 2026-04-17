@@ -1,13 +1,14 @@
-import axios from 'axios';
-import glob from 'glob';
-import { URL } from 'node:url';
-import { basename, resolve } from 'node:path';
-import { existsSync, readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { glob } from 'glob';
+import { URL } from 'url';
+import { basename, resolve } from 'path';
+import { existsSync, readFileSync } from 'fs';
 import { exec } from 'child_process';
 import { logFail, logInfo, logWarn } from './logger';
 import { startDevServer } from './devserver';
 import { getMainBundle, getAppRoutes } from './dependencies';
 import { getAvailablePort } from './port';
+import type { PackageJson } from './types';
 
 async function readImportmap(path: string, backend?: string, spaPath?: string) {
   if (path.startsWith('http://') || path.startsWith('https://')) {
@@ -50,31 +51,35 @@ async function readRoutes(path: string, backend?: string, spaPath?: string) {
 }
 
 async function fetchRemoteImportmap(fetchUrl: string) {
-  return await axios
-    .get(fetchUrl)
-    .then((res) => res.data)
-    .then((m) => (typeof m === 'string' ? JSON.parse(m) : m))
-    .then((m) => {
-      if (typeof m === 'object' && 'imports' in m) {
-        Object.keys(m.imports).forEach((key) => {
-          const url = m.imports[key];
+  const res = await fetch(fetchUrl);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch import map from ${fetchUrl}: ${res.status} ${res.statusText}`);
+  }
 
-          if (typeof url === 'string') {
-            m.imports[key] = new URL(url, fetchUrl).href;
-          }
-        });
+  const m = await res.json();
+
+  if (typeof m === 'object' && m !== null && 'imports' in m && typeof m.imports === 'object' && m.imports !== null) {
+    const imports = m.imports;
+    Object.keys(imports).forEach((key) => {
+      const url = imports[key];
+
+      if (typeof url === 'string') {
+        imports[key] = new URL(url, fetchUrl).href;
       }
-      return m;
-    })
-    .then((m) => JSON.stringify(m));
+    });
+  }
+
+  return JSON.stringify(m);
 }
 
 async function fetchRemoteRoutes(fetchUrl: string) {
-  return await axios
-    .get(fetchUrl)
-    .then((res) => res.data)
-    .then((m) => (typeof m === 'string' ? JSON.parse(m) : m))
-    .then((m) => JSON.stringify(m));
+  const res = await fetch(fetchUrl);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch routes from ${fetchUrl}: ${res.status} ${res.statusText}`);
+  }
+
+  const m = await res.json();
+  return JSON.stringify(m);
 }
 
 export interface ImportmapDeclaration {
@@ -112,7 +117,12 @@ export function checkRoutesJson(value: string) {
     const content = JSON.parse(value);
     return (
       typeof content === 'object' &&
-      Object.entries(content).every(([key, value]) => typeof key === 'string' && typeof value === 'object')
+      content !== null &&
+      !Array.isArray(content) &&
+      Object.entries(content).every(
+        ([key, value]) =>
+          typeof key === 'string' && typeof value === 'object' && value !== null && !Array.isArray(value),
+      )
     );
   } catch {
     return false;
@@ -120,37 +130,16 @@ export function checkRoutesJson(value: string) {
 }
 
 async function matchAny(baseDir: string, patterns: Array<string>) {
-  const matches: Array<string> = [];
-  await Promise.all(
-    patterns.map(
-      (pattern) =>
-        new Promise<void>((resolve, reject) => {
-          glob(
-            pattern,
-            {
-              cwd: baseDir,
-            },
-            (err, files) => {
-              if (err) {
-                reject(err);
-              } else {
-                matches.push(...files);
-                resolve();
-              }
-            },
-          );
-        }),
-    ),
-  );
-  return matches;
+  const results = await Promise.all(patterns.map((pattern) => glob(pattern, { cwd: baseDir })));
+  return results.flat();
 }
 
-const defaultConfigPath = resolve(__dirname, '..', '..', 'default-webpack-config.js');
+const defaultConfigPath = resolve(import.meta.dirname, '..', '..', 'default-rspack-config.cjs');
 
 function runProjectDevServer(
   configPath: string,
   port: number,
-  project: any,
+  project: PackageJson,
   sourceDirectory: string,
   importMap: Record<string, string>,
   routes: Record<string, unknown>,
@@ -159,9 +148,11 @@ function runProjectDevServer(
   const bundle = getMainBundle(project);
   const host = `http://localhost:${port}`;
 
-  startDevServer(configPath, port, sourceDirectory, useRspack);
+  const { ready } = startDevServer(configPath, port, sourceDirectory, useRspack);
   importMap[project.name] = `${host}/${bundle.name}`;
   routes[project.name] = getAppRoutes(sourceDirectory, project);
+
+  return ready;
 }
 
 export async function runProject(
@@ -178,6 +169,7 @@ export async function runProject(
   const importMap = {};
   const routes = {};
   const watchedRoutesPaths = {};
+  const devServerReadyPromises: Array<Promise<void>> = [];
 
   // Track the starting port, which is one more than the last used port
   let nextPortToCheck = basePort + 1;
@@ -201,8 +193,8 @@ export async function runProject(
       continue;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const project = require(projectFile);
+    const require = createRequire(import.meta.url);
+    const project: PackageJson = require(projectFile);
     const startup = project['openmrs:develop'];
 
     if (existsSync(routesFile)) {
@@ -217,7 +209,8 @@ export async function runProject(
       cp.stdout?.pipe(process.stdout);
       cp.stderr?.pipe(process.stderr);
       // connect to either startup.url or a computed value based on startup.host
-      importMap[project.name] = startup.url || `${startup.host}/${basename(project.browser)}`;
+      const bundle = getMainBundle(project);
+      importMap[project.name] = startup.url || `${startup.host}/${bundle.name}`;
     } else if (!hasConfig && !hasRspackConfig) {
       // try to locate and run via default webpack
       logWarn(`No "webpack.config.js" found in directory "${sourceDirectory}". Trying to use default config ...`);
@@ -226,7 +219,9 @@ export async function runProject(
       const port = await getAvailablePort(nextPortToCheck);
       nextPortToCheck = port + 1;
 
-      runProjectDevServer(defaultConfigPath, port, project, sourceDirectory, importMap, routes);
+      devServerReadyPromises.push(
+        runProjectDevServer(defaultConfigPath, port, project, sourceDirectory, importMap, routes),
+      );
     } else {
       // Find next available port
       const port = await getAvailablePort(nextPortToCheck);
@@ -234,12 +229,16 @@ export async function runProject(
 
       if (hasConfig) {
         // run via specialized webpack.config.js
-        runProjectDevServer(configPath, port, project, sourceDirectory, importMap, routes);
+        devServerReadyPromises.push(runProjectDevServer(configPath, port, project, sourceDirectory, importMap, routes));
       } else {
-        runProjectDevServer(rspackConfigPath, port, project, sourceDirectory, importMap, routes, true);
+        devServerReadyPromises.push(
+          runProjectDevServer(rspackConfigPath, port, project, sourceDirectory, importMap, routes, true),
+        );
       }
     }
   }
+
+  await Promise.all(devServerReadyPromises);
 
   logInfo(`Assembled dynamic import map and routes for packages (${Object.keys(importMap).join(', ')}).`);
 
@@ -329,7 +328,7 @@ export async function getImportMap(importMapPath: string, basePort?: number): Pr
         imports,
       }),
     };
-  } else if (!/https?:\/\//.test(importMapPath)) {
+  } else if (!/^https?:\/\//.test(importMapPath)) {
     const path = resolve(process.cwd(), importMapPath);
 
     if (existsSync(path)) {
@@ -359,7 +358,7 @@ export async function getImportMap(importMapPath: string, basePort?: number): Pr
 }
 
 export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> {
-  if (!/https?:\/\//.test(routesPath)) {
+  if (!/^https?:\/\//.test(routesPath)) {
     const path = resolve(process.cwd(), routesPath);
 
     if (existsSync(path)) {

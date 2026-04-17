@@ -2,7 +2,7 @@
 
 # Function: useVisitContextStore()
 
-> **useVisitContextStore**(`mutateVisitCallback?`): `VisitStoreState` & `BindFunctionsIn`\<\{ `mutateVisit`: \{ \}; `setVisitContext`: \{ `manuallySetVisitUuid`: `null`; `patientUuid?`: `undefined`; \} \| \{ `manuallySetVisitUuid`: `string`; `patientUuid`: `undefined` \| `string`; \}; \}\>
+> **useVisitContextStore**(`mutateVisitCallback?`): [`VisitStoreState`](../interfaces/VisitStoreState.md) & `BindFunctionsIn`\<\{ `mutateVisit`: \{ \}; `setVisitContext`: \{ `manuallySetVisitUuid`: `null`; `patientUuid?`: `undefined`; \} \| \{ `manuallySetVisitUuid`: `string`; `patientUuid`: `undefined` \| `string`; \}; \}\>
 
 Defined in: [packages/framework/esm-react-utils/src/useVisitContextStore.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitContextStore.ts#L30)
 
@@ -20,4 +20,4 @@ callbacks also registered into the store)
 
 ## Returns
 
-`VisitStoreState` & `BindFunctionsIn`\<\{ `mutateVisit`: \{ \}; `setVisitContext`: \{ `manuallySetVisitUuid`: `null`; `patientUuid?`: `undefined`; \} \| \{ `manuallySetVisitUuid`: `string`; `patientUuid`: `undefined` \| `string`; \}; \}\>
+[`VisitStoreState`](../interfaces/VisitStoreState.md) & `BindFunctionsIn`\<\{ `mutateVisit`: \{ \}; `setVisitContext`: \{ `manuallySetVisitUuid`: `null`; `patientUuid?`: `undefined`; \} \| \{ `manuallySetVisitUuid`: `string`; `patientUuid`: `undefined` \| `string`; \}; \}\>

@@ -22,7 +22,7 @@ $actionPanelOffset: layout.$spacing-09;
     &.overlay {
       position: absolute;
       top: 0;
-      right: 0;
+      inset-inline-end: 0;
       height: 100%;
     }
 
@@ -30,7 +30,7 @@ $actionPanelOffset: layout.$spacing-09;
       background: $ui-01;
       width: $actionPanelOffset;
       height: 100%;
-      border-left: 1px solid $text-03;
+      border-inline-start: 1px solid $color-gray-30;
       display: flex;
       align-items: center;
       flex-direction: column;
@@ -84,16 +84,4 @@ $actionPanelOffset: layout.$spacing-09;
   margin: layout.$spacing-04 0;
   height: 1px;
   width: layout.$spacing-08;
-}
-
-// Overriding styles for RTL support
-html[dir='rtl'] {
-  :global(.omrs-breakpoint-gt-tablet) {
-    .sideRail {
-      .container {
-        right: unset;
-        left: 0;
-      }
-    }
-  }
 }

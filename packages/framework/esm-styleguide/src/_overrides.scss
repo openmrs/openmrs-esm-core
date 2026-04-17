@@ -333,6 +333,10 @@
 }
 
 /* Pagination */
+.cds--pagination {
+  container: unset;
+}
+
 .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
   &::after {
     @include brand-03(background-color);
@@ -746,5 +750,9 @@ html[dir='rtl'] {
 }
 
 .omrs-icon {
-  fill: var(--omrs-icon-fill, 'currentColor');
+  fill: var(--omrs-icon-fill, currentColor);
+}
+
+.cds--btn--ghost:not([disabled]) .omrs-icon {
+  fill: var(--omrs-icon-fill, currentColor);
 }

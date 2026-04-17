@@ -36,7 +36,7 @@ The name of the extension slot
 
 ### select()?
 
-> `optional` **select**: (`extensions`) => `AssignedExtension`[]
+> `optional` **select**: (`extensions`) => [`AssignedExtension`](AssignedExtension.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
 
@@ -47,11 +47,11 @@ An optional function for filtering or otherwise modifying
 
 ##### extensions
 
-`AssignedExtension`[]
+[`AssignedExtension`](AssignedExtension.md)[]
 
 #### Returns
 
-`AssignedExtension`[]
+[`AssignedExtension`](AssignedExtension.md)[]
 
 ***
 

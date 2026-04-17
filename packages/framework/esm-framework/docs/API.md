@@ -71,6 +71,11 @@
 - [useAppContext](functions/useAppContext.md)
 - [useDefineAppContext](functions/useDefineAppContext.md)
 
+## Error Handling
+
+- [reportError](functions/reportError.md)
+- [createErrorHandler](functions/createErrorHandler.md)
+
 ## Breadcrumb
 
 - [registerBreadcrumb](functions/registerBreadcrumb.md)
@@ -174,6 +179,8 @@
 - [useAbortController](functions/useAbortController.md)
 - [useDebounce](functions/useDebounce.md)
 - [useOpenmrsSWR](functions/useOpenmrsSWR.md)
+- [ageAsDuration](functions/ageAsDuration.md)
+- [age](functions/age.md)
 - [getPatientName](functions/getPatientName.md)
 - [~~displayName~~](functions/displayName.md)
 - [formatPatientName](functions/formatPatientName.md)
@@ -182,6 +189,7 @@
 - [shallowEqual](functions/shallowEqual.md)
 - [canAccessStorage](functions/canAccessStorage.md)
 - [getDefaultsFromConfigSchema](functions/getDefaultsFromConfigSchema.md)
+- [isVersionSatisfied](functions/isVersionSatisfied.md)
 - [retry](functions/retry.md)
 - [RetryOptions](interfaces/RetryOptions.md)
 
@@ -192,6 +200,8 @@
 - [getFhirServerPaginationHandlers](functions/getFhirServerPaginationHandlers.md)
 - [useLayoutType](functions/useLayoutType.md)
 - [isDesktop](functions/isDesktop.md)
+- [useLeftNav](functions/useLeftNav.md)
+- [useLeftNavStore](functions/useLeftNavStore.md)
 - [useOnClickOutside](functions/useOnClickOutside.md)
 - [useOnVisible](functions/useOnVisible.md)
 - [usePagination](functions/usePagination.md)
@@ -227,6 +237,9 @@
 - [showToast](functions/showToast.md)
 - [ToastDescriptor](interfaces/ToastDescriptor.md)
 - [ToastNotificationMeta](interfaces/ToastNotificationMeta.md)
+- [NumericObservationProps](interfaces/NumericObservationProps.md)
+- [useConceptReferenceRange](functions/useConceptReferenceRange.md)
+- [UseConceptReferenceRangeResult](interfaces/UseConceptReferenceRangeResult.md)
 
 ## Config
 
@@ -246,11 +259,11 @@
 ## Workspace
 
 - [ActionMenuButtonProps](interfaces/ActionMenuButtonProps.md)
-- [closeWorkspace](functions/closeWorkspace.md)
-- [launchWorkspace](functions/launchWorkspace.md)
-- [navigateAndLaunchWorkspace](functions/navigateAndLaunchWorkspace.md)
-- [useWorkspaces](functions/useWorkspaces.md)
-- [launchWorkspaceGroup](functions/launchWorkspaceGroup.md)
+- [~~closeWorkspace~~](functions/closeWorkspace.md)
+- [~~launchWorkspace~~](functions/launchWorkspace.md)
+- [~~navigateAndLaunchWorkspace~~](functions/navigateAndLaunchWorkspace.md)
+- [~~useWorkspaces~~](functions/useWorkspaces.md)
+- [~~launchWorkspaceGroup~~](functions/launchWorkspaceGroup.md)
 - [DefaultWorkspaceProps](interfaces/DefaultWorkspaceProps.md)
 - [CloseWorkspaceOptions](interfaces/CloseWorkspaceOptions.md)
 - [OpenWorkspace](interfaces/OpenWorkspace.md)
@@ -272,6 +285,11 @@
 - [formatDatetime](functions/formatDatetime.md)
 - [convertToLocaleCalendar](functions/convertToLocaleCalendar.md)
 - [formatDuration](functions/formatDuration.md)
+- [parseDateInput](functions/parseDateInput.md)
+- [duration](functions/duration.md)
+- [formatDurationBetween](functions/formatDurationBetween.md)
+- [DurationOptions](interfaces/DurationOptions.md)
+- [DurationOptionsWithFormat](interfaces/DurationOptionsWithFormat.md)
 
 ## Dynamic Loading
 

@@ -4,7 +4,7 @@
 
 > **oneOf**(`allowedValues`): [`Validator`](../type-aliases/Validator.md)
 
-Defined in: [packages/framework/esm-config/src/validators/validators.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L58)
+Defined in: [packages/framework/esm-config/src/validators/validators.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L62)
 
 Verifies that the value is one of the allowed options.
 
@@ -19,3 +19,5 @@ The list of allowable values
 ## Returns
 
 [`Validator`](../type-aliases/Validator.md)
+
+A validator function that checks if a value is in the allowed list.

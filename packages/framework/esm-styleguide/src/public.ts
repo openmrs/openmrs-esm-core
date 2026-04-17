@@ -1,6 +1,7 @@
 export { type StyleguideConfigObject } from './config-schema';
 export * from './cards';
 export * from './custom-overflow-menu';
+export * from './data-table-batch-actions';
 export * from './dashboard-extension';
 export * from './datepicker';
 export * from './diagnosis-tags';
@@ -9,6 +10,7 @@ export * from './error-state';
 export * from './icons/icons';
 export * from './left-nav';
 export * from './location-picker';
+export * from './numeric-observation';
 export { showModal } from './modals';
 export { showNotification, showActionableNotification } from './notifications';
 export {

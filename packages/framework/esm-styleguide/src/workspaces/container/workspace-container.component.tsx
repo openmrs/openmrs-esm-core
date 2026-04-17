@@ -12,11 +12,28 @@ import { WorkspaceRenderer } from './workspace-renderer.component';
 import ActionMenu from './action-menu.component';
 import styles from './workspace.module.scss';
 
+/**
+ * @deprecated Workspace container is no longer needed with workspace v2.
+ */
 export interface WorkspaceContainerProps {
+  /**
+   * The context key is a path element that identifies the pages on which workspaces should
+   * appear. Defined to ensure workspaces do not stay open when navigating between pages.
+   * Must be a valid sub-path of the URL, with no initial or trailing slash.
+   */
   contextKey: string;
+  /** When true, renders the workspace as an overlay instead of a side panel window. */
   overlay?: boolean;
+  /** When true, renders the Siderail (desktop) or Bottom Nav (tablet/mobile) action menu. */
   showSiderailAndBottomNav?: boolean;
+  /**
+   * Additional props to pass to the workspace. Using this is unusual; you will generally
+   * want to pass props to the workspace when you open it using `launchWorkspace`. Use this
+   * only for props that will apply to every workspace launched on the page where this
+   * component is mounted.
+   */
   additionalWorkspaceProps?: object;
+  /** Props to pass to the action menu component. */
   actionMenuProps?: Record<string, unknown>;
 }
 
@@ -59,11 +76,7 @@ export interface WorkspaceContainerProps {
  *
  * This component also provides everything needed for workspace notifications to be rendered.
  *
- * @param props.contextKey The context key (explained above)
- * @param props.additionalWorkspaceProps Additional props to pass to the workspace. Using this is
- *          unusual; you will generally want to pass props to the workspace when you open it, using
- *          `launchWorkspace`. Use this only for props that will apply to every workspace launched
- *          on the page where this component is mounted.
+ * @deprecated Workspace container is no longer needed with workspace v2.
  */
 export function WorkspaceContainer({
   contextKey,

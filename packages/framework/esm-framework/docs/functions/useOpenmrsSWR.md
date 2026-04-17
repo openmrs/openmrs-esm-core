@@ -2,7 +2,7 @@
 
 # Function: useOpenmrsSWR()
 
-> **useOpenmrsSWR**\<`DataType`, `ErrorType`\>(`key`, `options`): `SWRResponse`\<`FetchResponse`\<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`\<`FetchResponse`\<`DataType`\>, `ErrorType`, `BareFetcher`\<`FetchResponse`\<`DataType`\>\>\>\>
+> **useOpenmrsSWR**\<`DataType`, `ErrorType`\>(`key`, `options`): `SWRResponse`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `BareFetcher`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>\>\>\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L70)
 
@@ -39,7 +39,7 @@ An object of optional parameters to provide, including a [FetchConfig](../interf
 
 ## Returns
 
-`SWRResponse`\<`FetchResponse`\<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`\<`FetchResponse`\<`DataType`\>, `ErrorType`, `BareFetcher`\<`FetchResponse`\<`DataType`\>\>\>\>
+`SWRResponse`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `BareFetcher`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>\>\>\>
 
 ## Examples
 

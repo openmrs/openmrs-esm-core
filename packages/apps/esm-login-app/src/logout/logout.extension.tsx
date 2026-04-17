@@ -12,9 +12,9 @@ const Logout: React.FC = () => {
   }, []);
 
   return (
-    <SwitcherItem aria-label={t('Logout', 'Logout')}>
+    <SwitcherItem aria-label={t('logout', 'Logout')}>
       <Button className={styles.logout} onClick={handleLogout} kind="ghost">
-        {t('Logout', 'Logout')}
+        {t('logout', 'Logout')}
       </Button>
     </SwitcherItem>
   );

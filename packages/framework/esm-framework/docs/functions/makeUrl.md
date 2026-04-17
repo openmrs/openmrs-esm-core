@@ -4,16 +4,9 @@
 
 > **makeUrl**(`path`): `string`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L23)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L30)
 
 Append `path` to the OpenMRS SPA base.
-
-#### Example
-
-```ts
-makeUrl('/foo/bar');
-// => '/openmrs/foo/bar'
-```
 
 ## Parameters
 
@@ -21,6 +14,18 @@ makeUrl('/foo/bar');
 
 `string`
 
+The path to append to the OpenMRS base URL.
+
 ## Returns
 
 `string`
+
+The full URL with the OpenMRS base prepended. If the path is already
+  an absolute URL (starting with 'http'), it is returned unchanged.
+
+## Example
+
+```ts
+makeUrl('/foo/bar');
+// => '/openmrs/foo/bar'
+```

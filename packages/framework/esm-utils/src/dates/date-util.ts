@@ -10,7 +10,6 @@ import {
   createCalendar,
   toCalendar,
 } from '@internationalized/date';
-import { DurationFormat } from '@formatjs/intl-durationformat';
 import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday.js';
@@ -18,7 +17,6 @@ import objectSupport from 'dayjs/plugin/objectSupport.js';
 import utc from 'dayjs/plugin/utc.js';
 import { isNil, omit } from 'lodash-es';
 import { getLocale } from '../';
-import type { DurationFormatOptions, DurationInput } from '@formatjs/intl-durationformat/src/types';
 
 dayjs.extend(isToday);
 dayjs.extend(utc);
@@ -58,8 +56,10 @@ export function isOmrsDateStrict(omrsPayloadString: string): boolean {
 }
 
 /**
+ * Checks if the provided date is today.
  *
- * @param date Checks if the provided date is today.
+ * @param date The date to check.
+ * @returns `true` if the date is today, `false` otherwise.
  */
 export function isOmrsDateToday(date: DateInput) {
   return dayjs(date).isToday();
@@ -232,6 +232,10 @@ const defaultOptions: FormatDateOptions = {
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
  * locales.
+ *
+ * @param dateString The date string to parse and format.
+ * @param options Optional formatting options.
+ * @returns The formatted date string, or `null` if the input cannot be parsed.
  */
 // TODO: Shouldn't throw on null input
 export function formatPartialDate(dateString: string, options: Partial<FormatDateOptions> = {}) {
@@ -293,6 +297,10 @@ export function formatPartialDate(dateString: string, options: Partial<FormatDat
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
  * locales.
+ *
+ * @param date The date to format.
+ * @param options Optional formatting options.
+ * @returns The formatted date string.
  */
 // TODO: Shouldn't throw on null input
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
@@ -381,6 +389,9 @@ const formatParts = (separator: string) => {
 /**
  * Formats the input as a time, according to the current locale.
  * 12-hour or 24-hour clock depends on locale.
+ *
+ * @param date The date whose time portion should be formatted.
+ * @returns The formatted time string (e.g., "2:30 PM" or "14:30").
  */
 export function formatTime(date: Date) {
   return date.toLocaleTimeString(getLocale(), {
@@ -397,6 +408,10 @@ export function formatTime(date: Date) {
  * This is created by concatenating the results of `formatDate`
  * and `formatTime` with a comma and space. This agrees with the
  * output of `Date.prototype.toLocaleString` for *most* locales.
+ *
+ * @param date The date to format.
+ * @param options Optional formatting options (same as formatDate, except time is always included).
+ * @returns The formatted date and time string.
  */
 export function formatDatetime(date: Date, options?: Partial<Omit<FormatDateOptions, 'time'>>) {
   return formatDate(date, { ...options, time: true });
@@ -423,7 +438,287 @@ export function convertToLocaleCalendar(
  * @param options Optional options for formatting.
  * @returns The formatted duration string.
  */
-export function formatDuration(duration: DurationInput, options?: DurationFormatOptions) {
-  const formatter = new DurationFormat(getLocale(), options);
+export function formatDuration(duration: Intl.DurationInput, options?: Intl.DurationFormatOptions) {
+  const formatter = new Intl.DurationFormat(getLocale(), options);
   return formatter.format(duration);
+}
+
+/**
+ * Parses a date input into a dayjs object. String inputs are interpreted using
+ * any-date-parser with corrections for its month/day representation differences
+ * with dayjs. Non-string inputs are passed directly to dayjs.
+ *
+ * @param dateInput The date to parse.
+ * @param referenceDate Used as the base when resolving partial string dates (e.g., '2000' resolves missing fields from this date).
+ * @returns A dayjs object, or null if the string could not be parsed.
+ */
+export function parseDateInput(dateInput: dayjs.ConfigType, referenceDate: dayjs.Dayjs): dayjs.Dayjs | null {
+  if (dateInput == null) {
+    return null;
+  }
+
+  if (typeof dateInput === 'string') {
+    const locale = getLocale();
+    let parsedDate = attempt(dateInput, locale);
+    if (parsedDate.invalid) {
+      console.warn(`Could not interpret '${dateInput}' as a date`);
+      return null;
+    }
+
+    // hack here but any date interprets 2000-01, etc. as yyyy-dd rather than yyyy-mm
+    if (parsedDate.day && !parsedDate.month) {
+      parsedDate = { ...omit(parsedDate, 'day'), ...{ month: parsedDate.day } };
+    }
+
+    // dayjs' object support uses 0-based months, whereas any-date-parser uses 1-based months
+    if (parsedDate.month) {
+      parsedDate.month -= 1;
+    }
+
+    // in dayjs day is day of week; in any-date-parser, its day of month, so we need to convert them
+    if (parsedDate.day) {
+      parsedDate = { ...omit(parsedDate, 'day'), ...{ date: parsedDate.day } };
+    }
+
+    return dayjs(referenceDate).set(parsedDate);
+  }
+
+  return dayjs(dateInput);
+}
+
+type DurationUnitPlural = 'seconds' | 'minutes' | 'hours' | 'days' | 'months' | 'years';
+type DurationUnitSingular = 'second' | 'minute' | 'hour' | 'day' | 'month' | 'year';
+
+/** Accepts both singular ('year') and plural ('years') forms, mirroring Temporal.Duration.round(). */
+export type DurationUnit = DurationUnitPlural | DurationUnitSingular;
+
+export interface DurationOptions {
+  /** Override auto-selection thresholds. Each value is in the unit's own terms (e.g., seconds: 30 means "use seconds if < 30 seconds"). */
+  thresholds?: Partial<Record<DurationUnit, number>>;
+  /**
+   * Coarsest unit to include. Accepts 'auto' (default when smallestUnit is set),
+   * which resolves to the largest non-zero unit or smallestUnit, whichever is greater.
+   * Mirrors Temporal.Duration.round() behavior.
+   */
+  largestUnit?: DurationUnit | 'auto';
+  /** Finest unit to include. Defaults to largestUnit when largestUnit is an explicit unit, giving a single-unit result. */
+  smallestUnit?: DurationUnit;
+}
+
+export interface DurationOptionsWithFormat extends DurationOptions {
+  /** Options passed to Intl.DurationFormat. Defaults to { style: 'short', localeMatcher: 'lookup' }. */
+  formatOptions?: Intl.DurationFormatOptions;
+}
+
+const UNIT_ORDER: DurationUnitPlural[] = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
+
+const SINGULAR_TO_PLURAL: Record<DurationUnitSingular, DurationUnitPlural> = {
+  second: 'seconds',
+  minute: 'minutes',
+  hour: 'hours',
+  day: 'days',
+  month: 'months',
+  year: 'years',
+};
+
+function normalizeUnit(unit: DurationUnit): DurationUnitPlural {
+  return SINGULAR_TO_PLURAL[unit as DurationUnitSingular] ?? (unit as DurationUnitPlural);
+}
+
+/**
+ * Normalizes threshold keys from singular/plural to plural, then merges with defaults.
+ */
+function normalizeThresholds(thresholds?: Partial<Record<DurationUnit, number>>): Record<DurationUnitPlural, number> {
+  const result = { ...DEFAULT_THRESHOLDS };
+  if (thresholds) {
+    for (const [key, value] of Object.entries(thresholds)) {
+      if (value !== undefined) {
+        result[normalizeUnit(key as DurationUnit)] = value;
+      }
+    }
+  }
+  return result;
+}
+
+const DEFAULT_THRESHOLDS: Record<DurationUnitPlural, number> = {
+  seconds: 45,
+  minutes: 45,
+  hours: 22,
+  days: 26,
+  months: 11,
+  years: Infinity,
+};
+
+/**
+ * Auto-selects the appropriate unit based on the magnitude of the duration,
+ * using the provided thresholds (or defaults).
+ */
+function autoSelectUnit(
+  from: dayjs.Dayjs,
+  to: dayjs.Dayjs,
+  thresholds?: Partial<Record<DurationUnit, number>>,
+): DurationUnitPlural {
+  const t = normalizeThresholds(thresholds);
+
+  if (to.diff(from, 'seconds') < t.seconds) return 'seconds';
+  if (to.diff(from, 'minutes') < t.minutes) return 'minutes';
+  if (to.diff(from, 'hours') < t.hours) return 'hours';
+  if (to.diff(from, 'days') < t.days) return 'days';
+  if (to.diff(from, 'months') < t.months) return 'months';
+  return 'years';
+}
+
+/**
+ * Finds the largest unit with a non-zero diff, or falls back to smallestUnit.
+ * Mirrors the Temporal.Duration.round() 'auto' behavior for largestUnit.
+ */
+function autoLargestUnit(from: dayjs.Dayjs, to: dayjs.Dayjs, smallestUnit: DurationUnitPlural): DurationUnitPlural {
+  const smallestIdx = UNIT_ORDER.indexOf(smallestUnit);
+
+  for (let i = 0; i < UNIT_ORDER.length; i++) {
+    const unit = UNIT_ORDER[i];
+    if (to.diff(from, unit) > 0) {
+      // Return this unit or smallestUnit, whichever is coarser (lower index)
+      return i <= smallestIdx ? unit : smallestUnit;
+    }
+  }
+
+  return smallestUnit;
+}
+
+/**
+ * Decomposes the duration between two dates across a range of units, from
+ * largestUnit down to smallestUnit. Each unit's value is the remainder after
+ * subtracting all larger units.
+ */
+function decompose(
+  from: dayjs.Dayjs,
+  to: dayjs.Dayjs,
+  largestUnit: DurationUnitPlural,
+  smallestUnit: DurationUnitPlural,
+): Intl.DurationInput {
+  const startIdx = UNIT_ORDER.indexOf(largestUnit);
+  const endIdx = UNIT_ORDER.indexOf(smallestUnit);
+  const units = UNIT_ORDER.slice(startIdx, endIdx + 1);
+
+  const result: Intl.DurationInput = {};
+  let current = from;
+
+  for (const unit of units) {
+    const diff = to.diff(current, unit);
+    result[unit] = diff;
+    current = current.add(diff, unit);
+  }
+
+  return result;
+}
+
+/**
+ * Calculates the duration between two dates as a structured duration object.
+ *
+ * When called with no options or a single unit string, the unit is auto-selected
+ * using dayjs relativeTime thresholds:
+ * - < 45 seconds → seconds
+ * - < 45 minutes → minutes
+ * - < 22 hours → hours
+ * - < 26 days → days
+ * - < 11 months → months
+ * - otherwise → years
+ *
+ * With a {@link DurationOptions} object, you can override thresholds and/or request
+ * a multi-unit decomposition via largestUnit/smallestUnit.
+ *
+ * @param startDate The start date. If null, returns null.
+ * @param endDate Optional. Defaults to now.
+ * @param options A unit string for single-unit output, or a DurationOptions object.
+ * @returns A DurationInput object, or null if either date is null or unparseable.
+ *
+ * @example
+ * // Auto-selects the appropriate unit
+ * duration('2022-01-01', '2024-07-30') // => { years: 2 }
+ *
+ * @example
+ * // Multi-unit decomposition
+ * duration('2022-01-01', '2024-07-30', { largestUnit: 'year', smallestUnit: 'day' })
+ * // => { years: 2, months: 6, days: 29 }
+ */
+export function duration(
+  startDate: dayjs.ConfigType,
+  endDate: dayjs.ConfigType = dayjs(),
+  options?: DurationUnit | DurationOptions,
+): Intl.DurationInput | null {
+  const to = dayjs(endDate);
+  const from = parseDateInput(startDate, to);
+
+  if (from == null) {
+    return null;
+  }
+
+  if (typeof options === 'string') {
+    const normalized = normalizeUnit(options);
+    return { [normalized]: to.diff(from, normalized) };
+  }
+
+  const { thresholds, largestUnit: rawLargest, smallestUnit: rawSmallest } = options ?? {};
+
+  if (rawLargest !== undefined || rawSmallest !== undefined) {
+    const smallest = rawSmallest ? normalizeUnit(rawSmallest) : undefined;
+
+    let largest: DurationUnitPlural;
+    if (rawLargest === 'auto' || rawLargest === undefined) {
+      // 'auto' or omitted: resolve to the largest non-zero unit, or smallestUnit, whichever is coarser
+      const effectiveSmallest = smallest ?? 'seconds';
+      largest = autoLargestUnit(from, to, effectiveSmallest);
+    } else {
+      largest = normalizeUnit(rawLargest);
+    }
+
+    return decompose(from, to, largest, smallest ?? largest);
+  }
+
+  const selected = autoSelectUnit(from, to, thresholds);
+  return { [selected]: to.diff(from, selected) };
+}
+
+const DEFAULT_FORMAT_OPTIONS: Intl.DurationFormatOptions = { style: 'short', localeMatcher: 'lookup' };
+
+/**
+ * Calculates the duration between two dates and formats it as a locale-aware string.
+ * Uses the same unit-selection logic as {@link duration} and delegates formatting
+ * to {@link formatDuration}.
+ *
+ * @param startDate The start date. If null, returns null.
+ * @param endDate Optional. Defaults to now.
+ * @param options A unit string for single-unit output, or a {@link DurationOptionsWithFormat} object.
+ *   The `formatOptions` field is passed to Intl.DurationFormat (defaults to short style).
+ * @returns A formatted duration string, or null if either date is null or unparseable.
+ *
+ * @example
+ * formatDurationBetween('2022-01-01', '2024-07-30') // => '2 yrs'
+ *
+ * @example
+ * // Multi-unit with long-form formatting
+ * formatDurationBetween('2022-01-01', '2024-07-30', {
+ *   largestUnit: 'year',
+ *   smallestUnit: 'day',
+ *   formatOptions: { style: 'long' },
+ * }) // => '2 years, 6 months, 29 days'
+ */
+export function formatDurationBetween(
+  startDate: dayjs.ConfigType,
+  endDate: dayjs.ConfigType = dayjs(),
+  options?: DurationUnit | DurationOptionsWithFormat,
+): string | null {
+  const durationInput = duration(startDate, endDate, options);
+
+  if (durationInput == null) {
+    return null;
+  }
+
+  const formatOpts =
+    typeof options === 'object' && options.formatOptions
+      ? { ...DEFAULT_FORMAT_OPTIONS, ...options.formatOptions }
+      : DEFAULT_FORMAT_OPTIONS;
+
+  return formatDuration(durationInput, formatOpts);
 }

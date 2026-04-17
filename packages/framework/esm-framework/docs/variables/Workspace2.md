@@ -4,7 +4,7 @@
 
 > `const` **Workspace2**: `React.FC`\<`Workspace2Props`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L68)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L69)
 
 **`Experimental`**
 

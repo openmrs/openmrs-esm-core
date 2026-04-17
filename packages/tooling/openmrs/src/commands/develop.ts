@@ -1,11 +1,10 @@
+import { createRequire } from 'node:module';
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { basename, resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { type ImportmapDeclaration, type RoutesDeclaration, logInfo, logWarn, removeTrailingSlash } from '../utils';
-
-/* eslint-disable no-console */
 
 export interface DevelopArgs {
   port: number;
@@ -23,7 +22,7 @@ export interface DevelopArgs {
   supportOffline: boolean;
 }
 
-export async function runDevelop(args: DevelopArgs) {
+export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
   const {
     backend,
     host,
@@ -44,6 +43,7 @@ export async function runDevelop(args: DevelopArgs) {
   const localConfigUrlPrefix = '__local_config__';
   const localConfigUrls = configFiles.map((path) => `${spaPath}/${localConfigUrlPrefix}/${basename(path)}`);
 
+  const require = createRequire(import.meta.url);
   const source = resolve(require.resolve('@openmrs/esm-app-shell/package.json'), '..', 'dist');
   const index = resolve(source, 'index.html');
   const indexContent = readFileSync(index, 'utf8')
@@ -64,9 +64,12 @@ export async function runDevelop(args: DevelopArgs) {
     .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`)
     .replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\/importmap\.json/g, `${spaPath}/importmap.json`);
 
-  const sw = resolve(source, 'service-worker.js');
-  // remove any full references to dev3.openmrs.org
-  const swContent = readFileSync(sw, 'utf-8').replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g, `${spaPath}`);
+  const swContent = supportOffline
+    ? readFileSync(resolve(source, 'service-worker.js'), 'utf-8').replace(
+        /https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g,
+        `${spaPath}`,
+      )
+    : '';
 
   const pageUrl = `http://${host}:${port}${spaPath}`;
 
@@ -130,10 +133,13 @@ export async function runDevelop(args: DevelopArgs) {
     });
   });
 
+  // Escape the spaPath so it can be safely used in a regex
+  const escapedSpaPath = spaPath.replace(/[|\\{}()[\]^$+*?.]/g, String.raw`\$&`).replace(/-/g, String.raw`\x2d`);
+
   // Return our custom `index.html` for all requests beginning with spaPath
   // and not ending in `.js`, `.woff`, `.woff2`, `.json`, or any two- or three-character
   // extension.
-  const indexHtmlPathMatcher = /\/openmrs\/spa\/(?!.*\.(js|woff2?|json|.{2,3}$)).*$/;
+  const indexHtmlPathMatcher = new RegExp(String.raw`${escapedSpaPath}\/(?!.*\.(js|woff2?|json|.{2,3}$)).*$`);
 
   // Route for custom `index.html` goes above static assets
   app.get(indexHtmlPathMatcher, (_, res) => res.contentType('text/html').send(indexContent));
@@ -164,7 +170,7 @@ export async function runDevelop(args: DevelopArgs) {
     ),
   );
 
-  app.listen(port, host, () => {
+  const server = app.listen(port, host, () => {
     logInfo(`Listening at http://${host}:${port}`);
     logInfo(`SPA available at ${pageUrl}`);
 
@@ -183,5 +189,8 @@ export async function runDevelop(args: DevelopArgs) {
     }
   });
 
+  signal?.addEventListener('abort', () => server.close());
+
+  // Keep the promise pending so the runner process doesn't exit
   return new Promise<void>(() => {});
 }

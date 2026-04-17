@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
-import * as utils from '@openmrs/esm-utils';
+import * as utils from '@openmrs/esm-utils/mock';
 import dayjs from 'dayjs';
 
 window.i18next = { ...window.i18next, language: 'en' };
@@ -73,6 +73,11 @@ export const CustomOverflowMenu = jest.fn(({ menuTitle, children }) => (
     <button>{menuTitle}</button>
     {children}
   </div>
+));
+export const CustomOverflowMenuItem = jest.fn(({ itemText, ...props }) => (
+  <button role="menuitem" {...props}>
+    {itemText}
+  </button>
 ));
 export const PatientBannerActionsMenu = jest.fn(() => <div>Patient Banner Actions Menu</div>);
 export const PatientBannerContactDetails = jest.fn(() => <div>Patient Banner Contact Details</div>);

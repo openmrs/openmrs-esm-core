@@ -4,4 +4,4 @@
 
 > **PictogramId** = *typeof* [`pictogramIds`](../variables/pictogramIds.md)\[`number`\]
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L36)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L37)

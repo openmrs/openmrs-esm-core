@@ -4,4 +4,4 @@
 
 > **SpaEnvironment** = `"production"` \| `"development"` \| `"test"`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:72
+Defined in: [packages/framework/esm-globals/src/types.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L59)

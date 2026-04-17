@@ -6,6 +6,7 @@ import { validator } from './validator';
  *
  * @param min Minimum acceptable value
  * @param max Maximum acceptable value
+ * @returns A validator function that checks if a value is within the specified range.
  */
 export const inRange = (min: number, max: number) => {
   return validator((val) => min <= val && val <= max, `must be between ${min} and ${max}`);
@@ -16,6 +17,7 @@ export const inRange = (min: number, max: number) => {
  * parameters, plus any specified in `allowedTemplateParameters`.
  *
  * @param allowedTemplateParameters To be added to `openmrsBase` and `openmrsSpaBase`
+ * @returns A validator function that checks if a URL contains only allowed template parameters.
  * @category Navigation
  */
 export const isUrlWithTemplateParameters = (allowedTemplateParameters: Array<string> | readonly string[]) => {
@@ -53,7 +55,9 @@ export const isUrl = isUrlWithTemplateParameters([]);
 
 /**
  * Verifies that the value is one of the allowed options.
+ *
  * @param allowedValues The list of allowable values
+ * @returns A validator function that checks if a value is in the allowed list.
  */
 export const oneOf = (allowedValues: Array<any> | readonly any[]) => {
   return validator(

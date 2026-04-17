@@ -127,7 +127,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2629
 
 ### aria-checked?
 
-> `optional` **aria-checked**: `boolean` \| `"true"` \| `"false"` \| `"mixed"`
+> `optional` **aria-checked**: `boolean` \| `"false"` \| `"true"` \| `"mixed"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2634
 
@@ -238,7 +238,7 @@ aria-owns.
 
 ### aria-current?
 
-> `optional` **aria-current**: `boolean` \| `"true"` \| `"location"` \| `"time"` \| `"false"` \| `"page"` \| `"step"` \| `"date"`
+> `optional` **aria-current**: `boolean` \| `"false"` \| `"time"` \| `"date"` \| `"true"` \| `"location"` \| `"page"` \| `"step"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2661
 
@@ -325,7 +325,7 @@ Indicates that the element is perceivable but disabled, so it is not editable or
 
 ### ~~aria-dropeffect?~~
 
-> `optional` **aria-dropeffect**: `"link"` \| `"copy"` \| `"none"` \| `"move"` \| `"execute"` \| `"popup"`
+> `optional` **aria-dropeffect**: `"copy"` \| `"link"` \| `"none"` \| `"move"` \| `"execute"` \| `"popup"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2686
 
@@ -409,7 +409,7 @@ in ARIA 1.1
 
 ### aria-haspopup?
 
-> `optional` **aria-haspopup**: `boolean` \| `"true"` \| `"dialog"` \| `"menu"` \| `"false"` \| `"grid"` \| `"listbox"` \| `"tree"`
+> `optional` **aria-haspopup**: `boolean` \| `"false"` \| `"true"` \| `"dialog"` \| `"menu"` \| `"grid"` \| `"listbox"` \| `"tree"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2705
 
@@ -441,7 +441,7 @@ aria-disabled.
 
 ### aria-invalid?
 
-> `optional` **aria-invalid**: `boolean` \| `"true"` \| `"false"` \| `"grammar"` \| `"spelling"`
+> `optional` **aria-invalid**: `boolean` \| `"false"` \| `"true"` \| `"grammar"` \| `"spelling"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2715
 
@@ -645,7 +645,7 @@ aria-setsize.
 
 ### aria-pressed?
 
-> `optional` **aria-pressed**: `boolean` \| `"true"` \| `"false"` \| `"mixed"`
+> `optional` **aria-pressed**: `boolean` \| `"false"` \| `"true"` \| `"mixed"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2760
 
@@ -839,7 +839,7 @@ aria-posinset.
 
 ### aria-sort?
 
-> `optional` **aria-sort**: `"other"` \| `"none"` \| `"ascending"` \| `"descending"`
+> `optional` **aria-sort**: `"none"` \| `"other"` \| `"ascending"` \| `"descending"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2817
 
@@ -913,7 +913,7 @@ Defines the human readable text alternative of aria-valuenow for a range widget.
 
 ### autoCapitalize?
 
-> `optional` **autoCapitalize**: `"on"` \| `"off"` \| `string` & `object` \| `"none"` \| `"sentences"` \| `"words"` \| `"characters"`
+> `optional` **autoCapitalize**: `"none"` \| `"on"` \| `"off"` \| `string` & `object` \| `"sentences"` \| `"words"` \| `"characters"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2913
 
@@ -1105,7 +1105,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2919
 
 ### enterKeyHint?
 
-> `optional` **enterKeyHint**: `"next"` \| `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"previous"` \| `"send"`
+> `optional` **enterKeyHint**: `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2920
 
@@ -1187,7 +1187,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2942
 
 ### inputMode?
 
-> `optional` **inputMode**: `"url"` \| `"search"` \| `"text"` \| `"none"` \| `"tel"` \| `"email"` \| `"numeric"` \| `"decimal"`
+> `optional` **inputMode**: `"numeric"` \| `"search"` \| `"text"` \| `"none"` \| `"url"` \| `"tel"` \| `"email"` \| `"decimal"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2969
 
@@ -3349,7 +3349,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 ### select()?
 
-> `optional` **select**: (`extensions`) => `AssignedExtension`[]
+> `optional` **select**: (`extensions`) => [`AssignedExtension`](AssignedExtension.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
 
@@ -3360,11 +3360,11 @@ An optional function for filtering or otherwise modifying
 
 ##### extensions
 
-`AssignedExtension`[]
+[`AssignedExtension`](AssignedExtension.md)[]
 
 #### Returns
 
-`AssignedExtension`[]
+[`AssignedExtension`](AssignedExtension.md)[]
 
 #### Inherited from
 

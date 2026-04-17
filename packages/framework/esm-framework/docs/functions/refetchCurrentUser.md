@@ -4,7 +4,7 @@
 
 > **refetchCurrentUser**(`username?`, `password?`): `Promise`\<[`SessionStore`](../type-aliases/SessionStore.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L163)
+Defined in: [packages/framework/esm-api/src/current-user.ts:204](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L204)
 
 The `refetchCurrentUser` function causes a network request to redownload
 the user. All subscribers to the current user will be notified of the
@@ -24,9 +24,10 @@ new users once the new version of the user object is downloaded.
 
 `Promise`\<[`SessionStore`](../type-aliases/SessionStore.md)\>
 
-The same observable as returned by [[getCurrentUser]].
+The same observable as returned by [getCurrentUser](getCurrentUser.md).
 
-#### Example
+## Example
+
 ```js
 import { refetchCurrentUser } from '@openmrs/esm-api'
 refetchCurrentUser()

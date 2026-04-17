@@ -40,7 +40,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (!user) {
-      if (loginProvider.type === 'oauth2') {
+      if (loginProvider.type === 'oauth2' || loginProvider.type === 'custom') {
         openmrsNavigate({ to: loginProvider.loginUrl });
       } else if (!username && location.pathname === '/login/confirm') {
         navigate('/login');
@@ -220,7 +220,7 @@ const Login: React.FC = () => {
                       type="submit"
                       className={styles.continueButton}
                       renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                      iconDescription="Continue to password"
+                      iconDescription={t('continueToPassword', 'Continue to password')}
                       onClick={(evt) => {
                         evt.preventDefault();
                         continueLogin();
@@ -249,7 +249,7 @@ const Login: React.FC = () => {
                     type="submit"
                     className={styles.continueButton}
                     renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-                    iconDescription="Log in"
+                    iconDescription={t('loginButtonIconDescription', 'Log in button')}
                     disabled={!isLoginEnabled || isLoggingIn}
                   >
                     {isLoggingIn ? (

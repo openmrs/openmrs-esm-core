@@ -2,9 +2,11 @@
 
 # Function: saveVisit()
 
-> **saveVisit**(`payload`, `abortController`): `Promise`\<`FetchResponse`\<[`Visit`](../interfaces/Visit.md)\>\>
+> **saveVisit**(`payload`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`Visit`](../interfaces/Visit.md)\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L81)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L134)
+
+Creates a new visit by sending a POST request to the OpenMRS REST API.
 
 ## Parameters
 
@@ -12,10 +14,29 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:81](https://githu
 
 [`NewVisitPayload`](../interfaces/NewVisitPayload.md)
 
+The visit data to create, including patient UUID, visit type,
+  start datetime, and other visit attributes.
+
 ### abortController
 
 `AbortController`
 
+An AbortController to allow cancellation of the request.
+
 ## Returns
 
-`Promise`\<`FetchResponse`\<[`Visit`](../interfaces/Visit.md)\>\>
+`Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`Visit`](../interfaces/Visit.md)\>\>
+
+A Promise that resolves with the FetchResponse containing the created Visit.
+
+## Example
+
+```ts
+import { saveVisit } from '@openmrs/esm-framework';
+const abortController = new AbortController();
+const response = await saveVisit({
+  patient: 'patient-uuid',
+  visitType: 'visit-type-uuid',
+  startDatetime: new Date().toISOString()
+}, abortController);
+```

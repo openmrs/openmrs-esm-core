@@ -4,9 +4,9 @@
 
 > **getFeatureFlag**(`flagName`): `boolean`
 
-Defined in: [packages/framework/esm-feature-flags/src/feature-flags.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L87)
+Defined in: [packages/framework/esm-feature-flags/src/feature-flags.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L91)
 
-Use this function to access the current value of the feature flag
+Use this function to access the current value of the feature flag.
 
 If you are using React, use `useFeatureFlag` instead.
 
@@ -16,6 +16,10 @@ If you are using React, use `useFeatureFlag` instead.
 
 `string`
 
+The name of the feature flag to check.
+
 ## Returns
 
 `boolean`
+
+`true` if the feature flag is enabled, `false` otherwise.

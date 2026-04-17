@@ -1,6 +1,7 @@
 export * from './breakpoints';
 export * from './cards';
 export * from './config-schema';
+export * from './data-table-batch-actions';
 export * from './custom-overflow-menu';
 export * from './dashboard-extension';
 export * from './datepicker';
@@ -14,6 +15,7 @@ export * from './modals';
 export * from './notifications';
 export * from './notifications/actionable-notification.component';
 export * from './notifications/notification.component';
+export * from './numeric-observation/numeric-observation.component';
 export * from './page-header';
 export * from './pagination';
 export * from './patient-banner';

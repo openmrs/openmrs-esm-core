@@ -1,5 +1,5 @@
 /** @module @category Config */
-import { clone, equals, reduce, mergeDeepRight, omit } from 'ramda';
+import { cloneDeep, isEqual, mergeWith, omit as lodashOmit } from 'lodash-es';
 import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig } from '../types';
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
@@ -16,6 +16,19 @@ import {
   temporaryConfigStore,
 } from './state';
 import { type TemporaryConfigStore } from '..';
+
+/**
+ * Deep merge two objects, with right-side values taking precedence.
+ * Arrays are replaced entirely (not merged by index), matching the
+ * behavior of ramda's mergeDeepRight.
+ */
+function mergeDeepReplace<T extends object>(left: T, right: Partial<T>): T {
+  return mergeWith({}, left, right, (_objValue: unknown, srcValue: unknown) => {
+    if (Array.isArray(srcValue)) {
+      return srcValue;
+    }
+  }) as T;
+}
 
 /**
  * Store setup
@@ -108,7 +121,7 @@ function computeExtensionSlotConfigs(state: ConfigInternalStore, tempState: Temp
   const oldState = slotStore.getState();
   const newState = { slots: { ...oldState.slots, ...newSlotStoreEntries } };
 
-  if (!equals(oldState.slots, newState.slots)) {
+  if (!isEqual(oldState.slots, newState.slots)) {
     slotStore.setState(newState);
   }
 }
@@ -119,7 +132,7 @@ function computeImplementerToolsConfig(state: ConfigInternalStore, tempConfigSta
   const newState = { config };
 
   // Use deep equality on the actual config content, not the wrapper object
-  if (!equals(oldState.config, newState.config)) {
+  if (!isEqual(oldState.config, newState.config)) {
     implementerToolsConfigStore.setState(newState);
   }
 }
@@ -152,7 +165,7 @@ function computeExtensionConfigs(
   const newState = { configs };
 
   // Use deep equality to only update if configs actually changed
-  if (!equals(oldState.configs, newState.configs)) {
+  if (!isEqual(oldState.configs, newState.configs)) {
     extensionsConfigStore.setState(newState);
   }
 }
@@ -176,7 +189,7 @@ function computeExtensionConfigs(
  */
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
-  const enhancedSchema = mergeDeepRight(schema, implicitConfigSchema) as ConfigSchema;
+  const enhancedSchema = mergeDeepReplace(schema, implicitConfigSchema);
 
   configInternalStore.setState((state) => ({
     ...state,
@@ -252,7 +265,7 @@ export function registerTranslationNamespace(namespace: string) {
  */
 export function defineExtensionConfigSchema(extensionName: string, schema: ConfigSchema) {
   validateConfigSchema(extensionName, schema);
-  const enhancedSchema = mergeDeepRight(schema, implicitConfigSchema) as ConfigSchema;
+  const enhancedSchema = mergeDeepReplace(schema, implicitConfigSchema);
 
   const state = configInternalStore.getState();
   if (state.schemas[extensionName]) {
@@ -267,6 +280,15 @@ export function defineExtensionConfigSchema(extensionName: string, schema: Confi
   }));
 }
 
+/**
+ * Provides configuration values programmatically. This is an alternative to
+ * providing configuration through the config-file. Configuration provided this
+ * way will be merged with configuration from other sources.
+ *
+ * @param config A configuration object to merge into the existing configuration.
+ * @param sourceName An optional name to identify the source of this configuration,
+ *   used for debugging purposes. Defaults to 'provided'.
+ */
 export function provide(config: Config, sourceName = 'provided') {
   configInternalStore.setState((state) => ({
     ...state,
@@ -288,7 +310,7 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
       if (state.loaded && state.config) {
-        const config = omit(['Display conditions', 'Translation overrides'], state.config);
+        const config = lodashOmit(state.config, ['Display conditions', 'Translation overrides']);
         resolve(config as T);
 
         if (unsubscribe) {
@@ -301,7 +323,19 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
   });
 }
 
-/** @internal */
+/**
+ * Retrieves translation overrides for an extension, optionally scoped to a specific
+ * extension slot. When called with only a module name, retrieves module-level overrides.
+ * Translation overrides allow customizing translated strings without modifying the
+ * original translation files.
+ *
+ * @param moduleName The name of the module providing the translation context.
+ * @param slotName Optional extension slot name to include slot-specific overrides.
+ * @param extensionId Optional extension ID to include extension-specific overrides.
+ * @returns A Promise resolving to an array of translation override objects.
+ *
+ * @internal
+ */
 export function getTranslationOverrides(
   moduleName: string,
   slotName?: string,
@@ -353,8 +387,9 @@ export function getTranslationOverrides(
  *
  * @param schema  a configuration schema
  * @param providedConfig  an object of config values (without the top-level module name)
- * @param keyPathContext  a dot-deparated string which helps the user figure out where
+ * @param keyPathContext  a dot-separated string which helps the user figure out where
  *     the provided config came from
+ * @returns The validated and processed configuration object with defaults applied.
  * @internal
  */
 export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject, keyPathContext: string) {
@@ -410,7 +445,7 @@ function getImplementerToolsConfig(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
 ): Record<string, Config> {
-  let result = getSchemaWithValuesAndSources(clone(configState.schemas));
+  let result = getSchemaWithValuesAndSources(cloneDeep(configState.schemas));
   const configsAndSources = [
     ...configState.providedConfigs.map((c) => [c.config, c.source]),
     [tempConfigState.config, 'temporary config'],
@@ -623,8 +658,7 @@ function mergeConfigsFor(moduleName: string, allConfigs: Array<Config>): ConfigO
 }
 
 function mergeConfigs(configs: Array<Config>) {
-  const mergeDeepAll = reduce(mergeDeepRight);
-  return mergeDeepAll({}, configs) as Config;
+  return configs.reduce<Config>((acc, config) => mergeDeepReplace(acc, config), {});
 }
 
 /**
@@ -780,7 +814,7 @@ function runValidators(keyPath: string, validators: Array<Function> | undefined,
 
 // Recursively fill in the config with values from the schema.
 const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
-  const config = clone(inputConfig);
+  const config = structuredClone(inputConfig);
 
   if (!schema) {
     return config;

@@ -4,6 +4,7 @@ import classNames, { type Argument } from 'classnames';
 import { RenderIfValueIsTruthy } from '@openmrs/esm-react-utils';
 import style from './pictograms.module.scss';
 
+/** Array of all available OpenMRS pictogram IDs that can be used with the Pictogram component. */
 export const pictogramIds = [
   'omrs-pict-appointments',
   'omrs-pict-assessment-1',

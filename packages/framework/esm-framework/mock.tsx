@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { NEVER } from 'rxjs';
 import { vi } from 'vitest';
 import type {} from '@openmrs/esm-globals';
-import * as utils from '@openmrs/esm-utils';
+import * as utils from '@openmrs/esm-utils/mock';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -74,6 +74,11 @@ export const CustomOverflowMenu = vi.fn(({ menuTitle, children }) => (
     <button>{menuTitle}</button>
     {children}
   </div>
+));
+export const CustomOverflowMenuItem = vi.fn(({ itemText, ...props }) => (
+  <button role="menuitem" {...props}>
+    {itemText}
+  </button>
 ));
 export const PatientBannerActionsMenu = vi.fn(() => <div>Patient Banner Actions Menu</div>);
 export const PatientBannerContactDetails = vi.fn(() => <div>Patient Banner Contact Details</div>);

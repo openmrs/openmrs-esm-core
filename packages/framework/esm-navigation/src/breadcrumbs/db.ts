@@ -9,9 +9,9 @@ function getMatcher(settings: BreadcrumbSettings) {
   if (settings.matcher instanceof RegExp) {
     return settings.matcher;
   } else if (typeof settings.matcher === 'string') {
-    return pathToRegexp(settings.matcher);
+    return pathToRegexp(settings.matcher).regexp;
   } else {
-    return pathToRegexp(settings.path);
+    return pathToRegexp(settings.path).regexp;
   }
 }
 

@@ -1,10 +1,10 @@
 [O3 Framework](../API.md) / WorkspaceContainer
 
-# Function: WorkspaceContainer()
+# Function: ~~WorkspaceContainer()~~
 
 > **WorkspaceContainer**(`__namedParameters`): `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L68)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L81)
 
 Use this component to render the [workspace window](https://zeroheight.com/23a080e38/p/483a22-workspace)
 in an app such as the patient chart, or a workspace overlay in an app such as the clinic dashboard.
@@ -53,3 +53,7 @@ This component also provides everything needed for workspace notifications to be
 ## Returns
 
 `Element`
+
+## Deprecated
+
+Workspace container is no longer needed with workspace v2.

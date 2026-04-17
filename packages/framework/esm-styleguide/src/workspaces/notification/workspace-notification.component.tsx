@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Button, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 import { escapeRegExp } from 'lodash-es';
 import { navigate } from '@openmrs/esm-navigation';
-import { reportError } from '@openmrs/esm-error-handling';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { type SingleSpaCustomEventDetail } from 'single-spa';
 import {
@@ -30,7 +29,7 @@ export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps
     const regex = new RegExp(`\/${escapeRegExp(contextKey)}(\/|$)`);
     const isValidContextKey = regex.test(window.location.pathname);
     if (!isValidContextKey) {
-      reportError(
+      console.warn(
         `WorkspaceContainer has provided an invalid context key: "${contextKey}". The context key must be part of the URL path, with no initial or trailing slash.`,
       );
     }

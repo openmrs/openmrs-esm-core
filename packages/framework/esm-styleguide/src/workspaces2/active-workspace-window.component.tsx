@@ -101,8 +101,32 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
             return false;
           }
         },
-        launchChildWorkspace: (childWorkspaceName, childWorkspaceProps) => {
+        launchChildWorkspace: async (childWorkspaceName, childWorkspaceProps) => {
           const parentWorkspaceName = openedWorkspace.workspaceName;
+          const { openedWorkspaces } = openedWindow;
+          const parentIndex = openedWorkspaces.findIndex((w) => w.workspaceName === parentWorkspaceName);
+          if (parentIndex === -1) {
+            return;
+          }
+          const isLeaf = parentIndex === openedWorkspaces.length - 1;
+
+          if (!isLeaf) {
+            // There are workspaces above the parent that will be closed.
+            // Prompt if any of them have unsaved changes.
+            const workspacesAboveParent = openedWorkspaces.slice(parentIndex + 1);
+            if (workspacesAboveParent.some((w) => w.hasUnsavedChanges)) {
+              const okToClose = await promptForClosingWorkspaces({
+                reason: 'CLOSE_WORKSPACE',
+                explicit: true,
+                windowName: openedWindow.windowName,
+                workspaceName: openedWorkspaces[parentIndex + 1].workspaceName,
+              });
+              if (!okToClose) {
+                return;
+              }
+            }
+          }
+
           openChildWorkspace(parentWorkspaceName, childWorkspaceName, childWorkspaceProps || {});
         },
         workspaceName: openedWorkspace.workspaceName,
@@ -124,6 +148,9 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
     const { registeredWindowsByName } = workspace2Store.getState();
     const windowDef = windowName ? registeredWindowsByName[windowName] : undefined;
     const width = windowDef && windowDef.width ? windowDef.width : 'narrow';
+    const isActionMenuOpened = Object.values(registeredWindowsByName).some(
+      (window) => window.group === openedGroup?.groupName && window.icon !== undefined,
+    );
 
     return (
       <div
@@ -131,6 +158,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
           [styles.narrowWorkspace]: width === 'narrow',
           [styles.widerWorkspace]: width === 'wider',
           [styles.extraWideWorkspace]: width === 'extra-wide',
+          [styles.isActionMenuOpened]: isActionMenuOpened,
         })}
       >
         <div className={styles.workspaceSpacer} />

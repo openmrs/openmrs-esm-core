@@ -46,22 +46,6 @@ declare global {
      */
     spaVersion: string;
     /**
-     * Gets a set of options from the import-map-overrides package.
-     */
-    importMapOverrides: {
-      addOverride(moduleName: string, url: string): void;
-      enableOverride(moduleName: string): void;
-      getCurrentPageMap(): Promise<ImportMap>;
-      getDefaultMap(): Promise<ImportMap>;
-      getNextPageMap(): Promise<ImportMap>;
-      addOverride(moduleName: string, url: string): void;
-      getOverrideMap(includeDisabled?: boolean): ImportMap;
-      getDisabledOverrides(): Array<string>;
-      isDisabled(moduleName: string): boolean;
-      removeOverride(moduleName: string): void;
-      resetOverrides(): void;
-    };
-    /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */
     installedModules: Array<[string, OpenmrsAppRoutes]>;
@@ -329,6 +313,17 @@ export interface WorkspaceGroupDefinition2 {
    * with any opened windows / workspaces.
    */
   persistence?: 'app-wide' | 'closable';
+
+  /**
+   * URL pattern that defines the scope where workspaces in this group should persist.
+   * - If not defined: workspaces close only when navigating to a different app
+   * - If defined without capture groups: workspaces close when URL doesn't match pattern
+   * - If defined with capture groups: workspaces close when captured values change
+   *
+   * @example "^/home/appointments" - static scope for appointments dashboard
+   * @example "^/patient/([^/]+)/chart" - dynamic scope by patient UUID
+   */
+  scopePattern?: string;
 }
 
 export interface WorkspaceWindowDefinition2 {

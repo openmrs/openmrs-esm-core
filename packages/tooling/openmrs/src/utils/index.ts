@@ -4,4 +4,5 @@ export * from './importmap';
 export * from './logger';
 export * from './port';
 export * from './untar';
+export * from './types';
 export * from './variables';

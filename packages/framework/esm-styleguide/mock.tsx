@@ -20,6 +20,7 @@ export const CaretLeftIcon = () => <span>CaretLeftIcon</span>;
 export const CaretRightIcon = () => <span>CaretRightIcon</span>;
 export const CaretUpIcon = () => <span>CaretUpIcon</span>;
 export const ChartAverageIcon = () => <span>ChartAverageIcon</span>;
+export const ChartLineIcon = () => <span>ChartLineIcon</span>;
 export const CheckmarkFilledIcon = () => <span>CheckmarkFilledIcon</span>;
 export const CheckmarkOutlineIcon = () => <span>CheckmarkOutlineIcon</span>;
 export const ChemistryIcon = () => <span>ChemistryIcon</span>;
@@ -207,3 +208,15 @@ export const Workspace2 = vi.fn(({ title, children }) => (
     {children}
   </div>
 ));
+
+export const NumericObservation = vi.fn(({ value, unit, label }) => (
+  <span>
+    {label && <span>{label}</span>}
+    {value} {unit}
+  </span>
+));
+
+export const TableBatchActions = vi.fn(({ children }) => <>{children}</>);
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+export const showModal = vi.fn<typeof import('@openmrs/esm-styleguide').showModal>();

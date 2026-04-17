@@ -4,4 +4,4 @@
 
 > **WorkspaceWindowState** = `"maximized"` \| `"hidden"` \| `"normal"`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:229
+Defined in: [packages/framework/esm-globals/src/types.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L229)

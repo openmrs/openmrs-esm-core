@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceGroupDefinition
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:287
+Defined in: [packages/framework/esm-globals/src/types.ts:290](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L290)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: packages/framework/esm-globals/dist/types.d.ts:287
 
 > `optional` **members**: `string`[]
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:295
+Defined in: [packages/framework/esm-globals/src/types.ts:298](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L298)
 
 List of workspace names which are part of the workspace group.
 
@@ -20,6 +20,6 @@ List of workspace names which are part of the workspace group.
 
 > **name**: `string`
 
-Defined in: packages/framework/esm-globals/dist/types.d.ts:291
+Defined in: [packages/framework/esm-globals/src/types.ts:294](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L294)
 
 Name of the workspace group. This is used to launch the workspace group

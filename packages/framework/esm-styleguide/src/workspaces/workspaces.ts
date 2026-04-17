@@ -144,6 +144,9 @@ export function canCloseWorkspaceWithoutPrompting(name: string, ignoreChanges: b
  * - Executes cleanup function if defined in the workspace group
  * - Updates the main workspace store to remove the workspace group
  * - Calls the optional closeup callback if provided
+ *
+ * @deprecated migrate to workspace v2 and use closeWorkspaceGroup2 instead. See:
+ * https://openmrs.atlassian.net/wiki/spaces/docs/pages/615677981/Workspace+v2+Migration+Guide
  */
 function closeWorkspaceGroup(groupName: string, onWorkspaceCloseup?: () => void) {
   const store = getWorkspaceStore();
@@ -206,6 +209,9 @@ interface LaunchWorkspaceGroupArg {
  *   onWorkspaceGroupLaunch: () => console.log("Workspace group launched"),
  *   workspaceGroupCleanup: () => console.log("Cleaning up workspace group")
  * });
+ *
+ * @deprecated migrate to workspace v2 and use launchWorkspaceGroup2 instead. See:
+ * https://openmrs.atlassian.net/wiki/spaces/docs/pages/615677981/Workspace+v2+Migration+Guide
  */
 export function launchWorkspaceGroup(groupName: string, args: LaunchWorkspaceGroupArg) {
   const workspaceGroupRegistration = getWorkspaceGroupRegistration(groupName);
@@ -292,6 +298,9 @@ function promptBeforeLaunchingWorkspace(
  * @param name The name of the workspace to launch
  * @param additionalProps Props to pass to the workspace component being launched. Passing
  *          a prop named `workspaceTitle` will override the title of the workspace.
+ *
+ * @deprecated migrate to workspace v2 and use launchWorkspace2 instead. See:
+ * https://openmrs.atlassian.net/wiki/spaces/docs/pages/615677981/Workspace+v2+Migration+Guide
  */
 export function launchWorkspace<
   T extends DefaultWorkspaceProps | object = DefaultWorkspaceProps & { [key: string]: any },
@@ -359,13 +368,18 @@ export function launchWorkspace<
     });
   } else if (isWorkspaceAlreadyOpen) {
     const openWorkspace = openWorkspaces[workspaceIndexInOpenWorkspaces];
-    // Only update the title if it hasn't been set by `setTitle`
-    if (openWorkspace.title === getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
-      openWorkspace.title = getWorkspaceTitle(newWorkspace, newWorkspace.additionalProps);
-    }
-    openWorkspace.additionalProps = newWorkspace.additionalProps;
+    // Create a new object reference so that WorkspaceRenderer's useMemo
+    // detects the change and re-renders with the updated additionalProps.
+    const updatedWorkspace: OpenWorkspace = {
+      ...openWorkspace,
+      additionalProps: newWorkspace.additionalProps,
+      // Only update the title if it hasn't been set by `setTitle`
+      ...(openWorkspace.title === getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps) && {
+        title: getWorkspaceTitle(newWorkspace, newWorkspace.additionalProps),
+      }),
+    };
     const restOfTheWorkspaces = openWorkspaces.filter((w) => w.name != name);
-    updateStoreWithNewWorkspace(openWorkspaces[workspaceIndexInOpenWorkspaces], restOfTheWorkspaces);
+    updateStoreWithNewWorkspace(updatedWorkspace, restOfTheWorkspaces);
   } else if (openedWorkspaceWithSameType) {
     const restOfTheWorkspaces = store.getState().openWorkspaces.filter((w) => w.type != newWorkspace.type);
     updateStoreWithNewWorkspace(openedWorkspaceWithSameType, restOfTheWorkspaces);
@@ -381,10 +395,14 @@ export function launchWorkspace<
 /**
  * Use this function to navigate to a new page and launch a workspace on that page.
  *
- * @param options.targetUrl: The URL to navigate to. Will be passed to [[navigate]].
- * @param options.contextKey: The context key used by the target page.
- * @param options.workspaceName: The name of the workspace to launch.
- * @param options.additionalProps: Additional props to pass to the workspace component being launched.
+ * @param options The options for navigating and launching the workspace.
+ * @param options.targetUrl The URL to navigate to. Will be passed to [[navigate]].
+ * @param options.contextKey The context key used by the target page.
+ * @param options.workspaceName The name of the workspace to launch.
+ * @param options.additionalProps Additional props to pass to the workspace component being launched.
+ *
+ * @deprecated migrate to workspace v2 and call launchWorkspace2 instead. See:
+ * https://openmrs.atlassian.net/wiki/spaces/docs/pages/615677981/Workspace+v2+Migration+Guide
  */
 export function navigateAndLaunchWorkspace({
   targetUrl,
@@ -428,6 +446,9 @@ const defaultOptions: CloseWorkspaceOptions = {
  * Function to close an opened workspace
  * @param name Workspace registration name
  * @param options Options to close workspace
+ *
+ * @deprecated migrate to workspace v2 and call closeWorkspace from Workspace2DefinitionProps instead. See:
+ * https://openmrs.atlassian.net/wiki/spaces/docs/pages/615677981/Workspace+v2+Migration+Guide
  */
 export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}): boolean {
   options = { ...defaultOptions, ...options };
@@ -540,6 +561,10 @@ export interface WorkspacesInfo {
   workspaceGroup?: WorkspaceStoreState['workspaceGroup'];
 }
 
+/**
+ * @deprecated migrate to workspace v2. See:
+ * https://openmrs.atlassian.net/wiki/spaces/docs/pages/615677981/Workspace+v2+Migration+Guide
+ */
 export function useWorkspaces(): WorkspacesInfo {
   const { workspaceWindowState, openWorkspaces, prompt, workspaceGroup } = useStore(workspaceStore);
   const memoisedResults: WorkspacesInfo = useMemo(() => {

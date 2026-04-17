@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   TURBO_API: 'http://127.0.0.1:9080'
   TURBO_TOKEN: 'turbo-token'
@@ -23,7 +27,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🔍 Check if any source code has changed
         id: changes
@@ -50,23 +54,23 @@ jobs:
     if: ${{ needs.changes.outputs.test-changes == 'true' }}
 
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
       - name: 📥 Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📄 Copy test environment variables
         run: cp example.env .env
 
       - name: 🛠️ Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
 
       - name: 💾 Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
@@ -76,7 +80,7 @@ jobs:
         run: yarn install --immutable
 
       - name: 🚀 Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v3
+        uses: felixmosh/turborepo-gh-artifacts@v4
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
@@ -86,7 +90,7 @@ jobs:
 
       - name: 💾 Cache Playwright Browsers
         id: playwright-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
@@ -101,7 +105,7 @@ jobs:
         run: yarn playwright test
 
       - name: 📤 Upload Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: report-esm-core
@@ -122,16 +126,16 @@ jobs:
 
     steps:
       - name: 📥 Checkout esm-core repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🛠️ Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
 
       - name: 💾 Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
@@ -141,7 +145,7 @@ jobs:
         run: yarn install --immutable
 
       - name: 🚀 Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v3
+        uses: felixmosh/turborepo-gh-artifacts@v4
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
@@ -153,7 +157,7 @@ jobs:
         run: bash e2e/support/github/run-e2e-docker-env.sh
 
       - name: 📥 Checkout to the ${{ matrix.repo }} main branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: openmrs/${{ matrix.repo }}
           ref: main
@@ -165,7 +169,7 @@ jobs:
 
       - name: 💾 Cache dependencies for ${{ matrix.repo }}
         id: cache-other-repo-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('e2e_repo/**/yarn.lock') }}
@@ -177,7 +181,7 @@ jobs:
 
       - name: 💾 Cache Playwright Browsers for ${{ matrix.repo }}
         id: playwright-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('e2e_repo/**/yarn.lock') }}
@@ -191,7 +195,7 @@ jobs:
         working-directory: e2e_repo
 
       - name: 📤 Upload Report for ${{ matrix.repo }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: report-${{ matrix.repo }}
@@ -205,7 +209,7 @@ jobs:
           dest: "./logs"
 
       - name: 📤 Upload Logs as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: server-logs-${{ matrix.repo }}

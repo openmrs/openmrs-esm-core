@@ -2,7 +2,7 @@ import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { useLayoutType } from '@openmrs/esm-react-utils';
 import { CustomOverflowMenu, CustomOverflowMenuItem, useCustomOverflowMenu } from './custom-overflow-menu.component';
 
@@ -79,8 +79,61 @@ describe('CustomOverflowMenu', () => {
 
     expect(trigger).toHaveAttribute('aria-haspopup', 'true');
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
-    expect(trigger).toHaveAttribute('aria-controls', 'custom-actions-overflow-menu');
-    expect(menu).toHaveAttribute('aria-labelledby', 'custom-actions-overflow-menu-trigger');
+
+    const menuId = trigger.getAttribute('aria-controls');
+    expect(menuId).toBeTruthy();
+    expect(menu).toHaveAttribute('id', menuId);
+    expect(menu).toHaveAttribute('aria-labelledby', trigger.id);
+  });
+
+  it('should generate unique IDs for multiple instances', () => {
+    render(
+      <>
+        <CustomOverflowMenu menuTitle="Menu A">
+          <li>Option 1</li>
+        </CustomOverflowMenu>
+        <CustomOverflowMenu menuTitle="Menu B">
+          <li>Option 2</li>
+        </CustomOverflowMenu>
+      </>,
+    );
+
+    const buttons = screen.getAllByRole('button');
+    expect(buttons[0].id).not.toBe(buttons[1].id);
+  });
+
+  it('should close menu and return focus to trigger on Escape key', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <CustomOverflowMenu menuTitle="Menu">
+        <CustomOverflowMenuItem itemText="Option 1" />
+      </CustomOverflowMenu>,
+    );
+
+    const trigger = screen.getByRole('button', { name: /menu/i });
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+    await user.keyboard('{Escape}');
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(trigger).toHaveFocus();
+  });
+
+  it('should focus the first enabled menu item when opened', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <CustomOverflowMenu menuTitle="Menu">
+        <CustomOverflowMenuItem itemText="Disabled Item" disabled />
+        <CustomOverflowMenuItem itemText="Enabled Item" />
+      </CustomOverflowMenu>,
+    );
+
+    await user.click(screen.getByRole('button', { name: /menu/i }));
+
+    const menuItems = screen.getAllByRole('menuitem');
+    await waitFor(() => expect(menuItems[1]).toHaveFocus());
   });
 
   it('should have correct menu positioning attributes', () => {

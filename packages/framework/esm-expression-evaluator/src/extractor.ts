@@ -31,7 +31,7 @@ import { globalsAsync } from './globals';
  * const variables = extractVariableNames('arr.filter(v => v === needle)')
  * ```
  *
- @example
+ * @example
  * ```ts
  * // variables will be ['myVar']
  * const  variables = extractVariableNames('new String(myVar)')
@@ -40,6 +40,9 @@ import { globalsAsync } from './globals';
  * Note that because this expression evaluator uses a restricted definition of "global" there are some Javascript
  * globals that will be reported as a unbound expression. This is expected because the evaluator will still fail
  * on these expressions.
+ *
+ * @param expression The expression to analyze, either as a string or pre-parsed expression.
+ * @returns An array of variable names that are unbound in the expression.
  */
 export function extractVariableNames(expression: string | jsep.Expression) {
   if (typeof expression !== 'string' && (typeof expression !== 'object' || !expression || !('type' in expression))) {

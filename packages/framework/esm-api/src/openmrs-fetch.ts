@@ -6,14 +6,21 @@ import { clearHistory, navigate } from '@openmrs/esm-navigation';
 import type { FetchResponse } from './types';
 import { defaultRedirectAuthFailureUrl, type EsmApiConfigObject } from './config-schema';
 
+/** The base URL for the OpenMRS REST API (e.g., '/ws/rest/v1'). */
 export const restBaseUrl = '/ws/rest/v1';
+/** The base URL for the OpenMRS FHIR R4 API (e.g., '/ws/fhir2/R4'). */
 export const fhirBaseUrl = '/ws/fhir2/R4';
+/** The endpoint for session management operations. */
 export const sessionEndpoint = `${restBaseUrl}/session`;
 
 /**
  * Append `path` to the OpenMRS SPA base.
  *
- * #### Example
+ * @param path The path to append to the OpenMRS base URL.
+ * @returns The full URL with the OpenMRS base prepended. If the path is already
+ *   an absolute URL (starting with 'http'), it is returned unchanged.
+ *
+ * @example
  *
  * ```ts
  * makeUrl('/foo/bar');
@@ -49,7 +56,7 @@ export function makeUrl(path: string) {
  *   downloaded the HTTP response body as json, and has an additional
  *   `data` property with the HTTP response json as a javascript object.
  *
- * #### Example
+ * @example
  * ```js
  * import { openmrsFetch } from '@openmrs/esm-api'
  * const abortController = new AbortController();
@@ -251,7 +258,7 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
  * @returns An Observable that produces exactly one Response object.
  * The response object is exactly the same as for [[openmrsFetch]].
  *
- * #### Example
+ * @example
  *
  * ```js
  * import { openmrsObservableFetch } from '@openmrs/esm-api'

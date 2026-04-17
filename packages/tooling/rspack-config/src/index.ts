@@ -157,6 +157,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const { name, version, peerDependencies, browser, main, types } = require(resolve(root, 'package.json'));
   // this typing is provably incorrect, but actually works
   const mode = (argv.mode || process.env.NODE_ENV || 'development') as OpenmrsRspackConfig['mode'];
+  const devServerPort = argv.port ? Number(argv.port) : undefined;
+  const devServerHost = argv.host || 'localhost';
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
@@ -198,8 +200,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         merge(
           {
             test: /\.m?(js|ts|tsx)$/,
-            exclude: /node_modules(?![\/\\]@openmrs)/,
-            loader: 'swc-loader',
+            exclude: /node_modules/,
+            loader: 'builtin:swc-loader',
             options: {
               jsc: {
                 parser: {
@@ -238,11 +240,15 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         ),
         merge(
           {
-            test: /\.(png|jpe?g|gif|svg)$/i,
+            test: /\.(png|jpe?g|gif)$/i,
             type: 'asset/resource',
           },
           assetRuleConfig,
         ),
+        {
+          test: /\.svg$/i,
+          type: 'asset/source',
+        },
       ],
     },
     mode,
@@ -250,9 +256,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     devServer: {
       headers: {
         'Access-Control-Allow-Origin': '*',
-      },
-      devMiddleware: {
-        writeToDisk: true,
       },
       static: [resolve(root, outDir)],
     },
@@ -357,6 +360,13 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         'lodash.throttle': 'lodash-es/throttle',
       },
     },
+    ...(devServerPort !== undefined && {
+      lazyCompilation: {
+        imports: true,
+        entries: false,
+        serverUrl: `http://${devServerHost}:${devServerPort}`,
+      },
+    }),
     ...overrides,
   };
   return mergeWith(baseConfig, additionalConfig, mergeFunction);

@@ -2,9 +2,11 @@ import React from 'react';
 import type { i18n } from 'i18next';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
 import { OpenmrsDatePicker } from './index';
+import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
 
 window.i18next = { language: 'en' } as i18n;
 
@@ -17,10 +19,49 @@ describe('OpenmrsDatePicker', () => {
     });
   });
 
-  it('uses dd/mm/yyyy for english by default', () => {
-    render(<OpenmrsDatePicker aria-label="datepicker" />);
-    const input = screen.getByLabelText('datepicker');
-    expect(input).toHaveTextContent('dd/mm/yyyy');
+  describe('locale and format', () => {
+    it('uses dd/mm/yyyy for english by default', () => {
+      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      const input = screen.getByLabelText('datepicker');
+      expect(input).toHaveTextContent('dd/mm/yyyy');
+    });
+
+    it('should respect the preferred date locale', () => {
+      useConfig.mockReturnValue({
+        preferredDateLocale: {
+          en: 'en-US',
+        },
+      });
+      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      const input = screen.getByLabelText('datepicker');
+      expect(input).toHaveTextContent('mm/dd/yyyy');
+    });
+
+    it('should render RTL layout for Arabic locale', () => {
+      window.i18next = { language: 'ar' } as i18n;
+      useConfig.mockReturnValue({ preferredDateLocale: {} });
+
+      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      const input = screen.getByLabelText('datepicker');
+      const text = input.textContent?.replace(/\u200F/g, '');
+
+      expect(text).toBe('يوم/شهر/سنة');
+
+      window.i18next = { language: 'en' } as i18n;
+    });
+
+    it('should render RTL layout for Amharic locale', () => {
+      window.i18next = { language: 'am' } as i18n;
+      useConfig.mockReturnValue({ preferredDateLocale: {} });
+
+      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      const input = screen.getByLabelText('datepicker');
+      const text = input.textContent?.replace(/\u200F/g, '');
+
+      expect(text).toBe('ቀቀ/ሚሜ/ዓዓዓዓ');
+
+      window.i18next = { language: 'en' } as i18n;
+    });
   });
  it('should respect the preferred date locale', () => {
     useConfig.mockReturnValue({

@@ -1,8 +1,9 @@
+import { createRequire } from 'node:module';
+import type { Configuration as RspackConfig } from '@rspack/core';
 import type { ImportmapDeclaration, RoutesDeclaration } from './importmap';
 import { setEnvVariables } from './variables';
-import type { Configuration as WebpackConfig } from 'webpack';
 
-export interface WebpackOptions {
+export interface BuildOptions {
   backend?: string;
   defaultLocale?: string;
   importmap?: ImportmapDeclaration;
@@ -19,7 +20,11 @@ export interface WebpackOptions {
   assets?: Array<string>;
 }
 
-export function loadWebpackConfig(options: WebpackOptions = {}) {
+/**
+ * Maps {@link BuildOptions} to the `OMRS_*` environment variables that the
+ * rspack config reads at evaluation time.
+ */
+export function setBundlerEnv(options: BuildOptions = {}) {
   const variables: Record<string, unknown> = {};
 
   if (typeof options.backend === 'string') {
@@ -94,11 +99,15 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
   }
 
   setEnvVariables(variables);
+}
 
+export function loadBundlerConfig(options: BuildOptions = {}) {
+  setBundlerEnv(options);
+
+  const require = createRequire(import.meta.url);
   const config:
-    | ((env: Record<string, unknown>) => WebpackConfig)
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    | WebpackConfig = require('@openmrs/esm-app-shell/webpack.config.js');
+    | ((env: Record<string | number | symbol, unknown>) => RspackConfig)
+    | RspackConfig = require('@openmrs/esm-app-shell/rspack.config.js');
 
   if (typeof config === 'function') {
     return config({});

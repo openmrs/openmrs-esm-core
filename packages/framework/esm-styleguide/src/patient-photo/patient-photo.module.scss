@@ -2,3 +2,20 @@
   height: 3.5rem;
   width: 3.5rem;
 }
+
+.avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.initials {
+  font-size: 1.75rem;
+  color: #fff;
+  line-height: 1;
+  user-select: none;
+}

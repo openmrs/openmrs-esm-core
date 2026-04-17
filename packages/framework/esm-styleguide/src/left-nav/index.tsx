@@ -34,13 +34,13 @@ export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>((prop
   const { slotName, basePath, componentContext, state } = useLeftNavStore();
   const currentPath = window.location ?? { pathname: '' };
   const navMenuItems = useAssignedExtensions(slotName ?? '');
-
   if (props.isChildOfHeader && slotName && navMenuItems.length > 0) {
     return (
       <SideNav
         aria-label={getCoreTranslation('leftNavigation', 'Left navigation')}
         className={styles.leftNav}
         expanded
+        isFixedNav
         ref={ref}
         {...props}
       >
