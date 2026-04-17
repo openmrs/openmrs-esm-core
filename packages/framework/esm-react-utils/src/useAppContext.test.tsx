@@ -43,7 +43,12 @@ describe('useAppContext', () => {
     expect(result.current).toBe(5);
   });
 
-  it("returns the value registered by a sibling useDefineAppContext on the consumer's first render", () => {
+  it('exposes a sibling useDefineAppContext value to the consumer after effects flush', () => {
+    // Note: React Testing Library's render() flushes effects before returning,
+    // so this asserts the post-effect steady state — not literally the first
+    // render. The useState-initializer path is exercised by the
+    // "currently-registered value on the very first render" test above, which
+    // pre-registers the namespace before renderHook runs.
     const Producer = () => {
       useDefineAppContext<TestContext>(namespace, { value: 'from-producer', count: 42 });
       return null;
@@ -54,8 +59,6 @@ describe('useAppContext', () => {
       return <div data-testid="consumer-value">{ctx ? `${ctx.value}:${ctx.count}` : 'UNDEFINED'}</div>;
     };
 
-    // Producer mounts first, then consumer — consumer must see the value on
-    // its first render, not undefined.
     render(
       <>
         <Producer />

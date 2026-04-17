@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react';
 import { getContext, subscribeToContext } from '@openmrs/esm-context';
 import { shallowEqual } from '@openmrs/esm-utils';
 
+function isBlankNamespace(namespace: unknown): boolean {
+  return typeof namespace !== 'string' || namespace.trim().length === 0;
+}
+
 /**
  * This hook is used to access a namespace within the overall AppContext, so that a component can
  * use any shared contextual values. A selector may be provided to further restrict the properties
@@ -54,7 +58,7 @@ export function useAppContext<T extends NonNullable<object> = NonNullable<object
   selector: (state: Readonly<T> | null) => Readonly<U> = (state) => (state ?? {}) as Readonly<U>,
 ): Readonly<U> | undefined {
   const [value, setValue] = useState<Readonly<U> | undefined>(() => {
-    if (!namespace || namespace.replace(' ', '') === '') {
+    if (isBlankNamespace(namespace)) {
       return undefined;
     }
     const current = getContext<T>(namespace);
@@ -65,18 +69,21 @@ export function useAppContext<T extends NonNullable<object> = NonNullable<object
   });
 
   useEffect(() => {
-    if (namespace === null || typeof namespace === 'undefined' || namespace.replace(' ', '') === '') {
+    if (isBlankNamespace(namespace)) {
       throw new Error(`The namespace supplied to useAppContext must be a non-empty string, but was "${namespace}".`);
     }
   }, [namespace]);
 
   useEffect(() => {
-    // Read the authoritative state via getContext rather than relying on the
-    // callback's state argument. subscribeToContext substitutes {} when a
-    // namespace is unregistered, which makes it indistinguishable from a
+    // Prefer the state provided by subscribeToContext to avoid re-reading and
+    // re-cloning the context on every update. Only fall back to getContext for
+    // the ambiguous empty-object case: subscribeToContext substitutes a frozen
+    // {} when a namespace is unregistered, which is indistinguishable from a
     // namespace that was genuinely registered with an empty object.
-    return subscribeToContext<T>(namespace, () => {
-      const current = getContext<T>(namespace);
+    return subscribeToContext<T>(namespace, (state) => {
+      const current =
+        state != null && Object.keys(state).length === 0 ? getContext<T>(namespace) : ((state ?? null) as T | null);
+
       if (current === null) {
         setValue((prev) => (prev === undefined ? prev : undefined));
         return;
