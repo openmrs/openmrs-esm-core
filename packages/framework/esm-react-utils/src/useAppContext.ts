@@ -1,6 +1,6 @@
 /** @module @category Context */
 import { useEffect, useState } from 'react';
-import { subscribeToContext } from '@openmrs/esm-context';
+import { getContext, subscribeToContext } from '@openmrs/esm-context';
 import { shallowEqual } from '@openmrs/esm-utils';
 
 /**
@@ -53,7 +53,16 @@ export function useAppContext<T extends NonNullable<object> = NonNullable<object
   namespace: string,
   selector: (state: Readonly<T> | null) => Readonly<U> = (state) => (state ?? {}) as Readonly<U>,
 ): Readonly<U> | undefined {
-  const [value, setValue] = useState<Readonly<U>>();
+  const [value, setValue] = useState<Readonly<U> | undefined>(() => {
+    if (!namespace || namespace.replace(' ', '') === '') {
+      return undefined;
+    }
+    const current = getContext<T>(namespace);
+    if (current === null) {
+      return undefined;
+    }
+    return selector ? selector(current) : (current as unknown as Readonly<U>);
+  });
 
   useEffect(() => {
     if (namespace === null || typeof namespace === 'undefined' || namespace.replace(' ', '') === '') {
@@ -62,13 +71,18 @@ export function useAppContext<T extends NonNullable<object> = NonNullable<object
   }, [namespace]);
 
   useEffect(() => {
-    return subscribeToContext<T>(namespace, (state) => {
-      if (typeof state !== 'undefined') {
-        const newValue = selector ? selector(state) : ((state ?? {}) as Readonly<U>);
-        if (!shallowEqual(value, newValue)) {
-          setValue(newValue);
-        }
+    // Read the authoritative state via getContext rather than relying on the
+    // callback's state argument. subscribeToContext substitutes {} when a
+    // namespace is unregistered, which makes it indistinguishable from a
+    // namespace that was genuinely registered with an empty object.
+    return subscribeToContext<T>(namespace, () => {
+      const current = getContext<T>(namespace);
+      if (current === null) {
+        setValue((prev) => (prev === undefined ? prev : undefined));
+        return;
       }
+      const newValue = selector ? selector(current) : (current as unknown as Readonly<U>);
+      setValue((prev) => (shallowEqual(prev, newValue) ? prev : newValue));
     });
   }, []);
 
