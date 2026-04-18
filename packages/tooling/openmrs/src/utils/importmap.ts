@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module';
 import { glob } from 'glob';
 import { URL } from 'url';
-import { basename, resolve } from 'path';
+import { resolve } from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { exec } from 'child_process';
 import { logFail, logInfo, logWarn } from './logger';
@@ -59,7 +59,7 @@ async function fetchRemoteImportmap(fetchUrl: string) {
   const m = await res.json();
 
   if (typeof m === 'object' && m !== null && 'imports' in m && typeof m.imports === 'object' && m.imports !== null) {
-    const imports = m.imports;
+    const imports = m.imports as Record<string, unknown>;
     Object.keys(imports).forEach((key) => {
       const url = imports[key];
 
@@ -166,9 +166,9 @@ export async function runProject(
 }> {
   const baseDir = process.cwd();
   const sourceDirectories = await matchAny(baseDir, sourceDirectoryPatterns);
-  const importMap = {};
-  const routes = {};
-  const watchedRoutesPaths = {};
+  const importMap: Record<string, string> = {};
+  const routes: Record<string, unknown> = {};
+  const watchedRoutesPaths: Record<string, string> = {};
   const devServerReadyPromises: Array<Promise<void>> = [];
 
   // Track the starting port, which is one more than the last used port

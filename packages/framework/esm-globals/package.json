@@ -19,6 +19,9 @@
   "scripts": {
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "typescript": "tsc --project tsconfig.build.json",
     "lint": "eslint src --ext ts,tsx"
   },
@@ -54,6 +57,7 @@
     "@swc/core": "1.15.21",
     "concurrently": "^9.2.1",
     "rimraf": "^6.1.3",
-    "single-spa": "^6.0.3"
+    "single-spa": "^6.0.3",
+    "vitest": "^4.1.2"
   }
 }

@@ -11,7 +11,12 @@ import {
 registerTranslationNamespace('core');
 
 export function setupI18n() {
-  const i18n = (window.i18next = i18next.default || i18next);
+  const i18n = i18next.default || i18next;
+  Object.defineProperty(window, 'i18next', {
+    value: i18n,
+    writable: false,
+    configurable: false,
+  });
 
   const languageChangeObserver = new MutationObserver(() => {
     i18n.changeLanguage().catch((e) => console.error('i18next failed to re-detect language', e));
