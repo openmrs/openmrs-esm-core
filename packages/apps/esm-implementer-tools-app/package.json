@@ -52,10 +52,10 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.1.2",
+    "@vitest/coverage-v8": "^4.1.4",
     "ace-builds": "^1.43.3",
     "cross-env": "^10.1.0",
-    "happy-dom": "^20.6.0",
+    "happy-dom": "^20.9.0",
     "openmrs": "workspace:*",
     "react": "^18.3.1",
     "react-ace": "^14.0.1",
@@ -63,6 +63,6 @@
     "react-i18next": "^16.0.0",
     "rxjs": "^6.5.3",
     "swr": "2.2.5",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.4"
   }
 }
