@@ -53,6 +53,10 @@
   &[data-focused='true'] {
     animation: cursor-blink 1s step-end infinite;
   }
+
+  :global([dir='rtl']) &[data-focused='true'] {
+    animation: cursor-blink-rtl 1s step-end infinite;
+  }
 }
 
 // Shared rules for dimming read-only separators (/, -, etc.) adjacent to
@@ -67,13 +71,28 @@
   }
 }
 
+// Use physical `border-right`/`border-left` rather than logical `border-inline-end`:
+// a PostCSS plugin in the build pipeline incorrectly hoists `border-inline-end`
+// out of @keyframes and re-emits it as a static `border-right` on selectors that
+// reference the animation, which produced a permanent vertical line on the
+// date input wrappers in LTR contexts.
 @keyframes cursor-blink {
   from,
   to {
-    border-inline-end: 1px solid transparent;
+    border-right: 1px solid transparent;
   }
   50% {
-    border-inline-end: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+  }
+}
+
+@keyframes cursor-blink-rtl {
+  from,
+  to {
+    border-left: 1px solid transparent;
+  }
+  50% {
+    border-left: 1px solid currentColor;
   }
 }
 

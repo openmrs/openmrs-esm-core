@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceGroupDefinition2
 
-Defined in: [packages/framework/esm-globals/src/types.ts:317](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L317)
+Defined in: [packages/framework/esm-globals/src/types.ts:301](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L301)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:317](https://github.com
 
 > `optional` **closeable**: `boolean`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:319](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L319)
+Defined in: [packages/framework/esm-globals/src/types.ts:303](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L303)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:319](https://github.com
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:318](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L318)
+Defined in: [packages/framework/esm-globals/src/types.ts:302](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L302)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:318](https://github.com
 
 > `optional` **overlay**: `boolean`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L320)
+Defined in: [packages/framework/esm-globals/src/types.ts:304](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L304)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:320](https://github.com
 
 > `optional` **persistence**: `"app-wide"` \| `"closable"`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:331](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L331)
+Defined in: [packages/framework/esm-globals/src/types.ts:315](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L315)
 
 In app-wide persistence mode, a workspace group renders its
 action menu without a close button. This is for
@@ -50,7 +50,7 @@ with any opened windows / workspaces.
 
 > `optional` **scopePattern**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:342](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L342)
+Defined in: [packages/framework/esm-globals/src/types.ts:326](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L326)
 
 URL pattern that defines the scope where workspaces in this group should persist.
 - If not defined: workspaces close only when navigating to a different app

@@ -51,7 +51,7 @@ export const NumericObservation: React.FC<NumericObservationProps> = ({
   const generatedId = useId();
 
   const { referenceRange: fetchedReferenceRange, isLoading: isLoadingConcept } = useConceptReferenceRange(
-    providedReferenceRange ? undefined : conceptUuid,
+    providedReferenceRange || providedInterpretation ? undefined : conceptUuid,
     patientUuid,
   );
 

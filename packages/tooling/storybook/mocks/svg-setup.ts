@@ -5,7 +5,9 @@
 import { setupIcons } from '@openmrs/esm-styleguide/src/icons/icon-registration';
 import { setupPictograms } from '@openmrs/esm-styleguide/src/pictograms/pictogram-registration';
 import { setupEmptyCard } from '@openmrs/esm-styleguide/src/empty-card/empty-card-registration';
+import { flushSvgs } from '@openmrs/esm-styleguide/src/svg-utils';
 
 setupIcons();
 setupPictograms();
 setupEmptyCard();
+flushSvgs();
