@@ -4,6 +4,7 @@ export interface PackageJson {
   browser?: string;
   module?: string;
   main?: string;
+  workspaces?: Array<string> | { packages: Array<string> };
   'openmrs:develop'?: {
     command: string;
     url?: string;

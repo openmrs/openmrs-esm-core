@@ -7,8 +7,10 @@ import {
   getAvailablePort,
   getImportmapAndRoutes,
   isPortAvailable,
+  logFail,
   mergeImportmapAndRoutes,
   proxyImportmapAndRoutes,
+  resolvePackages,
   runProject,
   trimEnd,
 } from './utils';
@@ -86,8 +88,15 @@ export function buildCli(y: Argv) {
           string: true,
         })
         .option('sources', {
-          default: ['.'],
-          describe: 'Runs the projects from the provided source directories. Can be used multiple times.',
+          describe:
+            'Runs the projects from the provided source directories. Can be used multiple times. Defaults to the current directory if neither --sources nor --packages is specified.',
+          type: 'array',
+          string: true,
+        })
+        .option('packages', {
+          default: [],
+          describe:
+            'Runs the projects by package name, resolved from the current workspace. Can be used multiple times.',
           type: 'array',
           string: true,
         })
@@ -132,6 +141,30 @@ export function buildCli(y: Argv) {
         port = args.port;
       }
 
+      let resolvedFromPackages: string[] = [];
+      if (args.packages.length > 0) {
+        try {
+          resolvedFromPackages = await resolvePackages(args.packages);
+        } catch (e) {
+          logFail((e as Error).message);
+          process.exit(1);
+        }
+      }
+
+      const explicitSources = args.sources ?? [];
+      const combined = [...explicitSources, ...resolvedFromPackages];
+
+      // De-duplicate by resolved absolute path
+      const seen = new Set<string>();
+      const deduplicated = combined.filter((s) => {
+        const abs = resolve(s);
+        if (seen.has(abs)) return false;
+        seen.add(abs);
+        return true;
+      });
+
+      const sources = deduplicated.length > 0 ? deduplicated : ['.'];
+
       runCommand('runDevelop', {
         configUrls: args['config-url'],
         configFiles: args['config-file'],
@@ -140,7 +173,7 @@ export function buildCli(y: Argv) {
         ...proxyImportmapAndRoutes(
           await mergeImportmapAndRoutes(
             await getImportmapAndRoutes(args.importmap, args.routes, port),
-            await runProject(port, args.sources, args['use-rspack']),
+            await runProject(port, sources, args['use-rspack']),
             args.backend,
             args.spaPath,
           ),
