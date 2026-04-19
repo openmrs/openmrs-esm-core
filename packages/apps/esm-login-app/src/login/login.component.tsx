@@ -21,13 +21,20 @@ export interface LoginReferrer {
 }
 
 const Login: React.FC = () => {
-  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+  const {
+    showPasswordOnSeparateScreen,
+    provider: loginProvider,
+    links: loginLinks,
+  } = useConfig<ConfigSchema>();
+
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
+
   const location = useLocation() as unknown as Omit<Location, 'state'> & {
     state: LoginReferrer;
   };
+
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -35,6 +42,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [showPasswordField, setShowPasswordField] = useState(false);
+
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
@@ -63,7 +71,6 @@ const Login: React.FC = () => {
   const continueLogin = useCallback(() => {
     const currentUsername = usernameInputRef.current?.value?.trim();
     if (currentUsername) {
-      // If credentials were autofilled, input onChange might not have been called
       setUsername(currentUsername);
       setShowPasswordField(true);
     } else {
@@ -71,15 +78,21 @@ const Login: React.FC = () => {
     }
   }, []);
 
-  const changeUsername = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value), []);
-  const changePassword = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value), []);
+  const changeUsername = useCallback(
+    (evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value),
+    [],
+  );
+
+  const changePassword = useCallback(
+    (evt: React.ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value),
+    [],
+  );
 
   const handleSubmit = useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
       evt.stopPropagation();
 
-      // If credentials were autofilled, input onChange might not have been called
       const currentUsername = usernameInputRef.current?.value?.trim() || username;
       const currentPassword = passwordInputRef.current?.value || password;
 
@@ -95,6 +108,7 @@ const Login: React.FC = () => {
 
       try {
         setIsLoggingIn(true);
+
         const sessionStore = await refetchCurrentUser(currentUsername, currentPassword);
         const session = sessionStore.session;
         const authenticated = sessionStore?.session?.authenticated;
@@ -102,6 +116,7 @@ const Login: React.FC = () => {
         if (authenticated) {
           if (session.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
+
             if (location?.state?.referrer) {
               if (location.state.referrer.startsWith('/')) {
                 to = `\${openmrsSpaBase}${location.state.referrer}`;
@@ -125,11 +140,12 @@ const Login: React.FC = () => {
 
         return true;
       } catch (error: unknown) {
-        if (error instanceof Error) {
+        if (error instanceof Error && error.message?.trim()) {
           setErrorMessage(error.message);
         } else {
           setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
         }
+
         setUsername('');
         setPassword('');
         if (showPasswordOnSeparateScreen) {
@@ -160,15 +176,17 @@ const Login: React.FC = () => {
             <div className={styles.errorMessage}>
               <InlineNotification
                 kind="error"
-                subtitle={t(errorMessage)}
+                subtitle={errorMessage}
                 title={getCoreTranslation('error')}
                 onClick={() => setErrorMessage('')}
               />
             </div>
           )}
+
           <div className={styles.center}>
             <Logo t={t} />
           </div>
+
           <form onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
               <TextInput
@@ -183,6 +201,7 @@ const Login: React.FC = () => {
                 required
                 autoFocus
               />
+
               {showPasswordOnSeparateScreen ? (
                 <>
                   <div className={showPasswordField ? undefined : styles.hiddenPasswordField}>
@@ -201,6 +220,7 @@ const Login: React.FC = () => {
                       tabIndex={showPasswordField ? 0 : -1}
                     />
                   </div>
+
                   {showPasswordField ? (
                     <Button
                       type="submit"
@@ -210,7 +230,10 @@ const Login: React.FC = () => {
                       disabled={!isLoginEnabled || isLoggingIn}
                     >
                       {isLoggingIn ? (
-                        <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
+                        <InlineLoading
+                          className={styles.loader}
+                          description={`${t('loggingIn', 'Logging in')}...`}
+                        />
                       ) : (
                         t('login', 'Log in')
                       )}
@@ -245,6 +268,7 @@ const Login: React.FC = () => {
                     showPasswordLabel={t('showPassword', 'Show password')}
                     invalidText={t('validValueRequired', 'A valid value is required')}
                   />
+
                   <Button
                     type="submit"
                     className={styles.continueButton}
@@ -253,7 +277,10 @@ const Login: React.FC = () => {
                     disabled={!isLoginEnabled || isLoggingIn}
                   >
                     {isLoggingIn ? (
-                      <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
+                      <InlineLoading
+                        className={styles.loader}
+                        description={`${t('loggingIn', 'Logging in')}...`}
+                      />
                     ) : (
                       t('login', 'Log in')
                     )}
@@ -263,10 +290,12 @@ const Login: React.FC = () => {
             </div>
           </form>
         </Tile>
+
         <Footer />
       </div>
     );
   }
+
   return null;
 };
 
