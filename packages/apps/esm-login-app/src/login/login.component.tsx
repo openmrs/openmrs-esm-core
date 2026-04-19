@@ -117,9 +117,12 @@ const Login: React.FC = () => {
           if (session.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
 
-            // ✅ FIXED HERE (Sonar issue removed)
             if (location?.state?.referrer) {
-              to = location.state.referrer;
+              if (location.state.referrer.startsWith('/')) {
+                to = `\${openmrsSpaBase}${location.state.referrer}`;
+              } else {
+                to = location.state.referrer;
+              }
             }
 
             openmrsNavigate({ to });
@@ -211,7 +214,7 @@ const Login: React.FC = () => {
                       ref={passwordInputRef}
                       required
                       value={password}
-                      showPasswordLabel={t('showPasswordLabel', 'Show password')}
+                      showPasswordLabel={t('showPassword', 'Show password')}
                       invalidText={t('validValueRequired', 'A valid value is required')}
                       aria-hidden={!showPasswordField}
                       tabIndex={showPasswordField ? 0 : -1}
@@ -232,7 +235,7 @@ const Login: React.FC = () => {
                           description={t('loggingIn', 'Logging in...')}
                         />
                       ) : (
-                        t('loginButton', 'Log in')
+                        t('login', 'Log in')
                       )}
                     </Button>
                   ) : (
@@ -247,7 +250,7 @@ const Login: React.FC = () => {
                       }}
                       disabled={!isLoginEnabled}
                     >
-                      {t('continueButton', 'Continue')}
+                      {t('continue', 'Continue')}
                     </Button>
                   )}
                 </>
@@ -262,7 +265,7 @@ const Login: React.FC = () => {
                     ref={passwordInputRef}
                     required
                     value={password}
-                    showPasswordLabel={t('showPasswordLabel', 'Show password')}
+                    showPasswordLabel={t('showPassword', 'Show password')}
                     invalidText={t('validValueRequired', 'A valid value is required')}
                   />
 
@@ -279,7 +282,7 @@ const Login: React.FC = () => {
                         description={t('loggingIn', 'Logging in...')}
                       />
                     ) : (
-                      t('loginButton', 'Log in')
+                      t('login', 'Log in')
                     )}
                   </Button>
                 </>
