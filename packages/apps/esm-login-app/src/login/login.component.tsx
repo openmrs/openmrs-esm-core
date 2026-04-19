@@ -232,7 +232,7 @@ const Login: React.FC = () => {
                       {isLoggingIn ? (
                         <InlineLoading
                           className={styles.loader}
-                          description={t('loggingIn', 'Logging in...')}
+                          description={`${t('loggingIn', 'Logging in')}...`}
                         />
                       ) : (
                         t('login', 'Log in')
@@ -279,7 +279,7 @@ const Login: React.FC = () => {
                     {isLoggingIn ? (
                       <InlineLoading
                         className={styles.loader}
-                        description={t('loggingIn', 'Logging in...')}
+                        description={`${t('loggingIn', 'Logging in')}...`}
                       />
                     ) : (
                       t('login', 'Log in')

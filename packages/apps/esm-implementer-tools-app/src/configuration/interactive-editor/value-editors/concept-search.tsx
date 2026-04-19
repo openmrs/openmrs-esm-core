@@ -25,7 +25,8 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const [conceptToLookup, setConceptToLookup] = useState('');
   const [selectedConcept, setSelectedConcept] = useState<string>(value);
 
-  const { concepts, error, isSearchingConcepts } = useConceptLookup(conceptToLookup);
+  const trimmedQuery = conceptToLookup.trim();
+  const { concepts, error, isSearchingConcepts } = useConceptLookup(trimmedQuery);
 
   const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConceptToLookup(event.target.value);
@@ -37,14 +38,17 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
     setConceptToLookup('');
   };
 
+  const inputId = `concept-search-input-${id}`;
+  const listId = `concept-search-list-${id}`;
+
   let content = null;
 
-  if (conceptToLookup?.trim()) {
+  if (trimmedQuery) {
     if (isSearchingConcepts) {
       content = (
         <InlineLoading
           className={styles.loader}
-          description={`${t('searchingConcepts', 'Searching concepts')}...`}
+          description={`${t('searching', 'Searching')}...`}
         />
       );
     } else if (error) {
@@ -58,7 +62,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
       );
     } else if (concepts && concepts.length > 0) {
       content = (
-        <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
+        <StructuredListWrapper selection id={listId} className={styles.listbox}>
           {concepts.map((concept: Concept) => (
             <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
               <StructuredListCell
@@ -76,10 +80,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
         <InlineNotification
           kind="info"
           title={t('noResultsFound', 'No results found')}
-          subtitle={t(
-            'noConceptsFoundText',
-            `No results found for "${conceptToLookup.trim()}"`
-          )}
+          subtitle={t('noConceptsFoundText', 'No matching concepts found')}
           lowContrast
         />
       );
@@ -92,7 +93,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
 
       <div className={styles.autocomplete}>
         <Search
-          id={`searchbox-${id}`}
+          id={inputId}
           labelText=""
           type="text"
           size="sm"
@@ -100,8 +101,8 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           autoCapitalize="off"
           aria-autocomplete="list"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
-          aria-controls={`searchbox-${id}`}
-          aria-expanded={!!(conceptToLookup?.trim() && concepts && concepts.length > 0)}
+          aria-controls={listId}
+          aria-expanded={!!(trimmedQuery && concepts && concepts.length > 0)}
           placeholder={t('searchConceptHelperText', 'Search concepts')}
           onChange={handleSearchTermChange}
         />
