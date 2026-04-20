@@ -1,7 +1,7 @@
 import React from 'react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { render, renderHook, screen } from '@testing-library/react';
-import { registerContext, unregisterContext } from '@openmrs/esm-context';
+import { act, render, renderHook, screen } from '@testing-library/react';
+import { registerContext, unregisterContext, updateContext } from '@openmrs/esm-context';
 import { useAppContext } from './useAppContext';
 import { useDefineAppContext } from './useDefineAppContext';
 
@@ -24,10 +24,6 @@ describe('useAppContext', () => {
   });
 
   it('returns the currently-registered value on the very first render', () => {
-    // Simulates the real-world scenario: one component has already registered
-    // the context (e.g. WardView via useDefineAppContext), and a second
-    // component mounts later and calls useAppContext. The second component
-    // must see the current value on its first render, not undefined.
     registerContext<TestContext>(namespace, { value: 'initial', count: 1 });
 
     const { result } = renderHook(() => useAppContext<TestContext>(namespace));
@@ -44,11 +40,6 @@ describe('useAppContext', () => {
   });
 
   it('exposes a sibling useDefineAppContext value to the consumer after effects flush', () => {
-    // Note: React Testing Library's render() flushes effects before returning,
-    // so this asserts the post-effect steady state — not literally the first
-    // render. The useState-initializer path is exercised by the
-    // "currently-registered value on the very first render" test above, which
-    // pre-registers the namespace before renderHook runs.
     const Producer = () => {
       useDefineAppContext<TestContext>(namespace, { value: 'from-producer', count: 42 });
       return null;
@@ -69,21 +60,18 @@ describe('useAppContext', () => {
     expect(screen.getByTestId('consumer-value')).toHaveTextContent('from-producer:42');
   });
 
-  it('returns undefined (not {}) after the namespace owner unmounts (O3-4020 scenario)', async () => {
-    // This reproduces Ian Bacher's hypothesis from O3-4020: when the component
-    // that owns a namespace via useDefineAppContext unmounts while a consumer
-    // is still mounted, the consumer must observe undefined — not a frozen
-    // empty object that silently hides the absence.
-    let currentValue: ReturnType<typeof useAppContext<TestContext>> = undefined;
-
+  it('returns undefined (not {}) after the namespace owner unmounts (O3-4020 scenario)', () => {
+    // When the component that owns a namespace via useDefineAppContext
+    // unmounts while a consumer is still mounted, the consumer must observe
+    // undefined — not a frozen empty object that silently hides the absence.
     const Producer = () => {
       useDefineAppContext<TestContext>(namespace, { value: 'v', count: 1 });
       return null;
     };
 
     const Consumer = () => {
-      currentValue = useAppContext<TestContext>(namespace);
-      return null;
+      const ctx = useAppContext<TestContext>(namespace);
+      return <div data-testid="consumer-value">{ctx ? `${ctx.value}:${ctx.count}` : 'UNDEFINED'}</div>;
     };
 
     const { rerender } = render(
@@ -93,15 +81,24 @@ describe('useAppContext', () => {
       </>,
     );
 
-    expect(currentValue).toEqual({ value: 'v', count: 1 });
+    expect(screen.getByTestId('consumer-value')).toHaveTextContent('v:1');
 
-    // Owner unmounts; consumer stays mounted
-    rerender(
-      <>
-        <Consumer />
-      </>,
-    );
+    rerender(<Consumer />);
 
-    expect(currentValue).toBeUndefined();
+    expect(screen.getByTestId('consumer-value')).toHaveTextContent('UNDEFINED');
+  });
+
+  it('re-applies the selector when the underlying context updates', () => {
+    registerContext<TestContext>(namespace, { value: 'a', count: 1 });
+
+    const { result } = renderHook(() => useAppContext<TestContext, number>(namespace, (state) => state?.count ?? -1));
+
+    expect(result.current).toBe(1);
+
+    act(() => {
+      updateContext<TestContext>(namespace, (state) => ({ ...state, count: 7 }));
+    });
+
+    expect(result.current).toBe(7);
   });
 });

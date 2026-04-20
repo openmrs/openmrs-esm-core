@@ -117,15 +117,18 @@ export function subscribeToContext<T extends NonNullable<object> = NonNullable<o
 ) {
   let previous = getContext<T>(namespace);
 
-  // set initial value
-  callback(Object.freeze(Object.assign({}, previous)));
+  callback(snapshot(previous));
 
   return contextStore.subscribe((state) => {
-    let current: Readonly<T> | null | undefined = namespace in state ? (state[namespace] as T) : null;
+    const current: Readonly<T> | null = namespace in state ? (state[namespace] as T) : null;
 
     if (current !== previous) {
       previous = current;
-      callback(Object.freeze(Object.assign({}, current)));
+      callback(snapshot(current));
     }
   });
+}
+
+function snapshot<T extends NonNullable<object> = NonNullable<object>>(value: Readonly<T> | null): Readonly<T> | null {
+  return value === null ? null : Object.freeze(Object.assign({}, value));
 }

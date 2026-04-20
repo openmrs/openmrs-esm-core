@@ -3,10 +3,6 @@ import { useEffect, useState } from 'react';
 import { getContext, subscribeToContext } from '@openmrs/esm-context';
 import { shallowEqual } from '@openmrs/esm-utils';
 
-function isBlankNamespace(namespace: unknown): boolean {
-  return typeof namespace !== 'string' || namespace.trim().length === 0;
-}
-
 /**
  * This hook is used to access a namespace within the overall AppContext, so that a component can
  * use any shared contextual values. A selector may be provided to further restrict the properties
@@ -55,6 +51,11 @@ export function useAppContext<T extends NonNullable<object> = NonNullable<object
  */
 export function useAppContext<T extends NonNullable<object> = NonNullable<object>, U = T>(
   namespace: string,
+  selector: (state: Readonly<T> | null) => Readonly<U>,
+): Readonly<U> | undefined;
+
+export function useAppContext<T extends NonNullable<object> = NonNullable<object>, U = T>(
+  namespace: string,
   selector: (state: Readonly<T> | null) => Readonly<U> = (state) => (state ?? {}) as Readonly<U>,
 ): Readonly<U> | undefined {
   const [value, setValue] = useState<Readonly<U> | undefined>(() => {
@@ -75,23 +76,19 @@ export function useAppContext<T extends NonNullable<object> = NonNullable<object
   }, [namespace]);
 
   useEffect(() => {
-    // Prefer the state provided by subscribeToContext to avoid re-reading and
-    // re-cloning the context on every update. Only fall back to getContext for
-    // the ambiguous empty-object case: subscribeToContext substitutes a frozen
-    // {} when a namespace is unregistered, which is indistinguishable from a
-    // namespace that was genuinely registered with an empty object.
     return subscribeToContext<T>(namespace, (state) => {
-      const current =
-        state != null && Object.keys(state).length === 0 ? getContext<T>(namespace) : ((state ?? null) as T | null);
-
-      if (current === null) {
-        setValue((prev) => (prev === undefined ? prev : undefined));
+      if (state == null) {
+        setValue(undefined);
         return;
       }
-      const newValue = selector ? selector(current) : (current as unknown as Readonly<U>);
+      const newValue = selector ? selector(state) : (state as unknown as Readonly<U>);
       setValue((prev) => (shallowEqual(prev, newValue) ? prev : newValue));
     });
-  }, []);
+  }, [namespace, selector]);
 
   return value;
+}
+
+function isBlankNamespace(namespace: unknown): boolean {
+  return typeof namespace !== 'string' || namespace.trim().length === 0;
 }
