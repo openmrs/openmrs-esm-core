@@ -1,9 +1,13 @@
 /** @module @category UI */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export type LayoutType = 'phone' | 'tablet' | 'small-desktop' | 'large-desktop';
 
-function getLayout() {
+// Resize fires at up to ~60fps; 150ms debounce skips intermediate sizes without
+// noticeable lag, preventing redundant DOM reads on every event tick.
+const RESIZE_DEBOUNCE_MS = 150;
+
+function getLayout(): LayoutType {
   let layout: LayoutType = 'tablet';
 
   document.body.classList.forEach((cls) => {
@@ -25,13 +29,24 @@ function getLayout() {
 
 export function useLayoutType() {
   const [type, setType] = useState<LayoutType>(getLayout);
+  const resizeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handler = () => {
-      setType(getLayout());
+      if (resizeTimeout.current !== null) {
+        clearTimeout(resizeTimeout.current);
+      }
+      resizeTimeout.current = setTimeout(() => setType(getLayout()), RESIZE_DEBOUNCE_MS);
     };
+
     window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
+
+    return () => {
+      if (resizeTimeout.current !== null) {
+        clearTimeout(resizeTimeout.current);
+      }
+      window.removeEventListener('resize', handler);
+    };
   }, []);
 
   return type;
