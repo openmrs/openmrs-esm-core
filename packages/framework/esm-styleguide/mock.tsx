@@ -20,6 +20,7 @@ export const CaretLeftIcon = () => <span>CaretLeftIcon</span>;
 export const CaretRightIcon = () => <span>CaretRightIcon</span>;
 export const CaretUpIcon = () => <span>CaretUpIcon</span>;
 export const ChartAverageIcon = () => <span>ChartAverageIcon</span>;
+export const ChartLineIcon = () => <span>ChartLineIcon</span>;
 export const CheckmarkFilledIcon = () => <span>CheckmarkFilledIcon</span>;
 export const CheckmarkOutlineIcon = () => <span>CheckmarkOutlineIcon</span>;
 export const ChemistryIcon = () => <span>ChemistryIcon</span>;

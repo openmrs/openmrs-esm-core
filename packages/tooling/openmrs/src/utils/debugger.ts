@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import {
   rspack,
   type Configuration as RspackConfiguration,
@@ -19,10 +20,10 @@ function getWebpackEnv() {
 }
 
 function loadConfig(configPath: string): WebpackConfiguration | RspackConfiguration {
+  const require = createRequire(import.meta.url);
   const content:
     | WebpackConfiguration
     | RspackConfiguration
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
     | ((env: Record<string, unknown>) => WebpackConfiguration | RspackConfiguration) = require(configPath);
   if (typeof content === 'function') {
     return content(getWebpackEnv());

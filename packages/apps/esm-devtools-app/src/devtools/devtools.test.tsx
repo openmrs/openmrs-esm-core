@@ -49,12 +49,12 @@ describe('DevTools', () => {
       expect(screen.getByRole('button', { name: '{···}' })).toBeInTheDocument();
     });
 
-    it('should render DevTools when the devtools localStorage flag is set', () => {
+    it('should not render DevTools when only the devtools localStorage flag is set', () => {
+      window.spaEnv = 'production';
       localStorage.setItem('openmrs:devtools', 'true');
 
-      render(<Root {...defaultProps} />);
-
-      expect(screen.getByRole('button', { name: '{···}' })).toBeInTheDocument();
+      const { container } = render(<Root {...defaultProps} />);
+      expect(container).toBeEmptyDOMElement();
     });
   });
 
