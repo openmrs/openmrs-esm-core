@@ -22,6 +22,10 @@ import { shallowEqual } from '@openmrs/esm-utils';
  *
  * @typeParam T The type of the value stored in the namespace
  * @param namespace The namespace to load properties from
+ * @returns The current value registered under `namespace`, or `undefined` when the namespace has not
+ * yet been registered, was unregistered (e.g. the owning component unmounted), or is a blank string.
+ * Consumers should handle the `undefined` case explicitly rather than defaulting to `{}`, since an
+ * empty-object default can mask a genuinely missing namespace and hide bugs.
  */
 export function useAppContext<T extends NonNullable<object> = NonNullable<object>>(
   namespace: string,
@@ -48,6 +52,10 @@ export function useAppContext<T extends NonNullable<object> = NonNullable<object
  * @typeParam U The return type of this hook which is mostly relevant when using a selector
  * @param namespace The namespace to load properties from
  * @param selector An optional function which extracts the relevant part of the state
+ * @returns The selected value, or `undefined` when the namespace has not yet been registered, was
+ * unregistered (e.g. the owning component unmounted), or is a blank string. Consumers should handle
+ * the `undefined` case explicitly rather than defaulting to `{}`, since an empty-object default can
+ * mask a genuinely missing namespace and hide bugs.
  */
 export function useAppContext<T extends NonNullable<object> = NonNullable<object>, U = T>(
   namespace: string,
