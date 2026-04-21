@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { Session } from '@openmrs/esm-api';
+import { sessionStore, type Session } from '@openmrs/esm-api';
 import {
   attach,
   detach,
@@ -479,5 +479,70 @@ describe('getAssignedExtensions', () => {
     const result = getAssignedExtensions(slotName);
 
     expect(result[0].meta).toEqual(meta);
+  });
+
+  describe('displayExpression with user location', () => {
+    const locationUuid = '59b2d7d1-5b76-4b1b-a54c-0888ba1b2f4e';
+    const locationDisplay = 'Outpatient Clinic';
+
+    function setSession(session: Session | null) {
+      sessionStore.setState({ loaded: session != null, session });
+    }
+
+    afterEach(() => {
+      setSession(null);
+    });
+
+    it('includes an extension whose displayExpression matches userLocation', () => {
+      const slotName = getUniqueName('loc-slot-display');
+      const extensionName = getUniqueName('loc-ext-display');
+      registerExtension(
+        createMockExtension(extensionName, { displayExpression: `userLocation === '${locationDisplay}'` }),
+      );
+      attach(slotName, extensionName);
+      setSession({
+        authenticated: true,
+        sessionId: 's1',
+        sessionLocation: { uuid: locationUuid, display: locationDisplay, links: [] },
+      });
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('includes an extension whose displayExpression matches sessionLocationUuid', () => {
+      const slotName = getUniqueName('loc-slot-uuid');
+      const extensionName = getUniqueName('loc-ext-uuid');
+      registerExtension(
+        createMockExtension(extensionName, { displayExpression: `sessionLocationUuid === '${locationUuid}'` }),
+      );
+      attach(slotName, extensionName);
+      setSession({
+        authenticated: true,
+        sessionId: 's2',
+        sessionLocation: { uuid: locationUuid, display: locationDisplay, links: [] },
+      });
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    });
+
+    it('hides the extension when the session has no sessionLocation', () => {
+      const slotName = getUniqueName('loc-slot-none');
+      const extensionName = getUniqueName('loc-ext-none');
+      registerExtension(
+        createMockExtension(extensionName, { displayExpression: `userLocation === '${locationDisplay}'` }),
+      );
+      attach(slotName, extensionName);
+      setSession({ authenticated: true, sessionId: 's3' });
+
+      const result = getAssignedExtensions(slotName);
+
+      expect(result).toEqual([]);
+    });
   });
 });

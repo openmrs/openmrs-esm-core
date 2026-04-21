@@ -348,9 +348,13 @@ function getAssignedExtensionsFromSlotData(
   const assignedIds = calculateAssignedIds(config, attachedIds);
   const extensions: Array<AssignedExtension> = [];
 
-  // Create context once for all extensions in this slot
   const slotState = internalState.slots[slotName]?.state;
-  const expressionContext = slotState && typeof slotState === 'object' ? { session, ...slotState } : { session };
+  const userLocation = session?.sessionLocation?.display ?? null;
+  const sessionLocationUuid = session?.sessionLocation?.uuid ?? null;
+  const expressionContext =
+    slotState && typeof slotState === 'object'
+      ? { session, ...slotState, userLocation, sessionLocationUuid }
+      : { session, userLocation, sessionLocationUuid };
 
   for (let id of assignedIds) {
     const { config: rawExtensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
