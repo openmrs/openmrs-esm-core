@@ -50,13 +50,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@jsep-plugin/arrow": "^1.0.6",
-    "@jsep-plugin/new": "^1.0.4",
-    "@jsep-plugin/numbers": "^1.0.2",
-    "@jsep-plugin/regex": "^1.0.4",
-    "@jsep-plugin/template": "^1.0.5",
-    "@jsep-plugin/ternary": "^1.1.4",
-    "jsep": "^1.4.0"
+    "@jsep-plugin/arrow": "1.0.6",
+    "@jsep-plugin/new": "1.0.4",
+    "@jsep-plugin/numbers": "1.0.2",
+    "@jsep-plugin/regex": "1.0.4",
+    "@jsep-plugin/template": "1.0.5",
+    "@jsep-plugin/ternary": "1.1.4",
+    "jsep": "1.4.0"
   },
   "devDependencies": {
     "@swc/cli": "0.8.1",
