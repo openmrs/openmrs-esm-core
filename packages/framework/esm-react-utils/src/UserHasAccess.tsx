@@ -1,12 +1,16 @@
 /** @module @category API */
-import type { LoggedInUser } from '@openmrs/esm-api';
-import { getCurrentUser, userHasAccess } from '@openmrs/esm-api';
+import type { LoggedInUser, SessionStore } from '@openmrs/esm-api';
+import { getCurrentUser, sessionStore, userHasAccess } from '@openmrs/esm-api';
 import React, { useEffect, useState } from 'react';
 
 export interface UserHasAccessProps {
   privilege: string | string[];
   fallback?: React.ReactNode;
   children?: React.ReactNode;
+}
+
+function getUserFromStore(state: SessionStore): LoggedInUser | null {
+  return state.loaded ? (state.session?.user ?? null) : null;
 }
 
 /**
@@ -38,9 +42,15 @@ export interface UserHasAccessProps {
  *   privileges.
  */
 export const UserHasAccess: React.FC<UserHasAccessProps> = ({ privilege, fallback, children }) => {
-  const [user, setUser] = useState<LoggedInUser | null>(null);
+  // Read the session store synchronously so that components which render after the
+  // session is already loaded (e.g. during in-app navigation) get the correct value
+  // on the very first render rather than flashing blank while useEffect fires.
+  const [user, setUser] = useState<LoggedInUser | null>(() => getUserFromStore(sessionStore.getState()));
 
   useEffect(() => {
+    // Re-sync in case the store changed between the render and this effect, then
+    // subscribe for future updates.
+    setUser(getUserFromStore(sessionStore.getState()));
     const subscription = getCurrentUser({
       includeAuthStatus: false,
     }).subscribe(setUser);
