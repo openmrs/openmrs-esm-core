@@ -6,7 +6,7 @@
 
 > **useAppContext**\<`T`\>(`namespace`): `undefined` \| `Readonly`\<`T`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
+Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L30)
 
 This hook is used to access a namespace within the overall AppContext, so that a component can
 use any shared contextual values. A selector may be provided to further restrict the properties
@@ -32,6 +32,11 @@ The namespace to load properties from
 
 `undefined` \| `Readonly`\<`T`\>
 
+The current value registered under `namespace`, or `undefined` when the namespace has not
+yet been registered, was unregistered (e.g. the owning component unmounted), or is a blank string.
+Consumers should handle the `undefined` case explicitly rather than defaulting to `{}`, since an
+empty-object default can mask a genuinely missing namespace and hide bugs.
+
 ### Examples
 
 ```ts
@@ -48,7 +53,7 @@ const patientName = useAppContext<PatientContext, string | undefined>('patient',
 
 > **useAppContext**\<`T`, `U`\>(`namespace`, `selector`): `undefined` \| `Readonly`\<`U`\>
 
-Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L52)
+Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L60)
 
 This hook is used to access a namespace within the overall AppContext, so that a component can
 use any shared contextual values. A selector may be provided to further restrict the properties
@@ -85,6 +90,11 @@ An optional function which extracts the relevant part of the state
 ### Returns
 
 `undefined` \| `Readonly`\<`U`\>
+
+The selected value, or `undefined` when the namespace has not yet been registered, was
+unregistered (e.g. the owning component unmounted), or is a blank string. Consumers should handle
+the `undefined` case explicitly rather than defaulting to `{}`, since an empty-object default can
+mask a genuinely missing namespace and hide bugs.
 
 ### Examples
 
