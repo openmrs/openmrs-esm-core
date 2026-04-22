@@ -106,18 +106,20 @@ describe('history', () => {
     expect(getHistory()).toEqual([mockReferrer, 'https://o3.openmrs.org/openmrs/spa/home']);
   });
 
-  it('should return empty history for malformed JSON', () => {
+  it('should return empty history for malformed JSON and clear corrupted storage', () => {
     sessionStorage.setItem('openmrs:history', '{malformed-json');
 
     expect(getHistory()).toEqual([]);
     expect(consoleWarnSpy).toHaveBeenCalled();
+    expect(sessionStorage.getItem('openmrs:history')).toBeNull();
   });
 
-  it('should return empty history for non-array JSON values', () => {
+  it('should return empty history for non-array JSON values and clear corrupted storage', () => {
     sessionStorage.setItem('openmrs:history', JSON.stringify({ bad: 'shape' }));
 
     expect(getHistory()).toEqual([]);
     expect(consoleWarnSpy).toHaveBeenCalled();
+    expect(sessionStorage.getItem('openmrs:history')).toBeNull();
   });
 
   it('should keep only string entries when history array contains mixed types', () => {
