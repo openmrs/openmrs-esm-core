@@ -8,11 +8,11 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./src/public": {
-      "types": "./src/public.ts",
+      "types": "./dist/public.d.ts",
       "default": "./dist/public.js"
     }
   },
@@ -59,12 +59,12 @@
     "jsep": "^1.4.0"
   },
   "devDependencies": {
-    "@swc/cli": "0.8.0",
-    "@swc/core": "1.15.18",
-    "@vitest/coverage-v8": "^4.0.18",
-    "concurrently": "^9.1.2",
-    "cross-env": "^7.0.3",
-    "rimraf": "^6.0.1",
-    "vitest": "^4.0.18"
+    "@swc/cli": "0.8.1",
+    "@swc/core": "1.15.21",
+    "@vitest/coverage-v8": "^4.1.2",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "rimraf": "^6.1.3",
+    "vitest": "^4.1.2"
   }
 }
