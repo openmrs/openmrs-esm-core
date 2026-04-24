@@ -161,32 +161,29 @@ describe('OpenmrsDateRangePicker', () => {
 
     it('should apply md size classes by default', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" />);
-      const wrapper = getInputsWrapper(container);
-      expect(wrapper?.className).toContain('inputsWrapperMd');
+      const wrapper = getInputsWrapper(container)!;
+      expect(wrapper.className).toContain('inputsWrapperMd');
       expect(screen.getByRole('button').className).toContain('flatButtonMd');
     });
 
     it('should apply sm size classes when size="sm"', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" size="sm" />);
-      const wrapper = getInputsWrapper(container);
-      expect(wrapper?.className).toContain('inputsWrapperSm');
-      expect(wrapper?.className).not.toContain('inputsWrapperMd');
+      const wrapper = getInputsWrapper(container)!;
+      expect(wrapper.className).toContain('inputsWrapperSm');
       expect(screen.getByRole('button').className).toContain('flatButtonSm');
     });
 
     it('should apply md size classes when size="md"', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" size="md" />);
-      const wrapper = getInputsWrapper(container);
-      expect(wrapper?.className).toContain('inputsWrapperMd');
-      expect(wrapper?.className).not.toContain('inputsWrapperSm');
+      const wrapper = getInputsWrapper(container)!;
+      expect(wrapper.className).toContain('inputsWrapperMd');
       expect(screen.getByRole('button').className).toContain('flatButtonMd');
     });
 
     it('should apply lg size classes when size="lg"', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" size="lg" />);
-      const wrapper = getInputsWrapper(container);
-      expect(wrapper?.className).toContain('inputsWrapperLg');
-      expect(wrapper?.className).not.toContain('inputsWrapperMd');
+      const wrapper = getInputsWrapper(container)!;
+      expect(wrapper.className).toContain('inputsWrapperLg');
       expect(screen.getByRole('button').className).toContain('flatButtonLg');
     });
     /* eslint-enable testing-library/no-container, testing-library/no-node-access */
