@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
 import { OpenmrsDatePicker } from './index';
 import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
+import styles from './datepicker.module.scss';
 
 window.i18next = { language: 'en' } as i18n;
 
@@ -153,28 +154,28 @@ describe('OpenmrsDatePicker', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" />);
       const wrapper = container.querySelector('.cds--date-picker-input__wrapper')!;
       expect(wrapper.className).toContain('inputWrapperMd');
-      expect(screen.getByRole('button').className).toContain('flatButtonMd');
+      expect(screen.getByRole('button')).toHaveClass(styles.flatButtonMd);
     });
 
     it('should apply sm size classes when size="sm"', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="sm" />);
       const wrapper = container.querySelector('.cds--date-picker-input__wrapper')!;
       expect(wrapper.className).toContain('inputWrapperSm');
-      expect(screen.getByRole('button').className).toContain('flatButtonSm');
+      expect(screen.getByRole('button')).toHaveClass(styles.flatButtonSm);
     });
 
     it('should apply md size classes when size="md"', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="md" />);
       const wrapper = container.querySelector('.cds--date-picker-input__wrapper')!;
       expect(wrapper.className).toContain('inputWrapperMd');
-      expect(screen.getByRole('button').className).toContain('flatButtonMd');
+      expect(screen.getByRole('button')).toHaveClass(styles.flatButtonMd);
     });
 
     it('should apply lg size classes when size="lg"', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="lg" />);
       const wrapper = container.querySelector('.cds--date-picker-input__wrapper')!;
       expect(wrapper.className).toContain('inputWrapperLg');
-      expect(screen.getByRole('button').className).toContain('flatButtonLg');
+      expect(screen.getByRole('button')).toHaveClass(styles.flatButtonLg);
     });
     /* eslint-enable testing-library/no-container, testing-library/no-node-access */
   });
