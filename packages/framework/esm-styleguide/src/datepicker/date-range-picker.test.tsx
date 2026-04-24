@@ -163,7 +163,7 @@ describe('OpenmrsDateRangePicker', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" />);
       const wrapper = getInputsWrapper(container);
       expect(wrapper?.className).toContain('inputsWrapperMd');
-      expect(screen.getByRole('button')).toHaveClass('flatButtonMd');
+      expect(screen.getByRole('button').className).toContain('flatButtonMd');
     });
 
     it('should apply sm size classes when size="sm"', () => {
@@ -171,7 +171,7 @@ describe('OpenmrsDateRangePicker', () => {
       const wrapper = getInputsWrapper(container);
       expect(wrapper?.className).toContain('inputsWrapperSm');
       expect(wrapper?.className).not.toContain('inputsWrapperMd');
-      expect(screen.getByRole('button')).toHaveClass('flatButtonSm');
+      expect(screen.getByRole('button').className).toContain('flatButtonSm');
     });
 
     it('should apply md size classes when size="md"', () => {
@@ -179,7 +179,7 @@ describe('OpenmrsDateRangePicker', () => {
       const wrapper = getInputsWrapper(container);
       expect(wrapper?.className).toContain('inputsWrapperMd');
       expect(wrapper?.className).not.toContain('inputsWrapperSm');
-      expect(screen.getByRole('button')).toHaveClass('flatButtonMd');
+      expect(screen.getByRole('button').className).toContain('flatButtonMd');
     });
 
     it('should apply lg size classes when size="lg"', () => {
@@ -187,7 +187,7 @@ describe('OpenmrsDateRangePicker', () => {
       const wrapper = getInputsWrapper(container);
       expect(wrapper?.className).toContain('inputsWrapperLg');
       expect(wrapper?.className).not.toContain('inputsWrapperMd');
-      expect(screen.getByRole('button')).toHaveClass('flatButtonLg');
+      expect(screen.getByRole('button').className).toContain('flatButtonLg');
     });
     /* eslint-enable testing-library/no-container, testing-library/no-node-access */
   });
