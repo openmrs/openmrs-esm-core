@@ -154,8 +154,6 @@ describe('OpenmrsDateRangePicker', () => {
   });
 
   describe('size prop', () => {
-    // CSS module class names are hashed at runtime; direct className inspection is the
-    // only way to assert which size modifier is applied.
     /* eslint-disable testing-library/no-container, testing-library/no-node-access */
     const getInputsWrapper = (container: HTMLElement) =>
       Array.from(container.querySelectorAll('div')).find((el) => el.className.includes('inputsWrapper')) ?? null;
@@ -163,28 +161,28 @@ describe('OpenmrsDateRangePicker', () => {
     it('should apply md size classes by default', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" />);
       const wrapper = getInputsWrapper(container)!;
-      expect(wrapper.className).toContain('inputsWrapperMd');
+      expect(wrapper).toHaveClass(styles.inputsWrapperMd);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonMd);
     });
 
     it('should apply sm size classes when size="sm"', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" size="sm" />);
       const wrapper = getInputsWrapper(container)!;
-      expect(wrapper.className).toContain('inputsWrapperSm');
+      expect(wrapper).toHaveClass(styles.inputsWrapperSm);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonSm);
     });
 
     it('should apply md size classes when size="md"', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" size="md" />);
       const wrapper = getInputsWrapper(container)!;
-      expect(wrapper.className).toContain('inputsWrapperMd');
+      expect(wrapper).toHaveClass(styles.inputsWrapperMd);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonMd);
     });
 
     it('should apply lg size classes when size="lg"', () => {
       const { container } = render(<OpenmrsDateRangePicker aria-label="datepicker" size="lg" />);
       const wrapper = getInputsWrapper(container)!;
-      expect(wrapper.className).toContain('inputsWrapperLg');
+      expect(wrapper).toHaveClass(styles.inputsWrapperLg);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonLg);
     });
     /* eslint-enable testing-library/no-container, testing-library/no-node-access */
