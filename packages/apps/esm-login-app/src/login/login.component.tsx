@@ -6,6 +6,7 @@ import {
   ArrowRightIcon,
   getCoreTranslation,
   refetchCurrentUser,
+  setSessionLocation,
   navigate as openmrsNavigate,
   useConfig,
   useConnectivity,
@@ -21,10 +22,15 @@ export interface LoginReferrer {
 }
 
 const Login: React.FC = () => {
-  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+  const {
+    showPasswordOnSeparateScreen,
+    provider: loginProvider,
+    links: loginLinks,
+    chooseLocation,
+  } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
-  const { user } = useSession();
+  const { user, sessionLocation } = useSession();
   const location = useLocation() as unknown as Omit<Location, 'state'> & {
     state: LoginReferrer;
   };
@@ -45,8 +51,15 @@ const Login: React.FC = () => {
       } else if (!username && location.pathname === '/login/confirm') {
         navigate('/login');
       }
+    } else {
+      if (sessionLocation || !chooseLocation.enabled) {
+        openmrsNavigate({ to: loginLinks?.loginSuccess || '${openmrsSpaBase}/home' });
+      } else if (location.pathname !== '/login/location') {
+        // Only redirect to location picker if not already there
+        navigate('/login/location');
+      }
     }
-  }, [username, navigate, location, user, loginProvider]);
+  }, [username, navigate, location, user, loginProvider, chooseLocation, loginLinks]);
 
   useEffect(() => {
     if (showPasswordOnSeparateScreen) {
@@ -98,10 +111,19 @@ const Login: React.FC = () => {
         const sessionStore = await refetchCurrentUser(currentUsername, currentPassword);
         const session = sessionStore.session;
         const authenticated = sessionStore?.session?.authenticated;
+        const userDefaultLocation = session?.user?.userProperties?.defaultLocation;
 
         if (authenticated) {
-          if (session.sessionLocation) {
-            let to = loginLinks?.loginSuccess || '/home';
+          if (session.sessionLocation || userDefaultLocation || !chooseLocation.enabled) {
+            if (!session.sessionLocation && userDefaultLocation) {
+              try {
+                await setSessionLocation(userDefaultLocation, new AbortController());
+              } catch (error) {
+                navigate('/login/location');
+                return true;
+              }
+            }
+            let to = loginLinks?.loginSuccess || '${openmrsSpaBase}/home';
             if (location?.state?.referrer) {
               if (location.state.referrer.startsWith('/')) {
                 to = `\${openmrsSpaBase}${location.state.referrer}`;
@@ -146,6 +168,7 @@ const Login: React.FC = () => {
       showPasswordOnSeparateScreen,
       showPasswordField,
       loginLinks,
+      chooseLocation,
       location,
       t,
       continueLogin,
