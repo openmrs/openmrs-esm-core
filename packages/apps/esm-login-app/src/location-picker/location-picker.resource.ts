@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useSwrImmutable from 'swr/immutable';
-import { type FetchResponse, openmrsFetch, setUserProperties, showSnackbar, useSession } from '@openmrs/esm-framework';
+import {
+  fhirBaseUrl,
+  type FetchResponse,
+  openmrsFetch,
+  setUserProperties,
+  showSnackbar,
+  useSession,
+} from '@openmrs/esm-framework';
 import { useValidateLocationUuid } from '../login.resource';
 import { type LocationResponse } from '../types';
 
@@ -86,10 +93,11 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
 }
 
 export function useLocationCount(useLoginLocationTag: boolean) {
-  const url = `/ws/fhir2/R4/Location?_count=1`;
+  const urlParams = new URLSearchParams({ _count: '1' });
   if (useLoginLocationTag) {
-    url.concat(`&tag=Login Location`);
+    urlParams.append('_tag', 'Login Location');
   }
+  const url = `${fhirBaseUrl}/Location?${urlParams}`;
   const { data, error, isLoading } = useSwrImmutable<FetchResponse<LocationResponse>>(url, openmrsFetch, {
     shouldRetryOnError(err) {
       if (err?.response?.status) {
