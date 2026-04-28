@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@swc/cli": "0.8.1",
-    "@swc/core": "1.15.21",
+    "@swc/core": "1.15.32",
     "concurrently": "^9.2.1",
     "i18next-parser": "^9.3.0",
     "rimraf": "^6.1.3"
