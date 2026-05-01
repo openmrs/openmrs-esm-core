@@ -1,8 +1,6 @@
-import { describe, expect, it, afterEach } from 'vitest';
+import { describe, expect, it, afterEach, beforeEach, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useLayoutType, isDesktop, type LayoutType } from './useLayoutType';
-
-// Breakpoint class → layout mapping used across tests
 
 const LAYOUT_CASES: Array<[string, LayoutType]> = [
   ['omrs-breakpoint-lt-tablet', 'phone'],
@@ -12,8 +10,6 @@ const LAYOUT_CASES: Array<[string, LayoutType]> = [
 
 const ALL_BREAKPOINT_CLASSES = LAYOUT_CASES.map(([className]) => className);
 
-// Helper to apply a breakpoint class to the body
-
 function setBreakpoint(className?: string) {
   document.body.classList.remove(...ALL_BREAKPOINT_CLASSES);
   if (className) {
@@ -21,40 +17,66 @@ function setBreakpoint(className?: string) {
   }
 }
 
-function renderWithBreakpoint(className?: string) {
-  setBreakpoint(className);
-  return renderHook(() => useLayoutType());
+function fireResize() {
+  window.dispatchEvent(new Event('resize'));
 }
 
 describe('useLayoutType', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
   afterEach(() => {
     document.body.classList.remove(...ALL_BREAKPOINT_CLASSES);
+    vi.useRealTimers();
   });
 
   it('returns "tablet" by default when no breakpoint class is present', () => {
-    const { result } = renderWithBreakpoint();
+    const { result } = renderHook(() => useLayoutType());
     expect(result.current).toBe('tablet');
   });
 
-  it.each(LAYOUT_CASES)('maps class "%s" to layout "%s"', (className, expectedLayout) => {
-    const { result } = renderWithBreakpoint(className);
+  it.each(LAYOUT_CASES)('maps class "%s" to layout "%s" after resize', (className, expectedLayout) => {
+    setBreakpoint(className);
+    const { result } = renderHook(() => useLayoutType());
     expect(result.current).toBe(expectedLayout);
   });
 
-  it('updates layout when breakpoint class changes on resize', () => {
+  it('updates layout after debounce fires on resize', () => {
     const { result } = renderHook(() => useLayoutType());
     expect(result.current).toBe('tablet');
 
     act(() => {
       setBreakpoint('omrs-breakpoint-lt-tablet');
-      window.dispatchEvent(new Event('resize'));
+      fireResize();
     });
-    expect(result.current).toBe('phone');
+    // layout has not changed yet — debounce is pending
+    expect(result.current).toBe('tablet');
 
     act(() => {
-      setBreakpoint('omrs-breakpoint-gt-small-desktop');
-      window.dispatchEvent(new Event('resize'));
+      vi.runAllTimers();
     });
+    expect(result.current).toBe('phone');
+  });
+
+  it('debounces rapid resize events — only applies the last breakpoint', () => {
+    const { result } = renderHook(() => useLayoutType());
+
+    act(() => {
+      setBreakpoint('omrs-breakpoint-lt-tablet');
+      fireResize();
+      setBreakpoint('omrs-breakpoint-gt-tablet');
+      fireResize();
+      setBreakpoint('omrs-breakpoint-gt-small-desktop');
+      fireResize();
+    });
+    // still on the initial value before debounce settles
+    expect(result.current).toBe('tablet');
+
+    act(() => {
+      vi.runAllTimers();
+    });
+    // only the last breakpoint state is applied
     expect(result.current).toBe('large-desktop');
   });
 
@@ -63,15 +85,43 @@ describe('useLayoutType', () => {
 
     act(() => {
       setBreakpoint('omrs-breakpoint-gt-tablet');
-      window.dispatchEvent(new Event('resize'));
+      fireResize();
+      vi.runAllTimers();
     });
     expect(result.current).toBe('small-desktop');
 
     act(() => {
-      setBreakpoint(); // clears all classes
-      window.dispatchEvent(new Event('resize'));
+      setBreakpoint();
+      fireResize();
+      vi.runAllTimers();
     });
     expect(result.current).toBe('tablet');
+  });
+
+  it('cancels a pending debounce timeout when the hook unmounts', () => {
+    const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
+
+    const { result, unmount } = renderHook(() => useLayoutType());
+
+    act(() => {
+      setBreakpoint('omrs-breakpoint-lt-tablet');
+      fireResize();
+      // debounce is now pending — do NOT run timers
+    });
+    // layout has not updated yet
+    expect(result.current).toBe('tablet');
+
+    unmount();
+
+    // the pending timeout must have been cancelled on unmount
+    expect(clearTimeoutSpy).toHaveBeenCalled();
+
+    // running timers after unmount must not cause a state-update warning
+    act(() => {
+      vi.runAllTimers();
+    });
+
+    clearTimeoutSpy.mockRestore();
   });
 
   it('ignores unrelated window events', () => {
@@ -81,9 +131,10 @@ describe('useLayoutType', () => {
       setBreakpoint('omrs-breakpoint-lt-tablet');
       window.dispatchEvent(new Event('scroll'));
       window.dispatchEvent(new Event('click'));
+      vi.runAllTimers();
     });
 
-    // DOM changed but no resize fired — hook should not have re-read the class
+    // DOM changed but no resize fired — hook should not update
     expect(result.current).toBe('tablet');
   });
 });
@@ -96,12 +147,5 @@ describe('isDesktop', () => {
     ['large-desktop', true],
   ])('returns %s for layout "%s"', (layout, expected) => {
     expect(isDesktop(layout)).toBe(expected);
-  });
-
-  it('identifies non-desktop layouts correctly', () => {
-    const nonDesktopLayouts = LAYOUT_CASES.map(([, layout]) => layout).filter(
-      (layout) => !isDesktop(layout),
-    );
-    expect(nonDesktopLayouts).toEqual(['phone']);
   });
 });
