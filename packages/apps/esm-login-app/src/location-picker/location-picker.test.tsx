@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
+  navigate,
   openmrsFetch,
   setSessionLocation,
   setUserProperties,
@@ -21,7 +22,7 @@ import {
 } from '../../__mocks__/locations.mock';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
-import LocationPickerView from './location-picker-view.component';
+import LocationPickerView, { isSafeReturnUrl } from './location-picker-view.component';
 
 const fistLocation = {
   uuid: 'uuid_1',
@@ -43,6 +44,7 @@ const mockSetSessionLocation = vi.mocked(setSessionLocation);
 const mockSetUserProperties = vi.mocked(setUserProperties);
 const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockShowSnackbar = vi.mocked(showSnackbar);
+const mockNavigate = vi.mocked(navigate);
 
 describe('LocationPickerView', () => {
   beforeEach(() => {
@@ -341,6 +343,124 @@ describe('LocationPickerView', () => {
       });
 
       expect(mockSetUserProperties).not.toHaveBeenCalled();
+    });
+  });
+});
+
+describe('isSafeReturnUrl', () => {
+  it('rejects an absolute external URL', () => {
+    expect(isSafeReturnUrl('https://evil.com/openmrs/spa/home')).toBe(false);
+  });
+
+  it('accepts an absolute same-origin SPA URL', () => {
+    const sameOriginSpaUrl = `${window.location.origin}/openmrs/spa/home`;
+    expect(isSafeReturnUrl(sameOriginSpaUrl)).toBe(true);
+  });
+
+  it('rejects a protocol-relative external URL', () => {
+    expect(isSafeReturnUrl('//evil.com/openmrs/spa/home')).toBe(false);
+  });
+
+  it('rejects a URL on the same origin but outside the SPA base', () => {
+    expect(isSafeReturnUrl('/openmrs/admin/index.htm')).toBe(false);
+  });
+
+  it('rejects a javascript: URL', () => {
+    expect(isSafeReturnUrl('javascript:alert(1)')).toBe(false);
+  });
+
+  it('rejects an empty string', () => {
+    expect(isSafeReturnUrl('')).toBe(false);
+  });
+
+  it('accepts a valid same-origin SPA path', () => {
+    expect(isSafeReturnUrl('/openmrs/spa/home')).toBe(true);
+  });
+
+  it('accepts a valid same-origin SPA sub-path', () => {
+    expect(isSafeReturnUrl('/openmrs/spa/patient/123/chart')).toBe(true);
+  });
+});
+
+describe('returnToUrl open-redirect protection', () => {
+  beforeEach(() => {
+    vi.mocked(useConnectivity).mockReturnValue(true);
+    vi.mocked(useConfig).mockReturnValue(mockConfig);
+
+    vi.mocked(useSession).mockReturnValue({
+      user: {
+        display: 'Testy McTesterface',
+        uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
+        userProperties: {},
+      } as LoggedInUser,
+    } as Session);
+
+    vi.mocked(openmrsFetch).mockResolvedValue(mockLoginLocations as FetchResponse<unknown>);
+    vi.mocked(setSessionLocation).mockResolvedValue(undefined);
+    mockNavigate.mockClear();
+  });
+
+  it('rejects an external returnToUrl and falls back to loginSuccess', async () => {
+    const user = userEvent.setup();
+
+    renderWithRouter(LocationPickerView, {}, { routes: ['?returnToUrl=https://evil.com/steal-creds'] });
+
+    const location = await screen.findByRole('radio', { name: fistLocation.name });
+    await user.click(location);
+
+    const submitButton = screen.getByRole('button', { name: /confirm/i });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(mockSetSessionLocation).toHaveBeenCalledWith(fistLocation.uuid, expect.anything());
+    });
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith({ to: mockConfig.links.loginSuccess });
+    });
+
+    expect(mockNavigate).not.toHaveBeenCalledWith({ to: 'https://evil.com/steal-creds' });
+  });
+
+  it('rejects a protocol-relative returnToUrl and falls back to loginSuccess', async () => {
+    const user = userEvent.setup();
+
+    renderWithRouter(LocationPickerView, {}, { routes: ['?returnToUrl=//evil.com/openmrs/spa/home'] });
+
+    const location = await screen.findByRole('radio', { name: fistLocation.name });
+    await user.click(location);
+
+    const submitButton = screen.getByRole('button', { name: /confirm/i });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(mockSetSessionLocation).toHaveBeenCalledWith(fistLocation.uuid, expect.anything());
+    });
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith({ to: mockConfig.links.loginSuccess });
+    });
+
+    expect(mockNavigate).not.toHaveBeenCalledWith({ to: '//evil.com/openmrs/spa/home' });
+  });
+
+  it('accepts a valid same-origin SPA returnToUrl', async () => {
+    const user = userEvent.setup();
+
+    renderWithRouter(LocationPickerView, {}, { routes: ['?returnToUrl=/openmrs/spa/home'] });
+
+    const location = await screen.findByRole('radio', { name: fistLocation.name });
+    await user.click(location);
+
+    const submitButton = screen.getByRole('button', { name: /confirm/i });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(mockSetSessionLocation).toHaveBeenCalledWith(fistLocation.uuid, expect.anything());
+    });
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith({ to: '/openmrs/spa/home' });
     });
   });
 });

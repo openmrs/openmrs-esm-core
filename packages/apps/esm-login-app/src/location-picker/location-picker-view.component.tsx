@@ -16,6 +16,24 @@ import type { ConfigSchema } from '../config-schema';
 import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker.scss';
 
+/**
+ * Validates that a returnToUrl is safe to navigate to.
+ * Only same-origin paths under the SPA base are permitted,
+ * preventing open-redirect attacks after login.
+ */
+export function isSafeReturnUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url, window.location.origin);
+    const spaBase = window.getOpenmrsSpaBase().replace(/\/$/, '');
+    return (
+      parsed.origin === window.location.origin &&
+      (parsed.pathname === spaBase || parsed.pathname.startsWith(`${spaBase}/`))
+    );
+  } catch {
+    return false;
+  }
+}
+
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
   currentLocationUuid?: string;
@@ -74,7 +92,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
           navigate({ to: '${openmrsSpaBase}' + referrer });
           return;
         }
-        if (returnToUrl && returnToUrl !== '/') {
+        if (returnToUrl && isSafeReturnUrl(returnToUrl)) {
           navigate({ to: returnToUrl });
         } else {
           navigate({ to: config.links.loginSuccess });
