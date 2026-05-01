@@ -105,9 +105,68 @@ export const configSchema = {
     _description:
       'Whether to show the password field on a separate screen. If false, the password field will be shown on the same screen.',
   },
+  background: {
+    _type: Type.Object,
+    _description:
+      'Customizes the login page background. Either a background image URL or a CSS color may be set. ' +
+      'If both are set, the image is used.',
+    image: {
+      _type: Type.String,
+      _default: '',
+      _description:
+        'URL to a background image. Relative paths are interpolated via ${openmrsBase} / ${openmrsSpaBase}.',
+      _validators: [validators.isUrl],
+    },
+    color: {
+      _type: Type.String,
+      _default: '',
+      _description: 'CSS color value (e.g. "#0066cc" or "rgb(0,102,204)"). Used when no image is set.',
+    },
+  },
+  announcements: {
+    _type: Type.Array,
+    _description:
+      'Message banners displayed above the login form, e.g. for planned downtime notices. ' +
+      'Each entry renders as a Carbon InlineNotification. `title` and `text` may be either ' +
+      'literal strings or translation keys.',
+    _elements: {
+      _type: Type.Object,
+      title: {
+        _type: Type.String,
+        _default: '',
+        _description: 'Optional title shown at the top of the banner. May be a translation key.',
+      },
+      text: {
+        _type: Type.String,
+        _required: true,
+        _description: 'Banner body text. May be a translation key.',
+      },
+      kind: {
+        _type: Type.String,
+        _default: 'info',
+        _description: 'The visual style of the banner. One of: info, warning, error, success.',
+        _validators: [
+          validator(
+            (v: unknown) => typeof v === 'string' && ['info', 'warning', 'error', 'success'].includes(v),
+            'Must be one of: info, warning, error, success',
+          ),
+        ],
+      },
+    },
+    _default: [],
+  },
 };
 
 export interface ConfigSchema {
+  announcements: Array<{
+    title: string;
+    text: string;
+    kind: 'info' | 'warning' | 'error' | 'success';
+  }>;
+  background: {
+    image: string;
+    color: string;
+  };
   chooseLocation: {
     enabled: boolean;
     locationsPerRequest: number;
