@@ -4,7 +4,7 @@
 
 > **createDashboard**(`props`): (`__namedParameters`) => `Element`
 
-Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L53)
+Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/dashboard-extension/index.tsx#L54)
 
 ## Parameters
 

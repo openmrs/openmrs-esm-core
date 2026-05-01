@@ -100,7 +100,8 @@ export function PatientPhoto({ patientUuid, patientName, alt }: PatientPhotoProp
         title={patientName}
         style={{
           backgroundImage: pattern.toDataUrl(),
-          backgroundRepeat: 'round',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
         }}
       >
         <span className={styles.initials}>{getInitials(patientName)}</span>

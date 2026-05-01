@@ -53,6 +53,10 @@
   &[data-focused='true'] {
     animation: cursor-blink 1s step-end infinite;
   }
+
+  :global([dir='rtl']) &[data-focused='true'] {
+    animation: cursor-blink-rtl 1s step-end infinite;
+  }
 }
 
 // Shared rules for dimming read-only separators (/, -, etc.) adjacent to
@@ -67,13 +71,28 @@
   }
 }
 
+// Use physical `border-right`/`border-left` rather than logical `border-inline-end`:
+// a PostCSS plugin in the build pipeline incorrectly hoists `border-inline-end`
+// out of @keyframes and re-emits it as a static `border-right` on selectors that
+// reference the animation, which produced a permanent vertical line on the
+// date input wrappers in LTR contexts.
 @keyframes cursor-blink {
   from,
   to {
-    border-inline-end: 1px solid transparent;
+    border-right: 1px solid transparent;
   }
   50% {
-    border-inline-end: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+  }
+}
+
+@keyframes cursor-blink-rtl {
+  from,
+  to {
+    border-left: 1px solid transparent;
+  }
+  50% {
+    border-left: 1px solid currentColor;
   }
 }
 
@@ -95,6 +114,14 @@
   block-size: layout.$spacing-08;
 }
 
+.inputWrapperSm {
+  block-size: layout.$spacing-07;
+}
+
+.inputWrapperLg {
+  block-size: layout.$spacing-09;
+}
+
 // Range date picker inputs
 .inputsWrapper {
   display: flex;
@@ -102,6 +129,18 @@
   max-width: 15rem;
   margin-inline-start: 1rem;
   inline-size: 15rem;
+}
+
+.inputsWrapperSm {
+  block-size: layout.$spacing-07;
+}
+
+.inputsWrapperMd {
+  block-size: layout.$spacing-08;
+}
+
+.inputsWrapperLg {
+  block-size: layout.$spacing-09;
 }
 
 .dateInputWrapper {
@@ -135,20 +174,31 @@
 }
 
 // Used for calendar pop-over
-@keyframes fade-in-down {
+@keyframes expand-in {
   from {
     opacity: 0;
-    transform: translate3d(0, -20px, 0);
+    transform: scale(0.93);
   }
 
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: scale(1);
   }
 }
 
+.popover {
+  transform-origin: top center;
+}
+
+// When the popover flips above the trigger (near bottom of viewport), anchor from the bottom
+.popover[data-placement='top'],
+.popover[data-placement='top-start'],
+.popover[data-placement='top-end'] {
+  transform-origin: bottom center;
+}
+
 .popover[data-entering] {
-  animation: fade-in-down motion.$duration-fast-02 motion.motion(entrance, productive);
+  animation: expand-in motion.$duration-fast-02 motion.motion(entrance, productive);
 
   @media screen and (prefers-reduced-motion: reduce) {
     animation: none;
@@ -202,6 +252,16 @@
 .flatButtonMd {
   height: layout.$spacing-08;
   width: layout.$spacing-08;
+}
+
+.flatButtonSm {
+  height: layout.$spacing-07;
+  width: layout.$spacing-07;
+}
+
+.flatButtonLg {
+  height: layout.$spacing-09;
+  width: layout.$spacing-09;
 }
 
 .monthYear {

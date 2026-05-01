@@ -76,6 +76,7 @@ const config: StorybookConfig = {
             frameworkRoot,
             'esm-styleguide/src/config-schema.ts',
           ),
+          '@openmrs/esm-styleguide/src/svg-utils': path.resolve(frameworkRoot, 'esm-styleguide/src/svg-utils.ts'),
         },
       },
       tools: {

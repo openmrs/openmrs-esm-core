@@ -8,7 +8,7 @@ import {
   Search,
 } from '@carbon/react';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { useOnVisible } from '@openmrs/esm-framework';
+import { useOnVisible } from '@openmrs/esm-react-utils';
 import { useLocationByUuid, useLocations } from './location-picker.resource';
 import styles from './location-picker.module.scss';
 

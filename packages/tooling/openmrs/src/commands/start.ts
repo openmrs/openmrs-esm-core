@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { resolve } from 'node:path';
@@ -13,9 +14,10 @@ export interface StartArgs {
   addCookie: string;
 }
 
-export function runStart(args: StartArgs) {
+export function runStart(args: StartArgs, signal?: AbortSignal) {
   const { backend, host, port, open, addCookie } = args;
   const app = express();
+  const require = createRequire(import.meta.url);
   const source = resolve(require.resolve('@openmrs/esm-app-shell/package.json'), '..', 'dist');
   const index = resolve(source, 'index.html');
   const spaPath = '/openmrs/spa';
@@ -38,21 +40,22 @@ export function runStart(args: StartArgs) {
   );
   app.get('/*', (_, res) => res.sendFile(index));
 
-  app.listen(port, host, () => {
+  const server = app.listen(port, host, async () => {
     logInfo(`Listening at http://${host}:${port}`);
     logInfo(`SPA available at ${pageUrl}`);
 
     if (open) {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const open = require('open');
+      const { default: openUrl } = await import('open');
 
-      open(pageUrl, { wait: false }).catch(() => {
+      openUrl(pageUrl, { wait: false }).catch(() => {
         logWarn(
           `Unable to open "${pageUrl}" in browser. If you are running in a headless environment, please do not use the --open flag.`,
         );
       });
     }
   });
+
+  signal?.addEventListener('abort', () => server.close());
 
   return new Promise<void>(() => {});
 }

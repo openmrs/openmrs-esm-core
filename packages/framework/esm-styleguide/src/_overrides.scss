@@ -333,6 +333,10 @@
 }
 
 /* Pagination */
+.cds--pagination {
+  container: unset;
+}
+
 .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
   &::after {
     @include brand-03(background-color);

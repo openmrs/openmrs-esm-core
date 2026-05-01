@@ -1,14 +1,14 @@
 {
-  "AppMenuTooltip": "App Menu",
-  "cancel": "Cancel",
-  "change": "Change",
-  "changeDefaultLocale": "Update your default locale",
-  "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
-  "changeLanguage": "Change language",
-  "changingLanguage": "Changing language",
-  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
-  "notifications": "Notifications",
-  "userMenu": "User menu",
-  "userMenuOptions": "User menu options",
-  "userMenuTooltip": "My Account"
+  "AppMenuTooltip": "App Menü",
+  "cancel": "Abbrechen",
+  "change": "Ändern",
+  "changeDefaultLocale": "Aktualisieren Sie Ihre Standardeinstellung für die Sprache und das Land",
+  "changeDefaultLocaleExplanation": "Lassen Sie dieses Kontrollkästchen deaktiviert, um die Sprache nur für diese Sitzung zu ändern",
+  "changeLanguage": "Sprache ändern",
+  "changingLanguage": "Sprache ändern",
+  "noPathInDashboardExtension": "Die Dashboard-Erweiterung kann nicht gerendert werden, wenn die Eigenschaft „path“ im Konfigurationsschema nicht festgelegt ist",
+  "notifications": "Benachrichtigungen",
+  "userMenu": "Benutzermenü",
+  "userMenuOptions": "Optionen im Benutzermenü",
+  "userMenuTooltip": "Mein Konto"
 }
