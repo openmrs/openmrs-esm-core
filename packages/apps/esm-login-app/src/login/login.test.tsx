@@ -296,4 +296,52 @@ describe('Login', () => {
 
     expect(usernameInput).toHaveFocus();
   });
+
+  it('does not render announcement banners by default', () => {
+    renderWithRouter(Login, {}, { route: '/login' });
+    expect(screen.queryByText(/Planned downtime/i)).not.toBeInTheDocument();
+  });
+
+  it('renders configured announcement banners stacked above the form', () => {
+    mockUseConfig.mockReturnValue({
+      ...mockConfig,
+      announcements: [
+        { title: '', text: 'Planned downtime tonight at 10pm', kind: 'warning' },
+        { title: 'Heads up', text: 'New release shipping Friday', kind: 'info' },
+      ],
+    });
+
+    renderWithRouter(Login, {}, { route: '/login' });
+
+    expect(screen.getByText('Planned downtime tonight at 10pm')).toBeInTheDocument();
+    expect(screen.getByText('New release shipping Friday')).toBeInTheDocument();
+    expect(screen.getByText('Heads up')).toBeInTheDocument();
+  });
+
+  it('applies a background image when background.image is configured', () => {
+    mockUseConfig.mockReturnValue({
+      ...mockConfig,
+      background: { image: 'https://example.test/bg.jpg', color: '' },
+    });
+
+    renderWithRouter(Login, {}, { route: '/login' });
+    const root = screen.getByTestId('login-container');
+
+    expect(root.style.backgroundImage).toContain('https://example.test/bg.jpg');
+    expect(root).toHaveStyle({ backgroundSize: 'cover' });
+    expect(root).toHaveStyle({ backgroundColor: '' });
+  });
+
+  it('applies a background color when only background.color is configured', () => {
+    mockUseConfig.mockReturnValue({
+      ...mockConfig,
+      background: { image: '', color: '#0066cc' },
+    });
+
+    renderWithRouter(Login, {}, { route: '/login' });
+    const root = screen.getByTestId('login-container');
+
+    expect(root).toHaveStyle({ backgroundColor: '#0066cc' });
+    expect(root).toHaveStyle({ backgroundImage: '' });
+  });
 });
