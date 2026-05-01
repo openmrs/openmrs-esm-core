@@ -5,6 +5,18 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ConceptSearchBox } from './concept-search';
 
+vi.mock('@openmrs/esm-framework', () => ({
+  // Pass debounced value through immediately so tests don't need fake timers
+  useDebounce: <T,>(value: T) => value,
+  getCoreTranslation: (key: string, fallback?: string) => {
+    const translations: Record<string, string> = {
+      error: 'Error',
+      noResultsToDisplay: 'No results to display',
+    };
+    return translations[key] ?? fallback ?? key;
+  },
+}));
+
 vi.mock('./concept-search.resource', () => ({
   useConceptLookup: vi.fn(),
 }));
@@ -23,14 +35,14 @@ describe('ConceptSearchBox', () => {
   it('renders the search input', () => {
     mockUseConceptLookup.mockReturnValue({ concepts: [], error: undefined, isSearchingConcepts: false });
     renderConceptSearchBox();
-    expect(screen.getByRole('combobox')).toBeInTheDocument();
+    expect(screen.getByRole('searchbox')).toBeInTheDocument();
   });
 
   it('shows loading state while searching', async () => {
     const user = userEvent.setup();
     mockUseConceptLookup.mockReturnValue({ concepts: [], error: undefined, isSearchingConcepts: true });
     renderConceptSearchBox();
-    await user.type(screen.getByRole('combobox'), 'aspirin');
+    await user.type(screen.getByRole('searchbox'), 'aspirin');
     expect(screen.getByText(/searching/i)).toBeInTheDocument();
   });
 
@@ -42,7 +54,7 @@ describe('ConceptSearchBox', () => {
       isSearchingConcepts: false,
     });
     renderConceptSearchBox();
-    await user.type(screen.getByRole('combobox'), 'aspirin');
+    await user.type(screen.getByRole('searchbox'), 'aspirin');
     expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
     // Raw error message should NOT be visible to the user
     expect(screen.queryByText(/500/)).not.toBeInTheDocument();
@@ -52,8 +64,8 @@ describe('ConceptSearchBox', () => {
     const user = userEvent.setup();
     mockUseConceptLookup.mockReturnValue({ concepts: [], error: undefined, isSearchingConcepts: false });
     renderConceptSearchBox();
-    await user.type(screen.getByRole('combobox'), 'xyznotaconcept');
-    expect(screen.getByText(/no results found/i)).toBeInTheDocument();
+    await user.type(screen.getByRole('searchbox'), 'xyznotaconcept');
+    expect(screen.getByText(/no results to display/i)).toBeInTheDocument();
   });
 
   it('renders concept results and calls setConcept on click', async () => {
@@ -64,8 +76,8 @@ describe('ConceptSearchBox', () => {
       isSearchingConcepts: false,
     });
     renderConceptSearchBox();
-    await user.type(screen.getByRole('combobox'), 'aspirin');
-    const result = screen.getByRole('option', { name: 'Aspirin' });
+    await user.type(screen.getByRole('searchbox'), 'aspirin');
+    const result = screen.getByText('Aspirin');
     expect(result).toBeInTheDocument();
     await user.click(result);
     expect(noOpSetConcept).toHaveBeenCalledWith(expect.objectContaining({ uuid: 'abc-123', display: 'Aspirin' }));
@@ -79,18 +91,17 @@ describe('ConceptSearchBox', () => {
       isSearchingConcepts: false,
     });
     renderConceptSearchBox();
-    await user.type(screen.getByRole('combobox'), 'aspirin');
-    const option = screen.getByRole('option', { name: 'Aspirin' });
+    await user.type(screen.getByRole('searchbox'), 'aspirin');
+    const option = screen.getByText('Aspirin');
     option.focus();
     await user.keyboard('{Enter}');
     expect(noOpSetConcept).toHaveBeenCalledWith(expect.objectContaining({ uuid: 'abc-123', display: 'Aspirin' }));
   });
 
-  it('sets aria-expanded="false" and no aria-controls when no results are shown', () => {
+  it('does not set aria-controls when no results are shown', () => {
     mockUseConceptLookup.mockReturnValue({ concepts: [], error: undefined, isSearchingConcepts: false });
     renderConceptSearchBox();
-    const input = screen.getByRole('combobox');
-    expect(input).toHaveAttribute('aria-expanded', 'false');
+    const input = screen.getByRole('searchbox');
     expect(input).not.toHaveAttribute('aria-controls');
   });
 
@@ -98,9 +109,9 @@ describe('ConceptSearchBox', () => {
     const user = userEvent.setup();
     mockUseConceptLookup.mockReturnValue({ concepts: [], error: undefined, isSearchingConcepts: false });
     renderConceptSearchBox();
-    await user.type(screen.getByRole('combobox'), '   ');
+    await user.type(screen.getByRole('searchbox'), '   ');
     expect(screen.queryByText(/searching/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/no results found/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/no results to display/i)).not.toBeInTheDocument();
     expect(mockUseConceptLookup).toHaveBeenCalledWith('');
   });
 
@@ -112,12 +123,12 @@ describe('ConceptSearchBox', () => {
       isSearchingConcepts: false,
     });
     renderConceptSearchBox();
-    await user.type(screen.getByRole('combobox'), 'aspirin');
+    await user.type(screen.getByRole('searchbox'), 'aspirin');
     await user.click(screen.getByText('Aspirin'));
-    expect(screen.getByRole('combobox')).toHaveValue('');
+    expect(screen.getByRole('searchbox')).toHaveValue('');
   });
 
-  it('sets aria-controls and aria-expanded when results list is rendered', async () => {
+  it('sets aria-controls when results list is rendered', async () => {
     const user = userEvent.setup();
     mockUseConceptLookup.mockReturnValue({
       concepts: [{ uuid: 'abc-123', display: 'Aspirin', answers: [], mappings: [] }],
@@ -125,9 +136,8 @@ describe('ConceptSearchBox', () => {
       isSearchingConcepts: false,
     });
     renderConceptSearchBox();
-    await user.type(screen.getByRole('combobox'), 'aspirin');
-    const input = screen.getByRole('combobox');
+    await user.type(screen.getByRole('searchbox'), 'aspirin');
+    const input = screen.getByRole('searchbox');
     expect(input).toHaveAttribute('aria-controls');
-    expect(input).toHaveAttribute('aria-expanded', 'true');
   });
 });

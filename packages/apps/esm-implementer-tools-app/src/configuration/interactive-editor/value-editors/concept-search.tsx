@@ -9,6 +9,7 @@ import {
   StructuredListRow,
   StructuredListWrapper,
 } from '@carbon/react';
+import { getCoreTranslation, useDebounce } from '@openmrs/esm-framework';
 import type { Concept } from './concept-search.resource';
 import { useConceptLookup } from './concept-search.resource';
 import styles from './uuid-search.scss';
@@ -25,8 +26,8 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const [conceptToLookup, setConceptToLookup] = useState('');
   const [selectedConcept, setSelectedConcept] = useState<string>(value);
 
-  const trimmedQuery = conceptToLookup.trim();
-  const { concepts, error, isSearchingConcepts } = useConceptLookup(trimmedQuery);
+  const debouncedQuery = useDebounce(conceptToLookup.trim());
+  const { concepts, error, isSearchingConcepts } = useConceptLookup(debouncedQuery);
 
   const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConceptToLookup(event.target.value);
@@ -41,7 +42,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const inputId = `concept-search-input-${id}`;
   const listId = `concept-search-list-${id}`;
 
-  const showResultsList = !!(trimmedQuery && concepts && concepts.length > 0);
+  const showResultsList = !!(debouncedQuery && concepts && concepts.length > 0);
 
   // Log fetch errors in development only — excludes test and production envs
   useEffect(() => {
@@ -50,28 +51,35 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
     }
   }, [error]);
 
-  let content = null;
+  let content: React.ReactNode = null;
 
-  if (trimmedQuery) {
+  if (debouncedQuery) {
     if (isSearchingConcepts) {
       content = <InlineLoading className={styles.loader} description={`${t('searching', 'Searching')}...`} />;
     } else if (error) {
       content = (
         <InlineNotification
           kind="error"
-          title={t('error', 'Error')}
+          title={getCoreTranslation('error', 'Error')}
           subtitle={t('somethingWentWrong', 'Something went wrong')}
           lowContrast
         />
       );
     } else if (showResultsList) {
       content = (
-        <StructuredListWrapper selection role="listbox" aria-labelledby={inputId} id={listId} className={styles.listbox}>
+        <StructuredListWrapper
+          selection
+          role="listbox"
+          aria-label={t('searchResults', 'Search results')}
+          id={listId}
+          className={styles.listbox}
+        >
           {concepts.map((concept: Concept) => (
             <StructuredListRow
               key={concept.uuid}
               role="option"
-              aria-selected={false}
+              aria-label={concept.display}
+              aria-selected={concept.uuid === selectedConcept}
               tabIndex={0}
               onClick={() => handleConceptUuidChange(concept)}
               onKeyDown={(e: React.KeyboardEvent) => {
@@ -81,9 +89,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
                 }
               }}
             >
-              <StructuredListCell className={styles.smallListCell}>
-                {concept.display}
-              </StructuredListCell>
+              <StructuredListCell className={styles.smallListCell}>{concept.display}</StructuredListCell>
             </StructuredListRow>
           ))}
         </StructuredListWrapper>
@@ -92,7 +98,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
       content = (
         <InlineNotification
           kind="info"
-          title={t('noResultsFound', 'No results found')}
+          title={getCoreTranslation('noResultsToDisplay')}
           subtitle={t('noConceptsFoundText', 'No matching concepts found')}
           lowContrast
         />
@@ -112,10 +118,9 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           size="sm"
           autoComplete="off"
           autoCapitalize="off"
-          role="combobox"
-          aria-autocomplete="list"
+          role="searchbox"
           aria-label={t('searchConceptHelperText', 'Search concepts')}
-          {...(showResultsList ? { 'aria-controls': listId, 'aria-expanded': true } : { 'aria-expanded': false })}
+          {...(showResultsList ? { 'aria-controls': listId } : {})}
           placeholder={t('searchConceptHelperText', 'Search concepts')}
           value={conceptToLookup}
           onChange={handleSearchTermChange}
