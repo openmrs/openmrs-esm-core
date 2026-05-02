@@ -15,7 +15,7 @@ const ResetSent: React.FC = () => {
 
   const maskedAddress = usernameOrEmail.includes('@')
     ? (() => {
-        const atIndex = usernameOrEmail.indexOf('@');
+        const atIndex = usernameOrEmail.lastIndexOf('@');
         const local = usernameOrEmail.slice(0, atIndex);
         const domain = usernameOrEmail.slice(atIndex);
         return local.slice(0, 2) + '***' + domain;
