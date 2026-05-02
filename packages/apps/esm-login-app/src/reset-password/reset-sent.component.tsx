@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Button, Tile } from '@carbon/react';
 import Logo from '../logo.component';
 import Footer from '../footer.component';
-import styles from '../login/login.scss';
+import loginStyles from '../login/login.scss';
+import styles from './reset-password.scss';
 
 const ResetSent: React.FC = () => {
   const { t } = useTranslation();
@@ -12,27 +13,26 @@ const ResetSent: React.FC = () => {
   const location = useLocation() as any;
   const usernameOrEmail = location.state?.usernameOrEmail ?? '';
 
-  // Mask email if it looks like an email address
   const maskedAddress = usernameOrEmail.includes('@')
     ? (() => {
         const atIndex = usernameOrEmail.indexOf('@');
         const local = usernameOrEmail.slice(0, atIndex);
         const domain = usernameOrEmail.slice(atIndex);
         return local.slice(0, 2) + '***' + domain;
-        })()
+      })()
     : usernameOrEmail;
 
   return (
-    <div className={styles.container}>
-      <Tile className={styles.loginCard}>
-        <div className={styles.center}>
+    <div className={loginStyles.container}>
+      <Tile className={loginStyles.loginCard}>
+        <div className={loginStyles.center}>
           <Logo t={t} />
         </div>
 
-        <h1 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+        <h1 className={styles.heading}>
           {t('checkYourEmail', 'Check your email')}
         </h1>
-        <p style={{ marginBottom: '1rem', color: '#525252' }}>
+        <p className={styles.subheadingSmall}>
           {t(
             'resetEmailSentMessage',
             "If an account matches the details you entered, we've sent a password reset link to the email on file. The link expires in 30 minutes.",
@@ -40,27 +40,24 @@ const ResetSent: React.FC = () => {
         </p>
 
         {maskedAddress && (
-          <p
-            style={{
-              fontWeight: 600,
-              marginBottom: '1.5rem',
-              textTransform: 'uppercase',
-              fontSize: '0.875rem',
-            }}
-          >
+          <p className={styles.sentTo}>
             {t('sentTo', 'SENT TO')} {maskedAddress}
           </p>
         )}
 
         <Button
           kind="ghost"
-          style={{ marginBottom: '0.5rem', paddingLeft: 0 }}
+          className={styles.ghostButton}
           onClick={() => navigate('/login/reset')}
         >
           {t('resendEmail', 'Resend email')}
         </Button>
 
-        <Button kind="ghost" style={{ paddingLeft: 0 }} onClick={() => navigate('/login')}>
+        <Button
+          kind="ghost"
+          className={styles.ghostButtonNoPadding}
+          onClick={() => navigate('/login')}
+        >
           {t('backToLogin', 'Back to log in')}
         </Button>
       </Tile>

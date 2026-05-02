@@ -5,7 +5,8 @@ import { Button, InlineLoading, PasswordInput, Tile } from '@carbon/react';
 import { ArrowRightIcon } from '@openmrs/esm-framework';
 import Logo from '../logo.component';
 import Footer from '../footer.component';
-import styles from '../login/login.scss';
+import loginStyles from '../login/login.scss';
+import styles from './reset-password.scss';
 
 const ResetConfirm: React.FC = () => {
   const { t } = useTranslation();
@@ -37,16 +38,16 @@ const ResetConfirm: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Tile className={styles.loginCard}>
-        <div className={styles.center}>
+    <div className={loginStyles.container}>
+      <Tile className={loginStyles.loginCard}>
+        <div className={loginStyles.center}>
           <Logo t={t} />
         </div>
 
-        <h1 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+        <h1 className={styles.heading}>
           {t('setNewPassword', 'Set a new password')}
         </h1>
-        <p style={{ marginBottom: '1.5rem', color: '#525252' }}>
+        <p className={styles.subheading}>
           {t(
             'setNewPasswordInstructions',
             'Your new password must be at least 8 characters and include letters, numbers, and a symbol.',
@@ -54,7 +55,7 @@ const ResetConfirm: React.FC = () => {
         </p>
 
         <form onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
+          <div className={loginStyles.inputGroup}>
             <PasswordInput
               id="new-password"
               labelText={t('newPassword', 'New password')}
@@ -64,15 +65,11 @@ const ResetConfirm: React.FC = () => {
               autoFocus
             />
 
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0.5rem 0 1rem' }}>
+            <ul className={styles.passwordRules}>
               {rules.map((rule) => (
                 <li
                   key={rule.label}
-                  style={{
-                    color: rule.valid ? '#24a148' : '#525252',
-                    fontSize: '0.875rem',
-                    marginBottom: '0.25rem',
-                  }}
+                  className={rule.valid ? styles.ruleValid : styles.ruleInvalid}
                 >
                   {rule.valid ? '✓' : '○'} {rule.label}
                 </li>
@@ -89,11 +86,10 @@ const ResetConfirm: React.FC = () => {
 
             <Button
               type="submit"
-              className={styles.continueButton}
+              className={`${loginStyles.continueButton} ${styles.submitButton}`}
               renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
               iconDescription={t('resetPassword', 'Reset password')}
               disabled={!isValid || isSubmitting}
-              style={{ marginTop: '1rem' }}
             >
               {isSubmitting ? (
                 <InlineLoading description={t('submitting', 'Submitting') + '...'} />
