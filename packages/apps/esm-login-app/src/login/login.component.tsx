@@ -100,7 +100,7 @@ const Login: React.FC = () => {
         const authenticated = sessionStore?.session?.authenticated;
 
         if (authenticated) {
-          if (session.sessionLocation) {
+          if (session?.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
             if (location?.state?.referrer) {
               if (location.state.referrer.startsWith('/')) {
@@ -260,6 +260,13 @@ const Login: React.FC = () => {
                   </Button>
                 </>
               )}
+              <Button
+                kind="ghost"
+                onClick={() => navigate('/login/reset')}
+                className={styles.forgotPasswordLink}
+              >
+                {t('forgotPassword', 'Forgot password?')}
+              </Button>
             </div>
           </form>
         </Tile>
