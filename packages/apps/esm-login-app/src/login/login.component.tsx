@@ -100,7 +100,7 @@ const Login: React.FC = () => {
         const authenticated = sessionStore?.session?.authenticated;
 
         if (authenticated) {
-          if (session?.sessionLocation) {
+          if (session!.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
             if (location?.state?.referrer) {
               if (location.state.referrer.startsWith('/')) {
