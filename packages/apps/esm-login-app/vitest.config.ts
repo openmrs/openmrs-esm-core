@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -9,6 +10,7 @@ export default defineConfig({
     alias: {
       '@openmrs/esm-framework/src/internal': '@openmrs/esm-framework/mock',
       '@openmrs/esm-framework': '@openmrs/esm-framework/mock',
+      '@openmrs/esm-styleguide/src/internal': path.resolve(__dirname, '../../framework/esm-styleguide/src/internal.ts'),
     },
   },
 });

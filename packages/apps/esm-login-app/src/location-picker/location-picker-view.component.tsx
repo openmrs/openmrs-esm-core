@@ -24,7 +24,7 @@ import styles from './location-picker.scss';
 export function isSafeReturnUrl(url: string): boolean {
   try {
     const parsed = new URL(url, window.location.origin);
-    const spaBase = window.getOpenmrsSpaBase().replace(/\/$/, '');
+    const spaBase = window.getOpenmrsSpaBase().slice(0, -1);
     return (
       parsed.origin === window.location.origin &&
       (parsed.pathname === spaBase || parsed.pathname.startsWith(`${spaBase}/`))
