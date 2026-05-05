@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@carbon/react": "^1.92.1",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.18.1"
   },
   "peerDependencies": {
     "@carbon/react": "1.x",
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^4.1.2",
-    "ace-builds": "^1.43.3",
+    "ace-builds": "^1.43.6",
     "cross-env": "^10.1.0",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",
