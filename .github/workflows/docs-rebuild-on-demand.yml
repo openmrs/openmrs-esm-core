@@ -1,0 +1,73 @@
+name: Docs - Rebuild on demand
+
+# Manual escape hatch for when the auto path fails (transient API errors,
+# push to a fork without "Allow edits by maintainers" enabled, etc.). Run
+# from the Actions tab. Preflight gates still apply, so the PR must already
+# have an approving review from a write-access reviewer; bypass_skip_docs
+# is the only override exposed here.
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number
+        required: true
+        type: number
+      bypass_skip_docs:
+        description: Force a rebuild even if the PR has skip-docs applied
+        required: false
+        type: boolean
+        default: false
+
+permissions: {}
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    env:
+      REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ inputs.pr_number }}
+    outputs:
+      head_sha: ${{ steps.lookup.outputs.head_sha }}
+      head_ref: ${{ steps.lookup.outputs.head_ref }}
+      head_repo: ${{ steps.lookup.outputs.head_repo }}
+      base_sha: ${{ steps.lookup.outputs.base_sha }}
+    steps:
+      - name: Look up PR
+        id: lookup
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # workflow_dispatch has no PR payload, so resolve the PR's current
+          # head/base via the API and pass them through to the called build
+          # workflow as explicit inputs.
+          pr=$(gh api "repos/${REPO}/pulls/${PR_NUMBER}")
+          {
+            echo "head_sha=$(echo "${pr}" | jq -r '.head.sha')"
+            echo "head_ref=$(echo "${pr}" | jq -r '.head.ref')"
+            echo "head_repo=$(echo "${pr}" | jq -r '.head.repo.full_name')"
+            echo "base_sha=$(echo "${pr}" | jq -r '.base.sha')"
+          } >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: resolve
+    permissions:
+      contents: write
+      pull-requests: write
+    # Shared group with the auto callers — a manual rebuild cancels any
+    # in-flight auto build for the same PR.
+    concurrency:
+      group: docs-build-${{ inputs.pr_number }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/docs-build.yml
+    with:
+      pr_number: ${{ inputs.pr_number }}
+      head_sha: ${{ needs.resolve.outputs.head_sha }}
+      head_ref: ${{ needs.resolve.outputs.head_ref }}
+      head_repo: ${{ needs.resolve.outputs.head_repo }}
+      base_sha: ${{ needs.resolve.outputs.base_sha }}
+      bypass_skip_docs: ${{ inputs.bypass_skip_docs }}
+    secrets: inherit

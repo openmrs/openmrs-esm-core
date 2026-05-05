@@ -1,0 +1,104 @@
+name: Docs - Build on approval
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+permissions: {}
+
+jobs:
+  decide:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    env:
+      REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      REVIEWER: ${{ github.event.review.user.login }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    outputs:
+      proceed: ${{ steps.gate.outputs.proceed }}
+    steps:
+      - name: Verify reviewer has write access
+        id: reviewer
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # pull_request_review fires for any submitted review, including from
+        # users without write access (their "approval" doesn't count toward
+        # branch protection but still fires the event).
+        run: |
+          set -euo pipefail
+          permission=$(gh api "repos/${REPO}/collaborators/${REVIEWER}/permission" --jq '.permission' 2>/dev/null || echo "none")
+          echo "Reviewer ${REVIEWER} has permission: ${permission}"
+          if [[ "${permission}" != "write" && "${permission}" != "admin" ]]; then
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+
+      - name: Decide whether to build
+        if: steps.reviewer.outputs.ok == 'true'
+        id: gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          labels=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/labels" --jq '[.[].name] | join(",")')
+          echo "Existing labels: ${labels}"
+          if echo ",${labels}," | grep -q ",skip-docs,"; then
+            echo "skip-docs present; skipping"
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Only the bot's App token can post the Docs / Regenerated check run
+          # (checks:write is App-scoped), so finding it on the head SHA is a
+          # credible "docs are current" signal — skip the rebuild.
+          regenerated=$(gh api "repos/${REPO}/commits/${HEAD_SHA}/check-runs" \
+            --jq '[.check_runs[] | select(.name == "Docs / Regenerated" and .conclusion == "success")] | length')
+          if [ "${regenerated}" -gt 0 ]; then
+            echo "Head SHA already has a successful Docs / Regenerated check run; skipping"
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # `gh pr diff` truncates on large PRs; the paginated files API doesn't.
+          files=$(gh api "repos/${REPO}/pulls/${PR_NUMBER}/files" --paginate --jq '.[].filename')
+          relevant=false
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            # bash `case` patterns: `*` crosses `/`, so these match at any depth.
+            case "$f" in
+              *.test.ts|*.test.tsx) continue ;;
+              */setup-tests.ts) continue ;;
+            esac
+            case "$f" in
+              packages/framework/*/src/*.ts|packages/framework/*/src/*.tsx) relevant=true ;;
+              packages/framework/*/tsconfig.json) relevant=true ;;
+              packages/framework/esm-framework/tsconfig.typedoc.json) relevant=true ;;
+              packages/framework/esm-framework/typedoc.json) relevant=true ;;
+            esac
+          done <<< "$files"
+          echo "Relevant: ${relevant}"
+          echo "proceed=${relevant}" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: decide
+    if: needs.decide.outputs.proceed == 'true'
+    # workflow_call caps the called workflow's GITHUB_TOKEN at the calling
+    # job's permissions; this is the union of what the build workflow's
+    # individual jobs need.
+    permissions:
+      contents: write
+      pull-requests: write
+    # Concurrency is set on the caller because workflow_call ignores any
+    # concurrency block in the called workflow. Shared group with the
+    # push-driven workflow so a synchronize and an approval can't run two
+    # builds for the same PR at once.
+    concurrency:
+      group: docs-build-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/docs-build.yml
+    secrets: inherit

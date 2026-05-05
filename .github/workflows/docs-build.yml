@@ -1,0 +1,353 @@
+name: Docs - Build and commit
+
+# Reusable workflow invoked by the review-driven, push-driven, and manual
+# dispatch docs workflows. Concurrency is owned by the callers (group keyed
+# on PR number) since workflow_call ignores a called workflow's concurrency
+# block.
+#
+# Inputs are optional: callers driven by a pull_request* event leave them
+# unset, in which case the workflow reads from `github.event.pull_request`.
+# The manual-dispatch path looks up the PR via the API and passes the
+# values explicitly because workflow_dispatch has no PR payload.
+on:
+  workflow_call:
+    inputs:
+      pr_number:
+        description: PR number (defaults to github.event.pull_request.number)
+        required: false
+        type: number
+      head_sha:
+        required: false
+        type: string
+      head_ref:
+        required: false
+        type: string
+      head_repo:
+        required: false
+        type: string
+      base_sha:
+        required: false
+        type: string
+      bypass_skip_docs:
+        description: When true, run even if the PR has skip-docs applied
+        required: false
+        type: boolean
+        default: false
+
+permissions: {}
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ inputs.pr_number || github.event.pull_request.number }}
+      HEAD_REPO: ${{ inputs.head_repo || github.event.pull_request.head.repo.full_name }}
+      HEAD_REF: ${{ inputs.head_ref || github.event.pull_request.head.ref }}
+      HEAD_SHA: ${{ inputs.head_sha || github.event.pull_request.head.sha }}
+      BASE_SHA: ${{ inputs.base_sha || github.event.pull_request.base.sha }}
+      BYPASS_SKIP_DOCS: ${{ inputs.bypass_skip_docs }}
+    outputs:
+      proceed: ${{ steps.gate.outputs.proceed }}
+    steps:
+      - name: Gate
+        id: gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # HEAD_REF is interpolated into a refspec on the push line in the
+          # commit job; reject anything outside a conservative subset before
+          # any privileged step touches it.
+          if ! [[ "${HEAD_REF}" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+            echo "Refusing unsafe head ref: ${HEAD_REF}"
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          labels=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/labels" --jq '[.[].name] | join(",")')
+          if echo ",${labels}," | grep -q ",skip-docs,"; then
+            if [ "${BYPASS_SKIP_DOCS}" = "true" ]; then
+              echo "skip-docs label present but bypass requested; proceeding"
+            else
+              echo "skip-docs label set; aborting"
+              echo "proceed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          is_fork=false
+          if [[ "${HEAD_REPO}" != "${REPO}" ]]; then
+            is_fork=true
+          fi
+
+          # Each caller implements its own approval gate; re-verify here so a
+          # future caller that forgets to gate (or a regression in caller
+          # logic) can't smuggle PR code execution through this workflow.
+          approved_by_writer=false
+          for u in $(gh api "repos/${REPO}/pulls/${PR_NUMBER}/reviews" --jq '[.[] | select(.state == "APPROVED") | .user.login] | unique | .[]'); do
+            permission=$(gh api "repos/${REPO}/collaborators/${u}/permission" --jq '.permission' 2>/dev/null || echo "none")
+            if [[ "${permission}" == "write" || "${permission}" == "admin" ]]; then
+              approved_by_writer=true
+              break
+            fi
+          done
+          if [[ "${approved_by_writer}" != "true" ]]; then
+            echo "No write-access approval present; aborting"
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Anything that influences what `yarn turbo run document` actually
+          # executes belongs here; modifying these files in a PR head could
+          # otherwise hijack the build job's typedoc plugin code path.
+          ATTACK_FILES=(
+            "packages/framework/esm-framework/typedoc.json"
+            "packages/framework/esm-framework/tsconfig.typedoc.json"
+            "tools/document.sh"
+            "yarn.lock"
+            "package.json"
+            "turbo.json"
+            ".yarnrc.yml"
+          )
+          touched_attack=false
+          attack_match=""
+          # Resolve the diff at the SHAs frozen in the event payload, not
+          # via pulls/N/files (which returns the *current* PR diff). A
+          # contributor could otherwise push attack-listed files at SHA A,
+          # then revert them at SHA B before this gate runs — the API would
+          # show the clean SHA-B diff while the build job still checks out
+          # SHA A and runs the attacker-influenced code.
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            for a in "${ATTACK_FILES[@]}"; do
+              if [[ "$f" == "$a" ]]; then
+                touched_attack=true
+                attack_match="$f"
+                break 2
+              fi
+            done
+            case "$f" in
+              packages/tooling/typedoc-plugin-file-categories/*) touched_attack=true; attack_match="$f"; break ;;
+              packages/framework/*/package.json) touched_attack=true; attack_match="$f"; break ;;
+              packages/framework/*/tsconfig.json|packages/framework/*/tsconfig.build.json) touched_attack=true; attack_match="$f"; break ;;
+              .yarn/plugins/*|.yarn/releases/*|.yarn/versions/*) touched_attack=true; attack_match="$f"; break ;;
+            esac
+            # Callers run on pull_request_target with their base-branch
+            # workflow file (which transitively pulls this one via uses:),
+            # so a fork's modifications to docs workflow files never actually
+            # execute. Block here so the change still requires maintainer
+            # audit via skip-docs rather than passing auto-build silently.
+            if [[ "${is_fork}" == "true" ]]; then
+              case "$f" in
+                .github/workflows/docs-*.yml) touched_attack=true; attack_match="$f"; break ;;
+              esac
+            fi
+          done < <(gh api "repos/${REPO}/compare/${BASE_SHA}...${HEAD_SHA}" --paginate --jq '.files[]?.filename')
+
+          if [[ "${touched_attack}" == "true" ]]; then
+            echo "PR modifies docs-build configuration (${attack_match}); refusing auto-build"
+            gh pr comment "${PR_NUMBER}" --repo "${REPO}" --body "Automatic documentation regeneration is disabled for this PR because it touches \`${attack_match}\`, which is part of the docs build configuration. A maintainer must apply the \`skip-docs\` label and regenerate docs manually after auditing the changes."
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "proceed=true" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: preflight
+    if: needs.preflight.outputs.proceed == 'true'
+    runs-on: ubuntu-latest
+    # No tokens, no secrets — this is the only job that executes PR code
+    # (typedoc plugins, build scripts).
+    permissions: {}
+    env:
+      # Block lifecycle scripts on PR-controlled deps so `yarn install`
+      # can't side-execute arbitrary code from a malicious package.json.
+      YARN_ENABLE_SCRIPTS: "0"
+    steps:
+      - name: Checkout PR head (sandboxed)
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ inputs.head_sha || github.event.pull_request.head.sha }}
+          repository: ${{ inputs.head_repo || github.event.pull_request.head.repo.full_name }}
+          # Belt-and-suspenders: this job has no tokens to begin with, but
+          # if a future change grants one, don't leave it in .git/config
+          # where PR-controlled paths could exfiltrate it.
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build documentation
+        run: yarn turbo run document
+
+      - name: Validate output
+        # typedoc plugins run as PR-controlled code and could write symlinks
+        # into the docs tree — they'd then be carried by the artifact and
+        # extracted in the privileged commit job. Reject them at the source.
+        run: |
+          set -euo pipefail
+          docs_dir="packages/framework/esm-framework/docs"
+          if [ ! -d "$docs_dir" ]; then
+            echo "Expected docs dir not found"
+            exit 1
+          fi
+          if find "$docs_dir" -type l | grep -q .; then
+            echo "Symlinks found in docs output"
+            exit 1
+          fi
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: docs
+          path: packages/framework/esm-framework/docs/
+          retention-days: 1
+          include-hidden-files: false
+
+  commit:
+    needs: [preflight, build]
+    # Explicit preflight gate (in addition to `needs:`) so this privileged
+    # job can never run if preflight didn't pass, even if `build`'s `if:`
+    # is changed in a future refactor.
+    if: needs.preflight.outputs.proceed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ inputs.pr_number || github.event.pull_request.number }}
+      HEAD_REF: ${{ inputs.head_ref || github.event.pull_request.head.ref }}
+      HEAD_REPO: ${{ inputs.head_repo || github.event.pull_request.head.repo.full_name }}
+    outputs:
+      pushed_sha: ${{ steps.commit.outputs.pushed_sha }}
+    steps:
+      - name: Checkout the SHA the build ran against
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ inputs.head_sha || github.event.pull_request.head.sha }}
+          repository: ${{ inputs.head_repo || github.event.pull_request.head.repo.full_name }}
+          persist-credentials: false
+
+      - name: Download docs artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: docs
+          path: /tmp/docs-artifact
+
+      - name: Validate artifact contents
+        run: |
+          set -euo pipefail
+          # Artifact tarball is produced by PR-controlled typedoc plugins.
+          # Reject anything that could escape the docs tree on extraction.
+          if find /tmp/docs-artifact -type l | grep -q .; then
+            echo "Symlinks present in artifact"
+            exit 1
+          fi
+          if find /tmp/docs-artifact -mindepth 1 ! -type f ! -type d | grep -q .; then
+            echo "Non-regular files present in artifact"
+            exit 1
+          fi
+          while IFS= read -r f; do
+            relative="${f#/tmp/docs-artifact/}"
+            case "$relative" in
+              */../*|../*|*/..) echo "Path traversal in artifact: $relative"; exit 1 ;;
+            esac
+          done < <(find /tmp/docs-artifact -type f)
+
+      - name: Replace docs tree
+        run: |
+          set -euo pipefail
+          docs_dir="packages/framework/esm-framework/docs"
+          rm -rf "$docs_dir"
+          mkdir -p "$docs_dir"
+          cp -a /tmp/docs-artifact/. "$docs_dir/"
+
+      - name: Commit and push
+        id: commit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "openmrs-bot"
+          git config user.email "infrastructure@openmrs.org"
+          git add packages/framework/esm-framework/docs/
+          if git diff --cached --quiet; then
+            echo "No doc changes; treating as success"
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
+            echo "pushed_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "(chore) Add docs"
+          # Push from detached HEAD to the specific branch. Non-FF fails
+          # (head moved during build); never force-push. Token lives only
+          # on this command line, never persisted to .git/config, so the
+          # working tree never holds a write-scoped credential reachable
+          # from PR-controlled paths.
+          push_url="https://x-access-token:${GH_TOKEN}@github.com/${HEAD_REPO}.git"
+          if git push "${push_url}" "HEAD:refs/heads/${HEAD_REF}"; then
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
+            # Pin to local HEAD (= the SHA we just pushed). A fresh
+            # `current head` API lookup would race against contributor
+            # pushes and could attest a SHA whose docs we didn't build.
+            echo "pushed_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          else
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+
+      - name: Comment on push failure
+        if: failure() && steps.commit.outputs.pushed == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment "${PR_NUMBER}" --repo "${REPO}" --body "Documentation was regenerated successfully but pushing the docs commit to this branch failed. Common causes:
+
+          - The branch advanced after the build started — push another commit to retrigger.
+          - The PR is from a fork without **Allow edits by maintainers** enabled (please enable it).
+
+          If neither applies, apply the \`skip-docs\` label and push the docs commit yourself."
+
+  publish-state:
+    needs: [preflight, commit]
+    # Skip when commit didn't actually publish (e.g., non-FF push fail).
+    # Posting a check run for a SHA we didn't push would falsely claim
+    # docs are current for that SHA.
+    if: needs.preflight.outputs.proceed == 'true' && needs.commit.outputs.pushed_sha != ''
+    runs-on: ubuntu-latest
+    # API-only — no checkout, no PR working tree on disk. Keeps the App
+    # token isolated from anything PR-controlled.
+    permissions: {}
+    env:
+      REPO: ${{ github.repository }}
+      PUSHED_SHA: ${{ needs.commit.outputs.pushed_sha }}
+    steps:
+      - name: Mint app token
+        id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          client-id: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
+
+      - name: Post check run
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          gh api -X POST "repos/${REPO}/check-runs" \
+            -f name='Docs / Regenerated' \
+            -f head_sha="${PUSHED_SHA}" \
+            -f status=completed \
+            -f conclusion=success \
+            -f 'output[title]=Documentation regenerated' \
+            -f "output[summary]=Generated docs reflect the PR head at \`${PUSHED_SHA}\`."

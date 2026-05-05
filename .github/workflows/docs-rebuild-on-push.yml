@@ -1,0 +1,93 @@
+name: Docs - Rebuild on push
+
+on:
+  pull_request_target:
+    types: [synchronize]
+
+permissions: {}
+
+jobs:
+  decide:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    env:
+      REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    outputs:
+      rebuild: ${{ steps.gate.outputs.rebuild }}
+    steps:
+      - name: Decide whether to rebuild
+        id: gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          labels=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/labels" --jq '[.[].name] | join(",")')
+          if echo ",${labels}," | grep -q ",skip-docs,"; then
+            echo "skip-docs set; nothing to do"
+            echo "rebuild=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # The check run is bound to the SHA, so a new commit (= new SHA)
+          # is automatically uncovered. Its presence on the current head
+          # answers "are docs current?".
+          regenerated=$(gh api "repos/${REPO}/commits/${HEAD_SHA}/check-runs" \
+            --jq '[.check_runs[] | select(.name == "Docs / Regenerated" and .conclusion == "success")] | length')
+          if [ "${regenerated}" -gt 0 ]; then
+            echo "Head SHA already has a successful Docs / Regenerated check run; nothing to do"
+            echo "rebuild=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Synchronize-driven rebuilds only kick in once at least one
+          # write-access reviewer has approved; pre-approval, the
+          # review-driven workflow handles it.
+          approved_by_writer=false
+          for u in $(gh api "repos/${REPO}/pulls/${PR_NUMBER}/reviews" --jq '[.[] | select(.state == "APPROVED") | .user.login] | unique | .[]'); do
+            permission=$(gh api "repos/${REPO}/collaborators/${u}/permission" --jq '.permission' 2>/dev/null || echo "none")
+            if [[ "${permission}" == "write" || "${permission}" == "admin" ]]; then
+              approved_by_writer=true
+              break
+            fi
+          done
+          if [[ "${approved_by_writer}" != "true" ]]; then
+            echo "PR has no approving review from a write-access reviewer; nothing to do"
+            echo "rebuild=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Cumulative PR diff. `gh pr diff` truncates on large PRs; the
+          # paginated files API doesn't.
+          files=$(gh api "repos/${REPO}/pulls/${PR_NUMBER}/files" --paginate --jq '.[].filename')
+          relevant=false
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            case "$f" in
+              *.test.ts|*.test.tsx) continue ;;
+              */setup-tests.ts) continue ;;
+            esac
+            case "$f" in
+              packages/framework/*/src/*.ts|packages/framework/*/src/*.tsx) relevant=true ;;
+              packages/framework/*/tsconfig.json) relevant=true ;;
+              packages/framework/esm-framework/tsconfig.typedoc.json) relevant=true ;;
+              packages/framework/esm-framework/typedoc.json) relevant=true ;;
+            esac
+          done <<< "$files"
+          echo "Cumulative diff relevant: ${relevant}"
+          echo "rebuild=${relevant}" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: decide
+    if: needs.decide.outputs.rebuild == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+    concurrency:
+      group: docs-build-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/docs-build.yml
+    secrets: inherit
