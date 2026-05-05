@@ -33,6 +33,11 @@ on:
         required: false
         type: boolean
         default: false
+    secrets:
+      OMRS_PR_BOT_CLIENT_ID:
+        required: true
+      OMRS_PR_BOT_PRIVATE_KEY:
+        required: true
 
 permissions: {}
 
@@ -41,6 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      issues: read
       pull-requests: write
     env:
       REPO: ${{ github.repository }}
@@ -161,9 +167,12 @@ jobs:
     needs: preflight
     if: needs.preflight.outputs.proceed == 'true'
     runs-on: ubuntu-latest
-    # No tokens, no secrets — this is the only job that executes PR code
-    # (typedoc plugins, build scripts).
-    permissions: {}
+    # contents:read is the minimum actions/checkout needs to authenticate;
+    # everything else stays denied. This is the only job that executes PR
+    # code (typedoc plugins, build scripts), and `persist-credentials: false`
+    # below keeps the token from reaching the working tree.
+    permissions:
+      contents: read
     env:
       # Block lifecycle scripts on PR-controlled deps so `yarn install`
       # can't side-execute arbitrary code from a malicious package.json.

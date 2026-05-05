@@ -30,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      checks: read
+      issues: read
       pull-requests: read
     env:
       REPO: ${{ github.repository }}

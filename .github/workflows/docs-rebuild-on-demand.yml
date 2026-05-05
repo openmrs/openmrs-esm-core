@@ -56,6 +56,7 @@ jobs:
     needs: resolve
     permissions:
       contents: write
+      issues: read
       pull-requests: write
     # Shared group with the auto callers — a manual rebuild cancels any
     # in-flight auto build for the same PR.
@@ -70,4 +71,6 @@ jobs:
       head_repo: ${{ needs.resolve.outputs.head_repo }}
       base_sha: ${{ needs.resolve.outputs.base_sha }}
       bypass_skip_docs: ${{ inputs.bypass_skip_docs }}
-    secrets: inherit
+    secrets:
+      OMRS_PR_BOT_CLIENT_ID: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
+      OMRS_PR_BOT_PRIVATE_KEY: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}

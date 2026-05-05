@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      checks: read
+      issues: read
       pull-requests: read
     env:
       REPO: ${{ github.repository }}
@@ -85,9 +87,12 @@ jobs:
     if: needs.decide.outputs.rebuild == 'true'
     permissions:
       contents: write
+      issues: read
       pull-requests: write
     concurrency:
       group: docs-build-${{ github.event.pull_request.number }}
       cancel-in-progress: true
     uses: ./.github/workflows/docs-build.yml
-    secrets: inherit
+    secrets:
+      OMRS_PR_BOT_CLIENT_ID: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
+      OMRS_PR_BOT_PRIVATE_KEY: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}

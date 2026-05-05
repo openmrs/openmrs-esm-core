@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      checks: read
+      issues: read
       pull-requests: read
     env:
       REPO: ${{ github.repository }}
@@ -92,6 +94,7 @@ jobs:
     # individual jobs need.
     permissions:
       contents: write
+      issues: read
       pull-requests: write
     # Concurrency is set on the caller because workflow_call ignores any
     # concurrency block in the called workflow. Shared group with the
@@ -101,4 +104,6 @@ jobs:
       group: docs-build-${{ github.event.pull_request.number }}
       cancel-in-progress: true
     uses: ./.github/workflows/docs-build.yml
-    secrets: inherit
+    secrets:
+      OMRS_PR_BOT_CLIENT_ID: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
+      OMRS_PR_BOT_PRIVATE_KEY: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
