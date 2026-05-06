@@ -18,15 +18,18 @@ export default function HelpMenu() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (
-        helpMenuButtonRef.current &&
-        !helpMenuButtonRef.current.contains(event.target instanceof Node ? event.target : null) &&
-        popupRef.current &&
-        !popupRef.current.contains(event.target instanceof Node ? event.target : null)
-      ) {
-        setHelpMenuOpen(false);
-      }
-    };
+    const target = event.target;
+
+    if (
+      target instanceof Node &&
+      helpMenuButtonRef.current &&
+      popupRef.current &&
+      !helpMenuButtonRef.current.contains(target) &&
+      !popupRef.current.contains(target)
+    ) {
+      setHelpMenuOpen(false);
+    }
+  };
 
     window.addEventListener(`mousedown`, handleClickOutside);
     window.addEventListener(`touchstart`, handleClickOutside);
