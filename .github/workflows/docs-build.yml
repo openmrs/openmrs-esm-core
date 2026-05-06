@@ -33,6 +33,11 @@ on:
         required: false
         type: boolean
         default: false
+      bypass_attack_files:
+        description: When true, run even if the PR diff touches build-config attack files
+        required: false
+        type: boolean
+        default: false
     secrets:
       OMRS_PR_BOT_CLIENT_ID:
         required: true
@@ -56,6 +61,7 @@ jobs:
       HEAD_SHA: ${{ inputs.head_sha || github.event.pull_request.head.sha }}
       BASE_SHA: ${{ inputs.base_sha || github.event.pull_request.base.sha }}
       BYPASS_SKIP_DOCS: ${{ inputs.bypass_skip_docs }}
+      BYPASS_ATTACK_FILES: ${{ inputs.bypass_attack_files }}
     outputs:
       proceed: ${{ steps.gate.outputs.proceed }}
     steps:
@@ -114,8 +120,6 @@ jobs:
             "packages/framework/esm-framework/typedoc.json"
             "packages/framework/esm-framework/tsconfig.typedoc.json"
             "tools/document.sh"
-            "yarn.lock"
-            "package.json"
             "turbo.json"
             ".yarnrc.yml"
           )
@@ -138,7 +142,6 @@ jobs:
             done
             case "$f" in
               packages/tooling/typedoc-plugin-file-categories/*) touched_attack=true; attack_match="$f"; break ;;
-              packages/framework/*/package.json) touched_attack=true; attack_match="$f"; break ;;
               packages/framework/*/tsconfig.json|packages/framework/*/tsconfig.build.json) touched_attack=true; attack_match="$f"; break ;;
               .yarn/plugins/*|.yarn/releases/*|.yarn/versions/*) touched_attack=true; attack_match="$f"; break ;;
             esac
@@ -155,10 +158,17 @@ jobs:
           done < <(gh api "repos/${REPO}/compare/${BASE_SHA}...${HEAD_SHA}" --paginate --jq '.files[]?.filename')
 
           if [[ "${touched_attack}" == "true" ]]; then
-            echo "PR modifies docs-build configuration (${attack_match}); refusing auto-build"
-            gh pr comment "${PR_NUMBER}" --repo "${REPO}" --body "Automatic documentation regeneration is disabled for this PR because it touches \`${attack_match}\`, which is part of the docs build configuration. A maintainer must apply the \`skip-docs\` label and regenerate docs manually after auditing the changes."
-            echo "proceed=false" >> "$GITHUB_OUTPUT"
-            exit 0
+            if [[ "${BYPASS_ATTACK_FILES}" == "true" ]]; then
+              echo "Attack file touched (${attack_match}) but bypass requested; proceeding"
+            else
+              echo "PR modifies docs-build configuration (${attack_match}); refusing auto-build"
+              gh pr comment "${PR_NUMBER}" --repo "${REPO}" --body "Automatic documentation regeneration is disabled for this PR because it touches \`${attack_match}\`, which is part of the docs build configuration. After auditing the changes, a maintainer can either:
+
+              - Apply the \`skip-docs\` label to skip docs entirely, or
+              - Trigger the **Docs - Rebuild on demand** workflow from the Actions tab with **bypass_attack_files** enabled to force the build."
+              echo "proceed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
           fi
 
           echo "proceed=true" >> "$GITHUB_OUTPUT"

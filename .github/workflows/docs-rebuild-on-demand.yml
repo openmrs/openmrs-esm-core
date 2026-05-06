@@ -17,6 +17,11 @@ on:
         required: false
         type: boolean
         default: false
+      bypass_attack_files:
+        description: Force a rebuild even if the PR diff touches build-config attack files (audit changes first)
+        required: false
+        type: boolean
+        default: false
 
 permissions: {}
 
@@ -71,6 +76,7 @@ jobs:
       head_repo: ${{ needs.resolve.outputs.head_repo }}
       base_sha: ${{ needs.resolve.outputs.base_sha }}
       bypass_skip_docs: ${{ inputs.bypass_skip_docs }}
+      bypass_attack_files: ${{ inputs.bypass_attack_files }}
     secrets:
       OMRS_PR_BOT_CLIENT_ID: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
       OMRS_PR_BOT_PRIVATE_KEY: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
