@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import * as reactRouter from 'react-router-dom';
 import {
   getSessionStore,
   refetchCurrentUser,
@@ -295,5 +296,38 @@ describe('Login', () => {
     const usernameInput = screen.getByRole('textbox', { name: /username/i });
 
     expect(usernameInput).toHaveFocus();
+  });
+  it('uses referrer for redirect after login', async () => {
+    mockLogin.mockResolvedValue({
+      session: {
+        authenticated: true,
+        sessionLocation: { uuid: '111', display: 'Earth' },
+      },
+    } as unknown as SessionStore);
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: '/login',
+        routes: [
+          {
+            path: '/login',
+            element: <Login />,
+            state: { referrer: '/patient/123' },
+          },
+        ],
+      },
+    );
+
+    const user = userEvent.setup();
+
+    await user.type(screen.getByRole('textbox', { name: /username/i }), 'yoshi');
+    await user.click(screen.getByRole('button', { name: /continue/i }));
+
+    await screen.findByLabelText(/^password$/i);
+
+    await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
+    await user.click(screen.getByRole('button', { name: /log in/i }));
   });
 });
