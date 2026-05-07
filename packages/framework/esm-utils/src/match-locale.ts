@@ -9,7 +9,7 @@ function canonicalize(tag: string): string | undefined {
     return undefined;
   }
 
-  const normalized = tag.replace('_', '-');
+  const normalized = tag.replaceAll('_', '-');
 
   try {
     return new Intl.Locale(normalized).toString();

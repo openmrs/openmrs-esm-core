@@ -32,54 +32,54 @@ describe('matchLocale', () => {
     });
 
     it('returns the original casing from `available`, not the canonical form', () => {
-      expect(matchLocale('en-us', ['en-US'], undefined)).toBe('en-US');
-      expect(matchLocale('EN-US', ['en-us'], undefined)).toBe('en-us');
+      expect(matchLocale('en-us', ['en-US'])).toBe('en-US');
+      expect(matchLocale('EN-US', ['en-us'])).toBe('en-us');
     });
 
     it('matches the first occurrence when an available locale appears multiple times', () => {
-      expect(matchLocale('en', ['en', 'en-US', 'en'], undefined)).toBe('en');
+      expect(matchLocale('en', ['en', 'en-US', 'en'])).toBe('en');
     });
   });
 
   describe('canonicalization', () => {
     it('treats underscore-separated tags as equivalent to hyphen-separated tags', () => {
-      expect(matchLocale('en_GB', ['en-GB'], undefined)).toBe('en-GB');
-      expect(matchLocale('en-GB', ['en_GB'], undefined)).toBe('en_GB');
+      expect(matchLocale('en_GB', ['en-GB'])).toBe('en-GB');
+      expect(matchLocale('en-GB', ['en_GB'])).toBe('en_GB');
     });
 
     it('is case-insensitive across language, script, and region subtags', () => {
-      expect(matchLocale('ZH-hant-tw', ['zh-Hant'], undefined)).toBe('zh-Hant');
+      expect(matchLocale('ZH-hant-tw', ['zh-Hant'])).toBe('zh-Hant');
     });
 
     it('canonicalizes script casing for matching (Latn vs latn)', () => {
-      expect(matchLocale('sr-latn-rs', ['sr-Latn'], undefined)).toBe('sr-Latn');
+      expect(matchLocale('sr-latn-rs', ['sr-Latn'])).toBe('sr-Latn');
     });
   });
 
   describe('truncation', () => {
     it('strips a region subtag to match a language-only available locale', () => {
-      expect(matchLocale('en-CA', ['en'], undefined)).toBe('en');
+      expect(matchLocale('en-CA', ['en'])).toBe('en');
     });
 
     it('strips a region from a script+region tag, leaving the script', () => {
-      expect(matchLocale('zh-Hant-TW', ['zh-Hant'], undefined)).toBe('zh-Hant');
+      expect(matchLocale('zh-Hant-TW', ['zh-Hant'])).toBe('zh-Hant');
     });
 
     it('strips a single-letter extension singleton along with its trailing subtag', () => {
       // `en-US-x-private` → `en-US-x` → strip singleton → `en-US` → `en`.
-      expect(matchLocale('en-US-x-private', ['en'], undefined)).toBe('en');
+      expect(matchLocale('en-US-x-private', ['en'])).toBe('en');
     });
   });
 
   describe('prefix expansion', () => {
     it('expands a language-only request to a regional variant', () => {
-      expect(matchLocale('en', ['en-US', 'en-GB'], undefined)).toBe('en-US');
+      expect(matchLocale('en', ['en-US', 'en-GB'])).toBe('en-US');
     });
 
     it('falls through truncation steps before expanding', () => {
       // `fr-BE` → no exact, no `fr-BE-…` prefix → truncate to `fr` →
       // no exact `fr` → expand to `fr-FR`.
-      expect(matchLocale('fr-BE', ['fr-FR'], undefined)).toBe('fr-FR');
+      expect(matchLocale('fr-BE', ['fr-FR'])).toBe('fr-FR');
     });
 
     it('does not match across language families', () => {
@@ -111,39 +111,39 @@ describe('matchLocale', () => {
 
   describe('ht → fr-HT fallback', () => {
     it('falls back to fr-HT when `ht` is requested and no Haitian Creole locale is available', () => {
-      expect(matchLocale('ht', ['fr-HT', 'en-US'], undefined)).toBe('fr-HT');
+      expect(matchLocale('ht', ['fr-HT', 'en-US'])).toBe('fr-HT');
     });
 
     it('falls back from `ht-HT` to `fr-HT`', () => {
-      expect(matchLocale('ht-HT', ['fr-HT', 'en-US'], undefined)).toBe('fr-HT');
+      expect(matchLocale('ht-HT', ['fr-HT', 'en-US'])).toBe('fr-HT');
     });
 
     it('falls back from `ht-Latn-HT` to `fr-HT`', () => {
-      expect(matchLocale('ht-Latn-HT', ['fr-HT', 'en-US'], undefined)).toBe('fr-HT');
+      expect(matchLocale('ht-Latn-HT', ['fr-HT', 'en-US'])).toBe('fr-HT');
     });
 
     it('continues truncating to plain `fr` when `fr-HT` is not available', () => {
-      expect(matchLocale('ht', ['fr', 'en-US'], undefined)).toBe('fr');
+      expect(matchLocale('ht', ['fr', 'en-US'])).toBe('fr');
     });
 
     it('expands the post-remap `fr-HT` candidate to any available `fr-*` variant', () => {
       // Truncate `ht` → remap to `fr-HT` → no exact `fr-HT` and no `fr-HT-…` →
       // truncate to `fr` → no exact `fr`, but prefix `fr-` matches `fr-FR`.
-      expect(matchLocale('ht', ['fr-FR'], undefined)).toBe('fr-FR');
+      expect(matchLocale('ht', ['fr-FR'])).toBe('fr-FR');
     });
 
     it('prefers an available `ht` locale over the French fallback', () => {
-      expect(matchLocale('ht', ['ht', 'fr-HT'], undefined)).toBe('ht');
+      expect(matchLocale('ht', ['ht', 'fr-HT'])).toBe('ht');
     });
 
     it('prefers an available `ht-HT` locale over the French fallback', () => {
-      expect(matchLocale('ht-HT', ['ht-HT', 'fr-HT'], undefined)).toBe('ht-HT');
+      expect(matchLocale('ht-HT', ['ht-HT', 'fr-HT'])).toBe('ht-HT');
     });
 
     it('uses the `ht` prefix expansion before falling back to French', () => {
       // Requested `ht-Latn-HT` truncates to `ht`; prefix expansion finds `ht-HT`
       // before the loop ever sees the `ht` → `fr-HT` remap.
-      expect(matchLocale('ht-Latn-HT', ['ht-HT', 'fr-HT'], undefined)).toBe('ht-HT');
+      expect(matchLocale('ht-Latn-HT', ['ht-HT', 'fr-HT'])).toBe('ht-HT');
     });
 
     it('returns the fallback when neither Haitian Creole nor French is available', () => {
@@ -163,7 +163,7 @@ describe('matchLocale', () => {
     });
 
     it('skips invalid entries in `available` and warns about each', () => {
-      expect(matchLocale('en-US', ['not-a-locale!', 'en-US'], undefined)).toBe('en-US');
+      expect(matchLocale('en-US', ['not-a-locale!', 'en-US'])).toBe('en-US');
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('invalid available locale tag'));
     });
 
@@ -173,7 +173,7 @@ describe('matchLocale', () => {
     });
 
     it('does not warn when all inputs are valid', () => {
-      matchLocale('en-US', ['en-US'], undefined);
+      matchLocale('en-US', ['en-US']);
       expect(warnSpy).not.toHaveBeenCalled();
     });
   });
