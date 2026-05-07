@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, InlineLoading, InlineNotification, PasswordInput, TextInput, Tile } from '@carbon/react';
 import {
   ArrowRightIcon,
   getCoreTranslation,
+  interpolateUrl,
   refetchCurrentUser,
   navigate as openmrsNavigate,
   useConfig,
@@ -21,7 +22,13 @@ export interface LoginReferrer {
 }
 
 const Login: React.FC = () => {
-  const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
+  const {
+    announcements = [],
+    background = { image: '', color: '' },
+    showPasswordOnSeparateScreen,
+    provider: loginProvider,
+    links: loginLinks,
+  } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -73,6 +80,20 @@ const Login: React.FC = () => {
 
   const changeUsername = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value), []);
   const changePassword = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value), []);
+
+  const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
+    if (background.image) {
+      return {
+        backgroundImage: `url(${interpolateUrl(background.image)})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      };
+    }
+    if (background.color) {
+      return { backgroundColor: background.color };
+    }
+    return undefined;
+  }, [background]);
 
   const handleSubmit = useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -154,7 +175,21 @@ const Login: React.FC = () => {
 
   if (!loginProvider || loginProvider.type === 'basic') {
     return (
-      <div className={styles.container}>
+      <div className={styles.container} style={containerStyle} data-testid="login-container">
+        {announcements.length > 0 && (
+          <div className={styles.announcements}>
+            {announcements.map((announcement, i) => (
+              <InlineNotification
+                key={i}
+                kind={announcement.kind}
+                title={announcement.title ? t(announcement.title) : undefined}
+                subtitle={t(announcement.text)}
+                lowContrast
+                hideCloseButton
+              />
+            ))}
+          </div>
+        )}
         <Tile className={styles.loginCard}>
           {errorMessage && (
             <div className={styles.errorMessage}>
