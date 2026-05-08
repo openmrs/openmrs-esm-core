@@ -182,7 +182,7 @@ const Login: React.FC = () => {
               <InlineNotification
                 key={i}
                 kind={announcement.kind}
-                title={announcement.title ? t(announcement.title) : undefined}
+                title={announcement.title ? t(announcement.title) : ''}
                 subtitle={t(announcement.text)}
                 lowContrast
                 hideCloseButton
