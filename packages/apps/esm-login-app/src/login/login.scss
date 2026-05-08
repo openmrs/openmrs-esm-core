@@ -148,3 +148,11 @@
   position: absolute;
   pointer-events: none;
 }
+
+.announcements {
+  width: 23rem;
+  margin-bottom: layout.$spacing-07;
+  display: flex;
+  flex-direction: column;
+  gap: layout.$spacing-03;
+}
