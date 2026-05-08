@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import classnames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, InlineLoading, InlineNotification, PasswordInput, TextInput, Tile } from '@carbon/react';
@@ -81,16 +82,17 @@ const Login: React.FC = () => {
   const changeUsername = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value), []);
   const changePassword = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value), []);
 
+  const containerClassName = classnames(styles.container, {
+    [styles.containerWithImage]: !!background.image,
+    [styles.containerWithColor]: !background.image && !!background.color,
+  });
+
   const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
     if (background.image) {
-      return {
-        backgroundImage: `url(${interpolateUrl(background.image)})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      };
+      return { '--login-bg-image': `url(${interpolateUrl(background.image)})` } as React.CSSProperties;
     }
     if (background.color) {
-      return { backgroundColor: background.color };
+      return { '--login-bg-color': background.color } as React.CSSProperties;
     }
     return undefined;
   }, [background]);
@@ -175,7 +177,7 @@ const Login: React.FC = () => {
 
   if (!loginProvider || loginProvider.type === 'basic') {
     return (
-      <div className={styles.container} style={containerStyle} data-testid="login-container">
+      <div className={containerClassName} style={containerStyle} data-testid="login-container">
         {announcements.length > 0 && (
           <div className={styles.announcements}>
             {announcements.map((announcement, i) => (

@@ -41,6 +41,16 @@
   min-height: calc(100vh - var(--omrs-navbar-height));
 }
 
+.containerWithImage {
+  background-image: var(--login-bg-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.containerWithColor {
+  background-color: var(--login-bg-color);
+}
+
 .center {
   text-align: center;
 }

@@ -327,8 +327,10 @@ describe('Login', () => {
     renderWithRouter(Login, {}, { route: '/login' });
     const root = screen.getByTestId('login-container');
 
-    expect(root.style.backgroundImage).toContain('/openmrs/spa/assets/bg.jpg');
-    expect(root.style.backgroundImage).not.toContain('${openmrsSpaBase}');
+    const bgImage = root.style.getPropertyValue('--login-bg-image');
+    expect(bgImage).toContain('/openmrs/spa/assets/bg.jpg');
+    expect(bgImage).not.toContain('${openmrsSpaBase}');
+    expect(root.className).toMatch(/containerWithImage/);
   });
 
   it('applies a background color when only background.color is configured', () => {
@@ -340,7 +342,9 @@ describe('Login', () => {
     renderWithRouter(Login, {}, { route: '/login' });
     const root = screen.getByTestId('login-container');
 
-    expect(root).toHaveStyle({ backgroundColor: '#0066cc' });
-    expect(root).toHaveStyle({ backgroundImage: '' });
+    expect(root.style.getPropertyValue('--login-bg-color')).toBe('#0066cc');
+    expect(root.style.getPropertyValue('--login-bg-image')).toBe('');
+    expect(root.className).toMatch(/containerWithColor/);
+    expect(root.className).not.toMatch(/containerWithImage/);
   });
 });
