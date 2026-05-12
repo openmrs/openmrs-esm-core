@@ -54,7 +54,7 @@
     "semver": "^7.7.3",
     "single-spa": "^6.0.3",
     "swc-loader": "0.2.7",
-    "swr": "2.2.5",
+    "swr": "2.4.1",
     "webpack-pwa-manifest": "4.3.0"
   },
   "devDependencies": {
