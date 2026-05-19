@@ -41,8 +41,8 @@
   "dependencies": {
     "@carbon/react": "^1.92.1",
     "@hookform/resolvers": "^3.6.0",
-    "lodash-es": "^4.17.21",
-    "react-hook-form": "^7.52.2",
+    "lodash-es": "^4.18.1",
+    "react-hook-form": "^7.76.0",
     "zod": "^3.23.8"
   },
   "peerDependencies": {
@@ -56,16 +56,16 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.1.2",
+    "@vitest/coverage-v8": "^4.1.6",
     "cross-env": "^10.1.0",
-    "happy-dom": "^20.6.0",
+    "happy-dom": "^20.9.0",
     "openmrs": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
     "react-router-dom": "^6.3.0",
     "rxjs": "^6.5.3",
-    "swr": "2.2.5",
-    "vitest": "^4.1.2"
+    "swr": "2.4.1",
+    "vitest": "^4.1.6"
   }
 }

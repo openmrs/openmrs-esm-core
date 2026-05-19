@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@carbon/react": "^1.92.1",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.18.1"
   },
   "peerDependencies": {
     "@carbon/react": "1.x",
@@ -52,17 +52,17 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.1.2",
-    "ace-builds": "^1.43.3",
+    "@vitest/coverage-v8": "^4.1.6",
+    "ace-builds": "^1.44.0",
     "cross-env": "^10.1.0",
-    "happy-dom": "^20.6.0",
+    "happy-dom": "^20.9.0",
     "openmrs": "workspace:*",
     "react": "^18.3.1",
     "react-ace": "^14.0.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
     "rxjs": "^6.5.3",
-    "swr": "2.2.5",
-    "vitest": "^4.1.2"
+    "swr": "2.4.1",
+    "vitest": "^4.1.6"
   }
 }
