@@ -17,7 +17,7 @@ export * from '@openmrs/esm-state/mock';
 export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
 
-export { parseDate, formatDate, formatDatetime, formatTime, isOmrsDateToday } from '@openmrs/esm-utils';
+export { parseDate, formatDate, formatDatetime, formatTime, isOmrsDateToday, matchLocale } from '@openmrs/esm-utils';
 
 /* esm-globals */
 
