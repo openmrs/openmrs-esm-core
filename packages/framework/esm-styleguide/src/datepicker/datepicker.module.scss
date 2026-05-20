@@ -158,6 +158,8 @@
 }
 
 .separator {
+  display: flex;
+  align-items: center;
   margin-inline: 0.5rem;
 }
 
