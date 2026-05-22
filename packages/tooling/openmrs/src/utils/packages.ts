@@ -98,7 +98,7 @@ export async function resolvePackages(packageNames: Array<string>): Promise<Arra
   }
 
   if (notFound.length > 0) {
-    const available = Array.from(packageMap.keys()).sort();
+    const available = Array.from(packageMap.keys()).sort((a, b) => a.localeCompare(b, 'en'));
     throw new Error(
       `Could not resolve the following package(s):\n` +
         notFound.map((n) => `  - ${n}`).join('\n') +
