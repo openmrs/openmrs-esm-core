@@ -238,6 +238,7 @@ jq -n \
     "@openmrs/esm-patient-programs-app": "next",
     "@openmrs/esm-patient-registration-app": "next",
     "@openmrs/esm-patient-search-app": "next",
+    "@openmrs/esm-patient-task-list-app": "next",
     "@openmrs/esm-patient-tests-app": "next",
     "@openmrs/esm-patient-vitals-app": "next",
     "@openmrs/esm-service-queues-app": "next",
