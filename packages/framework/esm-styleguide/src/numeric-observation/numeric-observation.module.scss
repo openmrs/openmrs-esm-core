@@ -36,7 +36,13 @@
   height: 100%;
   padding-top: 0.4375rem;
   padding-bottom: 0.375rem;
-  padding-inline: 0;
+  padding-left: layout.$spacing-05;
+  padding-right: layout.$spacing-05;
+
+  :global(.cds--data-table--lg) & {
+    padding-top: 0.9375rem;
+    padding-bottom: 0.9375rem;
+  }
 }
 
 .cell.critically-high,
