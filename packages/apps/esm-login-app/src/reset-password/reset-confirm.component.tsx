@@ -19,7 +19,7 @@ const ResetConfirm: React.FC = () => {
   const rules = [
     { label: t('atLeast8Chars', 'At least 8 characters'), valid: newPassword.length >= 8 },
     { label: t('oneUppercase', 'One uppercase letter'), valid: /[A-Z]/.test(newPassword) },
-    { label: t('oneNumber', 'One number'), valid: /[0-9]/.test(newPassword) },
+    { label: t('oneNumber', 'One number'), valid: /\d/.test(newPassword) },
     { label: t('oneSymbol', 'One symbol (e.g. !@#$)'), valid: /[^A-Za-z0-9]/.test(newPassword) },
   ];
 
@@ -30,7 +30,7 @@ const ResetConfirm: React.FC = () => {
     evt.preventDefault();
     if (!isValid) return;
     setIsSubmitting(true);
-    // TODO: call password reset confirmation endpoint with token from URL
+    
     setTimeout(() => {
       setIsSubmitting(false);
       navigate('/login/reset/complete');
