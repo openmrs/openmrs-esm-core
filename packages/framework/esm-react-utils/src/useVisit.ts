@@ -22,7 +22,8 @@ export interface VisitReturnType {
   currentVisit: Visit | null;
 
   /**
-   * @deprecated
+   * @deprecated "current visit" is not well defined outside of the patient chart.
+   * Use `visitContext` in the patient chart instead.
    */
   currentVisitIsRetrospective: boolean;
   isLoading: boolean;
