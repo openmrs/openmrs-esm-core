@@ -337,6 +337,12 @@
   container: unset;
 }
 
+@media (min-width: 42rem) {
+  .cds--pagination .cds--pagination__left {
+    padding-inline-start: layout.$spacing-05;
+  }
+}
+
 .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
   &::after {
     @include brand-03(background-color);
