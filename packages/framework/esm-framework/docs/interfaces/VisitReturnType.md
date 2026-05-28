@@ -31,9 +31,12 @@ Use `visitContext` in the patient chart instead.
 
 > **currentVisitIsRetrospective**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L27)
+Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L28)
 
 #### Deprecated
+
+"current visit" is not well defined outside of the patient chart.
+Use `visitContext` in the patient chart instead.
 
 ***
 
@@ -49,7 +52,7 @@ Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:13](https://gith
 
 > **isLoading**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L28)
+Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L29)
 
 ***
 
