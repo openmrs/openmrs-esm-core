@@ -23,7 +23,6 @@ import { type Workspace2DefinitionProps } from './workspace2.component';
  * the requested group is immediately opened.
  *
  * ** 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
- * @experimental
  * @param groupName
  * @param groupProps
  * @returns a Promise that resolves to true if the specified workspace group with the specified group props
@@ -65,7 +64,6 @@ export async function launchWorkspaceGroup2<GroupProps extends object>(
 /**
  * Closes the workspace group that is currently opened. Note that only one workspace group
  * may be opened at any given time
- * @experimental
  * @param discardUnsavedChanges If true, then the workspace group is forced closed, with no prompt
  * for confirmation for unsaved changes in any opened workspace. This should be used sparingly
  * for clean-up purpose, ex: when exiting an app.
@@ -130,7 +128,6 @@ export async function closeWorkspaceGroup2(discardUnsavedChanges?: boolean) {
  * The "patient search" workspace in the queues and ward apps is another example.
  *
  * [^2] 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
- * @experimental
  */
 export async function launchWorkspace2<
   WorkspaceProps extends object,
@@ -357,7 +354,6 @@ type PromptReason =
  * When the closing is explicit, it prompts for confirmation for affected workspaces with unsaved changes.
  * When the closing is implicit, it prompts for confirmation for all affected workspaces, regardless of
  * whether they have unsaved changes.
- * @experimental
  * @param promptReason
  * @returns a Promise that resolves to true if the user confirmed closing the workspaces; false otherwise.
  */
