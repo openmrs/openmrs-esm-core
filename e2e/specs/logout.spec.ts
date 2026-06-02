@@ -8,6 +8,7 @@ test('Logout as Admin user', async ({ page }) => {
 
   await test.step('When I visit the home page', async () => {
     await homePage.goto();
+    await page.waitForURL(/\/home\/\w+/);
   });
 
   await test.step('And I click the `User` button and log out', async () => {

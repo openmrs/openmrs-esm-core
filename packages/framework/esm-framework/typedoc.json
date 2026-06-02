@@ -18,6 +18,7 @@
   "excludeInternal": true,
   "entryFileName": "API.md",
   "gitRevision": "main",
+  "sourceLinkTemplate": "https://github.com/openmrs/openmrs-esm-core/blob/{gitRevision}/{path}#L{line}",
   "hidePageHeader": true,
   "sort": ["alphabetical"]
 }

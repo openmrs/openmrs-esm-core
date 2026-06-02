@@ -1,0 +1,209 @@
+name: Docs - Drift check
+
+# `pull_request_target` makes this required check tamper-proof (workflow
+# file always runs from base, so a PR can't modify what gates merge) and
+# gives access to the App token used to verify skip-docs provenance.
+#
+# `check_run.completed` re-fires this workflow when the bot posts the
+# `Docs / Regenerated` check run, so the required-check status updates on
+# the head SHA without needing a label-edit hop.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, labeled, unlabeled]
+  check_run:
+    types: [completed]
+
+permissions: {}
+
+concurrency:
+  group: docs-drift-${{ github.event.pull_request.number || github.event.check_run.head_sha }}
+  cancel-in-progress: true
+
+jobs:
+  drift:
+    # Noise filter only — skips check_run completions for unrelated checks.
+    # Trust comes from the API re-query below; only the bot's App token can
+    # post a successful 'Docs / Regenerated' check run.
+    if: |
+      github.event_name == 'pull_request_target' ||
+      (github.event_name == 'check_run' && github.event.check_run.name == 'Docs / Regenerated')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: read
+      issues: read
+      pull-requests: read
+    env:
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Resolve PR context
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          CR_HEAD_SHA: ${{ github.event.check_run.head_sha }}
+        run: |
+          set -euo pipefail
+          if [ "${EVENT_NAME}" = "pull_request_target" ]; then
+            {
+              echo "number=${PR_PR_NUMBER}"
+              echo "head_sha=${PR_HEAD_SHA}"
+              echo "base_sha=${PR_BASE_SHA}"
+            } >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # check_run events have no PR context — look up the PR for the SHA.
+          # If the SHA isn't currently the head of any open PR, there's
+          # nothing to evaluate.
+          pr=$(gh api "repos/${REPO}/commits/${CR_HEAD_SHA}/pulls" --jq '.[0].number // empty')
+          if [ -z "${pr}" ]; then
+            echo "No open PR for SHA ${CR_HEAD_SHA}; skipping"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          base_sha=$(gh api "repos/${REPO}/pulls/${pr}" --jq '.base.sha')
+          {
+            echo "number=${pr}"
+            echo "head_sha=${CR_HEAD_SHA}"
+            echo "base_sha=${base_sha}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Inspect labels and check run
+        if: steps.pr.outputs.skip != 'true'
+        id: labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
+        run: |
+          set -euo pipefail
+          # Authoritative signal first: only the bot's App token can post the
+          # Docs / Regenerated check run (checks:write is App-scoped), so
+          # finding it on the head SHA is a credible "docs are current"
+          # signal — drift check passes.
+          regenerated=$(gh api "repos/${REPO}/commits/${HEAD_SHA}/check-runs" \
+            --jq '[.check_runs[] | select(.name == "Docs / Regenerated" and .conclusion == "success")] | length')
+          if [ "${regenerated}" -gt 0 ]; then
+            echo "Head SHA has Docs / Regenerated check run; check passes."
+            echo "pass=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # skip-docs label is human-applied, so its presence alone isn't
+          # authoritative — defer the decision until the provenance step
+          # has verified who applied it.
+          labels=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/labels" --jq '[.[].name] | join(",")')
+          if echo ",${labels}," | grep -q ",skip-docs,"; then
+            echo "skip-docs present; needs provenance verification."
+            echo "needs_provenance=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "pass=false" >> "$GITHUB_OUTPUT"
+
+      - name: Mint app token
+        if: steps.labels.outputs.needs_provenance == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          client-id: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
+
+      - name: Verify skip-docs provenance
+        if: steps.labels.outputs.needs_provenance == 'true'
+        id: provenance
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          # Defense in depth: skip-docs by itself is necessary but not
+          # sufficient. The label-guard removes labels applied by non-dev-5
+          # users, but if the guard fails (App outage, rate limit, scheduled
+          # GitHub Actions outage, etc.), the malicious label persists.
+          # Re-verify the most recent applier here so drift fails closed
+          # regardless of guard state.
+          labeler=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/timeline" --paginate \
+            --jq '.[] | select(.event == "labeled" and .label.name == "skip-docs") | .actor.login' \
+            | tail -n 1)
+          if [ -z "${labeler}" ]; then
+            echo "Could not resolve skip-docs labeler; failing closed"
+            echo "verified=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          state=$(gh api "orgs/openmrs/teams/dev-5/memberships/${labeler}" --jq '.state' 2>/dev/null || echo "")
+          if [ "${state}" = "active" ]; then
+            echo "skip-docs applied by ${labeler} (openmrs/dev-5); check passes."
+            echo "verified=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip-docs applied by ${labeler} (state=${state:-not-a-member}); not in openmrs/dev-5"
+            echo "verified=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout base for diff
+        if: |
+          steps.pr.outputs.skip != 'true' &&
+          steps.labels.outputs.pass != 'true' &&
+          steps.provenance.outputs.verified != 'true'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          # Need full history so `git diff base...head` can resolve the
+          # merge-base. blob:none keeps the clone cheap — `git diff
+          # --name-only` reads tree objects, not file contents.
+          fetch-depth: 0
+          filter: blob:none
+          persist-credentials: false
+
+      - name: Verify drift
+        if: |
+          steps.pr.outputs.skip != 'true' &&
+          steps.labels.outputs.pass != 'true' &&
+          steps.provenance.outputs.verified != 'true'
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          BASE_SHA: ${{ steps.pr.outputs.base_sha }}
+        run: |
+          set -euo pipefail
+          # refs/pull/N/head lives in the base repo, so it works for fork
+          # PRs without cross-repo auth, and unlike refs/pull/N/merge it
+          # exists even when the PR has conflicts. git diff has no
+          # file-count ceiling, unlike the pulls/N/files API.
+          git fetch --filter=blob:none --no-tags origin \
+            "refs/pull/${PR_NUMBER}/head:refs/remotes/origin/pr-head"
+          files=$(git diff --name-only "${BASE_SHA}...refs/remotes/origin/pr-head")
+
+          # Manual edits to the generated docs tree.
+          manual_docs=$(echo "${files}" | grep '^packages/framework/esm-framework/docs/' || true)
+          if [ -n "${manual_docs}" ]; then
+            echo "::error::This PR has manual edits to generated documentation files. Approve the PR so the bot regenerates them, or have a maintainer apply 'skip-docs' to bypass."
+            echo ""
+            echo "Files in question:"
+            echo "${manual_docs}"
+            exit 1
+          fi
+
+          # Same relevance set as the review-driven and push-driven gates:
+          # changes that would cause a regen to produce different output.
+          # Without a Docs / Regenerated check run, merging would land code
+          # whose committed docs are stale relative to the source.
+          relevant=false
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            case "$f" in
+              *.test.ts|*.test.tsx) continue ;;
+              */setup-tests.ts) continue ;;
+            esac
+            case "$f" in
+              packages/framework/*/src/*.ts|packages/framework/*/src/*.tsx) relevant=true ;;
+              packages/framework/*/tsconfig.json) relevant=true ;;
+              packages/framework/esm-framework/tsconfig.typedoc.json) relevant=true ;;
+              packages/framework/esm-framework/typedoc.json) relevant=true ;;
+            esac
+          done <<< "${files}"
+          if [ "${relevant}" = "true" ]; then
+            echo "::error::This PR modifies framework source that feeds the generated documentation, but no successful 'Docs / Regenerated' check run exists for the head SHA. Approve the PR to trigger documentation regeneration, or have a maintainer apply 'skip-docs' to bypass."
+            exit 1
+          fi
+          echo "PR does not require docs regeneration; check passes."

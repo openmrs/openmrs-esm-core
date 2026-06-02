@@ -30,7 +30,40 @@ const openmrsPublicPath = removeTrailingSlash(process.env.OMRS_PUBLIC_PATH || '/
 const openmrsProxyTarget = process.env.OMRS_PROXY_TARGET || 'https://dev3.openmrs.org/';
 const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || 'OpenMRS';
 const openmrsFavicon = process.env.OMRS_FAVICON || `${openmrsPublicPath}/favicon.ico`;
-const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || '';
+/**
+ * Resolves the target environment from OMRS_ENV, falling back to NODE_ENV / build mode.
+ *
+ * Accepts aliases ("prod" → "production", "dev" → "development") and defaults
+ * to "production" when nothing is set — so dev features are never accidentally
+ * enabled in an unconfigured build.
+ *
+ * @param {string} buildMode rspack/webpack build mode ("production" | "development")
+ * @returns {"production" | "development" | "test"}
+ */
+function resolveEnvironment(buildMode) {
+  const raw = process.env.OMRS_ENV;
+
+  if (raw) {
+    switch (raw) {
+      case 'production':
+      case 'prod':
+        return 'production';
+      case 'development':
+      case 'dev':
+        return 'development';
+      case 'test':
+        return 'test';
+      default:
+        console.warn(`Unknown OMRS_ENV value "${raw}", defaulting to "production".`);
+        return 'production';
+    }
+  }
+
+  // No explicit OMRS_ENV — derive from NODE_ENV or build mode.
+  // Only "development" is treated as development; everything else is production.
+  const fallback = process.env.NODE_ENV || buildMode || '';
+  return fallback === 'development' ? 'development' : 'production';
+}
 const openmrsOffline = process.env.OMRS_OFFLINE === 'enable';
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
@@ -107,6 +140,7 @@ module.exports = (env, argv = []) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? 'dist' : 'lib';
   const isProd = mode === 'production';
+  const openmrsEnvironment = resolveEnvironment(mode);
   const appPatterns = [];
 
   const coreImportmap = {

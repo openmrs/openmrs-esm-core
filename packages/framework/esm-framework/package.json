@@ -28,7 +28,7 @@
   },
   "source": true,
   "scripts": {
-    "document": "../../../document.sh esm-framework",
+    "document": "../../../tools/document.sh",
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",

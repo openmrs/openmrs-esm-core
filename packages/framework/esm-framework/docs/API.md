@@ -19,7 +19,7 @@
 - [PatientWithFullResponse](interfaces/PatientWithFullResponse.md)
 - [OnlyThePatient](interfaces/OnlyThePatient.md)
 - [getVisitStore](functions/getVisitStore.md)
-- [setCurrentVisit](functions/setCurrentVisit.md)
+- [~~setCurrentVisit~~](functions/setCurrentVisit.md)
 - [saveVisit](functions/saveVisit.md)
 - [updateVisit](functions/updateVisit.md)
 - [~~getVisitsForPatient~~](functions/getVisitsForPatient.md)

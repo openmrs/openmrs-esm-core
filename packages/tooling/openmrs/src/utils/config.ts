@@ -20,7 +20,11 @@ export interface BuildOptions {
   assets?: Array<string>;
 }
 
-export function loadBundlerConfig(options: BuildOptions = {}) {
+/**
+ * Maps {@link BuildOptions} to the `OMRS_*` environment variables that the
+ * rspack config reads at evaluation time.
+ */
+export function setBundlerEnv(options: BuildOptions = {}) {
   const variables: Record<string, unknown> = {};
 
   if (typeof options.backend === 'string') {
@@ -95,6 +99,10 @@ export function loadBundlerConfig(options: BuildOptions = {}) {
   }
 
   setEnvVariables(variables);
+}
+
+export function loadBundlerConfig(options: BuildOptions = {}) {
+  setBundlerEnv(options);
 
   const require = createRequire(import.meta.url);
   const config:

@@ -210,6 +210,68 @@ describe('openmrsFetch', () => {
     }
   });
 
+  it('redirects to the Location header URL when a 401 response contains a Location header (auth-module challenge)', async () => {
+    mockGetConfig.mockResolvedValueOnce({
+      redirectAuthFailure: {
+        enabled: true,
+        url: '',
+        errors: [401],
+        resolvePromise: true,
+      },
+    });
+
+    // @ts-expect-error
+    window.fetch.mockReturnValue(
+      Promise.resolve({
+        ok: false,
+        status: 401,
+        statusText: 'Unauthorized',
+        headers: {
+          has: (name: string) => name.toLowerCase() === 'location',
+          get: (name: string) => (name.toLowerCase() === 'location' ? '/module/authentication/login.form' : null),
+        },
+        text: () => Promise.resolve(''),
+      }),
+    );
+
+    await openmrsFetch('/ws/rest/v1/session');
+
+    expect(mockNavigate.mock.calls[0][0]).toStrictEqual({
+      to: '/module/authentication/login.form',
+    });
+  });
+
+  it('redirects to the default login URL when a 401 response has no Location header (genuine auth failure)', async () => {
+    mockGetConfig.mockResolvedValueOnce({
+      redirectAuthFailure: {
+        enabled: true,
+        url: '',
+        errors: [401],
+        resolvePromise: true,
+      },
+    });
+
+    // @ts-expect-error
+    window.fetch.mockReturnValue(
+      Promise.resolve({
+        ok: false,
+        status: 401,
+        statusText: 'Unauthorized',
+        headers: {
+          has: (name: string) => false,
+          get: (name: string) => null,
+        },
+        text: () => Promise.resolve(''),
+      }),
+    );
+
+    await openmrsFetch('/ws/rest/v1/session');
+
+    expect(mockNavigate.mock.calls[0][0]).toStrictEqual({
+      to: '${openmrsSpaBase}/login',
+    });
+  });
+
   it('navigates to spa login page when the server responds with a 401', async () => {
     mockGetConfig.mockResolvedValueOnce({
       redirectAuthFailure: {
@@ -220,7 +282,7 @@ describe('openmrsFetch', () => {
       },
     });
 
-    // @ts-ignore
+    // @ts-expect-error
     window.fetch.mockReturnValue(
       Promise.resolve({
         ok: false,
