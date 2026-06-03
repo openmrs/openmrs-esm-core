@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type * as ReactRouterDom from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -27,9 +28,9 @@ const loginLocations = [
 ];
 
 vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
+  const actual = await vi.importActual<typeof ReactRouterDom>('react-router-dom');
   return {
-    ...(actual as any),
+    ...actual,
     useNavigate: () => mockNavigate,
   };
 });

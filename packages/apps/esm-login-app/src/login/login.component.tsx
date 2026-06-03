@@ -31,9 +31,6 @@ const Login: React.FC = () => {
     chooseLocation,
     announcements = [],
     background = { image: '', color: '' },
-    showPasswordOnSeparateScreen,
-    provider: loginProvider,
-    links: loginLinks,
   } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
@@ -59,14 +56,13 @@ const Login: React.FC = () => {
         navigate('/login');
       }
     } else {
-      if (sessionLocation || !chooseLocation.enabled) {
-        openmrsNavigate({ to: loginLinks?.loginSuccess || '${openmrsSpaBase}/home' });
+      if (sessionLocation || !chooseLocation?.enabled) {
+        openmrsNavigate({ to: loginLinks?.loginSuccess || `${window.openmrsBase || ''}/home` });
       } else if (location.pathname !== '/login/location') {
-        // Only redirect to location picker if not already there
         navigate('/login/location');
       }
     }
-  }, [username, navigate, location, user, loginProvider, chooseLocation, loginLinks]);
+  }, [username, navigate, location, user, loginProvider, chooseLocation, loginLinks, sessionLocation]);
 
   useEffect(() => {
     if (showPasswordOnSeparateScreen) {
@@ -136,8 +132,8 @@ const Login: React.FC = () => {
         const userDefaultLocation = session?.user?.userProperties?.defaultLocation;
 
         if (authenticated) {
-          if (session.sessionLocation || userDefaultLocation || !chooseLocation.enabled) {
-            if (!session.sessionLocation && userDefaultLocation) {
+          if (session?.sessionLocation || userDefaultLocation || !chooseLocation?.enabled) {
+            if (!session?.sessionLocation && userDefaultLocation) {
               try {
                 await setSessionLocation(userDefaultLocation, new AbortController());
               } catch (error) {
@@ -145,10 +141,10 @@ const Login: React.FC = () => {
                 return true;
               }
             }
-            let to = loginLinks?.loginSuccess || '${openmrsSpaBase}/home';
+            let to = loginLinks?.loginSuccess || `${window.openmrsBase || ''}/home`;
             if (location?.state?.referrer) {
               if (location.state.referrer.startsWith('/')) {
-                to = `\${openmrsSpaBase}${location.state.referrer}`;
+                to = `${window.openmrsBase || ''}${location.state.referrer}`;
               } else {
                 to = location.state.referrer;
               }
