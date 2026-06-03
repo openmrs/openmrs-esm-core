@@ -62,7 +62,6 @@ export interface ActionMenuButtonProps2 {
  * 2. restores the workspace window if it is opened and unfocused; or
  * 3. launches a workspace from within that window, if the window is not opened.
  *
- * @experimental
  */
 export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   icon: getIcon,
