@@ -55,12 +55,10 @@ const Login: React.FC = () => {
       } else if (!username && location.pathname === '/login/confirm') {
         navigate('/login');
       }
-    } else {
-      if (sessionLocation || !chooseLocation?.enabled) {
-        openmrsNavigate({ to: loginLinks?.loginSuccess || `${window.openmrsBase || ''}/home` });
-      } else if (location.pathname !== '/login/location') {
-        navigate('/login/location');
-      }
+    } else if (sessionLocation || !chooseLocation?.enabled) {
+      openmrsNavigate({ to: loginLinks?.loginSuccess || `${window.openmrsBase || ''}/home` });
+    } else if (location.pathname !== '/login/location') {
+      navigate('/login/location');
     }
   }, [username, navigate, location, user, loginProvider, chooseLocation, loginLinks, sessionLocation]);
 
@@ -137,6 +135,7 @@ const Login: React.FC = () => {
               try {
                 await setSessionLocation(userDefaultLocation, new AbortController());
               } catch (error) {
+                console.error('Failed to set session location: ', error);
                 navigate('/login/location');
                 return true;
               }
