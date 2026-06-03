@@ -17,11 +17,18 @@ export function ExtensionOverlay({ extensionName, slotModuleName, slotName, domE
   const [overlayDomElement, setOverlayDomElement] = useState<HTMLElement>();
 
   useEffect(() => {
-    if (domElement) {
-      const newOverlayDomElement = document.createElement('div');
-      domElement.parentElement?.appendChild(newOverlayDomElement);
-      setOverlayDomElement(newOverlayDomElement);
+    if (!domElement?.parentElement) {
+      return;
     }
+
+    const newOverlayDomElement = document.createElement('div');
+    domElement.parentElement.appendChild(newOverlayDomElement);
+    setOverlayDomElement(newOverlayDomElement);
+
+    return () => {
+      newOverlayDomElement.remove();
+      setOverlayDomElement(undefined);
+    };
   }, [domElement]);
 
   return overlayDomElement ? (
