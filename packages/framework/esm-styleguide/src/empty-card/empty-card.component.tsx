@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Layer, Tile } from '@carbon/react';
 import { useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { CardHeader } from '../cards';
 import styles from './empty-card.module.scss';
 
 export interface EmptyCardProps {
@@ -32,7 +31,9 @@ export const EmptyCard: React.FC<EmptyCardProps> = (props) => {
   return (
     <Layer className={styles.layer}>
       <Tile className={styles.tile}>
-        <CardHeader title={props.headerTitle} />
+        <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+          <h4>{props.headerTitle}</h4>
+        </div>
         <EmptyCardIllustration />
         <p className={styles.content}>
           {getCoreTranslation('emptyStateText', 'There are no {{displayText}} to display', {
