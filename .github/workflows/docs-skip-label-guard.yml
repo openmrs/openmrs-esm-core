@@ -1,0 +1,51 @@
+name: Docs - Skip-label guard
+
+# GitHub has no per-label ACL: anyone with `pull_requests: write` can apply
+# any label. Enforce a soft ACL on `skip-docs` (which bypasses doc
+# regeneration) by auto-removing it when applied by anyone outside
+# `openmrs/dev-5`.
+
+on:
+  pull_request_target:
+    types: [labeled]
+
+permissions: {}
+
+concurrency:
+  group: docs-skip-guard-${{ github.event.pull_request.number }}-${{ github.event.label.name }}
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    if: github.event.label.name == 'skip-docs'
+    runs-on: ubuntu-latest
+    permissions: {}
+    env:
+      REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      SENDER: ${{ github.event.sender.login }}
+    steps:
+      - name: Mint app token
+        id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          client-id: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
+
+      - name: Verify sender is in openmrs/dev-5
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          # API returns state=active for members, state=pending for invited-
+          # but-not-joined, 404 otherwise. Anything other than "active"
+          # fails closed.
+          state=$(gh api "orgs/openmrs/teams/dev-5/memberships/${SENDER}" --jq '.state' 2>/dev/null || echo "")
+          if [[ "${state}" == "active" ]]; then
+            echo "Sender ${SENDER} is in openmrs/dev-5; allowing skip-docs"
+            exit 0
+          fi
+
+          echo "Sender ${SENDER} is not in openmrs/dev-5; removing skip-docs"
+          gh pr edit "${PR_NUMBER}" --repo "${REPO}" --remove-label skip-docs
+          gh pr comment "${PR_NUMBER}" --repo "${REPO}" --body "The \`skip-docs\` label can only be applied by members of \`@openmrs/dev-5\`. The label has been removed automatically. If you believe this PR should bypass documentation regeneration, please request a maintainer apply the label."

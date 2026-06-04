@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@carbon/react';
 import {
   CloseIcon,
+  type ExtensionInfo,
   getExtensionInternalStore,
   useStore,
   useStoreWithActions,
@@ -24,6 +25,32 @@ interface SlotOverlayProps {
   slotName: string;
   t: TFunction;
   colorScheme: 'blue' | 'green';
+}
+
+export interface ExtensionOverlayTarget {
+  extensionName: string;
+  slotModuleName: string;
+  slotName: string;
+  extensionInstance: ExtensionInfo['instances'][number];
+}
+
+/**
+ * Flattens `extensions[name].instances` into a flat list of overlay targets. `instances` is an
+ * `Array<ExtensionInstance>`, so it must be iterated directly. Treating it as a nested object (via
+ * `Object.entries`) yields array indices as the module name and instance property names as the slot
+ * name, so the generated selectors never match a real extension DOM node.
+ */
+export function getExtensionOverlayTargets(
+  extensions: Record<string, ExtensionInfo> | undefined,
+): Array<ExtensionOverlayTarget> {
+  return Object.entries(extensions ?? {}).flatMap(([extensionName, extensionInfo]) =>
+    (extensionInfo.instances ?? []).map((extensionInstance) => ({
+      extensionName,
+      slotModuleName: extensionInstance.slotModuleName,
+      slotName: extensionInstance.slotName,
+      extensionInstance,
+    })),
+  );
 }
 
 export default function UiEditor() {
@@ -67,25 +94,16 @@ export default function UiEditor() {
       .filter((x): x is NonNullable<typeof x> => Boolean(x));
   }, [slots]);
 
-  const extensionElements = useMemo(() => {
-    if (!extensions) {
-      return [];
-    }
-
-    return Object.entries(extensions).flatMap(([extensionName, extensionInfo]) =>
-      Object.entries(extensionInfo.instances).flatMap(([slotModuleName, bySlotName]) =>
-        Object.entries(bySlotName).map(([slotName, extensionInstance]) => ({
-          extensionName,
-          slotModuleName,
-          slotName,
-          extensionInstance,
-          element: document.querySelector(
-            `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotModuleName}"] *[data-extension-id="${extensionInstance.id}"]`,
-          ) as HTMLElement | null,
-        })),
-      ),
-    );
-  }, [extensions]);
+  const extensionElements = useMemo(
+    () =>
+      getExtensionOverlayTargets(extensions).map((target) => ({
+        ...target,
+        element: document.querySelector(
+          `*[data-extension-slot-name="${target.slotName}"][data-extension-slot-module-name="${target.slotModuleName}"] *[data-extension-id="${target.extensionInstance.id}"]`,
+        ) as HTMLElement | null,
+      })),
+    [extensions],
+  );
 
   return (
     <>

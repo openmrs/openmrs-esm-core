@@ -16,6 +16,7 @@
     "release": "yarn workspaces foreach --all --topological version",
     "build": "turbo run build",
     "build:apps": "turbo run build --filter='@openmrs/*-app'",
+    "document": "turbo run document",
     "setup": "yarn install && turbo run build",
     "start": "openmrs develop",
     "verify": "turbo run lint test typescript",

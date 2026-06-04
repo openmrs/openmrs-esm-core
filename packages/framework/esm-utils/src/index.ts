@@ -3,6 +3,7 @@ export * from './age-helpers';
 export * from './dates';
 export * from './get-locale';
 export * from './is-online';
+export * from './match-locale';
 export * from './patient-helpers';
 export * from './shallowEqual';
 export * from './storage';
