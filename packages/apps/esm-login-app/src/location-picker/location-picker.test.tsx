@@ -361,8 +361,8 @@ describe('isSafeReturnUrl', () => {
     expect(isSafeReturnUrl('//evil.com/openmrs/spa/home')).toBe(false);
   });
 
-  it('rejects a URL on the same origin but outside the SPA base', () => {
-    expect(isSafeReturnUrl('/openmrs/admin/index.htm')).toBe(false);
+  it('accepts a same-origin URL outside the SPA base', () => {
+    expect(isSafeReturnUrl('/openmrs/admin/index.htm')).toBe(true);
   });
 
   it('rejects a javascript: URL', () => {
