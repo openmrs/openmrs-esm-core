@@ -4,9 +4,7 @@
 
 > `const` **Workspace2**: `React.FC`\<`Workspace2Props`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L69)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L62)
 
 The Workspace2 component is used as a top-level container to render
 its children as content within a workspace. When creating a workspace

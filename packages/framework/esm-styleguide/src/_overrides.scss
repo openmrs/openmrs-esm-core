@@ -337,6 +337,12 @@
   container: unset;
 }
 
+@media (min-width: 42rem) {
+  .cds--pagination .cds--pagination__left {
+    padding-inline-start: layout.$spacing-05;
+  }
+}
+
 .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
   &::after {
     @include brand-03(background-color);
@@ -390,6 +396,15 @@
 
 .cds--search-input:focus ~ .cds--search-close:hover {
   outline: none;
+}
+
+// The bundled Carbon version's `cds--search--lg` class only repositions the magnifier;
+// it doesn't set --cds-layout-size-height, so `<Search size="lg">` renders at md (40px).
+// Setting the layout token here lets the existing clamp resolve to lg (48px).
+// Remove once @carbon/styles is bumped to a version that emits
+// `.cds--search--lg .cds--search-input { block-size: 3rem }` directly.
+.cds--search--lg {
+  --cds-layout-size-height: var(--cds-layout-size-height-lg);
 }
 
 /* Radio buttons */
