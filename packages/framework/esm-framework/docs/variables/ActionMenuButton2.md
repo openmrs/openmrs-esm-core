@@ -4,9 +4,7 @@
 
 > `const` **ActionMenuButton2**: `React.FC`\<`ActionMenuButtonProps2`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/action-menu2/action-menu-button2.component.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/action-menu2/action-menu-button2.component.tsx#L67)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/action-menu2/action-menu-button2.component.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/action-menu2/action-menu-button2.component.tsx#L66)
 
 The ActionMenuButton2 component is used to render a button in the action menu of a workspace group.
 The button is associated with a specific workspace window, defined in routes.json of the app with the button.

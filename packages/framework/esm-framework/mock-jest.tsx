@@ -17,7 +17,7 @@ export * from '@openmrs/esm-state/mock';
 export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
 
-export { parseDate, formatDate, formatDatetime, formatTime, isOmrsDateToday } from '@openmrs/esm-utils';
+export { parseDate, formatDate, formatDatetime, formatTime, isOmrsDateToday, matchLocale } from '@openmrs/esm-utils';
 
 /* esm-globals */
 
@@ -105,6 +105,7 @@ export const closeWorkspace = jest.fn();
 export const launchWorkspace = jest.fn();
 export const launchWorkspace2 = jest.fn();
 export const launchWorkspaceGroup = jest.fn();
+export const launchWorkspaceGroup2 = jest.fn();
 export const closeWorkspaceGroup2 = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();

@@ -296,4 +296,55 @@ describe('Login', () => {
 
     expect(usernameInput).toHaveFocus();
   });
+
+  it('does not render announcement banners by default', () => {
+    renderWithRouter(Login, {}, { route: '/login' });
+    expect(screen.queryByText(/Planned downtime/i)).not.toBeInTheDocument();
+  });
+
+  it('renders configured announcement banners stacked above the form', () => {
+    mockUseConfig.mockReturnValue({
+      ...mockConfig,
+      announcements: [
+        { title: '', text: 'Planned downtime tonight at 10pm', kind: 'warning' },
+        { title: 'Heads up', text: 'New release shipping Friday', kind: 'info' },
+      ],
+    });
+
+    renderWithRouter(Login, {}, { route: '/login' });
+
+    expect(screen.getByText('Planned downtime tonight at 10pm')).toBeInTheDocument();
+    expect(screen.getByText('New release shipping Friday')).toBeInTheDocument();
+    expect(screen.getByText('Heads up')).toBeInTheDocument();
+  });
+
+  it('interpolates relative background.image paths via interpolateUrl', () => {
+    mockUseConfig.mockReturnValue({
+      ...mockConfig,
+      background: { image: '${openmrsSpaBase}/assets/bg.jpg', color: '' },
+    });
+
+    renderWithRouter(Login, {}, { route: '/login' });
+    const root = screen.getByTestId('login-container');
+
+    const bgImage = root.style.getPropertyValue('--login-bg-image');
+    expect(bgImage).toContain('/openmrs/spa/assets/bg.jpg');
+    expect(bgImage).not.toContain('${openmrsSpaBase}');
+    expect(root.className).toMatch(/containerWithImage/);
+  });
+
+  it('applies a background color when only background.color is configured', () => {
+    mockUseConfig.mockReturnValue({
+      ...mockConfig,
+      background: { image: '', color: '#0066cc' },
+    });
+
+    renderWithRouter(Login, {}, { route: '/login' });
+    const root = screen.getByTestId('login-container');
+
+    expect(root.style.getPropertyValue('--login-bg-color')).toBe('#0066cc');
+    expect(root.style.getPropertyValue('--login-bg-image')).toBe('');
+    expect(root.className).toMatch(/containerWithColor/);
+    expect(root.className).not.toMatch(/containerWithImage/);
+  });
 });
