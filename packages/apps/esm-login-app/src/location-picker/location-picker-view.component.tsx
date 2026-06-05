@@ -18,17 +18,13 @@ import styles from './location-picker.scss';
 
 /**
  * Validates that a returnToUrl is safe to navigate to.
- * Only same-origin paths under the SPA base are permitted,
- * preventing open-redirect attacks after login.
+ * Only same-origin URLs are permitted, preventing open-redirect attacks after login.
  */
 export function isSafeReturnUrl(url: string): boolean {
+  if (!url) return false;
   try {
     const parsed = new URL(url, window.location.origin);
-    const spaBase = window.getOpenmrsSpaBase().slice(0, -1);
-    return (
-      parsed.origin === window.location.origin &&
-      (parsed.pathname === spaBase || parsed.pathname.startsWith(`${spaBase}/`))
-    );
+    return parsed.origin === window.location.origin;
   } catch {
     return false;
   }
