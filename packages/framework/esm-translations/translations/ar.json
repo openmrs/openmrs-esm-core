@@ -65,7 +65,7 @@
   "save": "حفظ",
   "scriptLoadingError": "Failed to load overridden script from {{url}}. Please check that the bundled script is available at the expected URL. Click the button below to reset all import map overrides.",
   "scriptLoadingFailed": "Error: Script failed to load",
-  "searchForLocation": "Search for a location",
+  "searchForLocation": "البحث عن موقع",
   "seeAll": "See all",
   "seeMoreLists": "انظر {{count}} قائمة أخرى",
   "sex": "الجنس",
