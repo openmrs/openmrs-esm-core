@@ -20,6 +20,7 @@ import {
   isPortAvailable,
   mergeImportmapAndRoutes,
   proxyImportmapAndRoutes,
+  resolvePackages,
   runProject,
   trimEnd,
 } from './utils';
@@ -48,6 +49,7 @@ beforeEach(() => {
     routes: { type: 'inline', value: '{}' },
     watchedRoutesPaths: {},
   });
+  vi.mocked(resolvePackages).mockResolvedValue([]);
   vi.mocked(runProject).mockResolvedValue({
     importMap: {},
     routes: {},
@@ -94,6 +96,27 @@ describe('develop command', () => {
   it('defaults api-url to /openmrs/', async () => {
     const parsed = await createCli(['develop']).parseAsync();
     expect(parsed.apiUrl).toBe('/openmrs/');
+  });
+
+  it('defaults sources to undefined (no default)', async () => {
+    const parsed = await createCli(['develop']).parseAsync();
+    expect(parsed.sources).toBeUndefined();
+  });
+
+  it('defaults packages to an empty array', async () => {
+    const parsed = await createCli(['develop']).parseAsync();
+    expect(parsed.packages).toEqual([]);
+  });
+
+  it('accepts multiple --packages flags', async () => {
+    const parsed = await createCli([
+      'develop',
+      '--packages',
+      '@openmrs/app-a',
+      '--packages',
+      '@openmrs/app-b',
+    ]).parseAsync();
+    expect(parsed.packages).toEqual(['@openmrs/app-a', '@openmrs/app-b']);
   });
 });
 

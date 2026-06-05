@@ -20,6 +20,7 @@
       "@openmrs/esm-feature-flags": ["../esm-feature-flags/src/index.ts"],
       "@openmrs/esm-feature-flags/src/public": ["../esm-feature-flags/src/public.ts"],
       "@openmrs/esm-globals": ["../esm-globals/src/index.ts"],
+      "@openmrs/esm-globals/src/public": ["../esm-globals/src/public.ts"],
       "@openmrs/esm-navigation": ["../esm-navigation/src/index.ts"],
       "@openmrs/esm-navigation/src/public": ["../esm-navigation/src/public.ts"],
       "@openmrs/esm-offline": ["../esm-offline/src/index.ts"],

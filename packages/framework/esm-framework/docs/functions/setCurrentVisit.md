@@ -1,10 +1,10 @@
 [O3 Framework](../API.md) / setCurrentVisit
 
-# Function: setCurrentVisit()
+# Function: ~~setCurrentVisit()~~
 
 > **setCurrentVisit**(`patientUuid`, `visitUuid`): `void`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L95)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L98)
 
 Sets the current visit for a patient in the global visit store. This is used
 to manually specify which visit should be considered "active" for the given patient.
@@ -33,3 +33,8 @@ The UUID of the visit to set as the current visit.
 import { setCurrentVisit } from '@openmrs/esm-framework';
 setCurrentVisit('patient-uuid', 'visit-uuid');
 ```
+
+## Deprecated
+
+"current visit" is not well defined outside of the patient chart.
+Use `visitContext` in the patient chart instead.

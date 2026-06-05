@@ -1,0 +1,8 @@
+# Documentation build, the CI workflows that run it, and anything those
+# workflows trust at runtime. Changes here materially affect repo security.
+
+/.github/workflows/docs-*.yml                                   @openmrs/dev-5
+/tools/document.sh                                              @openmrs/dev-5
+/packages/framework/esm-framework/typedoc.json                  @openmrs/dev-5
+/packages/framework/esm-framework/tsconfig.typedoc.json         @openmrs/dev-5
+/packages/tooling/typedoc-plugin-file-categories/               @openmrs/dev-5

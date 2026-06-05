@@ -32,6 +32,8 @@ export interface OpenmrsDateRangePickerProps
   onChange?: (value: [Date | null | undefined, Date | null | undefined]) => void;
   /** Handler that is called when the value changes. Note that this provides types from @internationalized/date. */
   onChangeRaw?: (value: DateRange | null) => void;
+  /** Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option */
+  size?: 'sm' | 'md' | 'lg';
   /** The value (controlled) */
   value?: [DateInputValue, DateInputValue];
 }
@@ -55,6 +57,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
       minDate: rawMinDate,
       onChange,
       onChangeRaw,
+      size = 'md',
       value: rawValue,
       ...dateRangePickerProps
     },
@@ -144,7 +147,13 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                 )}
 
                 <Group className={styles.inputGroup}>
-                  <div className={styles.inputsWrapper}>
+                  <div
+                    className={classNames(styles.inputsWrapper, {
+                      [styles.inputsWrapperSm]: size === 'sm',
+                      [styles.inputsWrapperMd]: size === 'md' || !size || size.length === 0,
+                      [styles.inputsWrapperLg]: size === 'lg',
+                    })}
+                  >
                     <DateInput
                       className={classNames(
                         'cds--date-picker-input__wrapper',
@@ -171,7 +180,13 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                       {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
                     </DateInput>
                   </div>
-                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
+                  <Button
+                    className={classNames(styles.flatButton, {
+                      [styles.flatButtonSm]: size === 'sm',
+                      [styles.flatButtonMd]: size === 'md' || !size || size.length === 0,
+                      [styles.flatButtonLg]: size === 'lg',
+                    })}
+                  >
                     <DatePickerIcon />
                   </Button>
                 </Group>
