@@ -75,7 +75,9 @@ describe('useLocationCount', () => {
     const { result } = renderHook(() => useLocationCount(false), { wrapper });
 
     await waitFor(() => {
-      expect(result.current.firstLocation).toBeNull();
+      expect(result.current.locationCount).toBe(0);
     });
+
+    expect(result.current.firstLocation).toBeNull();
   });
 });
