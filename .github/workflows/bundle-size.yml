@@ -32,4 +32,4 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           minimum-change-threshold: 10000 # 10 KB
           install-script: "yarn install --immutable"
-          build-script: "turbo run build --color"
+          build-script: "yarn turbo run build --color"
