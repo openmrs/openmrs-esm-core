@@ -1,6 +1,6 @@
 import React, { type ComponentType, type ErrorInfo, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { type Cache, SWRConfig, type SWRConfiguration } from 'swr';
+import { SWRConfig, type SWRConfiguration } from 'swr';
 import type {} from '@openmrs/esm-globals';
 import { openmrsFetch, OpenmrsFetchError } from '@openmrs/esm-api';
 import { type ComponentConfig, type ExtensionData } from '@openmrs/esm-extensions';
@@ -11,8 +11,6 @@ const defaultOpts = {
   throwErrorsToConsole: true,
   disableTranslations: false,
 };
-
-const swrCache: Cache = new Map();
 
 // Read more about the available config options here: https://swr.vercel.app/docs/api#configuration
 const defaultSwrConfig: SWRConfiguration = {
@@ -27,6 +25,18 @@ const defaultSwrConfig: SWRConfiguration = {
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
   refreshInterval: 0,
+  // NOTE: deliberately no `provider`. SWR's default cache is already a single
+  // shared instance per swr module, which (because swr is a module-federation
+  // singleton) is shared across every app and extension — so we get one global
+  // cache for free. Do NOT reintroduce a custom `provider: () => sharedMap`
+  // here: SWR ties a provider cache's global state to the lifecycle of the
+  // first `<SWRConfig>` boundary that initializes it (its unmount runs
+  // `SWRGlobalState.delete(cache)`). Since every decorated component mounts its
+  // own `<SWRConfig>`, the first to mount would own that deleter; when it
+  // unmounts while others are still mounted (e.g. navigating the patient chart
+  // or closing a workspace) it wipes the shared state and the survivors crash
+  // on their next render with "undefined is not iterable". The default cache
+  // has no per-boundary owner, so it is never torn down.
   shouldRetryOnError: (error) => {
     if (error instanceof OpenmrsFetchError) {
       const status = error.response.status;
@@ -46,7 +56,6 @@ const defaultSwrConfig: SWRConfiguration = {
 
     return true;
   },
-  provider: () => swrCache,
 };
 
 export interface ComponentDecoratorOptions {
@@ -54,7 +63,10 @@ export interface ComponentDecoratorOptions {
   featureName: string;
   disableTranslations?: boolean;
   strictMode?: boolean;
-  swrConfig?: Partial<Omit<SWRConfiguration, 'fetcher'>>;
+  // `provider` is intentionally omitted: a custom cache provider must not be set
+  // per decorated component (see the note on `defaultSwrConfig` above). `fetcher`
+  // is fixed to `openmrsFetch`.
+  swrConfig?: Partial<Omit<SWRConfiguration, 'fetcher' | 'provider'>>;
 }
 
 export interface OpenmrsReactComponentProps {
