@@ -71,7 +71,7 @@ describe('openmrsComponentDecorator shared SWR cache lifecycle', () => {
   });
 
   it('shares cached data across separately decorated components (single global cache, #1397)', async () => {
-    // Fixed key, unique within this file (the default cache persists across renders).
+    // Fixed key, unique within this file (the shared cache persists across renders).
     const key = 'swr-cache-sharing-test';
 
     function Producer() {
