@@ -56,10 +56,10 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-config": "10.x",
-    "@openmrs/esm-error-handling": "10.x",
-    "@openmrs/esm-globals": "10.x",
-    "@openmrs/esm-navigation": "10.x"
+    "@openmrs/esm-config": "workspace:^",
+    "@openmrs/esm-error-handling": "workspace:^",
+    "@openmrs/esm-globals": "workspace:^",
+    "@openmrs/esm-navigation": "workspace:^"
   },
   "devDependencies": {
     "@openmrs/esm-config": "workspace:*",

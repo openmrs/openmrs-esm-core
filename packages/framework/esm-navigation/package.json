@@ -52,7 +52,7 @@
     "path-to-regexp": "^8.3.0"
   },
   "peerDependencies": {
-    "@openmrs/esm-state": "10.x"
+    "@openmrs/esm-state": "workspace:^"
   },
   "devDependencies": {
     "@openmrs/esm-state": "workspace:*",
