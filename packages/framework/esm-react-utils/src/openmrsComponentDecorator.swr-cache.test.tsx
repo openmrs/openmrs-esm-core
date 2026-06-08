@@ -5,15 +5,10 @@ import userEvent from '@testing-library/user-event';
 import useSWR from 'swr';
 import { openmrsComponentDecorator } from './openmrsComponentDecorator';
 
-// Regression test for the shared-SWR-cache lifecycle crash.
-//
-// Every component decorated by `openmrsComponentDecorator` mounts its own
-// `<SWRConfig>` over a single shared cache. SWR ties that cache's global state
-// to the first `<SWRConfig>` to initialize it, deleting it when that boundary
-// unmounts. So before the fix, unmounting the first-mounted decorated component
-// while another is still mounted wiped the shared state, and the survivor threw
-// "undefined is not iterable" on its next render (caught by the decorator's
-// error boundary, which then renders "An error has occurred").
+// Regression test for the shared-SWR-cache lifecycle crash: every decorated
+// component has its own `<SWRConfig>`, and SWR deletes a provider cache's state
+// when the first boundary to init it unmounts. Before the fix, that crashed any
+// still-mounted decorated component ("undefined is not iterable").
 
 function decorate(featureName: string, Inner: React.ComponentType) {
   return openmrsComponentDecorator({
@@ -76,8 +71,7 @@ describe('openmrsComponentDecorator shared SWR cache lifecycle', () => {
   });
 
   it('shares cached data across separately decorated components (single global cache, #1397)', async () => {
-    // A fixed key that no other test uses; the shared default cache persists
-    // across renders within this file, so the key only needs to be unique here.
+    // Fixed key, unique within this file (the default cache persists across renders).
     const key = 'swr-cache-sharing-test';
 
     function Producer() {

@@ -25,18 +25,11 @@ const defaultSwrConfig: SWRConfiguration = {
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
   refreshInterval: 0,
-  // NOTE: deliberately no `provider`. SWR's default cache is already a single
-  // shared instance per swr module, which (because swr is a module-federation
-  // singleton) is shared across every app and extension — so we get one global
-  // cache for free. Do NOT reintroduce a custom `provider: () => sharedMap`
-  // here: SWR ties a provider cache's global state to the lifecycle of the
-  // first `<SWRConfig>` boundary that initializes it (its unmount runs
-  // `SWRGlobalState.delete(cache)`). Since every decorated component mounts its
-  // own `<SWRConfig>`, the first to mount would own that deleter; when it
-  // unmounts while others are still mounted (e.g. navigating the patient chart
-  // or closing a workspace) it wipes the shared state and the survivors crash
-  // on their next render with "undefined is not iterable". The default cache
-  // has no per-boundary owner, so it is never torn down.
+  // No custom `provider`: a provider cache is deleted from SWRGlobalState when
+  // the first `<SWRConfig>` to initialize it unmounts, which crashes the other
+  // decorated components still mounted ("undefined is not iterable"). SWR's
+  // default cache has no per-boundary owner and is already global (swr is a
+  // singleton), so don't reintroduce a `provider` here.
   shouldRetryOnError: (error) => {
     if (error instanceof OpenmrsFetchError) {
       const status = error.response.status;
@@ -63,9 +56,7 @@ export interface ComponentDecoratorOptions {
   featureName: string;
   disableTranslations?: boolean;
   strictMode?: boolean;
-  // `provider` is intentionally omitted: a custom cache provider must not be set
-  // per decorated component (see the note on `defaultSwrConfig` above). `fetcher`
-  // is fixed to `openmrsFetch`.
+  // `provider` omitted deliberately (see defaultSwrConfig); `fetcher` is fixed.
   swrConfig?: Partial<Omit<SWRConfiguration, 'fetcher' | 'provider'>>;
 }
 
