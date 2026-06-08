@@ -2964,7 +2964,7 @@ __metadata:
     vitest: "npm:^4.1.2"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": 9.x
+    "@openmrs/esm-framework": 10.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3184,7 +3184,7 @@ __metadata:
     vitest: "npm:^4.1.2"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": 9.x
+    "@openmrs/esm-framework": 10.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3212,7 +3212,7 @@ __metadata:
     vitest: "npm:^4.1.2"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": 9.x
+    "@openmrs/esm-framework": 10.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3243,7 +3243,7 @@ __metadata:
     zod: "npm:^3.23.8"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": 9.x
+    "@openmrs/esm-framework": 10.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3295,7 +3295,7 @@ __metadata:
     vitest: "npm:^4.1.2"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": 9.x
+    "@openmrs/esm-framework": 10.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
@@ -3351,7 +3351,7 @@ __metadata:
     vitest: "npm:^4.1.2"
   peerDependencies:
     "@carbon/react": 1.x
-    "@openmrs/esm-framework": 9.x
+    "@openmrs/esm-framework": 10.x
     react: 18.x
     react-dom: 18.x
     react-i18next: 16.x
