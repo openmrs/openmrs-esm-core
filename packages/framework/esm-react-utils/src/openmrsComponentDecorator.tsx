@@ -1,6 +1,7 @@
 import React, { type ComponentType, type ErrorInfo, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { type Cache, SWRConfig, type SWRConfiguration } from 'swr';
+import { initCache } from 'swr/_internal';
 import type {} from '@openmrs/esm-globals';
 import { openmrsFetch, OpenmrsFetchError } from '@openmrs/esm-api';
 import { type ComponentConfig, type ExtensionData } from '@openmrs/esm-extensions';
@@ -12,7 +13,14 @@ const defaultOpts = {
   disableTranslations: false,
 };
 
+// One global SWR cache shared by every decorated component, the same regardless
+// of module-federation load order (see #1397). It is pre-initialized here so its
+// SWRGlobalState is owned by this (singleton) module, not by the first
+// `<SWRConfig>` that mounts. Otherwise that boundary's unmount would run
+// `SWRGlobalState.delete(swrCache)` and the other still-mounted decorated
+// components would crash on their next render ("undefined is not iterable").
 const swrCache: Cache = new Map();
+initCache(swrCache);
 
 // Read more about the available config options here: https://swr.vercel.app/docs/api#configuration
 const defaultSwrConfig: SWRConfiguration = {
@@ -54,7 +62,8 @@ export interface ComponentDecoratorOptions {
   featureName: string;
   disableTranslations?: boolean;
   strictMode?: boolean;
-  swrConfig?: Partial<Omit<SWRConfiguration, 'fetcher'>>;
+  // `provider` omitted deliberately (see defaultSwrConfig); `fetcher` is fixed.
+  swrConfig?: Partial<Omit<SWRConfiguration, 'fetcher' | 'provider'>>;
 }
 
 export interface OpenmrsReactComponentProps {
