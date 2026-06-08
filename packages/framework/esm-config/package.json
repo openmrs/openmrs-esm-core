@@ -56,9 +56,9 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "9.x",
-    "@openmrs/esm-state": "9.x",
-    "@openmrs/esm-utils": "9.x",
+    "@openmrs/esm-globals": "10.x",
+    "@openmrs/esm-state": "10.x",
+    "@openmrs/esm-utils": "10.x",
     "single-spa": "6.x"
   },
   "devDependencies": {

@@ -57,8 +57,8 @@
     "zustand": "^4.5.5"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "9.x",
-    "@openmrs/esm-utils": "9.x"
+    "@openmrs/esm-globals": "10.x",
+    "@openmrs/esm-utils": "10.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",

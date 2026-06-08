@@ -49,9 +49,9 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "9.x",
-    "@openmrs/esm-globals": "9.x",
-    "@openmrs/esm-state": "9.x",
+    "@openmrs/esm-api": "10.x",
+    "@openmrs/esm-globals": "10.x",
+    "@openmrs/esm-state": "10.x",
     "rxjs": "6.x"
   },
   "dependencies": {

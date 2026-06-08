@@ -57,9 +57,9 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "9.x",
-    "@openmrs/esm-offline": "9.x",
-    "@openmrs/esm-state": "9.x"
+    "@openmrs/esm-api": "10.x",
+    "@openmrs/esm-offline": "10.x",
+    "@openmrs/esm-state": "10.x"
   },
   "devDependencies": {
     "@openmrs/esm-api": "workspace:*",
