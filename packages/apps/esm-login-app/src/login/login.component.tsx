@@ -142,10 +142,10 @@ const Login: React.FC = () => {
             }
             let to = loginLinks?.loginSuccess || `${window.openmrsBase || ''}/home`;
             if (location?.state?.referrer) {
+              // Only accept relative paths; absolute or protocol-relative referrers
+              // are silently ignored to prevent open-redirect attacks after login.
               if (location.state.referrer.startsWith('/')) {
-                to = `${window.openmrsBase || ''}${location.state.referrer}`;
-              } else {
-                to = location.state.referrer;
+                to = `\${openmrsSpaBase}${location.state.referrer}`;
               }
             }
 
