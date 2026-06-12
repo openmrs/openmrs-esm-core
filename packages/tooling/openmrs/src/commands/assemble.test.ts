@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, type Mock, it, vi } from 'vitest';
 import { resolve } from 'node:path';
 
 vi.mock('node:fs/promises', () => ({
@@ -54,19 +54,19 @@ import { runAssemble, type AssembleArgs } from './assemble';
 // Many of these functions have complex overloaded signatures that make vi.mocked()
 // produce types no mock value can satisfy. Using vi.Mock lets us call mockResolvedValue
 // etc. without fighting overload resolution.
-const mockReadFile: vi.Mock = vi.mocked(readFile);
-const mockWriteFile: vi.Mock = vi.mocked(writeFile);
-const mockExistsSync: vi.Mock = vi.mocked(existsSync);
-const mockReadFileSync: vi.Mock = vi.mocked(readFileSync);
-const mockCheckbox: vi.Mock = vi.mocked(checkbox);
-const mockInput: vi.Mock = vi.mocked(input);
-const mockNpmFetchJson: vi.Mock = vi.mocked(npmRegistryFetch.json);
-const mockPacoteManifest: vi.Mock = vi.mocked(pacote.manifest);
-const mockPacoteTarball: vi.Mock = vi.mocked(pacote.tarball);
-const mockRm: vi.Mock = vi.mocked(rm);
-const mockUntar: vi.Mock = vi.mocked(untar);
-const mockContentHash: vi.Mock = vi.mocked(contentHash);
-const mockGetNpmRegistryConfiguration: vi.Mock = vi.mocked(getNpmRegistryConfiguration);
+const mockReadFile = vi.mocked(readFile);
+const mockWriteFile = vi.mocked(writeFile);
+const mockExistsSync = vi.mocked(existsSync);
+const mockReadFileSync = vi.mocked(readFileSync);
+const mockCheckbox = vi.mocked(checkbox);
+const mockInput = vi.mocked(input);
+const mockNpmFetchJson = vi.mocked(npmRegistryFetch.json);
+const mockPacoteManifest = vi.mocked(pacote.manifest);
+const mockPacoteTarball = vi.mocked(pacote.tarball);
+const mockRm = vi.mocked(rm);
+const mockUntar = vi.mocked(untar);
+const mockContentHash = vi.mocked(contentHash);
+const mockGetNpmRegistryConfiguration = vi.mocked(getNpmRegistryConfiguration);
 
 function defaultArgs(overrides: Partial<AssembleArgs> = {}): AssembleArgs {
   return {
@@ -78,6 +78,7 @@ function defaultArgs(overrides: Partial<AssembleArgs> = {}): AssembleArgs {
     fresh: false,
     buildRoutes: false,
     manifest: false,
+    ensureEntrypoints: false,
     ...overrides,
   };
 }
@@ -102,9 +103,13 @@ function setupSingleModuleRun(
     publicUrl: '.',
   };
 
+  const entryFileName = entryPath.split('/').pop()!;
   mockExistsSync.mockImplementation((p: any) => {
-    if (String(p) === '/path/to/config.json') return true;
-    if (String(p).endsWith('routes.json')) return Boolean(routesJson);
+    const path = String(p);
+    if (path === '/path/to/config.json') return true;
+    if (path.endsWith('routes.json')) return Boolean(routesJson);
+    // The code entrypoint is written out by extractFiles, so report it as present.
+    if (path.endsWith(entryFileName)) return true;
     return false;
   });
 
@@ -121,8 +126,10 @@ function setupSingleModuleRun(
   mockPacoteManifest.mockResolvedValue({
     _resolved: `https://registry.npmjs.org/${moduleName}/-/${moduleName}-${moduleVersion}.tgz`,
     _integrity: 'sha512-fake',
-  });
-  mockPacoteTarball.mockResolvedValue(Buffer.from('fake-tarball'));
+  } as unknown as Awaited<ReturnType<typeof pacote.manifest>>);
+  mockPacoteTarball.mockResolvedValue(
+    Buffer.from('fake-tarball') as unknown as Awaited<ReturnType<typeof pacote.tarball>>,
+  );
   mockUntar.mockResolvedValue(fakeUntarResult(moduleName, moduleVersion, entryPath));
 }
 
@@ -176,8 +183,13 @@ describe('runAssemble', () => {
       mockReadFile.mockResolvedValueOnce(JSON.stringify(config1)).mockResolvedValueOnce(JSON.stringify(config2));
 
       // Both modules will be downloaded; set up minimal mocks
-      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/a.tgz', _integrity: 'sha512-a' });
-      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
+      mockPacoteManifest.mockResolvedValue({
+        _resolved: 'https://r.test/a.tgz',
+        _integrity: 'sha512-a',
+      } as unknown as Awaited<ReturnType<typeof pacote.manifest>>);
+      mockPacoteTarball.mockResolvedValue(
+        Buffer.from('tarball') as unknown as Awaited<ReturnType<typeof pacote.tarball>>,
+      );
       mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-a', '1.0.0'));
 
       await runAssemble(
@@ -207,8 +219,13 @@ describe('runAssemble', () => {
       mockExistsSync.mockReturnValue(true);
       mockReadFile.mockResolvedValueOnce(JSON.stringify(config1)).mockResolvedValueOnce(JSON.stringify(config2));
 
-      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/b.tgz', _integrity: 'sha512-b' });
-      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
+      mockPacoteManifest.mockResolvedValue({
+        _resolved: 'https://r.test/b.tgz',
+        _integrity: 'sha512-b',
+      } as unknown as Awaited<ReturnType<typeof pacote.manifest>>);
+      mockPacoteTarball.mockResolvedValue(
+        Buffer.from('tarball') as unknown as Awaited<ReturnType<typeof pacote.tarball>>,
+      );
       mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-b', '2.0.0'));
 
       await runAssemble(
@@ -261,8 +278,13 @@ describe('runAssemble', () => {
       mockCheckbox.mockResolvedValue([{ name: '@openmrs/esm-home-app', version: '1.0.0' }]);
       mockInput.mockResolvedValue('1.2.0');
 
-      mockPacoteManifest.mockResolvedValue({ _resolved: 'https://r.test/home.tgz', _integrity: 'sha512-h' });
-      mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
+      mockPacoteManifest.mockResolvedValue({
+        _resolved: 'https://r.test/home.tgz',
+        _integrity: 'sha512-h',
+      } as unknown as Awaited<ReturnType<typeof pacote.manifest>>);
+      mockPacoteTarball.mockResolvedValue(
+        Buffer.from('tarball') as unknown as Awaited<ReturnType<typeof pacote.tarball>>,
+      );
       mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-home-app', '1.2.0'));
       mockExistsSync.mockReturnValue(false);
 
@@ -274,10 +296,10 @@ describe('runAssemble', () => {
       expect(inputConfig.default).toBe('1.0.0');
 
       // Verify the validation function accepts exact versions and ranges
-      expect(inputConfig.validate('1.0.0')).toBe(true);
-      expect(inputConfig.validate('^1.2.3')).toBe(true);
-      expect(inputConfig.validate('>=1.0.0 <2.0.0')).toBe(true);
-      expect(inputConfig.validate('not-semver')).toEqual(
+      expect(inputConfig.validate?.('1.0.0')).toBe(true);
+      expect(inputConfig.validate?.('^1.2.3')).toBe(true);
+      expect(inputConfig.validate?.('>=1.0.0 <2.0.0')).toBe(true);
+      expect(inputConfig.validate?.('not-semver')).toEqual(
         expect.stringContaining('does not appear to be a valid semver'),
       );
 
@@ -454,6 +476,67 @@ describe('runAssemble', () => {
       const importmapWrite = mockWriteFile.mock.calls.find(([path]) => String(path).includes('importmap'));
       expect(importmapWrite).toBeDefined();
       expect(String(importmapWrite![0])).toContain('importmap.abc123.json');
+    });
+  });
+
+  // ─── Entrypoint validation ──────────────────────────────────────────────────
+
+  describe('entrypoint validation', () => {
+    it('fails the run when routes.json is missing and ensureEntrypoints is enabled', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js');
+
+      await expect(runAssemble(defaultArgs({ ensureEntrypoints: true }))).rejects.toThrow(/Routes file/);
+    });
+
+    it('fails the run when the code entrypoint is missing and ensureEntrypoints is enabled', async () => {
+      // routes.json is present, but the code entrypoint referenced from the import map is not.
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', { pages: [] });
+      mockExistsSync.mockImplementation((p: any) => {
+        const path = String(p);
+        if (path === '/path/to/config.json') return true;
+        if (path.endsWith('routes.json')) return true;
+        return false;
+      });
+
+      await expect(runAssemble(defaultArgs({ ensureEntrypoints: true }))).rejects.toThrow(/Code entrypoint/);
+    });
+
+    it('reports every missing entrypoint in a single run', async () => {
+      const config = {
+        frontendModules: { '@openmrs/esm-a': '1.0.0', '@openmrs/esm-b': '2.0.0' },
+        publicUrl: '.',
+      };
+      mockExistsSync.mockImplementation((p: any) => String(p) === '/path/to/config.json');
+      mockReadFile.mockResolvedValue(JSON.stringify(config));
+      mockPacoteManifest.mockResolvedValue({
+        _resolved: 'https://r.test/x.tgz',
+        _integrity: 'sha512-x',
+      } as unknown as Awaited<ReturnType<typeof pacote.manifest>>);
+      mockPacoteTarball.mockResolvedValue(
+        Buffer.from('tarball') as unknown as Awaited<ReturnType<typeof pacote.tarball>>,
+      );
+      mockUntar
+        .mockResolvedValueOnce(fakeUntarResult('@openmrs/esm-a', '1.0.0'))
+        .mockResolvedValueOnce(fakeUntarResult('@openmrs/esm-b', '2.0.0'));
+
+      const error = await runAssemble(defaultArgs({ config: ['/path/to/config.json'], ensureEntrypoints: true })).catch(
+        (e: Error) => e,
+      );
+
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toContain('@openmrs/esm-a');
+      expect((error as Error).message).toContain('@openmrs/esm-b');
+    });
+
+    it('downgrades missing entrypoints to warnings when ensureEntrypoints is disabled', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js');
+      mockExistsSync.mockImplementation((p: any) => String(p) === '/path/to/config.json');
+      const { logWarn } = await import('../utils');
+
+      await expect(runAssemble(defaultArgs({ ensureEntrypoints: false }))).resolves.not.toThrow();
+
+      expect(logWarn).toHaveBeenCalledWith(expect.stringContaining('Routes file'));
+      expect(logWarn).toHaveBeenCalledWith(expect.stringContaining('Code entrypoint'));
     });
   });
 
