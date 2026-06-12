@@ -7,4 +7,4 @@ set -o pipefail
 
 echo Generating new API docs
 
-yarn typedoc --tsconfig tsconfig.build.json src/index.ts
+yarn typedoc --tsconfig tsconfig.typedoc.json src/index.ts

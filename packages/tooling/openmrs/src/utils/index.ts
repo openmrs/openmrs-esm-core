@@ -2,6 +2,8 @@ export * from './config';
 export * from './helpers';
 export * from './importmap';
 export * from './logger';
+export * from './packages';
 export * from './port';
 export * from './untar';
+export * from './types';
 export * from './variables';

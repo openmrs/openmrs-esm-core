@@ -71,7 +71,7 @@
   "sex": "性别",
   "showLess": "显示较少",
   "showMore": "显示更多",
-  "snackbarNotification": "Snackbar notification",
+  "snackbarNotification": "提示通知",
   "state": "省份",
   "stateProvince": "省份",
   "toggleDevTools": "切换开发工具",
@@ -80,6 +80,6 @@
   "unsavedChangesInWorkspace": "{{workspaceName}} 中有未保存的更改。请在打开另一个工作区之前保存它们。",
   "unsavedChangesTitleText": "未保存的更改",
   "workspaceHeader": "工作区标题",
-  "yearAbbreviation": "yr",
-  "yearsAbbreviation": "yrs"
+  "yearAbbreviation": "年",
+  "yearsAbbreviation": "年"
 }

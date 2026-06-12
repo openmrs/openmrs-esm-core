@@ -19,6 +19,7 @@ export const CaretLeftIcon = () => <span>CaretLeftIcon</span>;
 export const CaretRightIcon = () => <span>CaretRightIcon</span>;
 export const CaretUpIcon = () => <span>CaretUpIcon</span>;
 export const ChartAverageIcon = () => <span>ChartAverageIcon</span>;
+export const ChartLineIcon = () => <span>ChartLineIcon</span>;
 export const CheckmarkFilledIcon = () => <span>CheckmarkFilledIcon</span>;
 export const CheckmarkOutlineIcon = () => <span>CheckmarkOutlineIcon</span>;
 export const ChemistryIcon = () => <span>ChemistryIcon</span>;
@@ -206,5 +207,14 @@ export const Workspace2 = jest.fn(({ title, children }) => (
     {children}
   </div>
 ));
+
+export const NumericObservation = jest.fn(({ value, unit, label }) => (
+  <span>
+    {label && <span>{label}</span>}
+    {value} {unit}
+  </span>
+));
+
+export const TableBatchActions = jest.fn(({ children }) => <>{children}</>);
 
 export const showModal = jest.fn();

@@ -2,9 +2,7 @@
 
 # Interface: Workspace2DefinitionProps\<WorkspaceProps, WindowProps, GroupProps\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L21)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L18)
 
 ## Type Parameters
 
@@ -26,9 +24,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **groupProps**: `null` \| `GroupProps`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L46)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L43)
 
 ***
 
@@ -36,9 +32,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **isRootWorkspace**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L49)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L46)
 
 ***
 
@@ -46,9 +40,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **showActionMenu**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L50)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L47)
 
 ***
 
@@ -56,9 +48,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **windowName**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L48)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L45)
 
 ***
 
@@ -66,9 +56,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **windowProps**: `null` \| `WindowProps`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L45)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L42)
 
 ***
 
@@ -76,9 +64,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **workspaceName**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L47)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L44)
 
 ***
 
@@ -86,9 +72,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **workspaceProps**: `null` \| `WorkspaceProps`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L44)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L41)
 
 ## Methods
 
@@ -96,9 +80,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **closeWorkspace**(`options?`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L42)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L39)
 
 closes the current workspace, along with its children.
 
@@ -132,9 +114,7 @@ a Promise that resolves to true if the workspace is closed, false otherwise.
 
 > **launchChildWorkspace**\<`Props`\>(`workspaceName`, `workspaceProps?`): `Promise`\<`void`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L33)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L30)
 
 This function launches a child workspace. Unlike `launchWorkspace()`, this function is meant
 to be called from the a workspace, and it does not allow passing (or changing)

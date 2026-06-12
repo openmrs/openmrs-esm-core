@@ -1,10 +1,14 @@
 import { type ConfigSchema } from '../src/config-schema';
 
 export const mockConfig: ConfigSchema = {
+  announcements: [],
+  background: {
+    image: '',
+    color: '',
+  },
   provider: {
     type: 'basic',
     loginUrl: '',
-    logoutUrl: '',
   },
   chooseLocation: {
     enabled: true,

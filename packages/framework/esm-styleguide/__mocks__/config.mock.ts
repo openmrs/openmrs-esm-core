@@ -4,7 +4,6 @@ export const mockConfig: ConfigSchema = {
   provider: {
     type: 'basic',
     loginUrl: '',
-    logoutUrl: '',
   },
   chooseLocation: {
     enabled: true,

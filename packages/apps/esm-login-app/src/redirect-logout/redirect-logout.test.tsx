@@ -8,7 +8,6 @@ import {
   clearCurrentUser,
   navigate,
   openmrsFetch,
-  refetchCurrentUser,
   restBaseUrl,
   setUserLanguage,
   useConfig,
@@ -24,7 +23,6 @@ vi.mock('swr', () => ({
 const mockClearCurrentUser = vi.mocked(clearCurrentUser);
 const mockNavigate = vi.mocked(navigate);
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
-const mockRefetchCurrentUser = vi.mocked(refetchCurrentUser);
 const mockSetUserLanguage = vi.mocked(setUserLanguage);
 const mockUseConfig = vi.mocked(useConfig);
 const mockUseConnectivity = vi.mocked(useConnectivity);
@@ -42,7 +40,7 @@ describe('RedirectLogout', () => {
 
     mockUseConfig.mockReturnValue({
       provider: {
-        type: '',
+        type: 'basic',
       },
     });
 
@@ -59,7 +57,6 @@ describe('RedirectLogout', () => {
     await waitFor(() => expect(mutate).toHaveBeenCalled());
 
     expect(mockClearCurrentUser).toHaveBeenCalled();
-    expect(mockRefetchCurrentUser).toHaveBeenCalled();
     expect(mockSetUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
       authenticated: false,
@@ -84,7 +81,6 @@ describe('RedirectLogout', () => {
     await waitFor(() => expect(mutate).toHaveBeenCalled());
 
     expect(mockClearCurrentUser).toHaveBeenCalled();
-    expect(mockRefetchCurrentUser).toHaveBeenCalled();
     expect(mockSetUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
       authenticated: false,
@@ -167,5 +163,37 @@ describe('RedirectLogout', () => {
     render(<RedirectLogout />);
 
     expect(mockNavigate).toHaveBeenCalledTimes(0);
+  });
+
+  it('should redirect to login if user is not authenticated and the provider is custom', async () => {
+    mockUseSession.mockReturnValue({
+      authenticated: false,
+    } as Session);
+    mockUseConfig.mockReturnValue({
+      provider: {
+        type: 'custom',
+        loginUrl: 'http://custom-url.com',
+      },
+    });
+
+    render(<RedirectLogout />);
+
+    expect(mockNavigate).toHaveBeenCalledWith({ to: 'http://custom-url.com' });
+  });
+
+  it('should redirect to login if user is authenticated and the provider is custom', async () => {
+    mockUseSession.mockReturnValue({
+      authenticated: true,
+    } as Session);
+    mockUseConfig.mockReturnValue({
+      provider: {
+        type: 'custom',
+        loginUrl: 'https://custom-url.com',
+      },
+    });
+
+    render(<RedirectLogout />);
+
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith({ to: 'https://custom-url.com' }));
   });
 });

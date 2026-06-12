@@ -4,7 +4,7 @@
 
 > **navigateAndLaunchWorkspace**(`options`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:402](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L402)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:407](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L407)
 
 Use this function to navigate to a new page and launch a workspace on that page.
 

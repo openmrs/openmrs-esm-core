@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import type rspack from '@rspack/core';
 import { copyFileSync, existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { basename, join, parse, resolve } from 'path';
@@ -55,7 +56,7 @@ function addConfigFilesFromPaths(configPaths: Array<string>, targetDir: string) 
 }
 
 export async function runBuild(args: BuildArgs) {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const require = createRequire(import.meta.url);
   const rspack: RspackExport = require('@rspack/core');
   const buildConfig = loadBuildConfig(args.buildConfig);
   const configUrls = buildConfig.configUrls || args.configUrls;

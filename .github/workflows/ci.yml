@@ -10,156 +10,26 @@ on:
     types:
       - created
 
-env:
-  TURBO_API: 'http://127.0.0.1:9080'
-  TURBO_TOKEN: 'turbo-token'
-  TURBO_TEAM: ${{ github.repository_owner }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-
-    steps:
-      - uses: actions/checkout@v6
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          registry-url: "https://registry.npmjs.org"
-          node-version: 20
-
-      - name: 💾 Cache dependencies
-        id: cache
-        uses: actions/cache@v5
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-
-      - name: 📦 Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
-
-      - name: 🚀 Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ env.TURBO_TOKEN }}
-
-      - name: 🏗️ Run build
-        run: yarn turbo run build --color --concurrency=5
-
-      - name: 🔍 Run lint, tests and typecheck code
-        run: yarn run verify --concurrency=5
-
-  pre_release:
-    runs-on: ubuntu-latest
-    needs: build
-
-    if: ${{ (github.event.head_commit == null ||
-          !startsWith(github.event.head_commit.message, '(chore) Release v')) &&
-          (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
-
-    steps:
-      - uses: actions/checkout@v6
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          registry-url: "https://registry.npmjs.org"
-          node-version: 20
-
-      - name: 💾 Cache dependencies
-        id: cache
-        uses: actions/cache@v5
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-
-      - name: 📦 Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
-
-      - name: 🚀 Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ env.TURBO_TOKEN }}
-
-      - name: 🏷️ Version
-        # This command CANNOT be run in parallel
-        run: yarn workspaces foreach --worktree --topological --exclude @openmrs/esm-core version "$(node -e "console.log(require('semver').inc(require('./package.json').version, 'patch'))")-pre.${{ github.run_number }}"
-
-      - name: 🏗️ Build
-        run: yarn turbo run build --color --concurrency=5
-
-      - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
-      - run: git add . && git commit -m "Prerelease version" --no-verify
-
-      - name: 🚀 Pre-release
-        run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:publish-next
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
-      - name: 📤 Upload Artifacts
-        uses: actions/upload-artifact@v6
-        with:
-          name: packages
-          path: |
-            packages/**/dist
+    uses: openmrs/openmrs-contrib-gha-workflows/.github/workflows/build-frontend-module.yml@main
+    with:
+      enable_turborepo_cache: true
+      verify_command: 'yarn verify --concurrency=5'
 
   release:
-    runs-on: ubuntu-latest
     needs: build
-
-    if: ${{ github.event_name == 'release' }}
-
-    steps:
-      - uses: actions/checkout@v6
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          registry-url: "https://registry.npmjs.org"
-          node-version: 20
-
-      - name: 💾 Cache dependencies
-        id: cache
-        uses: actions/cache@v5
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-
-      - name: 📦 Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
-
-      - name: 🚀 Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          server-token: ${{ env.TURBO_TOKEN }}
-
-      - name: 🏗️ Build
-        run: yarn turbo run build --color --concurrency=5
-
-      - name: 🚀 Publish
-        run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
-  deploy_app_shell:
-    runs-on: ubuntu-latest
-
-    needs: pre_release
-
-    if: ${{ (github.event.head_commit == null ||
-          !startsWith(github.event.head_commit.message, '(release)')) &&
-          (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
-
-    steps:
-      - name: 🚀 Trigger RefApp Build
-        uses: fjogeleit/http-request-action@v2
-        continue-on-error: true
-        with:
-          url: https://ci.openmrs.org/rest/api/latest/queue/O3-BF
-          method: "POST"
-          customHeaders: '{ "Authorization": "Bearer ${{ secrets.BAMBOO_TOKEN }}" }'
+    uses: openmrs/openmrs-contrib-gha-workflows/.github/workflows/release-frontend-module.yml@main
+    with:
+      enable_turborepo_cache: true
+      pre_release_version_command: 'yarn workspaces foreach --worktree --topological --exclude @openmrs/esm-core version "$PRERELEASE_VERSION"'
+      pre_release_publish_command: 'yarn run ci:publish-next'
+      release_publish_command: 'yarn run ci:publish'
+      artifact_path: 'packages/**/dist'
+    secrets:
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      BOT_PAT: ${{ secrets.OMRS_BOT_GH_TOKEN }}

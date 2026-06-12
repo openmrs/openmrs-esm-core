@@ -31,7 +31,7 @@ describe('ChangeLocationLink', () => {
     await user.click(changeLocationButton);
 
     expect(mockNavigate).toHaveBeenCalledWith({
-      to: '${openmrsSpaBase}/login/location?returnToUrl=/openmrs/spa/home&update=true',
+      to: '${openmrsSpaBase}/login/location?returnToUrl=%2Fopenmrs%2Fspa%2Fhome&update=true',
     });
   });
 });

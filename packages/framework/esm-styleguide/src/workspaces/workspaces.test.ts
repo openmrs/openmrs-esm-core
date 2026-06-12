@@ -56,17 +56,17 @@ describe('workspace system', () => {
       launchWorkspace('POC HIV Form', { workspaceTitle: 'POC HIV Form' });
 
       expect(store.getState().openWorkspaces.length).toEqual(1);
-
-      const POCHIVForm = store.getState().openWorkspaces[0];
-      expect(POCHIVForm.name).toBe('POC HIV Form');
-      expect(POCHIVForm.additionalProps['workspaceTitle']).toBe('POC HIV Form');
+      expect(store.getState().openWorkspaces[0].name).toBe('POC HIV Form');
+      expect(store.getState().openWorkspaces[0].additionalProps['workspaceTitle']).toBe('POC HIV Form');
 
       launchWorkspace('POC HIV Form', { workspaceTitle: 'POC HIV Form Updated' });
 
-      expect(POCHIVForm.additionalProps['workspaceTitle']).toBe('POC HIV Form Updated');
+      // Re-launching with new props creates a new object reference in the store,
+      // so we must read from the store again rather than using a stale reference.
       expect(store.getState().openWorkspaces.length).toEqual(1);
+      expect(store.getState().openWorkspaces[0].additionalProps['workspaceTitle']).toBe('POC HIV Form Updated');
 
-      POCHIVForm.closeWorkspace();
+      store.getState().openWorkspaces[0].closeWorkspace();
 
       expect(store.getState().openWorkspaces.length).toEqual(0);
     });

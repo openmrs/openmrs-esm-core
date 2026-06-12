@@ -2,19 +2,17 @@ import { start, triggerAppChange } from 'single-spa';
 import { type CalendarIdentifier } from '@internationalized/date';
 import {
   activateOfflineCapability,
-  canAccessStorage,
   dispatchConnectivityChanged,
   dispatchPrecacheStaticDependencies,
   type ExtensionDefinition,
   finishRegisteringAllApps,
   fireOpenmrsEvent,
   getConfig,
+  getCurrentPageMap,
+  getCurrentRouteMap,
   getCurrentUser,
   integrateBreakpoints,
   interpolateUrl,
-  isOpenmrsAppRoutes,
-  isOpenmrsRoutes,
-  localStorageRoutesPrefix,
   messageOmrsServiceWorker,
   openmrsFetch,
   provide,
@@ -30,7 +28,9 @@ import {
   restBaseUrl,
   setupApiModule,
   setupHistory,
+  setupImportMapOverrides,
   setupModals,
+  setupRouteMapOverrides,
   showActionableNotification,
   showNotification,
   showSnackbar,
@@ -43,8 +43,6 @@ import {
   subscribeToastShown,
   tryRegisterExtension,
   type Config,
-  type OpenmrsAppRoutes,
-  type OpenmrsRoutes,
   type StyleguideConfigObject,
 } from '@openmrs/esm-framework/src/internal';
 import { setupI18n } from './locale';
@@ -65,106 +63,21 @@ const REGISTRATION_PROMISES = Symbol('openmrs_registration_promises');
  * as the registry of all apps in the application.
  */
 async function setupApps() {
-  const scriptTags = document.querySelectorAll<HTMLScriptElement>("script[type='openmrs-routes']");
-
-  const promises: Array<Promise<OpenmrsRoutes>> = [];
-  for (let i = 0; i < scriptTags.length; i++) {
-    promises.push(
-      (async (scriptTag) => {
-        let routes: OpenmrsRoutes | undefined = undefined;
-        try {
-          if (scriptTag.textContent) {
-            routes = JSON.parse(scriptTag.textContent) as OpenmrsRoutes;
-          } else if (scriptTag.src) {
-            routes = (await openmrsFetch<OpenmrsRoutes>(scriptTag.src)).data;
-          }
-        } catch (e) {
-          console.error(`Caught error while loading routes from ${scriptTag.src ?? 'JSON script tag content'}`, e);
-
-          return {};
-        }
-
-        return Promise.resolve(routes ?? {});
-      })(scriptTags.item(i)),
-    );
-  }
-
-  if (canAccessStorage()) {
-    // load routes overrides from localStorage if any
-    const localStorage = window.localStorage;
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key?.startsWith(localStorageRoutesPrefix)) {
-        const localOverride = localStorage.getItem(key);
-        if (localOverride) {
-          try {
-            const maybeOpenmrsRoutes = JSON.parse(localOverride);
-            if (isOpenmrsAppRoutes(maybeOpenmrsRoutes)) {
-              promises.push(
-                Promise.resolve<OpenmrsRoutes>({
-                  [key.slice(localStorageRoutesPrefix.length)]: maybeOpenmrsRoutes,
-                }),
-              );
-            } else if (typeof maybeOpenmrsRoutes === 'string' && maybeOpenmrsRoutes.startsWith('http')) {
-              promises.push(
-                openmrsFetch<OpenmrsAppRoutes>(maybeOpenmrsRoutes)
-                  .then((response) => {
-                    if (isOpenmrsAppRoutes(response.data)) {
-                      return Promise.resolve({
-                        [key.slice(localStorageRoutesPrefix.length)]: response.data,
-                      });
-                    }
-
-                    return Promise.reject(
-                      `${maybeOpenmrsRoutes} did not resolve to a valid OpenmrsAppRoutes JSON object`,
-                    );
-                  })
-                  .catch((reason) => {
-                    console.warn(
-                      `Failed to fetch route overrides for ${key.slice(localStorageRoutesPrefix.length)}`,
-                      reason,
-                    );
-
-                    // still fail the promise
-                    throw reason;
-                  }),
-              );
-            } else {
-              console.warn(
-                `Route override for ${key.slice(
-                  localStorageRoutesPrefix.length,
-                )} could not be handled as it was neither a JSON object nor a URL string`,
-                localOverride,
-              );
-            }
-          } catch (e) {
-            console.error(`Error parsing local route override for ${key}`, e);
-          }
-        }
-      }
-    }
-  }
-
-  const routes: OpenmrsRoutes = (await Promise.allSettled(promises))
-    .filter((p) => p.status === 'fulfilled')
-    .map((p) => (p as PromiseFulfilledResult<OpenmrsRoutes>).value)
-    .filter(isOpenmrsRoutes)
-    .reduce(
-      (accumulatedRoutes, routes) => ({
-        ...accumulatedRoutes,
-        ...routes,
-      }),
-      {},
-    );
+  await setupRouteMapOverrides();
+  const routes = await getCurrentRouteMap();
 
   const modules: typeof window.installedModules = [];
-  const registrationPromises = Object.entries(routes).map(async ([module, routes]) => {
-    modules.push([module, routes]);
-    registerApp(module, routes);
+  const registrationPromises = Object.entries(routes).map(async ([module, appRoutes]) => {
+    modules.push([module, appRoutes]);
+    registerApp(module, appRoutes);
   });
 
   window[REGISTRATION_PROMISES] = Promise.all(registrationPromises);
-  window.installedModules = modules;
+  Object.defineProperty(window, 'installedModules', {
+    value: modules,
+    writable: false,
+    configurable: false,
+  });
 }
 
 /**
@@ -385,7 +298,7 @@ async function precacheGlobalStaticDependencies() {
 }
 
 async function precacheImportMap() {
-  const importMap = await window.importMapOverrides.getCurrentPageMap();
+  const importMap = await getCurrentPageMap();
   await messageOmrsServiceWorker({
     type: 'onImportMapChanged',
     importMap,
@@ -409,6 +322,8 @@ function setupOfflineCssClasses() {
 }
 
 export function run(configUrls: Array<string>) {
+  setupImportMapOverrides();
+
   const offlineEnabled = window.offlineEnabled;
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
@@ -441,7 +356,7 @@ export function run(configUrls: Array<string>) {
 
     return polyfillReady
       .then(setupApps)
-      .then(() => finishRegisteringAllApps())
+      .then(() => Promise.resolve(finishRegisteringAllApps()))
       .then(offlineEnabled ? setupOfflineCssClasses : undefined)
       .then(offlineEnabled ? registerOfflineHandlers : undefined)
       .then(provideConfigs)

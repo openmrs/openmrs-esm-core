@@ -1,57 +1,33 @@
 /** @module @category Utility */
-import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
-import objectSupport from 'dayjs/plugin/objectSupport.js';
-import { omit } from 'lodash-es';
-import { getLocale } from './get-locale';
-
-dayjs.extend(objectSupport);
+import { formatDuration, parseDateInput } from './dates/date-util';
 
 /**
- * Gets a human readable and locale supported representation of a person's age, given their birthDate,
- * The representation logic follows the guideline here:
- * https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
- * (See Tables 7 and 8)
+ * Gets the age of a person as a structured duration object, following NHS Digital guidelines
+ * (Tables 7 and 8) for which units to include based on the person's age.
  *
- * @param birthDate The birthDate. If birthDate is null, returns null.
- * @param currentDate Optional. If provided, calculates the age of the person at the provided currentDate (instead of now).
- * @returns A human-readable string version of the age.
+ * @see https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
+ * @param birthDate The birthDate. If null, returns null.
+ * @param currentDate Optional. If provided, calculates the age at the provided date instead of now.
+ * @returns A DurationInput object, or null if birthDate is null or unparseable.
+ *
+ * @example
+ * // For infants, returns fine-grained units
+ * ageAsDuration('2024-07-29', '2024-07-30') // => { hours: 24 }
+ *
+ * @example
+ * // For adults (>= 18), returns years only
+ * ageAsDuration('2000-01-15', '2024-07-30') // => { years: 24 }
  */
-export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType = dayjs()): string | null {
-  if (birthDate == null) {
-    return null;
-  }
-
-  const locale = getLocale();
-
+export function ageAsDuration(
+  birthDate: dayjs.ConfigType,
+  currentDate: dayjs.ConfigType = dayjs(),
+): Intl.DurationInput | null {
   const to = dayjs(currentDate);
-  let from: dayjs.Dayjs;
+  const from = parseDateInput(birthDate, to);
 
-  if (typeof birthDate === 'string') {
-    let parsedDate = attempt(birthDate, locale);
-    if (parsedDate.invalid) {
-      console.warn(`Could not interpret '${birthDate}' as a date`);
-      return null;
-    }
-
-    // hack here but any date interprets 2000-01, etc. as yyyy-dd rather than yyyy-mm
-    if (parsedDate.day && !parsedDate.month) {
-      parsedDate = Object.assign({}, omit(parsedDate, 'day'), { month: parsedDate.day });
-    }
-
-    // dayjs' object support uses 0-based months, whereas any-date-parser uses 1-based months
-    if (parsedDate.month) {
-      parsedDate.month -= 1;
-    }
-
-    // in dayjs day is day of week; in any-date-parser, its day of month, so we need to convert them
-    if (parsedDate.day) {
-      parsedDate = Object.assign({}, omit(parsedDate, 'day'), { date: parsedDate.day });
-    }
-
-    from = dayjs(to).set(parsedDate);
-  } else {
-    from = dayjs(birthDate);
+  if (from == null) {
+    return null;
   }
 
   const hourDiff = to.diff(from, 'hours');
@@ -61,14 +37,9 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
   const yearDiff = to.diff(from, 'years');
 
   const duration: Intl.DurationInput = {};
-  const options: Intl.DurationFormatOptions = { style: 'short', localeMatcher: 'lookup' };
 
   if (hourDiff < 2) {
-    const minuteDiff = to.diff(from, 'minutes');
-    duration['minutes'] = minuteDiff;
-    if (minuteDiff === 0) {
-      options.minutesDisplay = 'always';
-    }
+    duration['minutes'] = to.diff(from, 'minutes');
   } else if (dayDiff < 2) {
     duration['hours'] = hourDiff;
   } else if (weekDiff < 4) {
@@ -89,5 +60,38 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
     duration['years'] = yearDiff;
   }
 
-  return new Intl.DurationFormat(locale, options).format(duration);
+  return duration;
+}
+
+/**
+ * Gets a human readable and locale supported representation of a person's age, given their birthDate,
+ * The representation logic follows the guideline here:
+ * https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
+ * (See Tables 7 and 8)
+ *
+ * @param birthDate The birthDate. If birthDate is null, returns null.
+ * @param currentDate Optional. If provided, calculates the age of the person at the provided currentDate (instead of now).
+ * @returns A human-readable string version of the age.
+ *
+ * @example
+ * age('2020-02-29', '2024-07-30') // => '4 yrs, 5 mths'
+ *
+ * @example
+ * // String dates with partial precision are supported
+ * age('2000', '2024-07-30') // => '24 yrs'
+ */
+export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType = dayjs()): string | null {
+  const durationInput = ageAsDuration(birthDate, currentDate);
+
+  if (durationInput == null) {
+    return null;
+  }
+
+  const options: Intl.DurationFormatOptions = { style: 'short', localeMatcher: 'lookup' };
+
+  if ('minutes' in durationInput && durationInput.minutes === 0) {
+    options.minutesDisplay = 'always';
+  }
+
+  return formatDuration(durationInput, options);
 }

@@ -2,7 +2,7 @@
 
 # Interface: ResourceLoader()\<T\>
 
-Defined in: [packages/framework/esm-globals/src/types.ts:419](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L419)
+Defined in: [packages/framework/esm-globals/src/types.ts:403](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L403)
 
 ## Type Parameters
 
@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:419](https://github.com
 
 > **ResourceLoader**(): `Promise`\<`T`\>
 
-Defined in: [packages/framework/esm-globals/src/types.ts:420](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L420)
+Defined in: [packages/framework/esm-globals/src/types.ts:404](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L404)
 
 ## Returns
 

@@ -4,9 +4,7 @@
 
 > **closeWorkspaceGroup2**(`discardUnsavedChanges?`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L75)
-
-**`Experimental`**
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L73)
 
 Closes the workspace group that is currently opened. Note that only one workspace group
 may be opened at any given time

@@ -8,14 +8,25 @@ test('Logout as Admin user', async ({ page }) => {
 
   await test.step('When I visit the home page', async () => {
     await homePage.goto();
+    await page.waitForURL(/\/home\/\w+/);
   });
 
-  await test.step('And I click the `User` button', async () => {
-    await page.getByRole('button', { name: /My Account/i }).click();
-  });
+  await test.step('And I click the `User` button and log out', async () => {
+    const myAccountButton = page.getByRole('button', { name: /My Account/i });
+    const userMenu = page.locator('[aria-label="User menu"].cds--header-panel--expanded');
 
-  await test.step('And I click the `Logout` button', async () => {
-    await page.getByRole('button', { name: /logout/i }).click();
+    // The user menu is rendered by a lazily-mounted extension. The first click can
+    // land the instant the button mounts, before the navbar's React tree is
+    // interactive, so the toggle is dropped and the panel never expands. Nothing
+    // re-fires it, so a single click times out. Re-click until the panel opens.
+    await expect(async () => {
+      if (!(await userMenu.isVisible())) {
+        await myAccountButton.click();
+      }
+      await expect(userMenu).toBeVisible({ timeout: 2_000 });
+    }).toPass({ timeout: 30_000 });
+
+    await userMenu.getByRole('button', { name: /logout/i }).click();
   });
 
   await test.step('Then I should be redirected to the login page', async () => {

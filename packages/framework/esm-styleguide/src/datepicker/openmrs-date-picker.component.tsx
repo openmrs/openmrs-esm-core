@@ -129,7 +129,9 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                     id={hasVisibleLabel ? id : undefined}
                     ref={ref}
                     className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
+                      [styles.inputWrapperSm]: size === 'sm',
                       [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
+                      [styles.inputWrapperLg]: size === 'lg',
                     })}
                   >
                     {(segment) => {
@@ -140,7 +142,13 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                       );
                     }}
                   </DatePickerInput>
-                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
+                  <Button
+                    className={classNames(styles.flatButton, {
+                      [styles.flatButtonSm]: size === 'sm',
+                      [styles.flatButtonMd]: size === 'md' || !size || size.length === 0,
+                      [styles.flatButtonLg]: size === 'lg',
+                    })}
+                  >
                     <DatePickerIcon />
                   </Button>
                 </Group>

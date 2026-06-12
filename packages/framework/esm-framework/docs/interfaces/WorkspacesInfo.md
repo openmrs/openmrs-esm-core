@@ -2,7 +2,7 @@
 
 # Interface: WorkspacesInfo
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:551](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L551)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:556](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L556)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:551]
 
 > **active**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:552](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L552)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:557](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L557)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:552]
 
 > **prompt**: `null` \| [`Prompt`](Prompt.md)
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:553](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L553)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:558](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L558)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:553]
 
 > `optional` **workspaceGroup**: `object`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:556](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L556)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:561](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L561)
 
 #### cleanup()?
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:556]
 
 > **workspaces**: [`OpenWorkspace`](OpenWorkspace.md)[]
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:555](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L555)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:560](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L560)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:555]
 
 > **workspaceWindowState**: [`WorkspaceWindowState`](../type-aliases/WorkspaceWindowState.md)
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:554](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L554)
+Defined in: [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:559](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L559)

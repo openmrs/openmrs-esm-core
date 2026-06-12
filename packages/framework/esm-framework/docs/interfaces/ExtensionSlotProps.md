@@ -238,7 +238,7 @@ aria-owns.
 
 ### aria-current?
 
-> `optional` **aria-current**: `boolean` \| `"date"` \| `"false"` \| `"time"` \| `"true"` \| `"location"` \| `"page"` \| `"step"`
+> `optional` **aria-current**: `boolean` \| `"false"` \| `"time"` \| `"date"` \| `"true"` \| `"location"` \| `"page"` \| `"step"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2661
 
@@ -1187,7 +1187,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2942
 
 ### inputMode?
 
-> `optional` **inputMode**: `"search"` \| `"numeric"` \| `"text"` \| `"none"` \| `"url"` \| `"tel"` \| `"email"` \| `"decimal"`
+> `optional` **inputMode**: `"numeric"` \| `"search"` \| `"text"` \| `"none"` \| `"url"` \| `"tel"` \| `"email"` \| `"decimal"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2969
 
