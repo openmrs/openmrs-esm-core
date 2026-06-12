@@ -204,7 +204,10 @@ async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string,
   const version = (packageJson.version as string) ?? '0.0.0';
   const entryModule = packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
-  const sourceDir = dirname(entryModule);
+  let sourceDir = dirname(entryModule);
+  if (sourceDir === '.') {
+    sourceDir = '';
+  }
   let outputDir = `${targetDir}-${version}`;
   await mkdir(outputDir, { recursive: true });
 
@@ -270,7 +273,7 @@ export async function runAssemble(args: AssembleArgs) {
       const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, baseDirName));
       const dirName = `${baseDirName}-${version}`;
 
-      // The routes are how the framework ensure that it loads the correct module before any pages
+      // The routes are how the framework ensures that it loads the correct module before any pages
       // or extensions; if it's missing the app won't load in the browser.
       const appRoutes = resolve(args.target, dirName, 'routes.json');
       if (existsSync(appRoutes)) {
@@ -308,7 +311,7 @@ export async function runAssemble(args: AssembleArgs) {
 
   if (entrypointErrors.length > 0) {
     throw new Error(
-      `Assemble failed because the following entrypoints could not be found. Pass --no-ensure-entrypoints to ` +
+      `Assemble failed because the following entrypoints could not be found or the routes could not be processed. Pass --no-ensure-entrypoints to ` +
         `downgrade these to warnings.\n\n${entrypointErrors.join('\n\n')}`,
     );
   }

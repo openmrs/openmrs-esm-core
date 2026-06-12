@@ -51,9 +51,6 @@ import { contentHash, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 import { runAssemble, type AssembleArgs } from './assemble';
 
-// Many of these functions have complex overloaded signatures that make vi.mocked()
-// produce types no mock value can satisfy. Using vi.Mock lets us call mockResolvedValue
-// etc. without fighting overload resolution.
 const mockReadFile = vi.mocked(readFile);
 const mockWriteFile = vi.mocked(writeFile);
 const mockExistsSync = vi.mocked(existsSync);
