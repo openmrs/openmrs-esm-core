@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, type Mock, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { resolve } from 'node:path';
 
 vi.mock('node:fs/promises', () => ({
