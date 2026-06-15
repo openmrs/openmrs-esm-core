@@ -205,9 +205,6 @@ async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string,
   const entryModule = packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
   let sourceDir = dirname(entryModule);
-  if (sourceDir === '.') {
-    sourceDir = '';
-  }
   let outputDir = `${targetDir}-${version}`;
   await mkdir(outputDir, { recursive: true });
 
