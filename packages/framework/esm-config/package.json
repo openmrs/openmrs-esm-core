@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-config",
-  "version": "9.0.2",
+  "version": "10.0.0",
   "license": "MPL-2.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
   "type": "module",
@@ -56,9 +56,9 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "9.x",
-    "@openmrs/esm-state": "9.x",
-    "@openmrs/esm-utils": "9.x",
+    "@openmrs/esm-globals": "workspace:^",
+    "@openmrs/esm-state": "workspace:^",
+    "@openmrs/esm-utils": "workspace:^",
     "single-spa": "6.x"
   },
   "devDependencies": {

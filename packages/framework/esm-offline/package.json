@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-offline",
-  "version": "9.0.2",
+  "version": "10.0.0",
   "license": "MPL-2.0",
   "description": "Helper utilities for OpenMRS",
   "type": "module",
@@ -49,9 +49,9 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "9.x",
-    "@openmrs/esm-globals": "9.x",
-    "@openmrs/esm-state": "9.x",
+    "@openmrs/esm-api": "workspace:^",
+    "@openmrs/esm-globals": "workspace:^",
+    "@openmrs/esm-state": "workspace:^",
     "rxjs": "6.x"
   },
   "dependencies": {
