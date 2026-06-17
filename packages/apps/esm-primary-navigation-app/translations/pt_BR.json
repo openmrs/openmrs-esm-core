@@ -2,13 +2,13 @@
   "AppMenuTooltip": "Menu do Aplicativo",
   "cancel": "Cancelar",
   "change": "Alterar",
-  "changeDefaultLocale": "Update your default locale",
-  "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
+  "changeDefaultLocale": "Atualize seu local padrão",
+  "changeDefaultLocaleExplanation": "Deixe esta opção desmarcada para alterar o idioma apenas nesta sessão",
   "changeLanguage": "Alterar idioma",
   "changingLanguage": "Alterando idioma",
-  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
+  "noPathInDashboardExtension": "Não é possível renderizar a extensão do painel sem que a propriedade \"path\" esteja definida no esquema de configuração",
   "notifications": "Notificações",
   "userMenu": "Menu do usuário",
-  "userMenuOptions": "User menu options",
+  "userMenuOptions": "Opções do menu do usuário",
   "userMenuTooltip": "Minha Conta"
 }
