@@ -4,16 +4,22 @@ import React from 'react';
 import { Observable, type Subscriber } from 'rxjs';
 import type { LoggedInUser, Privilege, Role } from '@openmrs/esm-api';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { getCurrentUser, userHasAccess } from '@openmrs/esm-api';
+import { getCurrentUser, sessionStore, userHasAccess } from '@openmrs/esm-api';
 import { UserHasAccess } from './UserHasAccess';
 
-// Mock getCurrentUser and userHasAccess
+// Mock getCurrentUser, userHasAccess, and sessionStore
 const mockGetCurrentUser = vi.fn();
 const mockUserHasAccess = vi.fn();
+const mockSessionStoreGetState = vi.fn().mockReturnValue({ loaded: false, session: null });
+const mockSessionStoreSubscribe = vi.fn().mockReturnValue(() => {});
 
 vi.mock('@openmrs/esm-api', () => ({
   getCurrentUser: (...args: Parameters<typeof getCurrentUser>) => mockGetCurrentUser(...args),
   userHasAccess: (...args: Parameters<typeof userHasAccess>) => mockUserHasAccess(...args),
+  sessionStore: {
+    getState: (...args: Parameters<typeof sessionStore.getState>) => mockSessionStoreGetState(...args),
+    subscribe: (...args: Parameters<typeof sessionStore.subscribe>) => mockSessionStoreSubscribe(...args),
+  },
 }));
 
 // Helper to create a mock user
@@ -45,6 +51,9 @@ function createMockUser(privileges: string[] = [], roles: string[] = []): Logged
 describe('UserHasAccess', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Default: session not yet loaded
+    mockSessionStoreGetState.mockReturnValue({ loaded: false, session: null });
+    mockSessionStoreSubscribe.mockReturnValue(() => {});
   });
 
   afterAll(() => {
@@ -99,6 +108,29 @@ describe('UserHasAccess', () => {
 
       expect(screen.getByText('First Child')).toBeInTheDocument();
       expect(screen.getByText('Second Child')).toBeInTheDocument();
+    });
+
+    it('should render children synchronously on first render when session is already loaded', () => {
+      // Simulates in-app navigation: session was loaded before this component mounted.
+      // Without the synchronous useState initializer, the first render would show null
+      // because useEffect hasn't fired yet, causing a visible flash on slow networks.
+      const user = createMockUser(['Edit Patients']);
+
+      mockSessionStoreGetState.mockReturnValue({
+        loaded: true,
+        session: { user, authenticated: true, sessionId: 'test-session' },
+      });
+      // Observable never emits — proves the initial render doesn't depend on it
+      mockGetCurrentUser.mockReturnValue(new Observable(() => {}));
+      mockUserHasAccess.mockReturnValue(true);
+
+      render(
+        <UserHasAccess privilege="Edit Patients">
+          <div>Protected Content</div>
+        </UserHasAccess>,
+      );
+
+      expect(screen.getByText('Protected Content')).toBeInTheDocument();
     });
   });
 
