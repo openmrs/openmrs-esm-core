@@ -236,6 +236,37 @@ describe('assemble survey mode (integration with real @inquirer/prompts)', () =>
     expect(mockPacoteManifest).toHaveBeenCalledWith('@openmrs/esm-home-app@1.0.0', expect.any(Object));
   });
 
+  it('extracts a package whose entry module lives at the package root', async () => {
+    mockNpmFetchJson.mockResolvedValue({
+      objects: [{ package: { name: '@openmrs/esm-home-app', version: '1.0.0' } }],
+      total: 1,
+    });
+
+    mockPacoteManifest.mockResolvedValue({
+      _resolved: 'https://r.test/app.tgz',
+      _integrity: 'sha512-test',
+    });
+    mockPacoteTarball.mockResolvedValue(Buffer.from('tarball'));
+    // A root-level entry (e.g. "main": "index.js") makes dirname() resolve to '.'.
+    mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-home-app', '1.0.0', 'index.js'));
+    mockExistsSync.mockReturnValue(false);
+
+    const resultPromise = runAssemble(defaultArgs());
+
+    await screen.next();
+    screen.keypress('space');
+    screen.keypress('enter');
+
+    await screen.next();
+    screen.keypress('enter');
+
+    await resultPromise;
+
+    // The root-level entry file must be written out rather than silently skipped.
+    const entryWrite = mockWriteFile.mock.calls.find(([path]) => String(path).endsWith('index.js'));
+    expect(entryWrite).toBeDefined();
+  });
+
   it('selecting multiple packages prompts for version of each', async () => {
     mockNpmFetchJson.mockResolvedValue({
       objects: [

@@ -204,16 +204,21 @@ async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string,
   const version = (packageJson.version as string) ?? '0.0.0';
   const entryModule = packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
-  let sourceDir = dirname(entryModule);
-  let outputDir = `${targetDir}-${version}`;
+  const sourceDir = dirname(entryModule);
+  const outputDir = `${targetDir}-${version}`;
   await mkdir(outputDir, { recursive: true });
+
+  // When the entry module lives at the package root, dirname() yields '.' (or '' for an
+  // empty entry). In that case the files sit directly under `package/` with no intermediate
+  // directory, so the prefix must be the package root itself rather than `package/.`.
+  const sourcePrefix = sourceDir === '.' || sourceDir === '' ? `${packageRoot}/` : `${packageRoot}/${sourceDir}/`;
 
   await Promise.all(
     Object.keys(files)
-      .filter((m) => m.startsWith(`${packageRoot}/${sourceDir}`))
+      .filter((m) => m.startsWith(sourcePrefix))
       .map(async (m) => {
         const content = files[m];
-        const fileName = m.replace(`${packageRoot}/${sourceDir}/`, '');
+        const fileName = m.replace(sourcePrefix, '');
         const targetFile = resolve(outputDir, fileName);
         await mkdir(dirname(targetFile), { recursive: true });
         await writeFile(targetFile, content);
