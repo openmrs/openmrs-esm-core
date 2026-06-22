@@ -164,6 +164,11 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
         if (location) {
           navigate({ to: location });
         }
+
+        /* We don't want this promise to resolve or reject because we are redirecting
+         * the user to a new page (e.g, TOTP Setup screen). Returning a pending promise
+         * confirm the code just waits silently while the navigation take place.
+         */
         return new Promise<FetchResponse<T>>(() => {});
       }
 
