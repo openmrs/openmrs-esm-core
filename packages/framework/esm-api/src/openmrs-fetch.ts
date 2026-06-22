@@ -158,23 +158,15 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     const response = r as FetchResponse<T>;
     const { redirectAuthFailure, followRedirects } = await getConfig<EsmApiConfigObject>('@openmrs/esm-api');
 
-    if (url === makeUrl(sessionEndpoint) && response.headers?.has?.('location')) {
-      const location = response.headers.get('location');
-
-      if (location) {
-        if (!response.ok) {
-          clearHistory();
-        }
-        navigate({ to: location });
-
-        if (!response.ok && redirectAuthFailure.resolvePromise) {
-          return Promise.resolve() as unknown as Promise<FetchResponse<T>>;
+    if (response.ok) {
+      if (url === makeUrl(sessionEndpoint) && response.headers.has('location')) {
+        const location = response.headers.get('location');
+        if (location) {
+          navigate({ to: location });
         }
         return new Promise<FetchResponse<T>>(() => {});
       }
-    }
 
-    if (response.ok) {
       if (response.status === 204) {
         if (followRedirects && response.headers.has('location')) {
           const location = response.headers.get('location');

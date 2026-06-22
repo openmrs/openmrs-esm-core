@@ -131,6 +131,10 @@ describe('openmrsFetch', () => {
       Promise.resolve({
         ok: true,
         status: 200,
+        headers: {
+          has: () => false,
+          get: () => null,
+        },
         clone: () => ({
           text: () => Promise.resolve('{ "value": "hi" }'),
         }),
@@ -148,6 +152,10 @@ describe('openmrsFetch', () => {
       Promise.resolve({
         ok: true,
         status: 204,
+        headers: {
+          has: () => false,
+          get: () => null,
+        },
         json: () => Promise.reject(Error("No json for HTTP 204's!!")),
       }),
     );
@@ -336,6 +344,10 @@ describe('openmrsObservableFetch', () => {
       Promise.resolve({
         ok: true,
         status: 200,
+        headers: {
+          has: () => false,
+          get: () => null,
+        },
         clone: () => ({
           text: () => Promise.resolve('{"value": "hi"}'),
         }),
