@@ -22,6 +22,7 @@ describe('openmrsFetch', () => {
           errors: [401],
           resolvePromise: false,
         },
+        followRedirects: true,
       }),
     );
     window.openmrsBase = '/openmrs';
@@ -259,6 +260,9 @@ describe('openmrsFetch', () => {
         headers: {
           has: (name: string) => name.toLowerCase() === 'location',
           get: (name: string) => (name.toLowerCase() === 'location' ? '/openmrs/spa/login' : null),
+        },
+        clone() {
+          return this;
         },
         text: () => Promise.resolve(''),
       }),

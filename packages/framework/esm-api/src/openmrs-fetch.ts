@@ -159,27 +159,17 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     const { redirectAuthFailure, followRedirects } = await getConfig<EsmApiConfigObject>('@openmrs/esm-api');
 
     if (response.ok) {
-      if (url === makeUrl(sessionEndpoint) && response.headers.has('location')) {
+      const isSessionRedirect = url === makeUrl(sessionEndpoint) && response.headers.has('location');
+      const is204Redirect = response.status === 204 && response.headers.has('location');
+
+      if (followRedirects && (isSessionRedirect || is204Redirect)) {
         const location = response.headers.get('location');
         if (location) {
           navigate({ to: location });
         }
-
-        /* We don't want this promise to resolve or reject because we are redirecting
-         * the user to a new page (e.g, TOTP Setup screen). Returning a pending promise
-         * confirm the code just waits silently while the navigation take place.
-         */
-        return new Promise<FetchResponse<T>>(() => {});
       }
 
       if (response.status === 204) {
-        if (followRedirects && response.headers.has('location')) {
-          const location = response.headers.get('location');
-          if (location) {
-            navigate({ to: location });
-          }
-        }
-
         /* HTTP 204 - No Content
          * We should not try to download the empty response as json. Instead,
          * we return null since there is no response body.
