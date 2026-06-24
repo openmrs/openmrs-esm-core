@@ -159,14 +159,11 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     const { redirectAuthFailure, followRedirects } = await getConfig<EsmApiConfigObject>('@openmrs/esm-api');
 
     if (response.ok) {
-      const isSessionRedirect = url === makeUrl(sessionEndpoint) && response.headers.has('location');
-      const is204Redirect = response.status === 204 && response.headers.has('location');
+      const location = response.headers.get('location');
+      const isRedirect = followRedirects && location && (url === makeUrl(sessionEndpoint) || response.status === 204);
 
-      if (followRedirects && (isSessionRedirect || is204Redirect)) {
-        const location = response.headers.get('location');
-        if (location) {
-          navigate({ to: location });
-        }
+      if (isRedirect) {
+        navigate({ to: location });
       }
 
       if (response.status === 204) {
