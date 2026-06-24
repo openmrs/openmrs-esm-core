@@ -6,9 +6,9 @@ type FilteredResultsFilter = (data: [{ encounter?: { reference?: string } }]) =>
 
 const TestsSummary = ({ patientUuid, encounters = [] }: { patientUuid: string; encounters: Array<Encounter> }) => {
   const filter = React.useMemo<FilteredResultsFilter>(() => {
-    const encounterIds = encounters.map((e) => `Encounter/${e.uuid}`);
+    const encounterIds = new Set(encounters.map((e) => `Encounter/${e.uuid}`));
     return ([entry]) => {
-      return encounterIds.includes(entry.encounter?.reference ?? '');
+      return encounterIds.has(entry.encounter?.reference ?? '');
     };
   }, [encounters]);
 

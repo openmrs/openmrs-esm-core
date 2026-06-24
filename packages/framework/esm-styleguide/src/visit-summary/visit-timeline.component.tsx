@@ -5,6 +5,7 @@ import { SkeletonText } from '@carbon/react';
 import { formatDate } from '@openmrs/esm-utils';
 import { CardHeader } from '../cards';
 import { EmptyCard } from '../empty-card';
+import { ErrorState } from '../error-state';
 import { useEncountersByVisit } from './useEncountersByVisit';
 import styles from './visit-timeline.module.scss';
 
@@ -13,9 +14,9 @@ interface VisitTimelineProps {
   visitUuid: string;
 }
 
-function VisitTimeline({ patientUuid, visitUuid }: VisitTimelineProps) {
+function VisitTimeline({ patientUuid, visitUuid }: Readonly<VisitTimelineProps>) {
   const { t } = useTranslation();
-  const { encounters, isLoading } = useEncountersByVisit(patientUuid, visitUuid);
+  const { encounters, isLoading, error } = useEncountersByVisit(patientUuid, visitUuid);
 
   if (isLoading) {
     return (
@@ -29,8 +30,8 @@ function VisitTimeline({ patientUuid, visitUuid }: VisitTimelineProps) {
           </span>
         </p>
         <div className={styles.timelineEntries}>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <p className={styles.timelineEntry} key={index}>
+          {['skeleton-1', 'skeleton-2', 'skeleton-3'].map((key) => (
+            <div className={styles.timelineEntry} key={key}>
               <div className={styles.timelineDot} />
               <SkeletonText className={styles.skeleton} />
               <span>&middot;</span>
@@ -39,12 +40,16 @@ function VisitTimeline({ patientUuid, visitUuid }: VisitTimelineProps) {
               <SkeletonText className={styles.skeleton} />
               <span>&mdash;</span>
               <SkeletonText className={styles.skeleton} />
-            </p>
+            </div>
           ))}
           <div className={styles.timelineLine} />
         </div>
       </div>
     );
+  }
+
+  if (error) {
+    return <ErrorState error={error} headerTitle={t('timeline', 'Timeline')} />;
   }
 
   if (encounters?.length === 0) {
@@ -65,18 +70,18 @@ function VisitTimeline({ patientUuid, visitUuid }: VisitTimelineProps) {
       </p>
       <div className={styles.timelineEntries}>
         {encounters?.map((encounter) => (
-          <p className={styles.timelineEntry} key={encounter.uuid}>
+          <div className={styles.timelineEntry} key={encounter.uuid}>
             <div className={styles.timelineDot} />
             <span className={styles.encounterType}>{encounter.encounterType?.display}</span>
             <span>&middot;</span>
-            {!encounter.encounterProviders?.length ? (
-              <span>{t('noProvider', 'No provider')}</span>
-            ) : (
+            {encounter.encounterProviders?.length ? (
               <span>
                 {encounter.encounterProviders
                   .map((encounterProvider) => encounterProvider.provider?.person?.display)
                   .join(', ')}
               </span>
+            ) : (
+              <span>{t('noProvider', 'No provider')}</span>
             )}
             <span>&middot;</span>{' '}
             <span>
@@ -86,7 +91,7 @@ function VisitTimeline({ patientUuid, visitUuid }: VisitTimelineProps) {
                   })
                 : ''}
             </span>
-          </p>
+          </div>
         ))}
         <div className={styles.timelineLine} />
       </div>

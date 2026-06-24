@@ -65,7 +65,8 @@ const VisitSummary: React.FC<VisitSummaryProps> = ({
         if (obs.concept && notesConceptUuids?.includes(obs.concept.uuid)) {
           // Putting all notes in a single array.
           notes.push({
-            note: obs.value as string, // TODO: add better typing check
+            id: obs.uuid, // obs values are typed as unknown; visit notes are free-text string observations.
+            note: obs.value as string,
             provider,
             time: enc.encounterDatetime ? formatTime(parseDate(enc.encounterDatetime)) : '',
             concept: obs.concept,
@@ -116,11 +117,7 @@ const VisitSummary: React.FC<VisitSummaryProps> = ({
             {t('medications', 'Medications')}
           </Tab>
           {completedFormsExtensions?.map((extension, index) => (
-            <Tab
-              key={`completed-forms-${index}`}
-              className={styles.tab}
-              id={`${extension.meta.title || index}-completed-forms-tab`}
-            >
+            <Tab key={extension.id} className={styles.tab} id={`${extension.meta.title || index}-completed-forms-tab`}>
               {t(extension.meta.title, {
                 ns: extension.moduleName,
                 defaultValue: extension.meta.title,
@@ -128,7 +125,7 @@ const VisitSummary: React.FC<VisitSummaryProps> = ({
             </Tab>
           ))}
           {extensions?.map((extension, index) => (
-            <Tab key={index} className={styles.tab} id={`${extension.meta.title || index}-tab`}>
+            <Tab key={extension.id} className={styles.tab} id={`${extension.meta.title || index}-tab`}>
               {t(extension.meta.title, {
                 ns: extension.moduleName,
                 defaultValue: extension.meta.title,

@@ -18,8 +18,8 @@ const NotesSummary: React.FC<NotesSummaryProps> = ({ notes }) => {
 
   return (
     <>
-      {notes.map((note: Note, index) => (
-        <div className={styles.notesContainer} key={index}>
+      {notes.map((note: Note) => (
+        <div className={styles.notesContainer} key={note.id}>
           <p className={classNames(styles.noteText, styles.bodyLong01)}>{note.note}</p>
           <p className={styles.metadata}>
             {note.time} {note.provider.name ? <span>&middot; {note.provider.name} </span> : null}

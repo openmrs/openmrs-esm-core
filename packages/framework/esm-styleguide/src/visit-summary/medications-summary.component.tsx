@@ -23,7 +23,7 @@ const MedicationSummary: React.FC<MedicationSummaryProps> = ({ medications, drug
     return new Date(order.dateStopped) < new Date();
   };
 
-  const drugOrders = medications?.filter((medication) => {
+  const drugOrders = medications.filter((medication) => {
     return medication?.order?.orderType?.uuid === drugOrderTypeUUID;
   });
 
@@ -36,9 +36,9 @@ const MedicationSummary: React.FC<MedicationSummaryProps> = ({ medications, drug
   return (
     <div className={styles.medicationRecord}>
       {drugOrders.map(
-        (medication, index) =>
+        (medication) =>
           (medication?.order?.dose != null || medication?.order?.dosingInstructions) && (
-            <React.Fragment key={index}>
+            <React.Fragment key={medication.order.uuid}>
               <div className={styles.medicationContainer}>
                 <div>
                   <p className={styles.bodyLong01}>
@@ -58,7 +58,30 @@ const MedicationSummary: React.FC<MedicationSummaryProps> = ({ medications, drug
                     )}
                   </p>
                   <p className={styles.bodyLong01}>
-                    {medication?.order?.dose != null ? (
+                    {medication?.order?.dose == null ? (
+                      <>
+                        <span className={styles.label01}>
+                          {t('dosingInstructions', 'Dosing Instructions').toUpperCase()}{' '}
+                        </span>
+                        <span className={styles.dosage}>{medication?.order?.dosingInstructions}</span>
+                        {medication?.order?.duration != null && (
+                          <span>
+                            {' '}
+                            &mdash;{' '}
+                            {t('orderDurationAndUnit', 'for {{duration}} {{durationUnit}}', {
+                              duration: medication?.order?.duration,
+                              durationUnit: medication?.order?.durationUnits?.display?.toLowerCase(),
+                            })}
+                          </span>
+                        )}
+                        {medication?.order?.numRefills != null && medication?.order?.numRefills !== 0 && (
+                          <span>
+                            <span className={styles.label01}> &mdash; {t('refills', 'Refills').toUpperCase()}</span>{' '}
+                            {medication?.order?.numRefills}
+                          </span>
+                        )}
+                      </>
+                    ) : (
                       <>
                         <span className={styles.label01}> {t('dose', 'Dose').toUpperCase()} </span>{' '}
                         <span className={styles.dosage}>
@@ -95,29 +118,6 @@ const MedicationSummary: React.FC<MedicationSummaryProps> = ({ medications, drug
                           <span> &mdash; {medication?.order?.dosingInstructions?.toLocaleLowerCase()}</span>
                         )}
                       </>
-                    ) : (
-                      <>
-                        <span className={styles.label01}>
-                          {t('dosingInstructions', 'Dosing Instructions').toUpperCase()}{' '}
-                        </span>
-                        <span className={styles.dosage}>{medication?.order?.dosingInstructions}</span>
-                        {medication?.order?.duration != null && (
-                          <span>
-                            {' '}
-                            &mdash;{' '}
-                            {t('orderDurationAndUnit', 'for {{duration}} {{durationUnit}}', {
-                              duration: medication?.order?.duration,
-                              durationUnit: medication?.order?.durationUnits?.display?.toLowerCase(),
-                            })}
-                          </span>
-                        )}
-                        {medication?.order?.numRefills != null && medication?.order?.numRefills !== 0 && (
-                          <span>
-                            <span className={styles.label01}> &mdash; {t('refills', 'Refills').toUpperCase()}</span>{' '}
-                            {medication?.order?.numRefills}
-                          </span>
-                        )}
-                      </>
                     )}
                   </p>
                   <p className={styles.bodyLong01}>
@@ -128,16 +128,16 @@ const MedicationSummary: React.FC<MedicationSummaryProps> = ({ medications, drug
                       </span>
                     ) : null}
                     {medication?.order?.orderReasonNonCoded && medication?.order?.quantity != null && <>&mdash;</>}
-                    {medication?.order?.quantity != null ? (
+                    {medication?.order?.quantity != null && (
                       <span>
                         <span className={styles.label01}> {t('quantity', 'Quantity').toUpperCase()}</span>{' '}
                         {medication?.order?.quantity}
                       </span>
-                    ) : null}
+                    )}
                     {medication?.order?.dateStopped ? (
                       <span className={styles.bodyShort01}>
                         <span className={styles.label01}>
-                          {medication?.order?.quantity != null ? ` — ` : ''} {t('endDate', 'End date').toUpperCase()}
+                          {medication?.order?.quantity != null && ` — `} {t('endDate', 'End date').toUpperCase()}
                         </span>{' '}
                         {formatDate(new Date(medication?.order?.dateStopped))}
                       </span>
@@ -146,12 +146,12 @@ const MedicationSummary: React.FC<MedicationSummaryProps> = ({ medications, drug
                 </div>
               </div>
 
-              <p className={styles.metadata}>
+              <div className={styles.metadata}>
                 <div className={styles.startDateColumn}>
                   <span>{formatDate(new Date(medication.order.dateActivated))}</span> &middot;{' '}
                   <span>{medication.order.orderer?.display ?? '--'}</span>
                 </div>
-              </p>
+              </div>
             </React.Fragment>
           ),
       )}

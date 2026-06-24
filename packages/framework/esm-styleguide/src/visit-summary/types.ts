@@ -47,6 +47,7 @@ export interface Order {
 }
 
 export interface Note {
+  id: string;
   concept: OpenmrsResource;
   note: string;
   provider: {
