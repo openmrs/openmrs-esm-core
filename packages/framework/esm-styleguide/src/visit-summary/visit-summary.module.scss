@@ -1,0 +1,76 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.diagnosisLabel {
+  @include type.type-style('heading-compact-01');
+  color: $text-02;
+  margin-top: 5px;
+}
+
+.diagnosesList {
+  display: flex;
+  flex-flow: row wrap;
+  padding-bottom: layout.$spacing-03;
+  margin: 0 layout.$spacing-05;
+  border-bottom: 1px solid $ui-03;
+}
+
+.summaryContainer {
+  background-color: $ui-background;
+  display: grid;
+  grid-template-columns: max-content auto;
+  padding: layout.$spacing-05;
+
+  :global(.cds--tabs) {
+    min-height: 13rem;
+  }
+}
+
+.tabPanels {
+  min-width: 0;
+}
+
+.tab {
+  outline: 0;
+  outline-offset: 0;
+  min-height: 2rem !important;
+
+  &:active,
+  &:focus {
+    outline: layout.$spacing-01 solid var(--brand-03) !important;
+  }
+
+  &[aria-selected='true'] {
+    border-left: 3px solid var(--brand-03);
+    border-bottom: none;
+    font-weight: 600;
+    margin-left: 0 !important;
+  }
+
+  &[aria-selected='false'] {
+    border-bottom: none;
+    border-left: layout.$spacing-01 solid $ui-03;
+    margin-left: 0 !important;
+  }
+}
+
+.tablist {
+  :global(.cds--tab--list) {
+    flex-direction: column;
+    max-height: fit-content;
+  }
+
+  > button :global(.cds--tabs .cds--tabs__nav-link) {
+    border-bottom: none;
+  }
+}
+
+.text02 {
+  color: colors.$gray-70;
+}
+
+.bodyLong01 {
+  @include type.type-style('body-01');
+}

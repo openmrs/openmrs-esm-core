@@ -201,6 +201,8 @@ export const DiagnosisTags = jest.fn(({ diagnoses }: { diagnoses: Array<Diagnosi
   </>
 ));
 
+export const VisitSummary = jest.fn(() => <div>Visit Summary</div>);
+
 export const Workspace2 = jest.fn(({ title, children }) => (
   <div>
     <h1>{title}</h1>

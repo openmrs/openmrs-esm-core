@@ -1,0 +1,60 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+@use '@carbon/type';
+
+.visitTimeline {
+  border: 1px solid colors.$gray-20;
+  background-color: colors.$white;
+  padding-top: layout.$spacing-05;
+}
+
+.timelineHeader {
+  padding: 0 layout.$spacing-10;
+  @include type.type-style('helper-text-01');
+  display: flex;
+  gap: layout.$spacing-03;
+}
+
+.timelineEntries {
+  margin: 0 layout.$spacing-08;
+  margin-top: layout.$spacing-04;
+  display: flex;
+  flex-direction: column;
+  gap: layout.$spacing-05;
+  margin-bottom: layout.$spacing-05;
+  position: relative;
+}
+
+.timelineEntry {
+  display: flex;
+  gap: layout.$spacing-03;
+  align-items: center;
+}
+
+.encounterType {
+  font-weight: 700;
+}
+
+.timelineDot {
+  height: 8px;
+  width: 8px;
+  background-color: colors.$blue-30;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: layout.$spacing-03;
+  z-index: 10;
+}
+
+.timelineLine {
+  position: absolute;
+  border-left: 1px solid colors.$blue-20;
+  height: 100%;
+  left: 3.4px;
+  top: 4px;
+  z-index: 9;
+}
+
+.skeleton {
+  width: 5% !important; // using hardcoded px values could be a bad idea.
+  margin-bottom: 0 !important;
+}

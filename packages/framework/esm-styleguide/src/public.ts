@@ -24,6 +24,7 @@ export * from './patient-banner';
 export * from './patient-photo';
 export * from './pictograms/pictograms';
 export * from './responsive-wrapper';
+export * from './visit-summary';
 export { showSnackbar, type SnackbarDescriptor, type SnackbarType, type SnackbarMeta } from './snackbars';
 export { showToast, type ToastDescriptor, type ToastType, type ToastNotificationMeta } from './toasts';
 export * from './workspaces/public';

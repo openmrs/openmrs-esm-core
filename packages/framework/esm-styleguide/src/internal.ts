@@ -22,6 +22,7 @@ export * from './patient-banner';
 export * from './patient-photo';
 export * from './pictograms/pictograms';
 export * from './responsive-wrapper';
+export * from './visit-summary';
 export * from './snackbars';
 export * from './snackbars/snackbar.component';
 export * from './spinner';
