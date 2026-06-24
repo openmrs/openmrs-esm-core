@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import useSwrInfinite, { type SWRInfiniteResponse } from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
 import {
@@ -10,6 +9,7 @@ import {
   type FetchResponse,
   type Session,
   useDebounce,
+  useSession,
 } from '@openmrs/esm-framework';
 import type { LocationEntry, LocationResponse } from './types';
 
@@ -17,14 +17,14 @@ import type { LocationEntry, LocationResponse } from './types';
 type InfiniteKeyedMutator<T> = SWRInfiniteResponse<T extends (infer I)[] ? I : T>['mutate'];
 
 interface LoginLocationData {
-  error: Error;
+  error: Error | undefined;
   hasMore: boolean;
   isLoading: boolean;
   loadingNewData: boolean;
-  locations: Array<LocationEntry>;
+  locations: Array<LocationEntry> | null;
   mutate: InfiniteKeyedMutator<FetchResponse<LocationResponse>[]>;
   setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[]>;
-  totalResults: number;
+  totalResults: number | null;
 }
 
 export function useLoginLocations(
@@ -32,10 +32,16 @@ export function useLoginLocations(
   searchQuery: string = '',
   useLoginLocationTag: boolean,
 ): LoginLocationData {
-  const { t } = useTranslation();
+  const { user } = useSession();
+  const userUuid = user?.uuid;
   const debouncedSearchQuery = useDebounce(searchQuery);
 
   function constructUrl(page: number, prevPageData: FetchResponse<LocationResponse>) {
+    // Wait until the user UUID is available before making any request.
+    if (!userUuid) {
+      return null;
+    }
+
     if (prevPageData) {
       const nextLink = prevPageData.data?.link?.find((link) => link.relation === 'next');
 
@@ -56,27 +62,21 @@ export function useLoginLocations(
       ).toString();
     }
 
-    let url = `${fhirBaseUrl}/Location?`;
-    let urlSearchParameters = new URLSearchParams();
-    urlSearchParameters.append('_summary', 'data');
-
-    if (count) {
-      urlSearchParameters.append('_count', '' + count);
-    }
-
-    if (page) {
-      urlSearchParameters.append('_getpagesoffset', '' + page * count);
-    }
+    // Use the user-scoped REST endpoint so the backend filters locations to
+    // only those assigned to this user (falling back to all Login Locations
+    // for users with no explicit mappings).
+    const urlSearchParameters = new URLSearchParams();
 
     if (useLoginLocationTag) {
-      urlSearchParameters.append('_tag', 'Login Location');
+      urlSearchParameters.append('tag', 'Login Location');
     }
 
-    if (typeof debouncedSearchQuery === 'string' && debouncedSearchQuery != '') {
-      urlSearchParameters.append('name:contains', debouncedSearchQuery);
+    if (typeof debouncedSearchQuery === 'string' && debouncedSearchQuery !== '') {
+      urlSearchParameters.append('q', debouncedSearchQuery);
     }
 
-    return url + urlSearchParameters.toString();
+    const queryString = urlSearchParameters.toString();
+    return `${restBaseUrl}/user/${userUuid}/location${queryString ? `?${queryString}` : ''}`;
   }
 
   const { data, isLoading, isValidating, setSize, error, mutate } = useSwrInfinite<

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import useSwrImmutable from 'swr/immutable';
 import useSwrInfinite from 'swr/infinite';
-import { type FetchResponse, fhirBaseUrl, openmrsFetch } from '@openmrs/esm-api';
+import { type FetchResponse, fhirBaseUrl, openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
 import { type FHIRLocationResource } from '@openmrs/esm-emr-api';
-import { useDebounce } from '@openmrs/esm-react-utils';
+import { useDebounce, useSession } from '@openmrs/esm-react-utils';
 
 export interface LocationResponse {
   type: string;
@@ -73,8 +73,16 @@ export function useLocationByUuid(locationUuid?: string) {
  * @category API
  */
 export function useLocations(locationTag?: string, count: number = 0, searchQuery: string = ''): LoginLocationData {
+  const { user } = useSession();
+  const userUuid = user?.uuid;
   const debouncedSearchQuery = useDebounce(searchQuery);
+
   function constructUrl(page: number, prevPageData: FetchResponse<LocationResponse>) {
+    // Wait until the user UUID is available before making any request.
+    if (!userUuid) {
+      return null;
+    }
+
     if (prevPageData) {
       const nextLink = prevPageData.data?.link?.find((link) => link.relation === 'next');
 
@@ -95,27 +103,21 @@ export function useLocations(locationTag?: string, count: number = 0, searchQuer
       ).toString();
     }
 
-    let url = `${fhirBaseUrl}/Location?`;
-    let urlSearchParameters = new URLSearchParams();
-    urlSearchParameters.append('_summary', 'data');
-
-    if (count) {
-      urlSearchParameters.append('_count', '' + count);
-    }
-
-    if (page) {
-      urlSearchParameters.append('_getpagesoffset', '' + page * count);
-    }
+    // Use the user-scoped REST endpoint so the backend filters locations to
+    // only those assigned to this user (falling back to all Login Locations
+    // for users with no explicit mappings).
+    const urlSearchParameters = new URLSearchParams();
 
     if (locationTag) {
-      urlSearchParameters.append('_tag', locationTag);
+      urlSearchParameters.append('tag', locationTag);
     }
 
     if (typeof debouncedSearchQuery === 'string' && debouncedSearchQuery !== '') {
-      urlSearchParameters.append('name:contains', debouncedSearchQuery);
+      urlSearchParameters.append('q', debouncedSearchQuery);
     }
 
-    return url + urlSearchParameters.toString();
+    const queryString = urlSearchParameters.toString();
+    return `${restBaseUrl}/user/${userUuid}/location${queryString ? `?${queryString}` : ''}`;
   }
 
   const { data, isLoading, isValidating, setSize, error } = useSwrInfinite<FetchResponse<LocationResponse>, Error>(
