@@ -117,7 +117,8 @@ export function useLocations(locationTag?: string, count: number = 0, searchQuer
     }
 
     const queryString = urlSearchParameters.toString();
-    return `${restBaseUrl}/user/${userUuid}/location${queryString ? `?${queryString}` : ''}`;
+    const query = queryString ? '?' + queryString : '';
+    return `${restBaseUrl}/user/${userUuid}/location${query}`;
   }
 
   const { data, isLoading, isValidating, setSize, error } = useSwrInfinite<FetchResponse<LocationResponse>, Error>(
