@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import useSwrImmutable from 'swr/immutable';
 import useSwrInfinite from 'swr/infinite';
-import { type FetchResponse, fhirBaseUrl, openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
+import { type FetchResponse, openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
 import { type FHIRLocationResource } from '@openmrs/esm-emr-api';
 import { useDebounce, useSession } from '@openmrs/esm-react-utils';
 
