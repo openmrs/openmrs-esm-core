@@ -160,9 +160,10 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
 
     if (response.ok) {
       const location = response.headers.get('location');
-      const isRedirect = followRedirects && location && (url === makeUrl(sessionEndpoint) || response.status === 204);
+      const shouldRedirect =
+        followRedirects && location && (url === makeUrl(sessionEndpoint) || response.status === 204);
 
-      if (isRedirect) {
+      if (shouldRedirect) {
         navigate({ to: location });
       }
 
