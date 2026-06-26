@@ -163,6 +163,10 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
       const shouldRedirect =
         followRedirects && location && (url === makeUrl(sessionEndpoint) || response.status === 204);
 
+      /* If a successful session check includes a 'Location' header, it means the server
+       * is requesting a redirect (e.g., moving the user from a login page to a TOTP setup page).
+       * We navigate the user to this location immediately.
+       */
       if (shouldRedirect) {
         navigate({ to: location });
       }
