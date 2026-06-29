@@ -159,14 +159,17 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     const { redirectAuthFailure, followRedirects } = await getConfig<EsmApiConfigObject>('@openmrs/esm-api');
 
     if (response.ok) {
+      /*
+       * Backend modules can trigger SPA redirects by returning a `Location` header.
+       * This is required because `fetch()` hides HTTP redirects from the application.
+       *
+       * - Session endpoint (2xx): Authentication challenge URLs (e.g. TOTP,2FA).
+       * - HTTP 204: Logout redirect URLs (e.g. Keycloak IdP logout). Refer: OA-41 #1231
+       */
       const location = response.headers.get('location');
       const shouldRedirect =
         followRedirects && location && (url === makeUrl(sessionEndpoint) || response.status === 204);
 
-      /* When a user tries to log in (using username and password),
-       * we use the session endpoint (which includes a "Location" header)
-       * to navigate the user to that location immediately (e.g., from login page to TOTP setup page).
-       */
       if (shouldRedirect) {
         navigate({ to: location });
       }
