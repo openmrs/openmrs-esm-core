@@ -2,7 +2,7 @@
 
 # Class: OpenmrsFetchError
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L311)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:312](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L312)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github
 
 > **new OpenmrsFetchError**(`url`, `response`, `responseBody`, `requestStacktrace`): `OpenmrsFetchError`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:312](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L312)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:313](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L313)
 
 #### Parameters
 
@@ -88,7 +88,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > **response**: `Response`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L320)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L321)
 
 #### Implementation of
 
@@ -100,7 +100,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:320](https://github
 
 > **responseBody**: `null` \| `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md)
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L321)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:322](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L322)
 
 #### Implementation of
 
