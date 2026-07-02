@@ -277,6 +277,7 @@ export function defineExtensionConfigSchema(extensionName: string, schema: Confi
   configInternalStore.setState((state) => ({
     ...state,
     schemas: { ...state.schemas, [extensionName]: enhancedSchema },
+    moduleLoaded: { ...state.moduleLoaded, [extensionName]: true },
   }));
 }
 
@@ -929,6 +930,20 @@ export function resetConfigSystem() {
 function getExtensionNameFromId(extensionId: string) {
   const [extensionName] = extensionId.split('#');
   return extensionName;
+}
+
+/**
+ * Checks if an extension has its own config schema defined.
+ * When an extension has its own schema, it should use that schema exclusively
+ * rather than falling back to the module schema.
+ *
+ * @param extensionName The name of the extension (without the ID suffix)
+ * @returns true if the extension has its own config schema defined
+ * @internal
+ */
+export function extensionHasOwnConfigSchema(extensionName: string): boolean {
+  const state = configInternalStore.getState();
+  return !!state.schemas[extensionName];
 }
 
 /**
