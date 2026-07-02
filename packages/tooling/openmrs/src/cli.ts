@@ -336,6 +336,12 @@ export function buildCli(y: Argv) {
           description: 'Whether to compile all module routes.json into a master routes.json',
           type: 'boolean',
         })
+        .option('ensure-entrypoints', {
+          default: true,
+          description:
+            'Whether to fail the assemble run if a frontend module is missing its routes.json or the code entrypoint referenced from the import map. Use --no-ensure-entrypoints to downgrade these to warnings.',
+          type: 'boolean',
+        })
         .option('mode', {
           choices: ['config', 'survey'],
           default: 'survey',

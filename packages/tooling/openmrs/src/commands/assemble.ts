@@ -23,6 +23,7 @@ export interface AssembleArgs {
   fresh: boolean;
   buildRoutes: boolean;
   manifest: boolean;
+  ensureEntrypoints: boolean;
 }
 
 interface NpmSearchResult {
@@ -204,15 +205,20 @@ async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string,
   const entryModule = packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
   const sourceDir = dirname(entryModule);
-  let outputDir = `${targetDir}-${version}`;
+  const outputDir = `${targetDir}-${version}`;
   await mkdir(outputDir, { recursive: true });
+
+  // When the entry module lives at the package root, dirname() yields '.' (or '' for an
+  // empty entry). In that case the files sit directly under `package/` with no intermediate
+  // directory, so the prefix must be the package root itself rather than `package/.`.
+  const sourcePrefix = sourceDir === '.' || sourceDir === '' ? `${packageRoot}/` : `${packageRoot}/${sourceDir}/`;
 
   await Promise.all(
     Object.keys(files)
-      .filter((m) => m.startsWith(`${packageRoot}/${sourceDir}`))
+      .filter((m) => m.startsWith(sourcePrefix))
       .map(async (m) => {
         const content = files[m];
-        const fileName = m.replace(`${packageRoot}/${sourceDir}/`, '');
+        const fileName = m.replace(sourcePrefix, '');
         const targetFile = resolve(outputDir, fileName);
         await mkdir(dirname(targetFile), { recursive: true });
         await writeFile(targetFile, content);
@@ -248,6 +254,18 @@ export async function runAssemble(args: AssembleArgs) {
 
   await mkdir(args.target, { recursive: true });
 
+  // When `ensureEntrypoints` is set, a missing routes.json or code entrypoint is a fatal error rather than a
+  // warning. We collect the failures across all modules so the user sees every problem in a single run instead
+  // of having to fix and re-run repeatedly. The actual throw happens once the Promise.all below has settled.
+  const entrypointErrors: Array<string> = [];
+  const reportMissingEntrypoint = (message: string) => {
+    if (args.ensureEntrypoints) {
+      entrypointErrors.push(message);
+    } else {
+      logWarn(message);
+    }
+  };
+
   await Promise.all(
     Object.keys(frontendModules).map(async (esmName) => {
       const esmVersion = frontendModules[esmName];
@@ -257,16 +275,20 @@ export async function runAssemble(args: AssembleArgs) {
       const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, baseDirName));
       const dirName = `${baseDirName}-${version}`;
 
+      // The routes are how the framework ensures that it loads the correct module before any pages
+      // or extensions; if it's missing the app won't load in the browser.
       const appRoutes = resolve(args.target, dirName, 'routes.json');
       if (existsSync(appRoutes)) {
         try {
           routes[esmName] = JSON.parse(await readFile(appRoutes, 'utf8'));
           routes[esmName]['version'] = version;
         } catch (e) {
-          logWarn(`Error while processing routes for ${esmName} using ${appRoutes}: ${e}`);
+          reportMissingEntrypoint(
+            `Error while processing routes for ${esmName} using ${appRoutes}: ${e}. Note that this means that no pages or extensions for ${esmName} will be available.`,
+          );
         }
       } else {
-        logWarn(
+        reportMissingEntrypoint(
           `Routes file ${appRoutes} does not exist. We expect that routes file to be defined by ${esmName}. Note that this means that no pages or extensions for ${esmName} will be available.`,
         );
 
@@ -275,10 +297,26 @@ export async function runAssemble(args: AssembleArgs) {
         }
       }
 
+      // The entrypoint named in the import map is the module's executable code; if it's missing the module
+      // simply won't load in the browser, so validate it exists before we commit it to the import map.
+      const entrypoint = resolve(args.target, dirName, fileName);
+      if (!existsSync(entrypoint)) {
+        reportMissingEntrypoint(
+          `Code entrypoint ${entrypoint} for ${esmName} does not exist. This is the file referenced from the import map, so ${esmName} would fail to load.`,
+        );
+      }
+
       importmap.imports[esmName] = `${publicUrl}/${dirName}/${fileName}`;
       versionManifest.frontendModules[esmName] = version;
     }),
   );
+
+  if (entrypointErrors.length > 0) {
+    throw new Error(
+      `Assemble failed because the following entrypoints could not be found or the routes could not be processed. Pass --no-ensure-entrypoints to ` +
+        `downgrade these to warnings.\n\n${entrypointErrors.join('\n\n')}`,
+    );
+  }
 
   await writeFile(
     resolve(args.target, `importmap${args.hashFiles ? '.' + contentHash(importmap) : ''}.json`),
