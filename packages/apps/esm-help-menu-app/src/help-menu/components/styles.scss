@@ -7,7 +7,9 @@
   align-items: center;
   justify-content: space-between;
   color: black !important;
-  &:focus {
-    outline: none;
+  padding: layout.$spacing-03;
+
+  &:hover {
+    background-color: $ui-03;
   }
 }
