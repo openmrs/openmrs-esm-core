@@ -1,14 +1,14 @@
 {
-  "AppMenuTooltip": "App Menu",
-  "cancel": "Cancel",
-  "change": "Change",
-  "changeDefaultLocale": "Update your default locale",
-  "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
-  "changeLanguage": "Change language",
-  "changingLanguage": "Changing language",
-  "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
-  "notifications": "Notifications",
-  "userMenu": "User menu",
-  "userMenuOptions": "User menu options",
-  "userMenuTooltip": "My Account"
+  "AppMenuTooltip": "Меню приложения",
+  "cancel": "Отмена",
+  "change": "Изменить",
+  "changeDefaultLocale": "Сменить язык по умолчанию",
+  "changeDefaultLocaleExplanation": "Оставьте этот флажок снятым, чтобы изменить язык только для этой сессии",
+  "changeLanguage": "Сменить язык",
+  "changingLanguage": "Смена языка",
+  "noPathInDashboardExtension": "Невозможно отобразить расширение панели управления без свойства \"path\", заданного в схеме конфигурации",
+  "notifications": "Уведомления",
+  "userMenu": "Меню пользователя",
+  "userMenuOptions": "Опции меню",
+  "userMenuTooltip": "Моя учётная запись"
 }
