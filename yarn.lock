@@ -3583,9 +3583,9 @@ __metadata:
     "@swc/core": "npm:1.15.21"
     "@types/lodash-es": "npm:^4.17.12"
     clean-webpack-plugin: "npm:4.0.0"
-    copy-webpack-plugin: "npm:11.0.0"
+    copy-webpack-plugin: "npm:^14.0.0"
     css-loader: "npm:5.2.7"
-    lodash: "npm:4.17.21"
+    lodash: "npm:^4.18.1"
     sass-embedded: "npm:1.89.2"
     sass-loader: "npm:16.0.5"
     style-loader: "npm:3.3.4"
@@ -3659,10 +3659,10 @@ __metadata:
     "@swc/core": "npm:1.15.21"
     "@types/lodash-es": "npm:4.17.12"
     clean-webpack-plugin: "npm:4.0.0"
-    copy-webpack-plugin: "npm:11.0.0"
+    copy-webpack-plugin: "npm:^14.0.0"
     css-loader: "npm:5.2.7"
     fork-ts-checker-webpack-plugin: "npm:6.5.3"
-    lodash: "npm:4.17.21"
+    lodash: "npm:^4.18.1"
     sass-embedded: "npm:1.89.2"
     sass-loader: "npm:16.0.5"
     style-loader: "npm:3.3.4"
@@ -9574,6 +9574,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"copy-webpack-plugin@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "copy-webpack-plugin@npm:14.0.0"
+  dependencies:
+    glob-parent: "npm:^6.0.1"
+    normalize-path: "npm:^3.0.0"
+    schema-utils: "npm:^4.2.0"
+    serialize-javascript: "npm:^7.0.3"
+    tinyglobby: "npm:^0.2.12"
+  peerDependencies:
+    webpack: ^5.1.0
+  checksum: 10/734524b9569b873686bdd3addef77ac9604ecaf6eaadaf2fc37f1a91eb4a50c38e8d034899e65a189af37d29b1778b34b818493e5922dc1d089625ecd0f33211
+  languageName: node
+  linkType: hard
+
 "core-js@npm:~3.47.0":
   version: 3.47.0
   resolution: "core-js@npm:3.47.0"
@@ -14187,6 +14202,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash@npm:^4.18.1":
+  version: 4.18.1
+  resolution: "lodash@npm:4.18.1"
+  checksum: 10/306fea53dfd39dad1f03d45ba654a2405aebd35797b673077f401edb7df2543623dc44b9effbb98f69b32152295fff725a4cec99c684098947430600c6af0c3f
+  languageName: node
+  linkType: hard
+
 "log-update@npm:^6.1.0":
   version: 6.1.0
   resolution: "log-update@npm:6.1.0"
@@ -17851,6 +17873,13 @@ __metadata:
   dependencies:
     randombytes: "npm:^2.1.0"
   checksum: 10/445a420a6fa2eaee4b70cbd884d538e259ab278200a2ededd73253ada17d5d48e91fb1f4cd224a236ab62ea7ba0a70c6af29fc93b4f3d3078bf7da1c031fde58
+  languageName: node
+  linkType: hard
+
+"serialize-javascript@npm:^7.0.3":
+  version: 7.0.7
+  resolution: "serialize-javascript@npm:7.0.7"
+  checksum: 10/da427e5660c88c24020cae037883ac234127248c7f972d7e1eb3cea863d89d1816fa4bcf0ecd39f92082c346347ed312c46e50c8473060dcd723bd1891e98942
   languageName: node
   linkType: hard
 
