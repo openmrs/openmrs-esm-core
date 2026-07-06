@@ -41,26 +41,20 @@ describe('OpenmrsDatePicker', () => {
     it('should render RTL layout for Arabic locale', () => {
       window.i18next = { language: 'ar' } as i18n;
       useConfig.mockReturnValue({ preferredDateLocale: {} });
-
       render(<OpenmrsDatePicker aria-label="datepicker" />);
       const input = screen.getByLabelText('datepicker');
       const text = input.textContent?.replace(/\u200F/g, '');
-
       expect(text).toBe('يوم/شهر/سنة');
-
       window.i18next = { language: 'en' } as i18n;
     });
 
     it('should render RTL layout for Amharic locale', () => {
       window.i18next = { language: 'am' } as i18n;
       useConfig.mockReturnValue({ preferredDateLocale: {} });
-
       render(<OpenmrsDatePicker aria-label="datepicker" />);
       const input = screen.getByLabelText('datepicker');
       const text = input.textContent?.replace(/\u200F/g, '');
-
       expect(text).toBe('ቀቀ/ሚሜ/ዓዓዓዓ');
-
       window.i18next = { language: 'en' } as i18n;
     });
   });
@@ -90,6 +84,24 @@ describe('OpenmrsDatePicker', () => {
       );
       consoleWarnSpy.mockRestore();
     });
+
+    it('should support the deprecated label prop', () => {
+      render(<OpenmrsDatePicker label="Legacy label" />);
+      expect(screen.getByText('Legacy label')).toBeInTheDocument();
+      expect(screen.getByText('Legacy label')).toHaveClass('cds--label');
+    });
+
+    it('should not warn when aria-labelledby is provided', () => {
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <>
+          <span id="my-label">External label</span>
+          <OpenmrsDatePicker aria-labelledby="my-label" labelText="" />
+        </>,
+      );
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+      consoleWarnSpy.mockRestore();
+    });
   });
 
   describe('value display', () => {
@@ -103,6 +115,18 @@ describe('OpenmrsDatePicker', () => {
       render(<OpenmrsDatePicker aria-label="datepicker" defaultValue={new Date(2025, 5, 18)} />);
       const input = screen.getByLabelText('datepicker');
       expect(input).toHaveTextContent('18/06/2025');
+    });
+
+    it('should display placeholder when value is undefined', () => {
+      render(<OpenmrsDatePicker aria-label="datepicker" value={undefined} />);
+      const input = screen.getByLabelText('datepicker');
+      expect(input).toHaveTextContent('dd/mm/yyyy');
+    });
+
+    it('should display placeholder when value is null', () => {
+      render(<OpenmrsDatePicker aria-label="datepicker" value={null} />);
+      const input = screen.getByLabelText('datepicker');
+      expect(input).toHaveTextContent('dd/mm/yyyy');
     });
   });
 
@@ -121,6 +145,11 @@ describe('OpenmrsDatePicker', () => {
       render(<OpenmrsDatePicker aria-label="datepicker" isInvalid={true} invalidText="Bad date" />);
       expect(screen.getByText('Bad date')).toBeInTheDocument();
     });
+
+    it('should be invalid when either invalid or isInvalid is true', () => {
+      render(<OpenmrsDatePicker aria-label="datepicker" invalid={true} isInvalid={false} invalidText="Error" />);
+      expect(screen.getByText('Error')).toBeInTheDocument();
+    });
   });
 
   describe('disabled state', () => {
@@ -129,6 +158,12 @@ describe('OpenmrsDatePicker', () => {
       const label = screen.getByText('Date');
       expect(label).toHaveClass('cds--label--disabled');
     });
+
+    it('should not show disabled styling when isDisabled is false', () => {
+      render(<OpenmrsDatePicker labelText="Date" isDisabled={false} />);
+      const label = screen.getByText('Date');
+      expect(label).not.toHaveClass('cds--label--disabled');
+    });
   });
 
   describe('onChange callbacks', () => {
@@ -136,12 +171,24 @@ describe('OpenmrsDatePicker', () => {
       const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       const onChange = vi.fn();
       const onChangeRaw = vi.fn();
-
       render(<OpenmrsDatePicker aria-label="datepicker" onChange={onChange} onChangeRaw={onChangeRaw} />);
-
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         'An OpenmrsDatePicker component was created with both onChange and onChangeRaw handlers defined. Only onChangeRaw will be used.',
       );
+      consoleErrorSpy.mockRestore();
+    });
+
+    it('should not log an error when only onChange is provided', () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      render(<OpenmrsDatePicker aria-label="datepicker" onChange={vi.fn()} />);
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
+      consoleErrorSpy.mockRestore();
+    });
+
+    it('should not log an error when only onChangeRaw is provided', () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      render(<OpenmrsDatePicker aria-label="datepicker" onChangeRaw={vi.fn()} />);
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
       consoleErrorSpy.mockRestore();
     });
   });
@@ -178,14 +225,40 @@ describe('OpenmrsDatePicker', () => {
     /* eslint-enable testing-library/no-container, testing-library/no-node-access */
   });
 
+  describe('CSS class variants', () => {
+    /* eslint-disable testing-library/no-container, testing-library/no-node-access */
+    it('should apply short class when short prop is true', () => {
+      const { container } = render(<OpenmrsDatePicker aria-label="datepicker" short={true} />);
+      const datePicker = container.querySelector('.cds--date-picker')!;
+      expect(datePicker).toHaveClass('cds--date-picker--short');
+    });
+
+    it('should not apply short class when short prop is false', () => {
+      const { container } = render(<OpenmrsDatePicker aria-label="datepicker" short={false} />);
+      const datePicker = container.querySelector('.cds--date-picker')!;
+      expect(datePicker).not.toHaveClass('cds--date-picker--short');
+    });
+
+    it('should apply light class when light prop is true', () => {
+      const { container } = render(<OpenmrsDatePicker aria-label="datepicker" light={true} />);
+      const datePicker = container.querySelector('.cds--date-picker')!;
+      expect(datePicker).toHaveClass('cds--date-picker--light');
+    });
+
+    it('should apply custom className to the outer div', () => {
+      const { container } = render(<OpenmrsDatePicker aria-label="datepicker" className="my-custom-class" />);
+      const outerDiv = container.querySelector('.cds--form-item')!;
+      expect(outerDiv).toHaveClass('my-custom-class');
+    });
+    /* eslint-enable testing-library/no-container, testing-library/no-node-access */
+  });
+
   describe('calendar popover', () => {
     it('should open the calendar popover when the calendar button is clicked', async () => {
       const user = userEvent.setup();
       render(<OpenmrsDatePicker aria-label="datepicker" />);
-
       const button = screen.getByRole('button');
       await user.click(button);
-
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(screen.getByRole('grid')).toBeInTheDocument();
     });
@@ -198,14 +271,34 @@ describe('OpenmrsDatePicker', () => {
           value={new Date(DEFAULT_MIN_DATE_FLOOR.year, DEFAULT_MIN_DATE_FLOOR.month - 1, DEFAULT_MIN_DATE_FLOOR.day)}
         />,
       );
-
       await user.click(screen.getByRole('button'));
-
       const dialog = screen.getByRole('dialog');
       const previousButton = within(dialog).getByRole('button', { name: /previous/i });
-
       expect(previousButton).toBeInTheDocument();
       expect(previousButton).toBeDisabled();
+    });
+
+    it('should respect maxDate and disable next-month navigation at the max boundary', async () => {
+      const user = userEvent.setup();
+      render(
+        <OpenmrsDatePicker aria-label="datepicker" value={new Date(2025, 5, 15)} maxDate={new Date(2025, 5, 30)} />,
+      );
+      await user.click(screen.getByRole('button'));
+      const dialog = screen.getByRole('dialog');
+      const nextButtons = within(dialog).getAllByRole('button', { name: /next/i });
+      expect(nextButtons[0]).toBeDisabled();
+    });
+
+    it('should select a date and close the popover', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(<OpenmrsDatePicker aria-label="datepicker" value={new Date(2025, 5, 1)} onChange={onChange} />);
+      await user.click(screen.getByRole('button'));
+      const dialog = screen.getByRole('dialog');
+      const grid = within(dialog).getByRole('grid');
+      const dayCell = within(grid).getByRole('button', { name: /15/ });
+      await user.click(dayCell);
+      expect(onChange).toHaveBeenCalled();
     });
   });
 });
