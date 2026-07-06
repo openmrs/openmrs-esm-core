@@ -40,7 +40,7 @@
     "@typescript-eslint/parser": "^8.35.0",
     "classnames": "^2.3.2",
     "cross-env": "^10.1.0",
-    "dotenv": "^16.0.3",
+    "dotenv": "^17.4.2",
     "eslint": "^8.55.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest-dom": "^5.5.0",
@@ -52,13 +52,13 @@
     "husky": "^8.0.3",
     "i18next-parser": "^9.3.0",
     "identity-obj-proxy": "^3.0.0",
-    "lint-staged": "^15.2.9",
+    "lint-staged": "^17.0.8",
     "openmrs": "workspace:*",
-    "prettier": "^3.1.0",
+    "prettier": "^3.9.4",
     "swc-loader": "0.2.7",
     "timezone-mock": "^1.2.2",
-    "turbo": "^2.5.2",
-    "typescript": "^5.8.3"
+    "turbo": "^2.10.4",
+    "typescript": "^6.0.3"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix --max-warnings 0",
