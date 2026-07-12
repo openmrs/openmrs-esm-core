@@ -2,7 +2,7 @@ import React from 'react';
 import type { i18n } from 'i18next';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
 import { OpenmrsDatePicker } from './index';
@@ -197,28 +197,32 @@ describe('OpenmrsDatePicker', () => {
     /* eslint-disable testing-library/no-container, testing-library/no-node-access */
     it('should apply md size classes by default', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" />);
-      const wrapper = container.querySelector('.cds--date-picker-input__wrapper')!;
+      const wrapper = container.querySelector('.cds--date-picker-input__wrapper');
+      expect(wrapper).not.toBeNull();
       expect(wrapper).toHaveClass(styles.inputWrapperMd);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonMd);
     });
 
     it('should apply sm size classes when size="sm"', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="sm" />);
-      const wrapper = container.querySelector('.cds--date-picker-input__wrapper')!;
+      const wrapper = container.querySelector('.cds--date-picker-input__wrapper');
+      expect(wrapper).not.toBeNull();
       expect(wrapper).toHaveClass(styles.inputWrapperSm);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonSm);
     });
 
     it('should apply md size classes when size="md"', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="md" />);
-      const wrapper = container.querySelector('.cds--date-picker-input__wrapper')!;
+      const wrapper = container.querySelector('.cds--date-picker-input__wrapper');
+      expect(wrapper).not.toBeNull();
       expect(wrapper).toHaveClass(styles.inputWrapperMd);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonMd);
     });
 
     it('should apply lg size classes when size="lg"', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="lg" />);
-      const wrapper = container.querySelector('.cds--date-picker-input__wrapper')!;
+      const wrapper = container.querySelector('.cds--date-picker-input__wrapper');
+      expect(wrapper).not.toBeNull();
       expect(wrapper).toHaveClass(styles.inputWrapperLg);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonLg);
     });
@@ -229,25 +233,29 @@ describe('OpenmrsDatePicker', () => {
     /* eslint-disable testing-library/no-container, testing-library/no-node-access */
     it('should apply short class when short prop is true', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" short={true} />);
-      const datePicker = container.querySelector('.cds--date-picker')!;
+      const datePicker = container.querySelector('.cds--date-picker');
+      expect(datePicker).not.toBeNull();
       expect(datePicker).toHaveClass('cds--date-picker--short');
     });
 
     it('should not apply short class when short prop is false', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" short={false} />);
-      const datePicker = container.querySelector('.cds--date-picker')!;
+      const datePicker = container.querySelector('.cds--date-picker');
+      expect(datePicker).not.toBeNull();
       expect(datePicker).not.toHaveClass('cds--date-picker--short');
     });
 
     it('should apply light class when light prop is true', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" light={true} />);
-      const datePicker = container.querySelector('.cds--date-picker')!;
+      const datePicker = container.querySelector('.cds--date-picker');
+      expect(datePicker).not.toBeNull();
       expect(datePicker).toHaveClass('cds--date-picker--light');
     });
 
     it('should apply custom className to the outer div', () => {
       const { container } = render(<OpenmrsDatePicker aria-label="datepicker" className="my-custom-class" />);
-      const outerDiv = container.querySelector('.cds--form-item')!;
+      const outerDiv = container.querySelector('.cds--form-item');
+      expect(outerDiv).not.toBeNull();
       expect(outerDiv).toHaveClass('my-custom-class');
     });
     /* eslint-enable testing-library/no-container, testing-library/no-node-access */
@@ -259,7 +267,9 @@ describe('OpenmrsDatePicker', () => {
       render(<OpenmrsDatePicker aria-label="datepicker" />);
       const button = screen.getByRole('button');
       await user.click(button);
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+      });
       expect(screen.getByRole('grid')).toBeInTheDocument();
     });
 
@@ -272,6 +282,9 @@ describe('OpenmrsDatePicker', () => {
         />,
       );
       await user.click(screen.getByRole('button'));
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+      });
       const dialog = screen.getByRole('dialog');
       const previousButton = within(dialog).getByRole('button', { name: /previous/i });
       expect(previousButton).toBeInTheDocument();
@@ -284,21 +297,29 @@ describe('OpenmrsDatePicker', () => {
         <OpenmrsDatePicker aria-label="datepicker" value={new Date(2025, 5, 15)} maxDate={new Date(2025, 5, 30)} />,
       );
       await user.click(screen.getByRole('button'));
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+      });
       const dialog = screen.getByRole('dialog');
       const nextButtons = within(dialog).getAllByRole('button', { name: /next/i });
       expect(nextButtons[0]).toBeDisabled();
     });
 
-    it('should select a date and close the popover', async () => {
+    it('should select a date and call onChange', async () => {
       const user = userEvent.setup();
       const onChange = vi.fn();
-      render(<OpenmrsDatePicker aria-label="datepicker" value={new Date(2025, 5, 1)} onChange={onChange} />);
+      render(<OpenmrsDatePicker aria-label="datepicker" defaultValue={new Date(2025, 5, 1)} onChange={onChange} />);
       await user.click(screen.getByRole('button'));
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+      });
       const dialog = screen.getByRole('dialog');
       const grid = within(dialog).getByRole('grid');
       const dayCell = within(grid).getByRole('button', { name: /15/ });
       await user.click(dayCell);
-      expect(onChange).toHaveBeenCalled();
+      await waitFor(() => {
+        expect(onChange).toHaveBeenCalled();
+      });
     });
   });
 });
