@@ -318,7 +318,7 @@ describe('OpenmrsDatePicker', () => {
       const dayCell = within(grid).getByRole('button', { name: /15/ });
       await user.click(dayCell);
       await waitFor(() => {
-        expect(onChange).toHaveBeenCalled();
+        expect(onChange).toHaveBeenCalledWith(new Date(2025, 5, 15));
       });
     });
   });
