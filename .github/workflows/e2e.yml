@@ -27,11 +27,11 @@ jobs:
 
     steps:
       - name: 📥 Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 🔍 Check if any source code has changed
         id: changes
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         with:
           filters: |
             test-sources:
@@ -58,7 +58,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 📄 Copy test environment variables
         run: cp example.env .env
@@ -70,7 +70,7 @@ jobs:
 
       - name: 💾 Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
@@ -90,7 +90,7 @@ jobs:
 
       - name: 💾 Cache Playwright Browsers
         id: playwright-cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
@@ -126,7 +126,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout esm-core repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 🛠️ Setup node
         uses: actions/setup-node@v6
@@ -135,7 +135,7 @@ jobs:
 
       - name: 💾 Cache dependencies
         id: cache-dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
@@ -157,7 +157,7 @@ jobs:
         run: bash e2e/support/github/run-e2e-docker-env.sh
 
       - name: 📥 Checkout to the ${{ matrix.repo }} main branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: openmrs/${{ matrix.repo }}
           ref: main
@@ -169,7 +169,7 @@ jobs:
 
       - name: 💾 Cache dependencies for ${{ matrix.repo }}
         id: cache-other-repo-dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('e2e_repo/**/yarn.lock') }}
@@ -181,7 +181,7 @@ jobs:
 
       - name: 💾 Cache Playwright Browsers for ${{ matrix.repo }}
         id: playwright-cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('e2e_repo/**/yarn.lock') }}
