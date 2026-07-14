@@ -3340,6 +3340,7 @@ __metadata:
   dependencies:
     "@carbon/react": "npm:^1.92.1"
     "@vitest/coverage-v8": "npm:^4.1.2"
+    classnames: "npm:^2.3.2"
     happy-dom: "npm:^20.6.0"
     lodash-es: "npm:^4.17.21"
     openmrs: "workspace:*"

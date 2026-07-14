@@ -8,6 +8,7 @@ import {
   useLeftNavStore,
   useSession,
 } from '@openmrs/esm-framework';
+import classNames from 'classnames';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { isDesktop } from '../../utils';
@@ -15,7 +16,6 @@ import Logo from '../logo/logo.component';
 import NotificationsMenuPanel from '../navbar-header-panels/notifications-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
-import classNames from 'classnames';
 
 const HeaderItems: React.FC = () => {
   const config = useConfig();
