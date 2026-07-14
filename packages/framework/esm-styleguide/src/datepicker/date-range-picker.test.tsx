@@ -2,7 +2,7 @@ import React from 'react';
 import type { i18n } from 'i18next';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
 import { OpenmrsDateRangePicker } from './index';
@@ -219,6 +219,31 @@ describe('OpenmrsDateRangePicker', () => {
 
       expect(previousButton).toBeInTheDocument();
       expect(previousButton).toBeDisabled();
+    });
+
+    it('should select a range and call onChange', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <OpenmrsDateRangePicker
+          aria-label="datepicker"
+          defaultValue={[new Date(2025, 5, 1), new Date(2025, 5, 2)]}
+          onChange={onChange}
+        />,
+      );
+
+      await user.click(screen.getByRole('button'));
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+      });
+
+      const grid = within(screen.getByRole('dialog')).getByRole('grid');
+      await user.click(within(grid).getByRole('button', { name: /10/ }));
+      await user.click(within(grid).getByRole('button', { name: /15/ }));
+
+      await waitFor(() => {
+        expect(onChange).toHaveBeenCalledWith([new Date(2025, 5, 10), new Date(2025, 5, 15)]);
+      });
     });
   });
 });
