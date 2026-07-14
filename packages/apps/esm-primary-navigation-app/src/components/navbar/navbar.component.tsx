@@ -15,6 +15,7 @@ import Logo from '../logo/logo.component';
 import NotificationsMenuPanel from '../navbar-header-panels/notifications-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
+import classNames from 'classnames';
 
 const HeaderItems: React.FC = () => {
   const config = useConfig();
@@ -57,10 +58,11 @@ const HeaderItems: React.FC = () => {
           />
         )}
         <ConfigurableLink to={config.logo.link}>
-          <div className={showHamburger ? '' : styles.spacedLogo}>
+          <div className={classNames({ [styles.spacedLogo]: !showHamburger })}>
             <Logo />
           </div>
         </ConfigurableLink>
+        <div className={styles.versionText}>{window.openmrsVersion}</div>
         <div className={styles.divider} />
         <ExtensionSlot name="top-nav-info-slot" className={styles.topNavInfoSlot} />
         <HeaderGlobalBar className={styles.headerGlobalBar}>

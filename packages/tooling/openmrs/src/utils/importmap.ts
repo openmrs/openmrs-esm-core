@@ -119,7 +119,11 @@ export function checkRoutesJson(value: string) {
       typeof content === 'object' &&
       content !== null &&
       !Array.isArray(content) &&
-      Object.entries(content).every(
+      (content.version === undefined || typeof content.version === 'string') &&
+      typeof content.routes === 'object' &&
+      content.routes !== null &&
+      !Array.isArray(content.routes) &&
+      Object.entries(content.routes).every(
         ([key, value]) =>
           typeof key === 'string' && typeof value === 'object' && value !== null && !Array.isArray(value),
       )
@@ -299,7 +303,10 @@ export async function mergeImportmapAndRoutes(
 
     routesDecl.value = JSON.stringify({
       ...routes,
-      ...additionalRoutes,
+      routes: {
+        ...routes.routes,
+        ...additionalRoutes,
+      },
     });
   }
 

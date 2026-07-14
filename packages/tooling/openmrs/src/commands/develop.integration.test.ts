@@ -112,7 +112,7 @@ describe('runDevelop', () => {
     }, 15_000);
 
     it('serves the inline routes at /routes.registry.json', async () => {
-      const routes = '{"@openmrs/foo":{"pages":["/home"]}}';
+      const routes = '{"routes":{"@openmrs/foo":{"pages":["/home"]}}}';
       const port = await getAvailablePort(19200);
       const baseUrl = await startDevServer(defaultArgs({ port, routes: { type: 'inline', value: routes } }));
 
@@ -200,7 +200,7 @@ describe('runDevelop', () => {
     }, 15_000);
 
     it('serves the inline routes under the custom spaPath', async () => {
-      const routes = '{"@openmrs/bar":{"pages":["/dashboard"]}}';
+      const routes = '{"routes":{"@openmrs/bar":{"pages":["/dashboard"]}}}';
       const port = await getAvailablePort(19800);
       const baseUrl = await startDevServer(
         defaultArgs({

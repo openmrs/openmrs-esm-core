@@ -387,9 +387,36 @@ describe('runAssemble', () => {
       const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
       expect(writeCall).toBeDefined();
       const routesRegistry = JSON.parse(writeCall![1] as string);
-      expect(routesRegistry['@openmrs/esm-test-app']).toEqual(
+      expect(routesRegistry.routes['@openmrs/esm-test-app']).toEqual(
         expect.objectContaining({ pages: ['/home'], version: '1.0.0' }),
       );
+    });
+
+    it('records the top-level version from the openmrsVersion argument', async () => {
+      const routes = { pages: ['/home'], extensions: [] };
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
+
+      await runAssemble(defaultArgs({ buildRoutes: true, openmrsVersion: '3.1.0' }));
+
+      const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
+      expect(writeCall).toBeDefined();
+      const routesRegistry = JSON.parse(writeCall![1] as string);
+      expect(routesRegistry.version).toBe('3.1.0');
+      expect(routesRegistry.routes['@openmrs/esm-test-app']).toEqual(
+        expect.objectContaining({ pages: ['/home'], version: '1.0.0' }),
+      );
+    });
+
+    it('omits the top-level version when openmrsVersion is not provided', async () => {
+      const routes = { pages: ['/home'], extensions: [] };
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
+
+      await runAssemble(defaultArgs({ buildRoutes: true }));
+
+      const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
+      expect(writeCall).toBeDefined();
+      const routesRegistry = JSON.parse(writeCall![1] as string);
+      expect(routesRegistry.version).toBeUndefined();
     });
 
     it('does not generate routes registry when buildRoutes is disabled', async () => {
@@ -412,7 +439,7 @@ describe('runAssemble', () => {
       const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
       expect(writeCall).toBeDefined();
       const routesRegistry = JSON.parse(writeCall![1] as string);
-      expect(routesRegistry).not.toHaveProperty('@openmrs/esm-test-app');
+      expect(routesRegistry.routes).not.toHaveProperty('@openmrs/esm-test-app');
     });
 
     it('generates version manifest when manifest is enabled', async () => {

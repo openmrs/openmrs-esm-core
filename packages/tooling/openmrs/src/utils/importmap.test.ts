@@ -70,12 +70,28 @@ describe('checkImportmapJson', () => {
 });
 
 describe('checkRoutesJson', () => {
-  it('returns true for a valid routes object', () => {
-    expect(checkRoutesJson('{"@openmrs/foo":{"pages":[]}}')).toBe(true);
+  it('returns true for a valid routes registry', () => {
+    expect(checkRoutesJson('{"routes":{"@openmrs/foo":{"pages":[]}}}')).toBe(true);
   });
 
-  it('returns true for an empty object', () => {
-    expect(checkRoutesJson('{}')).toBe(true);
+  it('returns true when a top-level version is present', () => {
+    expect(checkRoutesJson('{"version":"1.2.3","routes":{"@openmrs/foo":{"pages":[]}}}')).toBe(true);
+  });
+
+  it('returns true for an empty routes map', () => {
+    expect(checkRoutesJson('{"routes":{}}')).toBe(true);
+  });
+
+  it('returns false for the legacy flat shape', () => {
+    expect(checkRoutesJson('{"@openmrs/foo":{"pages":[]}}')).toBe(false);
+  });
+
+  it('returns false when the routes key is missing', () => {
+    expect(checkRoutesJson('{}')).toBe(false);
+  });
+
+  it('returns false when version is not a string', () => {
+    expect(checkRoutesJson('{"version":42,"routes":{}}')).toBe(false);
   });
 
   it('returns false for invalid JSON', () => {
@@ -86,16 +102,16 @@ describe('checkRoutesJson', () => {
     expect(checkRoutesJson('[]')).toBe(false);
   });
 
-  it('returns false when a value is not an object', () => {
-    expect(checkRoutesJson('{"key":"string_value"}')).toBe(false);
+  it('returns false when a routes entry is not an object', () => {
+    expect(checkRoutesJson('{"routes":{"key":"string_value"}}')).toBe(false);
   });
 
-  it('returns false when a value is null', () => {
-    expect(checkRoutesJson('{"@openmrs/foo":null}')).toBe(false);
+  it('returns false when a routes entry is null', () => {
+    expect(checkRoutesJson('{"routes":{"@openmrs/foo":null}}')).toBe(false);
   });
 
-  it('returns false when a value is an array', () => {
-    expect(checkRoutesJson('{"@openmrs/foo":[]}')).toBe(false);
+  it('returns false when a routes entry is an array', () => {
+    expect(checkRoutesJson('{"routes":{"@openmrs/foo":[]}}')).toBe(false);
   });
 
   it('returns false for null', () => {
@@ -157,7 +173,7 @@ describe('getRoutes', () => {
   });
 
   it('returns an inline declaration when the local file exists and is valid', async () => {
-    const content = '{"@openmrs/foo":{"pages":[]}}';
+    const content = '{"version":"1.2.3","routes":{"@openmrs/foo":{"pages":[]}}}';
     mockExistsSync.mockReturnValue(true);
     mockReadFileSync.mockReturnValue(content);
 
@@ -176,7 +192,7 @@ describe('getRoutes', () => {
   });
 
   it('returns an inline declaration when the path is valid routes JSON', async () => {
-    const inlineJson = '{"@openmrs/foo":{"pages":[]}}';
+    const inlineJson = '{"routes":{"@openmrs/foo":{"pages":[]}}}';
     mockExistsSync.mockReturnValue(false);
 
     const result = await getRoutes(inlineJson);
@@ -191,13 +207,13 @@ describe('mergeImportmapAndRoutes', () => {
   it('returns the original declarations unchanged when additionalImportsAndRoutes is false', async () => {
     const original: ImportmapAndRoutes = {
       importMap: { type: 'inline', value: '{"imports":{"a":"1"}}' },
-      routes: { type: 'inline', value: '{"@openmrs/a":{"pages":[]}}' },
+      routes: { type: 'inline', value: '{"routes":{"@openmrs/a":{"pages":[]}}}' },
     };
 
     const result = await mergeImportmapAndRoutes(original, false);
 
     expect(result.importMap.value).toBe('{"imports":{"a":"1"}}');
-    expect(result.routes.value).toBe('{"@openmrs/a":{"pages":[]}}');
+    expect(result.routes.value).toBe('{"routes":{"@openmrs/a":{"pages":[]}}}');
   });
 
   it('merges additional imports into an inline import map', async () => {
@@ -262,10 +278,10 @@ describe('mergeImportmapAndRoutes', () => {
     vi.unstubAllGlobals();
   });
 
-  it('merges additional routes into the routes declaration', async () => {
+  it('merges additional routes into the nested routes map, preserving the top-level version', async () => {
     const original: ImportmapAndRoutes = {
       importMap: { type: 'inline', value: '{"imports":{}}' },
-      routes: { type: 'inline', value: '{"@openmrs/a":{"pages":[]}}' },
+      routes: { type: 'inline', value: '{"version":"1.2.3","routes":{"@openmrs/a":{"pages":[]}}}' },
     };
 
     const result = await mergeImportmapAndRoutes(original, {
@@ -275,8 +291,9 @@ describe('mergeImportmapAndRoutes', () => {
     });
 
     const merged = JSON.parse(result.routes.value);
-    expect(merged['@openmrs/a']).toEqual({ pages: [] });
-    expect(merged['@openmrs/b']).toEqual({ pages: ['/new'] });
+    expect(merged.version).toBe('1.2.3');
+    expect(merged.routes['@openmrs/a']).toEqual({ pages: [] });
+    expect(merged.routes['@openmrs/b']).toEqual({ pages: ['/new'] });
   });
 });
 

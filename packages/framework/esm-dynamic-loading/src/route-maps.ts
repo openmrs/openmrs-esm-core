@@ -43,10 +43,14 @@ async function readBaseMap(): Promise<OpenmrsRoutes> {
 }
 
 function mergeRouteMaps(maps: OpenmrsRoutes[]): OpenmrsRoutes {
-  const merged: OpenmrsRoutes = {};
+  const merged: OpenmrsRoutes = { routes: {} };
   for (const map of maps) {
     if (map && typeof map === 'object') {
-      Object.assign(merged, map);
+      Object.assign(merged.routes, map.routes);
+
+      if (!merged.version && map.version) {
+        merged.version = map.version;
+      }
     }
   }
   return merged;
@@ -57,7 +61,7 @@ function mergeRouteMaps(maps: OpenmrsRoutes[]): OpenmrsRoutes {
  * This is async because URL-valued overrides need to be fetched.
  */
 async function readOverrideMap(): Promise<OpenmrsRoutes> {
-  const result: OpenmrsRoutes = {};
+  const result: OpenmrsRoutes = { version: undefined, routes: {} };
 
   try {
     const entries: Array<{ moduleName: string; raw: string }> = [];
@@ -94,7 +98,7 @@ async function readOverrideMap(): Promise<OpenmrsRoutes> {
 
     for (const entry of settled) {
       if (entry.status === 'fulfilled') {
-        result[entry.value.moduleName] = entry.value.routes;
+        result['routes'][entry.value.moduleName] = entry.value.routes;
       } else {
         console.warn('[route-maps] Failed to load route override', entry.reason);
       }

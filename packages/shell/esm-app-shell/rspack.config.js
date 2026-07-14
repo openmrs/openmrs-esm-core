@@ -432,7 +432,7 @@ module.exports = (env, argv = []) => {
           openmrsEnvironment,
           openmrsConfigUrls,
           openmrsCoreImportmap: appPatterns.length > 0 && JSON.stringify(coreImportmap),
-          openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
+          openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify({ routes: coreRoutes }),
           openmrsCssFilename,
           openmrsExtraAssets: openmrsJsCssAssets.map((fileName) => 'assets/' + basename(fileName)),
         },
