@@ -199,6 +199,34 @@ describe('getRoutes', () => {
 
     expect(result).toEqual({ type: 'inline', value: inlineJson });
   });
+
+  it('converts a legacy local routes file (modules at the top level) into the nested format', async () => {
+    mockExistsSync.mockReturnValue(true);
+    mockReadFileSync.mockReturnValue('{"@openmrs/foo":{"pages":[]}}');
+
+    const result = await getRoutes('/path/to/routes.json');
+
+    expect(result).toEqual({ type: 'inline', value: '{"routes":{"@openmrs/foo":{"pages":[]}}}' });
+  });
+
+  it('converts a legacy inline routes JSON string into the nested format', async () => {
+    mockExistsSync.mockReturnValue(false);
+
+    const result = await getRoutes('{"@openmrs/foo":{"pages":[]}}');
+
+    expect(result).toEqual({ type: 'inline', value: '{"routes":{"@openmrs/foo":{"pages":[]}}}' });
+  });
+
+  it('treats a legacy module coincidentally named "routes" as a module, not the wrapper key', async () => {
+    mockExistsSync.mockReturnValue(true);
+    // "routes" here is a module whose value is an OpenmrsAppRoutes (array-valued
+    // pages), which is structurally distinct from the current-format wrapper.
+    mockReadFileSync.mockReturnValue('{"routes":{"pages":["/foo"]}}');
+
+    const result = await getRoutes('/path/to/routes.json');
+
+    expect(result).toEqual({ type: 'inline', value: '{"routes":{"routes":{"pages":["/foo"]}}}' });
+  });
 });
 
 // ─── mergeImportmapAndRoutes ────────────────────────────────────────────────
@@ -295,6 +323,58 @@ describe('mergeImportmapAndRoutes', () => {
     expect(merged.routes['@openmrs/a']).toEqual({ pages: [] });
     expect(merged.routes['@openmrs/b']).toEqual({ pages: ['/new'] });
   });
+
+  it('wraps a legacy inline routes registry (modules at the top level) into the nested format', async () => {
+    const original: ImportmapAndRoutes = {
+      importMap: { type: 'inline', value: '{"imports":{}}' },
+      // Legacy shape: module entries live directly at the top level.
+      routes: { type: 'inline', value: '{"@openmrs/a":{"pages":[]}}' },
+    };
+
+    const result = await mergeImportmapAndRoutes(original, {
+      importMap: {},
+      routes: { '@openmrs/b': { pages: ['/new'] } },
+      watchedRoutesPaths: {},
+    });
+
+    const merged = JSON.parse(result.routes.value);
+    expect(merged.routes['@openmrs/a']).toEqual({ pages: [] });
+    expect(merged.routes['@openmrs/b']).toEqual({ pages: ['/new'] });
+    // The legacy module must not leak as a stray top-level key.
+    expect(merged['@openmrs/a']).toBeUndefined();
+  });
+
+  it('converts a legacy-format remote registry to the nested format when fetching a URL-type declaration', async () => {
+    // The backend returns the legacy shape with modules at the top level.
+    const remoteRoutes = { '@openmrs/backend': { pages: ['/backend'] } };
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(remoteRoutes),
+      }),
+    );
+
+    const original: ImportmapAndRoutes = {
+      importMap: { type: 'inline', value: '{"imports":{}}' },
+      routes: { type: 'url', value: 'https://example.com/routes.registry.json' },
+    };
+
+    const result = await mergeImportmapAndRoutes(original, {
+      importMap: {},
+      routes: { '@openmrs/local': { pages: ['/local'] } },
+      watchedRoutesPaths: {},
+    });
+
+    expect(result.routes.type).toBe('inline');
+    const merged = JSON.parse(result.routes.value);
+    // Both the converted backend module and the locally-served module survive.
+    expect(merged.routes['@openmrs/backend']).toEqual({ pages: ['/backend'] });
+    expect(merged.routes['@openmrs/local']).toEqual({ pages: ['/local'] });
+    expect(merged['@openmrs/backend']).toBeUndefined();
+
+    vi.unstubAllGlobals();
+  });
 });
 
 // ─── proxyImportmapAndRoutes ────────────────────────────────────────────────
@@ -373,7 +453,7 @@ describe('proxyImportmapAndRoutes', () => {
     };
 
     expect(() => proxyImportmapAndRoutes(input, backend, spaPath)).toThrow(
-      'proxyImportmapAndRoutes called on non-inline import map',
+      /Could not resolve the import map to serve.*no local frontend/s,
     );
   });
 
@@ -385,7 +465,7 @@ describe('proxyImportmapAndRoutes', () => {
     };
 
     expect(() => proxyImportmapAndRoutes(input, backend, spaPath)).toThrow(
-      'proxyImportmapAndRoutes called on non-inline routes',
+      /Could not resolve the routes registry to serve.*no local frontend/s,
     );
   });
 });

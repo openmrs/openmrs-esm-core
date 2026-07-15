@@ -303,6 +303,76 @@ describe('route-maps', () => {
       expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
       expect(map.routes['@openmrs/esm-bar']).toEqual({ pages: [] });
     });
+
+    it('preserves the versioned registry version when a versionless map follows', async () => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+
+      document.querySelectorAll("script[type='openmrs-routes']").forEach((el) => el.remove());
+      for (const registry of [
+        { version: '1.0.0', routes: { '@openmrs/esm-foo': { pages: [] } } },
+        { routes: { '@openmrs/esm-core': { extensions: [] } } },
+      ]) {
+        const script = document.createElement('script');
+        script.type = 'openmrs-routes';
+        script.textContent = JSON.stringify(registry);
+        document.head.appendChild(script);
+      }
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const map = await getCurrentRouteMap();
+      expect(map.version).toBe('1.0.0');
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-core']).toEqual({ extensions: [] });
+    });
+
+    it('skips maps with no version and uses the first defined one', async () => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+
+      document.querySelectorAll("script[type='openmrs-routes']").forEach((el) => el.remove());
+      for (const registry of [
+        { routes: { '@openmrs/esm-foo': { pages: [] } } },
+        { version: '2.0.0', routes: { '@openmrs/esm-bar': { pages: [] } } },
+      ]) {
+        const script = document.createElement('script');
+        script.type = 'openmrs-routes';
+        script.textContent = JSON.stringify(registry);
+        document.head.appendChild(script);
+      }
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const map = await getCurrentRouteMap();
+      expect(map.version).toBe('2.0.0');
+    });
+
+    it('ignores a route map script whose content is a JSON array', async () => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+
+      document.querySelectorAll("script[type='openmrs-routes']").forEach((el) => el.remove());
+
+      const good = document.createElement('script');
+      good.type = 'openmrs-routes';
+      good.textContent = JSON.stringify({ routes: { '@openmrs/esm-foo': { pages: [] } } });
+      document.head.appendChild(good);
+
+      const arrayScript = document.createElement('script');
+      arrayScript.type = 'openmrs-routes';
+      arrayScript.textContent = JSON.stringify([{ '@openmrs/esm-bar': { pages: [] } }]);
+      document.head.appendChild(arrayScript);
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const map = await getCurrentRouteMap();
+      // An array-shaped registry must not pollute the merged routes.
+      expect(Object.keys(map.routes)).toEqual(['@openmrs/esm-foo']);
+    });
   });
 
   describe('error handling', () => {

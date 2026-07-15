@@ -130,7 +130,7 @@ async function runShell() {
       writable: false,
       configurable: false,
     });
-  } else if (typeof initialRouteMap.version === 'undefined') {
+  } else if (initialRouteMap.version === undefined) {
     Object.defineProperty(window, 'openmrsVersion', {
       value:
         window.spaVersion === 'local' ? getCoreTranslation('localVersion') : getCoreTranslation('prereleaseVersion'),
@@ -139,7 +139,7 @@ async function runShell() {
     });
   } else {
     Object.defineProperty(window, 'openmrsVersion', {
-      value: undefined,
+      value: '',
       writable: false,
       configurable: false,
     });

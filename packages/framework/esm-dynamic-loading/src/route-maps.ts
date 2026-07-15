@@ -45,10 +45,10 @@ async function readBaseMap(): Promise<OpenmrsRoutes> {
 function mergeRouteMaps(maps: OpenmrsRoutes[]): OpenmrsRoutes {
   const merged: OpenmrsRoutes = { routes: {} };
   for (const map of maps) {
-    if (map && typeof map === 'object') {
+    if (map && typeof map === 'object' && !Array.isArray(map)) {
       Object.assign(merged.routes, map.routes);
 
-      if (!merged.version && map.version) {
+      if (merged.version === undefined && map.version !== undefined) {
         merged.version = map.version;
       }
     }
