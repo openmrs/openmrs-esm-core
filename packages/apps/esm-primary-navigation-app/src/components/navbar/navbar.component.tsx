@@ -62,7 +62,7 @@ const HeaderItems: React.FC = () => {
             <Logo />
           </div>
         </ConfigurableLink>
-        <div className={styles.versionText}>{window.openmrsVersion}</div>
+        <div className={styles.versionText}>{window.applicationVersion}</div>
         <div className={styles.divider} />
         <ExtensionSlot name="top-nav-info-slot" className={styles.topNavInfoSlot} />
         <HeaderGlobalBar className={styles.headerGlobalBar}>

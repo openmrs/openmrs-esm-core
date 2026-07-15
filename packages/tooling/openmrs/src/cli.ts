@@ -336,10 +336,10 @@ export function buildCli(y: Argv) {
           description: 'Whether to compile all module routes.json into a master routes.json',
           type: 'boolean',
         })
-        .option('openmrs-version', {
+        .option('application-version', {
           default: undefined,
           description:
-            'The overall application version to record as the top-level `version` in the routes registry. Exposed at runtime as `window.openmrsVersion`.',
+            'The overall application version to record as the top-level `version` in the routes registry. Exposed at runtime as `window.applicationVersion`.',
           type: 'string',
         })
         .option('mode', {
@@ -353,7 +353,7 @@ export function buildCli(y: Argv) {
       runCommand('runAssemble', {
         ...args,
         configFiles: args['config-file'],
-        openmrsVersion: args['openmrs-version'],
+        applicationVersion: args['application-version'],
       }),
   );
 

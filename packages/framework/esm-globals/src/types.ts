@@ -46,9 +46,9 @@ declare global {
      */
     spaVersion: string;
     /**
-     * While called "openmrsVersion", this is intended to be an application-level version for the frontend.
+     * The application-level version for the frontend, as set by the distribution.
      */
-    openmrsVersion: string;
+    applicationVersion: string;
     /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */

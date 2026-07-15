@@ -392,11 +392,11 @@ describe('runAssemble', () => {
       );
     });
 
-    it('records the top-level version from the openmrsVersion argument', async () => {
+    it('records the top-level version from the applicationVersion argument', async () => {
       const routes = { pages: ['/home'], extensions: [] };
       setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
 
-      await runAssemble(defaultArgs({ buildRoutes: true, openmrsVersion: '3.1.0' }));
+      await runAssemble(defaultArgs({ buildRoutes: true, applicationVersion: '3.1.0' }));
 
       const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
       expect(writeCall).toBeDefined();
@@ -407,7 +407,7 @@ describe('runAssemble', () => {
       );
     });
 
-    it('omits the top-level version when openmrsVersion is not provided', async () => {
+    it('omits the top-level version when applicationVersion is not provided', async () => {
       const routes = { pages: ['/home'], extensions: [] };
       setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
 

@@ -125,20 +125,20 @@ async function runShell() {
   }
 
   if (initialRouteMap.version && initialRouteMap.version.length > 0) {
-    Object.defineProperty(window, 'openmrsVersion', {
+    Object.defineProperty(window, 'applicationVersion', {
       value: initialRouteMap.version,
       writable: false,
       configurable: false,
     });
   } else if (initialRouteMap.version === undefined) {
-    Object.defineProperty(window, 'openmrsVersion', {
+    Object.defineProperty(window, 'applicationVersion', {
       value:
         window.spaVersion === 'local' ? getCoreTranslation('localVersion') : getCoreTranslation('prereleaseVersion'),
       writable: false,
       configurable: false,
     });
   } else {
-    Object.defineProperty(window, 'openmrsVersion', {
+    Object.defineProperty(window, 'applicationVersion', {
       value: '',
       writable: false,
       configurable: false,

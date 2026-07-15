@@ -23,7 +23,7 @@ export interface AssembleArgs {
   fresh: boolean;
   buildRoutes: boolean;
   manifest: boolean;
-  openmrsVersion?: string;
+  applicationVersion?: string;
 }
 
 interface NpmSearchResult {
@@ -288,7 +288,7 @@ export async function runAssemble(args: AssembleArgs) {
   );
 
   if (args.buildRoutes) {
-    const routesRegistry = { version: args.openmrsVersion, routes };
+    const routesRegistry = { version: args.applicationVersion, routes };
     await writeFile(
       resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routesRegistry) : ''}.json`),
       JSON.stringify(routesRegistry),
