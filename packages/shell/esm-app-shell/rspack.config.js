@@ -233,7 +233,7 @@ module.exports = (env, argv = []) => {
     entry: resolve(__dirname, 'src/index.ts'),
     output: {
       filename: isProd ? 'openmrs.[contenthash].js' : 'openmrs.js',
-      chunkFilename: '[chunkhash].js',
+      chunkFilename: '[contenthash].js',
       path: resolve(__dirname, outDir),
       publicPath: '',
       hashFunction: 'xxhash64',
