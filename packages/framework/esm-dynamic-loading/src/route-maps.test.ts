@@ -10,7 +10,8 @@ describe('route-maps', () => {
     for (const map of maps) {
       const script = document.createElement('script');
       script.type = 'openmrs-routes';
-      script.textContent = JSON.stringify(map);
+      // `map` is a flat module map; wrap it in the { version, routes } registry shape.
+      script.textContent = JSON.stringify({ routes: map });
       document.head.appendChild(script);
     }
   }
@@ -43,8 +44,8 @@ describe('route-maps', () => {
       );
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toEqual({ pages: [] });
-      expect(map['@openmrs/esm-bar']).toEqual({ extensions: [] });
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-bar']).toEqual({ extensions: [] });
     });
 
     it('getRouteMapNextPageMap returns base map only', async () => {
@@ -58,7 +59,7 @@ describe('route-maps', () => {
       );
 
       const map = await getRouteMapNextPageMap();
-      expect(map['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
     });
 
     it('getRouteMapOverrideMap returns empty object', async () => {
@@ -115,8 +116,8 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toEqual({ pages: [{ component: 'root', route: '/' }] });
-      expect(map['@openmrs/esm-bar']).toEqual({ extensions: [] });
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [{ component: 'root', route: '/' }] });
+      expect(map.routes['@openmrs/esm-bar']).toEqual({ extensions: [] });
     });
 
     it('getCurrentRouteMap merges base map with URL-fetched overrides', async () => {
@@ -128,7 +129,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toEqual({ pages: [{ component: 'root', route: '/fetched' }] });
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [{ component: 'root', route: '/fetched' }] });
     });
 
     it('getRouteMapDefaultMap returns only the base map', async () => {
@@ -142,7 +143,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getRouteMapDefaultMap();
-      expect(map['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
     });
 
     it('addRouteMapOverride stores an object in localStorage', async () => {
@@ -254,11 +255,11 @@ describe('route-maps', () => {
 
       // getCurrentRouteMap uses the snapshot — doesn't reflect post-setup changes
       const currentMap = await getCurrentRouteMap();
-      expect(currentMap['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(currentMap.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
 
       // getRouteMapNextPageMap reads live overrides
       const nextMap = await getRouteMapNextPageMap();
-      expect(nextMap['@openmrs/esm-foo']).toEqual({ pages: [{ component: 'new', route: '/new' }] });
+      expect(nextMap.routes['@openmrs/esm-foo']).toEqual({ pages: [{ component: 'new', route: '/new' }] });
     });
   });
 
@@ -276,7 +277,101 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toEqual({ pages: [{ component: 'v2', route: '/' }] });
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [{ component: 'v2', route: '/' }] });
+    });
+
+    it('takes the first defined top-level version when merging', async () => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+
+      document.querySelectorAll("script[type='openmrs-routes']").forEach((el) => el.remove());
+      for (const registry of [
+        { version: '1.0.0', routes: { '@openmrs/esm-foo': { pages: [] } } },
+        { version: '2.0.0', routes: { '@openmrs/esm-bar': { pages: [] } } },
+      ]) {
+        const script = document.createElement('script');
+        script.type = 'openmrs-routes';
+        script.textContent = JSON.stringify(registry);
+        document.head.appendChild(script);
+      }
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const map = await getCurrentRouteMap();
+      expect(map.version).toBe('1.0.0');
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-bar']).toEqual({ pages: [] });
+    });
+
+    it('preserves the versioned registry version when a versionless map follows', async () => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+
+      document.querySelectorAll("script[type='openmrs-routes']").forEach((el) => el.remove());
+      for (const registry of [
+        { version: '1.0.0', routes: { '@openmrs/esm-foo': { pages: [] } } },
+        { routes: { '@openmrs/esm-core': { extensions: [] } } },
+      ]) {
+        const script = document.createElement('script');
+        script.type = 'openmrs-routes';
+        script.textContent = JSON.stringify(registry);
+        document.head.appendChild(script);
+      }
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const map = await getCurrentRouteMap();
+      expect(map.version).toBe('1.0.0');
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-core']).toEqual({ extensions: [] });
+    });
+
+    it('skips maps with no version and uses the first defined one', async () => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+
+      document.querySelectorAll("script[type='openmrs-routes']").forEach((el) => el.remove());
+      for (const registry of [
+        { routes: { '@openmrs/esm-foo': { pages: [] } } },
+        { version: '2.0.0', routes: { '@openmrs/esm-bar': { pages: [] } } },
+      ]) {
+        const script = document.createElement('script');
+        script.type = 'openmrs-routes';
+        script.textContent = JSON.stringify(registry);
+        document.head.appendChild(script);
+      }
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const map = await getCurrentRouteMap();
+      expect(map.version).toBe('2.0.0');
+    });
+
+    it('ignores a route map script whose content is a JSON array', async () => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+
+      document.querySelectorAll("script[type='openmrs-routes']").forEach((el) => el.remove());
+
+      const good = document.createElement('script');
+      good.type = 'openmrs-routes';
+      good.textContent = JSON.stringify({ routes: { '@openmrs/esm-foo': { pages: [] } } });
+      document.head.appendChild(good);
+
+      const arrayScript = document.createElement('script');
+      arrayScript.type = 'openmrs-routes';
+      arrayScript.textContent = JSON.stringify([{ '@openmrs/esm-bar': { pages: [] } }]);
+      document.head.appendChild(arrayScript);
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const map = await getCurrentRouteMap();
+      // An array-shaped registry must not pollute the merged routes.
+      expect(Object.keys(map.routes)).toEqual(['@openmrs/esm-foo']);
     });
   });
 
@@ -291,14 +386,14 @@ describe('route-maps', () => {
       document.head.appendChild(script);
 
       fetchMock.mockResponseOnce(
-        JSON.stringify({ '@openmrs/esm-remote': { pages: [{ component: 'root', route: '/remote' }] } }),
+        JSON.stringify({ routes: { '@openmrs/esm-remote': { pages: [{ component: 'root', route: '/remote' }] } } }),
       );
 
       const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-remote']).toEqual({ pages: [{ component: 'root', route: '/remote' }] });
+      expect(map.routes['@openmrs/esm-remote']).toEqual({ pages: [{ component: 'root', route: '/remote' }] });
       expect(fetchMock).toHaveBeenCalledWith('http://localhost/routes.json');
     });
 
@@ -308,7 +403,7 @@ describe('route-maps', () => {
 
       const inline = document.createElement('script');
       inline.type = 'openmrs-routes';
-      inline.textContent = JSON.stringify({ '@openmrs/esm-inline': { extensions: [] } });
+      inline.textContent = JSON.stringify({ routes: { '@openmrs/esm-inline': { extensions: [] } } });
       document.head.appendChild(inline);
 
       const remote = document.createElement('script');
@@ -316,14 +411,14 @@ describe('route-maps', () => {
       Object.defineProperty(remote, 'src', { value: 'http://localhost/routes.json', writable: false });
       document.head.appendChild(remote);
 
-      fetchMock.mockResponseOnce(JSON.stringify({ '@openmrs/esm-remote': { pages: [] } }));
+      fetchMock.mockResponseOnce(JSON.stringify({ routes: { '@openmrs/esm-remote': { pages: [] } } }));
 
       const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-inline']).toEqual({ extensions: [] });
-      expect(map['@openmrs/esm-remote']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-inline']).toEqual({ extensions: [] });
+      expect(map.routes['@openmrs/esm-remote']).toEqual({ pages: [] });
     });
 
     it('skips remote route maps that fail to fetch', async () => {
@@ -334,7 +429,7 @@ describe('route-maps', () => {
 
       const good = document.createElement('script');
       good.type = 'openmrs-routes';
-      good.textContent = JSON.stringify({ '@openmrs/esm-foo': { pages: [] } });
+      good.textContent = JSON.stringify({ routes: { '@openmrs/esm-foo': { pages: [] } } });
       document.head.appendChild(good);
 
       const bad = document.createElement('script');
@@ -348,8 +443,8 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toEqual({ pages: [] });
-      expect(map['@openmrs/esm-broken']).toBeUndefined();
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-broken']).toBeUndefined();
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse routes'), expect.anything());
     });
 
@@ -370,7 +465,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(Object.keys(map)).toHaveLength(0);
+      expect(Object.keys(map.routes)).toHaveLength(0);
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse routes'), expect.anything());
     });
 
@@ -389,7 +484,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(Object.keys(map)).toHaveLength(0);
+      expect(Object.keys(map.routes)).toHaveLength(0);
     });
 
     it('skips malformed inline route map script tags', async () => {
@@ -400,7 +495,7 @@ describe('route-maps', () => {
 
       const good = document.createElement('script');
       good.type = 'openmrs-routes';
-      good.textContent = JSON.stringify({ '@openmrs/esm-foo': { pages: [] } });
+      good.textContent = JSON.stringify({ routes: { '@openmrs/esm-foo': { pages: [] } } });
       document.head.appendChild(good);
 
       const bad = document.createElement('script');
@@ -412,7 +507,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toEqual({ pages: [] });
+      expect(map.routes['@openmrs/esm-foo']).toEqual({ pages: [] });
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse routes'), expect.anything());
     });
 
@@ -428,7 +523,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toBeUndefined();
+      expect(map.routes['@openmrs/esm-foo']).toBeUndefined();
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to load route override'), expect.anything());
     });
 
@@ -444,7 +539,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toBeUndefined();
+      expect(map.routes['@openmrs/esm-foo']).toBeUndefined();
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to load route override'), expect.anything());
     });
 
@@ -459,7 +554,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toBeUndefined();
+      expect(map.routes['@openmrs/esm-foo']).toBeUndefined();
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to load route override'), expect.anything());
     });
 
@@ -474,7 +569,7 @@ describe('route-maps', () => {
       await setupRouteMapOverrides();
 
       const map = await getCurrentRouteMap();
-      expect(map['@openmrs/esm-foo']).toBeUndefined();
+      expect(map.routes['@openmrs/esm-foo']).toBeUndefined();
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to load route override'), expect.anything());
     });
   });

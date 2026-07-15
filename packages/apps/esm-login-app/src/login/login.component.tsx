@@ -298,6 +298,7 @@ const Login: React.FC = () => {
                 </>
               )}
             </div>
+            <div className={styles.versionText}>{window.applicationVersion}</div>
           </form>
         </Tile>
         <Footer />

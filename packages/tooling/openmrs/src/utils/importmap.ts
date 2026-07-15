@@ -47,7 +47,7 @@ async function readRoutes(path: string, backend?: string, spaPath?: string) {
     return fetchRemoteRoutes('https://dev3.openmrs.org/openmrs/spa/routes.registry.json');
   }
 
-  return '{}';
+  return '{"routes":{}}';
 }
 
 async function fetchRemoteImportmap(fetchUrl: string) {
@@ -79,7 +79,64 @@ async function fetchRemoteRoutes(fetchUrl: string) {
   }
 
   const m = await res.json();
-  return JSON.stringify(m);
+  return JSON.stringify(normalizeRoutesRegistry(m));
+}
+
+/**
+ * Coerces a parsed routes registry into the current `{ version, routes }` shape.
+ *
+ * The registry nests each module's routes under a top-level `routes` key,
+ * alongside an optional `version` string. Backends (and route files) that
+ * predate this change serve the legacy shape, where each module's routes are
+ * themselves the top-level entries. Wrapping the legacy shape here means every
+ * downstream consumer—ultimately the app shell, which reads `registry.routes`—
+ * only ever sees the current format.
+ *
+ * @param parsed a parsed routes registry in either the legacy or current shape
+ * @returns the registry in the current `{ version?, routes }` format
+ */
+function normalizeRoutesRegistry(parsed: unknown): { version?: string; routes: Record<string, unknown> } {
+  // Distinguish the two shapes structurally, not by the mere presence of a
+  // `routes` key. A current-format registry's `routes` is a map of module name
+  // -> OpenmrsAppRoutes, so a legacy registry that happens to contain a module
+  // literally named `routes` (whose value is its own OpenmrsAppRoutes, e.g.
+  // `{ pages: [...] }`) does not satisfy isCurrentRoutesRegistry and is
+  // correctly treated as legacy rather than misread as the wrapper key.
+  if (isCurrentRoutesRegistry(parsed)) {
+    // Keep only the recognized keys so stray top-level properties don't leak
+    // into what we serve.
+    return typeof parsed.version === 'string'
+      ? { version: parsed.version, routes: parsed.routes }
+      : { routes: parsed.routes };
+  }
+
+  if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+    // Legacy format: the object itself is the map of module name -> routes.
+    return { routes: parsed as Record<string, unknown> };
+  }
+
+  return { routes: {} };
+}
+
+/**
+ * Parses a routes registry string and coerces it into the current
+ * `{ version, routes }` format via {@link normalizeRoutesRegistry}, converting
+ * the legacy (top-level module entries) shape along the way.
+ *
+ * @param content the raw routes registry JSON
+ * @returns the normalized registry as a JSON string, or `null` if the content
+ *   isn't parseable JSON or doesn't describe a valid routes registry
+ */
+function normalizeRoutesJson(content: string): string | null {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(content);
+  } catch {
+    return null;
+  }
+
+  const normalized = JSON.stringify(normalizeRoutesRegistry(parsed));
+  return checkRoutesJson(normalized) ? normalized : null;
 }
 
 export interface ImportmapDeclaration {
@@ -112,18 +169,33 @@ export function checkImportmapJson(value: string) {
   }
 }
 
+/**
+ * Structural predicate for a current-format routes registry: a `{ version?, routes }`
+ * object whose `routes` is a map of module name -> OpenmrsAppRoutes object. This is
+ * the discriminator between the current and legacy shapes—a legacy module named
+ * `routes` fails it because its value would be an OpenmrsAppRoutes (e.g. with an
+ * array-valued `pages`), not a map of module objects.
+ */
+function isCurrentRoutesRegistry(content: unknown): content is { version?: string; routes: Record<string, unknown> } {
+  if (typeof content !== 'object' || content === null || Array.isArray(content)) {
+    return false;
+  }
+
+  const registry = content as { version?: unknown; routes?: unknown };
+  return (
+    (registry.version === undefined || typeof registry.version === 'string') &&
+    typeof registry.routes === 'object' &&
+    registry.routes !== null &&
+    !Array.isArray(registry.routes) &&
+    Object.entries(registry.routes).every(
+      ([key, value]) => typeof key === 'string' && typeof value === 'object' && value !== null && !Array.isArray(value),
+    )
+  );
+}
+
 export function checkRoutesJson(value: string) {
   try {
-    const content = JSON.parse(value);
-    return (
-      typeof content === 'object' &&
-      content !== null &&
-      !Array.isArray(content) &&
-      Object.entries(content).every(
-        ([key, value]) =>
-          typeof key === 'string' && typeof value === 'object' && value !== null && !Array.isArray(value),
-      )
-    );
+    return isCurrentRoutesRegistry(JSON.parse(value));
   } catch {
     return false;
   }
@@ -295,11 +367,14 @@ export async function mergeImportmapAndRoutes(
       routesDecl.value = await readRoutes(routesDecl.value, backend, spaPath);
     }
 
-    const routes = JSON.parse(routesDecl.value);
+    const routes = normalizeRoutesRegistry(JSON.parse(routesDecl.value));
 
     routesDecl.value = JSON.stringify({
-      ...routes,
-      ...additionalRoutes,
+      ...(routes.version !== undefined ? { version: routes.version } : {}),
+      routes: {
+        ...routes.routes,
+        ...additionalRoutes,
+      },
     });
   }
 
@@ -362,21 +437,23 @@ export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> 
     const path = resolve(process.cwd(), routesPath);
 
     if (existsSync(path)) {
-      const content = readFileSync(path, 'utf8');
-      const valid = checkRoutesJson(content);
+      const normalized = normalizeRoutesJson(readFileSync(path, 'utf8'));
 
-      if (!valid) {
-        logWarn(`The routes provided provided in "${routesPath}" does not seem right. Skipping.`);
+      if (normalized === null) {
+        logWarn(`The routes provided in "${routesPath}" does not seem right. Skipping.`);
       }
 
       return {
         type: 'inline',
-        value: valid ? content : '',
+        value: normalized ?? '',
       };
-    } else if (checkRoutesJson(routesPath)) {
+    }
+
+    const normalized = normalizeRoutesJson(routesPath);
+    if (normalized !== null) {
       return {
         type: 'inline',
-        value: routesPath,
+        value: normalized,
       };
     }
   }
@@ -401,14 +478,19 @@ export function proxyImportmapAndRoutes(
   const { importMap: importMapDecl, routes: routesDecl, watchedRoutesPaths } = importmapAndRoutes;
   if (importMapDecl.type != 'inline') {
     throw new Error(
-      'proxyImportmapAndRoutes called on non-inline import map. This is a programming error. Value: ' +
-        importMapDecl.value,
+      `Could not resolve the import map to serve ("${importMapDecl.value}"). This usually means no local frontend ` +
+        'modules were found to run, so the remote import map was never downloaded and merged. Check that you are ' +
+        'running "openmrs develop" from a frontend module directory or that the paths passed via --sources match ' +
+        'one or more frontend modules.',
     );
   }
 
   if (routesDecl.type != 'inline') {
     throw new Error(
-      'proxyImportmapAndRoutes called on non-inline routes. This is a programming error. Value: ' + routesDecl.value,
+      `Could not resolve the routes registry to serve ("${routesDecl.value}"). This usually means no local frontend ` +
+        'modules were found to run, so the remote routes registry was never downloaded and merged. Check that you are ' +
+        'running "openmrs develop" from a frontend module directory or that the paths passed via --sources match ' +
+        'one or more frontend modules.',
     );
   }
 

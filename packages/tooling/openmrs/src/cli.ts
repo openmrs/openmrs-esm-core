@@ -336,6 +336,12 @@ export function buildCli(y: Argv) {
           description: 'Whether to compile all module routes.json into a master routes.json',
           type: 'boolean',
         })
+        .option('application-version', {
+          default: undefined,
+          description:
+            'The overall application version to record as the top-level `version` in the routes registry. Exposed at runtime as `window.applicationVersion`.',
+          type: 'string',
+        })
         .option('mode', {
           choices: ['config', 'survey'],
           default: 'survey',
@@ -343,7 +349,12 @@ export function buildCli(y: Argv) {
             'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey.',
           type: 'string',
         }),
-    (args) => runCommand('runAssemble', { ...args, configFiles: args['config-file'] }),
+    (args) =>
+      runCommand('runAssemble', {
+        ...args,
+        configFiles: args['config-file'],
+        applicationVersion: args['application-version'],
+      }),
   );
 
   y.command(

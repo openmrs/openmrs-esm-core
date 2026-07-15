@@ -2,12 +2,14 @@ import { start, triggerAppChange } from 'single-spa';
 import { type CalendarIdentifier } from '@internationalized/date';
 import {
   activateOfflineCapability,
+  type Config,
   dispatchConnectivityChanged,
   dispatchPrecacheStaticDependencies,
   type ExtensionDefinition,
   finishRegisteringAllApps,
   fireOpenmrsEvent,
   getConfig,
+  getCoreTranslation,
   getCurrentPageMap,
   getCurrentRouteMap,
   getCurrentUser,
@@ -15,6 +17,7 @@ import {
   interpolateUrl,
   messageOmrsServiceWorker,
   openmrsFetch,
+  type OpenmrsRoutes,
   provide,
   registerApp,
   registerDefaultCalendar,
@@ -41,9 +44,8 @@ import {
   subscribePrecacheStaticDependencies,
   subscribeSnackbarShown,
   subscribeToastShown,
-  tryRegisterExtension,
-  type Config,
   type StyleguideConfigObject,
+  tryRegisterExtension,
 } from '@openmrs/esm-framework/src/internal';
 import { setupI18n } from './locale';
 import './routing-events';
@@ -56,6 +58,8 @@ import { setupCoreConfig } from './core-config';
 // so we can pre-load all modules
 const REGISTRATION_PROMISES = Symbol('openmrs_registration_promises');
 
+let initialRouteMap: OpenmrsRoutes;
+
 /**
  * Sets up the frontend modules (apps). Uses the defined export
  * from the root modules of the apps. This is done by reading the
@@ -64,10 +68,10 @@ const REGISTRATION_PROMISES = Symbol('openmrs_registration_promises');
  */
 async function setupApps() {
   await setupRouteMapOverrides();
-  const routes = await getCurrentRouteMap();
+  const routes = (initialRouteMap = await getCurrentRouteMap());
 
   const modules: typeof window.installedModules = [];
-  const registrationPromises = Object.entries(routes).map(async ([module, appRoutes]) => {
+  const registrationPromises = Object.entries(routes.routes).map(async ([module, appRoutes]) => {
     modules.push([module, appRoutes]);
     registerApp(module, appRoutes);
   });
@@ -114,16 +118,39 @@ function connectivityChanged() {
  * Runs the shell by importing the translations and starting single SPA.
  */
 async function runShell() {
-  return setupI18n()
-    .catch((err) => console.error(`Failed to initialize translations`, err))
-    .then(async () => {
-      const { preferredCalendar } = await getConfig<StyleguideConfigObject>('@openmrs/esm-styleguide');
+  try {
+    await setupI18n();
+  } catch (err) {
+    console.error(`Failed to initialize translation system`, err);
+  }
 
-      for (const entry of Object.entries(preferredCalendar)) {
-        registerDefaultCalendar(entry[0], entry[1] as CalendarIdentifier);
-      }
-    })
-    .then(() => start());
+  if (initialRouteMap.version && initialRouteMap.version.length > 0) {
+    Object.defineProperty(window, 'applicationVersion', {
+      value: initialRouteMap.version,
+      writable: false,
+      configurable: false,
+    });
+  } else if (initialRouteMap.version === undefined) {
+    Object.defineProperty(window, 'applicationVersion', {
+      value:
+        window.spaVersion === 'local' ? getCoreTranslation('localVersion') : getCoreTranslation('prereleaseVersion'),
+      writable: false,
+      configurable: false,
+    });
+  } else {
+    Object.defineProperty(window, 'applicationVersion', {
+      value: '',
+      writable: false,
+      configurable: false,
+    });
+  }
+
+  const { preferredCalendar } = await getConfig<StyleguideConfigObject>('@openmrs/esm-styleguide');
+  for (const entry of Object.entries(preferredCalendar)) {
+    registerDefaultCalendar(entry[0], entry[1] as CalendarIdentifier);
+  }
+
+  start();
 }
 
 function handleInitFailure(e: Error) {

@@ -8,6 +8,7 @@ import {
   useLeftNavStore,
   useSession,
 } from '@openmrs/esm-framework';
+import classNames from 'classnames';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { isDesktop } from '../../utils';
@@ -57,10 +58,11 @@ const HeaderItems: React.FC = () => {
           />
         )}
         <ConfigurableLink to={config.logo.link}>
-          <div className={showHamburger ? '' : styles.spacedLogo}>
+          <div className={classNames({ [styles.spacedLogo]: !showHamburger })}>
             <Logo />
           </div>
         </ConfigurableLink>
+        <div className={styles.versionText}>{window.applicationVersion}</div>
         <div className={styles.divider} />
         <ExtensionSlot name="top-nav-info-slot" className={styles.topNavInfoSlot} />
         <HeaderGlobalBar className={styles.headerGlobalBar}>
