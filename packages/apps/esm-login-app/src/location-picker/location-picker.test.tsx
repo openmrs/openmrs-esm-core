@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { screen, waitFor, render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { SWRConfig } from 'swr';
 import userEvent from '@testing-library/user-event';
 import {
   navigate,
@@ -462,5 +465,139 @@ describe('returnToUrl open-redirect protection', () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith({ to: '/openmrs/spa/home' });
     });
+  });
+});
+
+const mockZeroLocationsResponse: FetchResponse<unknown> = {
+  data: {
+    resourceType: 'Bundle',
+    total: 0,
+    entry: [],
+  },
+} as FetchResponse<unknown>;
+
+const regularUser: LoggedInUser = {
+  display: 'Regular User',
+  uuid: 'user-uuid',
+  userProperties: {},
+} as LoggedInUser;
+
+describe('Zero login locations', () => {
+  beforeEach(() => {
+    mockUseConnectivity.mockReturnValue(true);
+    mockUseConfig.mockReturnValue(mockConfig);
+    mockSetSessionLocation.mockResolvedValue(undefined);
+    mockNavigate.mockClear();
+
+    mockOpenmrsFetch.mockImplementation(async (url) => {
+      if (String(url).includes('_count=1')) {
+        return mockZeroLocationsResponse;
+      }
+      return mockLoginLocations as FetchResponse<unknown>;
+    });
+  });
+
+  const renderWithFreshCache = (props = {}) => {
+    return render(
+      <SWRConfig value={{ provider: () => new Map() }}>
+        <MemoryRouter>
+          <LocationPickerView {...props} />
+        </MemoryRouter>
+      </SWRConfig>,
+    );
+  };
+
+  it('shows empty state message when no login locations exist', async () => {
+    mockUseSession.mockReturnValue({
+      user: regularUser,
+    } as Session);
+
+    renderWithFreshCache();
+
+    await waitFor(() => {
+      expect(screen.getByText('No login locations configured')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText(
+        'This installation has no login locations configured. Please contact your system administrator.',
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it('does not render the confirm button when no locations exist', async () => {
+    mockUseSession.mockReturnValue({
+      user: regularUser,
+    } as Session);
+
+    renderWithFreshCache();
+
+    await waitFor(() => {
+      expect(screen.getByText('No login locations configured')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByRole('button', { name: /confirm/i })).not.toBeInTheDocument();
+  });
+
+  it('does not render the location picker when no locations exist', async () => {
+    mockUseSession.mockReturnValue({
+      user: regularUser,
+    } as Session);
+
+    renderWithFreshCache();
+
+    await waitFor(() => {
+      expect(screen.getByText('No login locations configured')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByRole('radio')).not.toBeInTheDocument();
+  });
+
+  it('does not render the remember location checkbox when no locations exist', async () => {
+    mockUseSession.mockReturnValue({
+      user: regularUser,
+    } as Session);
+
+    renderWithFreshCache();
+
+    await waitFor(() => {
+      expect(screen.getByText('No login locations configured')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByLabelText(/remember my location/i)).not.toBeInTheDocument();
+  });
+
+  it('does not call setSessionLocation when no locations exist', async () => {
+    mockUseSession.mockReturnValue({
+      user: regularUser,
+    } as Session);
+
+    renderWithFreshCache();
+
+    await waitFor(() => {
+      expect(screen.getByText('No login locations configured')).toBeInTheDocument();
+    });
+
+    expect(mockSetSessionLocation).not.toHaveBeenCalled();
+  });
+
+  it('does not auto-login with saved default when no login locations exist', async () => {
+    mockUseSession.mockReturnValue({
+      user: {
+        display: 'Saved Default User',
+        uuid: 'saved-user-uuid',
+        userProperties: {
+          defaultLocation: fistLocation.uuid,
+        },
+      } as LoggedInUser,
+    } as Session);
+
+    renderWithFreshCache();
+
+    await waitFor(() => {
+      expect(screen.getByText('No login locations configured')).toBeInTheDocument();
+    });
+
+    expect(mockSetSessionLocation).not.toHaveBeenCalled();
   });
 });
