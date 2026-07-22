@@ -59,6 +59,7 @@ export const iconIds = [
   'omrs-icon-medication',
   'omrs-icon-message-queue',
   'omrs-icon-microscope',
+  'omrs-icon-mobile-check',
   'omrs-icon-money',
   'omrs-icon-mother',
   'omrs-icon-movement',
@@ -89,6 +90,7 @@ export const iconIds = [
   'omrs-icon-translate',
   'omrs-icon-trash-can',
   'omrs-icon-tree-view--alt',
+  'omrs-icon-two-factor-authentication',
   'omrs-icon-user-avatar',
   'omrs-icon-user-follow',
   'omrs-icon-user-xray',
@@ -528,6 +530,14 @@ export const MicroscopeIcon = memo(
 );
 
 /**
+ */
+export const MobileCheckIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MobileCheckIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-mobile-check" iconProps={props} />;
+  }),
+);
+
+/**
  * Billing
  */
 export const MoneyIcon = memo(
@@ -768,6 +778,15 @@ export const TrashCanIcon = memo(
 export const TreeViewAltIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function TreeViewAltIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-tree-view--alt" iconProps={props} />;
+  }),
+);
+
+/**
+ * This icon is used in the My account and the Two Factor Authentication page header as well.
+ */
+export const TwoFactorAuthenticationIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function TwoFactorAuthenticationIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-two-factor-authentication" iconProps={props} />;
   }),
 );
 

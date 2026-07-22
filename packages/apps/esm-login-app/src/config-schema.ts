@@ -1,4 +1,8 @@
 import { validators, Type, validator } from '@openmrs/esm-framework';
+import {
+  type TwoFactorAuthConfigObject,
+  twoFactorAuthConfigSchema,
+} from './two-factor-auth/two-factor-auth-config-schema';
 
 export const configSchema = {
   provider: {
@@ -150,6 +154,7 @@ export const configSchema = {
     },
     _default: [],
   },
+  twoFactorAuth: twoFactorAuthConfigSchema,
 };
 
 export interface ConfigSchema {
@@ -186,4 +191,5 @@ export interface ConfigSchema {
     type: 'basic' | 'oauth2' | 'custom';
   };
   showPasswordOnSeparateScreen: boolean;
+  twoFactorAuth: TwoFactorAuthConfigObject;
 }
