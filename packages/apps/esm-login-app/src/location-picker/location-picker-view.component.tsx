@@ -119,12 +119,11 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
     if (isUpdateFlow) {
       return;
     }
-    if (isLoadingLocationCount) return;
     if (defaultLocation && !isSubmitting) {
       setActiveLocation(defaultLocation);
       changeLocation(defaultLocation, true);
     }
-  }, [changeLocation, isSubmitting, defaultLocation, isUpdateFlow, isLoadingLocationCount]);
+  }, [changeLocation, isSubmitting, defaultLocation, isUpdateFlow]);
 
   const handleSubmit = useCallback(
     (evt: React.FormEvent<HTMLFormElement>) => {
