@@ -1,5 +1,4 @@
 @use '@carbon/layout';
-@use '@carbon/react/scss/themes';
 @use '@carbon/react/scss/theme';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
@@ -50,6 +49,10 @@
     &:first-child {
       border-left: none !important;
       border-radius: 0 !important;
+    }
+
+    &:global(.cds--content-switcher--selected) {
+      background-color: theme.$background-inverse;
     }
   }
 }
