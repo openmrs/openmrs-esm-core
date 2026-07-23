@@ -1,0 +1,88 @@
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.pageContainer {
+  background-color: $ui-background;
+  padding: layout.$spacing-07 layout.$spacing-05;
+}
+
+.header {
+  background-color: $ui-02;
+  border-block: 1px solid $ui-03;
+  display: flex;
+  justify-content: space-between;
+  padding-right: layout.$spacing-03;
+}
+
+button.menuItemButton {
+  color: $field-01 !important;
+  font-size: layout.$spacing-05;
+  flex: 1;
+  justify-content: flex-start;
+  padding-left: 0;
+  height: 100%;
+  white-space: nowrap;
+}
+
+.mainCard {
+  background-color: $ui-01;
+  border: 1px solid $ui-03;
+  padding: layout.$spacing-07;
+  max-width: 90rem;
+  margin: layout.$spacing-06 auto;
+}
+
+.descriptionText {
+  margin-bottom: layout.$spacing-06;
+
+  h3 {
+    @include type.type-style('heading-03');
+    margin-bottom: layout.$spacing-04;
+  }
+
+  p {
+    @include type.type-style('body-short-02');
+    margin-bottom: layout.$spacing-02;
+  }
+}
+
+.methodTile {
+  display: flex;
+  align-items: center;
+  border: 1px solid $ui-03;
+  padding: layout.$spacing-06;
+  background-color: $ui-02 !important;
+  border-radius: 4px;
+}
+
+.iconContainer {
+  margin-right: layout.$spacing-06;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid $ui-03;
+  padding-right: layout.$spacing-06;
+  height: 48px;
+}
+
+.textContainer {
+  .titleRow {
+    display: flex;
+    align-items: center;
+    gap: layout.$spacing-03;
+    margin-bottom: layout.$spacing-02;
+  }
+
+  flex: 1;
+
+  h4 {
+    @include type.type-style('heading-01');
+    margin-bottom: layout.$spacing-02;
+  }
+
+  p {
+    @include type.type-style('body-short-01');
+    color: $text-02;
+  }
+}

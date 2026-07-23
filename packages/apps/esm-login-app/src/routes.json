@@ -21,6 +21,12 @@
       "route": "change-password",
       "online": true,
       "offline": true
+    },
+    {
+      "component": "root",
+      "route": "two-factor-auth",
+      "online": true,
+      "offline": true
     }
   ],
   "extensions": [
@@ -52,12 +58,23 @@
       "online": true,
       "offline": true,
       "order": 1
+    },
+    {
+      "name": "two-factor-authentication",
+      "slot": "user-panel-slot",
+      "component": "twoFactorAuthLink",
+      "online": true,
+      "offline": true
     }
   ],
   "modals": [
     {
       "name": "change-password-modal",
       "component": "changePasswordModal"
+    },
+    {
+      "name": "totp-enrollment-modal",
+      "component": "totpEnrollmentModal"
     }
   ]
 }
