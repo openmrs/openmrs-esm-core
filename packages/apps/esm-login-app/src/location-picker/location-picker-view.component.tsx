@@ -10,6 +10,7 @@ import {
   useConfig,
   useConnectivity,
   useSession,
+  WarningIcon,
 } from '@openmrs/esm-framework';
 import { useDefaultLocation, useLocationCount } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
@@ -60,6 +61,8 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
     [user],
   );
 
+  const hasNoLocations = !isLoadingLocationCount && locationCount === 0;
+
   const [activeLocation, setActiveLocation] = useState(() => {
     if (currentLocationUuid && hideWelcomeMessage) {
       return currentLocationUuid;
@@ -98,13 +101,11 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
     [state?.referrer, config.links.loginSuccess, updateDefaultLocation, searchParams],
   );
 
-  // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
+  // Handle cases where the location picker is disabled or there is only one location.
   useEffect(() => {
     if (isLoadingLocationCount) return;
 
-    if (locationCount === 0) {
-      changeLocation();
-    } else if (locationCount === 1 || !chooseLocation.enabled) {
+    if (locationCount === 1 || (!chooseLocation.enabled && locationCount > 0)) {
       if (firstLocation?.resource?.id) {
         changeLocation(firstLocation.resource.id, true);
       } else {
@@ -142,43 +143,62 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
       <form onSubmit={handleSubmit}>
         <div className={styles.locationCard}>
           <div className={styles.paddedContainer}>
-            <p className={styles.welcomeTitle}>
-              {t('welcome', 'Welcome')} {currentUser}
-            </p>
-            <p className={styles.welcomeMessage}>
-              {t(
-                'selectYourLocation',
-                'Select your location from the list below. Use the search bar to find your location.',
-              )}
-            </p>
+            {hasNoLocations ? (
+              <div className={styles.emptyStateContainer}>
+                <WarningIcon className={styles.emptyStateIcon} size={24} />
+                <p className={styles.emptyStateTitle}>{t('noLoginLocations', 'No login locations configured')}</p>
+                <p className={styles.emptyStateMessage}>
+                  {t(
+                    'noLoginLocationsMessage',
+                    'This installation has no login locations configured. Please contact your system administrator.',
+                  )}
+                </p>
+              </div>
+            ) : (
+              <>
+                <p className={styles.welcomeTitle}>
+                  {t('welcome', 'Welcome')} {currentUser}
+                </p>
+                <p className={styles.welcomeMessage}>
+                  {t(
+                    'selectYourLocation',
+                    'Select your location from the list below. Use the search bar to find your location.',
+                  )}
+                </p>
+              </>
+            )}
           </div>
-          <LocationPicker
-            selectedLocationUuid={activeLocation}
-            defaultLocationUuid={userProperties.defaultLocation}
-            locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}
-            onChange={(locationUuid) => setActiveLocation(locationUuid)}
-          />
-          <div className={styles.footerContainer}>
-            <Checkbox
-              className={styles.savePreferenceCheckbox}
-              checked={savePreference}
-              id={checkboxId}
-              labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
-              onChange={(_, { checked }) => setSavePreference(checked)}
+          {!hasNoLocations && (
+            <LocationPicker
+              selectedLocationUuid={activeLocation}
+              defaultLocationUuid={userProperties.defaultLocation}
+              locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}
+              onChange={(locationUuid) => setActiveLocation(locationUuid)}
             />
-            <Button
-              className={styles.confirmButton}
-              kind="primary"
-              type="submit"
-              disabled={!activeLocation || !isLoginEnabled || isSubmitting}
-            >
-              {isSubmitting ? (
-                <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
-              ) : (
-                <span>{getCoreTranslation('confirm')}</span>
-              )}
-            </Button>
-          </div>
+          )}
+          {!hasNoLocations && (
+            <div className={styles.footerContainer}>
+              <Checkbox
+                className={styles.savePreferenceCheckbox}
+                checked={savePreference}
+                id={checkboxId}
+                labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
+                onChange={(_, { checked }) => setSavePreference(checked)}
+              />
+              <Button
+                className={styles.confirmButton}
+                kind="primary"
+                type="submit"
+                disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+              >
+                {isSubmitting ? (
+                  <InlineLoading className={styles.loader} description={t('submitting', 'Submitting') + '...'} />
+                ) : (
+                  <span>{getCoreTranslation('confirm')}</span>
+                )}
+              </Button>
+            </div>
+          )}
         </div>
       </form>
     </div>

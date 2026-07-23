@@ -92,3 +92,29 @@
   margin-inline-start: -(layout.$spacing-06);
   margin-inline-end: -(layout.$spacing-06);
 }
+
+.emptyStateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: layout.$spacing-03;
+  padding: layout.$spacing-06;
+  text-align: center;
+}
+
+.emptyStateIcon {
+  color: $color-gray-70;
+  margin-bottom: layout.$spacing-03;
+}
+
+.emptyStateTitle {
+  @extend .bodyLong01;
+  font-weight: 600;
+  margin-bottom: layout.$spacing-03;
+}
+
+.emptyStateMessage {
+  @extend .bodyLong01;
+  color: $color-gray-70;
+  margin-bottom: layout.$spacing-05;
+}

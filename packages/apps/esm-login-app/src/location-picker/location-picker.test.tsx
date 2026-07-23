@@ -1,6 +1,9 @@
+import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { SWRConfig } from 'swr';
 import userEvent from '@testing-library/user-event';
 import {
   navigate,
@@ -36,6 +39,21 @@ const secondLocation = {
 
 const invalidLocationUuid = '2gf1b7d4-c865-4178-82b0-5932e51503d6';
 const userUuid = '90bd24b3-e700-46b0-a5ef-c85afdfededd';
+
+const mockZeroLocationsResponse = {
+  data: {
+    resourceType: 'Bundle',
+    type: 'searchset',
+    total: 0,
+    entry: [],
+  },
+} as FetchResponse<fhir.Bundle>;
+
+const regularUser: LoggedInUser = {
+  display: 'Regular User',
+  uuid: 'user-uuid',
+  userProperties: {},
+} as LoggedInUser;
 
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
 const mockUseConfig = vi.mocked(useConfig);
@@ -343,6 +361,44 @@ describe('LocationPickerView', () => {
       });
 
       expect(mockSetUserProperties).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Zero login locations', () => {
+    const renderWithFreshCache = (props = {}) => {
+      return render(
+        <SWRConfig value={{ provider: () => new Map() }}>
+          <MemoryRouter>
+            <LocationPickerView {...props} />
+          </MemoryRouter>
+        </SWRConfig>,
+      );
+    };
+
+    it('shows an empty state and hides the picker, checkbox, and confirm button when no login locations exist', async () => {
+      mockUseSession.mockReturnValue({
+        user: regularUser,
+      } as Session);
+
+      mockOpenmrsFetch.mockImplementation(async (url) =>
+        String(url).includes('_count=1') ? mockZeroLocationsResponse : (mockLoginLocations as FetchResponse<unknown>),
+      );
+
+      renderWithFreshCache();
+
+      await waitFor(() => {
+        expect(screen.getByText('No login locations configured')).toBeInTheDocument();
+      });
+
+      expect(
+        screen.getByText(
+          'This installation has no login locations configured. Please contact your system administrator.',
+        ),
+      ).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /confirm/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('radio')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText(/remember my location/i)).not.toBeInTheDocument();
+      expect(mockSetSessionLocation).not.toHaveBeenCalled();
     });
   });
 });
