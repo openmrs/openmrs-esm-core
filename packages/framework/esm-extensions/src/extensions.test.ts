@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { Session } from '@openmrs/esm-api';
+import { sessionStore, userHasAccess } from '@openmrs/esm-api';
+import type { Privilege } from '@openmrs/esm-api';
 import {
   attach,
   detach,
@@ -60,6 +61,7 @@ function createMockExtension(name: string, overrides: Partial<ExtensionRegistrat
     ...overrides,
   };
 }
+
 
 describe('getExtensionNameFromId', () => {
   it('should extract the extension name from a simple ID', () => {
@@ -434,6 +436,56 @@ describe('updateExtensionSlotState', () => {
 });
 
 describe('getAssignedExtensions', () => {
+  function setSession(
+    privileges: Array<Privilege> = [],
+  ) {
+    sessionStore.setState({
+      loaded: true,
+      session: {
+        authenticated: true,
+        sessionId: 'test-session',
+        user: {
+          uuid: 'user-uuid',
+          display: 'Test User',
+          username: 'testuser',
+          systemId: 'testuser',
+          userProperties: null,
+          person: { uuid: 'person-uuid' } as any,
+          privileges,
+          roles: [],
+          allRoles: [],
+          retired: false,
+          locale: 'en',
+          allowedLocales: ['en'],
+        },
+      },
+    });
+  }
+
+  function assertDisplayExpression(
+    displayExpression: string,
+    privileges: Array<Privilege>,
+    expectVisible: boolean,
+  ) {
+    const slotName = getUniqueName('expr-slot');
+    const extensionName = getUniqueName('expr-ext');
+
+    setSession(privileges);
+    vi.mocked(userHasAccess).mockReturnValue(true);
+
+    const mockExtension = createMockExtension(extensionName, { displayExpression });
+    registerExtension(mockExtension);
+    attach(slotName, extensionName);
+    const result = getAssignedExtensions(slotName);
+
+    if (expectVisible) {
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe(extensionName);
+    } else {
+      expect(result).toHaveLength(0);
+    }
+  }
+
   it('should return an empty array for a slot with no registered extensions', () => {
     const slotName = getUniqueName('empty-slot');
 
@@ -479,5 +531,21 @@ describe('getAssignedExtensions', () => {
     const result = getAssignedExtensions(slotName);
 
     expect(result[0].meta).toEqual(meta);
+  });
+
+  describe('hasPrivilege', () => {
+    it('should show extension when privilege matches', () => {
+      const editOrders: Privilege = { uuid: 'priv-1', name: 'Edit Orders', display: 'Edit Orders' };
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [editOrders], true);
+    });
+
+    it('should hide extension when privilege does not match', () => {
+      const viewReports: Privilege = { uuid: 'priv-2', name: 'View Reports', display: 'View Reports' };
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [viewReports], false);
+    });
+
+    it('should return false when no privileges exist', () => {
+      assertDisplayExpression("hasPrivilege('Edit Orders')", [], false);
+    });
   });
 });
