@@ -13,6 +13,13 @@
   background-color: $ui-01;
 }
 
+.withSeparator {
+  &::before {
+    content: '\00B7';
+    margin: 0 layout.$spacing-02;
+  }
+}
+
 .patientBanner {
   display: flex;
 }
@@ -22,6 +29,7 @@
   color: colors.$gray-100;
   font-weight: 600;
   margin-right: layout.$spacing-02;
+  overflow-wrap: anywhere;
 }
 
 .patientAvatar {
@@ -43,6 +51,7 @@
   flex-direction: column;
   padding: layout.$spacing-05 layout.$spacing-03 layout.$spacing-05 0;
   width: 100%;
+  min-width: 0;
 }
 
 .demographics {

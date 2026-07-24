@@ -17,6 +17,7 @@ interface PatientBannerPatientInfoProps {
    * affect how / if they should be rendered
    */
   renderedFrom?: string;
+  showAllIdentifiers?: boolean;
 }
 
 type Gender = 'female' | 'male' | 'other' | 'unknown';
@@ -58,7 +59,11 @@ const getGender = (gender: string) => {
   };
 };
 
-export function PatientBannerPatientInfo({ patient, renderedFrom }: PatientBannerPatientInfoProps) {
+export function PatientBannerPatientInfo({
+  patient,
+  renderedFrom,
+  showAllIdentifiers = true,
+}: Readonly<PatientBannerPatientInfoProps>) {
   const name = getPatientName(patient);
   const genderInfo = patient?.gender && getGender(patient.gender);
 
@@ -87,12 +92,15 @@ export function PatientBannerPatientInfo({ patient, renderedFrom }: PatientBanne
         {patient.birthDate && (
           <>
             <span>{age(patient.birthDate)}</span>
-            <span className={styles.separator}>&middot;</span>
-            <span>{formatPartialDate(patient.birthDate, { time: false })}</span>
-            <span className={styles.separator}>&middot;</span>
+            <span className={styles.withSeparator}>{formatPartialDate(patient.birthDate, { time: false })}</span>
           </>
         )}
-        <PatientBannerPatientIdentifiers identifiers={patient.identifier} showIdentifierLabel />
+        <PatientBannerPatientIdentifiers
+          identifiers={patient.identifier}
+          showIdentifierLabel
+          showLeadingSeparator={Boolean(patient.birthDate)}
+          showAllIdentifiers={showAllIdentifiers}
+        />
         <ExtensionSlot className={styles.extensionSlot} name="patient-banner-bottom-slot" state={extensionState} />
       </div>
     </div>
