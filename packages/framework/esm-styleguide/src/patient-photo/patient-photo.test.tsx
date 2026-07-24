@@ -184,4 +184,17 @@ describe('PatientPhoto', () => {
     // Restore the original Image constructor
     window.Image = originalImage;
   });
+
+  it('caps initials at two characters, using first and last name parts, for multi-part names', () => {
+    mockUsePatientPhoto.mockReturnValue({
+      isLoading: false,
+      data: null,
+      error: undefined,
+    });
+
+    render(<PatientPhoto patientUuid={patientUuid} patientName="Wanjiru Achieng Nakato" />);
+
+    const avatar = screen.getByTitle('Wanjiru Achieng Nakato');
+    expect(avatar).toHaveTextContent('WN');
+  });
 });

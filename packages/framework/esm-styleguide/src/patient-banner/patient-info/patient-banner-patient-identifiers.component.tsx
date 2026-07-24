@@ -1,4 +1,5 @@
 /** @module @category UI */
+import classNames from 'classnames';
 import React from 'react';
 import { FormLabel, Tag } from '@carbon/react';
 import { useConfig, usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
@@ -14,6 +15,8 @@ interface IdentifiersProps {
 interface PatientBannerPatientIdentifiersProps {
   identifiers: fhir.Identifier[] | undefined;
   showIdentifierLabel: boolean;
+  showLeadingSeparator?: boolean;
+  showAllIdentifiers?: boolean;
 }
 
 function PrimaryIdentifier({ showIdentifierLabel, type, value }: IdentifiersProps) {
@@ -39,30 +42,35 @@ function SecondaryIdentifier({ showIdentifierLabel, type, value }: IdentifiersPr
 export function PatientBannerPatientIdentifiers({
   identifiers,
   showIdentifierLabel,
+  showLeadingSeparator = false,
+  showAllIdentifiers = true,
 }: PatientBannerPatientIdentifiersProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig<StyleguideConfigObject>();
   const { primaryIdentifierCode } = usePrimaryIdentifierCode();
 
-  const filteredIdentifiers =
+  const filteredIdentifiers = (
     identifiers?.filter((identifier) => {
       const code = identifier.type?.coding?.[0]?.code;
       return code && !excludePatientIdentifierCodeTypes?.uuids.includes(code);
-    }) ?? [];
+    }) ?? []
+  ).filter((identifier) => (showAllIdentifiers ? true : identifier.type?.coding?.[0]?.code === primaryIdentifierCode));
 
   return (
     <>
       {filteredIdentifiers?.length
         ? filteredIdentifiers.map(({ value, type }, index) => (
-            <React.Fragment key={value}>
-              <span className={styles.identifier}>
-                {type?.coding?.[0]?.code === primaryIdentifierCode ? (
-                  <PrimaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
-                ) : (
-                  <SecondaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
-                )}
-              </span>
-              {index < filteredIdentifiers.length - 1 && <span className={styles.separator}>&middot;</span>}
-            </React.Fragment>
+            <span
+              key={value}
+              className={classNames(styles.identifier, {
+                [styles.withSeparator]: index > 0 || showLeadingSeparator,
+              })}
+            >
+              {type?.coding?.[0]?.code === primaryIdentifierCode ? (
+                <PrimaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
+              ) : (
+                <SecondaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
+              )}
+            </span>
           ))
         : ''}
     </>

@@ -13,13 +13,10 @@ export interface PatientPhotoProps {
   alt?: string;
 }
 
-function getInitials(name: string, maxInitials = 3): string {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, maxInitials)
-    .map((part) => part[0])
-    .join('');
+function getInitials(name: string, maxInitials = 2): string {
+  const parts = name.split(/\s+/).filter(Boolean);
+  const selected = parts.length > maxInitials ? [parts[0], parts.at(-1)] : parts;
+  return selected.map((part) => part![0]).join('');
 }
 
 /**
