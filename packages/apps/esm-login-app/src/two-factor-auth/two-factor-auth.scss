@@ -54,6 +54,13 @@ button.menuItemButton {
   padding: layout.$spacing-06;
   background-color: $ui-02 !important;
   border-radius: 4px;
+
+  @media (max-width: 672px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: layout.$spacing-04;
+    gap: layout.$spacing-04;
+  }
 }
 
 .iconContainer {
@@ -64,6 +71,13 @@ button.menuItemButton {
   border-right: 1px solid $ui-03;
   padding-right: layout.$spacing-06;
   height: 48px;
+
+  @media (max-width: 672px) {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+    height: auto;
+  }
 }
 
 .textContainer {

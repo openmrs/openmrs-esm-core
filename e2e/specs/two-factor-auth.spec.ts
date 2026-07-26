@@ -45,15 +45,15 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
 
   await test.step('And I should see the "Authenticator App" method tile', async () => {
     await expect(page.getByRole('heading', { name: 'Authenticator App' })).toBeVisible();
-    await expect(page.getByRole('button', { name: /setup/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /set up/i })).toBeVisible();
   });
 
-  await test.step('When I click the "Setup" button', async () => {
-    await page.getByRole('button', { name: /setup/i }).click();
+  await test.step('When I click the "Set up" button', async () => {
+    await page.getByRole('button', { name: /set up/i }).click();
   });
 
   await test.step('Then the TOTP enrollment modal should appear', async () => {
-    await expect(page.getByRole('heading', { name: 'Setup Authenticator App' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Set up Authenticator App' })).toBeVisible();
     await expect(page.getByText('Scan the QR Code')).toBeVisible();
     await expect(page.getByLabel(/Enter Verification Code/i)).toBeVisible();
   });
@@ -73,6 +73,6 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
 
   await test.step('Then I should see a success notification and the modal should close', async () => {
     await expect(page.getByText('Two-Factor Authentication Enabled')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Setup Authenticator App' })).toBeHidden();
+    await expect(page.getByRole('heading', { name: 'Set up Authenticator App' })).toBeHidden();
   });
 });

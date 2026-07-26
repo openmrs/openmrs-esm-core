@@ -44,7 +44,7 @@ describe('Two-Factor Authentication Component', () => {
     } as any);
 
     render(<TwoFactorAuth />);
-    const setupButton = screen.getByRole('button', { name: /Setup/i });
+    const setupButton = screen.getByRole('button', { name: /Set up/i });
 
     expect(setupButton).toBeInTheDocument();
     expect(screen.queryByText(/Enabled/i)).not.toBeInTheDocument();
@@ -75,6 +75,6 @@ describe('Two-Factor Authentication Component', () => {
 
     const removeButton = screen.getByRole('button', { name: /Remove/i });
     expect(removeButton).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Setup/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Set up/i })).not.toBeInTheDocument();
   });
 });

@@ -25,11 +25,10 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
 
   const userProperties = session.user?.userProperties;
   const secondaryAuthTypes = userProperties?.['authentication.secondaryType'] || '';
-  const isTotpEnabled = secondaryAuthTypes.includes('totp');
+  const isTotpEnabled = secondaryAuthTypes.split(',').includes('totp');
 
   const launchTotpModal = React.useCallback(() => {
-    const dispose = showModal('totp-enrollment-modal', {
-      closeModal: () => dispose(),
+    showModal('totp-enrollment-modal', {
       size: 'sm',
     });
   }, []);
@@ -48,10 +47,7 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
           <div className={styles.descriptionText}>
             <h3>{t('protectAccountTitle', 'Protect your account with an extra verification step.')}</h3>
             <p>
-              {t(
-                'protectAccountDescription',
-                'After signing in with your password, you will verify your identity using a second method.',
-              )}
+              {t('protectAccountDescription', 'After signing in, you will verify your identity with a second method')}
             </p>
             <p>{t('protectAccountReason', 'This helps keep your account secure.')}</p>
           </div>
@@ -75,7 +71,7 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
                 <Button kind="danger--ghost">{t('remove', 'Remove')}</Button>
               ) : (
                 <Button kind="ghost" onClick={launchTotpModal}>
-                  {t('setup', 'Setup')}
+                  {t('setup', 'Set up')}
                 </Button>
               )}
             </div>
