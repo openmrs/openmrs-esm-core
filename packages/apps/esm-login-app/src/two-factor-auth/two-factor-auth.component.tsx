@@ -4,7 +4,7 @@ import { Button, Tile, Tag } from '@carbon/react';
 import {
   PageHeader,
   PageHeaderContent,
-  ServiceQueuesPictogram,
+  DigitalTrustPictogram,
   useConfig,
   showModal,
   MobileCheckIcon,
@@ -39,7 +39,7 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
       <PageHeader className={styles.header}>
         <PageHeaderContent
           title={title ? title : t(dashboardTitle.key, dashboardTitle.value)}
-          illustration={<ServiceQueuesPictogram />}
+          illustration={<DigitalTrustPictogram />}
         />
       </PageHeader>
 

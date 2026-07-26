@@ -110,6 +110,7 @@ export const BloodBankPictogram = () => <span>BloodBankPictogram</span>;
 export const CardiologyPictogram = () => <span>CardiologyPictogram</span>;
 export const CtScanPictogram = () => <span>CtScanPictogram</span>;
 export const DentistryPictogram = () => <span>DentistryPictogram</span>;
+export const DigitalTrustPictogram = () => <span>DigitalTrustPictogram</span>;
 export const EmergencyDepartmentPictogram = () => <span>EmergencyDepartmentPictogram</span>;
 export const FacilityPictogram = () => <span>FacilityPictogram</span>;
 export const GeriatricsPictogram = () => <span>GeriatricsPictogram</span>;

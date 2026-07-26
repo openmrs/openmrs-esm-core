@@ -6,6 +6,7 @@ import bloodBank from './svgs/blood-bank.svg';
 import cardiology from './svgs/cardiology.svg';
 import ctScan from './svgs/ct-scan.svg';
 import dentistry from './svgs/dentistry.svg';
+import digitalTrust from './svgs/digital-trust.svg';
 import emergencyDepartment from './svgs/emergency-department.svg';
 import facility from './svgs/facility.svg';
 import geriatrics from './svgs/geriatrics.svg';
@@ -35,6 +36,7 @@ export function setupPictograms() {
   addPictogramSvg('omrs-pict-cardiology', cardiology);
   addPictogramSvg('omrs-pict-ct-scan', ctScan);
   addPictogramSvg('omrs-pict-dentistry', dentistry);
+  addPictogramSvg('omrs-pict-digital-trust', digitalTrust);
   addPictogramSvg('omrs-pict-emergency-department', emergencyDepartment);
   addPictogramSvg('omrs-pict-facility', facility);
   addPictogramSvg('omrs-pict-geriatrics', geriatrics);
