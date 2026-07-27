@@ -22,4 +22,21 @@ describe('@openmrs/esm-framework/mock', () => {
     expect(mock.getHistory()).toEqual([history[0]]);
     expect(mock.navigate).toHaveBeenCalled();
   });
+
+  it('should re-export the duration-formatting helpers from @openmrs/esm-utils', () => {
+    expect(typeof mock.formatDuration).toBe('function');
+    expect(typeof mock.formatDurationBetween).toBe('function');
+    expect(typeof mock.duration).toBe('function');
+    expect(typeof mock.ageAsDuration).toBe('function');
+  });
+
+  it('should format a duration without any per-test setup', () => {
+    // The mock sets `window.i18next.language = 'en'` and loads the
+    // `Intl.DurationFormat` polyfill, so this resolves out of the box.
+    const result = mock.formatDurationBetween('2022-01-01', '2024-07-30', {
+      largestUnit: 'years',
+      smallestUnit: 'days',
+    });
+    expect(result).toMatch(/2\s+yrs/);
+  });
 });
