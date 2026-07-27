@@ -61,6 +61,19 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
   });
 
   await test.step('When I click the "Set up" button', async () => {
+    // In here we're forcing the backend to successfully initiate enrollment
+    // because the backend might not have the TOTP module configured.
+    await page.route('**/ws/rest/v1/auth/totp/enrollment', async (route) => {
+      if (route.request().method() === 'POST') {
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({ qrCodeUri: 'data:image/png;base64,mockQrCodeUri', secret: 'MOCK_SECRET_KEY' }),
+        });
+      } else {
+        await route.continue();
+      }
+    });
     await page.getByRole('button', { name: /set up/i }).click();
   });
 
