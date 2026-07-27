@@ -33,6 +33,10 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
     });
   }, []);
 
+  if (!config.twoFactorAuth.enabled) {
+    return null;
+  }
+
   return (
     <div>
       <PageHeader className={styles.header}>

@@ -37,9 +37,26 @@
 
 .inputCode {
   width: 15rem;
-  margin: 0 auto layout.$spacing-06 auto;
+  margin: 0 auto layout.$spacing-01 auto;
 }
 
 .errorMessage {
   margin-bottom: layout.$spacing-05;
+}
+
+.manualSetupContainer {
+  text-align: left;
+  margin-bottom: layout.$spacing-05;
+}
+
+.manualSetupLabel {
+  margin-bottom: layout.$spacing-03;
+}
+
+.toggleButton {
+  margin-top: layout.$spacing-03;
+}
+
+.secretSnippet {
+  max-width: 25rem;
 }

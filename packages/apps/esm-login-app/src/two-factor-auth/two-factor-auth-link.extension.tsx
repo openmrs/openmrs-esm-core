@@ -1,11 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, SwitcherItem } from '@carbon/react';
-import { TwoFactorAuthenticationIcon, navigate as openmrsNavigate } from '@openmrs/esm-framework';
+import { TwoFactorAuthenticationIcon, navigate as openmrsNavigate, useConfig } from '@openmrs/esm-framework';
+import type { ConfigSchema } from '../config-schema';
 import styles from './two-factor-auth.scss';
 
 const TwoFactorAuthLink: React.FC = () => {
   const { t } = useTranslation();
+  const config = useConfig<ConfigSchema>();
+
+  if (!config.twoFactorAuth.enabled) {
+    return null;
+  }
 
   const handle2faSetupClick = () => {
     // Navigate to the Two Factor Authentication Page

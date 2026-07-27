@@ -28,6 +28,7 @@ export const mockConfig: ConfigSchema = {
   },
   showPasswordOnSeparateScreen: true,
   twoFactorAuth: {
+    enabled: true,
     dashboardTitle: {
       key: 'twoFactorAuth',
       value: 'Two Factor Authentication',

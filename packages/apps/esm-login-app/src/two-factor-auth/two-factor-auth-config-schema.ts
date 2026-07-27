@@ -1,6 +1,11 @@
 import { Type } from '@openmrs/esm-framework';
 
 export const twoFactorAuthConfigSchema = {
+  enabled: {
+    _type: Type.Boolean,
+    _default: false,
+    _description: 'Whether Two Factor Authentication is enabled or not',
+  },
   dashboardTitle: {
     _type: Type.Object,
     _default: {
@@ -18,6 +23,7 @@ export const twoFactorAuthConfigSchema = {
 };
 
 export interface TwoFactorAuthConfigObject {
+  enabled: boolean;
   dashboardTitle: {
     key: string;
     value: string;
