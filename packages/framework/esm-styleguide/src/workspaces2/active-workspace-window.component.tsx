@@ -19,16 +19,31 @@ interface WorkspaceWindowProps {
  */
 const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow, showActionMenu }) => {
   const { openedWorkspaces } = openedWindow;
-  const [lifeCycles, setLifeCycles] = useState<ParcelConfig[]>();
+  // Keyed by opened workspace uuid rather than stack index. The lifecycles load
+  // asynchronously, so when the stack changes (a workspace at some position is
+  // replaced by another, for example closing a child workspace and immediately
+  // opening a different one), an index-based lookup can hand the new workspace
+  // the previous workspace's component until the reload resolves. The parcel
+  // mounts whatever config it first receives, so the wrong component would then
+  // render with the new workspace's props.
+  const [lifeCyclesByUuid, setLifeCyclesByUuid] = useState<Record<string, ParcelConfig>>({});
   const { registeredWorkspacesByName } = workspace2Store.getState();
 
   useEffect(() => {
+    let cancelled = false;
     Promise.all(
-      openedWorkspaces.map((openedWorkspace) => {
+      openedWorkspaces.map(async (openedWorkspace): Promise<[string, ParcelConfig]> => {
         const { moduleName, component } = registeredWorkspacesByName[openedWorkspace.workspaceName];
-        return loadLifeCycles(moduleName, component);
+        return [openedWorkspace.uuid, await loadLifeCycles(moduleName, component)];
       }),
-    ).then(setLifeCycles);
+    ).then((entries) => {
+      if (!cancelled) {
+        setLifeCyclesByUuid(Object.fromEntries(entries));
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [openedWorkspaces]);
 
   return (
@@ -38,7 +53,7 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({ openedWindow, s
           key={openedWorkspace.uuid}
           openedWorkspace={openedWorkspace}
           openedWindow={openedWindow}
-          lifeCycle={lifeCycles && lifeCycles[i] ? lifeCycles[i] : undefined}
+          lifeCycle={lifeCyclesByUuid[openedWorkspace.uuid]}
           isRootWorkspace={i === 0}
           isLeafWorkspace={i === openedWorkspaces.length - 1}
           showActionMenu={showActionMenu}
