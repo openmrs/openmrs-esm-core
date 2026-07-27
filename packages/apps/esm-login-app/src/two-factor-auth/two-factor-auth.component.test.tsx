@@ -4,6 +4,7 @@ import { showModal, useSession, useConfig } from '@openmrs/esm-framework';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import TwoFactorAuth from './two-factor-auth.component';
+import type { ConfigSchema } from '../config-schema';
 
 vi.mock('@openmrs/esm-framework', async () => {
   const actual = await vi.importActual('@openmrs/esm-framework');
@@ -29,9 +30,10 @@ describe('Two-Factor Authentication Component', () => {
 
     mockUseConfig.mockReturnValue({
       twoFactorAuth: {
+        enabled: true,
         dashboardTitle: { key: 'twoFactorAuth', value: 'Two-Factor Authentication' },
       },
-    } as any);
+    } as unknown as ConfigSchema);
   });
 
   it('should render the Setup button when TOTP is not enabled', async () => {

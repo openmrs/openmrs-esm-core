@@ -1,21 +1,31 @@
 import React from 'react';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
-import { navigate } from '@openmrs/esm-framework';
+import { navigate, useConfig } from '@openmrs/esm-framework';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import TwoFactorAuthLink from './two-factor-auth-link.extension';
+import type { ConfigSchema } from '../config-schema';
 
 vi.mock('@openmrs/esm-framework', async () => {
   const actual = await vi.importActual('@openmrs/esm-framework');
   return {
     ...actual,
     navigate: vi.fn(),
+    useConfig: vi.fn(),
     TwoFactorAuthenticationIcon: () => <svg data-testid="mock-icon" />,
   };
 });
 
 describe('TwoFactorAuthLink', () => {
   const mockNavigate = vi.mocked(navigate);
+  const mockUseConfig = vi.mocked(useConfig);
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockUseConfig.mockReturnValue({
+      twoFactorAuth: { enabled: true },
+    } as unknown as ConfigSchema);
+  });
 
   beforeEach(() => {
     vi.clearAllMocks();
