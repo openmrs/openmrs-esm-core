@@ -8,6 +8,18 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
   const topNav = page.getByRole('banner', { name: 'OpenMRS' });
 
   await test.step('Given I navigate to the login page', async () => {
+    await page.addInitScript(() => {
+      window.localStorage.setItem(
+        'openmrs:temporaryConfig',
+        JSON.stringify({
+          '@openmrs/esm-login-app': {
+            twoFactorAuth: {
+              enabled: true,
+            },
+          },
+        }),
+      );
+    });
     await loginPage.goto();
   });
 
@@ -54,7 +66,7 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
 
   await test.step('Then the TOTP enrollment modal should appear', async () => {
     await expect(page.getByRole('heading', { name: 'Set up Authenticator App' })).toBeVisible();
-    await expect(page.getByText('Scan the QR Code')).toBeVisible();
+    await expect(page.getByText('Scan the QR Code using an authenticator app from your phone')).toBeVisible();
     await expect(page.getByLabel(/Enter Verification Code/i)).toBeVisible();
   });
 
