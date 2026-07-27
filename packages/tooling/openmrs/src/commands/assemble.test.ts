@@ -392,16 +392,34 @@ describe('runAssemble', () => {
       );
     });
 
-    it('records the top-level version from the applicationVersion argument', async () => {
+    it.each([['3.1.0'], ['prerelease'], ['Zulu']])(
+      "records the top-level version to '$0' from the applicationVersion argument '$0'",
+      async (applicationVersion) => {
+        const routes = { pages: ['/home'], extensions: [] };
+        setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
+
+        await runAssemble(defaultArgs({ buildRoutes: true, applicationVersion }));
+
+        const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
+        expect(writeCall).toBeDefined();
+        const routesRegistry = JSON.parse(writeCall![1] as string);
+        expect(routesRegistry.version).toBe(applicationVersion);
+        expect(routesRegistry.routes['@openmrs/esm-test-app']).toEqual(
+          expect.objectContaining({ pages: ['/home'], version: '1.0.0' }),
+        );
+      },
+    );
+
+    it('omits the top-level version when the applicationVersion is empty', async () => {
       const routes = { pages: ['/home'], extensions: [] };
       setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
 
-      await runAssemble(defaultArgs({ buildRoutes: true, applicationVersion: '3.1.0' }));
+      await runAssemble(defaultArgs({ buildRoutes: true, applicationVersion: '' }));
 
       const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
       expect(writeCall).toBeDefined();
       const routesRegistry = JSON.parse(writeCall![1] as string);
-      expect(routesRegistry.version).toBe('3.1.0');
+      expect(routesRegistry.version).toBe(undefined);
       expect(routesRegistry.routes['@openmrs/esm-test-app']).toEqual(
         expect.objectContaining({ pages: ['/home'], version: '1.0.0' }),
       );
@@ -412,6 +430,19 @@ describe('runAssemble', () => {
       setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
 
       await runAssemble(defaultArgs({ buildRoutes: true }));
+
+      const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
+      expect(writeCall).toBeDefined();
+      const routesRegistry = JSON.parse(writeCall![1] as string);
+      expect(routesRegistry.version).toBeUndefined();
+    });
+
+    it('omits the top-level version when applicationVersion is null', async () => {
+      const routes = { pages: ['/home'], extensions: [] };
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
+
+      // Technically, `null` is invalid
+      await runAssemble(defaultArgs({ buildRoutes: true, applicationVersion: null }));
 
       const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
       expect(writeCall).toBeDefined();

@@ -124,13 +124,14 @@ async function runShell() {
     console.error(`Failed to initialize translation system`, err);
   }
 
-  if (initialRouteMap.version && initialRouteMap.version.length > 0) {
+  const applicationVersion = initialRouteMap.version;
+  if (applicationVersion === undefined || applicationVersion === null || applicationVersion.trim().length === 0) {
     Object.defineProperty(window, 'applicationVersion', {
-      value: initialRouteMap.version,
+      value: undefined,
       writable: false,
       configurable: false,
     });
-  } else if (initialRouteMap.version === undefined) {
+  } else if (applicationVersion === 'prelease') {
     Object.defineProperty(window, 'applicationVersion', {
       value:
         window.spaVersion === 'local' ? getCoreTranslation('localVersion') : getCoreTranslation('prereleaseVersion'),
@@ -139,7 +140,7 @@ async function runShell() {
     });
   } else {
     Object.defineProperty(window, 'applicationVersion', {
-      value: '',
+      value: applicationVersion,
       writable: false,
       configurable: false,
     });

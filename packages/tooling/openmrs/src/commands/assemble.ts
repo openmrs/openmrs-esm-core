@@ -288,7 +288,13 @@ export async function runAssemble(args: AssembleArgs) {
   );
 
   if (args.buildRoutes) {
-    const routesRegistry = { version: args.applicationVersion, routes };
+    const applicationVersion = args.applicationVersion;
+    const routesRegistry = {
+      ...(applicationVersion === undefined || applicationVersion === null || applicationVersion.trim().length === 0
+        ? {}
+        : { version: applicationVersion }),
+      ...{ routes },
+    };
     await writeFile(
       resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routesRegistry) : ''}.json`),
       JSON.stringify(routesRegistry),

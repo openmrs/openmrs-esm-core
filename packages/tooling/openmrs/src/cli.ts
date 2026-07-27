@@ -339,7 +339,7 @@ export function buildCli(y: Argv) {
         .option('application-version', {
           default: undefined,
           description:
-            'The overall application version to record as the top-level `version` in the routes registry. Exposed at runtime as `window.applicationVersion`.',
+            'The overall application version to record as the top-level `version` in the routes registry. Exposed at runtime as `window.applicationVersion`. If omitted, the version is not set.',
           type: 'string',
         })
         .option('mode', {

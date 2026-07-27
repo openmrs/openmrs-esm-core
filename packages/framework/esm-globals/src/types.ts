@@ -48,7 +48,7 @@ declare global {
     /**
      * The application-level version for the frontend, as set by the distribution.
      */
-    applicationVersion: string;
+    applicationVersion?: string;
     /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */

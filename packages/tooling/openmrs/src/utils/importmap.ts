@@ -115,6 +115,11 @@ function normalizeRoutesRegistry(parsed: unknown): { version?: string; routes: R
     return { routes: parsed as Record<string, unknown> };
   }
 
+  logWarn(
+    `Expected the routes registry to be a JSON object, but got ${
+      parsed === null ? 'null' : Array.isArray(parsed) ? 'an array' : `a ${typeof parsed}`
+    }. Serving an empty routes registry instead.`,
+  );
   return { routes: {} };
 }
 
