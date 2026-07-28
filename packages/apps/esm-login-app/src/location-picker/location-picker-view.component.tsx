@@ -144,7 +144,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
         <div className={styles.locationCard}>
           <div className={styles.paddedContainer}>
             {hasNoLocations ? (
-              <div className={styles.emptyStateContainer}>
+              <div className={styles.emptyStateContainer} role="status">
                 <WarningIcon className={styles.emptyStateIcon} size={24} />
                 <p className={styles.emptyStateTitle}>{t('noLoginLocations', 'No login locations configured')}</p>
                 <p className={styles.emptyStateMessage}>
@@ -169,35 +169,35 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
             )}
           </div>
           {!hasNoLocations && (
-            <LocationPicker
-              selectedLocationUuid={activeLocation}
-              defaultLocationUuid={userProperties.defaultLocation}
-              locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}
-              onChange={(locationUuid) => setActiveLocation(locationUuid)}
-            />
-          )}
-          {!hasNoLocations && (
-            <div className={styles.footerContainer}>
-              <Checkbox
-                className={styles.savePreferenceCheckbox}
-                checked={savePreference}
-                id={checkboxId}
-                labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
-                onChange={(_, { checked }) => setSavePreference(checked)}
+            <>
+              <LocationPicker
+                selectedLocationUuid={activeLocation}
+                defaultLocationUuid={userProperties.defaultLocation}
+                locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}
+                onChange={(locationUuid) => setActiveLocation(locationUuid)}
               />
-              <Button
-                className={styles.confirmButton}
-                kind="primary"
-                type="submit"
-                disabled={!activeLocation || !isLoginEnabled || isSubmitting}
-              >
-                {isSubmitting ? (
-                  <InlineLoading className={styles.loader} description={t('submitting', 'Submitting') + '...'} />
-                ) : (
-                  <span>{getCoreTranslation('confirm')}</span>
-                )}
-              </Button>
-            </div>
+              <div className={styles.footerContainer}>
+                <Checkbox
+                  className={styles.savePreferenceCheckbox}
+                  checked={savePreference}
+                  id={checkboxId}
+                  labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
+                  onChange={(_, { checked }) => setSavePreference(checked)}
+                />
+                <Button
+                  className={styles.confirmButton}
+                  kind="primary"
+                  type="submit"
+                  disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <InlineLoading className={styles.loader} description={t('submitting', 'Submitting') + '...'} />
+                  ) : (
+                    <span>{getCoreTranslation('confirm')}</span>
+                  )}
+                </Button>
+              </div>
+            </>
           )}
         </div>
       </form>

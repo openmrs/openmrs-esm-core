@@ -98,7 +98,6 @@
   flex-direction: column;
   align-items: center;
   margin-top: layout.$spacing-03;
-  padding: layout.$spacing-06;
   text-align: center;
 }
 
@@ -116,5 +115,4 @@
 .emptyStateMessage {
   @extend .bodyLong01;
   color: $color-gray-70;
-  margin-bottom: layout.$spacing-05;
 }

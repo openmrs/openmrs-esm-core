@@ -49,12 +49,6 @@ const mockZeroLocationsResponse = {
   },
 } as FetchResponse<fhir.Bundle>;
 
-const regularUser: LoggedInUser = {
-  display: 'Regular User',
-  uuid: 'user-uuid',
-  userProperties: {},
-} as LoggedInUser;
-
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
 const mockUseConfig = vi.mocked(useConfig);
 const mockUseSession = vi.mocked(useSession);
@@ -365,6 +359,8 @@ describe('LocationPickerView', () => {
   });
 
   describe('Zero login locations', () => {
+    // useSwrImmutable keys on the URL; without a fresh cache, earlier tests' non-zero
+    // count stays cached and the empty state never renders.
     const renderWithFreshCache = (props = {}) => {
       return render(
         <SWRConfig value={{ provider: () => new Map() }}>
@@ -376,13 +372,7 @@ describe('LocationPickerView', () => {
     };
 
     it('shows an empty state and hides the picker, checkbox, and confirm button when no login locations exist', async () => {
-      mockUseSession.mockReturnValue({
-        user: regularUser,
-      } as Session);
-
-      mockOpenmrsFetch.mockImplementation(async (url) =>
-        String(url).includes('_count=1') ? mockZeroLocationsResponse : (mockLoginLocations as FetchResponse<unknown>),
-      );
+      mockOpenmrsFetch.mockResolvedValue(mockZeroLocationsResponse);
 
       renderWithFreshCache();
 
