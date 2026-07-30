@@ -43,11 +43,11 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
   });
 
   await test.step('Then I should see the "Two-Factor Authentication" button', async () => {
-    await expect(page.getByLabel(/two-factor authentication/i)).toBeVisible();
+    await expect(page.getByRole('button', { name: /two-factor authentication/i })).toBeVisible();
   });
 
   await test.step('When I click on the "Two-Factor Authentication" button', async () => {
-    await page.getByLabel(/two-factor authentication/i).click();
+    await page.getByRole('button', { name: /two-factor authentication/i }).click();
   });
 
   await test.step('Then I should be navigated to the Two-Factor Authentication page', async () => {
