@@ -10,16 +10,13 @@ import {
   Form,
   CodeSnippet,
   ActionableNotification,
+  Link,
 } from '@carbon/react';
-import { openmrsFetch, refetchCurrentUser, showSnackbar } from '@openmrs/esm-framework';
+import { openmrsFetch, refetchCurrentUser, showSnackbar, OpenmrsFetchError } from '@openmrs/esm-framework';
 import styles from './totp-enrollment.modal.scss';
 
 interface TotpEnrollmentProps {
   close(): void;
-}
-
-interface OpenmrsFetchError extends Error {
-  responseBody: { error: { translatedMessage: string } };
 }
 
 const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
@@ -30,7 +27,7 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
   const [qrCodeUri, setQrCodeUri] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [secret, setSecret] = useState('');
-  const [showSecret, setShowSecret] = useState(false);
+  const formattedSecret = secret.match(/.{1,4}/g)?.join(' ') || secret;
 
   const initiateEnrollment = useCallback(async () => {
     try {
@@ -92,12 +89,20 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
           console.warn('Failed to refresh current user after TOTP enrollment:', error);
         });
       } catch (error: unknown) {
-        const fetchError = error as OpenmrsFetchError;
+        let errorMessage = t('totpVerificationFailed', 'We could not verify that code. Please try again.');
+        if (
+          error instanceof OpenmrsFetchError &&
+          typeof error.responseBody === 'object' &&
+          error.responseBody !== null
+        ) {
+          const body = error.responseBody as { error?: { translatedMessage?: string } };
+          const translatedMessage = body.error?.translatedMessage;
 
-        setErrorMessage(
-          fetchError.responseBody.error.translatedMessage ??
-            t('totpVerificationFailed', 'We could not verify that code. Please try again.'),
-        );
+          if (translatedMessage) {
+            errorMessage = translatedMessage;
+          }
+        }
+        setErrorMessage(errorMessage);
       } finally {
         setSubmittingVerificationCode(false);
       }
@@ -109,86 +114,103 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
     <Form onSubmit={handleVerificationCodeSubmit}>
       <ModalHeader closeModal={close} title={t('setupAuthenticatorApp', 'Set up Authenticator App')} />
       <ModalBody>
-        <div>
-          <p className={styles.banner}>
-            {t(
-              'useAuthenticatorApp',
-              'Use a phone app like Microsoft Authenticator, Google Authenticator or Authy etc to get two factor authentication codes.',
-            )}
-          </p>
-          <h4 className={styles.scanInstruction}>
-            {showSecret
-              ? t('manualKeyInstruction', 'Enter this manual setup key into your authenticator app')
-              : t('scanQrCodeInstruction', 'Scan the QR Code using an authenticator app from your phone')}
-          </h4>
-          {loadingEnrollment ? (
-            <div className={styles.center}>
-              <InlineLoading description={t('generatingQrCode', 'Generating QR Code...')} />
-            </div>
-          ) : !qrCodeUri && errorMessage ? (
-            <ActionableNotification
-              kind="error"
-              inline
-              hideCloseButton
-              title={errorMessage}
-              actionButtonLabel={t('tryAgain', 'Try Again')}
-              onActionButtonClick={initiateEnrollment}
-            />
-          ) : (
-            <>
-              <div>
-                {showSecret ? (
-                  <div className={styles.manualSetupContainer}>
-                    <p className={styles.manualSetupLabel}>{t('manualSetupKey', 'Set up the key manually:')}</p>
-                    <CodeSnippet type="single" className={styles.secretSnippet}>
-                      {secret}
-                    </CodeSnippet>
-                    <div className={styles.center}>
-                      <Button
-                        kind="ghost"
-                        size="sm"
-                        onClick={() => setShowSecret(false)}
-                        className={styles.toggleButton}
-                      >
-                        {t('scanQrCodeInstead', 'Scan QR Code Instead')}
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className={styles.qrContainer}>
-                    {qrCodeUri && (
-                      <>
-                        <img className={styles.qrImage} src={qrCodeUri} alt={t('scanQrCode', 'Scan the QR Code')} />
-                        <Button
-                          kind="ghost"
-                          size="sm"
-                          onClick={() => setShowSecret(true)}
-                          className={styles.toggleButton}
-                        >
-                          {t('cantScanQrCode', "Can't scan the QR code?")}
-                        </Button>
-                      </>
+        <div className={styles.twoColumnLayout}>
+          <div className={styles.leftColumn}>
+            <p className={styles.banner}>
+              {t(
+                'useAuthenticatorApp',
+                'Your authenticator app will generate a new 6-digit code every 30 seconds. You will be asked for one after your password each time you sign in.',
+              )}
+            </p>
+            <div className={styles.instructionList}>
+              <div className={styles.instructionItem}>
+                <span className={styles.stepNumber}>1</span>
+                <div className={styles.stepText}>
+                  <div>
+                    {t(
+                      'installAppInstruction',
+                      "Install an authenticator app if you don't have one — Google Authenticator, Microsoft Authenticator and Authy all work.",
                     )}
                   </div>
+                  <div>
+                    <Link
+                      href="https://openmrs.atlassian.net/wiki/spaces/docs/pages/1236172803/Supported+Two-Factor+Authentication+Apps+and+Setup+Guide"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t('whichApps', 'Which apps can I use?')}
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.instructionItem}>
+                <span className={styles.stepNumber}>2</span>
+                <div className={styles.stepText}>
+                  {t(
+                    'addAccountInstruction',
+                    'Add a new account in the app and scan the code on the right, or type the setup key manually.',
+                  )}
+                </div>
+              </div>
+
+              <div className={styles.instructionItem}>
+                <span className={styles.stepNumber}>3</span>
+                <div className={styles.stepText}>
+                  {t('enterCodeInstruction', 'Enter the code the app shows to confirm the setting up.')}
+                </div>
+              </div>
+            </div>
+            <div className={styles.inputCode}>
+              <TextInput
+                id="verification-code"
+                labelText={t('enterVerificationCode', 'Enter 6-digit code from your app')}
+                helperText={t(
+                  'codeExpiryWarning',
+                  'Code expires after 30 seconds. If it is rejected, wait for the next one.',
                 )}
-              </div>
-              <div className={styles.inputCode}>
-                <TextInput
-                  id="verification-code"
-                  labelText={t('enterVerificationCode', 'Enter Verification Code')}
-                  inputMode="numeric"
-                  maxLength={6}
-                  value={verificationCode}
-                  invalidText={errorMessage}
-                  invalid={!!errorMessage}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  disabled={submittingVerificationCode}
-                  autoComplete="one-time-code"
-                  required
+                inputMode="numeric"
+                maxLength={6}
+                value={verificationCode}
+                invalidText={errorMessage}
+                invalid={!!errorMessage}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                disabled={submittingVerificationCode}
+                autoComplete="one-time-code"
+                required
+              />
+            </div>
+          </div>
+
+          <div className={styles.rightColumn}>
+            <div className={styles.qrContainer}>
+              {loadingEnrollment ? (
+                <div className={styles.center}>
+                  <InlineLoading description={t('generatingQrCode', 'Generating QR Code...')} />
+                </div>
+              ) : !qrCodeUri && errorMessage ? (
+                <ActionableNotification
+                  kind="error"
+                  inline
+                  hideCloseButton
+                  title={errorMessage}
+                  actionButtonLabel={t('tryAgain', 'Try Again')}
+                  onActionButtonClick={initiateEnrollment}
                 />
-              </div>
-            </>
-          )}
+              ) : qrCodeUri ? (
+                <>
+                  <img className={styles.qrImage} src={qrCodeUri} alt={t('scanQrCode', 'Scan the QR Code')} />
+                  <div className={styles.manualSetupContainer}>
+                    <p className={styles.cantScanText}>{t('cantScanQrCode', "Can't scan the QR code?")}</p>
+                    <p className={styles.manualSetupLabel}>{t('manualSetupKey', 'Enter this setup key in your app')}</p>
+                    <CodeSnippet type="single" className={styles.secretSnippet}>
+                      {formattedSecret}
+                    </CodeSnippet>
+                  </div>
+                </>
+              ) : null}
+            </div>
+          </div>
         </div>
       </ModalBody>
       <ModalFooter>
@@ -202,7 +224,7 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
           {submittingVerificationCode ? (
             <InlineLoading description={t('verifying', 'Verifying...')} />
           ) : (
-            t('enable2fa', 'Enable 2FA')
+            t('confirmAndEnable', 'Confirm and Enable authenticator app')
           )}
         </Button>
       </ModalFooter>

@@ -29,7 +29,7 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
 
   const launchTotpModal = React.useCallback(() => {
     showModal('totp-enrollment-modal', {
-      size: 'sm',
+      size: 'md',
     });
   }, []);
 
@@ -41,7 +41,7 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
     <div>
       <PageHeader className={styles.header}>
         <PageHeaderContent
-          title={title ? title : t(dashboardTitle.key, dashboardTitle.value)}
+          title={title ?? t(dashboardTitle.key, dashboardTitle.value)}
           illustration={<DigitalTrustPictogram />}
         />
       </PageHeader>

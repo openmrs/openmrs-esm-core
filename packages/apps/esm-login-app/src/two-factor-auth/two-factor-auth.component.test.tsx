@@ -57,7 +57,7 @@ describe('Two-Factor Authentication Component', () => {
     expect(mockShowModal).toHaveBeenCalledWith(
       'totp-enrollment-modal',
       expect.objectContaining({
-        size: 'sm',
+        size: 'md',
       }),
     );
   });

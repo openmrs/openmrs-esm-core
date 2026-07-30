@@ -6,7 +6,6 @@ import locationPickerComponent from './location-picker/location-picker-view.comp
 import logoutButtonComponent from './logout/logout.extension';
 import rootComponent from './root.component';
 import twoFactorAuthLinkComponent from './two-factor-auth/two-factor-auth-link.extension';
-import TwoFactorAuth from './two-factor-auth/two-factor-auth.component';
 
 const moduleName = '@openmrs/esm-login-app';
 
@@ -28,5 +27,4 @@ export const changeLocationLink = getSyncLifecycle(changeLocationLinkComponent, 
 export const changePasswordLink = getSyncLifecycle(changePasswordLinkComponent, options);
 export const changePasswordModal = getAsyncLifecycle(() => import('./change-password/change-password.modal'), options);
 export const twoFactorAuthLink = getSyncLifecycle(twoFactorAuthLinkComponent, options);
-export const twoFactorAuth = getSyncLifecycle(TwoFactorAuth, options);
 export const totpEnrollmentModal = getAsyncLifecycle(() => import('./two-factor-auth/totp-enrollment.modal'), options);

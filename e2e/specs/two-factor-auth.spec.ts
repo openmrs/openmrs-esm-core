@@ -79,8 +79,10 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
 
   await test.step('Then the TOTP enrollment modal should appear', async () => {
     await expect(page.getByRole('heading', { name: 'Set up Authenticator App' })).toBeVisible();
-    await expect(page.getByText('Scan the QR Code using an authenticator app from your phone')).toBeVisible();
-    await expect(page.getByLabel(/Enter Verification Code/i)).toBeVisible();
+    await expect(
+      page.getByText('Your authenticator app will generate a new 6-digit code every 30 seconds.'),
+    ).toBeVisible();
+    await expect(page.getByLabel(/Enter 6-digit code from your app/i)).toBeVisible();
   });
 
   await test.step('When I enter a verification code and submit', async () => {
@@ -92,8 +94,8 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
         body: JSON.stringify({ isValidCode: true }),
       });
     });
-    await page.getByLabel(/Enter Verification Code/i).fill('123456');
-    await page.getByRole('button', { name: 'Enable 2FA' }).click();
+    await page.getByLabel(/Enter 6-digit code from your app/i).fill('123456');
+    await page.getByRole('button', { name: 'Confirm and Enable authenticator app' }).click();
   });
 
   await test.step('Then I should see a success notification and the modal should close', async () => {

@@ -8,16 +8,13 @@
 }
 
 .banner {
-  text-align: center;
-  line-height: 1.4;
-  margin: 0 auto layout.$spacing-06 auto;
-}
-
-.scanInstruction {
-  @include type.type-style('heading-01');
-  margin-bottom: layout.$spacing-05;
-  font-weight: 600;
-  text-align: center;
+  @include type.type-style('body-short-01');
+  line-height: 1.5;
+  text-align: left;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: layout.$spacing-06;
 }
 
 .qrContainer {
@@ -27,6 +24,10 @@
   justify-content: center;
   margin-bottom: layout.$spacing-05;
   padding: layout.$spacing-05;
+  background-color: $ui-02;
+  border: 1px solid $ui-03;
+  border-radius: 2px;
+  max-width: 360px;
 }
 
 .qrImage {
@@ -37,11 +38,7 @@
 
 .inputCode {
   width: 15rem;
-  margin: 0 auto layout.$spacing-01 auto;
-}
-
-.errorMessage {
-  margin-bottom: layout.$spacing-05;
+  margin: layout.$spacing-01;
 }
 
 .manualSetupContainer {
@@ -49,17 +46,77 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin-top: layout.$spacing-03;
+  margin-bottom: layout.$spacing-05;
+}
+
+.cantScanText {
+  @include type.type-style('helper-text-01');
+  color: $text-02;
   margin-bottom: layout.$spacing-05;
 }
 
 .manualSetupLabel {
+  @include type.type-style('helper-text-01');
+  color: $text-02;
   margin-bottom: layout.$spacing-03;
 }
 
-.toggleButton {
-  margin-top: layout.$spacing-03;
+.secretSnippet {
+  max-width: 23rem;
 }
 
-.secretSnippet {
-  max-width: 25rem;
+.twoColumnLayout {
+  display: flex;
+  flex-direction: row;
+  gap: layout.$spacing-05;
+  align-items: flex-start;
+}
+
+.leftColumn {
+  flex: 1.3;
+  min-width: 0;
+  text-align: left;
+}
+
+.rightColumn {
+  flex: 1;
+  min-width: 0;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.instructionList {
+  display: flex;
+  flex-direction: column;
+  gap: layout.$spacing-05;
+  margin-bottom: layout.$spacing-06;
+}
+
+.instructionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: layout.$spacing-04;
+}
+
+.stepNumber {
+  background-color: $ui-05;
+  color: $ui-01;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.stepText {
+  @include type.type-style('body-short-01');
+  color: $text-02;
+  line-height: 1.5;
 }
