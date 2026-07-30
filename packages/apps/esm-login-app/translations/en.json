@@ -24,6 +24,8 @@
   "logout": "Logout",
   "newPassword": "New password",
   "newPasswordRequired": "New password is required",
+  "noLoginLocations": "No login locations configured",
+  "noLoginLocationsMessage": "This installation has no login locations configured. Please contact your system administrator.",
   "oldPassword": "Old password",
   "oldPasswordRequired": "Old password is required",
   "openmrsLogo": "OpenMRS logo",
