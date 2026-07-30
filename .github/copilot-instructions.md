@@ -130,7 +130,7 @@ On push: `yarn verify` (full lint + test + typecheck).
 
 ## Coding Conventions
 
-Follow the conventions at https://o3-docs.openmrs.org/docs/coding-conventions/introduction. Key rules:
+Follow the conventions at https://o3-docs.openmrs.org/en-US/docs/coding-conventions/introduction. Key rules:
 
 **File naming:** Components use `*.component.tsx`, tests use `*.test.tsx`, styles use `*.module.scss`, data fetching uses `*.resource.ts`. Colocate related files in the same directory.
 

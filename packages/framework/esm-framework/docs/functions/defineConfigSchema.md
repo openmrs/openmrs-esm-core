@@ -10,7 +10,7 @@ This defines a configuration schema for a module. The schema tells the
 configuration system how the module can be configured. It specifies
 what makes configuration valid or invalid.
 
-See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
+See [Configuration System](https://o3-docs.openmrs.org/en-US/docs/configuration-system)
 for more information about defining a config schema.
 
 ## Parameters
