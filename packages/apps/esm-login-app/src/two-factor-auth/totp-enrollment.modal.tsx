@@ -149,7 +149,7 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
               <div className={styles.instructionItem}>
                 <span className={styles.stepNumber}>3</span>
                 <div className={styles.stepText}>
-                  {t('enterCodeInstruction', 'Enter the code the app shows to finish setting up. ')}
+                  {t('enterCodeInstruction', 'Enter the code the app shows to finish setting up.')}
                 </div>
               </div>
             </div>
