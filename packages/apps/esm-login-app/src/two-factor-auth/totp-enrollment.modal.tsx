@@ -12,7 +12,8 @@ import {
   ActionableNotification,
   Link,
 } from '@carbon/react';
-import { openmrsFetch, refetchCurrentUser, showSnackbar, OpenmrsFetchError } from '@openmrs/esm-framework';
+import { refetchCurrentUser, showSnackbar, OpenmrsFetchError } from '@openmrs/esm-framework';
+import { inititateTotpEnrollment, verifyTotpEnrollment } from './two-factor-auth.resource';
 import styles from './totp-enrollment.modal.scss';
 
 interface TotpEnrollmentProps {
@@ -23,7 +24,8 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
   const { t } = useTranslation();
   const [loadingEnrollment, setLoadingEnrollment] = useState(true);
   const [submittingVerificationCode, setSubmittingVerificationCode] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [initiationError, setInitiationError] = useState('');
+  const [verificationError, setVerificationError] = useState('');
   const [qrCodeUri, setQrCodeUri] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [secret, setSecret] = useState('');
@@ -32,11 +34,9 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
   const initiateEnrollment = useCallback(async () => {
     try {
       setLoadingEnrollment(true);
-      setErrorMessage('');
+      setInitiationError('');
 
-      const response = await openmrsFetch('/ws/rest/v1/auth/totp/enrollment', {
-        method: 'POST',
-      });
+      const response = await inititateTotpEnrollment();
 
       if (response.data) {
         setQrCodeUri(response.data.qrCodeUri || '');
@@ -44,7 +44,7 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
       }
     } catch (error) {
       console.error('Failed to initiate TOTP enrollment:', error);
-      setErrorMessage(t('failToInitiate', 'Failed to initiate TOTP enrollment. Please try again.'));
+      setInitiationError(t('failToInitiate', 'Failed to initiate TOTP enrollment. Please try again.'));
     } finally {
       setLoadingEnrollment(false);
     }
@@ -59,24 +59,16 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
       event.preventDefault();
       event.stopPropagation();
 
-      if (verificationCode.length !== 6) {
-        setErrorMessage('Verification code must be 6 digits.');
+      if (!/^\d{6}$/.test(verificationCode)) {
+        setVerificationError(t('totpCodeMustBeSixDigits', 'The verification code must be 6 digits.'));
         return;
       }
 
       try {
         setSubmittingVerificationCode(true);
-        setErrorMessage('');
+        setVerificationError('');
 
-        await openmrsFetch('/ws/rest/v1/auth/totp/enrollment/verify', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: {
-            code: verificationCode,
-          },
-        });
+        await verifyTotpEnrollment(verificationCode);
 
         showSnackbar({
           title: t('totpEnabledSuccessfully', 'Two-Factor Authentication Enabled'),
@@ -102,12 +94,12 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
             errorMessage = translatedMessage;
           }
         }
-        setErrorMessage(errorMessage);
+        setVerificationError(errorMessage);
       } finally {
         setSubmittingVerificationCode(false);
       }
     },
-    [verificationCode, close],
+    [verificationCode, close, t],
   );
 
   return (
@@ -119,7 +111,7 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
             <p className={styles.banner}>
               {t(
                 'useAuthenticatorApp',
-                'Your authenticator app will generate a new 6-digit code every 30 seconds. You will be asked for one after your password each time you sign in.',
+                'Your authenticator app will generate a new 6-digit code every 30 seconds. You will be asked for one each time you sign in.',
               )}
             </p>
             <div className={styles.instructionList}>
@@ -157,7 +149,7 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
               <div className={styles.instructionItem}>
                 <span className={styles.stepNumber}>3</span>
                 <div className={styles.stepText}>
-                  {t('enterCodeInstruction', 'Enter the code the app shows to confirm the setting up.')}
+                  {t('enterCodeInstruction', 'Enter the code the app shows to finish setting up. ')}
                 </div>
               </div>
             </div>
@@ -172,8 +164,8 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
                 inputMode="numeric"
                 maxLength={6}
                 value={verificationCode}
-                invalidText={errorMessage}
-                invalid={!!errorMessage}
+                invalidText={verificationError}
+                invalid={!!verificationError}
                 onChange={(e) => setVerificationCode(e.target.value)}
                 disabled={submittingVerificationCode}
                 autoComplete="one-time-code"
@@ -188,12 +180,12 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
                 <div className={styles.center}>
                   <InlineLoading description={t('generatingQrCode', 'Generating QR Code...')} />
                 </div>
-              ) : !qrCodeUri && errorMessage ? (
+              ) : !qrCodeUri && initiationError ? (
                 <ActionableNotification
                   kind="error"
                   inline
                   hideCloseButton
-                  title={errorMessage}
+                  title={initiationError}
                   actionButtonLabel={t('tryAgain', 'Try Again')}
                   onActionButtonClick={initiateEnrollment}
                 />
@@ -203,7 +195,7 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
                   <div className={styles.manualSetupContainer}>
                     <p className={styles.cantScanText}>{t('cantScanQrCode', "Can't scan the QR code?")}</p>
                     <p className={styles.manualSetupLabel}>{t('manualSetupKey', 'Enter this setup key in your app')}</p>
-                    <CodeSnippet type="single" className={styles.secretSnippet}>
+                    <CodeSnippet type="single" className={styles.secretSnippet} copyText={secret}>
                       {formattedSecret}
                     </CodeSnippet>
                   </div>
@@ -219,12 +211,12 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
         </Button>
         <Button
           type="submit"
-          disabled={loadingEnrollment || submittingVerificationCode || verificationCode.length !== 6}
+          disabled={loadingEnrollment || submittingVerificationCode || !/^\d{6}$/.test(verificationCode)}
         >
           {submittingVerificationCode ? (
             <InlineLoading description={t('verifying', 'Verifying...')} />
           ) : (
-            t('confirmAndEnable', 'Confirm and Enable authenticator app')
+            t('confirmAndEnable', 'Confirm and enable authenticator app')
           )}
         </Button>
       </ModalFooter>

@@ -32,8 +32,8 @@
 }
 
 .qrImage {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 100%;
+  width: 200px;
   margin-bottom: 0;
 }
 
@@ -72,6 +72,10 @@
   flex-direction: row;
   gap: layout.$spacing-05;
   align-items: stretch;
+
+  @media (max-width: 40px) {
+    flex-direction: column;
+  }
 }
 
 .leftColumn {

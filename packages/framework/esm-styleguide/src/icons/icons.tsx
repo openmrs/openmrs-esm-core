@@ -530,6 +530,7 @@ export const MicroscopeIcon = memo(
 );
 
 /**
+ * This icon is used for the Authenticator app authentication method under Two Factor Authentication.
  */
 export const MobileCheckIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function MobileCheckIcon(props, ref) {
@@ -782,7 +783,7 @@ export const TreeViewAltIcon = memo(
 );
 
 /**
- * This icon is used in the My account and the Two Factor Authentication page header as well.
+ * This icon is used for the Two Factor Authentication button in the My Account panel.
  */
 export const TwoFactorAuthenticationIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function TwoFactorAuthenticationIcon(props, ref) {

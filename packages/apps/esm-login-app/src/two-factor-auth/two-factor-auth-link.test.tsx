@@ -6,16 +6,6 @@ import userEvent from '@testing-library/user-event';
 import TwoFactorAuthLink from './two-factor-auth-link.extension';
 import type { ConfigSchema } from '../config-schema';
 
-vi.mock('@openmrs/esm-framework', async () => {
-  const actual = await vi.importActual('@openmrs/esm-framework');
-  return {
-    ...actual,
-    navigate: vi.fn(),
-    useConfig: vi.fn(),
-    TwoFactorAuthenticationIcon: () => <svg data-testid="mock-icon" />,
-  };
-});
-
 describe('TwoFactorAuthLink', () => {
   const mockNavigate = vi.mocked(navigate);
   const mockUseConfig = vi.mocked(useConfig);
@@ -27,16 +17,12 @@ describe('TwoFactorAuthLink', () => {
     } as unknown as ConfigSchema);
   });
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should render the two factor auth link with the correct icon and text', () => {
     render(<TwoFactorAuthLink />);
     const button = screen.getByRole('button', { name: /Two-Factor Authentication/i });
 
     expect(button).toBeInTheDocument();
-    expect(screen.getByTestId('mock-icon')).toBeInTheDocument();
+    expect(screen.getByText('TwoFactorAuthenticationIcon')).toBeInTheDocument();
   });
 
   it('should navigate to the two factor authentication page when the button is clicked', async () => {

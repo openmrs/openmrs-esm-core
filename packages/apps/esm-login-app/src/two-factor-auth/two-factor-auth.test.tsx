@@ -6,20 +6,6 @@ import { render, screen } from '@testing-library/react';
 import TwoFactorAuth from './two-factor-auth.component';
 import type { ConfigSchema } from '../config-schema';
 
-vi.mock('@openmrs/esm-framework', async () => {
-  const actual = await vi.importActual('@openmrs/esm-framework');
-  return {
-    ...actual,
-    showModal: vi.fn(),
-    useSession: vi.fn(),
-    useConfig: vi.fn(),
-    PageHeader: ({ children }: any) => <header>{children}</header>,
-    PageHeaderContent: ({ title }: any) => <h1>{title}</h1>,
-    ServiceQueuesPictogram: () => <svg data-testid="service-queues-pictogram" />,
-    MobileCheckIcon: () => <svg data-testid="mobile-check-icon" />,
-  };
-});
-
 describe('Two-Factor Authentication Component', () => {
   const mockShowModal = vi.mocked(showModal);
   const mockUseSession = vi.mocked(useSession);

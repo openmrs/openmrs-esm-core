@@ -58,6 +58,7 @@
   "setupAuthenticatorApp": "Set up Authenticator App",
   "showPassword": "Show password",
   "submitting": "Submitting",
+  "totpCodeMustBeSixDigits": "The verification code must be 6 digits.",
   "totpEnabledSuccessfully": "Two-Factor Authentication Enabled",
   "totpEnabledSuccessfullyMessage": "Your account is now protected with a TOTP authenticator app.",
   "totpVerificationFailed": "We could not verify that code. Please try again.",

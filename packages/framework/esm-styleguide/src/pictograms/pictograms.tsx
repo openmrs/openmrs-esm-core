@@ -89,6 +89,9 @@ export const DentistryPictogram = memo(
   }),
 );
 
+/**
+ * This icon is used in the Two Factor Authentication page header.
+ */
 export const DigitalTrustPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function DigitalTrustPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-digital-trust" pictogramProps={props} />;

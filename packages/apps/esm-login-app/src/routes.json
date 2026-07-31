@@ -26,7 +26,7 @@
       "component": "root",
       "route": "two-factor-auth",
       "online": true,
-      "offline": true
+      "offline": false
     }
   ],
   "extensions": [
@@ -64,7 +64,7 @@
       "slot": "user-panel-slot",
       "component": "twoFactorAuthLink",
       "online": true,
-      "offline": true
+      "offline": false
     }
   ],
   "modals": [

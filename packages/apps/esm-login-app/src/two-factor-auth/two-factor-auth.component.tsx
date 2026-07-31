@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Tile, Tag } from '@carbon/react';
 import {
@@ -27,7 +27,7 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
   const secondaryAuthTypes = userProperties?.['authentication.secondaryType'] || '';
   const isTotpEnabled = secondaryAuthTypes.split(',').includes('totp');
 
-  const launchTotpModal = React.useCallback(() => {
+  const launchTotpModal = useCallback(() => {
     showModal('totp-enrollment-modal', {
       size: 'md',
     });
