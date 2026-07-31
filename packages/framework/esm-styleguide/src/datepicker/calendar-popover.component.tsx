@@ -52,11 +52,11 @@ export const CalendarPopover = /*#__PURE__*/ forwardRef<HTMLDivElement, Calendar
       <AutoCloseDialog>
         <CalendarComponent {...calendarProps}>
           <header className={styles.header}>
-            <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
+            <Button className={classNames(styles.flatButton, styles.calendarNavButton)} slot="previous">
               <ChevronLeftIcon size={16} />
             </Button>
             <MonthYear className={styles.monthYear} />
-            <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
+            <Button className={classNames(styles.flatButton, styles.calendarNavButton)} slot="next">
               <ChevronRightIcon size={16} />
             </Button>
           </header>

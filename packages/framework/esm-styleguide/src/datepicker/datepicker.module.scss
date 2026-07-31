@@ -249,9 +249,10 @@
   --omrs-icon-fill: #{theme.$support-error};
 }
 
-// Used by the calendar's month navigation buttons; the input group's trigger button is sized
-// by the group itself.
-.flatButtonMd {
+// The calendar popover's previous/next month buttons. These are a fixed 2.5rem square regardless
+// of the field size: the popover is not part of the field, so it does not scale with it. The
+// field's own trigger button is sized by `.inputGroup` above.
+.calendarNavButton {
   height: layout.$spacing-08;
   width: layout.$spacing-08;
 }
