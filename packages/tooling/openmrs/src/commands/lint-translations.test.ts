@@ -103,16 +103,32 @@ describe('inspectCatalog', () => {
     expect(findings).toEqual([]);
   });
 
-  it('flags a plural family whose forms are identical', () => {
+  it('warns, but does not error, when the forms of a plural family are identical', () => {
     const findings = inspectCatalog('m', {
       searchResults_one: '{{count}} results',
       searchResults_other: '{{count}} results',
     });
 
     expect(findings).toHaveLength(1);
-    expect(findings[0].check).toBe('broken-plural-family');
+    expect(findings[0].check).toBe('identical-plural-forms');
     expect(findings[0].key).toBe('searchResults');
-    expect(findings[0].severity).toBe('error');
+    // Identical forms are legitimate for invariant nouns, so a human decides. See the fish case below.
+    expect(findings[0].severity).toBe('warning');
+  });
+
+  it('does not error on an invariant noun whose forms are legitimately identical', () => {
+    const findings = inspectCatalog('m', { fishCount_one: '{{count}} fish', fishCount_other: '{{count}} fish' });
+
+    expect(findings.filter((finding) => finding.severity === 'error')).toEqual([]);
+  });
+
+  it('accepts forms that differ without repeating the count, since plural selection can change other words', () => {
+    const findings = inspectCatalog('m', {
+      sheep_one: 'This sheep is healthy',
+      sheep_other: 'These sheep are healthy',
+    });
+
+    expect(findings).toEqual([]);
   });
 
   it('flags {{count}} with no plural forms', () => {
@@ -121,10 +137,23 @@ describe('inspectCatalog', () => {
     expect(findings.map((finding) => finding.check)).toEqual(['count-without-plural-forms']);
   });
 
-  it('flags a plural form that drops the count', () => {
+  it('flags a plural form that drops the count the other form interpolates', () => {
     const findings = inspectCatalog('m', { itemCount_one: 'one item', itemCount_other: '{{count}} items' });
 
-    expect(findings.map((finding) => finding.check)).toEqual(['plural-form-missing-count']);
+    expect(findings.map((finding) => finding.check)).toEqual(['plural-form-placeholder-mismatch']);
+    expect(findings[0].key).toBe('itemCount_one');
+    expect(findings[0].message).toContain('{{count}}');
+  });
+
+  it('flags a plural form that drops a non-count placeholder', () => {
+    const findings = inspectCatalog('m', {
+      shown_one: '{{count}} of {{total}} result',
+      shown_other: '{{count}} results',
+    });
+
+    expect(findings.map((finding) => finding.check)).toEqual(['plural-form-placeholder-mismatch']);
+    expect(findings[0].key).toBe('shown_other');
+    expect(findings[0].message).toContain('{{total}}');
   });
 
   it('flags leading or trailing whitespace', () => {
@@ -236,9 +265,8 @@ describe('checks', () => {
     const errors = checks.filter((check) => check.severity === 'error').map((check) => check.id);
 
     expect(errors).toEqual([
-      'broken-plural-family',
+      'plural-form-placeholder-mismatch',
       'count-without-plural-forms',
-      'plural-form-missing-count',
       'default-value-drift',
       'untrimmed-value',
       'interpolated-default-value',

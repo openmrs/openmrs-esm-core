@@ -41,9 +41,10 @@ interface CheckDefinition {
 
 export const checks: Array<CheckDefinition> = [
   {
-    id: 'broken-plural-family',
+    id: 'plural-form-placeholder-mismatch',
     severity: 'error',
-    description: 'Every form of a plural family holds the same text, so the count never changes the output.',
+    description:
+      'The forms of a plural family interpolate different placeholders, so at least one form drops a value the others show.',
   },
   {
     id: 'count-without-plural-forms',
@@ -51,9 +52,12 @@ export const checks: Array<CheckDefinition> = [
     description: 'A key interpolates {{count}} but has no plural forms, so i18next cannot pluralize it.',
   },
   {
-    id: 'plural-form-missing-count',
-    severity: 'error',
-    description: 'One form of a plural family omits the {{count}} the other forms interpolate.',
+    id: 'identical-plural-forms',
+    severity: 'warning',
+    // Not an invariant: English invariant nouns ("{{count}} fish") read correctly in every form, and
+    // plural selection can change grammar elsewhere in a sentence without the number appearing. Worth
+    // a look because it is also what "1 results" looks like, but a human has to make the call.
+    description: 'Every form of a plural family holds the same text, so the count never changes the output.',
   },
   {
     id: 'default-value-drift',
@@ -101,13 +105,19 @@ export const checks: Array<CheckDefinition> = [
     id: 'translated-dynamic-key',
     severity: 'warning',
     description:
-      'A t() call takes a non-literal key. Intentional for implementer-supplied config, but broken for backend data.',
+      'A t() call takes a non-literal key. Deliberate for implementer-supplied config and for closed code sets that ' +
+      'have keys of their own, but broken for arbitrary backend display text.',
     optIn: true,
   },
 ];
 
 const pluralSuffixes = ['zero', 'one', 'two', 'few', 'many', 'other'];
 const pluralSuffixPattern = new RegExp(`_(${pluralSuffixes.join('|')})$`);
+
+/** Collects the i18next interpolation names in a message, so `"{{count}} of {{total}}"` gives count, total. */
+function placeholdersIn(value: string) {
+  return new Set([...value.matchAll(/\{\{\s*([\w.-]+)\s*(?:,[^}]*)?\}\}/g)].map((match) => match[1]));
+}
 
 /**
  * SWC hands out spans from a counter that keeps climbing across every parse in the process, and a
@@ -265,29 +275,36 @@ export function inspectCatalog(module: string, catalog: Record<string, string>):
 
     if (values.length > 1 && new Set(values).size === 1) {
       findings.push({
-        check: 'broken-plural-family',
-        severity: 'error',
+        check: 'identical-plural-forms',
+        severity: 'warning',
         module,
         key: base,
-        message: `all ${values.length} plural forms hold the same text ${JSON.stringify(
-          values[0],
-        )}, so every count renders it`,
+        message:
+          `all ${values.length} plural forms hold the same text ${JSON.stringify(values[0])}, so the count never ` +
+          `changes the output. Intended for an invariant noun such as "{{count}} fish", otherwise one of these ` +
+          `forms is not grammatical for its own category`,
       });
     }
 
-    const withCount = Object.keys(forms).filter((form) => forms[form].includes('{{count}}'));
-    const withoutCount = Object.keys(forms).filter((form) => !forms[form].includes('{{count}}'));
+    // Placeholder parity is the real invariant: whatever a form's grammar, it must not silently drop a
+    // value the other forms interpolate.
+    const placeholdersPerForm = new Map(Object.keys(forms).map((form) => [form, placeholdersIn(forms[form])]));
+    const everyPlaceholder = new Set([...placeholdersPerForm.values()].flatMap((names) => [...names]));
 
-    if (withCount.length > 0 && withoutCount.length > 0) {
-      findings.push({
-        check: 'plural-form-missing-count',
-        severity: 'error',
-        module,
-        key: base,
-        message: `${withoutCount.map((form) => `_${form}`).join(', ')} omits the {{count}} that ${withCount
-          .map((form) => `_${form}`)
-          .join(', ')} interpolates`,
-      });
+    for (const [form, names] of placeholdersPerForm) {
+      const missing = [...everyPlaceholder].filter((name) => !names.has(name));
+
+      if (missing.length > 0) {
+        findings.push({
+          check: 'plural-form-placeholder-mismatch',
+          severity: 'error',
+          module,
+          key: `${base}_${form}`,
+          message: `omits ${missing
+            .map((name) => `{{${name}}}`)
+            .join(', ')}, which the other forms of ${base} interpolate`,
+        });
+      }
     }
   }
 
@@ -371,7 +388,10 @@ export function inspectSources({ module, catalog, files }: ModuleSources): Array
           severity: 'warning',
           module,
           key: call.dynamicKey,
-          message: `key is not a literal, so it has no entry in en.json and t() returns it unchanged`,
+          message:
+            `key is not a literal, so it cannot be checked against en.json or extracted. Fine for a closed set of ` +
+            `values you own a key for, such as an allergy severity, and for implementer-supplied config. Broken for ` +
+            `arbitrary backend display text, where t() just returns the value unchanged`,
           file,
           line: call.line,
         });
