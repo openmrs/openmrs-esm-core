@@ -60,6 +60,18 @@ export function internationalizedDateToDate(date: DateValue): Date | undefined {
   return date.toDate(getLocalTimeZone());
 }
 
+/**
+ * Returns the Carbon layout size class for a date picker size.
+ *
+ * Carbon sizes its form controls through the `cds--layout--size-*` classes, which set the layout
+ * size tokens (sm 32px / md 40px / lg 48px) that the control's height is read from. The date
+ * pickers use the same mechanism so that they are exactly as tall as the Carbon inputs they sit
+ * next to in a form row.
+ */
+export function getLayoutSizeClass(size: 'sm' | 'md' | 'lg' | undefined): string {
+  return `cds--layout--size-${size && size.length > 0 ? size : 'md'}`;
+}
+
 /** Removes any data attributes from an object */
 export function removeDataAttributes<T>(props: T): T {
   const prefix = /^(data-.*)$/;

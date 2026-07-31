@@ -5,7 +5,7 @@ import { Button, DatePicker, type DatePickerProps, FieldError, Group, Provider, 
 import { type CalendarDate } from '@internationalized/date';
 import { type DateInputValue, type DatePickerBaseProps } from './types';
 import { I18nWrapper } from './i18n-wrapper.component';
-import { dateToInternationalizedDate, internationalizedDateToDate } from './utils';
+import { dateToInternationalizedDate, getLayoutSizeClass, internationalizedDateToDate } from './utils';
 import { OpenmrsIntlLocaleContext, useDatepickerContext } from './hooks';
 import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
 import { CalendarPopover } from './calendar-popover.component';
@@ -68,6 +68,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
 
     const id = useId();
     const hasVisibleLabel = !!(labelText ?? label);
+    const layoutSizeClass = getLayoutSizeClass(size);
 
     // Warn in development if no accessible label is provided
     if (process.env.NODE_ENV !== 'production') {
@@ -124,15 +125,11 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                     {labelText ?? label}
                   </Label>
                 )}
-                <Group className={styles.inputGroup}>
+                <Group className={classNames(styles.inputGroup, layoutSizeClass)}>
                   <DatePickerInput
                     id={hasVisibleLabel ? id : undefined}
                     ref={ref}
-                    className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
-                      [styles.inputWrapperSm]: size === 'sm',
-                      [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
-                      [styles.inputWrapperLg]: size === 'lg',
-                    })}
+                    className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper)}
                   >
                     {(segment) => {
                       return segment.type !== 'era' ? (
@@ -142,13 +139,7 @@ export const OpenmrsDatePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, Openmr
                       );
                     }}
                   </DatePickerInput>
-                  <Button
-                    className={classNames(styles.flatButton, {
-                      [styles.flatButtonSm]: size === 'sm',
-                      [styles.flatButtonMd]: size === 'md' || !size || size.length === 0,
-                      [styles.flatButtonLg]: size === 'lg',
-                    })}
-                  >
+                  <Button className={styles.flatButton}>
                     <DatePickerIcon />
                   </Button>
                 </Group>

@@ -6,16 +6,36 @@
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
 @use '@carbon/styles/scss/utilities/focus-outline' as focus;
+@use '@carbon/styles/scss/utilities/layout' as carbon-layout;
 @use '../vars' as *;
 
 // Text field for dates
+//
+// Carbon puts the control height and the 1px bottom border on the *same* border-box element
+// (see `.cds--text-input` / `.cds--date-picker__input`), so the border is included in the
+// height: an md input is 40px in total, not 40px plus a border. This group has to do the same,
+// otherwise it renders one pixel taller than every Carbon input beside it in a form row.
+//
+// The height itself comes from Carbon's layout size tokens (sm 32px / md 40px / lg 48px), read
+// from the `cds--layout--size-*` class the components set, which is exactly how Carbon's own
+// inputs are sized. That way we follow Carbon if those values ever change.
 .inputGroup {
+  @include carbon-layout.use('size', $default: 'md', $min: 'sm', $max: 'lg');
+
   align-items: center;
   background-color: var(--cds-field);
+  block-size: carbon-layout.size('height');
   border-block-end: 1px solid var(--cds-border-strong);
+  box-sizing: border-box;
   color: var(--cds-text-primary);
   display: flex;
   position: relative;
+
+  // The trigger button fills the group instead of defining its height.
+  & > .flatButton {
+    block-size: 100%;
+    inline-size: carbon-layout.size('height');
+  }
 
   &:focus-within,
   &.cds--focused {
@@ -98,6 +118,7 @@
 
 // Single date picker input
 .inputWrapper {
+  block-size: 100%;
   inline-size: 15rem;
   margin-left: layout.$spacing-05;
   min-width: layout.$spacing-13;
@@ -110,37 +131,14 @@
   @extend %readonlyPlaceholderDimming;
 }
 
-.inputWrapperMd {
-  block-size: layout.$spacing-08;
-}
-
-.inputWrapperSm {
-  block-size: layout.$spacing-07;
-}
-
-.inputWrapperLg {
-  block-size: layout.$spacing-09;
-}
-
 // Range date picker inputs
 .inputsWrapper {
+  block-size: 100%;
   display: flex;
   min-width: 10rem;
   max-width: 15rem;
   margin-inline-start: 1rem;
   inline-size: 15rem;
-}
-
-.inputsWrapperSm {
-  block-size: layout.$spacing-07;
-}
-
-.inputsWrapperMd {
-  block-size: layout.$spacing-08;
-}
-
-.inputsWrapperLg {
-  block-size: layout.$spacing-09;
 }
 
 .dateInputWrapper {
@@ -251,19 +249,11 @@
   --omrs-icon-fill: #{theme.$support-error};
 }
 
+// Used by the calendar's month navigation buttons; the input group's trigger button is sized
+// by the group itself.
 .flatButtonMd {
   height: layout.$spacing-08;
   width: layout.$spacing-08;
-}
-
-.flatButtonSm {
-  height: layout.$spacing-07;
-  width: layout.$spacing-07;
-}
-
-.flatButtonLg {
-  height: layout.$spacing-09;
-  width: layout.$spacing-09;
 }
 
 .monthYear {

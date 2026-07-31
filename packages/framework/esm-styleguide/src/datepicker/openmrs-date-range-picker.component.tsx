@@ -19,7 +19,7 @@ import { type DateInputValue, type DatePickerBaseProps } from './types';
 import { I18nWrapper } from './i18n-wrapper.component';
 import { DatePickerIcon } from './date-picker-icon.component';
 import { CalendarPopover } from './calendar-popover.component';
-import { dateToInternationalizedDate, internationalizedDateToDate } from './utils';
+import { dateToInternationalizedDate, getLayoutSizeClass, internationalizedDateToDate } from './utils';
 import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
 
 /** Properties for the OpenmrsDateRangePicker */
@@ -67,6 +67,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
 
     const id = useId();
     const hasVisibleLabel = !!(labelText ?? label);
+    const layoutSizeClass = getLayoutSizeClass(size);
 
     // Warn in development if no accessible label is provided
     if (process.env.NODE_ENV !== 'production') {
@@ -146,14 +147,8 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                   </Label>
                 )}
 
-                <Group className={styles.inputGroup}>
-                  <div
-                    className={classNames(styles.inputsWrapper, {
-                      [styles.inputsWrapperSm]: size === 'sm',
-                      [styles.inputsWrapperMd]: size === 'md' || !size || size.length === 0,
-                      [styles.inputsWrapperLg]: size === 'lg',
-                    })}
-                  >
+                <Group className={classNames(styles.inputGroup, layoutSizeClass)}>
+                  <div className={styles.inputsWrapper}>
                     <DateInput
                       className={classNames(
                         'cds--date-picker-input__wrapper',
@@ -180,13 +175,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                       {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
                     </DateInput>
                   </div>
-                  <Button
-                    className={classNames(styles.flatButton, {
-                      [styles.flatButtonSm]: size === 'sm',
-                      [styles.flatButtonMd]: size === 'md' || !size || size.length === 0,
-                      [styles.flatButtonLg]: size === 'lg',
-                    })}
-                  >
+                  <Button className={styles.flatButton}>
                     <DatePickerIcon />
                   </Button>
                 </Group>

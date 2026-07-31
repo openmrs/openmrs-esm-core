@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { CalendarDate, CalendarDateTime, EthiopicCalendar } from '@internationalized/date';
-import { dateToInternationalizedDate, internationalizedDateToDate, removeDataAttributes } from './utils';
+import {
+  dateToInternationalizedDate,
+  getLayoutSizeClass,
+  internationalizedDateToDate,
+  removeDataAttributes,
+} from './utils';
 
 describe('dateToInternationalizedDate', () => {
   it('returns undefined for undefined input', () => {
@@ -91,6 +96,24 @@ describe('internationalizedDateToDate', () => {
     expect(result!.getFullYear()).toBe(2025);
     expect(result!.getMonth()).toBe(5);
     expect(result!.getDate()).toBe(18);
+  });
+});
+
+describe('getLayoutSizeClass', () => {
+  it.each([
+    ['sm' as const, 'cds--layout--size-sm'],
+    ['md' as const, 'cds--layout--size-md'],
+    ['lg' as const, 'cds--layout--size-lg'],
+  ])('maps size %s to the Carbon layout class %s', (size, expected) => {
+    expect(getLayoutSizeClass(size)).toBe(expected);
+  });
+
+  it('falls back to md when no size is given', () => {
+    expect(getLayoutSizeClass(undefined)).toBe('cds--layout--size-md');
+  });
+
+  it('falls back to md for an empty size', () => {
+    expect(getLayoutSizeClass('' as unknown as 'md')).toBe('cds--layout--size-md');
   });
 });
 
