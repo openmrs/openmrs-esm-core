@@ -89,7 +89,11 @@ export const checks: Array<CheckDefinition> = [
   {
     id: 'case-only-duplicate',
     severity: 'warning',
-    description: 'Several keys hold the same text differing only by capitalization.',
+    // Cannot be decided from the catalog. Two keys carrying the same words in different capitalization
+    // are sometimes one string duplicated by accident, and sometimes a deliberate context variant:
+    // `visitType` labels a table column while `visitType_title` heads a form section. Only the call
+    // sites say which, so this stays a warning that asks the reader to look.
+    description: 'Several keys hold the same text differing only by capitalization, which may be a duplicate.',
   },
   {
     id: 'case-transform-on-translation',
@@ -350,9 +354,11 @@ export function inspectCatalog(module: string, catalog: Record<string, string>):
         severity: 'warning',
         module,
         key: keys[0],
-        message: `duplicated with different capitalization across ${keys
-          .map((key) => `${key}=${JSON.stringify(catalog[key])}`)
-          .join(', ')}`,
+        message:
+          `same words, different capitalization, across ${keys
+            .map((key) => `${key}=${JSON.stringify(catalog[key])}`)
+            .join(', ')}. Check the call sites: one key per meaning and grammatical context, so a heading and a ` +
+          `table column legitimately differ, but the same string in the same place should not be written twice`,
       });
     }
   }
