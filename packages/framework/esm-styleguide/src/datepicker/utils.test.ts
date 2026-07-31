@@ -110,12 +110,28 @@ describe('getLayoutSizeClass', () => {
 
   // No class means "inherit the surrounding Carbon layout context"; the md fallback lives in the
   // stylesheet's `layout.use()` `$default`, not here.
-  it('returns no class when no size is given', () => {
-    expect(getLayoutSizeClass(undefined)).toBeUndefined();
-  });
-
-  it('returns no class for an empty size', () => {
-    expect(getLayoutSizeClass('' as unknown as 'md')).toBeUndefined();
+  //
+  // The `size` prop is typed, but the framework is consumed from untyped JavaScript too, so these
+  // cover what a caller can actually pass at runtime, not just what the type permits. Everything
+  // outside the three supported steps has to come back `undefined` so the group falls back to the
+  // layout context rather than carrying a class that looks like a Carbon token but isn't one.
+  it.each([
+    ['undefined', undefined],
+    ['null', null],
+    ['an empty string', ''],
+    ['a step Carbon has but the pickers do not support', 'xl'],
+    ['the wrong case', 'Md'],
+    ['an unknown string', 'huge'],
+    ['a number', 40],
+    ['zero', 0],
+    ['a boolean', true],
+    ['an object', {}],
+    // A value with whitespace would otherwise emit two classes, and the later
+    // `cds--layout--size-*` wins the cascade — so a caller asking for `md` would silently render
+    // at `lg`.
+    ['a value that would inject a second class', 'md cds--layout--size-lg'],
+  ])('returns no class for %s', (_label, size) => {
+    expect(getLayoutSizeClass(size as unknown as 'md' | undefined)).toBeUndefined();
   });
 });
 

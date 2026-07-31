@@ -173,6 +173,23 @@ describe('OpenmrsDateRangePicker', () => {
       expect(inputGroup).toHaveClass(styles.inputGroup);
       expect(inputGroup.className).not.toMatch(/cds--layout--size-/);
     });
+
+    // See the note in datepicker.test.tsx: untyped JavaScript callers can pass anything, and none
+    // of it may reach the DOM as a `cds--layout--size-*` token.
+    it.each([
+      ['null', null],
+      ['an empty string', ''],
+      ['an unsupported step', 'xl'],
+      ['the wrong case', 'Md'],
+      ['a number', 40],
+      ['an object', {}],
+      ['a value that would inject a second class', 'md cds--layout--size-lg'],
+    ])('should render without a layout class when size is %s', (_label, size) => {
+      render(<OpenmrsDateRangePicker aria-label="datepicker" size={size as unknown as 'md'} />);
+      const [inputGroup] = screen.getAllByRole('group');
+      expect(inputGroup).toHaveClass(styles.inputGroup);
+      expect(inputGroup.className).not.toMatch(/cds--layout--size-/);
+    });
   });
 
   describe('calendar popover', () => {

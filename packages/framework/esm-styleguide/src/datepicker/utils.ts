@@ -60,9 +60,12 @@ export function internationalizedDateToDate(date: DateValue): Date | undefined {
   return date.toDate(getLocalTimeZone());
 }
 
+/** The layout steps the date pickers support, matching the `size` prop's type. */
+const layoutSizeSteps = new Set(['sm', 'md', 'lg']);
+
 /**
- * Returns the Carbon layout size class for a date picker size, or `undefined` when no size was
- * given.
+ * Returns the Carbon layout size class for a date picker size, or `undefined` when no usable size
+ * was given.
  *
  * Carbon sizes its form controls through the `cds--layout--size-*` classes, which set the layout
  * size tokens (sm 32px / md 40px / lg 48px) that the control's height is read from. The date
@@ -75,9 +78,17 @@ export function internationalizedDateToDate(date: DateValue): Date | undefined {
  * context: inside a `cds--layout--size-sm` container an unsized Carbon input is 32px, and an
  * unsized picker would stay 40px. With no class, the size falls back to the `$default: 'md'` in
  * `.inputGroup`'s `layout.use()`, so an unsized picker outside any layout context is still 40px.
+ *
+ * Anything outside `sm`/`md`/`lg` is treated the same as an absent size rather than interpolated
+ * into the class name. The prop is typed, but plenty of callers are untyped JavaScript, and
+ * interpolating whatever they pass puts a token that reads like a Carbon class but isn't one
+ * (`cds--layout--size-40`) into production DOM. Worse, a value containing whitespace emits *two*
+ * classes, so `size="md cds--layout--size-lg"` renders at `lg` — the opposite of what was asked
+ * for. Carbon's own `TextInput` interpolates naively; being stricter here costs nothing for
+ * in-contract callers and fails predictably for the rest.
  */
 export function getLayoutSizeClass(size: 'sm' | 'md' | 'lg' | undefined): string | undefined {
-  return size ? `cds--layout--size-${size}` : undefined;
+  return layoutSizeSteps.has(size as string) ? `cds--layout--size-${size}` : undefined;
 }
 
 /** Removes any data attributes from an object */

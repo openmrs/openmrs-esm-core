@@ -220,6 +220,25 @@ describe('OpenmrsDatePicker', () => {
       expect(inputGroup).toHaveClass(styles.inputGroup);
       expect(inputGroup.className).not.toMatch(/cds--layout--size-/);
     });
+
+    // The prop is typed, but the framework is consumed from untyped JavaScript, so the component
+    // has to survive whatever a caller actually passes. Nothing outside the three supported steps
+    // may reach the DOM as a `cds--layout--size-*` token: the group must stay unsized and inherit
+    // the layout context instead.
+    it.each([
+      ['null', null],
+      ['an empty string', ''],
+      ['an unsupported step', 'xl'],
+      ['the wrong case', 'Md'],
+      ['a number', 40],
+      ['an object', {}],
+      ['a value that would inject a second class', 'md cds--layout--size-lg'],
+    ])('should render without a layout class when size is %s', (_label, size) => {
+      render(<OpenmrsDatePicker aria-label="datepicker" size={size as unknown as 'md'} />);
+      const [inputGroup] = screen.getAllByRole('group');
+      expect(inputGroup).toHaveClass(styles.inputGroup);
+      expect(inputGroup.className).not.toMatch(/cds--layout--size-/);
+    });
   });
 
   describe('CSS class variants', () => {
