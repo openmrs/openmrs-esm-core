@@ -32,7 +32,11 @@ export interface OpenmrsDateRangePickerProps
   onChange?: (value: [Date | null | undefined, Date | null | undefined]) => void;
   /** Handler that is called when the value changes. Note that this provides types from @internationalized/date. */
   onChangeRaw?: (value: DateRange | null) => void;
-  /** Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option */
+  /**
+   * Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
+   * When omitted, the size is taken from the surrounding Carbon layout context, falling back to
+   * `md` when there is none.
+   */
   size?: 'sm' | 'md' | 'lg';
   /** The value (controlled) */
   value?: [DateInputValue, DateInputValue];
@@ -57,7 +61,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
       minDate: rawMinDate,
       onChange,
       onChangeRaw,
-      size = 'md',
+      size,
       value: rawValue,
       ...dateRangePickerProps
     },

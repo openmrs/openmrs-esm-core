@@ -157,7 +157,6 @@ describe('OpenmrsDateRangePicker', () => {
     // See the note in datepicker.test.tsx: the group owns both the height and the bottom border,
     // and gets its height from Carbon's layout size tokens via these classes.
     it.each([
-      [undefined, 'cds--layout--size-md'],
       ['sm' as const, 'cds--layout--size-sm'],
       ['md' as const, 'cds--layout--size-md'],
       ['lg' as const, 'cds--layout--size-lg'],
@@ -166,6 +165,13 @@ describe('OpenmrsDateRangePicker', () => {
       const [inputGroup] = screen.getAllByRole('group');
       expect(inputGroup).toHaveClass(styles.inputGroup);
       expect(inputGroup).toHaveClass(expectedClass);
+    });
+
+    it('should not set a layout class when no size is given', () => {
+      render(<OpenmrsDateRangePicker aria-label="datepicker" />);
+      const [inputGroup] = screen.getAllByRole('group');
+      expect(inputGroup).toHaveClass(styles.inputGroup);
+      expect(inputGroup.className).not.toMatch(/cds--layout--size-/);
     });
   });
 

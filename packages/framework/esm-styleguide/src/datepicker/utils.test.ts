@@ -108,12 +108,14 @@ describe('getLayoutSizeClass', () => {
     expect(getLayoutSizeClass(size)).toBe(expected);
   });
 
-  it('falls back to md when no size is given', () => {
-    expect(getLayoutSizeClass(undefined)).toBe('cds--layout--size-md');
+  // No class means "inherit the surrounding Carbon layout context"; the md fallback lives in the
+  // stylesheet's `layout.use()` `$default`, not here.
+  it('returns no class when no size is given', () => {
+    expect(getLayoutSizeClass(undefined)).toBeUndefined();
   });
 
-  it('falls back to md for an empty size', () => {
-    expect(getLayoutSizeClass('' as unknown as 'md')).toBe('cds--layout--size-md');
+  it('returns no class for an empty size', () => {
+    expect(getLayoutSizeClass('' as unknown as 'md')).toBeUndefined();
   });
 });
 

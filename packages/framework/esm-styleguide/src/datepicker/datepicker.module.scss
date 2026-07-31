@@ -16,9 +16,12 @@
 // height: an md input is 40px in total, not 40px plus a border. This group has to do the same,
 // otherwise it renders one pixel taller than every Carbon input beside it in a form row.
 //
-// The height itself comes from Carbon's layout size tokens (sm 32px / md 40px / lg 48px), read
-// from the `cds--layout--size-*` class the components set, which is exactly how Carbon's own
-// inputs are sized. That way we follow Carbon if those values ever change.
+// The height itself comes from Carbon's layout size tokens (sm 32px / md 40px / lg 48px), which is
+// exactly how Carbon's own inputs are sized, so we follow Carbon if those values ever change. The
+// step is taken from the surrounding layout context — either the `cds--layout--size-*` class the
+// components set when a `size` prop is given, or one on an ancestor — and falls back to `$default`
+// when there is none. `$min`/`$max` match `.cds--text-input`, so a context outside sm..lg clamps
+// the same way Carbon's inputs do.
 .inputGroup {
   @include carbon-layout.use('size', $default: 'md', $min: 'sm', $max: 'lg');
 

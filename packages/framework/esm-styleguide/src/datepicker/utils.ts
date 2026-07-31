@@ -61,15 +61,23 @@ export function internationalizedDateToDate(date: DateValue): Date | undefined {
 }
 
 /**
- * Returns the Carbon layout size class for a date picker size.
+ * Returns the Carbon layout size class for a date picker size, or `undefined` when no size was
+ * given.
  *
  * Carbon sizes its form controls through the `cds--layout--size-*` classes, which set the layout
  * size tokens (sm 32px / md 40px / lg 48px) that the control's height is read from. The date
  * pickers use the same mechanism so that they are exactly as tall as the Carbon inputs they sit
  * next to in a form row.
+ *
+ * Returning `undefined` for an absent size is deliberate, and mirrors `TextInput`, which also only
+ * emits the class when a size is passed. The class overrides the layout size for the whole subtree
+ * it is set on, so emitting it unconditionally would opt the picker out of any surrounding layout
+ * context: inside a `cds--layout--size-sm` container an unsized Carbon input is 32px, and an
+ * unsized picker would stay 40px. With no class, the size falls back to the `$default: 'md'` in
+ * `.inputGroup`'s `layout.use()`, so an unsized picker outside any layout context is still 40px.
  */
-export function getLayoutSizeClass(size: 'sm' | 'md' | 'lg' | undefined): string {
-  return `cds--layout--size-${size && size.length > 0 ? size : 'md'}`;
+export function getLayoutSizeClass(size: 'sm' | 'md' | 'lg' | undefined): string | undefined {
+  return size ? `cds--layout--size-${size}` : undefined;
 }
 
 /** Removes any data attributes from an object */

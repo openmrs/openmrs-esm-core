@@ -196,10 +196,11 @@ describe('OpenmrsDatePicker', () => {
   describe('size prop', () => {
     // The input group is the element that carries both the control height and the bottom border,
     // and it takes that height from Carbon's layout size tokens through these classes, the same
-    // way `cds--text-input` does. Asserting on the class is the closest we can get in jsdom,
-    // which has no layout engine and so cannot report a rendered height.
+    // way `cds--text-input` does. Asserting on the class is the closest we can get here: happy-dom
+    // has no layout engine, so it cannot report a rendered height. The heights themselves
+    // (sm 32px / md 40px / lg 48px, matching Carbon's inputs) are only verifiable in a real
+    // browser.
     it.each([
-      [undefined, 'cds--layout--size-md'],
       ['sm' as const, 'cds--layout--size-sm'],
       ['md' as const, 'cds--layout--size-md'],
       ['lg' as const, 'cds--layout--size-lg'],
@@ -208,6 +209,16 @@ describe('OpenmrsDatePicker', () => {
       const [inputGroup] = screen.getAllByRole('group');
       expect(inputGroup).toHaveClass(styles.inputGroup);
       expect(inputGroup).toHaveClass(expectedClass);
+    });
+
+    // Without a size the group must carry no layout class at all, so that it inherits the
+    // surrounding Carbon layout context the way an unsized `TextInput` does. The `md` fallback
+    // then comes from `layout.use()`'s `$default` in the stylesheet, not from a class.
+    it('should not set a layout class when no size is given', () => {
+      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      const [inputGroup] = screen.getAllByRole('group');
+      expect(inputGroup).toHaveClass(styles.inputGroup);
+      expect(inputGroup.className).not.toMatch(/cds--layout--size-/);
     });
   });
 

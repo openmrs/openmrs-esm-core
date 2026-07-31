@@ -26,7 +26,11 @@ export interface OpenmrsDatePickerProps
   onChange?: (value: Date | null | undefined) => void;
   /** Handler that is called when the value changes. Note that this provides types from @internationalized/date. */
   onChangeRaw?: (value: DateValue | null) => void;
-  /** Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option */
+  /**
+   * Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
+   * When omitted, the size is taken from the surrounding Carbon layout context, falling back to
+   * `md` when there is none.
+   */
   size?: 'sm' | 'md' | 'lg';
   /** 'true' to use the short version. */
   short?: boolean;
@@ -36,7 +40,6 @@ export interface OpenmrsDatePickerProps
 
 const defaultProps: OpenmrsDatePickerProps = {
   short: false,
-  size: 'md',
 };
 
 /**
