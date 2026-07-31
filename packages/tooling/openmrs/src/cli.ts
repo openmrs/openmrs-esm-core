@@ -372,6 +372,38 @@ export function buildCli(y: Argv) {
       }),
   );
 
+  y.command(
+    'lint-translations',
+    'Checks translatable strings for problems that break translation, such as a t() default that disagrees with the string en.json ships.',
+    (argv) =>
+      argv
+        .option('root', {
+          default: '.',
+          describe: 'The directory to scan. Every translations/en.json beneath it is treated as a frontend module.',
+          type: 'string',
+          coerce: (arg) => resolve(process.cwd(), arg),
+        })
+        .option('check', {
+          default: [],
+          describe:
+            'Run only the named checks, instead of every check that is on by default. Can be used multiple times.',
+          type: 'array',
+          string: true,
+        })
+        .option('strict', {
+          default: false,
+          describe: 'Fail on warnings as well as errors.',
+          type: 'boolean',
+        })
+        .option('format', {
+          choices: ['pretty', 'json'],
+          default: 'pretty',
+          describe: 'How to report the findings.',
+          type: 'string',
+        }),
+    (args) => runCommand('runLintTranslations', { ...args }),
+  );
+
   return y
     .epilog(
       'The SPA assemble config JSON is a JSON file, typically `spa-assemble-config.json`, which defines parameters for the `build` and `assemble` ' +
