@@ -720,9 +720,11 @@ By default, this is determined by the user's locale.
 
 > `optional` **size**: `"sm"` \| `"md"` \| `"lg"`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L36)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L40)
 
-Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option
+Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
+When omitted, the size is taken from the surrounding Carbon layout context, falling back to
+`md` when there is none.
 
 ***
 
@@ -822,6 +824,6 @@ or invalid via ARIA.
 
 > `optional` **value**: \[`DateInputValue`, `DateInputValue`\]
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L38)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L42)
 
 The value (controlled)

@@ -194,39 +194,51 @@ describe('OpenmrsDatePicker', () => {
   });
 
   describe('size prop', () => {
-    /* eslint-disable testing-library/no-container, testing-library/no-node-access */
-    it('should apply md size classes by default', () => {
-      const { container } = render(<OpenmrsDatePicker aria-label="datepicker" />);
-      const wrapper = container.querySelector('.cds--date-picker-input__wrapper');
-      expect(wrapper).not.toBeNull();
-      expect(wrapper).toHaveClass(styles.inputWrapperMd);
-      expect(screen.getByRole('button')).toHaveClass(styles.flatButtonMd);
+    // The input group is the element that carries both the control height and the bottom border,
+    // and it takes that height from Carbon's layout size tokens through these classes, the same
+    // way `cds--text-input` does. Asserting on the class is the closest we can get here: happy-dom
+    // has no layout engine, so it cannot report a rendered height. The heights themselves
+    // (sm 32px / md 40px / lg 48px, matching Carbon's inputs) are only verifiable in a real
+    // browser.
+    it.each([
+      ['sm' as const, 'cds--layout--size-sm'],
+      ['md' as const, 'cds--layout--size-md'],
+      ['lg' as const, 'cds--layout--size-lg'],
+    ])('should size the input group with the Carbon layout class for size=%s', (size, expectedClass) => {
+      render(<OpenmrsDatePicker aria-label="datepicker" size={size} />);
+      const [inputGroup] = screen.getAllByRole('group');
+      expect(inputGroup).toHaveClass(styles.inputGroup);
+      expect(inputGroup).toHaveClass(expectedClass);
     });
 
-    it('should apply sm size classes when size="sm"', () => {
-      const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="sm" />);
-      const wrapper = container.querySelector('.cds--date-picker-input__wrapper');
-      expect(wrapper).not.toBeNull();
-      expect(wrapper).toHaveClass(styles.inputWrapperSm);
-      expect(screen.getByRole('button')).toHaveClass(styles.flatButtonSm);
+    // Without a size the group must carry no layout class at all, so that it inherits the
+    // surrounding Carbon layout context the way an unsized `TextInput` does. The `md` fallback
+    // then comes from `layout.use()`'s `$default` in the stylesheet, not from a class.
+    it('should not set a layout class when no size is given', () => {
+      render(<OpenmrsDatePicker aria-label="datepicker" />);
+      const [inputGroup] = screen.getAllByRole('group');
+      expect(inputGroup).toHaveClass(styles.inputGroup);
+      expect(inputGroup.className).not.toMatch(/cds--layout--size-/);
     });
 
-    it('should apply md size classes when size="md"', () => {
-      const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="md" />);
-      const wrapper = container.querySelector('.cds--date-picker-input__wrapper');
-      expect(wrapper).not.toBeNull();
-      expect(wrapper).toHaveClass(styles.inputWrapperMd);
-      expect(screen.getByRole('button')).toHaveClass(styles.flatButtonMd);
+    // The prop is typed, but the framework is consumed from untyped JavaScript, so the component
+    // has to survive whatever a caller actually passes. Nothing outside the three supported steps
+    // may reach the DOM as a `cds--layout--size-*` token: the group must stay unsized and inherit
+    // the layout context instead.
+    it.each([
+      ['null', null],
+      ['an empty string', ''],
+      ['an unsupported step', 'xl'],
+      ['the wrong case', 'Md'],
+      ['a number', 40],
+      ['an object', {}],
+      ['a value that would inject a second class', 'md cds--layout--size-lg'],
+    ])('should render without a layout class when size is %s', (_label, size) => {
+      render(<OpenmrsDatePicker aria-label="datepicker" size={size as unknown as 'md'} />);
+      const [inputGroup] = screen.getAllByRole('group');
+      expect(inputGroup).toHaveClass(styles.inputGroup);
+      expect(inputGroup.className).not.toMatch(/cds--layout--size-/);
     });
-
-    it('should apply lg size classes when size="lg"', () => {
-      const { container } = render(<OpenmrsDatePicker aria-label="datepicker" size="lg" />);
-      const wrapper = container.querySelector('.cds--date-picker-input__wrapper');
-      expect(wrapper).not.toBeNull();
-      expect(wrapper).toHaveClass(styles.inputWrapperLg);
-      expect(screen.getByRole('button')).toHaveClass(styles.flatButtonLg);
-    });
-    /* eslint-enable testing-library/no-container, testing-library/no-node-access */
   });
 
   describe('CSS class variants', () => {

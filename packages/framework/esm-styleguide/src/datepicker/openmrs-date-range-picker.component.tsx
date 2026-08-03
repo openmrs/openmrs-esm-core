@@ -19,7 +19,7 @@ import { type DateInputValue, type DatePickerBaseProps } from './types';
 import { I18nWrapper } from './i18n-wrapper.component';
 import { DatePickerIcon } from './date-picker-icon.component';
 import { CalendarPopover } from './calendar-popover.component';
-import { dateToInternationalizedDate, internationalizedDateToDate } from './utils';
+import { dateToInternationalizedDate, getLayoutSizeClass, internationalizedDateToDate } from './utils';
 import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
 
 /** Properties for the OpenmrsDateRangePicker */
@@ -32,7 +32,11 @@ export interface OpenmrsDateRangePickerProps
   onChange?: (value: [Date | null | undefined, Date | null | undefined]) => void;
   /** Handler that is called when the value changes. Note that this provides types from @internationalized/date. */
   onChangeRaw?: (value: DateRange | null) => void;
-  /** Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option */
+  /**
+   * Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
+   * When omitted, the size is taken from the surrounding Carbon layout context, falling back to
+   * `md` when there is none.
+   */
   size?: 'sm' | 'md' | 'lg';
   /** The value (controlled) */
   value?: [DateInputValue, DateInputValue];
@@ -57,7 +61,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
       minDate: rawMinDate,
       onChange,
       onChangeRaw,
-      size = 'md',
+      size,
       value: rawValue,
       ...dateRangePickerProps
     },
@@ -67,6 +71,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
 
     const id = useId();
     const hasVisibleLabel = !!(labelText ?? label);
+    const layoutSizeClass = getLayoutSizeClass(size);
 
     // Warn in development if no accessible label is provided
     if (process.env.NODE_ENV !== 'production') {
@@ -146,14 +151,8 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                   </Label>
                 )}
 
-                <Group className={styles.inputGroup}>
-                  <div
-                    className={classNames(styles.inputsWrapper, {
-                      [styles.inputsWrapperSm]: size === 'sm',
-                      [styles.inputsWrapperMd]: size === 'md' || !size || size.length === 0,
-                      [styles.inputsWrapperLg]: size === 'lg',
-                    })}
-                  >
+                <Group className={classNames(styles.inputGroup, layoutSizeClass)}>
+                  <div className={styles.inputsWrapper}>
                     <DateInput
                       className={classNames(
                         'cds--date-picker-input__wrapper',
@@ -180,13 +179,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
                       {(segment) => <DateSegment className={styles.inputSegment} segment={segment} />}
                     </DateInput>
                   </div>
-                  <Button
-                    className={classNames(styles.flatButton, {
-                      [styles.flatButtonSm]: size === 'sm',
-                      [styles.flatButtonMd]: size === 'md' || !size || size.length === 0,
-                      [styles.flatButtonLg]: size === 'lg',
-                    })}
-                  >
+                  <Button className={styles.flatButton}>
                     <DatePickerIcon />
                   </Button>
                 </Group>
