@@ -79,7 +79,9 @@
     "watch": {},
     "lint": {
       "inputs": [
-        "src/**/*.{ts,tsx}",
+        "src/**/*.{js,cjs,mjs,ts,tsx}",
+        ".storybook/**",
+        "mocks/**",
         "$TURBO_ROOT$/eslint.config.mjs"
       ]
     },
