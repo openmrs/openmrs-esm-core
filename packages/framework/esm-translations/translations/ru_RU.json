@@ -60,7 +60,7 @@
   "printIdentifierSticker": "Печать стикера с ID",
   "printing": "Печать",
   "recordNewEntry": "Сохранить {{displayText}}",
-  "relationships": "Связи",
+  "relationships": "Представители",
   "resetOverrides": "Сбросить",
   "save": "Сохранить",
   "scriptLoadingError": "Не удалось загрузить переопределённый скрипт из {{url}}. Проверьте, что связанный скрипт доступен по ожидаемому URL. Нажмите кнопку ниже, чтобы сбросить все переопределения карты импорта.",
