@@ -6,11 +6,26 @@
   height: var(--omrs-topnav-height);
 }
 
+.errorNotification {
+  margin-block-end: layout.$spacing-05;
+  max-width: 100%;
+}
+
 .languageOptionsContainer {
   display: flex;
   flex-direction: column;
   padding-bottom: layout.$spacing-05;
   max-height: 28rem;
+  // Without this, a long locale list overflows into the ModalBody, which then becomes the
+  // scroll container and gets Carbon's cds--modal-scroll-content fade mask. That mask keeps
+  // the bottom ~48px transparent even at maximum scroll, leaving the last locale invisible
+  // (though still clickable). Scrolling here instead keeps the body non-scrollable, so the
+  // mask never applies.
+  overflow-y: auto;
+  // On viewports short enough that the body still scrolls, Carbon's fade covers the last 80px
+  // of the body box while the body's own end padding only accounts for 48px of it. This margin
+  // makes up the difference, so the fade lands on empty space rather than on the last locale.
+  margin-block-end: layout.$spacing-07;
 }
 
 .languageRadioButton {
