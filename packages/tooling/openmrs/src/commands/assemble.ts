@@ -11,8 +11,6 @@ import semver from 'semver';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 
-/* eslint-disable no-console */
-
 export interface AssembleArgs {
   target: string;
   mode: string;

@@ -84,7 +84,6 @@ async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
 
   console.info('[SW] Removing the following expired URLs from the cache: ', urlsToInvalidate);
 
-  // eslint-disable-next-line no-console
   console.debug(
     '[SW] The following URLs were known and not invalidated: ',
     absoluteWbManifestUrls,
