@@ -69,14 +69,17 @@ jobs:
       group: docs-build-${{ inputs.pr_number }}
       cancel-in-progress: true
     uses: ./.github/workflows/docs-build.yml
+    # workflow_dispatch delivers typed inputs as strings, while the
+    # workflow_call boundary type-checks strictly; fromJSON restores the
+    # declared number/boolean types so the call doesn't fail validation.
     with:
-      pr_number: ${{ inputs.pr_number }}
+      pr_number: ${{ fromJSON(inputs.pr_number) }}
       head_sha: ${{ needs.resolve.outputs.head_sha }}
       head_ref: ${{ needs.resolve.outputs.head_ref }}
       head_repo: ${{ needs.resolve.outputs.head_repo }}
       base_sha: ${{ needs.resolve.outputs.base_sha }}
-      bypass_skip_docs: ${{ inputs.bypass_skip_docs }}
-      bypass_attack_files: ${{ inputs.bypass_attack_files }}
+      bypass_skip_docs: ${{ fromJSON(inputs.bypass_skip_docs) }}
+      bypass_attack_files: ${{ fromJSON(inputs.bypass_attack_files) }}
     secrets:
       OMRS_PR_BOT_CLIENT_ID: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
       OMRS_PR_BOT_PRIVATE_KEY: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
