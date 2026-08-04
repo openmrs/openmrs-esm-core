@@ -27,7 +27,7 @@
     "storybook": "yarn workspace @openmrs/storybook storybook"
   },
   "devDependencies": {
-    "@openmrs/eslint-config": "^0.1.0",
+    "@openmrs/eslint-config": "^1.0.0",
     "@playwright/test": "^1.55.1",
     "@swc/core": "1.15.21",
     "@testing-library/dom": "^10.4.1",
@@ -40,7 +40,7 @@
     "classnames": "^2.3.2",
     "cross-env": "^10.1.0",
     "dotenv": "^16.0.3",
-    "eslint": "^9.13.0",
+    "eslint": "^9.39.0",
     "fake-indexeddb": "^4.0.2",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "husky": "^8.0.3",
