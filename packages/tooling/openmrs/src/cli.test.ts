@@ -195,6 +195,16 @@ describe('assemble command', () => {
     const parsed = await createCli(['assemble']).parseAsync();
     expect(parsed.buildRoutes).toBe(true);
   });
+
+  it('defaults ensure-entrypoints to true', async () => {
+    const parsed = await createCli(['assemble']).parseAsync();
+    expect(parsed.ensureEntrypoints).toBe(true);
+  });
+
+  it('allows opting out of entrypoint checks via --no-ensure-entrypoints', async () => {
+    const parsed = await createCli(['assemble', '--no-ensure-entrypoints']).parseAsync();
+    expect(parsed.ensureEntrypoints).toBe(false);
+  });
 });
 
 describe('start command', () => {
