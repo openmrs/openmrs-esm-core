@@ -72,7 +72,10 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
             </div>
             <div>
               {isTotpEnabled ? (
-                <Button kind="danger--ghost">{t('remove', 'Remove')}</Button>
+                // The removal flow for TOTP will be implemented in a follow-up PR
+                <Button kind="danger--ghost" disabled>
+                  {t('remove', 'Remove')}
+                </Button>
               ) : (
                 <Button kind="ghost" onClick={launchTotpModal}>
                   {t('setup', 'Set up')}
