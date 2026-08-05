@@ -14,12 +14,12 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('./two-factor-auth.resource', () => ({
-  inititateTotpEnrollment: vi.fn(),
+  initiateTotpEnrollment: vi.fn(),
   verifyTotpEnrollment: vi.fn(),
 }));
 
 describe('TotpEnrollment', () => {
-  const mockInititateTotpEnrollment = vi.mocked(initiateTotpEnrollment);
+  const mockInitiateTotpEnrollment = vi.mocked(initiateTotpEnrollment);
   const mockVerifyTotpEnrollment = vi.mocked(verifyTotpEnrollment);
   const mockShowSnackbar = vi.mocked(showSnackbar);
   const mockRefetchCurrentUser = vi.mocked(refetchCurrentUser);
@@ -28,7 +28,7 @@ describe('TotpEnrollment', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockRefetchCurrentUser.mockResolvedValue(undefined as unknown as Awaited<ReturnType<typeof refetchCurrentUser>>);
-    mockInititateTotpEnrollment.mockResolvedValue({
+    mockInitiateTotpEnrollment.mockResolvedValue({
       data: { qrCodeUri: 'data:image/png;base64,mock' },
     } as unknown as Awaited<ReturnType<typeof initiateTotpEnrollment>>);
   });
