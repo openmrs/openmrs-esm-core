@@ -2881,9 +2881,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openmrs/eslint-config@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@openmrs/eslint-config@npm:0.1.0"
+"@openmrs/eslint-config@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@openmrs/eslint-config@npm:1.0.0"
   dependencies:
     "@eslint/js": "npm:^9.13.0"
     eslint-config-prettier: "npm:^9.1.0"
@@ -2895,9 +2895,9 @@ __metadata:
     globals: "npm:^15.11.0"
     typescript-eslint: "npm:^8.10.0"
   peerDependencies:
-    eslint: ">=9"
+    eslint: ^9.39.0
     typescript: ">=5"
-  checksum: 10/3719d53a812fe2c8fbee1373d7825e42777c9935d7137e37471ac50e0dbab1231e918ecefb4dc1b8d6266269f9b8a50fe9a4169b96e4eea2ed9db5a94d3c4cb2
+  checksum: 10/66c25b77c6b1d77a5b73e4074cdd17b96e7447684e71bf13509f512c8e806102e0a94fe613b33ea442e9782c8f3fb4afb2f9d5e14b5f6be6d6abb651b54d8ffe
   languageName: node
   linkType: hard
 
@@ -3007,7 +3007,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-core@workspace:."
   dependencies:
-    "@openmrs/eslint-config": "npm:^0.1.0"
+    "@openmrs/eslint-config": "npm:^1.0.0"
     "@playwright/test": "npm:^1.55.1"
     "@swc/core": "npm:1.15.21"
     "@testing-library/dom": "npm:^10.4.1"
@@ -3020,7 +3020,7 @@ __metadata:
     classnames: "npm:^2.3.2"
     cross-env: "npm:^10.1.0"
     dotenv: "npm:^16.0.3"
-    eslint: "npm:^9.13.0"
+    eslint: "npm:^9.39.0"
     fake-indexeddb: "npm:^4.0.2"
     fork-ts-checker-webpack-plugin: "npm:^7.2.13"
     husky: "npm:^8.0.3"
@@ -11462,7 +11462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^9.13.0":
+"eslint@npm:^9.39.0":
   version: 9.39.5
   resolution: "eslint@npm:9.39.5"
   dependencies:
