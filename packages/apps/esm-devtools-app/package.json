@@ -39,6 +39,7 @@
     "access": "public"
   },
   "peerDependencies": {
+    "@carbon/icons-react": "11.x",
     "@carbon/react": "1.x",
     "@openmrs/esm-framework": "10.x",
     "react": "18.x",
