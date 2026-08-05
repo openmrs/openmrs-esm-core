@@ -69,6 +69,7 @@ function getDefaults() {
     // getDefaults() runs, the schema has already been defined.
     try {
       // Dynamic import to break the circular dependency at module load time.
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { esmStyleGuideSchema } = require('@openmrs/esm-styleguide/src/config-schema');
       cachedDefaults = extractDefaults(esmStyleGuideSchema);
     } catch {
