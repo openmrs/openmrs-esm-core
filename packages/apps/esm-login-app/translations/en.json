@@ -20,6 +20,7 @@
   "errorChangingPassword": "Error changing password",
   "failToInitiate": "Failed to initiate TOTP enrollment. Please try again.",
   "footerlogo": "Footer Logo",
+  "generateNewQrCode": "Generate a new QR code",
   "generatingQrCode": "Generating QR Code...",
   "installAppInstruction": "Install an authenticator app if you don't have one — Google Authenticator, Microsoft Authenticator and Authy all work.",
   "invalidCredentials": "Invalid username or password",
