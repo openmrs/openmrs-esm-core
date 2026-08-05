@@ -73,7 +73,7 @@
   gap: layout.$spacing-05;
   align-items: stretch;
 
-  @media (max-width: 40px) {
+  @media (max-width: 672px) {
     flex-direction: column;
   }
 }

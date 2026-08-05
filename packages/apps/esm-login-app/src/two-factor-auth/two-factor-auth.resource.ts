@@ -1,6 +1,6 @@
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 
-export function inititateTotpEnrollment() {
+export function initiateTotpEnrollment() {
   return openmrsFetch(`${restBaseUrl}/auth/totp/enrollment`, {
     method: 'POST',
   });

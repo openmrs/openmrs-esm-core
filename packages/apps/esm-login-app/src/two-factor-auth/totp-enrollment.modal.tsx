@@ -13,7 +13,7 @@ import {
   Link,
 } from '@carbon/react';
 import { refetchCurrentUser, showSnackbar, OpenmrsFetchError } from '@openmrs/esm-framework';
-import { inititateTotpEnrollment, verifyTotpEnrollment } from './two-factor-auth.resource';
+import { initiateTotpEnrollment, verifyTotpEnrollment } from './two-factor-auth.resource';
 import styles from './totp-enrollment.modal.scss';
 
 interface TotpEnrollmentProps {
@@ -35,8 +35,10 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
     try {
       setLoadingEnrollment(true);
       setInitiationError('');
+      setVerificationError('');
+      setVerificationCode('');
 
-      const response = await inititateTotpEnrollment();
+      const response = await initiateTotpEnrollment();
 
       if (response.data) {
         setQrCodeUri(response.data.qrCodeUri || '');
@@ -164,9 +166,24 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
                 inputMode="numeric"
                 maxLength={6}
                 value={verificationCode}
-                invalidText={verificationError}
+                invalidText={
+                  verificationError ? (
+                    <span>
+                      {verificationError}
+                      {''}
+                      <Link
+                        onClick={(event) => {
+                          event.preventDefault();
+                          initiateEnrollment();
+                        }}
+                      >
+                        {t('generateNewQrCode', 'Generate a new QR code')}
+                      </Link>
+                    </span>
+                  ) : null
+                }
                 invalid={!!verificationError}
-                onChange={(e) => setVerificationCode(e.target.value)}
+                onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                 disabled={submittingVerificationCode}
                 autoComplete="one-time-code"
                 required

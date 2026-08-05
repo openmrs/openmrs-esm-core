@@ -3,7 +3,7 @@ import { vi, describe, beforeEach, it, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { showSnackbar, refetchCurrentUser, OpenmrsFetchError } from '@openmrs/esm-framework';
-import { inititateTotpEnrollment, verifyTotpEnrollment } from './two-factor-auth.resource';
+import { initiateTotpEnrollment, verifyTotpEnrollment } from './two-factor-auth.resource';
 import TotpEnrollment from './totp-enrollment.modal';
 
 const mockT = (key: string, defaultText: string) => defaultText;
@@ -19,7 +19,7 @@ vi.mock('./two-factor-auth.resource', () => ({
 }));
 
 describe('TotpEnrollment', () => {
-  const mockInititateTotpEnrollment = vi.mocked(inititateTotpEnrollment);
+  const mockInititateTotpEnrollment = vi.mocked(initiateTotpEnrollment);
   const mockVerifyTotpEnrollment = vi.mocked(verifyTotpEnrollment);
   const mockShowSnackbar = vi.mocked(showSnackbar);
   const mockRefetchCurrentUser = vi.mocked(refetchCurrentUser);
@@ -30,7 +30,7 @@ describe('TotpEnrollment', () => {
     mockRefetchCurrentUser.mockResolvedValue(undefined as unknown as Awaited<ReturnType<typeof refetchCurrentUser>>);
     mockInititateTotpEnrollment.mockResolvedValue({
       data: { qrCodeUri: 'data:image/png;base64,mock' },
-    } as unknown as Awaited<ReturnType<typeof inititateTotpEnrollment>>);
+    } as unknown as Awaited<ReturnType<typeof initiateTotpEnrollment>>);
   });
 
   it('should verify the totp code successfully and show a success snackbar', async () => {

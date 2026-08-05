@@ -16,6 +16,8 @@ const TwoFactorAuthLink: React.FC = () => {
   const handle2faSetupClick = () => {
     // Navigate to the Two Factor Authentication Page
     openmrsNavigate({ to: '${openmrsSpaBase}/two-factor-auth' });
+    // Simulate a mouse click outside the user menu to close it after navigation.
+    // This is a workaround for the issue where the user menu remains open after navigation.
     document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
   };
 

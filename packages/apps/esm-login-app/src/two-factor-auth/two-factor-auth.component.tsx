@@ -51,7 +51,7 @@ const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {
           <div className={styles.descriptionText}>
             <h3>{t('protectAccountTitle', 'Protect your account with an extra verification step.')}</h3>
             <p>
-              {t('protectAccountDescription', 'After signing in, you will verify your identity with a second method')}
+              {t('protectAccountDescription', 'After signing in, you will verify your identity with a second method.')}
             </p>
             <p>{t('protectAccountReason', 'This helps keep your account secure.')}</p>
           </div>
