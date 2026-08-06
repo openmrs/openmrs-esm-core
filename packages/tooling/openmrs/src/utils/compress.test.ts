@@ -1,6 +1,19 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type * as Crypto from 'node:crypto';
 import { randomBytes } from 'node:crypto';
-import { chmod, mkdir, mkdtemp, readdir, readFile, rm, stat, symlink, utimes, writeFile } from 'node:fs/promises';
+import {
+  chmod,
+  lstat,
+  mkdir,
+  mkdtemp,
+  readdir,
+  readFile,
+  rm,
+  stat,
+  symlink,
+  utimes,
+  writeFile,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
@@ -342,6 +355,45 @@ describe('compressAssets', () => {
     await expect(compressAssets(dir, { gzip: true })).rejects.toThrow(/precompressed/);
 
     expect((await listFiles()).filter((name) => name.endsWith('.tmp'))).toEqual([]);
+  });
+
+  it('replaces a symlink standing where a sibling belongs instead of writing through it', async () => {
+    const victim = await writeAsset('victim.txt', 'do not touch');
+    await writeAsset('main.js', compressibleContent());
+    await symlink(victim, join(dir, 'main.js.gz'));
+
+    await compressAssets(dir, { gzip: true });
+
+    // rename() replaces the link itself, so the sibling must end up a real gzip file and the
+    // symlink's target must be untouched.
+    expect(await readFile(victim, 'utf8')).toBe('do not touch');
+    expect((await lstat(join(dir, 'main.js.gz'))).isSymbolicLink()).toBe(false);
+    expect(await gunzipAsync(await readFile(join(dir, 'main.js.gz')))).toEqual(Buffer.from(compressibleContent()));
+  });
+
+  it('refuses to write through a symlink pre-created at its temporary path', async () => {
+    const victim = await writeAsset('victim.txt', 'do not touch');
+    await writeAsset('main.js', compressibleContent());
+
+    // The temporary name is random precisely so it can't be pre-created; pinning the
+    // randomness lets the test play the attacker who guessed it anyway, and proves the
+    // exclusive open — not the unpredictability alone — is what refuses to follow the link.
+    vi.resetModules();
+    vi.doMock('node:crypto', async () => ({
+      ...(await vi.importActual<Crypto>('node:crypto')),
+      randomBytes: () => Buffer.alloc(8, 0xab),
+    }));
+
+    try {
+      await symlink(victim, join(dir, `main.js.gz.${'ab'.repeat(8)}.tmp`));
+      const { compressAssets: compressWithKnownTempName } = await import('./compress');
+
+      await expect(compressWithKnownTempName(dir, { gzip: true })).rejects.toThrow(/precompressed/);
+      expect(await readFile(victim, 'utf8')).toBe('do not touch');
+    } finally {
+      vi.doUnmock('node:crypto');
+      vi.resetModules();
+    }
   });
 
   it('leaves no temporary files behind', async () => {

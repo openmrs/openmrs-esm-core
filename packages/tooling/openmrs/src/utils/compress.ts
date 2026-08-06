@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import { readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 import { promisify } from 'node:util';
@@ -10,7 +11,12 @@ const brotliCompressAsync = promisify(brotliCompress);
 /**
  * Extensions we emit precompressed siblings for.
  */
-const compressibleExtensions = ['.js', '.mjs', '.cjs', '.css', '.json', '.svg', '.html', '.map'];
+const compressibleExtensions = new Set(['.js', '.mjs', '.cjs', '.css', '.json', '.svg', '.html', '.map']);
+
+/** Whether a file name is one we emit precompressed siblings for. */
+function isCompressible(path: string) {
+  return compressibleExtensions.has(extname(path).toLowerCase());
+}
 
 /**
  * Files below this size are not worth a maximum-effort compression pass.
@@ -123,7 +129,7 @@ function sourceOf(path: string) {
     if (lowercased.endsWith(encoding.suffix)) {
       const source = path.slice(0, -encoding.suffix.length);
 
-      if (compressibleExtensions.includes(extname(source).toLowerCase())) {
+      if (isCompressible(source)) {
         return { source, encoding };
       }
     }
@@ -132,29 +138,30 @@ function sourceOf(path: string) {
   return undefined;
 }
 
+/**
+ * Walks `dir` one directory at a time.
+ */
 async function collectAssets(dir: string): Promise<AssetTree> {
   const tree: AssetTree = { sources: [], siblings: [] };
   const entries = await readdir(dir, { withFileTypes: true });
 
-  await Promise.all(
-    entries.map(async (entry) => {
-      const path = join(dir, entry.name);
+  for (const entry of entries) {
+    const path = join(dir, entry.name);
 
-      if (entry.isDirectory()) {
-        const nested = await collectAssets(path);
-        tree.sources.push(...nested.sources);
-        tree.siblings.push(...nested.siblings);
-      } else if (entry.isFile() && sourceOf(entry.name)) {
-        tree.siblings.push(path);
-      } else if (entry.isFile() && compressibleExtensions.includes(extname(entry.name).toLowerCase())) {
-        tree.sources.push(path);
-      } else if (entry.isSymbolicLink() && compressibleExtensions.includes(extname(entry.name).toLowerCase())) {
-        // Following symlinks would let us write a sibling whose name implies a file we
-        // don't own, so we skip them but notify the user.
-        logWarn(`Not precompressing ${path} because it is a symbolic link.`);
-      }
-    }),
-  );
+    if (entry.isDirectory()) {
+      const nested = await collectAssets(path);
+      tree.sources.push(...nested.sources);
+      tree.siblings.push(...nested.siblings);
+    } else if (entry.isFile() && sourceOf(entry.name)) {
+      tree.siblings.push(path);
+    } else if (entry.isFile() && isCompressible(entry.name)) {
+      tree.sources.push(path);
+    } else if (entry.isSymbolicLink() && isCompressible(entry.name)) {
+      // Following symlinks would let us write a sibling whose name implies a file we
+      // don't own, so we skip them but notify the user.
+      logWarn(`Not precompressing ${path} because it is a symbolic link.`);
+    }
+  }
 
   return tree;
 }
@@ -165,13 +172,17 @@ async function collectAssets(dir: string): Promise<AssetTree> {
  * useful in the one message an operator gets.
  */
 function describeError(e: unknown) {
-  const code = (e as NodeJS.ErrnoException)?.code;
+  try {
+    const code = (e as NodeJS.ErrnoException)?.code;
 
-  if (code) {
-    return `${code}: ${e}`;
+    if (code) {
+      return `${code}: ${e}`;
+    }
+
+    return e instanceof Error ? e.message : JSON.stringify(e) ?? String(e);
+  } catch {
+    return 'an error that could not be rendered';
   }
-
-  return e instanceof Error ? e.message : JSON.stringify(e) ?? String(e);
 }
 
 /**
@@ -195,12 +206,12 @@ class SkippableAssetError extends Error {
  * were complete, which is far harder to diagnose than a failed build.
  */
 async function writeAtomically(path: string, content: Buffer) {
-  // The pid keeps two concurrent openmrs processes over one target directory from renaming
-  // each other's half-written buffer into place, which would defeat the point of the rename.
-  const temporary = `${path}.${process.pid}.tmp`;
+  // name contains random information and is opened with exclusive write privileges
+  // to avoid symlink attacks
+  const temporary = `${path}.${randomBytes(8).toString('hex')}.tmp`;
 
   try {
-    await writeFile(temporary, content);
+    await writeFile(temporary, content, { flag: 'wx' });
     await rename(temporary, path);
   } catch (e) {
     await rm(temporary, { force: true }).catch((cleanupError) =>
