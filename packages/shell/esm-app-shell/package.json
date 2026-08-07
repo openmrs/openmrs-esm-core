@@ -12,7 +12,7 @@
     "build:development": "cross-env OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack --mode development",
     "build": "yarn run build:production && yarn run build:development",
     "analyze": "rspack --mode=production --env analyze=true",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src"
   },
   "keywords": [
     "openmrs",

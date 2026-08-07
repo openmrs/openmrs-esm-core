@@ -3,6 +3,11 @@ import { expect } from '@playwright/test';
 import { HomePage } from '../pages';
 import globalSetup from '../core/global-setup';
 
+test.afterEach(async () => {
+  // log in again
+  globalSetup();
+});
+
 test('Logout as Admin user', async ({ page }) => {
   const homePage = new HomePage(page);
 
@@ -45,9 +50,4 @@ test('Logout as Admin user', async ({ page }) => {
 
     await Promise.all(promises);
   });
-});
-
-test.afterEach(async () => {
-  // log in again
-  globalSetup();
 });

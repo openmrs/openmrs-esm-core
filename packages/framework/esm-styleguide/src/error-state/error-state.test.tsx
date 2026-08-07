@@ -30,7 +30,6 @@ describe('ErrorState', () => {
     mockUseLayoutType.mockReturnValue('tablet');
 
     render(<ErrorState headerTitle="test" error={{}} />);
-    // eslint-disable-next-line testing-library/no-node-access
     expect(screen.getByRole('heading').parentElement?.getAttribute('class')).toContain('tabletHeading');
   });
 
@@ -38,7 +37,6 @@ describe('ErrorState', () => {
     mockUseLayoutType.mockReturnValue('small-desktop');
 
     render(<ErrorState headerTitle="test" error={{}} />);
-    // eslint-disable-next-line testing-library/no-node-access
     expect(screen.getByRole('heading').parentElement?.getAttribute('class')).toContain('desktopHeading');
   });
 
