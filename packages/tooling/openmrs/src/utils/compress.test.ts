@@ -165,16 +165,16 @@ describe('compressAssets', () => {
     expect(await listFiles()).toEqual(['main.js']);
   });
 
-  it('leaves existing siblings alone when no encoding is requested', async () => {
-    // No combination of the compression flags deletes anything, so switching compression off
-    // is never destructive.
+  it('prunes siblings when no encoding is requested', async () => {
+    // A pass that runs with every encoding off still owns the directory's siblings; leaving
+    // them would be the looser setting shipping more than the stricter one.
     await writeAsset('main.js', compressibleContent());
     await compressAssets(dir, { gzip: true, brotli: true });
 
     const result = await compressAssets(dir, {});
 
-    expect(result.removed).toBe(0);
-    expect(await listFiles()).toEqual(expect.arrayContaining(['main.js', 'main.js.gz', 'main.js.br']));
+    expect(result.removed).toBe(2);
+    expect(await listFiles()).toEqual(['main.js']);
   });
 
   it('writes no sibling for content that does not compress smaller', async () => {
@@ -238,14 +238,29 @@ describe('compressAssets', () => {
     expect(await listFiles()).not.toContain('openmrs.oldhash.js.gz');
   });
 
-  it('leaves siblings in an encoding that is no longer enabled', async () => {
+  it('removes siblings in an encoding that is no longer enabled', async () => {
     await writeAsset('main.js', compressibleContent());
     await compressAssets(dir, { gzip: true, brotli: true });
 
     const result = await compressAssets(dir, { gzip: true });
 
-    expect(result.removed).toBe(0);
-    expect(await listFiles()).toEqual(expect.arrayContaining(['main.js.gz', 'main.js.br']));
+    expect(result.removed).toBe(1);
+    expect(await listFiles()).toContain('main.js.gz');
+    expect(await listFiles()).not.toContain('main.js.br');
+  });
+
+  it('never leaves a disabled encoding holding content the enabled one has moved past', async () => {
+    const path = await writeAsset('main.js', compressibleContent('const version = "old";\n'));
+    await compressAssets(dir, { gzip: true, brotli: true });
+
+    const updated = compressibleContent('const version = "new";\n');
+    await writeFile(path, updated, 'utf8');
+    await compressAssets(dir, { gzip: true });
+
+    // The .gz now holds the new source; a .br left behind would still decompress to the old
+    // one, and a server would hand it to any client that asked for brotli.
+    expect(await gunzipAsync(await readFile(`${path}.gz`))).toEqual(Buffer.from(updated));
+    expect(await listFiles()).not.toContain('main.js.br');
   });
 
   it('removes a sourceless .gz even when it was shipped that way by a frontend module', async () => {

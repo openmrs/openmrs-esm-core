@@ -272,31 +272,39 @@ function describe(encoding: Encoding, { files, sourceBytes, compressedBytes }: E
 }
 
 /**
- * Removes siblings whose source file is gone.
- * *
- * Note what is deliberately *not* removed here: siblings in an encoding that is currently
- * switched off.
+ * Removes siblings this pass does not stand behind: those whose source is gone, and those in a
+ * disabled encoding — the pass rewrites the other encodings, so leaving those would serve the
+ * old content to whichever clients ask for that encoding.
  */
-async function removeOrphanedSiblings(dir: string, tree: AssetTree) {
+async function removeUnwantedSiblings(dir: string, tree: AssetTree, encodings: Array<Encoding>) {
   const sources = new Set(tree.sources);
-  const orphaned: Array<string> = [];
+  const unwanted: Array<string> = [];
 
   for (const sibling of tree.siblings) {
     const owner = sourceOf(sibling);
 
-    if (owner && !sources.has(owner.source)) {
+    if (!owner) {
+      continue;
+    }
+
+    if (!sources.has(owner.source)) {
+      // Warned rather than logged, because this is the one case where the pass deletes a file
+      // it never wrote — a module shipping `data.json.gz` with no `data.json` beside it.
       logWarn(`Removing ${relative(dir, sibling)} because ${relative(dir, owner.source)} does not exist.`);
-      orphaned.push(sibling);
+      unwanted.push(sibling);
+    } else if (!encodings.includes(owner.encoding)) {
+      logInfo(`Removing ${relative(dir, sibling)} because ${owner.encoding.name} output is disabled.`);
+      unwanted.push(sibling);
     }
   }
 
-  const outcomes = await Promise.allSettled(orphaned.map((sibling) => rm(sibling, { force: true })));
+  const outcomes = await Promise.allSettled(unwanted.map((sibling) => rm(sibling, { force: true })));
   const failed = outcomes.find((outcome) => outcome.status === 'rejected');
   if (failed?.status === 'rejected') {
     throw new Error(`Could not remove obsolete precompressed assets in ${dir}: ${describeError(failed.reason)}`);
   }
 
-  return orphaned.length;
+  return unwanted.length;
 }
 
 /**
@@ -322,17 +330,22 @@ export async function compressAssets(dir: string, options: CompressAssetsOptions
   };
 
   const encodings = allEncodings.filter((encoding) => options[encoding.resultKey]);
+  const disabled = encodings.length === 0;
 
-  if (encodings.length === 0) {
+  if (disabled) {
     logWarn(`Not precompressing assets in ${dir}: both gzip and brotli output are disabled.`);
-    return result;
+  } else {
+    logInfo(`Precompressing assets in ${dir} (${encodings.map((encoding) => encoding.name).join(' and ')}) ...`);
   }
-
-  logInfo(`Precompressing assets in ${dir} (${encodings.map((encoding) => encoding.name).join(' and ')}) ...`);
 
   const tree = await collectAssets(dir);
   const existingSiblings = new Set(tree.siblings);
-  result.removed = await removeOrphanedSiblings(dir, tree);
+  result.removed = await removeUnwantedSiblings(dir, tree, encodings);
+
+  if (disabled) {
+    logInfo(`Removed ${result.removed} obsolete precompressed assets in ${dir}`);
+    return result;
+  }
 
   /**
    * Removes the siblings for the given encodings. Failures to remove propagate, like
