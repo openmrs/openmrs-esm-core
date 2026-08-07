@@ -21,3 +21,4 @@ export const refetchCurrentUser = vi.fn();
 export const setUserLanguage = vi.fn();
 export const setUserProperties = vi.fn();
 export const userHasAccess = vi.fn();
+export { OpenmrsFetchError } from './src/openmrs-fetch';
