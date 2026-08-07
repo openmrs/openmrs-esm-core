@@ -115,4 +115,71 @@ describe(`Change Language Modal`, () => {
     const submitButton = screen.getByRole('button', { name: /change/i });
     expect(submitButton).toBeDisabled();
   });
+
+  it('should render regional locales in the underscore form the REST session reports', () => {
+    // uz@Latn deliberately absent here: the modal must not crash rendering it (covered by the
+    // getLocaleDisplayName tests), but the session POST parser (LocaleUtils.toLocale) rejects
+    // both uz@Latn and uz-Latn, so listing it as a selectable option would overstate support.
+    mockUseSession.mockReturnValue({
+      authenticated: true,
+      user: mockUser as unknown as LoggedInUser,
+      allowedLocales: ['en_US', 'sw_KE', 'fr'],
+      locale: 'en_US',
+    } as Session);
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    expect(screen.getByRole('radio', { name: /american english/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: /kiswahili \(kenya\)/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: /français/i })).toBeInTheDocument();
+  });
+
+  it('should send the underscore form of a selected regional locale to the backend', async () => {
+    const user = userEvent.setup();
+    mockUseSession.mockReturnValue({
+      authenticated: true,
+      user: mockUser as unknown as LoggedInUser,
+      allowedLocales: ['en_US', 'sw_KE'],
+      locale: 'en_US',
+    } as Session);
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    await user.click(screen.getByRole('radio', { name: /kiswahili \(kenya\)/i }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(mockUpdateUserProperties).toHaveBeenCalledWith(mockUser.uuid, { defaultLocale: 'sw_KE' }, expect.anything());
+  });
+
+  it('should surface the backend error and re-enable the submit button when the update fails', async () => {
+    const user = userEvent.setup();
+    // The shape the REST module returns: RestUtil.wrapErrorResponse nests the message
+    // under an `error` key, and openmrsFetch exposes the parsed body as `responseBody`.
+    mockUpdateUserProperties.mockRejectedValueOnce({
+      message: 'Server responded with 500',
+      responseBody: { error: { message: 'User with uuid uuid not found' } },
+    });
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(await screen.findByText(/error changing language/i)).toBeInTheDocument();
+    expect(screen.getByText('User with uuid uuid not found')).toBeInTheDocument();
+    expect(screen.queryByText(/changing language\.\.\./i)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^change$/i })).toBeEnabled();
+  });
+
+  it('should fall back to the transport error when there is no response body', async () => {
+    const user = userEvent.setup();
+    mockUpdateUserProperties.mockRejectedValueOnce(new Error('Network request failed'));
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(await screen.findByText('Network request failed')).toBeInTheDocument();
+  });
 });

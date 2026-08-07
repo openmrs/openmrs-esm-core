@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, SwitcherItem } from '@carbon/react';
 import { capitalize } from 'lodash-es';
 import { TranslateIcon, showModal, useSession } from '@openmrs/esm-framework';
+import { getLocaleDisplayName } from '../../utils';
 import styles from './change-language-link.scss';
 
 /** The user menu item that shows the current language and has a button to change the language */
@@ -17,15 +18,13 @@ function ChangeLanguageLink() {
     });
   }, []);
 
-  const languageName = session?.locale
-    ? new Intl.DisplayNames([session.locale], { type: 'language' })
-    : new Intl.DisplayNames(['en'], { type: 'language' });
+  const languageName = getLocaleDisplayName(session?.locale ?? 'en');
 
   return (
     <SwitcherItem className={styles.panelItemContainer} aria-label={t('changeLanguage', 'Change language')}>
       <div>
         <TranslateIcon size={20} />
-        <p>{capitalize(languageName.of(session?.locale ?? 'en'))}</p>
+        <p>{capitalize(languageName)}</p>
       </div>
       <Button kind="ghost" onClick={launchChangeLanguageModal}>
         {t('change', 'Change')}
