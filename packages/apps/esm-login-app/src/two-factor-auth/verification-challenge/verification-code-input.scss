@@ -1,0 +1,28 @@
+@use '@carbon/layout';
+@use '@carbon/type';
+
+.otpContainer {
+  display: flex;
+  gap: layout.$spacing-03;
+  justify-content: center;
+}
+
+.otpInput {
+  width: 3rem;
+
+  :global(.cds--text-input) {
+    text-align: center;
+    padding: 0;
+    font-size: 1.25rem;
+  }
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.label {
+  @include type.type-style('label-01');
+  display: block;
+  margin-bottom: layout.$spacing-03;
+}

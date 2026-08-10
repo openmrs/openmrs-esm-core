@@ -1,0 +1,35 @@
+@use '@carbon/layout';
+
+.title {
+  text-align: center;
+  margin-top: -(layout.$spacing-07);
+  margin-bottom: layout.$spacing-08;
+}
+
+.checkbox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: layout.$spacing-07;
+
+  :global(.cds--checkbox-wrapper) {
+    width: fit-content !important;
+    margin: 0 auto;
+  }
+
+  :global(.cds--checkbox-label) {
+    font-size: 0.75rem;
+  }
+}
+
+.checkboxInner {
+  display: inline-block;
+  text-align: left;
+}
+
+.verifyButton {
+  width: 18rem;
+  margin-top: layout.$spacing-08;
+  margin-left: auto;
+  margin-right: auto;
+}
