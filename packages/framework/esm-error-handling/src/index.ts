@@ -76,23 +76,30 @@ export function createErrorHandler() {
   };
 }
 
-function ensureErrorObject(thing: any) {
+function ensureErrorObject(thing: unknown) {
   let message: string;
 
   if (thing instanceof Error) {
     return thing;
-  } else if (thing === null) {
-    return Error(`'null' was thrown as an error`);
-  } else if (typeof thing === 'object') {
-    try {
-      message = `Object thrown as error: ${JSON.stringify(thing)}`;
-    } catch (e) {
-      message = `Object thrown as error with the following properties: ${Object.keys(thing)}`;
-    }
-    return Error(message);
-  } else if (thing === undefined) {
-    return Error(`'undefined' was thrown as an error`);
-  } else {
-    return Error(thing.toString());
   }
+
+  if (thing === null) {
+    return new Error(`Received null instead of a valid error object.`);
+  }
+
+  if (thing === undefined) {
+    return new Error(`Received undefined instead of a valid error object.`);
+  }
+
+  if (typeof thing === 'object') {
+    try {
+      message = `Invalid error object received: ${JSON.stringify(thing)}`;
+    } catch {
+      message = `Invalid error object with keys: ${Object.keys(thing as object).join(', ')}`;
+    }
+    return new Error(message);
+  }
+
+  // string / number / boolean
+  return new Error(`Error: ${String(thing)}`);
 }
