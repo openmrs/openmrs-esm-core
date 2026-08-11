@@ -1,9 +1,9 @@
 /* eslint-disable */
 import React, { useReducer } from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
-import { act, render, screen, waitFor, within } from '@testing-library/react';
+import { act, render, renderHook, screen, waitFor, within } from '@testing-library/react';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 import {
   attach,
@@ -11,6 +11,7 @@ import {
   registerExtension,
   updateInternalExtensionStore,
 } from '@openmrs/esm-extensions';
+import * as esmExtensions from '@openmrs/esm-extensions';
 import {
   getSyncLifecycle,
   Extension,
@@ -18,6 +19,7 @@ import {
   openmrsComponentDecorator,
   useExtensionSlotMeta,
   useRenderableExtensions,
+  useExtensionSlot,
 } from '.';
 
 describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
@@ -301,3 +303,46 @@ function registerSimpleExtension(
     featureFlag,
   });
 }
+
+describe('useExtensionSlot — state update optimization', () => {
+  let updateExtensionSlotStateSpy: ReturnType<typeof vi.spyOn>;
+  let wrapper: any;
+
+  beforeEach(() => {
+    wrapper = openmrsComponentDecorator({
+      moduleName: 'test-module',
+      featureName: 'Test',
+      disableTranslations: true,
+    })(({ children }: any) => <>{children}</>);
+
+    updateExtensionSlotStateSpy = vi.spyOn(esmExtensions, 'updateExtensionSlotState');
+  });
+
+  afterEach(() => {
+    updateExtensionSlotStateSpy.mockRestore();
+  });
+
+  it('should not dispatch when state content is unchanged but reference changes', () => {
+    const { rerender } = renderHook(({ state }) => useExtensionSlot('test-slot-dedup', state), {
+      initialProps: { state: { encounterType: 'visit-note' } },
+      wrapper,
+    });
+
+    updateExtensionSlotStateSpy.mockClear();
+    rerender({ state: { encounterType: 'visit-note' } });
+
+    expect(updateExtensionSlotStateSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should dispatch when state content actually changes', () => {
+    const { rerender } = renderHook(({ state }) => useExtensionSlot('test-slot-changed', state), {
+      initialProps: { state: { encounterType: 'visit-note' } },
+      wrapper,
+    });
+
+    updateExtensionSlotStateSpy.mockClear();
+    rerender({ state: { encounterType: 'lab-results' } });
+
+    expect(updateExtensionSlotStateSpy).toHaveBeenCalledTimes(1);
+  });
+});

@@ -21,9 +21,15 @@ export function useExtensionSlot(slotName: string, state?: ExtensionSlotCustomSt
     isInitialRender.current = false;
   }, []);
 
+  const prevStateRef = useRef<string>(JSON.stringify(state ?? {}));
+
   useEffect(() => {
     if (!isInitialRender.current) {
-      updateExtensionSlotState(slotName, state);
+      const serialized = JSON.stringify(state ?? {});
+      if (prevStateRef.current !== serialized) {
+        prevStateRef.current = serialized;
+        updateExtensionSlotState(slotName, state);
+      }
     }
   }, [slotName, state]);
 
