@@ -1,4 +1,4 @@
-/* eslint-disable testing-library/no-node-access, testing-library/no-wait-for-multiple-assertions, testing-library/no-unnecessary-act, testing-library/no-manual-cleanup, testing-library/await-async-queries */
+/* eslint-disable testing-library/no-node-access, testing-library/no-unnecessary-act, testing-library/no-manual-cleanup, testing-library/await-async-queries */
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
