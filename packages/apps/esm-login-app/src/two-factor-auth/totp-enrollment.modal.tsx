@@ -172,12 +172,12 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
                   verificationError ? (
                     <span>
                       {verificationError}
-                      {''}
                       <Link
-                        onClick={(event) => {
-                          event.preventDefault();
-                          initiateEnrollment();
-                        }}
+                        as="button"
+                        type="button"
+                        size="sm"
+                        className={styles.regenerateAction}
+                        onClick={initiateEnrollment}
                       >
                         {t('generateNewQrCode', 'Generate a new QR code')}
                       </Link>

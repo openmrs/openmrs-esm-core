@@ -98,7 +98,7 @@ describe('TotpEnrollment', () => {
     const enableButton = await screen.findByRole('button', { name: /Confirm and Enable authenticator app/i });
     await user.click(enableButton);
 
-    const generateNewQr = await screen.findByText(/Generate a new QR code/i);
+    const generateNewQr = await screen.findByRole('button', { name: /generate a new QR code/i });
     mockInitiateTotpEnrollment.mockRejectedValueOnce(new Error('Network error'));
     await user.click(generateNewQr);
 
