@@ -4,4 +4,4 @@
 
 > **IconId** = *typeof* [`iconIds`](../variables/iconIds.md)\[`number`\]
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L101)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L103)
