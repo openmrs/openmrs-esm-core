@@ -37,6 +37,8 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
       setInitiationError('');
       setVerificationError('');
       setVerificationCode('');
+      setQrCodeUri('');
+      setSecret('');
 
       const response = await initiateTotpEnrollment();
 

@@ -77,4 +77,35 @@ describe('TotpEnrollment', () => {
     const errorMessage = await screen.findByText(/Invalid code provided/i);
     expect(errorMessage).toBeInTheDocument();
   });
+
+  it('should clear old QR code and show error if regenerating a new QR code fails', async () => {
+    render(<TotpEnrollment close={mockClose} />);
+
+    const user = userEvent.setup();
+    const input = await screen.findByRole('textbox', { name: /Enter 6-digit code from your app/i });
+
+    mockVerifyTotpEnrollment.mockRejectedValueOnce(
+      new OpenmrsFetchError(
+        '/ws/rest/v1/auth/totp/enrollment/verify',
+        new Response(),
+        { error: { translatedMessage: 'Invalid code provided' } },
+        new Error(),
+      ),
+    );
+
+    await user.type(input, '000000');
+
+    const enableButton = await screen.findByRole('button', { name: /Confirm and Enable authenticator app/i });
+    await user.click(enableButton);
+
+    const generateNewQr = await screen.findByText(/Generate a new QR code/i);
+    mockInitiateTotpEnrollment.mockRejectedValueOnce(new Error('Network error'));
+    await user.click(generateNewQr);
+
+    const errorNotification = await screen.findByText(/Failed to initiate TOTP enrollment. Please try again./i);
+    expect(errorNotification).toBeInTheDocument();
+
+    const qrImage = screen.queryByAltText(/Scan the QR code/i);
+    expect(qrImage).not.toBeInTheDocument();
+  });
 });
