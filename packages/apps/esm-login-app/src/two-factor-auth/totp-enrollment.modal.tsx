@@ -63,11 +63,6 @@ const TotpEnrollment: React.FC<TotpEnrollmentProps> = ({ close }) => {
       event.preventDefault();
       event.stopPropagation();
 
-      if (!/^\d{6}$/.test(verificationCode)) {
-        setVerificationError(t('totpCodeMustBeSixDigits', 'The verification code must be 6 digits.'));
-        return;
-      }
-
       try {
         setSubmittingVerificationCode(true);
         setVerificationError('');
