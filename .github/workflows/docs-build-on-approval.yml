@@ -58,8 +58,8 @@ jobs:
           # Only the bot's App token can post the Docs / Regenerated check run
           # (checks:write is App-scoped), so finding it on the head SHA is a
           # credible "docs are current" signal — skip the rebuild.
-          regenerated=$(gh api "repos/${REPO}/commits/${HEAD_SHA}/check-runs" \
-            --jq '[.check_runs[] | select(.name == "Docs / Regenerated" and .conclusion == "success")] | length')
+          regenerated=$(gh api --paginate "repos/${REPO}/commits/${HEAD_SHA}/check-runs" \
+            --jq '.check_runs[] | select(.name == "Docs / Regenerated" and .conclusion == "success") | .id' | wc -l)
           if [ "${regenerated}" -gt 0 ]; then
             echo "Head SHA already has a successful Docs / Regenerated check run; skipping"
             echo "proceed=false" >> "$GITHUB_OUTPUT"

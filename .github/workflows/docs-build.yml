@@ -100,7 +100,7 @@ jobs:
           # future caller that forgets to gate (or a regression in caller
           # logic) can't smuggle PR code execution through this workflow.
           approved_by_writer=false
-          for u in $(gh api "repos/${REPO}/pulls/${PR_NUMBER}/reviews" --jq '[.[] | select(.state == "APPROVED") | .user.login] | unique | .[]'); do
+          for u in $(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/reviews" --jq '.[] | select(.state == "APPROVED") | .user.login' | sort -u); do
             permission=$(gh api "repos/${REPO}/collaborators/${u}/permission" --jq '.permission' 2>/dev/null || echo "none")
             if [[ "${permission}" == "write" || "${permission}" == "admin" ]]; then
               approved_by_writer=true

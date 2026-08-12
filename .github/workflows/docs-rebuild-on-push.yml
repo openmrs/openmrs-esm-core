@@ -37,8 +37,8 @@ jobs:
           # The check run is bound to the SHA, so a new commit (= new SHA)
           # is automatically uncovered. Its presence on the current head
           # answers "are docs current?".
-          regenerated=$(gh api "repos/${REPO}/commits/${HEAD_SHA}/check-runs" \
-            --jq '[.check_runs[] | select(.name == "Docs / Regenerated" and .conclusion == "success")] | length')
+          regenerated=$(gh api --paginate "repos/${REPO}/commits/${HEAD_SHA}/check-runs" \
+            --jq '.check_runs[] | select(.name == "Docs / Regenerated" and .conclusion == "success") | .id' | wc -l)
           if [ "${regenerated}" -gt 0 ]; then
             echo "Head SHA already has a successful Docs / Regenerated check run; nothing to do"
             echo "rebuild=false" >> "$GITHUB_OUTPUT"
@@ -49,7 +49,7 @@ jobs:
           # write-access reviewer has approved; pre-approval, the
           # review-driven workflow handles it.
           approved_by_writer=false
-          for u in $(gh api "repos/${REPO}/pulls/${PR_NUMBER}/reviews" --jq '[.[] | select(.state == "APPROVED") | .user.login] | unique | .[]'); do
+          for u in $(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/reviews" --jq '.[] | select(.state == "APPROVED") | .user.login' | sort -u); do
             permission=$(gh api "repos/${REPO}/collaborators/${u}/permission" --jq '.permission' 2>/dev/null || echo "none")
             if [[ "${permission}" == "write" || "${permission}" == "admin" ]]; then
               approved_by_writer=true
