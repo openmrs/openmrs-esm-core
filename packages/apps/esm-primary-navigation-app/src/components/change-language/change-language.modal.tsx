@@ -13,8 +13,7 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from '@carbon/react';
-import { useAbortController, useSession } from '@openmrs/esm-framework';
-import { getLocaleDisplayName } from '../../utils';
+import { getLocaleDisplayName, useAbortController, useSession } from '@openmrs/esm-framework';
 import { updateSessionLocale, updateUserProperties } from './change-language.resource';
 import styles from './change-language.scss';
 

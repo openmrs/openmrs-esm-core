@@ -54,6 +54,12 @@ describe('matchLocale', () => {
     it('canonicalizes script casing for matching (Latn vs latn)', () => {
       expect(matchLocale('sr-latn-rs', ['sr-Latn'])).toBe('sr-Latn');
     });
+
+    it('treats a POSIX script modifier as a script subtag', () => {
+      // `uz@Latn` is the form OpenMRS ships translations under, on both sides of the comparison.
+      expect(matchLocale('uz@Latn', ['uz@Latn'])).toBe('uz@Latn');
+      expect(matchLocale('uz@Latn', ['uz-Latn'])).toBe('uz-Latn');
+    });
   });
 
   describe('truncation', () => {
