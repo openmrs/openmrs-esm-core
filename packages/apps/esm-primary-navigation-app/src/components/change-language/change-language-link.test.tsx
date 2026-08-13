@@ -20,9 +20,10 @@ describe('ChangeLanguageLink', () => {
     ['en', /english/i],
     ['fr', /français/i],
     // The REST session reports Java `Locale#toString()` values, which `Intl` rejects outright.
-    ['en_US', /american english/i],
-    ['sw_KE', /kiswahili \(kenya\)/i],
-    ['uz@Latn', /o‘zbek \(lotin\)/i],
+    // Matched exactly: the casing within the name is part of what `getLocaleDisplayName` returns.
+    ['en_US', 'American English'],
+    ['sw_KE', 'Kiswahili (Kenya)'],
+    ['uz@Latn', 'O‘zbek (lotin)'],
   ])('should display the current language for the %s locale', (locale, expected) => {
     mockUseSession.mockReturnValue({ authenticated: true, locale } as Session);
 

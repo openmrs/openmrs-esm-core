@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { capitalize } from 'lodash-es';
+import { upperFirst } from 'lodash-es';
 import {
   Button,
   Checkbox,
@@ -103,7 +103,7 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
                 key={`locale-option-${locale}-${i}`}
                 id={`locale-option-${locale}-${i}`}
                 name={locale}
-                labelText={capitalize(languageNames[locale])}
+                labelText={upperFirst(languageNames[locale])}
                 value={locale}
               />
             ))}

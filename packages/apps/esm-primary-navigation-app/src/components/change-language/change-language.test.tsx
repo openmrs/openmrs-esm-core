@@ -129,9 +129,10 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    expect(screen.getByRole('radio', { name: /american english/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /kiswahili \(kenya\)/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /français/i })).toBeInTheDocument();
+    // Matched exactly: the casing within the name is part of what `getLocaleDisplayName` returns.
+    expect(screen.getByRole('radio', { name: 'American English' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Kiswahili (Kenya)' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Français' })).toBeInTheDocument();
   });
 
   it('should send the underscore form of a selected regional locale to the backend', async () => {
@@ -145,7 +146,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    await user.click(screen.getByRole('radio', { name: /kiswahili \(kenya\)/i }));
+    await user.click(screen.getByRole('radio', { name: 'Kiswahili (Kenya)' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(mockUpdateUserProperties).toHaveBeenCalledWith(mockUser.uuid, { defaultLocale: 'sw_KE' }, expect.anything());
