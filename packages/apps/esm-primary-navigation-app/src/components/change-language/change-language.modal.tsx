@@ -95,7 +95,11 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
             valueSelected={selectedLocale}
             orientation="vertical"
             name="Language options"
-            onChange={(locale) => setSelectedLocale(locale.toString())}
+            onChange={(locale) => {
+              setSelectedLocale(locale.toString());
+              // A failure refers to the locale that was submitted, so it should not outlive it.
+              setErrorMessage('');
+            }}
           >
             {allowedLocales.map((locale, i) => (
               <RadioButton

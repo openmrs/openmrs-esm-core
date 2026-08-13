@@ -172,6 +172,22 @@ describe(`Change Language Modal`, () => {
     expect(screen.getByRole('button', { name: /^change$/i })).toBeEnabled();
   });
 
+  it('should clear a failed update from view once the user picks a different locale', async () => {
+    const user = userEvent.setup();
+    mockUpdateUserProperties.mockRejectedValueOnce(new Error('Network request failed'));
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+    expect(await screen.findByText('Network request failed')).toBeInTheDocument();
+
+    // The notification refers to the locale that failed, so it must not outlive that selection.
+    await user.click(screen.getByRole('radio', { name: /italiano/i }));
+
+    expect(screen.queryByText('Network request failed')).not.toBeInTheDocument();
+  });
+
   it('should fall back to the transport error when there is no response body', async () => {
     const user = userEvent.setup();
     mockUpdateUserProperties.mockRejectedValueOnce(new Error('Network request failed'));
