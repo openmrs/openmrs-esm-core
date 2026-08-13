@@ -16,11 +16,12 @@ vi.mock('@openmrs/esm-framework', async (importOriginal) => {
 const mockUseSession = vi.mocked(useSession);
 
 describe('ChangeLanguageLink', () => {
+  // Casing is matched exactly throughout. CLDR gives most of these names lowercase, so the leading
+  // capital comes from the component, and only an exact match pins that it is still applied.
   it.each([
-    ['en', /english/i],
-    ['fr', /français/i],
+    ['en', 'English'],
+    ['fr', 'Français'],
     // The REST session reports Java `Locale#toString()` values, which `Intl` rejects outright.
-    // Casing inside the name is part of what `getLocaleDisplayName` returns, so match it exactly.
     ['en_US', 'American English'],
     ['sw_KE', 'Kiswahili (Kenya)'],
     // Loose on purpose: the script name is engine-specific ("lotin" on Node, "Latn" in Chrome).
@@ -38,6 +39,6 @@ describe('ChangeLanguageLink', () => {
 
     render(<ChangeLanguageLink />);
 
-    expect(screen.getByText(/english/i)).toBeInTheDocument();
+    expect(screen.getByText('English')).toBeInTheDocument();
   });
 });

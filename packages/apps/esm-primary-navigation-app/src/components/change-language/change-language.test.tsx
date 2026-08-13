@@ -44,10 +44,10 @@ describe(`Change Language Modal`, () => {
   it('should correctly displays all allowed locales', () => {
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    expect(screen.getByRole('radio', { name: /english/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /français/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /italiano/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /português/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'English' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Français' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Italiano' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Português' })).toBeInTheDocument();
   });
 
   it('should close the modal when the cancel button is clicked', async () => {
@@ -65,9 +65,9 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    expect(screen.getByRole('radio', { name: /français/i })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'Français' })).toBeChecked();
 
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(mockUpdateUserProperties).toHaveBeenCalledWith(mockUser.uuid, { defaultLocale: 'en' }, expect.anything());
@@ -79,7 +79,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(screen.getByText(/changing language.../i)).toBeInTheDocument();
@@ -102,7 +102,7 @@ describe(`Change Language Modal`, () => {
     await user.click(checkbox);
 
     // Change locale
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(mockUpdateSessionLocale).toHaveBeenCalledWith('en', expect.anything());
@@ -163,7 +163,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(await screen.findByText(/error changing language/i)).toBeInTheDocument();
@@ -178,11 +178,11 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
     expect(await screen.findByText('Network request failed')).toBeInTheDocument();
 
-    await user.click(screen.getByRole('radio', { name: /italiano/i }));
+    await user.click(screen.getByRole('radio', { name: 'Italiano' }));
 
     expect(screen.queryByText('Network request failed')).not.toBeInTheDocument();
   });
@@ -193,7 +193,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(await screen.findByText('Network request failed')).toBeInTheDocument();
