@@ -18,7 +18,7 @@
   max-height: 28rem;
   // Without this, a long locale list overflows into the ModalBody, which then becomes the
   // scroll container and gets Carbon's cds--modal-scroll-content fade mask. That mask keeps
-  // the bottom ~48px transparent even at maximum scroll, leaving the last locale invisible
+  // the bottom 80px transparent even at maximum scroll, leaving the last locale invisible
   // (though still clickable). Scrolling here instead keeps the body non-scrollable, so the
   // mask never applies.
   overflow-y: auto;

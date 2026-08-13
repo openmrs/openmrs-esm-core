@@ -61,10 +61,12 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
     } catch (error) {
       // Same shape the change-password modal reads: the REST error body when there is one,
       // the transport error otherwise.
+      // `||` rather than `??`: these are all strings, and an empty one should fall through to the
+      // next candidate rather than render an error notification with no message in it.
       setErrorMessage(
-        error?.responseBody?.error?.message ??
-          error?.responseBody?.message ??
-          error?.message ??
+        error?.responseBody?.error?.message ||
+          error?.responseBody?.message ||
+          error?.message ||
           t('changeLanguageFailedSubtitle', 'Please try again. Your language has not been changed.'),
       );
       setIsChangingLanguage(false);
