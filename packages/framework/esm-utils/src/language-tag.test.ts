@@ -20,8 +20,6 @@ describe('toLanguageTag', () => {
   });
 
   it('returns undefined for a missing locale rather than throwing', () => {
-    // Locale data reaching this function comes from the REST session and from configuration,
-    // neither of which is guaranteed to be well formed at runtime.
     expect(toLanguageTag(null)).toBeUndefined();
     expect(toLanguageTag(undefined)).toBeUndefined();
   });

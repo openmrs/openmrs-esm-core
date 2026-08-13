@@ -4,14 +4,15 @@
 
 > **toLanguageTag**(`locale`): `undefined` \| `string`
 
-Defined in: [packages/framework/esm-utils/src/language-tag.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/language-tag.ts#L24)
+Defined in: [packages/framework/esm-utils/src/language-tag.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/language-tag.ts#L25)
 
 Converts an OpenMRS locale identifier into a canonical BCP 47 language tag.
 
-The REST API reports locales in Java's `Locale#toString()` form (`en_US`, `sw_KE`), and some
-installs configure POSIX-style variants (`uz@Latn`). Neither is a valid language tag, and the
-`Intl` constructors throw `RangeError` rather than degrading, so convert before handing an
-OpenMRS locale to `Intl`.
+OpenMRS locale identifiers are not always language tags. User properties such as
+`defaultLocale` store Java's `Locale#toString()` form (`en_US`, `sw_KE`) verbatim, some backends
+serialize session locales the same way, and some installs configure POSIX-style variants
+(`uz@Latn`). The `Intl` constructors throw `RangeError` rather than degrading when handed any of
+them, so convert before passing an OpenMRS locale to `Intl`.
 
 Both `_` and `@` are treated as subtag separators, which covers the `@Latn` script modifier.
 Other POSIX modifiers have no BCP 47 equivalent and parse as whatever their length implies

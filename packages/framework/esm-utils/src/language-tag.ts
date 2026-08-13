@@ -1,10 +1,11 @@
 /**
  * Converts an OpenMRS locale identifier into a canonical BCP 47 language tag.
  *
- * The REST API reports locales in Java's `Locale#toString()` form (`en_US`, `sw_KE`), and some
- * installs configure POSIX-style variants (`uz@Latn`). Neither is a valid language tag, and the
- * `Intl` constructors throw `RangeError` rather than degrading, so convert before handing an
- * OpenMRS locale to `Intl`.
+ * OpenMRS locale identifiers are not always language tags. User properties such as
+ * `defaultLocale` store Java's `Locale#toString()` form (`en_US`, `sw_KE`) verbatim, some backends
+ * serialize session locales the same way, and some installs configure POSIX-style variants
+ * (`uz@Latn`). The `Intl` constructors throw `RangeError` rather than degrading when handed any of
+ * them, so convert before passing an OpenMRS locale to `Intl`.
  *
  * Both `_` and `@` are treated as subtag separators, which covers the `@Latn` script modifier.
  * Other POSIX modifiers have no BCP 47 equivalent and parse as whatever their length implies
@@ -39,8 +40,8 @@ export function toLanguageTag(locale: string | null | undefined): string | undef
  * resolve, so the result is always safe to render.
  *
  * The name is CLDR's middle-of-sentence form. When presenting it as a standalone label, capitalize
- * it with `upperFirst`: `capitalize` lowercases the rest of the string, which turns "American
- * English" into "American english".
+ * only the first character: lowercasing the remainder corrupts names carrying internal capitals,
+ * turning "American English" into "American english".
  *
  * @param locale An OpenMRS locale identifier, e.g. `sw_KE`.
  * @returns The locale's name in its own language, `locale` itself if it cannot be resolved, or an

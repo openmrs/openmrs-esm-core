@@ -20,7 +20,7 @@ describe('ChangeLanguageLink', () => {
     ['en', /english/i],
     ['fr', /français/i],
     // The REST session reports Java `Locale#toString()` values, which `Intl` rejects outright.
-    // Matched exactly: the casing within the name is part of what `getLocaleDisplayName` returns.
+    // Casing inside the name is part of what `getLocaleDisplayName` returns, so match it exactly.
     ['en_US', 'American English'],
     ['sw_KE', 'Kiswahili (Kenya)'],
     // Loose on purpose: the script name is engine-specific ("lotin" on Node, "Latn" in Chrome).

@@ -129,7 +129,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    // Matched exactly: the casing within the name is part of what `getLocaleDisplayName` returns.
+    // Casing inside the name is part of what `getLocaleDisplayName` returns, so match it exactly.
     expect(screen.getByRole('radio', { name: 'American English' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Kiswahili (Kenya)' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Français' })).toBeInTheDocument();
@@ -182,7 +182,6 @@ describe(`Change Language Modal`, () => {
     await user.click(screen.getByRole('button', { name: /change/i }));
     expect(await screen.findByText('Network request failed')).toBeInTheDocument();
 
-    // The notification refers to the locale that failed, so it must not outlive that selection.
     await user.click(screen.getByRole('radio', { name: /italiano/i }));
 
     expect(screen.queryByText('Network request failed')).not.toBeInTheDocument();

@@ -4,15 +4,15 @@
 
 > **getLocaleDisplayName**(`locale`): `string`
 
-Defined in: [packages/framework/esm-utils/src/language-tag.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/language-tag.ts#L53)
+Defined in: [packages/framework/esm-utils/src/language-tag.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/language-tag.ts#L54)
 
 Returns the name of a locale as written in that locale, so `fr` becomes "français" and `sw_KE`
 becomes "Kiswahili (Kenya)". Falls back to the identifier itself for anything `Intl` cannot
 resolve, so the result is always safe to render.
 
 The name is CLDR's middle-of-sentence form. When presenting it as a standalone label, capitalize
-it with `upperFirst`: `capitalize` lowercases the rest of the string, which turns "American
-English" into "American english".
+only the first character: lowercasing the remainder corrupts names carrying internal capitals,
+turning "American English" into "American english".
 
 ## Parameters
 
