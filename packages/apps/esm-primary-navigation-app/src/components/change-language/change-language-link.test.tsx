@@ -23,7 +23,8 @@ describe('ChangeLanguageLink', () => {
     // Matched exactly: the casing within the name is part of what `getLocaleDisplayName` returns.
     ['en_US', 'American English'],
     ['sw_KE', 'Kiswahili (Kenya)'],
-    ['uz@Latn', 'O‘zbek (lotin)'],
+    // Loose on purpose: the script name is engine-specific ("lotin" on Node, "Latn" in Chrome).
+    ['uz@Latn', /zbek/i],
   ])('should display the current language for the %s locale', (locale, expected) => {
     mockUseSession.mockReturnValue({ authenticated: true, locale } as Session);
 

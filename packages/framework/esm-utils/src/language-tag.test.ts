@@ -34,9 +34,18 @@ describe('getLocaleDisplayName', () => {
     ['en_US', 'American English'],
     ['sw_KE', 'Kiswahili (Kenya)'],
     ['pt_BR', 'português (Brasil)'],
-    ['uz@Latn', 'o‘zbek (lotin)'],
   ])('renders %s as %s', (locale, expected) => {
     expect(getLocaleDisplayName(locale)).toBe(expected);
+  });
+
+  it('resolves a POSIX script modifier to a name rather than the raw identifier', () => {
+    // Asserted loosely on purpose. The script name is engine-specific: Node renders `uz@Latn` as
+    // "o‘zbek (lotin)" and Chrome as "O‘zbek (Latn)", so pinning either would assert a string half
+    // the runtimes never produce. `toLanguageTag` covers the conversion itself exactly.
+    const name = getLocaleDisplayName('uz@Latn');
+
+    expect(name).not.toBe('uz@Latn');
+    expect(name.toLowerCase()).toContain('zbek');
   });
 
   it('falls back to the identifier when the locale is not a valid tag', () => {
