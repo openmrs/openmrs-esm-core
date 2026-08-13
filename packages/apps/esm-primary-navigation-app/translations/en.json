@@ -5,6 +5,8 @@
   "changeDefaultLocale": "Update your default locale",
   "changeDefaultLocaleExplanation": "Leave this unchecked to change language for this session only",
   "changeLanguage": "Change language",
+  "changeLanguageFailed": "Error changing language",
+  "changeLanguageFailedSubtitle": "Please try again. Your language has not been changed.",
   "changingLanguage": "Changing language",
   "noPathInDashboardExtension": "Cannot render the dashboard extension without the property \"path\" being set in the configuration schema",
   "notifications": "Notifications",

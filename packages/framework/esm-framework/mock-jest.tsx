@@ -28,6 +28,8 @@ export {
   ageAsDuration,
   isOmrsDateToday,
   matchLocale,
+  toLanguageTag,
+  getLocaleDisplayName,
 } from '@openmrs/esm-utils';
 
 /* esm-globals */
