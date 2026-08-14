@@ -1,14 +1,24 @@
 name: Docs - Build on approval
 
+# Regenerates documentation when a PR is approved. Reached via `workflow_run`
+# on `docs-approval-request.yml`, which observes the approval itself; running
+# from the default branch is what makes the App token and a write-scoped
+# GITHUB_TOKEN available here, including for fork PRs.
 on:
-  pull_request_review:
-    types: [submitted]
+  workflow_run:
+    workflows: ["Docs - Approval request"]
+    types: [completed]
 
 permissions: {}
 
 jobs:
   decide:
-    if: github.event.review.state == 'approved'
+    # Runs whose only job was skipped (review wasn't an approval) report a
+    # `skipped` conclusion. This is a noise filter, not a trust boundary.
+    # Below we do the actual validation.
+    if: |
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request_review'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -17,34 +27,93 @@ jobs:
       pull-requests: read
     env:
       REPO: ${{ github.repository }}
-      PR_NUMBER: ${{ github.event.pull_request.number }}
-      REVIEWER: ${{ github.event.review.user.login }}
-      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+      # This is the login for the reviewer who approved the step
+      REVIEWER: ${{ github.event.workflow_run.actor.login }}
     outputs:
       proceed: ${{ steps.gate.outputs.proceed }}
+      # Defaulted so it is always numeric for the caller's fromJSON().
+      pr_number: ${{ steps.pr.outputs.number || 0 }}
+      head_sha: ${{ steps.pr.outputs.head_sha }}
+      head_ref: ${{ steps.pr.outputs.head_ref }}
+      head_repo: ${{ steps.pr.outputs.head_repo }}
+      base_sha: ${{ steps.pr.outputs.base_sha }}
     steps:
       - name: Verify reviewer has write access
         id: reviewer
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # pull_request_review fires for any submitted review, including from
-        # users without write access (their "approval" doesn't count toward
-        # branch protection but still fires the event).
+        # This is the guard that the reviewer is authorized, which means
+        # has commit access to this repo
         run: |
           set -euo pipefail
-          permission=$(gh api "repos/${REPO}/collaborators/${REVIEWER}/permission" --jq '.permission' 2>/dev/null || echo "none")
+          if [ -z "${REVIEWER}" ]; then
+            echo "::error::Triggering run has no actor; refusing to proceed"
+            exit 1
+          fi
+          # A 404 here means "no such user", which can't happen for an actor
+          # GitHub itself set. So treat every failure as a real error rather
+          # than letting a rate limit or 5xx read as "no access".
+          if ! permission=$(gh api "repos/${REPO}/collaborators/${REVIEWER}/permission" --jq '.permission'); then
+            echo "::error::Could not resolve repository permissions for ${REVIEWER}"
+            exit 1
+          fi
           echo "Reviewer ${REVIEWER} has permission: ${permission}"
           if [[ "${permission}" != "write" && "${permission}" != "admin" ]]; then
-            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "Reviewer lacks write access; nothing to do"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Resolve PR
+        id: pr
+        if: steps.reviewer.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # The triggering run's `pull_requests` array is empty for fork PRs
+          # (and often for same-repo ones), so map its head SHA back to the PR
+          # instead. workflow_run.head_sha is the PR head commit rather than
+          # the refs/pull/N/merge commit, so this resolves.
+          number=$(gh api "repos/${REPO}/commits/${RUN_HEAD_SHA}/pulls" \
+            --jq '[.[] | select(.state == "open")][0].number // empty')
+          if [ -z "${number}" ]; then
+            echo "::warning::No open PR found for SHA ${RUN_HEAD_SHA}; documentation was not regenerated."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          echo "ok=true" >> "$GITHUB_OUTPUT"
+
+          # Resolve the current head rather than reusing RUN_HEAD_SHA: if the
+          # contributor pushed since the approval, committing docs onto the
+          # approved SHA would fail non-fast-forward. The trade-off is that the
+          # build runs a SHA no reviewer saw, which is why docs-build.yml's
+          # attack-file gate evaluates this same SHA.
+          pr=$(gh api "repos/${REPO}/pulls/${number}")
+          # `// empty` on each: jq -r prints the string "null" otherwise
+          head_sha=$(echo "${pr}" | jq -r '.head.sha // empty')
+          head_ref=$(echo "${pr}" | jq -r '.head.ref // empty')
+          head_repo=$(echo "${pr}" | jq -r '.head.repo.full_name // empty')
+          base_sha=$(echo "${pr}" | jq -r '.base.sha // empty')
+          if [ -z "${head_sha}" ] || [ -z "${head_ref}" ] || [ -z "${head_repo}" ] || [ -z "${base_sha}" ]; then
+            echo "::warning::PR #${number} is missing head or base details (fork deleted?); documentation was not regenerated."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          {
+            echo "number=${number}"
+            echo "head_sha=${head_sha}"
+            echo "head_ref=${head_ref}"
+            echo "head_repo=${head_repo}"
+            echo "base_sha=${base_sha}"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Decide whether to build
-        if: steps.reviewer.outputs.ok == 'true'
+        if: steps.reviewer.outputs.skip != 'true' && steps.pr.outputs.skip != 'true'
         id: gate
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
         run: |
           set -euo pipefail
           labels=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/labels" --jq '[.[].name] | join(",")')
@@ -65,6 +134,19 @@ jobs:
             --jq '.check_runs[] | select(.conclusion == "success") | .id' | wc -l)
           if [ "${regenerated}" -gt 0 ]; then
             echo "Head SHA already has a successful Docs / Regenerated check run; skipping"
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # The reviewer has write access, but the request workflow is
+          # fork-controlled, so it can't be trusted to have fired on an
+          # *approval* — a comment-only review is enough to start it. Confirm
+          # the approval itself against the API.
+          approvers=$(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/reviews?per_page=100" \
+            --jq '.[] | select(.state == "APPROVED") | .user.login' | sort -u)
+          echo "Approving reviewers: ${approvers:-<none>}"
+          if ! echo "${approvers}" | grep -qFx "${REVIEWER}"; then
+            echo "::warning::${REVIEWER} has write access but no approving review on PR #${PR_NUMBER}; documentation was not regenerated."
             echo "proceed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -93,20 +175,24 @@ jobs:
     needs: decide
     if: needs.decide.outputs.proceed == 'true'
     # workflow_call caps the called workflow's GITHUB_TOKEN at the calling
-    # job's permissions; this is the union of what the build workflow's
-    # individual jobs need.
+    # job's permissions; this is the union of what its jobs need.
     permissions:
       contents: write
       issues: read
       pull-requests: write
-    # Concurrency is set on the caller because workflow_call ignores any
-    # concurrency block in the called workflow. Shared group with the
-    # push-driven workflow so a synchronize and an approval can't run two
-    # builds for the same PR at once.
+    # Set here because workflow_call ignores the called workflow's own
+    # concurrency block. Shared group with the other callers.
     concurrency:
-      group: docs-build-${{ github.event.pull_request.number }}
+      group: docs-build-${{ needs.decide.outputs.pr_number }}
       cancel-in-progress: true
     uses: ./.github/workflows/docs-build.yml
+    with:
+      # Job outputs are strings; pr_number is declared as a number.
+      pr_number: ${{ fromJSON(needs.decide.outputs.pr_number) }}
+      head_sha: ${{ needs.decide.outputs.head_sha }}
+      head_ref: ${{ needs.decide.outputs.head_ref }}
+      head_repo: ${{ needs.decide.outputs.head_repo }}
+      base_sha: ${{ needs.decide.outputs.base_sha }}
     secrets:
       OMRS_PR_BOT_CLIENT_ID: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
       OMRS_PR_BOT_PRIVATE_KEY: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
