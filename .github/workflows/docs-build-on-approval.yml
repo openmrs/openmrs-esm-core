@@ -27,7 +27,8 @@ jobs:
       pull-requests: read
     env:
       REPO: ${{ github.repository }}
-      RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+      RUN_HEAD_OWNER: ${{ github.event.workflow_run.head_repository.owner.login }}
+      RUN_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
       # This is the login for the reviewer who approved the step
       REVIEWER: ${{ github.event.workflow_run.actor.login }}
     outputs:
@@ -72,18 +73,37 @@ jobs:
         run: |
           set -euo pipefail
           # The triggering run's `pull_requests` array is empty for fork PRs
-          # (and often for same-repo ones), so map its head SHA back to the PR
-          # instead. workflow_run.head_sha is the PR head commit rather than
-          # the refs/pull/N/merge commit, so this resolves.
-          number=$(gh api "repos/${REPO}/commits/${RUN_HEAD_SHA}/pulls" \
-            --jq '[.[] | select(.state == "open")][0].number // empty')
-          if [ -z "${number}" ]; then
-            echo "::warning::No open PR found for SHA ${RUN_HEAD_SHA}; documentation was not regenerated."
+          # (and often for same-repo ones), so identify the PR by its head
+          # branch. Don't use commits/{sha}/pulls: that matches on containment,
+          # so a PR stacked on this one is returned too and picking [0] can
+          # resolve to the wrong PR.
+          if [ -z "${RUN_HEAD_OWNER}" ] || [ -z "${RUN_HEAD_BRANCH}" ]; then
+            echo "::error::Triggering run has no head branch identity; refusing to guess which PR to build"
+            exit 1
+          fi
+          # An empty `head=` is ignored by the API and returns every open PR,
+          # so the guard above is load-bearing. Match defensively as well
+          # rather than trusting the filter.
+          matches=$(gh api "repos/${REPO}/pulls?state=open&per_page=100" \
+            -f head="${RUN_HEAD_OWNER}:${RUN_HEAD_BRANCH}" --method GET \
+            --jq "[.[] | select(.head.repo.owner.login == \"${RUN_HEAD_OWNER}\" and .head.ref == \"${RUN_HEAD_BRANCH}\")]")
+          count=$(echo "${matches}" | jq 'length')
+          if [ "${count}" -eq 0 ]; then
+            echo "::warning::No open PR found for ${RUN_HEAD_OWNER}:${RUN_HEAD_BRANCH}; documentation was not regenerated."
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          if [ "${count}" -gt 1 ]; then
+            # Same branch opened against two bases — nothing in the run payload
+            # says which one was approved, so don't pick one at random.
+            echo "::warning::${count} open PRs share head ${RUN_HEAD_OWNER}:${RUN_HEAD_BRANCH}; cannot tell which was approved, so documentation was not regenerated."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          number=$(echo "${matches}" | jq -r '.[0].number')
+          echo "Resolved ${RUN_HEAD_OWNER}:${RUN_HEAD_BRANCH} to PR #${number}"
 
-          # Resolve the current head rather than reusing RUN_HEAD_SHA: if the
+          # Resolve the current head rather than the approved one: if the
           # contributor pushed since the approval, committing docs onto the
           # approved SHA would fail non-fast-forward. The trade-off is that the
           # build runs a SHA no reviewer saw, which is why docs-build.yml's
