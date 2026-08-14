@@ -19,7 +19,7 @@ const mockUseConfig = vi.mocked(useConfig);
 describe('Logo', () => {
   it('should display the OpenMRS logo by default', () => {
     const mockConfig = { logo: { src: null, alt: null, name: null } };
-    mockUseConfig.mockReturnValue(mockConfig as unknown as ConfigSchema['logo']);
+    mockUseConfig.mockReturnValue(mockConfig as ConfigSchema);
 
     render(<Logo />);
 
@@ -35,7 +35,7 @@ describe('Logo', () => {
       externalRefLinks: null,
     };
 
-    mockUseConfig.mockReturnValue(mockConfig as unknown as ConfigSchema['logo']);
+    mockUseConfig.mockReturnValue(mockConfig as ConfigSchema);
 
     render(<Logo />);
 
