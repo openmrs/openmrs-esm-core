@@ -86,7 +86,7 @@ jobs:
           # rather than trusting the filter.
           matches=$(gh api "repos/${REPO}/pulls?state=open&per_page=100" \
             -f head="${RUN_HEAD_OWNER}:${RUN_HEAD_BRANCH}" --method GET \
-            --jq "[.[] | select(.head.repo.owner.login == \"${RUN_HEAD_OWNER}\" and .head.ref == \"${RUN_HEAD_BRANCH}\")]")
+            --jq '[.[] | select(.head.repo.owner.login == env.RUN_HEAD_OWNER and .head.ref == env.RUN_HEAD_BRANCH)]')
           count=$(echo "${matches}" | jq 'length')
           if [ "${count}" -eq 0 ]; then
             echo "::warning::No open PR found for ${RUN_HEAD_OWNER}:${RUN_HEAD_BRANCH}; documentation was not regenerated."
