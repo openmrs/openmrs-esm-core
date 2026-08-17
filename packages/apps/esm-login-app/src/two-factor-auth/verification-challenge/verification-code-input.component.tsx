@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TextInput } from '@carbon/react';
 import styles from './verification-code-input.scss';
-import { useTranslation } from 'react-i18next';
 
 interface VerificationCodeInputProps {
   length: number;
@@ -13,20 +13,11 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
   const [otp, setOtp] = useState<string[]>(new Array(length).fill(''));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  useEffect(() => {
-    // Focus the first input box on mount
-    setTimeout(() => {
-      if (inputRefs.current[0]) {
-        inputRefs.current[0].focus();
-      }
-    }, 100);
-  }, []);
-
   // Handle the code input typing
   const handleCodeInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     // Only allow numeric input
     const value = event.target.value;
-    if (isNaN(Number(value))) return;
+    if (!/^[0-9]*$/.test(value)) return;
 
     // Take only the last character
     const newOtp = [...otp];
@@ -51,6 +42,11 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
       if (!otp[index] && index > 0 && inputRefs.current[index - 1]) {
         inputRefs.current[index - 1]?.focus();
       }
+    } else if (event.key === 'ArrowLeft' && index > 0) {
+      event.preventDefault();
+      inputRefs.current[index - 1]?.focus();
+    } else if (event.key === 'ArrowRight' && index < length - 1) {
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
@@ -67,9 +63,6 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
     const newOtp = [...otp];
     pastedData.split('').forEach((char, index) => {
       newOtp[index] = char;
-      if (inputRefs.current[index]) {
-        inputRefs.current[index]!.value = char;
-      }
     });
     setOtp(newOtp);
 
@@ -91,7 +84,10 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
             className={styles.otpInput}
             key={index}
             id={`otp-input-${index}`}
-            type="text"
+            type="tel"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            autoFocus={index === 0}
             maxLength={1}
             value={data}
             labelText={`Digit ${index + 1}`}
@@ -99,6 +95,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
             ref={(el: HTMLInputElement | null) => (inputRefs.current[index] = el)}
             onChange={(event) => handleCodeInputChange(event, index)}
             onKeyDown={(event) => handleKeyDown(event, index)}
+            onFocus={(event) => event.target.select()}
           />
         ))}
       </div>
