@@ -1,0 +1,30 @@
+name: Docs - Approval request
+
+# Fires `docs-build-on-approval.yml`, which does the actual work, by
+# completing successfully.
+#
+# `pull_request_review` is the only event GitHub sends on approval, and for a
+# PR from a fork it withholds every secret and downgrades GITHUB_TOKEN to
+# read-only — so a workflow on this trigger can neither mint the bot's App
+# token nor push a docs commit. Hence the `workflow_run` hop.
+#
+# Carries no logic by design: this file executes from `refs/pull/N/merge`, so
+# a fork controls its contents and nothing it emits is trustworthy. The
+# downstream workflow derives everything from run metadata instead.
+on:
+  pull_request_review:
+    types: [submitted]
+
+permissions: {}
+
+jobs:
+  request:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    permissions: {}
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - name: Signal approval
+        run: |
+          echo "PR #${PR_NUMBER} approved; handing off to Docs - Build on approval."
