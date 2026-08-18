@@ -258,7 +258,7 @@ jq -n \
 
 echo "Created dynamic spa-assemble-config.json"
 
-echo "Copying tooling, shell and framework..."
+echo "Copying tooling, shell, framework and apps..."
 mkdir -p "$working_dir/packages"
 mkdir -p "$working_dir/packages/tooling"
 
@@ -267,6 +267,9 @@ cp -r "$repository_root/.yarnrc.yml" "$working_dir/.yarnrc.yml"
 cp -r "$repository_root/packages/tooling" "$working_dir/packages"
 cp -r "$repository_root/packages/shell" "$working_dir/packages"
 cp -r "$repository_root/packages/framework" "$working_dir/packages"
+# The apps must be present for the immutable install in the Dockerfile:
+# without them, yarn would prune the missing workspaces from the lockfile.
+cp -r "$repository_root/packages/apps" "$working_dir/packages"
 cp "$repository_root/package.json" "$working_dir/package.json"
 cp "$repository_root/yarn.lock" "$working_dir/yarn.lock"
 
