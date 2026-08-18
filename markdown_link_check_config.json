@@ -18,6 +18,7 @@
       "pattern": "^http://localhost"
     }
   ],
+  "aliveStatusCodes": [200, 202]
   "retryOn429": true,
   "retryCount": 3,
   "retryDelay": 1000
