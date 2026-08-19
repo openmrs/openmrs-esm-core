@@ -10,6 +10,7 @@ import {
   useSession,
   LocationPicker,
   getCoreTranslation,
+  showModal,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import { useDefaultLocation, useLocationCount } from './location-picker.resource';
@@ -112,8 +113,17 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
       evt.preventDefault();
 
       if (!activeLocation) return;
-
-      changeLocation(activeLocation, savePreference);
+      if (config.promptConcent) {
+        const dismiss = showModal('terms-of-access-modal', {
+          onClose: () => dismiss(),
+          onAccepted: () => {
+            dismiss();
+            changeLocation(activeLocation, savePreference);
+          },
+        });
+      } else {
+        changeLocation(activeLocation, savePreference);
+      }
     },
     [activeLocation, changeLocation, savePreference],
   );
