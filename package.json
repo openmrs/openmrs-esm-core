@@ -27,7 +27,7 @@
     "storybook": "yarn workspace @openmrs/storybook storybook"
   },
   "devDependencies": {
-    "@openmrs/eslint-config": "^2.0.0",
+    "@openmrs/eslint-config": "^2.1.0",
     "@playwright/test": "^1.55.1",
     "@swc/core": "1.15.21",
     "@testing-library/dom": "^10.4.1",

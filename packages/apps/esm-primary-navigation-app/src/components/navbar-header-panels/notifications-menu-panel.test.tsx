@@ -5,7 +5,6 @@ import { screen, render } from '@testing-library/react';
 import NotificationsMenuPanel from './notifications-menu-panel.component';
 
 vi.mock('@openmrs/esm-framework', async (importOriginal) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@openmrs/esm-framework')>();
   return {
     ...actual,
