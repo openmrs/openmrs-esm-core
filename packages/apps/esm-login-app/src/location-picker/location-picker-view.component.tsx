@@ -125,7 +125,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
         changeLocation(activeLocation, savePreference);
       }
     },
-    [activeLocation, changeLocation, savePreference],
+    [activeLocation, changeLocation, savePreference, config.promptConcent],
   );
 
   return (
