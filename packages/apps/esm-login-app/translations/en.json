@@ -16,6 +16,7 @@
   "confirmPassword": "Confirm new password",
   "continue": "Continue",
   "continueToPassword": "Continue to password",
+  "digitLabel": "Digit {{number}}",
   "enabled": "Enabled",
   "enterCode": "Enter the code from your authenticator app",
   "enterCodeInstruction": "Enter the code the app shows to finish setting up.",

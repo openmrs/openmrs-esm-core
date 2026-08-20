@@ -92,7 +92,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
             autoFocus={index === 0}
             maxLength={1}
             value={data}
-            labelText={`Digit ${index + 1}`}
+            labelText={t('digitLabel', 'Digit {{number}}', { number: index + 1 })}
             hideLabel
             ref={(el: HTMLInputElement | null) => (inputRefs.current[index] = el)}
             onChange={(event) => handleCodeInputChange(event, index)}
