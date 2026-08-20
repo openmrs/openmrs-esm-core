@@ -21,7 +21,7 @@ import * as utils from '@openmrs/esm-utils';
 
 export const ComponentContext = React.createContext(null);
 
-export const openmrsComponentDecorator = vi.fn().mockImplementation(() => (component) => component);
+export const openmrsComponentDecorator = vi.fn().mockImplementation(() => (component: React.ReactNode) => component);
 
 export const useAttachments = vi.fn(() => ({
   isLoading: true,

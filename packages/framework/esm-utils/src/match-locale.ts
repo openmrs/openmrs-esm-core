@@ -1,22 +1,4 @@
-/**
- * Returns a canonical BCP 47 representation of `tag`, or `undefined` if it is not a
- * structurally valid tag. Underscores are accepted as a separator and normalized to
- * hyphens before canonicalization to accommodate locale strings that originate from
- * Java-style identifiers (e.g. `en_GB`).
- */
-function canonicalize(tag: string): string | undefined {
-  if (typeof tag !== 'string' || tag.trim().length === 0) {
-    return undefined;
-  }
-
-  const normalized = tag.replaceAll('_', '-');
-
-  try {
-    return new Intl.Locale(normalized).toString();
-  } catch {
-    return undefined;
-  }
-}
+import { toLanguageTag } from './language-tag';
 
 /**
  * Resolves a requested locale against a list of available locales using the
@@ -59,7 +41,7 @@ export function matchLocale(
     return fallback;
   }
 
-  const requestedCanonical = canonicalize(requested);
+  const requestedCanonical = toLanguageTag(requested);
   if (!requestedCanonical) {
     console.warn(`matchLocale: invalid requested locale tag: ${JSON.stringify(requested)}`);
     return fallback;
@@ -67,7 +49,7 @@ export function matchLocale(
 
   const pool: Array<{ canonical: string; original: string }> = [];
   for (const entry of available) {
-    const canonical = canonicalize(entry);
+    const canonical = toLanguageTag(entry);
     if (!canonical) {
       console.warn(`matchLocale: skipping invalid available locale tag: ${JSON.stringify(entry)}`);
       continue;

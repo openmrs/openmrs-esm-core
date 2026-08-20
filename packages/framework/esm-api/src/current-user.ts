@@ -157,6 +157,10 @@ function isValidLocale(locale: unknown): locale is string {
 export function setUserLanguage(data: Session) {
   let locale = data.locale ?? data.user?.userProperties?.defaultLocale;
 
+  // Only underscores are converted here, deliberately, rather than reusing `toLanguageTag`. i18next
+  // reads this value back off `document.lang` and uses it as the translation bundle key, and those
+  // bundles are named with the POSIX form (`uz@Latn.json`), so converting `@` would send the loader
+  // after a bundle that does not exist.
   if (locale && locale.includes('_')) {
     locale = locale.replaceAll('_', '-');
   }

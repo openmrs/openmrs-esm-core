@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { vi } from 'vitest';
 
 global.window.System = {

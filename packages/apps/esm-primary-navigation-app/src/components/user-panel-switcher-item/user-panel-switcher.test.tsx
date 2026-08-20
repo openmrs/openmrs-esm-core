@@ -6,7 +6,6 @@ import { mockLoggedInUser } from '../../../__mocks__/mock-user';
 import UserPanelSwitcher from './user-panel-switcher.component';
 
 vi.mock('@openmrs/esm-framework', async (importOriginal) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@openmrs/esm-framework')>();
   return {
     ...actual,

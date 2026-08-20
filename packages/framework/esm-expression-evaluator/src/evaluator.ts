@@ -24,7 +24,6 @@ export { jsep };
 
 /** An object containing the variable to use when evaluating this expression */
 export type VariablesMap = {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   [key: string]: string | number | boolean | Function | RegExp | object | null | VariablesMap | Array<VariablesMap>;
 };
 

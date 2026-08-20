@@ -273,6 +273,22 @@ export function buildCli(y: Argv) {
             "The path to CSS or JS assets to copy into 'assets/' in the build directory, and include as <link> and <script> tags in the generated HTML. Can be used multiple times.",
           type: 'array',
           coerce: (arg: Array<string>) => arg.map((p) => resolve(process.cwd(), p)),
+        })
+        .option('compress', {
+          default: true,
+          describe:
+            'Whether to emit precompressed siblings (e.g. main.js.gz, main.js.br) for compressible assets, so that a web server can serve them without compressing on every request. Turning this off also skips removing precompressed files whose source no longer exists.',
+          type: 'boolean',
+        })
+        .option('compress-gzip', {
+          default: true,
+          describe: 'Whether the precompressed siblings include gzip (.gz) output.',
+          type: 'boolean',
+        })
+        .option('compress-brotli', {
+          default: true,
+          describe: 'Whether the precompressed siblings include brotli (.br) output.',
+          type: 'boolean',
         }),
     async (args) =>
       runCommand('runBuild', {
@@ -387,9 +403,11 @@ export function buildCli(y: Argv) {
     .epilog(
       'The SPA assemble config JSON is a JSON file, typically `spa-assemble-config.json`, which defines parameters for the `build` and `assemble` ' +
         'commands. The keys used by `build` are:\n' +
-        '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, and `supportOffline`;\n' +
+        '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, `supportOffline`, `compress`, ' +
+        '`compressGzip`, and `compressBrotli`;\n' +
         'each of which is equivalent to the corresponding command line argument (see `openmrs build --help`). ' +
-        'Multiple values provided to `configPaths` and `configUrls` should be comma-separated.\n' +
+        'Multiple values provided to `configPaths` and `configUrls` should be comma-separated. `compress`, ' +
+        '`compressGzip` and `compressBrotli` take precedence over the corresponding command line flags.\n' +
         'The keys used by `assemble` are:\n' +
         '  frontendModules  \tAn object which specifies which frontend modules to include. It should have package names ' +
         'for keys and versions for values.\n' +

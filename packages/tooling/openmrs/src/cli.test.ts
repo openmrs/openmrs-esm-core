@@ -161,6 +161,19 @@ describe('build command', () => {
     const parsed = await createCli(['build']).parseAsync();
     expect(parsed.fresh).toBe(false);
   });
+
+  it('enables precompression by default', async () => {
+    const parsed = await createCli(['build']).parseAsync();
+    expect(parsed.compress).toBe(true);
+    expect(parsed.compressGzip).toBe(true);
+    expect(parsed.compressBrotli).toBe(true);
+  });
+
+  it('allows precompression to be disabled entirely or per encoding', async () => {
+    expect((await createCli(['build', '--no-compress']).parseAsync()).compress).toBe(false);
+    expect((await createCli(['build', '--no-compress-brotli']).parseAsync()).compressBrotli).toBe(false);
+    expect((await createCli(['build', '--no-compress-gzip']).parseAsync()).compressGzip).toBe(false);
+  });
 });
 
 describe('assemble command', () => {

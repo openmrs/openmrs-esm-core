@@ -36,8 +36,12 @@ const workspaceTranslations = {
 };
 
 const workspace2Translations = {
-  closeWorkspaces2PromptTitle: 'Close workspace(s)',
-  closeWorkspaces2PromptBody: 'You are about to close the following workspace(s), which might have unsaved changes:',
+  discardUnsavedChangesPromptBodyMultiple:
+    '{{count}} workspaces have unsaved changes. Closing them will discard the changes:',
+  discardUnsavedChangesPromptBodySingle:
+    '<strong>{{workspaceTitle}}</strong> has unsaved changes. Closing it will discard them.',
+  discardUnsavedChangesPromptTitle: 'Discard unsaved changes?',
+  keepEditing: 'Keep editing',
 };
 
 export const coreTranslations = {

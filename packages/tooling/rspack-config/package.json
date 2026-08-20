@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "build:development": "tsc",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",

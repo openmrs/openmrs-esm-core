@@ -4,7 +4,7 @@
 
 > **ModalDefinition** = `object`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:217](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L217)
+Defined in: [packages/framework/esm-globals/src/types.ts:216](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L216)
 
 A definition of a modal as extracted from an app's routes.json
 
@@ -14,7 +14,7 @@ A definition of a modal as extracted from an app's routes.json
 
 > **component**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:225](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L225)
+Defined in: [packages/framework/esm-globals/src/types.ts:224](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L224)
 
 The name of the component exported by this frontend module.
 
@@ -24,6 +24,6 @@ The name of the component exported by this frontend module.
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:221](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L221)
+Defined in: [packages/framework/esm-globals/src/types.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L220)
 
 The name of this modal. This is used to launch the modal.
