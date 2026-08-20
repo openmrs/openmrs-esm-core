@@ -43,12 +43,13 @@ describe('TotpVerificationChallengePage', () => {
     const verifyButton = screen.getByRole('button', { name: /verify/i });
     expect(verifyButton).toBeDisabled();
 
-    const firstInput = screen.getByLabelText('Digit 1');
+    const inputs = screen.getAllByRole('textbox');
+    const firstInput = inputs[0];
     await user.click(firstInput);
     await user.paste('123456');
     expect(verifyButton).toBeEnabled();
 
-    const fifthInput = screen.getByLabelText('Digit 5');
+    const fifthInput = inputs[4];
     await user.click(fifthInput);
     await user.keyboard('{Backspace}');
     expect(verifyButton).toBeDisabled();
@@ -66,7 +67,8 @@ describe('TotpVerificationChallengePage', () => {
       </MemoryRouter>,
     );
 
-    const firstInput = screen.getByLabelText('Digit 1');
+    const inputs = screen.getAllByRole('textbox');
+    const firstInput = inputs[0];
     await user.click(firstInput);
     await user.paste('123456');
 

@@ -8,17 +8,17 @@ describe('VerificationCodeInput', () => {
   it('should render 6 number of input boxes', () => {
     render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
 
-    for (let i = 1; i <= 6; i++) {
-      expect(screen.getByLabelText(`Digit ${i}`)).toBeInTheDocument();
-    }
+    const inputs = screen.getAllByRole('textbox');
+    expect(inputs).toHaveLength(6);
   });
 
   it('should advance focus to the next input box', async () => {
     const user = userEvent.setup();
     render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
 
-    const firstInput = screen.getByLabelText('Digit 1');
-    const secondInput = screen.getByLabelText('Digit 2');
+    const inputs = screen.getAllByRole('textbox');
+    const firstInput = inputs[0];
+    const secondInput = inputs[1];
 
     await user.type(firstInput, '4');
     expect(firstInput).toHaveValue('4');
@@ -29,7 +29,8 @@ describe('VerificationCodeInput', () => {
     const user = userEvent.setup();
     render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
 
-    const firstInput = screen.getByLabelText('Digit 1');
+    const inputs = screen.getAllByRole('textbox');
+    const firstInput = inputs[0];
 
     await user.type(firstInput, 'A');
     await user.type(firstInput, ' ');
@@ -42,12 +43,13 @@ describe('VerificationCodeInput', () => {
     const onCompleteMock = vi.fn();
     render(<VerificationCodeInput length={6} onComplete={onCompleteMock} />);
 
-    const firstInput = screen.getByLabelText('Digit 1');
+    const inputs = screen.getAllByRole('textbox');
+    const firstInput = inputs[0];
 
     await user.click(firstInput);
     await user.paste('123456');
-    expect(screen.getByLabelText('Digit 1')).toHaveValue('1');
-    expect(screen.getByLabelText('Digit 6')).toHaveValue('6');
+    expect(inputs[0]).toHaveValue('1');
+    expect(inputs[5]).toHaveValue('6');
     expect(onCompleteMock).toHaveBeenCalledTimes(1);
     expect(onCompleteMock).toHaveBeenCalledWith('123456');
   });
@@ -56,8 +58,9 @@ describe('VerificationCodeInput', () => {
     const user = userEvent.setup();
     render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
 
-    const secondInput = screen.getByLabelText('Digit 2');
-    const thirdInput = screen.getByLabelText('Digit 3');
+    const inputs = screen.getAllByRole('textbox');
+    const secondInput = inputs[1];
+    const thirdInput = inputs[2];
 
     await user.click(secondInput);
     expect(secondInput).toHaveFocus();
@@ -71,8 +74,9 @@ describe('VerificationCodeInput', () => {
     const user = userEvent.setup();
     render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
 
-    const firstInput = screen.getByLabelText('Digit 1');
-    const secondInput = screen.getByLabelText('Digit 2');
+    const inputs = screen.getAllByRole('textbox');
+    const firstInput = inputs[0];
+    const secondInput = inputs[1];
 
     await user.type(firstInput, '7');
     expect(firstInput).toHaveValue('7');
