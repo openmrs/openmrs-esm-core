@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { waitFor, screen } from '@testing-library/react';
+import { waitFor, screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   getSessionStore,
@@ -11,6 +11,7 @@ import {
   useSession,
 } from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
+import { MemoryRouter } from 'react-router-dom';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
 
@@ -346,5 +347,15 @@ describe('Login', () => {
     expect(root.style.getPropertyValue('--login-bg-image')).toBe('');
     expect(root.className).toMatch(/containerWithColor/);
     expect(root.className).not.toMatch(/containerWithImage/);
+  });
+
+  it('saves the referrer to session storage if present in router state', () => {
+    render(
+      <MemoryRouter initialEntries={[{ pathname: '/login', state: { referrer: '/patient-chart' } }]}>
+        <Login />
+      </MemoryRouter>,
+    );
+
+    expect(sessionStorage.getItem('loginReferrer')).toBe('/patient-chart');
   });
 });

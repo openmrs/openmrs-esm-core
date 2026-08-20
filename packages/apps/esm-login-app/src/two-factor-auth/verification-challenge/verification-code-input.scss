@@ -3,6 +3,7 @@
 
 .otpContainer {
   display: flex;
+  direction: ltr;
   gap: layout.$spacing-03;
   justify-content: center;
 }
@@ -19,10 +20,15 @@
 
 .wrapper {
   width: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
 }
 
 .label {
   @include type.type-style('label-01');
   display: block;
   margin-bottom: layout.$spacing-03;
+  padding: 0;
 }

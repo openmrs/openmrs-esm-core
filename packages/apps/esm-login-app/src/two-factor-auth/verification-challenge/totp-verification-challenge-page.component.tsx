@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, InlineNotification, Tile } from '@carbon/react';
@@ -11,9 +11,12 @@ import {
   navigate as openmrsNavigate,
   ArrowRightIcon,
   OpenmrsFetchError,
+  useConnectivity,
+  ArrowLeftIcon,
 } from '@openmrs/esm-framework';
 import type { ConfigSchema } from '../../config-schema';
 import Logo from '../../logo.component';
+import { performLogout } from '../../redirect-logout/logout.resource';
 import VerificationCodeInput from './verification-code-input.component';
 import loginStyles from '../../login/login.scss';
 import styles from './totp-verification-challenge-page.scss';
@@ -22,6 +25,7 @@ const TotpVerificationChallengePage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const isOnline = useConnectivity();
   const { background = { image: '', color: '' }, links: loginLinks } = useConfig<ConfigSchema>();
   const containerClassName = classnames(loginStyles.container, {
     [loginStyles.containerWithImage]: !!background.image,
@@ -37,8 +41,9 @@ const TotpVerificationChallengePage: React.FC = () => {
     return undefined;
   }, [background]);
   const [code, setCode] = useState('');
-  const [rememberDevice, setRememberDevice] = useState(false);
+  const [rememberDevice, setRememberDevice] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isBackToLogin, setIsBackToLogin] = useState(false);
   const [verificationError, setVerificationError] = useState('');
 
   const handleVerify = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -63,11 +68,12 @@ const TotpVerificationChallengePage: React.FC = () => {
 
         if (session?.sessionLocation) {
           let to = loginLinks?.loginSuccess || '/home';
-          if (location?.state?.referrer) {
-            if (location.state.referrer.startsWith('/')) {
-              to = `\${window.getOpenmrsSpaBase()}${location.state.referrer}`;
-            }
+          const referrer = location?.state?.referrer || sessionStorage.getItem('loginReferrer');
+
+          if (referrer && referrer.startsWith('/')) {
+            to = `\${openmrsSpaBase}${referrer}`;
           }
+          sessionStorage.removeItem('loginReferrer');
           openmrsNavigate({ to });
         } else {
           navigate('/login/location');
@@ -76,20 +82,45 @@ const TotpVerificationChallengePage: React.FC = () => {
         setVerificationError(t('totpVerificationFailed', 'We could not verify that code. Please try again.'));
       }
     } catch (error: unknown) {
-      let errorMessage = t('invalidVerificationCode', 'Invalid verification code. Please try again.');
-      if (error instanceof OpenmrsFetchError && typeof error.responseBody === 'object' && error.responseBody !== null) {
-        const body = error.responseBody as { error?: { translatedMessage?: string } };
-        const translatedMessage = body.error?.translatedMessage;
+      let errorMessage = t('verificationFailedError', 'A network or server error occurred. Please try again.');
 
-        if (translatedMessage) {
-          errorMessage = translatedMessage;
+      if (error instanceof OpenmrsFetchError) {
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          errorMessage = t('invalidCode', 'Invalid verification code. Please try again.');
         }
+        if (typeof error.responseBody === 'object' && error.responseBody !== null) {
+          const body = error.responseBody as { error?: { translatedMessage?: string } };
+          const translatedMessage = body.error?.translatedMessage;
+
+          if (translatedMessage) {
+            errorMessage = translatedMessage;
+          }
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
       }
       setVerificationError(errorMessage);
     } finally {
       setIsVerifying(false);
     }
   };
+
+  const backToLogin = useCallback(
+    async (event: React.MouseEvent) => {
+      event.preventDefault();
+      setIsBackToLogin(true);
+      try {
+        await performLogout();
+        navigate('/login');
+      } catch (error) {
+        setVerificationError(
+          t('backToLoginFailed', 'Failed to cancel the verification process. Please refresh the page and try again.'),
+        );
+        setIsBackToLogin(false);
+      }
+    },
+    [navigate, t],
+  );
 
   return (
     <div className={containerClassName} style={containerStyle}>
@@ -122,20 +153,33 @@ const TotpVerificationChallengePage: React.FC = () => {
             <div className={styles.checkboxInner}>
               <Checkbox
                 id="remember-device"
-                labelText={t('rememberDevice', 'Remember this device for 30 days')}
+                labelText={t('rememberDevice', 'Remember this device')}
                 checked={rememberDevice}
                 onChange={(event, { checked }) => setRememberDevice(checked)}
               />
             </div>
           </div>
 
-          <Button
-            type="submit"
-            className={styles.verifyButton}
-            renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-          >
-            {isVerifying ? t('verifying', 'Verifying...') : t('verify', 'Verify')}
-          </Button>
+          <div className={styles.actionButtons}>
+            <Button
+              type="button"
+              className={styles.backToLoginButton}
+              kind="ghost"
+              onClick={backToLogin}
+              disabled={isVerifying || isBackToLogin}
+            >
+              <ArrowLeftIcon size={10} />
+              {t('backToLogin', 'Back to login')}
+            </Button>
+            <Button
+              type="submit"
+              className={styles.verifyButton}
+              renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+              disabled={!isOnline || isVerifying || code.length !== 6 || isBackToLogin}
+            >
+              {isVerifying ? t('verifying', 'Verifying...') : t('verify', 'Verify')}
+            </Button>
+          </div>
         </form>
       </Tile>
     </div>

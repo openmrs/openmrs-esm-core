@@ -1,9 +1,14 @@
 @use '@carbon/layout';
+@use '@carbon/type';
 
 .title {
   text-align: center;
   margin-top: -(layout.$spacing-07);
   margin-bottom: layout.$spacing-08;
+
+  h1 {
+    @include type.type-style('heading-02');
+  }
 }
 
 .checkbox {
@@ -27,9 +32,30 @@
   text-align: left;
 }
 
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: layout.$spacing-05;
+}
+
 .verifyButton {
   width: 18rem;
-  margin-top: layout.$spacing-08;
   margin-left: auto;
   margin-right: auto;
+}
+
+.backToLoginButton {
+  font-size: 0.75rem;
+  min-height: auto;
+  padding: layout.$spacing-03;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-right: 0.25rem;
+    margin-top: 0;
+  }
 }

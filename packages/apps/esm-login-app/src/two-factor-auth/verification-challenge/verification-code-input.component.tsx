@@ -26,9 +26,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
 
     // If the user filled the last box, trigger onComplete prop
     const combinedOtp = newOtp.join('');
-    if (combinedOtp.length === length) {
-      onComplete(combinedOtp);
-    }
+    onComplete(combinedOtp);
 
     // Move focus to the next input box if the current one is filled
     if (value && index < length - 1 && inputRefs.current[index + 1]) {
@@ -46,6 +44,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
       event.preventDefault();
       inputRefs.current[index - 1]?.focus();
     } else if (event.key === 'ArrowRight' && index < length - 1) {
+      event.preventDefault();
       inputRefs.current[index + 1]?.focus();
     }
   };
@@ -54,19 +53,22 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault();
 
-    const pastedData = event.clipboardData.getData('text').slice(0, length);
+    const pastedData = event.clipboardData.getData('text').replace(/\s/g, '').slice(0, length);
 
     // Only numbers are allowed to paste
     if (!/^\d+$/.test(pastedData)) return;
 
     // Spread the pasted code across the input boxes
-    const newOtp = [...otp];
+    const newOtp = new Array(length).fill('');
     pastedData.split('').forEach((char, index) => {
       newOtp[index] = char;
     });
     setOtp(newOtp);
 
     // Trigger onComplete prop
+    const combinedOtp = newOtp.join('');
+    onComplete(combinedOtp);
+
     if (pastedData.length === length) {
       onComplete(pastedData);
       inputRefs.current[length - 1]?.focus();
@@ -76,16 +78,17 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
   };
 
   return (
-    <div className={styles.wrapper}>
-      <label className={styles.label}>{t('enterCode', 'Enter the code from your authenticator app')}</label>
+    <fieldset className={styles.wrapper}>
+      <legend className={styles.label}>{t('enterCode', 'Enter the code from your authenticator app')}</legend>
       <div className={styles.otpContainer} onPaste={handlePaste}>
         {otp.map((data, index) => (
           <TextInput
             className={styles.otpInput}
             key={index}
             id={`otp-input-${index}`}
-            type="tel"
+            type="text"
             inputMode="numeric"
+            pattern="[0-9]*"
             autoComplete="one-time-code"
             autoFocus={index === 0}
             maxLength={1}
@@ -99,7 +102,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
           />
         ))}
       </div>
-    </div>
+    </fieldset>
   );
 };
 
