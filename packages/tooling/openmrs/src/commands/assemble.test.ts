@@ -419,7 +419,7 @@ describe('runAssemble', () => {
       const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));
       expect(writeCall).toBeDefined();
       const routesRegistry = JSON.parse(writeCall![1] as string);
-      expect(routesRegistry.version).toBe(undefined);
+      expect(routesRegistry.version).toBeUndefined();
       expect(routesRegistry.routes['@openmrs/esm-test-app']).toEqual(
         expect.objectContaining({ pages: ['/home'], version: '1.0.0' }),
       );

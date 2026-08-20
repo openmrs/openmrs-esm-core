@@ -291,7 +291,7 @@ export async function runAssemble(args: AssembleArgs) {
       ...(applicationVersion === undefined || applicationVersion === null || applicationVersion.trim().length === 0
         ? {}
         : { version: applicationVersion }),
-      ...{ routes },
+      routes,
     };
     await writeFile(
       resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routesRegistry) : ''}.json`),
