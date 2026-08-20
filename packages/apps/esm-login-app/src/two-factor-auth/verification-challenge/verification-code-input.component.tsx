@@ -70,7 +70,6 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
     onComplete(combinedOtp);
 
     if (pastedData.length === length) {
-      onComplete(pastedData);
       inputRefs.current[length - 1]?.focus();
     } else {
       inputRefs.current[pastedData.length]?.focus();
