@@ -16,7 +16,6 @@ const mockUpdateUserProperties = vi.fn((...args) => Promise.resolve());
 const mockUpdateSessionLocale = vi.fn((...args) => Promise.resolve());
 
 vi.mock('@openmrs/esm-framework', async (importOriginal) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@openmrs/esm-framework')>();
   return {
     ...actual,
@@ -25,8 +24,8 @@ vi.mock('@openmrs/esm-framework', async (importOriginal) => {
 });
 
 vi.mock('./change-language.resource', () => ({
-  updateUserProperties: (...args) => mockUpdateUserProperties(...args),
-  updateSessionLocale: (...args) => mockUpdateSessionLocale(...args),
+  updateUserProperties: (...args: Parameters<typeof mockUpdateUserProperties>) => mockUpdateUserProperties(...args),
+  updateSessionLocale: (...args: Parameters<typeof mockUpdateSessionLocale>) => mockUpdateSessionLocale(...args),
 }));
 
 const mockUseSession = vi.mocked(useSession);

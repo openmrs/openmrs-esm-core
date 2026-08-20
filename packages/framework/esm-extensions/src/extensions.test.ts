@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
 import type { Session } from '@openmrs/esm-api';
 import {
@@ -26,7 +26,6 @@ vi.mock('@openmrs/esm-api', () => ({
 }));
 
 vi.mock('@openmrs/esm-utils', async (importOriginal) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@openmrs/esm-utils')>();
   return {
     ...actual,
@@ -35,7 +34,6 @@ vi.mock('@openmrs/esm-utils', async (importOriginal) => {
 });
 
 vi.mock('@openmrs/esm-globals', async (importOriginal) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@openmrs/esm-globals')>();
   return {
     ...actual,
