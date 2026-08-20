@@ -131,7 +131,7 @@ async function runShell() {
       writable: false,
       configurable: false,
     });
-  } else if (applicationVersion === 'prelease') {
+  } else if (applicationVersion === 'prerelease') {
     Object.defineProperty(window, 'applicationVersion', {
       value:
         window.spaVersion === 'local' ? getCoreTranslation('localVersion') : getCoreTranslation('prereleaseVersion'),

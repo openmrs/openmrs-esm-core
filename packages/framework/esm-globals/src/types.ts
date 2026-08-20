@@ -405,7 +405,7 @@ export interface OpenmrsRoutes {
   /** The overall version for this application */
   version?: string;
   /** The routes associated with this application keyed by module id */
-  routes: Record<string, OpenmrsAppRoutes>;
+  routes: Record<Exclude<string, 'version'>, OpenmrsAppRoutes>;
 }
 
 export interface ResourceLoader<T = any> {
