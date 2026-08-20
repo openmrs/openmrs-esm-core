@@ -2,12 +2,15 @@
 @use '@carbon/type';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
+// Brand palette derived from the OpenMRS teal tokens
+$hero-gradient: linear-gradient(150deg, #0c4247 0%, #073034 55%, #061f22 100%);
+$hero-accent: $brand-primary-30; // #3ddbd9
+$card-eyebrow: #007d79;
+$button-bg: $brand-01; // #005d5d
+$button-bg-hover: $brand-02; // #004144
+
 .bodyShort01 {
   @include type.type-style('body-compact-01');
-}
-
-.productiveHeading03 {
-  @include type.type-style('heading-03');
 }
 
 .label01 {
@@ -18,124 +21,228 @@
   @include type.type-style('legal-01');
 }
 
-.backButton {
-  height: layout.$spacing-09;
-  padding-left: 0;
-
-  svg {
-    margin-right: layout.$spacing-03;
-    order: 1;
-  }
-
-  span {
-    order: 2;
-  }
-}
-
+// Root: two-panel split layout
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   min-height: calc(100vh - var(--omrs-navbar-height));
+  width: 100%;
 }
 
+// When an explicit background image/color is configured, it takes over the
+// whole viewport and the split panels become transparent overlays.
 .containerWithImage {
   background-image: var(--login-bg-image);
   background-size: cover;
   background-position: center;
+
+  .hero,
+  .formPanel {
+    background: transparent;
+  }
 }
 
 .containerWithColor {
   background-color: var(--login-bg-color);
+
+  .hero,
+  .formPanel {
+    background: transparent;
+  }
 }
 
-.center {
-  text-align: center;
-}
-
-.logo {
-  margin-bottom: layout.$spacing-08;
-  height: layout.$spacing-11;
-  width: 16rem;
-}
-
-.logoImg {
-  margin-bottom: layout.$spacing-09;
-  max-width: 100%;
-}
-
-.poweredByTxt {
-  @extend .caption01;
-  text-align: center;
-  color: $color-gray-70;
-  color: $text-02;
-}
-
-.needHelp {
+.hero {
   display: flex;
-  width: 23rem;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: layout.$spacing-09;
+  padding: layout.$spacing-10 layout.$spacing-09 layout.$spacing-09 layout.$spacing-09;
+  background: $hero-gradient;
+  color: $ui-02;
 }
 
-.needHelpText {
-  @extend .bodyShort01;
-  text-align: left;
-  color: $text-02;
+.heroBrand {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  margin: layout.$spacing-05 0;
+  gap: layout.$spacing-04;
 }
 
-.link {
-  text-decoration-line: none;
-  margin-left: layout.$spacing-03;
+.heroEyebrow {
+  @include type.type-style('label-01');
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $hero-accent;
+}
+
+.heroBrandTitle {
+  @include type.type-style('heading-03');
+  color: $ui-02;
+}
+
+.heroBody {
+  max-width: 34rem;
+}
+
+.heroTitle {
+  @include type.type-style('heading-06');
+  font-weight: 600;
+  font-size: 2.75rem;
+  line-height: 1.15;
+  color: $ui-02;
+  margin-bottom: layout.$spacing-06;
+}
+
+.heroAccent {
+  color: $hero-accent;
+}
+
+.heroSubtitle {
+  @include type.type-style('body-02');
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 28rem;
+}
+
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: layout.$spacing-05;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.statTile {
+  display: flex;
+  flex-direction: column;
+  gap: layout.$spacing-02;
+  min-width: 8.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: layout.$spacing-05;
+}
+
+.statValue {
+  @include type.type-style('heading-04');
+  color: $ui-02;
+}
+
+.statLabel {
+  @include type.type-style('label-01');
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.formPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: layout.$spacing-10 layout.$spacing-09 layout.$spacing-12;
+  background: $ui-01;
+}
+
+.formInner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 26rem;
+  gap: layout.$spacing-05;
 }
 
 .loginCard {
-  border-radius: 0;
-  border: 1px solid $ui-03;
+  border: none;
   background-color: $ui-02;
-  width: 23rem;
+  width: 100%;
   padding: layout.$spacing-08;
-  border-radius: layout.$spacing-03;
+  box-shadow: 0 20px 45px rgba(6, 31, 34, 0.12);
   position: relative;
   min-height: fit-content;
 }
 
+.cardEyebrow {
+  @include type.type-style('label-01');
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $card-eyebrow;
+  margin-bottom: layout.$spacing-03;
+}
+
+.cardTitle {
+  @include type.type-style('heading-05');
+  color: $ui-05;
+  margin-bottom: layout.$spacing-03;
+}
+
+.cardSubtitle {
+  @extend .bodyShort01;
+  color: $text-02;
+  margin-bottom: layout.$spacing-07;
+}
+
 .inputGroup {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
-  width: 18rem;
-  gap: layout.$spacing-05;
+  width: 100%;
+  gap: layout.$spacing-06;
+}
 
-  :global(.cds--text-input) {
+// Leading icon inside Carbon inputs
+.inputWithIcon {
+  position: relative;
+  width: 100%;
+
+  .inputIcon {
+    position: absolute;
+    left: layout.$spacing-05;
+    // The field is spacing-09 (2.5rem) tall and sits flush at the wrapper
+    // bottom; center the 1rem icon within it: (2.5rem - 1rem) / 2 = 0.75rem.
+    bottom: 0.75rem;
+    color: $text-03;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  :global(.cds--text-input),
+  :global(.cds--password-input) {
     height: layout.$spacing-09;
-    @extend .label01;
+    padding-left: layout.$spacing-09;
   }
+}
 
-  :global(.cds--text-input__field-outer-wrapper) {
-    width: 18rem;
-  }
+.passwordField {
+  position: relative;
+  width: 100%;
+}
 
-  &:not(:last-child) {
-    margin-bottom: layout.$spacing-05;
-  }
+.forgotPassword {
+  @include type.type-style('label-01');
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
 }
 
 .continueButton {
-  margin-top: layout.$spacing-06;
-  width: 18rem;
-}
+  margin-top: layout.$spacing-03;
+  width: 100%;
+  max-width: 100%;
 
-.backButtonDiv {
-  width: 23rem;
-  position: absolute;
-  bottom: 100%;
-  left: 0;
+  &:global(.cds--btn--primary) {
+    background-color: $button-bg;
+
+    &:hover {
+      background-color: $button-bg-hover;
+    }
+
+    &:active {
+      background-color: $button-bg-hover;
+    }
+  }
 }
 
 .loader {
@@ -143,11 +250,8 @@
 }
 
 .errorMessage {
-  width: 23rem;
-  margin-bottom: layout.$spacing-09;
-  position: absolute;
-  bottom: 100%;
-  left: 0;
+  width: 100%;
+  margin-bottom: layout.$spacing-05;
 }
 
 // Keep password field in DOM for browser autofill
@@ -160,9 +264,67 @@
 }
 
 .announcements {
-  width: 23rem;
-  margin-bottom: layout.$spacing-07;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: layout.$spacing-03;
+}
+
+.restrictedNotice {
+  display: flex;
+  align-items: flex-start;
+  gap: layout.$spacing-04;
+  padding: 0 layout.$spacing-03;
+  color: $text-02;
+  @extend .caption01;
+
+  p {
+    @include type.type-style('label-01');
+    color: $text-02;
+  }
+}
+
+.restrictedIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: layout.$spacing-07;
+  height: layout.$spacing-07;
+  background: #061f22;
+  color: $ui-02;
+}
+
+.logo {
+  height: layout.$spacing-09;
+  width: 10rem;
+}
+
+.logoImg {
+  max-height: layout.$spacing-09;
+  max-width: 12rem;
+}
+
+@media (max-width: 66rem) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    display: none;
+  }
+
+  .formPanel {
+    min-height: calc(100vh - var(--omrs-navbar-height));
+  }
+}
+
+@media (max-width: 32rem) {
+  .formPanel {
+    padding: layout.$spacing-07 layout.$spacing-05 layout.$spacing-11;
+  }
+
+  .loginCard {
+    padding: layout.$spacing-06;
+  }
 }

@@ -3297,38 +3297,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-login-app@workspace:packages/apps/esm-login-app":
-  version: 0.0.0-use.local
-  resolution: "@openmrs/esm-login-app@workspace:packages/apps/esm-login-app"
-  dependencies:
-    "@carbon/react": "npm:^1.92.1"
-    "@hookform/resolvers": "npm:^3.6.0"
-    "@vitest/coverage-v8": "npm:^4.1.2"
-    cross-env: "npm:^10.1.0"
-    happy-dom: "npm:^20.6.0"
-    lodash-es: "npm:^4.17.21"
-    openmrs: "workspace:*"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    react-hook-form: "npm:^7.52.2"
-    react-i18next: "npm:^16.0.0"
-    react-router-dom: "npm:^6.3.0"
-    rxjs: "npm:^6.5.3"
-    swr: "npm:2.2.5"
-    vitest: "npm:^4.1.2"
-    zod: "npm:^3.23.8"
-  peerDependencies:
-    "@carbon/react": 1.x
-    "@openmrs/esm-framework": 10.x
-    react: 18.x
-    react-dom: 18.x
-    react-i18next: 16.x
-    react-router-dom: 6.x
-    rxjs: 6.x
-    swr: 2.x
-  languageName: unknown
-  linkType: soft
-
 "@openmrs/esm-navigation@workspace:*, @openmrs/esm-navigation@workspace:packages/framework/esm-navigation":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-navigation@workspace:packages/framework/esm-navigation"
@@ -7657,6 +7625,38 @@ __metadata:
   checksum: 10/d47e936b10ec94a96f69f77a62463f4634fe72d12d42dd302d7777f7b98689468e0b67c538a52232b723695208f1b3fdeae5745eb3e71a70a90818fdd827a0bc
   languageName: node
   linkType: hard
+
+"@uzima/esm-login-app@workspace:packages/apps/esm-login-app":
+  version: 0.0.0-use.local
+  resolution: "@uzima/esm-login-app@workspace:packages/apps/esm-login-app"
+  dependencies:
+    "@carbon/react": "npm:^1.92.1"
+    "@hookform/resolvers": "npm:^3.6.0"
+    "@vitest/coverage-v8": "npm:^4.1.2"
+    cross-env: "npm:^10.1.0"
+    happy-dom: "npm:^20.6.0"
+    lodash-es: "npm:^4.17.21"
+    openmrs: "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    react-hook-form: "npm:^7.52.2"
+    react-i18next: "npm:^16.0.0"
+    react-router-dom: "npm:^6.3.0"
+    rxjs: "npm:^6.5.3"
+    swr: "npm:2.2.5"
+    vitest: "npm:^4.1.2"
+    zod: "npm:^3.23.8"
+  peerDependencies:
+    "@carbon/react": 1.x
+    "@openmrs/esm-framework": 10.x
+    react: 18.x
+    react-dom: 18.x
+    react-i18next: 16.x
+    react-router-dom: 6.x
+    rxjs: 6.x
+    swr: 2.x
+  languageName: unknown
+  linkType: soft
 
 "@vitest/coverage-v8@npm:^4.1.2":
   version: 4.1.2

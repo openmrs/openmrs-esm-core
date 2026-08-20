@@ -1,9 +1,9 @@
 {
-  "name": "@openmrs/esm-login-app",
+  "name": "@uzima/esm-login-app",
   "version": "10.0.0",
   "license": "MPL-2.0",
   "description": "The login microfrontend for the OpenMRS SPA",
-  "browser": "dist/openmrs-esm-login-app.js",
+  "browser": "dist/uzima-esm-login-app.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
