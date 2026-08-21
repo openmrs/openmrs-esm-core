@@ -68,6 +68,14 @@ const Login: React.FC = () => {
     }
   }, [showPasswordField, showPasswordOnSeparateScreen]);
 
+  useEffect(() => {
+    if (location?.state?.referrer) {
+      sessionStorage.setItem('loginReferrer', location.state.referrer);
+    } else {
+      sessionStorage.removeItem('loginReferrer');
+    }
+  }, [location]);
+
   const continueLogin = useCallback(() => {
     const currentUsername = usernameInputRef.current?.value?.trim();
     if (currentUsername) {
@@ -125,14 +133,14 @@ const Login: React.FC = () => {
         if (authenticated) {
           if (session.sessionLocation) {
             let to = loginLinks?.loginSuccess || '/home';
-            if (location?.state?.referrer) {
-              // Only accept relative paths; absolute or protocol-relative referrers
-              // are silently ignored to prevent open-redirect attacks after login.
-              if (location.state.referrer.startsWith('/')) {
-                to = `\${openmrsSpaBase}${location.state.referrer}`;
-              }
-            }
+            const referrer = location?.state?.referrer || sessionStorage.getItem('loginReferrer');
 
+            // Only accept relative paths; absolute or protocol-relative referrers
+            // are silently ignored to prevent open-redirect attacks after login.
+            if (referrer && referrer.startsWith('/')) {
+              to = `\${openmrsSpaBase}${referrer}`;
+            }
+            sessionStorage.removeItem('loginReferrer');
             openmrsNavigate({ to });
           } else {
             navigate('/login/location');
