@@ -39,6 +39,7 @@ export function setupPaths(config: any) {
   window.spaBase = config.spaPath;
   window.spaEnv = config.env || 'production';
   window.spaVersion = process.env.BUILD_VERSION ?? 'local';
+  window.applicationVersion = config.applicationVersion;
   window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 
