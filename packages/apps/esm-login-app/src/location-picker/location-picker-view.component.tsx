@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useLocation, type Location, useSearchParams } from 'react-router-dom';
+import { useLocation, type Location, useSearchParams, redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, InlineLoading } from '@carbon/react';
 import {
@@ -113,9 +113,13 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
       evt.preventDefault();
 
       if (!activeLocation) return;
-      if (config.promptConcent) {
+      const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
+      if (config.promptConcent && !returnToUrl) {
         const dismiss = showModal('terms-of-access-modal', {
-          onClose: () => dismiss(),
+          onClose: () => {
+            navigate({ to: '${openmrsSpaBase}/logout' });
+            dismiss();
+          },
           onAccepted: () => {
             dismiss();
             changeLocation(activeLocation, savePreference);
