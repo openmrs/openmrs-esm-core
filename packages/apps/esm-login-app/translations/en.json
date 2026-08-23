@@ -21,7 +21,6 @@
   "enterCode": "Enter the code from your authenticator app",
   "enterCodeInstruction": "Enter the code the app shows to finish setting up.",
   "enterVerificationCode": "Enter 6-digit code from your app",
-  "error": "Error",
   "errorChangingPassword": "Error changing password",
   "failToInitiate": "Failed to initiate TOTP enrollment. Please try again.",
   "footerlogo": "Footer Logo",
