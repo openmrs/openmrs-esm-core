@@ -1,11 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, Checkbox, InlineNotification, Tile } from '@carbon/react';
-import classnames from 'classnames';
+import { Button, Checkbox } from '@carbon/react';
 import {
   useConfig,
-  interpolateUrl,
   openmrsFetch,
   refetchCurrentUser,
   navigate as openmrsNavigate,
@@ -15,31 +13,17 @@ import {
   ArrowLeftIcon,
 } from '@openmrs/esm-framework';
 import type { ConfigSchema } from '../../config-schema';
-import Logo from '../../logo.component';
 import { performLogout } from '../../redirect-logout/logout.resource';
 import VerificationCodeInput from './verification-code-input.component';
-import loginStyles from '../../login/login.scss';
 import styles from './totp-verification-challenge-page.scss';
+import LoginPageWrapper from '../../login-page-wrapper/login-page-wrapper.component';
 
 const TotpVerificationChallengePage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const isOnline = useConnectivity();
-  const { background = { image: '', color: '' }, links: loginLinks } = useConfig<ConfigSchema>();
-  const containerClassName = classnames(loginStyles.container, {
-    [loginStyles.containerWithImage]: !!background.image,
-    [loginStyles.containerWithColor]: !background.image && !!background.color,
-  });
-  const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
-    if (background.image) {
-      return { '--login-bg-image': `url(${interpolateUrl(background.image)})` } as React.CSSProperties;
-    }
-    if (background.color) {
-      return { '--login-bg-color': background.color } as React.CSSProperties;
-    }
-    return undefined;
-  }, [background]);
+  const { links: loginLinks } = useConfig<ConfigSchema>();
   const [code, setCode] = useState('');
   const [rememberDevice, setRememberDevice] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
@@ -90,7 +74,7 @@ const TotpVerificationChallengePage: React.FC = () => {
         }
         if (typeof error.responseBody === 'object' && error.responseBody !== null) {
           const body = error.responseBody as { error?: { translatedMessage?: string } };
-          const translatedMessage = body.error?.translatedMessage;
+          const translatedMessage = body.error?.translatedMessage ?? error.message;
 
           if (translatedMessage) {
             errorMessage = translatedMessage;
@@ -113,9 +97,7 @@ const TotpVerificationChallengePage: React.FC = () => {
         await performLogout();
         navigate('/login');
       } catch (error) {
-        setVerificationError(
-          t('backToLoginFailed', 'Failed to cancel the verification process. Please refresh the page and try again.'),
-        );
+        setVerificationError(t('backToLoginFailed', 'Failed to cancel the verification process. Please try again.'));
         setIsBackToLogin(false);
       }
     },
@@ -123,66 +105,50 @@ const TotpVerificationChallengePage: React.FC = () => {
   );
 
   return (
-    <div className={containerClassName} style={containerStyle}>
-      {verificationError && (
-        <div className={loginStyles.announcements}>
-          <InlineNotification
-            kind="error"
-            title={t('error', 'Error')}
-            subtitle={verificationError}
-            onClose={() => setVerificationError('')}
-          />
-        </div>
-      )}
-      <Tile className={loginStyles.loginCard}>
-        <div className={loginStyles.center}>
-          <Logo t={t} />
+    <LoginPageWrapper errorMessage={verificationError} onClearError={() => setVerificationError('')}>
+      <div className={styles.title}>
+        <h1>{t('twoFactorVerification', 'Two-Factor Verification')}</h1>
+      </div>
+      <form onSubmit={handleVerify}>
+        <VerificationCodeInput
+          length={6}
+          onComplete={(completeCode) => {
+            setCode(completeCode);
+          }}
+        />
+        <div className={styles.checkbox}>
+          <div className={styles.checkboxInner}>
+            <Checkbox
+              id="remember-device"
+              labelText={t('rememberDevice', 'Remember this device')}
+              checked={rememberDevice}
+              onChange={(event, { checked }) => setRememberDevice(checked)}
+            />
+          </div>
         </div>
 
-        <div className={styles.title}>
-          <h5>{t('twoFactorVerification', 'Two-Factor Verification')}</h5>
+        <div className={styles.actionButtons}>
+          <Button
+            type="button"
+            className={styles.backToLoginButton}
+            kind="ghost"
+            onClick={backToLogin}
+            disabled={isVerifying || isBackToLogin}
+          >
+            <ArrowLeftIcon size={16} />
+            {t('backToLogin', 'Back to login')}
+          </Button>
+          <Button
+            type="submit"
+            className={styles.verifyButton}
+            renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
+            disabled={!isOnline || isVerifying || code.length !== 6 || isBackToLogin}
+          >
+            {isVerifying ? t('verifying', 'Verifying...') : t('verify', 'Verify')}
+          </Button>
         </div>
-        <form onSubmit={handleVerify}>
-          <VerificationCodeInput
-            length={6}
-            onComplete={(completeCode) => {
-              setCode(completeCode);
-            }}
-          />
-          <div className={styles.checkbox}>
-            <div className={styles.checkboxInner}>
-              <Checkbox
-                id="remember-device"
-                labelText={t('rememberDevice', 'Remember this device')}
-                checked={rememberDevice}
-                onChange={(event, { checked }) => setRememberDevice(checked)}
-              />
-            </div>
-          </div>
-
-          <div className={styles.actionButtons}>
-            <Button
-              type="button"
-              className={styles.backToLoginButton}
-              kind="ghost"
-              onClick={backToLogin}
-              disabled={isVerifying || isBackToLogin}
-            >
-              <ArrowLeftIcon size={10} />
-              {t('backToLogin', 'Back to login')}
-            </Button>
-            <Button
-              type="submit"
-              className={styles.verifyButton}
-              renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-              disabled={!isOnline || isVerifying || code.length !== 6 || isBackToLogin}
-            >
-              {isVerifying ? t('verifying', 'Verifying...') : t('verify', 'Verify')}
-            </Button>
-          </div>
-        </form>
-      </Tile>
-    </div>
+      </form>
+    </LoginPageWrapper>
   );
 };
 

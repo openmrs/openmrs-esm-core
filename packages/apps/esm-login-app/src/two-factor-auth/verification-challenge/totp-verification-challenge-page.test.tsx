@@ -26,6 +26,7 @@ describe('TotpVerificationChallengePage', () => {
       background: { image: '', color: '' },
       links: { loginSuccess: '/home' },
       logo: { src: '', alt: 'Logo' },
+      footer: { additionalLogos: [] },
     } as unknown as ConfigSchema);
 
     vi.mocked(useConnectivity).mockReturnValue(true);

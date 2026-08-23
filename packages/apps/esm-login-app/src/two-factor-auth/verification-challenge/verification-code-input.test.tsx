@@ -87,4 +87,26 @@ describe('VerificationCodeInput', () => {
     await user.keyboard('{Backspace}');
     expect(firstInput).toHaveValue('');
   });
+
+  it('should handle entering fields out of order correctly', async () => {
+    const user = userEvent.setup();
+    const onCompleteMock = vi.fn();
+    render(<VerificationCodeInput length={6} onComplete={onCompleteMock} />);
+
+    const codeInputs = screen.getAllByRole('textbox');
+
+    await user.type(codeInputs[5], '6');
+    expect(codeInputs[5]).toHaveValue('6');
+    expect(onCompleteMock).toHaveBeenCalledWith('6');
+
+    await user.type(codeInputs[0], '1');
+    expect(codeInputs[0]).toHaveValue('1');
+    expect(onCompleteMock).toHaveBeenCalledWith('16');
+
+    await user.type(codeInputs[1], '2');
+    await user.type(codeInputs[2], '3');
+    await user.type(codeInputs[3], '4');
+    await user.type(codeInputs[4], '5');
+    expect(onCompleteMock).toHaveBeenCalledWith('123456');
+  });
 });
