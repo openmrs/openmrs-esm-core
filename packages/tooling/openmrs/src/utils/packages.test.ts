@@ -17,6 +17,7 @@ vi.mock('./logger', () => ({
 
 import { glob } from 'glob';
 import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { resolvePackages } from './packages';
 
 const mockGlob = vi.mocked(glob);
@@ -30,9 +31,13 @@ beforeEach(() => {
 // Helper to set up a consistent filesystem mock from a map of path -> JSON content.
 // Paths not in the map are treated as non-existent.
 function mockFs(files: Record<string, object>) {
-  mockExistsSync.mockImplementation((p) => String(p) in files);
+  const normalized: Record<string, object> = {};
+  for (const [key, val] of Object.entries(files)) {
+    normalized[resolve(key)] = val;
+  }
+  mockExistsSync.mockImplementation((p) => resolve(String(p)) in normalized);
   mockReadFileSync.mockImplementation((p) => {
-    const content = files[String(p)];
+    const content = normalized[resolve(String(p))];
     if (content === undefined) {
       throw new Error(`ENOENT: ${p}`);
     }
@@ -53,7 +58,7 @@ describe('resolvePackages', () => {
       mockGlob.mockResolvedValue(['packages/app-a', 'packages/app-b']);
 
       const result = await resolvePackages(['@openmrs/app-a']);
-      expect(result).toEqual(['/repo/packages/app-a']);
+      expect(result).toEqual([resolve('/repo/packages/app-a')]);
     });
 
     it('resolves multiple package names', async () => {
@@ -67,7 +72,7 @@ describe('resolvePackages', () => {
       mockGlob.mockResolvedValue(['packages/app-a', 'packages/app-b']);
 
       const result = await resolvePackages(['@openmrs/app-a', '@openmrs/app-b']);
-      expect(result).toEqual(['/repo/packages/app-a', '/repo/packages/app-b']);
+      expect(result).toEqual([resolve('/repo/packages/app-a'), resolve('/repo/packages/app-b')]);
     });
 
     it('handles multiple workspace patterns', async () => {
@@ -82,7 +87,7 @@ describe('resolvePackages', () => {
       mockGlob.mockResolvedValueOnce(['packages/apps/login']).mockResolvedValueOnce(['packages/libs/utils']);
 
       const result = await resolvePackages(['@openmrs/esm-login-app']);
-      expect(result).toEqual(['/repo/packages/apps/login']);
+      expect(result).toEqual([resolve('/repo/packages/apps/login')]);
       expect(mockGlob).toHaveBeenCalledTimes(2);
     });
 
@@ -97,7 +102,7 @@ describe('resolvePackages', () => {
       mockGlob.mockResolvedValue(['packages/app-a', 'packages/orphan']);
 
       const result = await resolvePackages(['@openmrs/app-a']);
-      expect(result).toEqual(['/repo/packages/app-a']);
+      expect(result).toEqual([resolve('/repo/packages/app-a')]);
     });
   });
 
@@ -112,7 +117,7 @@ describe('resolvePackages', () => {
       mockGlob.mockResolvedValue(['packages/app-a']);
 
       const result = await resolvePackages(['@openmrs/app-a']);
-      expect(result).toEqual(['/repo/packages/app-a']);
+      expect(result).toEqual([resolve('/repo/packages/app-a')]);
     });
   });
 
@@ -128,7 +133,7 @@ describe('resolvePackages', () => {
       mockGlob.mockResolvedValue(['packages/app-a', 'packages/app-b']);
 
       const result = await resolvePackages(['@openmrs/app-b']);
-      expect(result).toEqual(['/repo/packages/app-b']);
+      expect(result).toEqual([resolve('/repo/packages/app-b')]);
     });
   });
 
