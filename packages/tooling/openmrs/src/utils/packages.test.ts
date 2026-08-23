@@ -139,14 +139,15 @@ describe('resolvePackages', () => {
 
   describe('single package (no workspaces)', () => {
     it('resolves when the cwd package.json name matches', async () => {
-      vi.spyOn(process, 'cwd').mockReturnValue('/projects/lab-app');
+      const mockCwd = resolve('/projects/lab-app');
+      vi.spyOn(process, 'cwd').mockReturnValue(mockCwd);
 
       mockFs({
-        '/projects/lab-app/package.json': { name: '@openmrs/esm-laboratory-app' },
+        [resolve('/projects/lab-app/package.json')]: { name: '@openmrs/esm-laboratory-app' },
       });
 
       const result = await resolvePackages(['@openmrs/esm-laboratory-app']);
-      expect(result).toEqual(['/projects/lab-app']);
+      expect(result).toEqual([mockCwd]);
     });
   });
 
