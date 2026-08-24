@@ -29,3 +29,4 @@ export const twoFactorAuthenticationModal = getAsyncLifecycle(
   () => import('./two-factor/two-factor-authentication.component'),
   options,
 );
+export const termsOfAccessModal = getAsyncLifecycle(() => import('./terms-of-access/terms-of-access.modal'), options);

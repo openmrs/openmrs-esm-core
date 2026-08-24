@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useLocation, type Location, useSearchParams } from 'react-router-dom';
+import { useLocation, type Location, useSearchParams, redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, InlineLoading } from '@carbon/react';
 import {
@@ -10,6 +10,7 @@ import {
   useSession,
   LocationPicker,
   getCoreTranslation,
+  showModal,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import { useDefaultLocation, useLocationCount } from './location-picker.resource';
@@ -112,10 +113,23 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
       evt.preventDefault();
 
       if (!activeLocation) return;
-
-      changeLocation(activeLocation, savePreference);
+      const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
+      if (config.promptConcent && !returnToUrl) {
+        const dismiss = showModal('terms-of-access-modal', {
+          onClose: () => {
+            navigate({ to: '${openmrsSpaBase}/logout' });
+            dismiss();
+          },
+          onAccepted: () => {
+            dismiss();
+            changeLocation(activeLocation, savePreference);
+          },
+        });
+      } else {
+        changeLocation(activeLocation, savePreference);
+      }
     },
-    [activeLocation, changeLocation, savePreference],
+    [activeLocation, changeLocation, savePreference, config.promptConcent],
   );
 
   return (

@@ -131,6 +131,11 @@ export const configSchema = {
       providerNationalId: '3d152c97-2293-4a2b-802e-e0f1009b7b15',
     },
   },
+  promptConcent: {
+    _type: Type.Boolean,
+    _description: 'Weather to promp user loging in for concent',
+    _default: true,
+  },
 };
 
 export interface ConfigSchema {
@@ -172,4 +177,5 @@ export interface ConfigSchema {
     src: string;
   };
   showPasswordOnSeparateScreen: boolean;
+  promptConcent: boolean;
 }

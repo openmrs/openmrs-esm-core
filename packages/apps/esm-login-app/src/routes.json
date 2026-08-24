@@ -62,6 +62,10 @@
     {
       "name": "change-password-modal",
       "component": "changePasswordModal"
+    },
+    {
+      "name": "terms-of-access-modal",
+      "component": "termsOfAccessModal"
     }
   ]
 }
