@@ -6,7 +6,6 @@ declare global {
     Record<string, { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }>
   >;
 
-  // eslint-disable-next-line no-var
   var __webpack_init_sharing__: (scope: string) => Promise<void>;
 
   interface Window {
@@ -45,6 +44,10 @@ declare global {
      * The build number of the app shell. Set when the app shell is built by webpack.
      */
     spaVersion: string;
+    /**
+     * The application-level version for the frontend, as set by the distribution.
+     */
+    applicationVersion?: string;
     /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */
@@ -398,7 +401,12 @@ export interface OpenmrsAppRoutes {
  * This interfaces describes the format of the overall routes.json loaded by the app shell.
  * Basically, this is the same as the app routes, with each routes definition keyed by the app's name
  */
-export type OpenmrsRoutes = Record<string, OpenmrsAppRoutes>;
+export interface OpenmrsRoutes {
+  /** The overall version for this application */
+  version?: string;
+  /** The routes associated with this application keyed by module id */
+  routes: Record<Exclude<string, 'version'>, OpenmrsAppRoutes>;
+}
 
 export interface ResourceLoader<T = any> {
   (): Promise<T>;

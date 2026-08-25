@@ -36,8 +36,12 @@ const workspaceTranslations = {
 };
 
 const workspace2Translations = {
-  closeWorkspaces2PromptTitle: 'Close workspace(s)',
-  closeWorkspaces2PromptBody: 'You are about to close the following workspace(s), which might have unsaved changes:',
+  discardUnsavedChangesPromptBodyMultiple:
+    '{{count}} workspaces have unsaved changes. Closing them will discard the changes:',
+  discardUnsavedChangesPromptBodySingle:
+    '<strong>{{workspaceTitle}}</strong> has unsaved changes. Closing it will discard them.',
+  discardUnsavedChangesPromptTitle: 'Discard unsaved changes?',
+  keepEditing: 'Keep editing',
 };
 
 export const coreTranslations = {
@@ -73,6 +77,7 @@ export const coreTranslations = {
   female: 'Female',
   leftNavigation: 'Left navigation',
   loading: 'Loading',
+  localVersion: 'Local Build',
   male: 'Male',
   noResultsToDisplay: 'No results to display',
   notAvailable: 'Not available',
@@ -84,6 +89,7 @@ export const coreTranslations = {
   patientLists: 'Patient lists',
   patientPhotoAlt: 'Profile photo of {{patientName}}',
   patientPhotoPlaceholder: 'Photo placeholder for {{patientName}}',
+  prereleaseVersion: 'Prerelease',
   print: 'Print',
   printError: 'Print error',
   printErrorExplainer: 'An error occurred in {{errorLocation}}',

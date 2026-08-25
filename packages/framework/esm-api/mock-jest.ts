@@ -20,3 +20,4 @@ export const refetchCurrentUser = jest.fn();
 export const setUserLanguage = jest.fn();
 export const setUserProperties = jest.fn();
 export const userHasAccess = jest.fn();
+export { OpenmrsFetchError } from './src/openmrs-fetch';

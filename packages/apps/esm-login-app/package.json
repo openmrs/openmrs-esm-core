@@ -16,7 +16,7 @@
     "build:development": "rspack --mode=development",
     "analyze": "rspack --mode=production --env analyze=true",
     "typescript": "tsc",
-    "lint": "eslint src --ext ts,tsx",
+    "lint": "eslint src",
     "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.extension.tsx' 'src/**/*.modal.tsx' 'src/**/*.resource.ts' --config='../../../tools/i18next-parser.config.js'",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests"
   },

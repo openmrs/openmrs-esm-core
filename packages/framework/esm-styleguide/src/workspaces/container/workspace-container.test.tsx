@@ -162,17 +162,14 @@ describe('WorkspaceContainer in window mode', () => {
 
     const header = screen.getByRole('banner');
     expect(within(header).getByText('clinicalForm')).toBeInTheDocument();
-    // eslint-disable-next-line testing-library/no-node-access
     expect(screen.getByRole('complementary').firstElementChild?.getAttribute('class')).not.toContain('maximizedWindow');
 
     const maximizeButton = await screen.findByRole('button', { name: 'Maximize' });
     await user.click(maximizeButton);
-    // eslint-disable-next-line testing-library/no-node-access
     expect(screen.getByRole('complementary').firstElementChild?.getAttribute('class')).toContain('maximizedWindow');
 
     const minimizeButton = await screen.findByRole('button', { name: 'Minimize' });
     await user.click(minimizeButton);
-    // eslint-disable-next-line testing-library/no-node-access
     expect(screen.getByRole('complementary').firstElementChild?.getAttribute('class')).not.toContain('maximizedWindow');
   });
 

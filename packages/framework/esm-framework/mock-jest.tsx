@@ -17,7 +17,20 @@ export * from '@openmrs/esm-state/mock';
 export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
 
-export { parseDate, formatDate, formatDatetime, formatTime, isOmrsDateToday, matchLocale } from '@openmrs/esm-utils';
+export {
+  parseDate,
+  formatDate,
+  formatDatetime,
+  formatTime,
+  formatDuration,
+  formatDurationBetween,
+  duration,
+  ageAsDuration,
+  isOmrsDateToday,
+  matchLocale,
+  toLanguageTag,
+  getLocaleDisplayName,
+} from '@openmrs/esm-utils';
 
 /* esm-globals */
 
@@ -26,6 +39,7 @@ export function setupPaths(config: any) {
   window.spaBase = config.spaPath;
   window.spaEnv = config.env || 'production';
   window.spaVersion = process.env.BUILD_VERSION ?? 'local';
+  window.applicationVersion = config.applicationVersion;
   window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 

@@ -14,11 +14,6 @@ updates:
     ignore:
       # Carbon Design System — handled manually; updates risk UI regressions
       - dependency-name: "@carbon/*"
-      # ESLint v9 requires flat config migration
-      - dependency-name: "eslint"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "eslint-plugin-react-hooks"
-        update-types: ["version-update:semver-major"]
       # Husky v9 changed configuration approach
       - dependency-name: "husky"
         update-types: ["version-update:semver-major"]
@@ -82,13 +77,10 @@ updates:
       playwright:
         patterns:
           - "@playwright/test"
-          - "eslint-plugin-playwright"
       typescript-and-linting:
         patterns:
-          - "@typescript-eslint/*"
-          - "eslint-plugin-*"
-        exclude-patterns:
-          - "eslint-plugin-playwright"
+          - "eslint"
+          - "@openmrs/eslint-config"
       swc:
         patterns:
           - "@swc/*"

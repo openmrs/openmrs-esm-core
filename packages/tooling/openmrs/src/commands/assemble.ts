@@ -11,8 +11,6 @@ import semver from 'semver';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 
-/* eslint-disable no-console */
-
 export interface AssembleArgs {
   target: string;
   mode: string;
@@ -23,6 +21,7 @@ export interface AssembleArgs {
   fresh: boolean;
   buildRoutes: boolean;
   manifest: boolean;
+  applicationVersion?: string;
 }
 
 interface NpmSearchResult {
@@ -287,9 +286,16 @@ export async function runAssemble(args: AssembleArgs) {
   );
 
   if (args.buildRoutes) {
+    const applicationVersion = args.applicationVersion;
+    const routesRegistry = {
+      ...(applicationVersion === undefined || applicationVersion === null || applicationVersion.trim().length === 0
+        ? {}
+        : { version: applicationVersion }),
+      routes,
+    };
     await writeFile(
-      resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routes) : ''}.json`),
-      JSON.stringify(routes),
+      resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routesRegistry) : ''}.json`),
+      JSON.stringify(routesRegistry),
       'utf-8',
     );
   }

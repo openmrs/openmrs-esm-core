@@ -154,7 +154,7 @@ describe('OpenmrsDateRangePicker', () => {
   });
 
   describe('size prop', () => {
-    /* eslint-disable testing-library/no-container, testing-library/no-node-access */
+    /* eslint-disable testing-library/no-node-access */
     const getInputsWrapper = (container: HTMLElement) =>
       Array.from(container.querySelectorAll('div')).find((el) => el.className.includes('inputsWrapper')) ?? null;
 
@@ -185,7 +185,7 @@ describe('OpenmrsDateRangePicker', () => {
       expect(wrapper).toHaveClass(styles.inputsWrapperLg);
       expect(screen.getByRole('button')).toHaveClass(styles.flatButtonLg);
     });
-    /* eslint-enable testing-library/no-container, testing-library/no-node-access */
+    /* eslint-enable testing-library/no-node-access */
   });
 
   describe('calendar popover', () => {

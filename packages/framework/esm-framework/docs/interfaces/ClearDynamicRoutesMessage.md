@@ -2,7 +2,7 @@
 
 # Interface: ClearDynamicRoutesMessage
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L34)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L33)
 
 ## Extends
 
