@@ -42,9 +42,9 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 // eslint-disable-next-line no-restricted-imports
 import { isArray, merge, mergeWith } from 'lodash';
-import { inc } from 'semver';
+import { inc, parse } from 'semver';
+import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
 import rspack, {
-  container,
   CopyRspackPlugin,
   DefinePlugin,
   type ModuleOptions,
@@ -59,7 +59,44 @@ type OpenmrsRspackConfig = Omit<Partial<RspackConfiguration>, 'module'> & {
 };
 
 const production = 'production';
-const { ModuleFederationPlugin } = container;
+
+// Read from our own pin rather than `@module-federation/enhanced/package.json`, which its `exports` map
+// makes unreadable. `parse` rather than `coerce`, so that loosening the pin to a range disables the skew
+// warning instead of misreporting it: `coerce` turns `2.x` and `^2` into 2.0, which would warn forever.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const moduleFederationPin: string = require('../package.json').dependencies['@module-federation/enhanced'];
+const moduleFederationVersion = parse(moduleFederationPin);
+
+/**
+ * Prepended to this app's entry chunks. Without it, an app running under an app shell too old to
+ * publish the runtime globals fails with a `TypeError` from inside minified runtime code. All three
+ * globals are checked because `_FEDERATION_ERROR_CODES` is what describes the failure, and a runtime
+ * minor differing from the app shell's warns. `@openmrs/webpack-config` has a copy of this; keep them in step.
+ */
+function buildFederationRuntimeGuard(appName: string, expectedMinor: string | undefined) {
+  const missingRuntime =
+    "(function(){var g=typeof globalThis!=='undefined'?globalThis:self;" +
+    "if(typeof g._FEDERATION_RUNTIME_CORE==='undefined'||typeof g._FEDERATION_SDK==='undefined'||typeof g._FEDERATION_ERROR_CODES==='undefined'){" +
+    'throw new Error(' +
+    JSON.stringify(appName) +
+    " + ' cannot start: the OpenMRS app shell serving this page does not provide the Module Federation runtime. " +
+    'This app was built with newer OpenMRS tooling than the app shell, so either upgrade @openmrs/esm-app-shell, ' +
+    "or rebuild this app with tooling matching the app shell.');}";
+
+  // Skipped rather than always warning if the pin couldn't be coerced to a version.
+  const skew = expectedMinor
+    ? 'var from=g._FEDERATION_RUNTIME_CORE_FROM;' +
+      'if(from&&from.version&&String(from.version).split(".").slice(0,2).join(".")!==' +
+      JSON.stringify(expectedMinor) +
+      '){console.warn(' +
+      JSON.stringify(appName) +
+      " + ' was built against Module Federation " +
+      expectedMinor +
+      ".x but the app shell provides ' + from.version + '. Shared dependencies may not de-duplicate correctly.');}"
+    : '';
+
+  return missingRuntime + skew + '})();';
+}
 
 function getFrameworkVersion() {
   try {
@@ -293,6 +330,15 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         // Look in the `esm-dynamic-loading` framework package for an explanation of how modules
         // get loaded into the application.
         name,
+        // `externalRuntime` reads `@module-federation/runtime-core` from the `_FEDERATION_RUNTIME_CORE`
+        // global rather than embedding a copy per remote. The app shell publishes it, so a remote built
+        // with this config only runs in an app shell new enough to provide it.
+        experiments: {
+          externalRuntime: true,
+        },
+        // Nothing consumes an mf-manifest or federated types here, so skip both plugins.
+        manifest: false,
+        dts: false,
         library: { type: 'var', name: slugify(name) },
         filename,
         exposes: {
@@ -342,6 +388,31 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
             },
           ],
         }),
+      // The rest of what a remote can borrow from the app shell; see `src/federation-runtime.ts` there.
+      // `@module-federation/runtime` and `webpack-bundler-runtime` stay bundled (~14 kB) because they
+      // cache a federation instance at module scope: a shared copy hands remotes the app shell's instance,
+      // which then rejects being re-initialized under the remote's name (RUNTIME-010).
+      //
+      // Note that sharing `runtime-core` means the app shell's build identifier is compiled into the
+      // runtime every app uses, so each app's federation instance reports the app shell's id rather than
+      // its own. Harmless while remotes are loaded through the container protocol from the import map,
+      // but it is a real change if we ever adopt Module Federation's own remote loading.
+      //
+      // A plugin rather than an `externals` entry because an app replacing `overrides.externals` would
+      // silently bundle its own copies again.
+      new rspack.ExternalsPlugin('global', {
+        '@module-federation/sdk': '_FEDERATION_SDK',
+        '@module-federation/error-codes': '_FEDERATION_ERROR_CODES',
+      }),
+      new rspack.BannerPlugin({
+        raw: true,
+        entryOnly: true,
+        test: /\.[cm]?js$/,
+        banner: buildFederationRuntimeGuard(
+          name,
+          moduleFederationVersion ? `${moduleFederationVersion.major}.${moduleFederationVersion.minor}` : undefined,
+        ),
+      }),
       new StatsWriterPlugin({
         filename: `${filename}.buildmanifest.json`,
         stats: {
