@@ -15,11 +15,11 @@ import * as sdk from '@module-federation/sdk';
 
 declare global {
   // `var` is what declares a property on `globalThis`; `let`/`const` do not.
-  // eslint-disable-next-line no-var
-  var _FEDERATION_ERROR_CODES: typeof errorCodes;
-  // eslint-disable-next-line no-var
-  var _FEDERATION_SDK: typeof sdk;
-  // eslint-disable-next-line no-var
+   
+  var _OPENMRS_FEDERATION_ERROR_CODES: typeof errorCodes;
+   
+  var _OPENMRS_FEDERATION_SDK: typeof sdk;
+   
   var _FEDERATION_RUNTIME_CORE: unknown;
 }
 
@@ -28,8 +28,8 @@ declare global {
  * ever declares `sideEffects: false`.
  */
 export function publishFederationRuntime() {
-  globalThis._FEDERATION_ERROR_CODES = errorCodes;
-  globalThis._FEDERATION_SDK = sdk;
+  globalThis._OPENMRS_FEDERATION_ERROR_CODES = errorCodes;
+  globalThis._OPENMRS_FEDERATION_SDK = sdk;
 
   // Reporting this here means a mis-built app shell says so itself, rather than every app in the
   // distribution claiming the app shell is too old.

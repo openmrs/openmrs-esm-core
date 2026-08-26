@@ -8,15 +8,15 @@ const shellRoot = resolve(__dirname, '..');
 
 describe('the Module Federation runtime the app shell publishes for remotes', () => {
   it('publishes the runtime helpers under the names remote entries read', async () => {
-    expect(globalThis._FEDERATION_SDK).toBeUndefined();
-    expect(globalThis._FEDERATION_ERROR_CODES).toBeUndefined();
+    expect(globalThis._OPENMRS_FEDERATION_SDK).toBeUndefined();
+    expect(globalThis._OPENMRS_FEDERATION_ERROR_CODES).toBeUndefined();
 
     const { publishFederationRuntime } = await import('./federation-runtime');
     publishFederationRuntime();
 
     // Indexed by string so a rename in the module can't rename the assertion along with it.
-    expect(Object.keys(globalThis['_FEDERATION_SDK'] ?? {}).length).toBeGreaterThan(0);
-    expect(Object.keys(globalThis['_FEDERATION_ERROR_CODES'] ?? {}).length).toBeGreaterThan(0);
+    expect(Object.keys(globalThis['_OPENMRS_FEDERATION_SDK'] ?? {}).length).toBeGreaterThan(0);
+    expect(Object.keys(globalThis['_OPENMRS_FEDERATION_ERROR_CODES'] ?? {}).length).toBeGreaterThan(0);
   });
 
   it('is configured to publish the runtime that remote entries expect', () => {

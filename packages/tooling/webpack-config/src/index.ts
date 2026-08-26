@@ -73,13 +73,13 @@ const moduleFederationVersion = parse(moduleFederationPin);
 /**
  * Prepended to this app's entry chunks. Without it, an app running under an app shell too old to
  * publish the runtime globals fails with a `TypeError` from inside minified runtime code. All three
- * globals are checked because `_FEDERATION_ERROR_CODES` is what describes the failure, and a runtime
+ * globals are checked because `_OPENMRS_FEDERATION_ERROR_CODES` is what describes the failure, and a runtime
  * minor differing from the app shell's warns. `@openmrs/rspack-config` has a copy of this; keep them in step.
  */
 function buildFederationRuntimeGuard(appName: string, expectedMinor: string | undefined) {
   const missingRuntime =
     "(function(){var g=typeof globalThis!=='undefined'?globalThis:self;" +
-    "if(typeof g._FEDERATION_RUNTIME_CORE==='undefined'||typeof g._FEDERATION_SDK==='undefined'||typeof g._FEDERATION_ERROR_CODES==='undefined'){" +
+    "if(typeof g._FEDERATION_RUNTIME_CORE==='undefined'||typeof g._OPENMRS_FEDERATION_SDK==='undefined'||typeof g._OPENMRS_FEDERATION_ERROR_CODES==='undefined'){" +
     'throw new Error(' +
     JSON.stringify(appName) +
     " + ' cannot start: the OpenMRS app shell serving this page does not provide the Module Federation runtime. " +
@@ -395,8 +395,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       // `ExternalsPlugin` block in `@openmrs/rspack-config` for why only these two are shareable,
       // what still ships per remote, and why this is a plugin rather than an `externals` entry.
       new ExternalsPlugin('global', {
-        '@module-federation/sdk': '_FEDERATION_SDK',
-        '@module-federation/error-codes': '_FEDERATION_ERROR_CODES',
+        '@module-federation/sdk': '_OPENMRS_FEDERATION_SDK',
+        '@module-federation/error-codes': '_OPENMRS_FEDERATION_ERROR_CODES',
       }),
       new BannerPlugin({
         raw: true,

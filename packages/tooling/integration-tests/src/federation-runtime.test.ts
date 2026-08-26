@@ -30,8 +30,8 @@ function publishedRuntimeContext() {
       getElementsByTagName: () => [],
     },
     _FEDERATION_RUNTIME_CORE: runtimeCore,
-    _FEDERATION_SDK: sdk,
-    _FEDERATION_ERROR_CODES: errorCodes,
+    _OPENMRS_FEDERATION_SDK: sdk,
+    _OPENMRS_FEDERATION_ERROR_CODES: errorCodes,
     _FEDERATION_RUNTIME_CORE_FROM: { name: '@openmrs/esm-app-shell', version: '2.8.1' },
   };
   context.self = context;
@@ -173,8 +173,8 @@ describe.each(['rspack', 'webpack'] as const)('%s remote entries', (bundler) => 
     // would pass either way.
     const externals = moduleIdentifiers.filter((id) => id.startsWith('external'));
     expect(externals.join('\n')).toContain('_FEDERATION_RUNTIME_CORE');
-    expect(externals.join('\n')).toContain('_FEDERATION_SDK');
-    expect(externals.join('\n')).toContain('_FEDERATION_ERROR_CODES');
+    expect(externals.join('\n')).toContain('_OPENMRS_FEDERATION_SDK');
+    expect(externals.join('\n')).toContain('_OPENMRS_FEDERATION_ERROR_CODES');
   }, 180_000);
 
   it('refuses to start, with a diagnosable error, when no app shell published the runtime', async () => {
@@ -190,7 +190,7 @@ describe.each(['rspack', 'webpack'] as const)('%s remote entries', (bundler) => 
     const { contents } = await buildRemoteEntry(bundler);
     const context = publishedRuntimeContext();
 
-    // Without this, a guard checking a global nobody publishes — `_FEDERATION_SDKK`, say — would satisfy
+    // Without this, a guard checking a global nobody publishes — `_OPENMRS_FEDERATION_SDK`, say — would satisfy
     // every other assertion here while making every app in the distribution permanently unstartable.
     expect(() => new Script(contents).runInContext(context)).not.toThrow();
 
