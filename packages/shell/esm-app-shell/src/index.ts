@@ -1,4 +1,9 @@
+import { publishFederationRuntime } from './federation-runtime';
 import type { SpaConfig } from '@openmrs/esm-framework/src/internal';
+
+// Before anything else: every frontend module reads the Module Federation runtime from the globals
+// this publishes, and modules are only ever loaded from code reached via `initializeSpa` below.
+publishFederationRuntime();
 
 function _createSpaBase(baseUrl: string) {
   return () => baseUrl;
