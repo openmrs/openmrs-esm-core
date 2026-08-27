@@ -12,30 +12,53 @@ let devMode = false;
 // getCurrentPageMap returns the overrides as they were when the page loaded).
 let initialOverrideSnapshot: ImportMap | null = null;
 
+// Memoizes the base map so that the import map is fetched at most once per page load.
+let baseMapPromise: Promise<ImportMap> | null = null;
+
 /**
  * Reads all `<script type="systemjs-importmap">` tags from the DOM and merges
  * them into a single {@link ImportMap}. Tags with a `src` attribute are fetched;
  * inline tags have their `textContent` parsed as JSON.
+ *
+ * A read in which every tag was parsed successfully is cached and reused by all later
+ * callers. A read that lost one or more tags to an error is returned as-is but not cached, so
+ * that a transient network failure doesn't leave the page with a permanently incomplete map.
  */
 async function readBaseMap(): Promise<ImportMap> {
+  if (!baseMapPromise) {
+    baseMapPromise = loadBaseMap().then(({ map, complete }) => {
+      if (!complete) {
+        baseMapPromise = null;
+      }
+      return map;
+    });
+  }
+
+  return baseMapPromise;
+}
+
+async function loadBaseMap(): Promise<{ map: ImportMap; complete: boolean }> {
   const scripts = document.querySelectorAll<HTMLScriptElement>('script[type="systemjs-importmap"]');
   const maps: ImportMap[] = [];
+  let complete = true;
 
   for (let i = 0; i < scripts.length; i++) {
     const script = scripts[i];
     try {
       if (script.src) {
-        const response = await fetch(script.src);
+        // `credentials: 'omit'` matches the `crossorigin="anonymous"` preload
+        const response = await fetch(script.src, { credentials: 'omit' });
         maps.push(await response.json());
       } else if (script.textContent) {
         maps.push(JSON.parse(script.textContent));
       }
     } catch (e) {
+      complete = false;
       console.warn(`[import-maps] Failed to parse import map from script tag at index ${i}`, e);
     }
   }
 
-  return mergeMaps(maps);
+  return { map: mergeMaps(maps), complete };
 }
 
 function mergeMaps(maps: ImportMap[]): ImportMap {

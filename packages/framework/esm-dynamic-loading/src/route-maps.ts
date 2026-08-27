@@ -11,21 +11,44 @@ let devMode = false;
 // getCurrentRouteMap returns the overrides as they were when the page loaded).
 let initialOverrideSnapshot: OpenmrsRoutes | null = null;
 
+// Memoizes the base map so that the routes registry is fetched at most once per page load.
+let baseMapPromise: Promise<OpenmrsRoutes> | null = null;
+
 /**
  * Reads all `<script type="openmrs-routes">` tags from the DOM and merges
  * them into a single {@link OpenmrsRoutes} object. Tags with a `src` attribute
  * are fetched; inline tags have their `textContent` parsed as JSON.
+ *
+ * A read in which no tag threw is cached and reused by all later callers. A read that lost a
+ * tag to an error is returned as-is but not cached, so that a transient network failure doesn't
+ * leave the page with a permanently incomplete map. A tag that loads but fails validation is
+ * dropped without invalidating the cache, since re-reading it would only fail the same way.
  */
 async function readBaseMap(): Promise<OpenmrsRoutes> {
+  if (!baseMapPromise) {
+    baseMapPromise = loadBaseMap().then(({ map, complete }) => {
+      if (!complete) {
+        baseMapPromise = null;
+      }
+      return map;
+    });
+  }
+
+  return baseMapPromise;
+}
+
+async function loadBaseMap(): Promise<{ map: OpenmrsRoutes; complete: boolean }> {
   const scripts = document.querySelectorAll<HTMLScriptElement>("script[type='openmrs-routes']");
   const maps: OpenmrsRoutes[] = [];
+  let complete = true;
 
   for (let i = 0; i < scripts.length; i++) {
     const script = scripts[i];
     try {
       let parsed: unknown;
       if (script.src) {
-        const response = await fetch(script.src);
+        // `credentials: 'omit'` matches the `crossorigin="anonymous"` preload
+        const response = await fetch(script.src, { credentials: 'omit' });
         parsed = await response.json();
       } else if (script.textContent) {
         parsed = JSON.parse(script.textContent);
@@ -35,11 +58,12 @@ async function readBaseMap(): Promise<OpenmrsRoutes> {
         maps.push(parsed);
       }
     } catch (e) {
+      complete = false;
       console.warn(`[route-maps] Failed to parse routes from script tag at index ${i}`, e);
     }
   }
 
-  return mergeRouteMaps(maps);
+  return { map: mergeRouteMaps(maps), complete };
 }
 
 function mergeRouteMaps(maps: OpenmrsRoutes[]): OpenmrsRoutes {
