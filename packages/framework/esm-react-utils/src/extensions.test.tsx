@@ -7,6 +7,7 @@ import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 import {
   attach,
+  getExtensionInstancesStore,
   getExtensionNameFromId,
   registerExtension,
   updateInternalExtensionStore,
@@ -278,6 +279,54 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     render(<App />);
 
     expect(await screen.findByText('Spanish hola')).toBeInTheDocument();
+  });
+});
+
+describe('Extension teardown', () => {
+  beforeEach(() => {
+    updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
+    getExtensionInstancesStore().setState({ instances: new Map() });
+  });
+
+  it('releases the instance when the slot unmounts while the bundle is still loading', async () => {
+    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    let releaseLoad = () => {};
+    const loadGate = new Promise<void>((resolve) => (releaseLoad = resolve));
+    const lifecycle = getSyncLifecycle(() => <div>Fred</div>, {
+      moduleName: 'esm-flintstone',
+      featureName: 'Flintstone',
+      disableTranslations: true,
+    });
+
+    registerExtension({
+      name: 'Fred',
+      moduleName: 'esm-flintstone',
+      load: async () => {
+        await loadGate;
+        return lifecycle();
+      },
+      meta: {},
+    });
+    attach('Box', 'Fred');
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-flintstone',
+      featureName: 'Flintstone',
+      disableTranslations: true,
+    })(() => <ExtensionSlot name="Box" />);
+
+    const { unmount } = render(<App />);
+    await act(async () => {});
+    expect(getExtensionInstancesStore().getState().instances.size).toBe(1);
+
+    unmount();
+    releaseLoad();
+
+    await waitFor(() => expect(getExtensionInstancesStore().getState().instances.size).toBe(0));
+    // React detaches the ref by calling it with `null`; taking that for a render request starts a
+    // second render that resolves to null and clears the parcel still coming up.
+    expect(consoleWarn).not.toHaveBeenCalledWith(expect.stringContaining('no DOM element was available'));
+    consoleWarn.mockRestore();
   });
 });
 

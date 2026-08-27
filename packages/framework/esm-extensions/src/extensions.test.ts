@@ -14,7 +14,16 @@ import {
   updateExtensionSlotState,
 } from './extensions';
 import type { ExtensionInfo, ExtensionInternalStore, ExtensionRegistration } from './store';
-import { getExtensionInternalStore } from './store';
+import {
+  batchExtensionUpdates,
+  getExtensionInstancesStore,
+  getExtensionInternalStore,
+  getExtensionStore,
+  registerExtensionInstance,
+  unregisterExtensionInstance,
+  updateInternalExtensionStore,
+} from './store';
+import { configExtensionStore } from '@openmrs/esm-config';
 
 // Minimal mocking - only what we need for fine-grained control
 vi.mock('@openmrs/esm-api', () => ({
@@ -54,7 +63,6 @@ function createMockExtension(name: string, overrides: Partial<ExtensionRegistrat
     load: vi.fn(async () => ({ bootstrap: vi.fn(), mount: vi.fn(), unmount: vi.fn() })),
     moduleName: `${name}-module`,
     meta: {},
-    instances: [],
     ...overrides,
   };
 }
@@ -477,5 +485,240 @@ describe('getAssignedExtensions', () => {
     const result = getAssignedExtensions(slotName);
 
     expect(result[0].meta).toEqual(meta);
+  });
+});
+
+describe('batchExtensionUpdates', () => {
+  it('should recompute the output store once for a batch of registrations', () => {
+    const extensionStore = getExtensionStore();
+    let writes = 0;
+    const unsubscribe = extensionStore.subscribe(() => writes++);
+    const slotNames = [0, 1, 2].map((i) => getUniqueName(`batch-slot-${i}`));
+
+    batchExtensionUpdates(() => {
+      for (let i = 0; i < 15; i++) {
+        const extensionName = getUniqueName('batched-extension');
+        registerExtension(createMockExtension(extensionName));
+        attach(slotNames[i % slotNames.length], extensionName);
+      }
+
+      expect(writes).toBe(0);
+    });
+    unsubscribe();
+
+    expect(writes).toBe(1);
+
+    for (const slotName of slotNames) {
+      expect(getAssignedExtensions(slotName)).toHaveLength(5);
+    }
+  });
+
+  it('should flush pending recomputation when the batched work throws', () => {
+    const extensionStore = getExtensionStore();
+    const slotName = getUniqueName('throwing-slot');
+    const extensionName = getUniqueName('throwing-extension');
+    let writes = 0;
+    const unsubscribe = extensionStore.subscribe(() => writes++);
+
+    expect(() =>
+      batchExtensionUpdates(() => {
+        registerExtension(createMockExtension(extensionName));
+        attach(slotName, extensionName);
+        throw new Error('boom');
+      }),
+    ).toThrow('boom');
+    unsubscribe();
+
+    expect(writes).toBe(1);
+    expect(extensionStore.getState().slots[slotName].assignedExtensions).toHaveLength(1);
+  });
+
+  it('should only flush at the end of the outermost batch when batches nest', () => {
+    const extensionStore = getExtensionStore();
+    const outerSlot = getUniqueName('outer-slot');
+    const innerSlot = getUniqueName('inner-slot');
+    let writes = 0;
+    const unsubscribe = extensionStore.subscribe(() => writes++);
+
+    batchExtensionUpdates(() => {
+      const outerExtension = getUniqueName('outer-extension');
+      registerExtension(createMockExtension(outerExtension));
+      attach(outerSlot, outerExtension);
+
+      batchExtensionUpdates(() => {
+        const innerExtension = getUniqueName('inner-extension');
+        registerExtension(createMockExtension(innerExtension));
+        attach(innerSlot, innerExtension);
+      });
+
+      expect(writes).toBe(0);
+    });
+    unsubscribe();
+
+    expect(writes).toBe(1);
+    expect(getAssignedExtensions(outerSlot)).toHaveLength(1);
+    expect(getAssignedExtensions(innerSlot)).toHaveLength(1);
+  });
+});
+
+describe('the bridge to the config system', () => {
+  function mountInstances(slotName: string, extensionName: string, count: number, firstId = 0) {
+    const instanceIds: Array<string> = [];
+
+    for (let i = firstId; i < firstId + count; i++) {
+      const instanceId = `${slotName}/${extensionName}-${i}`;
+      instanceIds.push(instanceId);
+      registerExtensionInstance({
+        instanceId,
+        extensionName,
+        extensionModuleName: `${extensionName}-module`,
+        id: extensionName,
+        slotName,
+        slotModuleName: 'test-module',
+      });
+    }
+
+    return instanceIds;
+  }
+
+  it('should record one entry per slot and extension however many copies are rendered', () => {
+    const slotName = getUniqueName('dedupe-slot');
+    const extensionName = getUniqueName('dedupe-extension');
+    let writes = 0;
+    const unsubscribe = configExtensionStore.subscribe(() => writes++);
+
+    mountInstances(slotName, extensionName, 50);
+    unsubscribe();
+
+    expect(configExtensionStore.getState().mountedExtensions.filter((r) => r.slotName === slotName)).toEqual([
+      {
+        slotModuleName: 'test-module',
+        extensionModuleName: `${extensionName}-module`,
+        slotName,
+        extensionId: extensionName,
+      },
+    ]);
+    // A list renders the same slot once per row, and every one of those mounts rewrites this store
+    // and re-derives a config for everything else on screen. Only the first copy is a real change.
+    expect(writes).toBe(1);
+  });
+
+  it('should keep the entry until the last copy of an extension is gone', () => {
+    const slotName = getUniqueName('drain-slot');
+    const extensionName = getUniqueName('drain-extension');
+    const instanceIds = mountInstances(slotName, extensionName, 10);
+
+    let writes = 0;
+    const unsubscribe = configExtensionStore.subscribe(() => writes++);
+
+    for (const instanceId of instanceIds.slice(0, -1)) {
+      unregisterExtensionInstance(instanceId);
+    }
+
+    expect(configExtensionStore.getState().mountedExtensions.filter((r) => r.slotName === slotName)).toHaveLength(1);
+    expect(writes).toBe(0);
+
+    unregisterExtensionInstance(instanceIds[instanceIds.length - 1]);
+    unsubscribe();
+
+    expect(configExtensionStore.getState().mountedExtensions.filter((r) => r.slotName === slotName)).toHaveLength(0);
+    expect(writes).toBe(1);
+  });
+
+  it('should notify on every mount even though the instance map keeps its identity', () => {
+    const slotName = getUniqueName('identity-slot');
+    const extensionName = getUniqueName('identity-extension');
+    const instancesStore = getExtensionInstancesStore();
+    const seen: Array<ReadonlyMap<string, unknown>> = [];
+    let notifications = 0;
+
+    const unsubscribe = instancesStore.subscribe((state) => {
+      notifications++;
+      seen.push(state.instances);
+    });
+
+    const before = instancesStore.getState().instances.size;
+    const instanceIds = mountInstances(slotName, extensionName, 3);
+    unregisterExtensionInstance(instanceIds[0]);
+    unsubscribe();
+
+    // The map is mutated in place, so consumers have to key off the state object around it.
+    expect(notifications).toBe(4);
+    expect(new Set(seen).size).toBe(1);
+    expect(instancesStore.getState().instances.size).toBe(before + 2);
+  });
+
+  it('should record separate entries for the same extension in different slots', () => {
+    const extensionName = getUniqueName('shared-extension');
+    const slotNames = [getUniqueName('slot-a'), getUniqueName('slot-b')];
+
+    for (const slotName of slotNames) {
+      mountInstances(slotName, extensionName, 3);
+    }
+
+    const records = configExtensionStore
+      .getState()
+      .mountedExtensions.filter((r) => slotNames.includes(r.slotName))
+      .map((r) => r.slotName);
+
+    expect(records.sort()).toEqual([...slotNames].sort());
+  });
+});
+
+describe('extension ordering', () => {
+  it('should place a configured order ahead of a registered one', () => {
+    const slotName = getUniqueName('order-configured');
+    const [first, second] = [getUniqueName('cfg-a'), getUniqueName('cfg-b')];
+
+    registerExtension(createMockExtension(first, { order: 0 }));
+    registerExtension(createMockExtension(second));
+    attach(slotName, first);
+    attach(slotName, second);
+    registerExtensionSlot('test-module', slotName);
+    updateInternalExtensionStore((state) => ({
+      ...state,
+      slots: { ...state.slots, [slotName]: { ...state.slots[slotName], config: { order: [second] } } },
+    }));
+
+    expect(getAssignedExtensions(slotName).map((e) => e.id)).toEqual([first, second]);
+  });
+
+  it('should place a registered order ahead of attachment order', () => {
+    const slotName = getUniqueName('order-registered');
+    const [unordered, ordered] = [getUniqueName('ord-none'), getUniqueName('ord-five')];
+
+    registerExtension(createMockExtension(unordered));
+    registerExtension(createMockExtension(ordered, { order: 5 }));
+    // Attached first, but has no order of its own, so it still sorts last.
+    attach(slotName, unordered);
+    attach(slotName, ordered);
+
+    expect(getAssignedExtensions(slotName).map((e) => e.id)).toEqual([ordered, unordered]);
+  });
+
+  it('should keep attachment order for extensions registered with the same order', () => {
+    const slotName = getUniqueName('order-tied');
+    const names = [getUniqueName('tie-a'), getUniqueName('tie-b'), getUniqueName('tie-c')];
+
+    for (const name of names) {
+      registerExtension(createMockExtension(name, { order: 3 }));
+      attach(slotName, name);
+    }
+
+    // The comparator returns 0 for these, so the result depends on the sort being stable.
+    expect(getAssignedExtensions(slotName).map((e) => e.id)).toEqual(names);
+  });
+
+  it('should order extensions with no ordering information after every other kind', () => {
+    const slotName = getUniqueName('order-bands');
+    const registered = getUniqueName('band-registered');
+    const attached = getUniqueName('band-attached');
+
+    registerExtension(createMockExtension(registered, { order: 1 }));
+    registerExtension(createMockExtension(attached));
+    attach(slotName, registered);
+    attach(slotName, attached);
+
+    expect(getAssignedExtensions(slotName).map((e) => e.id)).toEqual([registered, attached]);
   });
 });

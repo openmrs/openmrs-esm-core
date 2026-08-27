@@ -1,8 +1,8 @@
 /** @module @category Extension */
-import { mountRootParcel, type Parcel, type ParcelConfig } from 'single-spa';
+import { type LifeCycles, mountRootParcel, type Parcel, type ParcelConfig } from 'single-spa';
 import { getExtensionNameFromId, getExtensionRegistration } from './extensions';
 import { checkStatus } from './helpers';
-import { updateInternalExtensionStore } from './store';
+import { registerExtensionInstance, unregisterExtensionInstance } from './store';
 
 export interface CancelLoading {
   (): void;
@@ -35,44 +35,77 @@ export async function renderExtension(
     const { meta, moduleName, online, offline, load } = extensionRegistration;
 
     if (checkStatus(online, offline)) {
-      updateInternalExtensionStore((state) => {
-        const instance = {
-          domElement,
-          id: extensionId,
-          slotName: extensionSlotName,
-          slotModuleName: extensionSlotModuleName,
-        };
-        return {
-          ...state,
-          extensions: {
-            ...state.extensions,
-            [extensionName]: {
-              ...state.extensions[extensionName],
-              instances: [...state.extensions[extensionName].instances, instance],
-            },
-          },
-        };
+      const id = parcelCount++;
+      const instanceId = `${extensionSlotName}/${extensionId}-${id}`;
+
+      // Registered before loading so that the config system can start resolving this extension's
+      // config while its bundle is still in flight.
+      registerExtensionInstance({
+        instanceId,
+        extensionName,
+        extensionModuleName: moduleName,
+        id: extensionId,
+        slotName: extensionSlotName,
+        slotModuleName: extensionSlotModuleName,
       });
 
-      const lifecycle = await load();
-      const id = parcelCount++;
-      parcel = mountRootParcel(
-        renderFunction({
-          ...lifecycle,
-          name: `${extensionSlotName}/${extensionName}-${id}`,
-        }),
-        {
-          ...additionalProps,
-          _meta: meta,
-          _extensionContext: {
-            extensionId,
-            extensionSlotName,
-            extensionSlotModuleName,
-            extensionModuleName: moduleName,
+      let lifecycle: LifeCycles;
+
+      try {
+        lifecycle = await load();
+      } catch (e) {
+        // Releasing the record runs the config recomputation cascade, which can itself throw;
+        // letting that escape would replace the load failure that actually matters.
+        try {
+          unregisterExtensionInstance(instanceId);
+        } catch (cleanupError) {
+          console.error(`Recomputing configuration after '${extensionId}' failed to load also failed`, cleanupError);
+        }
+
+        throw e;
+      }
+
+      const forget = () => unregisterExtensionInstance(instanceId);
+
+      try {
+        parcel = mountRootParcel(
+          renderFunction({
+            ...lifecycle,
+            name: `${extensionSlotName}/${extensionName}-${id}`,
+          }),
+          {
+            ...additionalProps,
+            _meta: meta,
+            _extensionContext: {
+              extensionId,
+              extensionSlotName,
+              extensionSlotModuleName,
+              extensionModuleName: moduleName,
+            },
+            domElement,
           },
-          domElement,
-        },
-      );
+        );
+      } catch (e) {
+        try {
+          forget();
+        } catch (cleanupError) {
+          console.error(`Recomputing configuration after '${extensionId}' failed to mount also failed`, cleanupError);
+        }
+
+        throw e;
+      }
+
+      // A parcel that fails to bootstrap or mount never settles `unmountPromise`, so the mount
+      // rejection has to release the record too. single-spa hard-fails parcels, so its own error
+      // handlers never see either failure and the rejected promise is the only channel left.
+      parcel.mountPromise.then(undefined, (err) => {
+        console.error(`Extension '${extensionId}' in slot '${extensionSlotName}' failed to mount`, err);
+        forget();
+      });
+      parcel.unmountPromise.then(forget, (err) => {
+        console.error(`Extension '${extensionId}' in slot '${extensionSlotName}' failed to unmount`, err);
+        forget();
+      });
     }
   } else {
     console.warn(`Tried to render ${extensionId} into ${extensionSlotName} but no DOM element was available.`);

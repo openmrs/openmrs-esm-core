@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@carbon/react';
 import {
   CloseIcon,
-  type ExtensionInfo,
+  type ExtensionInstance,
+  type ExtensionInstancesStore,
+  getExtensionInstancesStore,
   getExtensionInternalStore,
   useStore,
   useStoreWithActions,
@@ -31,31 +33,30 @@ export interface ExtensionOverlayTarget {
   extensionName: string;
   slotModuleName: string;
   slotName: string;
-  extensionInstance: ExtensionInfo['instances'][number];
+  extensionInstance: ExtensionInstance;
 }
 
 /**
- * Flattens `extensions[name].instances` into a flat list of overlay targets. `instances` is an
- * `Array<ExtensionInstance>`, so it must be iterated directly. Treating it as a nested object (via
- * `Object.entries`) yields array indices as the module name and instance property names as the slot
- * name, so the generated selectors never match a real extension DOM node.
+ * Turns the instance store's records into overlay targets. Only currently-rendered extensions
+ * have an instance, so each target names a slot and extension the DOM is expected to contain.
  */
 export function getExtensionOverlayTargets(
-  extensions: Record<string, ExtensionInfo> | undefined,
+  instances: ExtensionInstancesStore['instances'] | undefined,
 ): Array<ExtensionOverlayTarget> {
-  return Object.entries(extensions ?? {}).flatMap(([extensionName, extensionInfo]) =>
-    (extensionInfo.instances ?? []).map((extensionInstance) => ({
-      extensionName,
-      slotModuleName: extensionInstance.slotModuleName,
-      slotName: extensionInstance.slotName,
-      extensionInstance,
-    })),
-  );
+  return Array.from(instances?.values() ?? [], (extensionInstance) => ({
+    extensionName: extensionInstance.extensionName,
+    slotModuleName: extensionInstance.slotModuleName,
+    slotName: extensionInstance.slotName,
+    extensionInstance,
+  }));
 }
 
 export default function UiEditor() {
   const { t } = useTranslation();
   const { slots, extensions } = useStore(getExtensionInternalStore());
+  // Depended on as a whole below: the instance map is mutated in place, so only the state
+  // object around it changes identity when an extension mounts or unmounts.
+  const instancesState = useStore(getExtensionInstancesStore());
   const { isOpen: areImplementerToolsOpen } = useStore(implementerToolsStore);
 
   const getExtensionCount = (slotName: string, moduleName: string) => {
@@ -96,13 +97,13 @@ export default function UiEditor() {
 
   const extensionElements = useMemo(
     () =>
-      getExtensionOverlayTargets(extensions).map((target) => ({
+      getExtensionOverlayTargets(instancesState.instances).map((target) => ({
         ...target,
         element: document.querySelector(
           `*[data-extension-slot-name="${target.slotName}"][data-extension-slot-module-name="${target.slotModuleName}"] *[data-extension-id="${target.extensionInstance.id}"]`,
         ) as HTMLElement | null,
       })),
-    [extensions],
+    [instancesState],
   );
 
   return (

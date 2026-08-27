@@ -5,7 +5,12 @@ import '@testing-library/jest-dom/vitest';
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
-import { attach, registerExtension, updateInternalExtensionStore } from '../../../esm-extensions/src';
+import {
+  attach,
+  getExtensionInstancesStore,
+  registerExtension,
+  updateInternalExtensionStore,
+} from '../../../esm-extensions/src';
 import {
   ExtensionSlot,
   getSyncLifecycle,
@@ -36,6 +41,9 @@ vi.mock('@openmrs/esm-api', async () => {
 
 describe('Interaction between configuration and extension systems', () => {
   beforeEach(() => {
+    // An instance outliving its module's schema makes the config system derive a config for an
+    // extension this test never registered.
+    getExtensionInstancesStore().setState({ instances: new Map() });
     temporaryConfigStore.setState({ config: {} });
     configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
     mockSessionStore.setState({});

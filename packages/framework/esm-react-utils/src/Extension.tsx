@@ -21,52 +21,72 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divPro
   const { extension } = useContext(ComponentContext);
   const parcel = useRef<Parcel | null>(null);
   const updatePromise = useRef<Promise<void>>(Promise.resolve());
+  const isUnmounted = useRef(false);
 
-  const ref = useCallback((node: HTMLDivElement) => {
-    if (
-      extension?.extensionSlotName &&
-      extension.extensionSlotModuleName &&
-      extension.extensionSlotModuleName &&
-      !parcel.current
-    ) {
-      renderExtension(
-        node,
-        extension.extensionSlotName,
-        extension.extensionSlotModuleName,
-        extension.extensionId,
-        undefined,
-        state,
-      ).then((newParcel: Parcel) => {
-        parcel.current = newParcel;
-      });
+  // Takes the parcel to tear down rather than reading `parcel.current`, which can be reassigned
+  // between scheduling this and running it.
+  const unmountParcel = useCallback((target: Parcel | null) => {
+    if (!target) {
+      return;
+    }
+
+    const unmountWhenMounted = () => {
+      if (target.getStatus() === 'MOUNTED') {
+        target.unmount();
+      }
+    };
+
+    switch (target.getStatus()) {
+      case 'MOUNTED':
+        target.unmount();
+        break;
+      case 'UPDATING':
+        // The rejection is reported by whoever owns `updatePromise`; here it only matters that a
+        // failed update still runs the teardown, or the parcel is left broken and mounted.
+        updatePromise.current?.then(unmountWhenMounted, unmountWhenMounted);
+        break;
+      default:
+        // Any other status: the parcel either hasn't finished coming up or is already gone.
+        // `mountPromise` has settled or will, and `unmountWhenMounted` re-checks the status.
+        target.mountPromise.then(unmountWhenMounted, () => {});
     }
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (parcel && parcel.current) {
-        const status = parcel.current.getStatus();
-        switch (status) {
-          case 'MOUNTING':
-            parcel.current.mountPromise.then(() => {
-              if (parcel.current?.getStatus() === 'MOUNTED') {
-                parcel.current.unmount();
-              }
-            });
-            break;
-          case 'MOUNTED':
-            parcel.current.unmount();
-            break;
-          case 'UPDATING':
-            if (updatePromise.current) {
-              updatePromise.current.then(() => {
-                if (parcel.current?.getStatus() === 'MOUNTED') {
-                  parcel.current.unmount();
-                }
-              });
-            }
-        }
+  const ref = useCallback((node: HTMLDivElement | null) => {
+    // React detaches a ref by calling it with null. That is not a request to render anything, and
+    // rendering into it warns and then resolves to null — clearing a parcel that may still be
+    // coming up, which leaves it mounted into a detached node for the life of the page.
+    if (!node || parcel.current || !extension?.extensionSlotName || !extension.extensionSlotModuleName) {
+      return;
+    }
+
+    renderExtension(
+      node,
+      extension.extensionSlotName,
+      extension.extensionSlotModuleName,
+      extension.extensionId,
+      undefined,
+      state,
+    ).then((newParcel: Parcel | null) => {
+      parcel.current = newParcel;
+
+      // Loading an extension's bundle can outlast the component that asked for it: the cleanup
+      // effect has already run and saw no parcel, so teardown has to happen here instead, or the
+      // parcel mounts into a detached node and its instance record outlives the page.
+      if (isUnmounted.current) {
+        unmountParcel(newParcel);
       }
+    });
+  }, []);
+
+  useEffect(() => {
+    // Reset on every run, not just the first: StrictMode mounts, tears down and mounts again, so
+    // a flag only ever set by the cleanup would still read "unmounted" for the live component.
+    isUnmounted.current = false;
+
+    return () => {
+      isUnmounted.current = true;
+      unmountParcel(parcel.current);
     };
   }, []);
 

@@ -264,7 +264,98 @@ export interface ImplementerToolsConfigStore {
   config: Config;
 }
 
-/** @internal */
-export const implementerToolsConfigStore = createGlobalStore<ImplementerToolsConfigStore>('config-implementer-tools', {
+const baseImplementerToolsConfigStore = createGlobalStore<ImplementerToolsConfigStore>('config-implementer-tools', {
   config: {},
 });
+
+/**
+ * Deriving this config means cloning, walking and deep-comparing every module's schema, which
+ * makes it by a wide margin the most expensive thing the config system computes — and nothing but
+ * the implementer tools panel ever reads it. So it is only kept current while something is
+ * subscribed. Once the panel closes and the last subscriber goes away, config changes just mark it
+ * stale and the work stops again.
+ */
+let implementerToolsSubscribers = 0;
+let implementerToolsConfigStale = true;
+let isRecomputing = false;
+let recomputeImplementerToolsConfig: (() => void) | undefined;
+
+/**
+ * Registers how to derive the implementer tools config; the store decides whether to.
+ * @internal
+ */
+export function setImplementerToolsConfigRecomputer(recompute: () => void) {
+  recomputeImplementerToolsConfig = recompute;
+}
+
+/**
+ * Marks the implementer tools config stale, deriving it again only if something is watching.
+ * @internal
+ */
+export function invalidateImplementerToolsConfig() {
+  implementerToolsConfigStale = true;
+
+  if (implementerToolsSubscribers > 0) {
+    recomputeImplementerToolsConfigIfStale();
+  }
+}
+
+function recomputeImplementerToolsConfigIfStale() {
+  // The guard is load-bearing rather than defensive: deriving writes to this store, and when
+  // nothing is subscribed that write re-enters through `getState`.
+  if (!implementerToolsConfigStale || !recomputeImplementerToolsConfig || isRecomputing) {
+    return;
+  }
+
+  isRecomputing = true;
+  // Cleared before the work, so that a config change made while it runs marks this stale again
+  // instead of being wiped when the pass finishes.
+  implementerToolsConfigStale = false;
+
+  try {
+    recomputeImplementerToolsConfig();
+  } catch (e) {
+    // Never allowed to escape: this runs from a store listener, from `getState` during a render
+    // and from `subscribe`, and a throw through any of those wedges far more than a developer
+    // tool. Left stale so the next config change tries again.
+    implementerToolsConfigStale = true;
+    console.error('Failed to derive the implementer tools config', e);
+  } finally {
+    isRecomputing = false;
+  }
+}
+
+/** @internal */
+export const implementerToolsConfigStore: StoreApi<ImplementerToolsConfigStore> = {
+  ...baseImplementerToolsConfigStore,
+  getState() {
+    // While something is subscribed the store is already current, so a read costs nothing. This
+    // branch is what serves the panel's very first render, before it has subscribed.
+    if (implementerToolsSubscribers === 0) {
+      recomputeImplementerToolsConfigIfStale();
+    }
+
+    return baseImplementerToolsConfigStore.getState();
+  },
+  setState(...args: Parameters<StoreApi<ImplementerToolsConfigStore>['setState']>) {
+    // An explicit write is the current value by definition, so don't overwrite it on the next read.
+    implementerToolsConfigStale = false;
+    return baseImplementerToolsConfigStore.setState(...args);
+  },
+  subscribe(listener) {
+    implementerToolsSubscribers++;
+    recomputeImplementerToolsConfigIfStale();
+
+    const unsubscribe = baseImplementerToolsConfigStore.subscribe(listener);
+    let hasUnsubscribed = false;
+
+    return () => {
+      if (!hasUnsubscribed) {
+        hasUnsubscribed = true;
+        implementerToolsSubscribers--;
+      }
+
+      unsubscribe();
+    };
+  },
+};
