@@ -375,6 +375,94 @@ describe('route-maps', () => {
     });
   });
 
+  describe('remote route map caching', () => {
+    function setRemoteRouteMap(src = 'http://localhost/routes.registry.json') {
+      const script = document.createElement('script');
+      script.type = 'openmrs-routes';
+      Object.defineProperty(script, 'src', { value: src, writable: false });
+      document.head.appendChild(script);
+    }
+
+    beforeEach(() => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+    });
+
+    it('fetches the routes registry only once across repeated reads', async () => {
+      setRemoteRouteMap();
+      fetchMock.mockResponse(JSON.stringify({ routes: { '@openmrs/esm-remote': { pages: [] } } }));
+
+      const { setupRouteMapOverrides, getCurrentRouteMap, getRouteMapDefaultMap, getRouteMapNextPageMap } =
+        await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const [first, second, third] = await Promise.all([
+        getCurrentRouteMap(),
+        getRouteMapDefaultMap(),
+        getRouteMapNextPageMap(),
+      ]);
+      const fourth = await getCurrentRouteMap();
+
+      for (const map of [first, second, third, fourth]) {
+        expect(map.routes['@openmrs/esm-remote']).toEqual({ pages: [] });
+      }
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not cache a map whose fetch failed', async () => {
+      setRemoteRouteMap();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      fetchMock.mockRejectOnce(new Error('network is down'));
+      fetchMock.mockResponse(JSON.stringify({ routes: { '@openmrs/esm-remote': { pages: [] } } }));
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const failed = await getCurrentRouteMap();
+      expect(Object.keys(failed.routes)).toHaveLength(0);
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse routes'), expect.anything());
+
+      // The failed read was not cached, so the next call retries and succeeds
+      const retried = await getCurrentRouteMap();
+      expect(retried.routes['@openmrs/esm-remote']).toEqual({ pages: [] });
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+
+    it('does not cache a map whose fetch returned an error status', async () => {
+      setRemoteRouteMap();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      fetchMock.mockResponseOnce(JSON.stringify({ error: 'service unavailable' }), { status: 503 });
+      fetchMock.mockResponse(JSON.stringify({ routes: { '@openmrs/esm-remote': { pages: [] } } }));
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      const failed = await getCurrentRouteMap();
+      expect(Object.keys(failed.routes)).toHaveLength(0);
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse routes'), expect.anything());
+
+      const retried = await getCurrentRouteMap();
+      expect(retried.routes['@openmrs/esm-remote']).toEqual({ pages: [] });
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+
+    it('caches a map whose tags loaded but failed validation', async () => {
+      setRemoteRouteMap();
+      // Valid JSON that isn't an OpenmrsRoutes object is dropped without throwing. Re-fetching
+      // would fail identically, so this must not defeat the cache.
+      fetchMock.mockResponse(JSON.stringify({ something: 'unexpected' }));
+
+      const { setupRouteMapOverrides, getCurrentRouteMap } = await import('./route-maps');
+      await setupRouteMapOverrides();
+
+      expect(Object.keys((await getCurrentRouteMap()).routes)).toHaveLength(0);
+      expect(Object.keys((await getCurrentRouteMap()).routes)).toHaveLength(0);
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('error handling', () => {
     it('reads route maps from remote script src attributes', async () => {
       (window as any).spaEnv = 'production';
@@ -394,6 +482,8 @@ describe('route-maps', () => {
 
       const map = await getCurrentRouteMap();
       expect(map.routes['@openmrs/esm-remote']).toEqual({ pages: [{ component: 'root', route: '/remote' }] });
+      // `crossorigin="anonymous"` on the preload link gives it a `same-origin` credentials mode,
+      // which is also `fetch()`'s default; passing anything else here misses the preload cache.
       expect(fetchMock).toHaveBeenCalledWith('http://localhost/routes.json');
     });
 
