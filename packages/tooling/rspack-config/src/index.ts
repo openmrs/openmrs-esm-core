@@ -44,6 +44,7 @@ import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
+import { FrameworkImportGuardPlugin } from '@openmrs/framework-import-guard';
 import rspack, {
   CopyRspackPlugin,
   DefinePlugin,
@@ -420,6 +421,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           chunks: true,
         },
       }),
+      new FrameworkImportGuardPlugin(),
     ].filter(Boolean),
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss', '.json'],

@@ -1,0 +1,41 @@
+{
+  "name": "@openmrs/framework-import-guard",
+  "version": "10.0.0",
+  "license": "MPL-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">= 20.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:development": "tsc",
+    "lint": "eslint src",
+    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
+    "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
+    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends",
+    "webpack",
+    "rspack",
+    "config"
+  ],
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.2"
+  }
+}

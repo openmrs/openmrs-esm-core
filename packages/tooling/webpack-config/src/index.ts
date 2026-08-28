@@ -45,6 +45,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
+import { FrameworkImportGuardPlugin } from '@openmrs/framework-import-guard';
 import {
   BannerPlugin,
   DefinePlugin,
@@ -414,6 +415,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           chunks: true,
         },
       }),
+      new FrameworkImportGuardPlugin(),
     ].filter(Boolean),
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss', '.json'],
