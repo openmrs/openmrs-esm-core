@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "clean": "git clean -fdX -- dist",
     "build:development": "tsc",
     "lint": "eslint src"
   },

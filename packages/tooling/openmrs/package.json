@@ -32,6 +32,7 @@
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "clean": "git clean -fdX -- dist",
     "lint": "eslint src"
   },
   "repository": {
