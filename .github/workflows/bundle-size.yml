@@ -33,4 +33,4 @@ jobs:
           minimum-change-threshold: 10000 # 10 KB
           install-script: "yarn install --immutable"
           build-script: "yarn turbo run build --color"
-          clean-script: "clean:dist"
+          clean-script: "yarn run clean:dist"
