@@ -16,16 +16,12 @@ export function shouldCloseOnUrlChange(scopePattern: string, oldUrl: string, new
       return true;
     }
 
-    const oldRelativeMatch = regex.exec(oldPathnames.spaRelative);
-    const newRelativeMatch = regex.exec(newPathnames.spaRelative);
-    const useSpaRelativePathnames = Boolean(oldRelativeMatch || newRelativeMatch);
-
     // scopePattern is defined against the SPA-relative pathname. Fall back to
-    // the full pathname when neither relative pathname matches so that existing
-    // patterns containing the SPA base path continue to work.
-    let oldMatch = oldRelativeMatch;
-    let newMatch = newRelativeMatch;
-    if (!useSpaRelativePathnames) {
+    // the full pathnames when the relative pathnames don't both match, so that
+    // patterns containing the SPA base path also work.
+    let oldMatch = regex.exec(oldPathnames.spaRelative);
+    let newMatch = regex.exec(newPathnames.spaRelative);
+    if (!oldMatch || !newMatch) {
       oldMatch = regex.exec(oldPathnames.full);
       newMatch = regex.exec(newPathnames.full);
     }
@@ -51,7 +47,7 @@ export function shouldCloseOnUrlChange(scopePattern: string, oldUrl: string, new
 
 function getPathnames(url: string) {
   const full = new URL(url, window.location.origin).pathname;
-  const spaBasePathname = new URL(window.getOpenmrsSpaBase(), window.location.origin).pathname;
+  const spaBasePathname = new URL(window.getOpenmrsSpaBase?.() ?? '/', window.location.origin).pathname;
   const spaBase = spaBasePathname.endsWith('/') ? spaBasePathname.slice(0, -1) : spaBasePathname;
   let spaRelative: string | null = null;
 

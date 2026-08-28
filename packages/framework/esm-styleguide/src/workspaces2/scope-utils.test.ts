@@ -134,6 +134,13 @@ describe('shouldCloseOnUrlChange', () => {
 
   it.each([
     [
+      'stays open: navigation from the exact SPA base remains in a root scope',
+      '^/',
+      'http://localhost/openmrs/spa',
+      'http://localhost/openmrs/spa/home',
+      false,
+    ],
+    [
       'stays open: same patient under the configured SPA base',
       '^/patient/([^/]+)/chart(?:/|$)',
       'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
@@ -176,6 +183,13 @@ describe('shouldCloseOnUrlChange', () => {
       false,
     ],
     [
+      'stays open: legacy pattern matches both full pathnames when only one relative pathname matches',
+      '^/openmrs',
+      'http://localhost/openmrs/spa/home',
+      'http://localhost/openmrs/spa/openmrs-lab',
+      false,
+    ],
+    [
       'closes: legacy pattern captures a different patient',
       '^/openmrs/spa/patient/([^/]+)/chart(?:/|$)',
       'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
@@ -186,6 +200,21 @@ describe('shouldCloseOnUrlChange', () => {
     withSpaBase('/openmrs/spa/', () => {
       expect(shouldCloseOnUrlChange(pattern, oldUrl, newUrl)).toBe(expected);
     });
+  });
+
+  it('matches against full pathnames when getOpenmrsSpaBase is not defined', () => {
+    const originalGetOpenmrsSpaBase = window.getOpenmrsSpaBase;
+    // @ts-expect-error simulating an environment without the app shell globals
+    delete window.getOpenmrsSpaBase;
+
+    try {
+      expect(shouldCloseOnUrlChange('^/home/appointments', '/home/appointments', '/home/appointments/details')).toBe(
+        false,
+      );
+      expect(shouldCloseOnUrlChange('^/home/appointments', '/home/appointments', '/home/service-queues')).toBe(true);
+    } finally {
+      window.getOpenmrsSpaBase = originalGetOpenmrsSpaBase;
+    }
   });
 
   it('matches against a custom SPA base', () => {
