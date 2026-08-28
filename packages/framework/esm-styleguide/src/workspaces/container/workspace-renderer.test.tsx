@@ -1,8 +1,8 @@
 import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
+import { createParcelMounter } from '@openmrs/esm-extensions';
 import { render, screen } from '@testing-library/react';
-import { mountRootParcel } from 'single-spa';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { getWorkspaceGroupStore } from '../workspaces';
 
@@ -22,6 +22,7 @@ describe('WorkspaceRenderer', () => {
     const mockPromptBeforeClosing = vi.fn();
     const mockSetTitle = vi.fn();
     const mockLoadFn = vi.fn().mockImplementation(() => Promise.resolve('file-content'));
+    const mountParcel = createParcelMounter();
 
     getWorkspaceGroupStore('test-sidebar-store')?.setState({
       // Testing that the workspace group state should be overrided by additionalProps
@@ -54,7 +55,7 @@ describe('WorkspaceRenderer', () => {
 
     expect(mockFn).toHaveBeenCalledWith({
       config: 'file-content',
-      mountParcel: mountRootParcel,
+      mountParcel: mountParcel,
       closeWorkspace: mockCloseWorkspace,
       closeWorkspaceWithSavedChanges: mockCloseWorkspaceWithSavedChanges,
       promptBeforeClosing: mockPromptBeforeClosing,

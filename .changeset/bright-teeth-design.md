@@ -1,5 +1,5 @@
 ---
-"@openmrs/esm-extensions": minor
+"@openmrs/esm-extensions": patch
 "@openmrs/esm-framework": patch
 ---
 
