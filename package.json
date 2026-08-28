@@ -15,6 +15,7 @@
     "ci:publish": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core --exclude @openmrs/storybook --exclude @openmrs/integration-tests npm publish --tolerate-republish --access public --tag latest",
     "release": "yarn workspaces foreach --all --topological version",
     "build": "turbo run build",
+    "clean:dist": "turbo run clean --color --concurrency=5",
     "build:apps": "turbo run build --filter='@openmrs/*-app'",
     "document": "turbo run document",
     "setup": "yarn install && turbo run build",
