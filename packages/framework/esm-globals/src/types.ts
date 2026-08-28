@@ -319,6 +319,7 @@ export interface WorkspaceGroupDefinition2 {
 
   /**
    * URL pattern that defines the scope where workspaces in this group should persist.
+   * The pattern is matched against the pathname relative to the configured SPA base path.
    * - If not defined: workspaces close only when navigating to a different app
    * - If defined without capture groups: workspaces close when URL doesn't match pattern
    * - If defined with capture groups: workspaces close when captured values change
