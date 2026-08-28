@@ -25,14 +25,12 @@ let baseMapPromise: Promise<ImportMap> | null = null;
  * that a transient network failure doesn't leave the page with a permanently incomplete map.
  */
 async function readBaseMap(): Promise<ImportMap> {
-  if (!baseMapPromise) {
-    baseMapPromise = loadBaseMap().then(({ map, complete }) => {
-      if (!complete) {
-        baseMapPromise = null;
-      }
-      return map;
-    });
-  }
+  baseMapPromise ??= loadBaseMap().then(({ map, complete }) => {
+    if (!complete) {
+      baseMapPromise = null;
+    }
+    return map;
+  });
 
   return baseMapPromise;
 }

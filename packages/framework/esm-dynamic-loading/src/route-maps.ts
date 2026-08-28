@@ -25,14 +25,12 @@ let baseMapPromise: Promise<OpenmrsRoutes> | null = null;
  * dropped without invalidating the cache, since re-reading it would only fail the same way.
  */
 async function readBaseMap(): Promise<OpenmrsRoutes> {
-  if (!baseMapPromise) {
-    baseMapPromise = loadBaseMap().then(({ map, complete }) => {
-      if (!complete) {
-        baseMapPromise = null;
-      }
-      return map;
-    });
-  }
+  baseMapPromise ??= loadBaseMap().then(({ map, complete }) => {
+    if (!complete) {
+      baseMapPromise = null;
+    }
+    return map;
+  });
 
   return baseMapPromise;
 }
