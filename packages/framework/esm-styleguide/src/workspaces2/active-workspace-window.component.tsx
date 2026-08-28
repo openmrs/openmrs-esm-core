@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Parcel from 'single-spa-react/parcel';
 import { type ParcelConfig } from 'single-spa';
