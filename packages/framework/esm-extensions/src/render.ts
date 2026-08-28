@@ -2,7 +2,7 @@
 import { type LifeCycles, mountRootParcel, type Parcel, type ParcelConfig } from 'single-spa';
 import { getExtensionNameFromId, getExtensionRegistration } from './extensions';
 import { checkStatus } from './helpers';
-import { registerExtensionInstance, unregisterExtensionInstance } from './store';
+import { registerExtensionRendering, unregisterExtensionRendering } from './store';
 
 export interface CancelLoading {
   (): void;
@@ -36,12 +36,12 @@ export async function renderExtension(
 
     if (checkStatus(online, offline)) {
       const id = parcelCount++;
-      const instanceId = `${extensionSlotName}/${extensionId}-${id}`;
+      const renderingId = `${extensionSlotName}/${extensionId}-${id}`;
 
       // Registered before loading so that the config system can start resolving this extension's
       // config while its bundle is still in flight.
-      registerExtensionInstance({
-        instanceId,
+      registerExtensionRendering({
+        renderingId,
         extensionName,
         extensionModuleName: moduleName,
         id: extensionId,
@@ -57,7 +57,7 @@ export async function renderExtension(
         // Releasing the record runs the config recomputation cascade, which can itself throw;
         // letting that escape would replace the load failure that actually matters.
         try {
-          unregisterExtensionInstance(instanceId);
+          unregisterExtensionRendering(renderingId);
         } catch (cleanupError) {
           console.error(`Recomputing configuration after '${extensionId}' failed to load also failed`, cleanupError);
         }
@@ -65,7 +65,7 @@ export async function renderExtension(
         throw e;
       }
 
-      const forget = () => unregisterExtensionInstance(instanceId);
+      const forget = () => unregisterExtensionRendering(renderingId);
 
       try {
         parcel = mountRootParcel(

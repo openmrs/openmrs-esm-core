@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import { type ExtensionSlotCustomState, registerExtensionSlot } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';
 import { useAssignedExtensions } from './useAssignedExtensions';
@@ -10,11 +10,6 @@ export function useExtensionSlot(slotName: string, state?: ExtensionSlotCustomSt
   if (!moduleName) {
     throw Error('ComponentContext has not been provided. This should come from @openmrs/esm-react-utils.');
   }
-
-  // Callers almost always pass `state` as an object literal, so its identity changes every render
-  // while its contents don't. Reading it from a ref keeps it out of the effect dependencies below.
-  const stateRef = useRef(state);
-  stateRef.current = state;
 
   useEffect(() => {
     registerExtensionSlot(moduleName, slotName);

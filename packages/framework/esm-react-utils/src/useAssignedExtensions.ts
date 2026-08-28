@@ -11,9 +11,10 @@ const selectSession = (state: SessionStore) => state.session;
 /**
  * Gets the assigned extensions for a given extension slot name.
  *
- * Pass `state` whenever the extensions are being displayed. The same slot can be rendered in
- * several places at once with different state, so display conditions are evaluated against the
- * state of this rendering; without it, extensions a condition would hide are included.
+ * Display conditions are always applied, so the result is what should actually be displayed. Pass
+ * `state` whenever you know it: the same slot can be rendered in several places at once with
+ * different state, so conditions are resolved against the state of this rendering. Omitting it
+ * resolves them against the session alone, hiding any extension whose condition depends on state.
  *
  * The returned array is a copy, so sorting or filtering it in place can't corrupt the extension
  * store. Its reference is stable for as long as the slot, the state and the session are.
@@ -28,7 +29,7 @@ export function useAssignedExtensions(slotName: string, state?: ExtensionSlotCus
   const stableState = useShallowStableValue(state);
 
   return useMemo(
-    () => filterExtensionsByDisplayConditions(assignedExtensions, stableState, session),
-    [assignedExtensions, stableState, session],
+    () => filterExtensionsByDisplayConditions(assignedExtensions, stableState, session, slotName),
+    [assignedExtensions, stableState, session, slotName],
   );
 }

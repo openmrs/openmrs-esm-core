@@ -12,7 +12,7 @@ export { type LeftNavStore, setLeftNav, unsetLeftNav, type SetLeftNavParams } fr
 export { type CancelLoading, renderExtension } from './render';
 export {
   type ExtensionMeta,
-  type ExtensionInstance,
+  type ExtensionRendering,
   type ExtensionRegistration,
   type ExtensionStore,
   type AssignedExtension,

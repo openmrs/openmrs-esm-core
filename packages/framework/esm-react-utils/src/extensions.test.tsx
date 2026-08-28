@@ -7,7 +7,7 @@ import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 import {
   attach,
-  getExtensionInstancesStore,
+  getExtensionRenderingsStore,
   getExtensionNameFromId,
   registerExtension,
   updateInternalExtensionStore,
@@ -285,10 +285,10 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
 describe('Extension teardown', () => {
   beforeEach(() => {
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
-    getExtensionInstancesStore().setState({ instances: new Map() });
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
   });
 
-  it('releases the instance when the slot unmounts while the bundle is still loading', async () => {
+  it('releases the rendering when the slot unmounts while the bundle is still loading', async () => {
     const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     let releaseLoad = () => {};
     const loadGate = new Promise<void>((resolve) => (releaseLoad = resolve));
@@ -317,12 +317,12 @@ describe('Extension teardown', () => {
 
     const { unmount } = render(<App />);
     await act(async () => {});
-    expect(getExtensionInstancesStore().getState().instances.size).toBe(1);
+    expect(getExtensionRenderingsStore().getState().renderings.size).toBe(1);
 
     unmount();
     releaseLoad();
 
-    await waitFor(() => expect(getExtensionInstancesStore().getState().instances.size).toBe(0));
+    await waitFor(() => expect(getExtensionRenderingsStore().getState().renderings.size).toBe(0));
     // React detaches the ref by calling it with `null`; taking that for a render request starts a
     // second render that resolves to null and clears the parcel still coming up.
     expect(consoleWarn).not.toHaveBeenCalledWith(expect.stringContaining('no DOM element was available'));

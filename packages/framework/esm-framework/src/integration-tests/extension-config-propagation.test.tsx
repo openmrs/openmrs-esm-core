@@ -6,7 +6,7 @@ import { act, cleanup, render, screen } from '@testing-library/react';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
 import {
   attach,
-  getExtensionInstancesStore,
+  getExtensionRenderingsStore,
   registerExtension,
   updateInternalExtensionStore,
 } from '../../../esm-extensions/src';
@@ -49,7 +49,8 @@ function reg(name: string) {
  */
 describe('runtime slot config changes', () => {
   beforeEach(() => {
-    getExtensionInstancesStore().setState({ instances: new Map() });
+    // eslint-disable-next-line testing-library/no-render-in-lifecycle -- not a render; the rule matches any callee name containing "render"
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
     temporaryConfigStore.setState({ config: {} });
     configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
     mockSessionStore.setState({});

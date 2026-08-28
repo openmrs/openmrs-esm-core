@@ -1,6 +1,11 @@
-/* eslint-disable testing-library/no-unnecessary-act, testing-library/no-manual-cleanup */
-// Rendering is wrapped in `act` because the extension system settles across several store
-// updates, and the store resets in `beforeEach` require the previous render to be torn down first.
+/*
+ * Rendering is wrapped in `act` because the extension system settles across several store updates,
+ * and the store resets in `beforeEach` require the previous render to be torn down first.
+ *
+ * `render-result-naming-convention` misreads this file's vocabulary: a `rendering` is one live copy
+ * of an extension, not a testing-library render result.
+ */
+/* eslint-disable testing-library/no-unnecessary-act, testing-library/no-manual-cleanup, testing-library/render-result-naming-convention */
 import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -10,7 +15,7 @@ import {
   attach,
   type ExtensionRegistration,
   getAssignedExtensions,
-  getExtensionInstancesStore,
+  getExtensionRenderingsStore,
   getExtensionInternalStore,
   getExtensionStore,
   registerExtension,
@@ -64,7 +69,8 @@ function decorate(Component: React.ComponentType) {
 
 describe('Extension system recomputation', () => {
   beforeEach(() => {
-    getExtensionInstancesStore().setState({ instances: new Map() });
+    // eslint-disable-next-line testing-library/no-render-in-lifecycle -- not a render; the rule matches any callee name containing "render"
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
     temporaryConfigStore.setState({ config: {} });
     configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
     mockSessionStore.setState({});
@@ -206,7 +212,6 @@ describe('Extension system recomputation', () => {
     // the display condition without touching the store every other rendering shares.
     expect(await screen.findByText('OnlyWhenFlagged')).toBeInTheDocument();
     expect(writes).toBe(0);
-    expect(internalStore.getState().slots['changing-state-slot'].state).toBeUndefined();
   });
 
   it('does not re-render a slot consumer when an unrelated slot changes', async () => {
@@ -262,11 +267,11 @@ describe('Extension system recomputation', () => {
     expect(extensionStore.getState().slots['stable-slot']).toBe(before);
   });
 
-  it('releases an extension instance when it unmounts', async () => {
+  it('releases an extension rendering when it unmounts', async () => {
     registerSimpleExtension('Fred');
     attach('mounting-slot', 'Fred');
 
-    const instancesStore = getExtensionInstancesStore();
+    const renderingsStore = getExtensionRenderingsStore();
     const App = decorate(() => <ExtensionSlot name="mounting-slot" />);
 
     for (let i = 0; i < 3; i++) {
@@ -275,15 +280,15 @@ describe('Extension system recomputation', () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
       });
 
-      expect(instancesStore.getState().instances.size).toBe(1);
+      expect(renderingsStore.getState().renderings.size).toBe(1);
 
       unmount();
       await act(async () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
       });
 
-      // An instance record must not outlive its parcel.
-      expect(instancesStore.getState().instances.size).toBe(0);
+      // A rendering record must not outlive its parcel.
+      expect(renderingsStore.getState().renderings.size).toBe(0);
       expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
     }
   });
@@ -304,10 +309,10 @@ describe('Extension system recomputation', () => {
     // StrictMode mounts, tears down and mounts again before the parcel resolves. Teardown state
     // has to be per-mount, or the live component's parcel is unmounted as soon as it arrives.
     expect(screen.getByTestId('strict-slot')).toHaveTextContent('Fred');
-    expect(getExtensionInstancesStore().getState().instances.size).toBe(1);
+    expect(getExtensionRenderingsStore().getState().renderings.size).toBe(1);
   });
 
-  it('releases an extension instance when the slot unmounts before the bundle loads', async () => {
+  it('releases an extension rendering when the slot unmounts before the bundle loads', async () => {
     let releaseLoad: () => void = () => {};
     const loadGate = new Promise<void>((resolve) => {
       releaseLoad = resolve;
@@ -326,7 +331,7 @@ describe('Extension system recomputation', () => {
     });
     attach('slow-slot', 'Slow');
 
-    const instancesStore = getExtensionInstancesStore();
+    const renderingsStore = getExtensionRenderingsStore();
     const App = decorate(() => <ExtensionSlot name="slow-slot" />);
     const { unmount } = render(<App />);
 
@@ -342,11 +347,11 @@ describe('Extension system recomputation', () => {
 
     // Navigating away while a lazy bundle is still downloading is routine; the record has to be
     // released even though the component never saw a parcel.
-    expect(instancesStore.getState().instances.size).toBe(0);
+    expect(renderingsStore.getState().renderings.size).toBe(0);
     expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
   });
 
-  it('releases an extension instance when the extension bundle fails to load', async () => {
+  it('releases an extension rendering when the extension bundle fails to load', async () => {
     registerExtension({
       name: 'Unloadable',
       moduleName,
@@ -357,7 +362,7 @@ describe('Extension system recomputation', () => {
     });
     attach('unloadable-slot', 'Unloadable');
 
-    const instancesStore = getExtensionInstancesStore();
+    const renderingsStore = getExtensionRenderingsStore();
 
     // Driven directly rather than through <ExtensionSlot>: `renderExtension` rethrows and
     // `Extension` has no rejection handler, so a failed load reaches the app's global handler.
@@ -366,11 +371,11 @@ describe('Extension system recomputation', () => {
     ).rejects.toThrow('chunk load failed');
 
     // The record is registered before the load starts, so the failure has to release it.
-    expect(instancesStore.getState().instances.size).toBe(0);
+    expect(renderingsStore.getState().renderings.size).toBe(0);
     expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
   });
 
-  it('releases an extension instance when the slot unmounts while the parcel is bootstrapping', async () => {
+  it('releases an extension rendering when the slot unmounts while the parcel is bootstrapping', async () => {
     let releaseBootstrap: () => void = () => {};
     const bootstrapGate = new Promise<void>((resolve) => {
       releaseBootstrap = resolve;
@@ -392,7 +397,7 @@ describe('Extension system recomputation', () => {
     });
     attach('bootstrapping-slot', 'SlowBootstrap');
 
-    const instancesStore = getExtensionInstancesStore();
+    const renderingsStore = getExtensionRenderingsStore();
     const App = decorate(() => <ExtensionSlot name="bootstrapping-slot" />);
     const { unmount } = render(<App />);
 
@@ -408,11 +413,11 @@ describe('Extension system recomputation', () => {
       await new Promise((resolve) => setTimeout(resolve, 20));
     });
 
-    expect(instancesStore.getState().instances.size).toBe(0);
+    expect(renderingsStore.getState().renderings.size).toBe(0);
     expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
   });
 
-  it('releases an extension instance when the extension fails to mount', async () => {
+  it('releases an extension rendering when the extension fails to mount', async () => {
     registerExtension({
       name: 'Broken',
       moduleName,
@@ -429,7 +434,7 @@ describe('Extension system recomputation', () => {
     });
     attach('broken-slot', 'Broken');
 
-    const instancesStore = getExtensionInstancesStore();
+    const renderingsStore = getExtensionRenderingsStore();
     const App = decorate(() => <ExtensionSlot name="broken-slot" />);
 
     await act(async () => {
@@ -441,7 +446,7 @@ describe('Extension system recomputation', () => {
 
     // A parcel that never mounts never settles `unmountPromise`, so the mount rejection is the
     // only thing that can release the record.
-    expect(instancesStore.getState().instances.size).toBe(0);
+    expect(renderingsStore.getState().renderings.size).toBe(0);
     expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
   });
 
@@ -525,9 +530,9 @@ describe('Extension system recomputation', () => {
     });
 
     const everMounted = new Set<string>();
-    const unsubscribe = getExtensionInstancesStore().subscribe((state) => {
-      for (const instanceId of state.instances.keys()) {
-        everMounted.add(instanceId);
+    const unsubscribe = getExtensionRenderingsStore().subscribe((state) => {
+      for (const renderingId of state.renderings.keys()) {
+        everMounted.add(renderingId);
       }
     });
 
@@ -539,7 +544,7 @@ describe('Extension system recomputation', () => {
     }
     unsubscribe();
 
-    const live = getExtensionInstancesStore().getState().instances.size;
+    const live = getExtensionRenderingsStore().getState().renderings.size;
 
     // Resolving the condition per rendering rather than per slot is what makes this hold: when it
     // was resolved once for the whole slot, each arriving row flipped the answer for every row

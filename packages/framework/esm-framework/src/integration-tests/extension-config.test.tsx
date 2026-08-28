@@ -7,7 +7,7 @@ import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
 import {
   attach,
-  getExtensionInstancesStore,
+  getExtensionRenderingsStore,
   registerExtension,
   updateInternalExtensionStore,
 } from '../../../esm-extensions/src';
@@ -41,9 +41,10 @@ vi.mock('@openmrs/esm-api', async () => {
 
 describe('Interaction between configuration and extension systems', () => {
   beforeEach(() => {
-    // An instance outliving its module's schema makes the config system derive a config for an
+    // A rendering outliving its module's schema makes the config system derive a config for an
     // extension this test never registered.
-    getExtensionInstancesStore().setState({ instances: new Map() });
+    // eslint-disable-next-line testing-library/no-render-in-lifecycle -- not a render; the rule matches any callee name containing "render"
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
     temporaryConfigStore.setState({ config: {} });
     configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
     mockSessionStore.setState({});
@@ -192,6 +193,52 @@ describe('Interaction between configuration and extension systems', () => {
     await waitFor(() => {
       expect(slot.firstChild).toHaveTextContent(/Dino/);
       expect(slot.lastChild).toHaveTextContent(/Baby Puss/);
+    });
+  });
+
+  it('Should give each extension instance its own config in every rendering of the slot', async () => {
+    registerSimpleExtension('obs', 'esm-widgets', true);
+    defineConfigSchema('esm-widgets', {
+      concept: { _type: Type.String, _default: '(none)' },
+    });
+    registerModuleLoad('esm-widgets');
+
+    attach('Vitals slot', 'obs#weight');
+    attach('Vitals slot', 'obs#height');
+    provide({
+      'esm-chart': {
+        extensionSlots: {
+          'Vitals slot': {
+            configure: {
+              'obs#weight': { concept: 'Weight (kg)' },
+              'obs#height': { concept: 'Height (cm)' },
+            },
+          },
+        },
+      },
+    });
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-chart',
+      featureName: 'The chart',
+      disableTranslations: true,
+    })(() => (
+      <>
+        <ExtensionSlot data-testid="row-1" name="Vitals slot" />
+        <ExtensionSlot data-testid="row-2" name="Vitals slot" />
+      </>
+    ));
+
+    act(() => {
+      render(<App />);
+    });
+
+    await waitFor(() => {
+      for (const testId of ['row-1', 'row-2']) {
+        const slot = screen.getByTestId(testId);
+        expect(slot.firstChild).toHaveTextContent(/Weight \(kg\)/);
+        expect(slot.lastChild).toHaveTextContent(/Height \(cm\)/);
+      }
     });
   });
 

@@ -535,7 +535,9 @@ function computeExtensionConfig(
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
-  const cacheKey = [slotName, extensionId, slotModuleName, extensionModuleName].join(' ');
+  // `|` rather than a space, which slot names and extension IDs are allowed to contain: joining on
+  // one lets ('a b', 'c') and ('a', 'b c') collide and share a config.
+  const cacheKey = [slotName, extensionId, slotModuleName, extensionModuleName].join('|');
   const cached = extensionConfigCache.get(cacheKey);
 
   if (
@@ -572,9 +574,8 @@ function computeExtensionConfig(
 }
 
 /**
- * The annotated config tree is keyed by module, and a config only ever mentions a few modules, so
- * merging per module means editing one module's configuration rebuilds only that module and every
- * other subtree keeps its identity — which also makes the deep comparison downstream cheap. Adding
+ * Merging per module means editing one module's configuration rebuilds only that module, and the
+ * other subtrees keep their identity — which also makes the deep comparison downstream cheap. Adding
  * a config source is the exception: it lengthens the source list, invalidating every entry.
  */
 interface ImplementerToolsModuleCacheEntry {

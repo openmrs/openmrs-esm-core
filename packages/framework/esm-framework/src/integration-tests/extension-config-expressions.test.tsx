@@ -7,7 +7,7 @@ import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
 import {
   attach,
-  getExtensionInstancesStore,
+  getExtensionRenderingsStore,
   registerExtension,
   updateInternalExtensionStore,
 } from '../../../esm-extensions/src';
@@ -46,9 +46,10 @@ vi.mock('@openmrs/esm-api', async () => {
  */
 describe('Expression evaluation in extension display conditions', () => {
   beforeEach(() => {
-    // An instance outliving its module's schema makes the config system derive a config for an
+    // A rendering outliving its module's schema makes the config system derive a config for an
     // extension this test never registered.
-    getExtensionInstancesStore().setState({ instances: new Map() });
+    // eslint-disable-next-line testing-library/no-render-in-lifecycle -- not a render; the rule matches any callee name containing "render"
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
     temporaryConfigStore.setState({ config: {} });
     configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
     mockSessionStore.setState({});
@@ -233,7 +234,7 @@ describe('Expression evaluation in extension display conditions', () => {
     });
   }, 10000);
 
-  it('evaluates a display condition against each slot instance own state', async () => {
+  it('evaluates a display condition against each rendering of a slot', async () => {
     registerExtension({
       name: 'Always',
       moduleName: 'esm-bedrock',
@@ -259,7 +260,7 @@ describe('Expression evaluation in extension display conditions', () => {
     attach('rows-slot', 'Flagged');
 
     // A virtualized list renders the same slot once per row, each with its own patient. The slot
-    // is not "a place on the screen" here, so the condition has to be evaluated per instance.
+    // is not "a place on the screen" here, so the condition has to be evaluated per rendering.
     const Rows = openmrsComponentDecorator({
       moduleName: 'esm-bedrock',
       featureName: 'Bedrock',

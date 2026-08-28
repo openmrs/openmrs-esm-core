@@ -23,24 +23,33 @@ export interface ExtensionRegistration {
 }
 
 /**
- * @deprecated Use `ExtensionRegistration`, which this aliases. Rendered instances are not
- *   reachable from a registration; they are tracked separately.
+ * @deprecated Use `ExtensionRegistration`, which this aliases. Renderings are not reachable from
+ *   a registration; they are tracked separately.
  */
 export type ExtensionInfo = ExtensionRegistration;
 
 /**
- * A single rendering of an extension into a slot. One registered extension can have any number
- * of these at a time — the same extension may be mounted into several slots, or into several
- * simultaneously-rendered copies of the same slot.
+ * A single rendering of an extension into a slot.
+ *
+ * Three things are easily confused, and the extension system distinguishes them:
+ *
+ *  - an *extension* is what a module registers, identified by its **name** (`obs`);
+ *  - an *extension instance* is a configurable use of one within a slot, identified by its
+ *    **ID** — the name plus an optional `#`-suffix (`obs#weight`) — which is what an implementer
+ *    writes under a slot's `configure` key, and what a config is derived for;
+ *  - a *rendering*, this type, is one live copy of an instance on screen.
+ *
+ * One instance has any number of renderings at a time: a list renders the same slot once per row,
+ * so each row holds its own rendering of every instance assigned to that slot.
  */
-export interface ExtensionInstance {
+export interface ExtensionRendering {
   /** Uniquely identifies this rendering. Never reused. */
-  readonly instanceId: string;
+  readonly renderingId: string;
   /** The name of the extension being rendered. */
   readonly extensionName: string;
   /** The module which registered the extension. */
   readonly extensionModuleName: string;
-  /** The extension ID, which is the extension name plus an optional `#`-suffix. */
+  /** The ID of the extension instance being rendered: the name plus an optional `#`-suffix. */
   readonly id: string;
   readonly slotName: string;
   readonly slotModuleName: string;
@@ -53,16 +62,16 @@ export interface ExtensionInternalStore {
   extensions: Record<string, ExtensionRegistration>;
 }
 
-export interface ExtensionInstancesStore {
+export interface ExtensionRenderingsStore {
   /**
-   * Currently-rendered extension instances, indexed by instance ID.
+   * Every rendering that has started and not yet been released, indexed by rendering ID.
    *
-   * The map is mutated in place as extensions mount and unmount — an application routinely renders
-   * thousands of instances at once, and copying them all on every mount is quadratic over a page's
-   * lifetime. Read it during render, as a store consumer does; a reference held across a change
-   * reflects the new contents rather than the state it was read from.
+   * Mutated in place as extensions mount and unmount, because an application renders thousands at
+   * once and copying them all per mount is quadratic over a page's lifetime. So its identity never
+   * changes: subscribe to the state object around it, never to this map, and read it during render
+   * rather than holding a reference across a change.
    */
-  instances: ReadonlyMap<string, ExtensionInstance>;
+  renderings: ReadonlyMap<string, ExtensionRendering>;
 }
 
 export type ExtensionSlotCustomState = Record<string | symbol | number, unknown> | undefined | null;
@@ -84,7 +93,6 @@ export interface ExtensionSlotInfo {
   attachedIds: Array<string>;
   /** The configuration provided for this slot. `null` if not yet loaded. */
   config: Omit<ExtensionSlotConfig, 'configuration'> | null;
-  state?: ExtensionSlotCustomState;
 }
 
 export interface ExtensionStore {
@@ -94,7 +102,6 @@ export interface ExtensionStore {
 export interface ExtensionSlotState {
   moduleName?: string;
   assignedExtensions: Array<AssignedExtension>;
-  state?: ExtensionSlotCustomState;
 }
 
 export interface AssignedExtension {
@@ -131,8 +138,8 @@ const extensionInternalStore = createGlobalStore<ExtensionInternalStore>('extens
   extensions: {},
 });
 
-const extensionInstancesStore = createGlobalStore<ExtensionInstancesStore>('extensionInstances', {
-  instances: new Map(),
+const extensionRenderingsStore = createGlobalStore<ExtensionRenderingsStore>('extensionRenderings', {
+  renderings: new Map(),
 });
 
 /**
@@ -148,15 +155,15 @@ export const getExtensionInternalStore = () =>
   });
 
 /**
- * This gets the store of currently-rendered extension instances. Instances are added by
+ * This gets the store of extension renderings currently on screen. Renderings are added by
  * `renderExtension` and removed once their parcel is gone — whether it unmounted, failed to load,
  * or failed to mount. It is subject to change radically and without warning. It should not be
  * used outside esm-core.
  * @internal
  */
-export const getExtensionInstancesStore = () =>
-  getGlobalStore<ExtensionInstancesStore>('extensionInstances', {
-    instances: new Map(),
+export const getExtensionRenderingsStore = () =>
+  getGlobalStore<ExtensionRenderingsStore>('extensionRenderings', {
+    renderings: new Map(),
   });
 
 /** @internal */
@@ -172,57 +179,59 @@ export function updateInternalExtensionStore(updater: (state: ExtensionInternalS
 }
 
 /**
- * The instance map this module owns and mutates, and the state object it last published. Comparing
- * the store's current state against that is how a write from anywhere else — a test reset, say — is
- * detected, so the map and the record counts below can be rebuilt from it.
+ * The rendering map this module owns and mutates, and the state object it last published. A current
+ * state that isn't the published one means someone else wrote the store, and the map and the record
+ * counts below have to be rebuilt from it.
  */
-let ownedInstances: Map<string, ExtensionInstance> | null = null;
-let publishedInstances: ExtensionInstancesStore | null = null;
+let ownedRenderings: Map<string, ExtensionRendering> | null = null;
+let publishedRenderings: ExtensionRenderingsStore | null = null;
 
-function currentInstances() {
-  const state = extensionInstancesStore.getState();
+function currentRenderings() {
+  const state = extensionRenderingsStore.getState();
 
-  if (!ownedInstances || state !== publishedInstances) {
+  if (!ownedRenderings || state !== publishedRenderings) {
     // Tolerates a plain object as well as a map: this store is reset by test harnesses, and a
     // throw here would escape from inside a `setState` call.
-    ownedInstances = new Map(state.instances instanceof Map ? state.instances : Object.entries(state.instances ?? {}));
-    publishedInstances = state;
-    rebuildConfigExtensionRecords(ownedInstances);
+    ownedRenderings = new Map(
+      state.renderings instanceof Map ? state.renderings : Object.entries(state.renderings ?? {}),
+    );
+    publishedRenderings = state;
+    rebuildConfigExtensionRecords(ownedRenderings);
   }
 
-  return ownedInstances;
+  return ownedRenderings;
 }
 
-function publishInstances(instances: Map<string, ExtensionInstance>) {
-  publishedInstances = { instances };
-  extensionInstancesStore.setState(publishedInstances, true);
-}
-
-/** @internal */
-export function registerExtensionInstance(instance: ExtensionInstance) {
-  const instances = currentInstances();
-
-  if (instances.has(instance.instanceId)) {
-    return;
-  }
-
-  instances.set(instance.instanceId, instance);
-  configExtensionRecordsChanged = countInstanceRecord(instance, 1) || configExtensionRecordsChanged;
-  publishInstances(instances);
+function publishRenderings(renderings: Map<string, ExtensionRendering>) {
+  publishedRenderings = { renderings };
+  extensionRenderingsStore.setState(publishedRenderings, true);
 }
 
 /** @internal */
-export function unregisterExtensionInstance(instanceId: string) {
-  const instances = currentInstances();
-  const instance = instances.get(instanceId);
+export function registerExtensionRendering(rendering: ExtensionRendering) {
+  const renderings = currentRenderings();
 
-  if (!instance) {
+  if (renderings.has(rendering.renderingId)) {
     return;
   }
 
-  instances.delete(instanceId);
-  configExtensionRecordsChanged = countInstanceRecord(instance, -1) || configExtensionRecordsChanged;
-  publishInstances(instances);
+  renderings.set(rendering.renderingId, rendering);
+  configExtensionRecordsChanged = countRenderingRecord(rendering, 1) || configExtensionRecordsChanged;
+  publishRenderings(renderings);
+}
+
+/** @internal */
+export function unregisterExtensionRendering(renderingId: string) {
+  const renderings = currentRenderings();
+  const rendering = renderings.get(renderingId);
+
+  if (!rendering) {
+    return;
+  }
+
+  renderings.delete(renderingId);
+  configExtensionRecordsChanged = countRenderingRecord(rendering, -1) || configExtensionRecordsChanged;
+  publishRenderings(renderings);
 }
 
 /**
@@ -285,31 +294,25 @@ export function scheduleRecomputation(recompute: () => void) {
 }
 
 /**
- * esm-config maintains its own store of the extension information it needs
- * to generate extension configs. We keep it updated based on which extension
- * instances are currently rendered.
- */
-
-/**
- * The config system derives one config per slot and extension, so any number of rendered instances
- * of the same extension in the same slot collapse into a single record. These counts track how many
- * instances stand behind each record.
+ * esm-config keeps its own store of what it needs to derive extension configs. It derives one config
+ * per extension instance in a slot, so renderings of the same instance collapse into a single record;
+ * these count how many stand behind each.
  *
- * They are maintained as instances come and go rather than rebuilt from the instances store, because
- * an application routinely has thousands of instances rendered at once: rebuilding would make every
- * mount and unmount cost a walk over all of them, where this way rendering another copy of a slot
- * already on screen costs nothing.
+ * Counted as renderings come and go rather than rebuilt from the store: an application has thousands
+ * on screen at once, so rebuilding would make every mount cost a walk over all of them.
  */
 const configExtensionRecordCounts = new Map<string, { count: number; record: ConfigExtensionStoreElement }>();
 
 let configExtensionRecordsChanged = false;
 
 updateConfigExtensionStoreToCurrent();
-extensionInstancesStore.subscribe(() => scheduleRecomputation(updateConfigExtensionStoreToCurrent));
+extensionRenderingsStore.subscribe(() => scheduleRecomputation(updateConfigExtensionStoreToCurrent));
 
 /** @returns whether the set of records changed, rather than just the count behind one of them. */
-function countInstanceRecord(instance: ExtensionInstance, delta: 1 | -1) {
-  const key = [instance.slotName, instance.id, instance.slotModuleName, instance.extensionModuleName].join(' ');
+function countRenderingRecord(rendering: ExtensionRendering, delta: 1 | -1) {
+  // `|` rather than a space, which slot names and extension IDs are allowed to contain: joining on
+  // one lets ('a b', 'c') and ('a', 'b c') collide, and the loser gets no config record at all.
+  const key = [rendering.slotName, rendering.id, rendering.slotModuleName, rendering.extensionModuleName].join('|');
   const counted = configExtensionRecordCounts.get(key);
 
   if (!counted) {
@@ -320,10 +323,10 @@ function countInstanceRecord(instance: ExtensionInstance, delta: 1 | -1) {
     configExtensionRecordCounts.set(key, {
       count: 1,
       record: {
-        slotModuleName: instance.slotModuleName,
-        extensionModuleName: instance.extensionModuleName,
-        slotName: instance.slotName,
-        extensionId: instance.id,
+        slotModuleName: rendering.slotModuleName,
+        extensionModuleName: rendering.extensionModuleName,
+        slotName: rendering.slotName,
+        extensionId: rendering.id,
       },
     });
 
@@ -340,11 +343,11 @@ function countInstanceRecord(instance: ExtensionInstance, delta: 1 | -1) {
   return false;
 }
 
-function rebuildConfigExtensionRecords(instances: ReadonlyMap<string, ExtensionInstance>) {
+function rebuildConfigExtensionRecords(renderings: ReadonlyMap<string, ExtensionRendering>) {
   configExtensionRecordCounts.clear();
 
-  for (const instance of instances.values()) {
-    countInstanceRecord(instance, 1);
+  for (const rendering of renderings.values()) {
+    countRenderingRecord(rendering, 1);
   }
 
   configExtensionRecordsChanged = true;
@@ -352,7 +355,7 @@ function rebuildConfigExtensionRecords(instances: ReadonlyMap<string, ExtensionI
 
 function updateConfigExtensionStoreToCurrent() {
   // Catches a write that bypassed the helpers above, which has to rebuild the counts.
-  currentInstances();
+  currentRenderings();
 
   if (!configExtensionRecordsChanged) {
     return;
@@ -362,7 +365,7 @@ function updateConfigExtensionStoreToCurrent() {
 
   const configExtensionRecords = Array.from(configExtensionRecordCounts.values(), ({ record }) => record);
   // Compared as an array, so an unstable order would look like a change and trigger a full config
-  // recomputation every time an instance is remounted in a different position.
+  // recomputation every time a rendering is remounted in a different position.
   configExtensionRecords.sort(compareConfigExtensionRecords);
 
   if (!isEqual(configExtensionStore.getState().mountedExtensions, configExtensionRecords)) {

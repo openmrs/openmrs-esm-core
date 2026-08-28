@@ -1,3 +1,9 @@
+/*
+ * `render-result-naming-convention` reads any `render`-prefixed name as a testing-library render
+ * result. Nothing here renders anything — these are store tests, and "rendering" is the extension
+ * system's word for one live copy of an extension instance.
+ */
+/* eslint-disable testing-library/render-result-naming-convention */
 import { describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
 import type { Session } from '@openmrs/esm-api';
@@ -11,16 +17,15 @@ import {
   getExtensionRegistrationFrom,
   registerExtension,
   registerExtensionSlot,
-  updateExtensionSlotState,
 } from './extensions';
 import type { ExtensionInfo, ExtensionInternalStore, ExtensionRegistration } from './store';
 import {
   batchExtensionUpdates,
-  getExtensionInstancesStore,
+  getExtensionRenderingsStore,
   getExtensionInternalStore,
   getExtensionStore,
-  registerExtensionInstance,
-  unregisterExtensionInstance,
+  registerExtensionRendering,
+  unregisterExtensionRendering,
   updateInternalExtensionStore,
 } from './store';
 import { configExtensionStore } from '@openmrs/esm-config';
@@ -188,7 +193,7 @@ describe('attach', () => {
     const store = getExtensionInternalStore();
     const state = store.getState();
 
-    // Both instances should be in the attachedIds array
+    // Both attachments should be in the attachedIds array
     const count = state.slots[slotName].attachedIds.filter((id) => id === extensionId).length;
     expect(count).toBe(2);
   });
@@ -363,18 +368,6 @@ describe('registerExtensionSlot', () => {
     expect(state.slots[slotName].moduleName).toBe(moduleName);
   });
 
-  it('should register a slot with custom state', () => {
-    const slotName = getUniqueName('slot-with-state');
-    const customState = { foo: 'bar', count: 42 };
-
-    registerExtensionSlot('test-module', slotName, customState);
-
-    const store = getExtensionInternalStore();
-    const state = store.getState();
-
-    expect(state.slots[slotName].state).toEqual(customState);
-  });
-
   it('should preserve attachedIds when registering an existing slot', () => {
     const slotName = getUniqueName('preserve-attached');
     const extensionId = 'test-extension';
@@ -386,56 +379,6 @@ describe('registerExtensionSlot', () => {
     const state = store.getState();
 
     expect(state.slots[slotName].attachedIds).toContain(extensionId);
-  });
-});
-
-describe('updateExtensionSlotState', () => {
-  it('should update the full state when partial is false', () => {
-    const slotName = getUniqueName('test-slot-state');
-
-    registerExtensionSlot('test-module', slotName, { initial: 'state' });
-
-    const newState = { updated: 'state', count: 1 };
-    updateExtensionSlotState(slotName, newState, false);
-
-    const store = getExtensionInternalStore();
-    const state = store.getState();
-
-    expect(state.slots[slotName].state).toEqual(newState);
-    expect(state.slots[slotName].state).not.toHaveProperty('initial');
-  });
-
-  it('should merge state when partial is true', () => {
-    const slotName = getUniqueName('test-slot-partial');
-
-    registerExtensionSlot('test-module', slotName, { foo: 'bar', count: 1 });
-
-    const partialState = { count: 2, newProp: 'value' };
-    updateExtensionSlotState(slotName, partialState, true);
-
-    const store = getExtensionInternalStore();
-    const state = store.getState();
-
-    expect(state.slots[slotName].state).toEqual({
-      foo: 'bar',
-      count: 2,
-      newProp: 'value',
-    });
-  });
-
-  it('should default partial to false when not specified', () => {
-    const slotName = getUniqueName('test-slot-default');
-
-    registerExtensionSlot('test-module', slotName, { foo: 'bar' });
-
-    const newState = { new: 'state' };
-    updateExtensionSlotState(slotName, newState);
-
-    const store = getExtensionInternalStore();
-    const state = store.getState();
-
-    expect(state.slots[slotName].state).toEqual(newState);
-    expect(state.slots[slotName].state).not.toHaveProperty('foo');
   });
 });
 
@@ -485,6 +428,70 @@ describe('getAssignedExtensions', () => {
     const result = getAssignedExtensions(slotName);
 
     expect(result[0].meta).toEqual(meta);
+  });
+
+  it('applies display conditions even when no state is given', () => {
+    const slotName = getUniqueName('no-state-slot');
+    const hidden = getUniqueName('always-hidden');
+    const shown = getUniqueName('always-shown');
+
+    registerExtension(createMockExtension(hidden, { displayExpression: 'false' }));
+    registerExtension(createMockExtension(shown));
+    attach(slotName, hidden);
+    attach(slotName, shown);
+
+    // A caller that skips the filter builds UI around extensions the slot will then refuse to
+    // render — an empty tab, in the case this came from.
+    expect(getAssignedExtensions(slotName).map((e) => e.id)).toEqual([shown]);
+  });
+});
+
+describe('output store recomputation', () => {
+  it('picks up a slot dirtied by a subscriber while the store is being published', () => {
+    const extensionStore = getExtensionStore();
+    const outerSlot = getUniqueName('publishing-slot');
+    const nestedSlot = getUniqueName('nested-slot');
+    const extensionName = getUniqueName('nested-extension');
+
+    registerExtension(createMockExtension(extensionName));
+
+    // Attaches once, from inside the notification for the outer slot's own write. Without a drain
+    // the nested write is swallowed by the re-entrancy guard and `nestedSlot` never appears.
+    let attached = false;
+    const unsubscribe = extensionStore.subscribe(() => {
+      if (!attached) {
+        attached = true;
+        attach(nestedSlot, extensionName);
+      }
+    });
+
+    attach(outerSlot, extensionName);
+    unsubscribe();
+
+    expect(attached).toBe(true);
+    expect(extensionStore.getState().slots[nestedSlot]?.assignedExtensions.map((e) => e.id)).toEqual([extensionName]);
+  });
+
+  it('gives up rather than spinning when a subscriber dirties on every write', () => {
+    const extensionStore = getExtensionStore();
+    const slotName = getUniqueName('runaway-slot');
+    const extensionName = getUniqueName('runaway-extension');
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    registerExtension(createMockExtension(extensionName));
+
+    let writes = 0;
+    const unsubscribe = extensionStore.subscribe(() => {
+      writes++;
+      attach(getUniqueName('runaway-nested'), extensionName);
+    });
+
+    attach(slotName, extensionName);
+    unsubscribe();
+
+    expect(writes).toBeLessThanOrEqual(20);
+    expect(consoleError).toHaveBeenCalledWith(expect.stringMatching(/stopped recomputing after 20 passes/));
+    consoleError.mockRestore();
   });
 });
 
@@ -562,14 +569,14 @@ describe('batchExtensionUpdates', () => {
 });
 
 describe('the bridge to the config system', () => {
-  function mountInstances(slotName: string, extensionName: string, count: number, firstId = 0) {
-    const instanceIds: Array<string> = [];
+  function mountRenderings(slotName: string, extensionName: string, count: number, firstId = 0) {
+    const renderingIds: Array<string> = [];
 
     for (let i = firstId; i < firstId + count; i++) {
-      const instanceId = `${slotName}/${extensionName}-${i}`;
-      instanceIds.push(instanceId);
-      registerExtensionInstance({
-        instanceId,
+      const renderingId = `${slotName}/${extensionName}-${i}`;
+      renderingIds.push(renderingId);
+      registerExtensionRendering({
+        renderingId,
         extensionName,
         extensionModuleName: `${extensionName}-module`,
         id: extensionName,
@@ -578,7 +585,7 @@ describe('the bridge to the config system', () => {
       });
     }
 
-    return instanceIds;
+    return renderingIds;
   }
 
   it('should record one entry per slot and extension however many copies are rendered', () => {
@@ -587,7 +594,7 @@ describe('the bridge to the config system', () => {
     let writes = 0;
     const unsubscribe = configExtensionStore.subscribe(() => writes++);
 
-    mountInstances(slotName, extensionName, 50);
+    mountRenderings(slotName, extensionName, 50);
     unsubscribe();
 
     expect(configExtensionStore.getState().mountedExtensions.filter((r) => r.slotName === slotName)).toEqual([
@@ -598,54 +605,54 @@ describe('the bridge to the config system', () => {
         extensionId: extensionName,
       },
     ]);
-    // A list renders the same slot once per row, and every one of those mounts rewrites this store
-    // and re-derives a config for everything else on screen. Only the first copy is a real change.
+    // A list renders the same slot once per row; each of those mounts would otherwise rewrite this
+    // store and re-derive a config for everything else on screen. Only the first copy is a change.
     expect(writes).toBe(1);
   });
 
   it('should keep the entry until the last copy of an extension is gone', () => {
     const slotName = getUniqueName('drain-slot');
     const extensionName = getUniqueName('drain-extension');
-    const instanceIds = mountInstances(slotName, extensionName, 10);
+    const renderingIds = mountRenderings(slotName, extensionName, 10);
 
     let writes = 0;
     const unsubscribe = configExtensionStore.subscribe(() => writes++);
 
-    for (const instanceId of instanceIds.slice(0, -1)) {
-      unregisterExtensionInstance(instanceId);
+    for (const renderingId of renderingIds.slice(0, -1)) {
+      unregisterExtensionRendering(renderingId);
     }
 
     expect(configExtensionStore.getState().mountedExtensions.filter((r) => r.slotName === slotName)).toHaveLength(1);
     expect(writes).toBe(0);
 
-    unregisterExtensionInstance(instanceIds[instanceIds.length - 1]);
+    unregisterExtensionRendering(renderingIds[renderingIds.length - 1]);
     unsubscribe();
 
     expect(configExtensionStore.getState().mountedExtensions.filter((r) => r.slotName === slotName)).toHaveLength(0);
     expect(writes).toBe(1);
   });
 
-  it('should notify on every mount even though the instance map keeps its identity', () => {
+  it('should notify on every mount even though the rendering map keeps its identity', () => {
     const slotName = getUniqueName('identity-slot');
     const extensionName = getUniqueName('identity-extension');
-    const instancesStore = getExtensionInstancesStore();
+    const renderingsStore = getExtensionRenderingsStore();
     const seen: Array<ReadonlyMap<string, unknown>> = [];
     let notifications = 0;
 
-    const unsubscribe = instancesStore.subscribe((state) => {
+    const unsubscribe = renderingsStore.subscribe((state) => {
       notifications++;
-      seen.push(state.instances);
+      seen.push(state.renderings);
     });
 
-    const before = instancesStore.getState().instances.size;
-    const instanceIds = mountInstances(slotName, extensionName, 3);
-    unregisterExtensionInstance(instanceIds[0]);
+    const before = renderingsStore.getState().renderings.size;
+    const renderingIds = mountRenderings(slotName, extensionName, 3);
+    unregisterExtensionRendering(renderingIds[0]);
     unsubscribe();
 
     // The map is mutated in place, so consumers have to key off the state object around it.
     expect(notifications).toBe(4);
     expect(new Set(seen).size).toBe(1);
-    expect(instancesStore.getState().instances.size).toBe(before + 2);
+    expect(renderingsStore.getState().renderings.size).toBe(before + 2);
   });
 
   it('should record separate entries for the same extension in different slots', () => {
@@ -653,7 +660,7 @@ describe('the bridge to the config system', () => {
     const slotNames = [getUniqueName('slot-a'), getUniqueName('slot-b')];
 
     for (const slotName of slotNames) {
-      mountInstances(slotName, extensionName, 3);
+      mountRenderings(slotName, extensionName, 3);
     }
 
     const records = configExtensionStore

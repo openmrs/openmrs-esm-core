@@ -269,11 +269,9 @@ const baseImplementerToolsConfigStore = createGlobalStore<ImplementerToolsConfig
 });
 
 /**
- * Deriving this config means cloning, walking and deep-comparing every module's schema, which
- * makes it by a wide margin the most expensive thing the config system computes — and nothing but
- * the implementer tools panel ever reads it. So it is only kept current while something is
- * subscribed. Once the panel closes and the last subscriber goes away, config changes just mark it
- * stale and the work stops again.
+ * Deriving this config walks every module's schema, making it the most expensive thing the config
+ * system computes — and nothing but the implementer tools panel reads it. So it is only kept current
+ * while something is subscribed; otherwise config changes just mark it stale.
  */
 let implementerToolsSubscribers = 0;
 let implementerToolsConfigStale = true;
@@ -301,8 +299,8 @@ export function invalidateImplementerToolsConfig() {
 }
 
 function recomputeImplementerToolsConfigIfStale() {
-  // The guard is load-bearing rather than defensive: deriving writes to this store, and when
-  // nothing is subscribed that write re-enters through `getState`.
+  // `isRecomputing` is load-bearing rather than defensive: the derivation opens by reading this
+  // store, and with nothing subscribed that read comes straight back here.
   if (!implementerToolsConfigStale || !recomputeImplementerToolsConfig || isRecomputing) {
     return;
   }

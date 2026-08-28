@@ -72,7 +72,7 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divPro
 
       // Loading an extension's bundle can outlast the component that asked for it: the cleanup
       // effect has already run and saw no parcel, so teardown has to happen here instead, or the
-      // parcel mounts into a detached node and its instance record outlives the page.
+      // parcel mounts into a detached node and its rendering record outlives the page.
       if (isUnmounted.current) {
         unmountParcel(newParcel);
       }
