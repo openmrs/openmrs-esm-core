@@ -49,48 +49,6 @@ describe('shouldCloseOnUrlChange', () => {
       false,
     ],
     [
-      'stays open: same patient under the configured SPA base',
-      '^/patient/([^/]+)/chart(?:/|$)',
-      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
-      'http://localhost/openmrs/spa/patient/abc-123/chart/conditions',
-      false,
-    ],
-    [
-      'closes: different patient under the configured SPA base',
-      '^/patient/([^/]+)/chart(?:/|$)',
-      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
-      'http://localhost/openmrs/spa/patient/def-456/chart/vitals',
-      true,
-    ],
-    [
-      'closes: route only shares the SPA base as a string prefix',
-      '^/patient/([^/]+)/chart(?:/|$)',
-      'http://localhost/openmrs/spa2/patient/abc-123/chart/vitals',
-      'http://localhost/openmrs/spa2/patient/abc-123/chart/conditions',
-      true,
-    ],
-    [
-      'closes: route only shares the patient chart prefix',
-      '^/patient/([^/]+)/chart(?:/|$)',
-      'http://localhost/openmrs/spa/patient/abc-123/chart',
-      'http://localhost/openmrs/spa/patient/abc-123/chart-extra',
-      true,
-    ],
-    [
-      'stays open: legacy pattern includes the configured SPA base',
-      '^/openmrs/spa/patient/([^/]+)/chart(?:/|$)',
-      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
-      'http://localhost/openmrs/spa/patient/abc-123/chart/conditions',
-      false,
-    ],
-    [
-      'closes: legacy pattern captures a different patient',
-      '^/openmrs/spa/patient/([^/]+)/chart(?:/|$)',
-      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
-      'http://localhost/openmrs/spa/patient/def-456/chart/vitals',
-      true,
-    ],
-    [
       'stays open: same patient chart URL',
       '^/patient/([^/]+)/chart',
       'http://localhost/patient/abc-123/chart',
@@ -169,14 +127,69 @@ describe('shouldCloseOnUrlChange', () => {
     ],
     ['closes: relative URLs leaving scope', '^/home/appointments', '/home/appointments', '/home/service-queues', true],
   ])('%s', (_desc, pattern, oldUrl, newUrl, expected) => {
-    expect(shouldCloseOnUrlChange(pattern, oldUrl, newUrl)).toBe(expected);
+    withSpaBase('/', () => {
+      expect(shouldCloseOnUrlChange(pattern, oldUrl, newUrl)).toBe(expected);
+    });
+  });
+
+  it.each([
+    [
+      'stays open: same patient under the configured SPA base',
+      '^/patient/([^/]+)/chart(?:/|$)',
+      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
+      'http://localhost/openmrs/spa/patient/abc-123/chart/conditions',
+      false,
+    ],
+    [
+      'closes: different patient under the configured SPA base',
+      '^/patient/([^/]+)/chart(?:/|$)',
+      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
+      'http://localhost/openmrs/spa/patient/def-456/chart/vitals',
+      true,
+    ],
+    [
+      'closes: route only shares the SPA base as a string prefix',
+      '^/patient/([^/]+)/chart(?:/|$)',
+      'http://localhost/openmrs/spa2/patient/abc-123/chart/vitals',
+      'http://localhost/openmrs/spa2/patient/abc-123/chart/conditions',
+      true,
+    ],
+    [
+      'closes: navigation leaves the configured SPA base',
+      '^/patient/([^/]+)/chart(?:/|$)',
+      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
+      'http://localhost/patient/abc-123/chart/conditions',
+      true,
+    ],
+    [
+      'closes: route only shares the patient chart prefix',
+      '^/patient/([^/]+)/chart(?:/|$)',
+      'http://localhost/openmrs/spa/patient/abc-123/chart',
+      'http://localhost/openmrs/spa/patient/abc-123/chart-extra',
+      true,
+    ],
+    [
+      'stays open: legacy pattern includes the configured SPA base',
+      '^/openmrs/spa/patient/([^/]+)/chart(?:/|$)',
+      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
+      'http://localhost/openmrs/spa/patient/abc-123/chart/conditions',
+      false,
+    ],
+    [
+      'closes: legacy pattern captures a different patient',
+      '^/openmrs/spa/patient/([^/]+)/chart(?:/|$)',
+      'http://localhost/openmrs/spa/patient/abc-123/chart/vitals',
+      'http://localhost/openmrs/spa/patient/def-456/chart/vitals',
+      true,
+    ],
+  ])('%s', (_desc, pattern, oldUrl, newUrl, expected) => {
+    withSpaBase('/openmrs/spa/', () => {
+      expect(shouldCloseOnUrlChange(pattern, oldUrl, newUrl)).toBe(expected);
+    });
   });
 
   it('matches against a custom SPA base', () => {
-    const originalGetOpenmrsSpaBase = window.getOpenmrsSpaBase;
-    window.getOpenmrsSpaBase = () => '/custom/spa/';
-
-    try {
+    withSpaBase('/custom/spa/', () => {
       expect(
         shouldCloseOnUrlChange(
           '^/patient/([^/]+)/chart(?:/|$)',
@@ -184,8 +197,17 @@ describe('shouldCloseOnUrlChange', () => {
           '/custom/spa/patient/abc-123/chart/conditions',
         ),
       ).toBe(false);
-    } finally {
-      window.getOpenmrsSpaBase = originalGetOpenmrsSpaBase;
-    }
+    });
   });
 });
+
+function withSpaBase<T>(spaBase: string, callback: () => T): T {
+  const originalGetOpenmrsSpaBase = window.getOpenmrsSpaBase;
+  window.getOpenmrsSpaBase = () => spaBase;
+
+  try {
+    return callback();
+  } finally {
+    window.getOpenmrsSpaBase = originalGetOpenmrsSpaBase;
+  }
+}

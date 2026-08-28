@@ -12,15 +12,23 @@ export function shouldCloseOnUrlChange(scopePattern: string, oldUrl: string, new
     const oldPathnames = getPathnames(oldUrl);
     const newPathnames = getPathnames(newUrl);
 
-    const oldRelativeMatch = oldPathnames.spaRelative.match(regex);
-    const newRelativeMatch = newPathnames.spaRelative.match(regex);
+    if (oldPathnames.spaRelative === null || newPathnames.spaRelative === null) {
+      return true;
+    }
+
+    const oldRelativeMatch = regex.exec(oldPathnames.spaRelative);
+    const newRelativeMatch = regex.exec(newPathnames.spaRelative);
     const useSpaRelativePathnames = Boolean(oldRelativeMatch || newRelativeMatch);
 
     // scopePattern is defined against the SPA-relative pathname. Fall back to
     // the full pathname when neither relative pathname matches so that existing
     // patterns containing the SPA base path continue to work.
-    const oldMatch = useSpaRelativePathnames ? oldRelativeMatch : oldPathnames.full.match(regex);
-    const newMatch = useSpaRelativePathnames ? newRelativeMatch : newPathnames.full.match(regex);
+    let oldMatch = oldRelativeMatch;
+    let newMatch = newRelativeMatch;
+    if (!useSpaRelativePathnames) {
+      oldMatch = regex.exec(oldPathnames.full);
+      newMatch = regex.exec(newPathnames.full);
+    }
 
     if (!oldMatch || !newMatch) {
       // One or both URLs don't match the pattern - close workspace
@@ -43,9 +51,17 @@ export function shouldCloseOnUrlChange(scopePattern: string, oldUrl: string, new
 
 function getPathnames(url: string) {
   const full = new URL(url, window.location.origin).pathname;
-  const spaBase = new URL(window.getOpenmrsSpaBase(), window.location.origin).pathname.replace(/\/+$/, '');
-  const spaRelative =
-    !spaBase || spaBase === full ? '/' : full.startsWith(`${spaBase}/`) ? full.slice(spaBase.length) : full;
+  const spaBasePathname = new URL(window.getOpenmrsSpaBase(), window.location.origin).pathname;
+  const spaBase = spaBasePathname.endsWith('/') ? spaBasePathname.slice(0, -1) : spaBasePathname;
+  let spaRelative: string | null = null;
+
+  if (!spaBase) {
+    spaRelative = full;
+  } else if (spaBase === full) {
+    spaRelative = '/';
+  } else if (full.startsWith(`${spaBase}/`)) {
+    spaRelative = full.slice(spaBase.length);
+  }
 
   return { full, spaRelative };
 }
