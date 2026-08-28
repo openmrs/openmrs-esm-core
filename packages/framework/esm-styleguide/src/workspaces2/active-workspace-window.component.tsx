@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Parcel from 'single-spa-react/parcel';
 import { type ParcelConfig } from 'single-spa';
 import { InlineLoading } from '@carbon/react';
-import { type OpenedWindow, type OpenedWorkspace, workspace2Store, createParcelMounter } from '@openmrs/esm-extensions';
+import { type OpenedWindow, type OpenedWorkspace, createParcelMounter, workspace2Store } from '@openmrs/esm-extensions';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { promptForClosingWorkspaces, useWorkspace2Store } from './workspace2';

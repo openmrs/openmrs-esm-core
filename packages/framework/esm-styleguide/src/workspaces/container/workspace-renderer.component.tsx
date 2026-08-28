@@ -2,11 +2,11 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import { InlineLoading } from '@carbon/react';
+import { createParcelMounter } from '@openmrs/esm-extensions';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import styles from './workspace.module.scss';
 import { type OpenWorkspace } from '../workspaces';
 import { useWorkspaceGroupStore } from '../workspace-sidebar-store/useWorkspaceGroupStore';
-import { createParcelMounter } from '@openmrs/esm-extensions';
 
 interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
