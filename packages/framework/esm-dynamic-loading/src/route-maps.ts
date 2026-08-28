@@ -47,8 +47,10 @@ async function loadBaseMap(): Promise<{ map: OpenmrsRoutes; complete: boolean }>
     try {
       let parsed: unknown;
       if (script.src) {
-        // `credentials: 'omit'` matches the `crossorigin="anonymous"` preload
-        const response = await fetch(script.src, { credentials: 'omit' });
+        const response = await fetch(script.src);
+        if (!response.ok) {
+          throw new Error(`Request for ${script.src} returned ${response.status} ${response.statusText}`);
+        }
         parsed = await response.json();
       } else if (script.textContent) {
         parsed = JSON.parse(script.textContent);

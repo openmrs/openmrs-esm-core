@@ -347,7 +347,7 @@ describe('import-maps', () => {
       vi.resetModules();
     });
 
-    it('fetches the import map without credentials so the preloaded response is reused', async () => {
+    it('fetches the import map with the default credentials mode so the preloaded response is reused', async () => {
       setRemoteImportMap();
       fetchMock.mockResponse(JSON.stringify({ imports: { '@openmrs/esm-remote': '/remote.js' } }));
 
@@ -356,7 +356,9 @@ describe('import-maps', () => {
 
       await getCurrentPageMap();
 
-      expect(fetchMock).toHaveBeenCalledWith('http://localhost/importmap.json', { credentials: 'omit' });
+      // `crossorigin="anonymous"` on the preload link gives it a `same-origin` credentials mode,
+      // which is also `fetch()`'s default; passing anything else here misses the preload cache.
+      expect(fetchMock).toHaveBeenCalledWith('http://localhost/importmap.json');
     });
 
     it('fetches the import map only once across repeated reads', async () => {
@@ -395,6 +397,25 @@ describe('import-maps', () => {
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse import map'), expect.anything());
 
       // The failed read was not cached, so the next call retries and succeeds
+      const retried = await getCurrentPageMap();
+      expect(retried.imports['@openmrs/esm-remote']).toBe('/remote.js');
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+
+    it('does not cache a map whose fetch returned an error status', async () => {
+      setRemoteImportMap();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      fetchMock.mockResponseOnce(JSON.stringify({ error: 'service unavailable' }), { status: 503 });
+      fetchMock.mockResponse(JSON.stringify({ imports: { '@openmrs/esm-remote': '/remote.js' } }));
+
+      const { setupImportMapOverrides, getCurrentPageMap } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      const failed = await getCurrentPageMap();
+      expect(failed.imports).toEqual({});
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse import map'), expect.anything());
+
       const retried = await getCurrentPageMap();
       expect(retried.imports['@openmrs/esm-remote']).toBe('/remote.js');
       expect(fetchMock).toHaveBeenCalledTimes(2);

@@ -46,8 +46,10 @@ async function loadBaseMap(): Promise<{ map: ImportMap; complete: boolean }> {
     const script = scripts[i];
     try {
       if (script.src) {
-        // `credentials: 'omit'` matches the `crossorigin="anonymous"` preload
-        const response = await fetch(script.src, { credentials: 'omit' });
+        const response = await fetch(script.src);
+        if (!response.ok) {
+          throw new Error(`Request for ${script.src} returned ${response.status} ${response.statusText}`);
+        }
         maps.push(await response.json());
       } else if (script.textContent) {
         maps.push(JSON.parse(script.textContent));
