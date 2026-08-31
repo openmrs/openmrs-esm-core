@@ -27,7 +27,7 @@
     "@module-federation/sdk": "2.8.1",
     "@openmrs/rspack-config": "workspace:*",
     "@openmrs/webpack-config": "workspace:*",
-    "@rspack/core": "1.7.9",
+    "@rspack/core": "2.2.1",
     "@types/semver": "^7.7.3",
     "cross-env": "^10.1.0",
     "semver": "^7.7.3",
