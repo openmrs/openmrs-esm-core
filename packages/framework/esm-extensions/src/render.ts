@@ -186,7 +186,7 @@ export async function renderExtension(
 
       // Marks the node for the UI editor, which needs to pair a rendering with the element it went
       // into and cannot tell two renderings of one extension apart by any other attribute.
-      domElement.setAttribute('data-extension-rendering-id', renderingId);
+      domElement.dataset.extensionRenderingId = renderingId;
 
       const forget = () => unregisterExtensionRendering(renderingId);
       const forgetSafely = (cleanupErrorMessage: string) => {

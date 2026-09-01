@@ -91,9 +91,11 @@ function setupConfigSubscriptions() {
 
   // Subscribe to all input stores with a single handler
   // This ensures we only recompute once even if multiple stores change simultaneously
-  configSubscriptions.push(configInternalStore.subscribe(recomputeAllConfigsSafely));
-  configSubscriptions.push(temporaryConfigStore.subscribe(recomputeAllConfigsSafely));
-  configSubscriptions.push(configExtensionStore.subscribe(recomputeAllConfigsSafely));
+  configSubscriptions.push(
+    configInternalStore.subscribe(recomputeAllConfigsSafely),
+    temporaryConfigStore.subscribe(recomputeAllConfigsSafely),
+    configExtensionStore.subscribe(recomputeAllConfigsSafely),
+  );
 }
 
 /** Ensure that we do not throw during a store subscription */
