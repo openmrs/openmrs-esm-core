@@ -5,7 +5,7 @@
  * - attached (set via code in form of: attach, detach, ...)
  * - configured (set via configuration in form of: added, removed, ...)
  * - assigned (computed from attached and configured)
- * - connected (computed from assigned using connectivity and online / offline)
+ * - displayed (computed from assigned)
  */
 
 import { type Session, type SessionStore, sessionStore, userHasAccess } from '@openmrs/esm-api';
@@ -15,7 +15,6 @@ import {
   type ExtensionsConfigStore,
   getExtensionConfigFromExtensionSlotStore,
   getExtensionConfigFromStore,
-  getExtensionSlotConfig,
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
   getExtensionsConfigStore,
@@ -157,7 +156,7 @@ function updateExtensionOutputStore(
     }
 
     const { config } = getExtensionSlotConfigFromStore(extensionSlotConfigs, slot.name);
-    const assignedExtensions = getAssignedExtensionsFromSlotData(
+    const candidateExtensions = getAssignedExtensionsFromSlotData(
       slotName,
       internalState,
       config,
@@ -170,11 +169,11 @@ function updateExtensionOutputStore(
     if (
       previous &&
       previous.moduleName === slot.moduleName &&
-      isEqual(previous.assignedExtensions, assignedExtensions)
+      isEqual(previous.candidateExtensions, candidateExtensions)
     ) {
       slots[slotName] = previous;
     } else {
-      slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
+      slots[slotName] = { moduleName: slot.moduleName, candidateExtensions };
       changed = true;
     }
   }
@@ -217,8 +216,8 @@ slotsConfigStore.subscribe((state, previousState) => {
   markSlotsDirty(changedKeys(state.slots, previousState.slots));
 });
 
-// Extension configs are keyed by slot too, but rebuilt wholesale on every config recomputation,
-// so in practice any change here dirties every slot that has a mounted extension.
+// Extension configs are keyed by slot too, and the config system hands back the same per-slot
+// object when nothing under it changed, so only the slots whose configs actually moved are dirtied.
 extensionsConfigStore.subscribe((state, previousState) => {
   markSlotsDirty(changedKeys(state.configs, previousState.configs));
 });
@@ -239,7 +238,6 @@ function createNewExtensionSlotInfo(slotName: string, moduleName?: string): Exte
     moduleName,
     name: slotName,
     attachedIds: [],
-    config: null,
   };
 }
 
@@ -500,20 +498,16 @@ function getAssignedExtensionsFromSlotData(
  * Narrows `extensions` to those whose display condition holds for one particular rendering of a
  * slot, evaluating each condition against `state`.
  *
- * The same slot can be rendered many times at once with different state — a list renders one per
- * row — so a display condition cannot be resolved when the slot's extensions are derived. It has
- * to be resolved against the state of the rendering being displayed, which is what this takes.
- *
- * An extension whose condition throws is left out, on the grounds that a condition that cannot be
+ * An extension whose display condition throws is left out, on the grounds that a condition that cannot be
  * evaluated has not been met.
  *
- * @param extensions The extensions assigned to the slot, from `getAssignedExtensions` or the store
+ * @param extensions The extensions assigned to the slot, as the extension store holds them
  * @param state The state of this rendering of the slot
  * @param session The current session, which conditions may refer to as `session`
  * @param slotName The slot these were assigned to, used only to identify them if a condition throws
  * @returns Those of `extensions` that should be displayed, in the same order. Always a new array.
  */
-export function filterExtensionsByDisplayConditions(
+function filterExtensionsByDisplayConditions(
   extensions: Array<AssignedExtension>,
   state?: ExtensionSlotCustomState,
   session: Session | null = null,
@@ -545,40 +539,39 @@ export function filterExtensionsByDisplayConditions(
 }
 
 /**
- * Gets the list of extensions assigned to a given slot.
+ * Gets the extensions a given rendering of a slot should display, in order. This is the supported
+ * way to ask what belongs in a slot; reading the extension store directly skips display conditions.
  *
- * Display conditions are always applied, so the result is what would actually be displayed. Pass
- * `state` whenever you know it: a slot can be rendered in several places at once with different
- * state, so conditions are resolved against the state of the rendering rather than against the slot.
- * Omitting it resolves them against the session alone, which will hide any extension whose condition
- * depends on state — the same answer `<ExtensionSlot>` would reach with no state of its own.
+ * Display conditions are evaluated against `state`, so pass whatever the slot is being rendered
+ * for. The same slot can be rendered many times with different state — once per row of a table,
+ * say — and each rendering can resolve to a different set of extensions. Omitting `state` hides
+ * every extension whose condition refers to it, since the condition cannot be evaluated.
  *
- * @param slotName The slot to load the assigned extensions for
+ * @param slotName The slot to load the extensions for
  * @param state The state of the rendering of the slot the extensions will be displayed in
- * @returns An array of extensions assigned to the named slot
+ * @returns Those extensions assigned to the slot whose display conditions hold
  */
 export function getAssignedExtensions(slotName: string, state?: ExtensionSlotCustomState): Array<AssignedExtension> {
-  const internalState = extensionInternalStore.getState();
-  const { config: slotConfig } = getExtensionSlotConfig(slotName);
-  const extensionStoreState = extensionsConfigStore.getState();
-  const featureFlagState = featureFlagsStore.getState();
-  const sessionState = sessionStore.getState();
-  const isOnline = isOnlineFn();
-  const enabledFeatureFlags = Object.entries(featureFlagState.flags)
-    .filter(([, { enabled }]) => enabled)
-    .map(([name]) => name);
-
-  const assigned = getAssignedExtensionsFromSlotData(
+  return filterExtensionsByDisplayConditions(
+    getCandidateExtensions(slotName),
+    state,
+    sessionStore.getState().session,
     slotName,
-    internalState,
-    slotConfig,
-    extensionStoreState,
-    enabledFeatureFlags,
-    isOnline,
-    sessionState.session,
   );
+}
 
-  return filterExtensionsByDisplayConditions(assigned, state, sessionState.session, slotName);
+/**
+ * Gets everything assigned to a slot without evaluating any display condition, which
+ * {@link getAssignedExtensions} cannot do without knowing the state of a particular rendering.
+ *
+ * This exists for tools that present a slot's configuration rather than render it — the UI editor
+ * has to list an extension in order to let an implementer reorder or remove it, even where no
+ * rendering would display it. Anything deciding what to render wants `getAssignedExtensions()`.
+ *
+ * @internal
+ */
+export function getCandidateExtensions(slotName: string): Array<AssignedExtension> {
+  return extensionStore.getState().slots[slotName]?.candidateExtensions ?? [];
 }
 
 function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<string>) {

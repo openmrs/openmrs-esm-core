@@ -11,7 +11,7 @@ import { shallowEqual } from '@openmrs/esm-utils';
  * so a value nested more than one level deep still reads as a change.
  *
  * @param value The value to stabilize
- * @returns The first value shallowly equal to `value` that this hook was given
+ * @returns `value`, or the last value this hook returned if the two are shallowly equal
  */
 export function useShallowStableValue<T>(value: T): T {
   const stable = useRef(value);

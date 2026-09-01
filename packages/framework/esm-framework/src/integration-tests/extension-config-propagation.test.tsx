@@ -2,7 +2,7 @@
 import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
 import {
   attach,
@@ -80,20 +80,23 @@ describe('runtime slot config changes', () => {
     return Array.from(screen.getByTestId('slot').childNodes).map((n) => (n as HTMLElement).textContent);
   }
 
+  // Polls rather than sleeping: the cascade from a config write to the DOM runs across several
+  // store updates and a parcel mount, which is not a fixed amount of wall-clock time.
+  async function expectRendered(expected: Array<string | null>) {
+    await waitFor(() => expect(rendered()).toEqual(expected));
+  }
+
   it('ADD: config adding an extension after the slot is mounted shows it', async () => {
     reg('Fred');
     reg('Barney');
     attach('cfg-slot', 'Fred');
     await renderSlot();
-    expect(rendered()).toEqual(['Fred']);
+    await expectRendered(['Fred']);
 
     await act(async () => {
       provide({ [moduleName]: { extensionSlots: { 'cfg-slot': { add: ['Barney'] } } } });
     });
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 20));
-    });
-    expect(rendered()).toEqual(['Fred', 'Barney']);
+    await expectRendered(['Fred', 'Barney']);
   });
 
   it('REMOVE: config removing an extension after the slot is mounted hides it', async () => {
@@ -102,15 +105,12 @@ describe('runtime slot config changes', () => {
     attach('cfg-slot', 'Fred');
     attach('cfg-slot', 'Wilma');
     await renderSlot();
-    expect(rendered()).toEqual(['Fred', 'Wilma']);
+    await expectRendered(['Fred', 'Wilma']);
 
     await act(async () => {
       provide({ [moduleName]: { extensionSlots: { 'cfg-slot': { remove: ['Fred'] } } } });
     });
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 20));
-    });
-    expect(rendered()).toEqual(['Wilma']);
+    await expectRendered(['Wilma']);
   });
 
   it('ORDER: config reordering after the slot is mounted reorders the DOM', async () => {
@@ -119,15 +119,12 @@ describe('runtime slot config changes', () => {
     attach('cfg-slot', 'Fred');
     attach('cfg-slot', 'Wilma');
     await renderSlot();
-    expect(rendered()).toEqual(['Fred', 'Wilma']);
+    await expectRendered(['Fred', 'Wilma']);
 
     await act(async () => {
       provide({ [moduleName]: { extensionSlots: { 'cfg-slot': { order: ['Wilma', 'Fred'] } } } });
     });
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 20));
-    });
-    expect(rendered()).toEqual(['Wilma', 'Fred']);
+    await expectRendered(['Wilma', 'Fred']);
   });
 
   it('TEMPORARY CONFIG: implementer-tools style change propagates', async () => {
@@ -135,17 +132,14 @@ describe('runtime slot config changes', () => {
     reg('Barney');
     attach('cfg-slot', 'Fred');
     await renderSlot();
-    expect(rendered()).toEqual(['Fred']);
+    await expectRendered(['Fred']);
 
     await act(async () => {
       temporaryConfigStore.setState({
         config: { [moduleName]: { extensionSlots: { 'cfg-slot': { add: ['Barney'] } } } },
       });
     });
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 20));
-    });
-    expect(rendered()).toEqual(['Fred', 'Barney']);
+    await expectRendered(['Fred', 'Barney']);
   });
 
   it('CLEARED: clearing the temporary config reverts the slot to its unconfigured state', async () => {
@@ -159,20 +153,14 @@ describe('runtime slot config changes', () => {
         config: { [moduleName]: { extensionSlots: { 'cfg-slot': { add: ['Barney'] } } } },
       });
     });
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 20));
-    });
-    expect(rendered()).toEqual(['Fred', 'Barney']);
+    await expectRendered(['Fred', 'Barney']);
 
     // What the implementer tools' "clear temporary config" does. The slot loses its config
     // entry entirely, which has to take effect without a page reload.
     await act(async () => {
       temporaryConfigStore.setState({ config: {} });
     });
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 20));
-    });
-    expect(rendered()).toEqual(['Fred']);
+    await expectRendered(['Fred']);
   });
 
   it('REPEATED: a second config change after the first still propagates', async () => {
@@ -185,19 +173,13 @@ describe('runtime slot config changes', () => {
     await act(async () => {
       provide({ [moduleName]: { extensionSlots: { 'cfg-slot': { add: ['Barney'] } } } });
     });
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 20));
-    });
-    expect(rendered()).toEqual(['Fred', 'Barney']);
+    await expectRendered(['Fred', 'Barney']);
 
     await act(async () => {
       provide({ [moduleName]: { extensionSlots: { 'cfg-slot': { add: ['Barney', 'Betty'] } } } });
     });
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 20));
-    });
     // Two config-`add`ed extensions with no explicit order come out in the order the
     // configuration lists them.
-    expect(rendered()).toEqual(['Fred', 'Barney', 'Betty']);
+    await expectRendered(['Fred', 'Barney', 'Betty']);
   });
 });

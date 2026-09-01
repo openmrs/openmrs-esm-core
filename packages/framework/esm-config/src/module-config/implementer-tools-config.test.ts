@@ -9,6 +9,18 @@ import { defineConfigSchema, provide, registerModuleLoad, resetConfigSystem } fr
 import { Type } from '../types';
 
 /**
+ * The derived tree is `{ [module]: { ...keys, _value, _source } }` all the way down, which the
+ * store types only as `Config`. Reading it in a test needs the shape spelled out.
+ */
+interface ConfigNode {
+  _value?: unknown;
+  _source?: string;
+  [key: string]: any;
+}
+
+type ImplementerToolsTree = Record<string, ConfigNode>;
+
+/**
  * The implementer tools config is derived lazily — only while something is subscribed to it — so
  * these cover the two ways it can be read, and the transition back to lazy when the last
  * subscriber goes away.
@@ -27,7 +39,7 @@ describe('implementer tools config', () => {
   it('derives on demand when nothing is subscribed', () => {
     provide({ 'esm-flintstone': { label: 'provided-label' } });
 
-    const config = implementerToolsConfigStore.getState().config as never;
+    const config = implementerToolsConfigStore.getState().config as ImplementerToolsTree;
 
     expect(config['esm-flintstone'].label._value).toBe('provided-label');
     expect(config['esm-flintstone'].label._source).toBe('provided');
@@ -38,10 +50,14 @@ describe('implementer tools config', () => {
     const unsubscribe = implementerToolsConfigStore.subscribe((state) => seen.push(state.config));
 
     provide({ 'esm-flintstone': { label: 'first' } });
-    expect((implementerToolsConfigStore.getState().config as never)['esm-flintstone'].label._value).toBe('first');
+    expect((implementerToolsConfigStore.getState().config as ImplementerToolsTree)['esm-flintstone'].label._value).toBe(
+      'first',
+    );
 
     temporaryConfigStore.setState({ config: { 'esm-flintstone': { label: 'second' } } });
-    expect((implementerToolsConfigStore.getState().config as never)['esm-flintstone'].label._value).toBe('second');
+    expect((implementerToolsConfigStore.getState().config as ImplementerToolsTree)['esm-flintstone'].label._value).toBe(
+      'second',
+    );
 
     expect(seen.length).toBeGreaterThanOrEqual(2);
     unsubscribe();
@@ -55,7 +71,7 @@ describe('implementer tools config', () => {
     // Back to deriving lazily; a read still has to see changes made while nothing was watching.
     temporaryConfigStore.setState({ config: { 'esm-flintstone': { label: 'after-unsubscribe' } } });
 
-    expect((implementerToolsConfigStore.getState().config as never)['esm-flintstone'].label._value).toBe(
+    expect((implementerToolsConfigStore.getState().config as ImplementerToolsTree)['esm-flintstone'].label._value).toBe(
       'after-unsubscribe',
     );
   });
@@ -63,7 +79,7 @@ describe('implementer tools config', () => {
   it('includes a module that is configured but never declared a schema', () => {
     provide({ 'esm-no-schema': { someSetting: 'configured' } });
 
-    const config = implementerToolsConfigStore.getState().config as never;
+    const config = implementerToolsConfigStore.getState().config as ImplementerToolsTree;
 
     // Merging happens per module, so a module present only in a provided config still has to
     // reach the output.
@@ -83,7 +99,7 @@ describe('implementer tools config', () => {
     provide({ 'esm-rubble': { nested: { overridden: 'from-provided' } } });
     temporaryConfigStore.setState({ config: { 'esm-rubble': { nested: { overridden: 'from-temporary' } } } });
 
-    const config = implementerToolsConfigStore.getState().config as never;
+    const config = implementerToolsConfigStore.getState().config as ImplementerToolsTree;
 
     expect(config['esm-rubble'].nested.overridden._value).toBe('from-temporary');
     expect(config['esm-rubble'].nested.overridden._source).toBe('temporary config');
@@ -141,6 +157,29 @@ describe('implementer tools config', () => {
     expect(derived).toBe(true);
   });
 
+  /*
+   * A failed derivation leaves the last config that built successfully in place — on a first
+   * failure, nothing at all — so the panel has no way to tell it is looking at stale data unless
+   * the failure is recorded alongside it.
+   */
+  it('records a failed derivation in the store, and clears it once one succeeds', () => {
+    let shouldThrow = true;
+    setImplementerToolsConfigRecomputer(() => {
+      if (shouldThrow) {
+        throw new Error('derivation blew up');
+      }
+    });
+
+    provide({ 'esm-flintstone': { label: 'x' } });
+
+    expect(implementerToolsConfigStore.getState().derivationError).toBe('derivation blew up');
+
+    shouldThrow = false;
+    provide({ 'esm-flintstone': { label: 'y' } });
+
+    expect(implementerToolsConfigStore.getState().derivationError).toBeUndefined();
+  });
+
   it('tolerates unsubscribing twice', () => {
     const unsubscribe = implementerToolsConfigStore.subscribe(() => {});
     unsubscribe();
@@ -148,7 +187,7 @@ describe('implementer tools config', () => {
 
     // A subscriber count driven below zero would leave `getState` permanently unable to derive.
     temporaryConfigStore.setState({ config: { 'esm-flintstone': { label: 'after-double' } } });
-    expect((implementerToolsConfigStore.getState().config as never)['esm-flintstone'].label._value).toBe(
+    expect((implementerToolsConfigStore.getState().config as ImplementerToolsTree)['esm-flintstone'].label._value).toBe(
       'after-double',
     );
   });
@@ -168,8 +207,8 @@ describe('implementer tools config', () => {
   });
 
   it('does not overwrite a config written directly to the store', () => {
-    implementerToolsConfigStore.setState({ config: { manual: true } as never });
+    implementerToolsConfigStore.setState({ config: { 'esm-manual': { written: true } } });
 
-    expect(implementerToolsConfigStore.getState().config).toEqual({ manual: true });
+    expect(implementerToolsConfigStore.getState().config).toEqual({ 'esm-manual': { written: true } });
   });
 });

@@ -117,7 +117,11 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
 
         case 'TO_BE_DELETED':
           instance.onClose();
-          instance.parcel?.unmount?.();
+          // A rejected unmount would otherwise be an unhandled rejection; the tear-down below runs
+          // either way.
+          instance.parcel?.unmount?.().catch((err) => {
+            console.error(`The modal '${instance.modalName}' failed to unmount`, err);
+          });
           instance.container?.remove();
           setTimeout(() => {
             modalStore.setState({

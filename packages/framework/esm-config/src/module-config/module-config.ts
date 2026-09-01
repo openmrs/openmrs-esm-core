@@ -18,8 +18,10 @@ import {
   getExtensionConfig,
   getExtensionSlotsConfigStore,
   getExtensionsConfigStore,
+  clearConfigDerivationError,
   implementerToolsConfigStore,
   invalidateImplementerToolsConfig,
+  recordConfigDerivationError,
   setImplementerToolsConfigRecomputer,
   temporaryConfigStore,
 } from './state';
@@ -89,9 +91,21 @@ function setupConfigSubscriptions() {
 
   // Subscribe to all input stores with a single handler
   // This ensures we only recompute once even if multiple stores change simultaneously
-  configSubscriptions.push(configInternalStore.subscribe(recomputeAllConfigs));
-  configSubscriptions.push(temporaryConfigStore.subscribe(recomputeAllConfigs));
-  configSubscriptions.push(configExtensionStore.subscribe(recomputeAllConfigs));
+  configSubscriptions.push(configInternalStore.subscribe(recomputeAllConfigsSafely));
+  configSubscriptions.push(temporaryConfigStore.subscribe(recomputeAllConfigsSafely));
+  configSubscriptions.push(configExtensionStore.subscribe(recomputeAllConfigsSafely));
+}
+
+/** Ensure that we do not throw during a store subscription */
+function recomputeAllConfigsSafely() {
+  clearConfigDerivationError();
+
+  try {
+    recomputeAllConfigs();
+  } catch (e) {
+    recordConfigDerivationError(e);
+    console.error('Failed to recompute the configuration', e);
+  }
 }
 
 // Set up subscriptions at module load time
@@ -246,6 +260,21 @@ function computeExtensionConfigs(
 
     configs[extension.slotName][extension.extensionId] = entry as ConfigStore;
     entryCount++;
+  }
+
+  // Slots keep their identity too when none of their entries changed. Subscribers compare these
+  // per-slot objects to work out which slots to re-derive, so handing out a fresh one for every
+  // slot on every write would mark every slot with a mounted extension dirty.
+  for (const [slotName, slotConfigs] of Object.entries(configs)) {
+    const previousSlot = oldConfigs[slotName];
+
+    if (
+      previousSlot &&
+      Object.keys(previousSlot).length === Object.keys(slotConfigs).length &&
+      Object.entries(slotConfigs).every(([extensionId, entry]) => previousSlot[extensionId] === entry)
+    ) {
+      configs[slotName] = previousSlot;
+    }
   }
 
   if (!changed) {
@@ -497,19 +526,6 @@ export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject
  */
 
 /**
- * Returns the configuration for an extension. This configuration is specific
- * to the slot in which it is mounted, and its ID within that slot.
- *
- * The schema for that configuration is the extension schema. If no extension
- * schema has been provided, the schema used is the schema of the module in
- * which the extension is defined.
- *
- * @param slotModuleName The name of the module which defines the extension slot
- * @param extensionModuleName The name of the module which defines the extension (and therefore the config schema)
- * @param slotName The name of the extension slot where the extension is mounted
- * @param extensionId The ID of the extension in its slot
- */
-/**
  * An extension's config depends only on the two schemas that can define it and on the config
  * sources, so mounting one extension leaves every other mounted extension's config untouched.
  * Without this, every mount and unmount re-derives — merge, clone, validate — a config for every
@@ -525,6 +541,19 @@ interface ExtensionConfigCacheEntry {
 
 const extensionConfigCache = new Map<string, ExtensionConfigCacheEntry>();
 
+/**
+ * Returns the configuration for an extension. This configuration is specific
+ * to the slot in which it is mounted, and its ID within that slot.
+ *
+ * The schema for that configuration is the extension schema. If no extension
+ * schema has been provided, the schema used is the schema of the module in
+ * which the extension is defined.
+ *
+ * @param slotModuleName The name of the module which defines the extension slot
+ * @param extensionModuleName The name of the module which defines the extension (and therefore the config schema)
+ * @param slotName The name of the extension slot where the extension is mounted
+ * @param extensionId The ID of the extension in its slot
+ */
 function computeExtensionConfig(
   slotModuleName: string,
   extensionModuleName: string,
@@ -535,9 +564,8 @@ function computeExtensionConfig(
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
-  // `|` rather than a space, which slot names and extension IDs are allowed to contain: joining on
-  // one lets ('a b', 'c') and ('a', 'b c') collide and share a config.
-  const cacheKey = [slotName, extensionId, slotModuleName, extensionModuleName].join('|');
+  // JSON string of these elements should be unique-per-extension
+  const cacheKey = JSON.stringify([slotName, extensionId, slotModuleName, extensionModuleName]);
   const cached = extensionConfigCache.get(cacheKey);
 
   if (

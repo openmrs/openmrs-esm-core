@@ -1,12 +1,12 @@
 /*
- * `render-result-naming-convention` reads any `render`-prefixed name as a testing-library render
- * result. Nothing here renders anything — these are store tests, and "rendering" is the extension
- * system's word for one live copy of an extension instance.
+ * `render-result-naming-convention` flags any callee name containing `render`, which
+ * `getExtensionRenderingsStore` does. Nothing here renders anything — these are store tests, and
+ * "rendering" is the extension system's word for one live copy of an extension instance.
  */
 /* eslint-disable testing-library/render-result-naming-convention */
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { Session } from '@openmrs/esm-api';
+import { sessionStore, userHasAccess, type Session } from '@openmrs/esm-api';
 import {
   attach,
   detach,
@@ -17,8 +17,9 @@ import {
   getExtensionRegistrationFrom,
   registerExtension,
   registerExtensionSlot,
+  reset,
 } from './extensions';
-import type { ExtensionInfo, ExtensionInternalStore, ExtensionRegistration } from './store';
+import type { ExtensionInternalStore, ExtensionRegistration } from './store';
 import {
   batchExtensionUpdates,
   getExtensionRenderingsStore,
@@ -28,7 +29,7 @@ import {
   unregisterExtensionRendering,
   updateInternalExtensionStore,
 } from './store';
-import { configExtensionStore } from '@openmrs/esm-config';
+import { configExtensionStore, getExtensionSlotsConfigStore } from '@openmrs/esm-config';
 
 // Minimal mocking - only what we need for fine-grained control
 vi.mock('@openmrs/esm-api', () => ({
@@ -62,7 +63,7 @@ function getUniqueName(prefix: string = 'test'): string {
 }
 
 // Helper to create a mock extension registration
-function createMockExtension(name: string, overrides: Partial<ExtensionRegistration> = {}): ExtensionInfo {
+function createMockExtension(name: string, overrides: Partial<ExtensionRegistration> = {}): ExtensionRegistration {
   return {
     name,
     load: vi.fn(async () => ({ bootstrap: vi.fn(), mount: vi.fn(), unmount: vi.fn() })),
@@ -71,6 +72,13 @@ function createMockExtension(name: string, overrides: Partial<ExtensionRegistrat
     ...overrides,
   };
 }
+
+// Every store the extension system writes is module-global, and so is its invalidation state, so
+// a test that leaves slots attached or slots dirty changes what the next one measures.
+beforeEach(() => {
+  reset();
+  getExtensionSlotsConfigStore().setState({ slots: {} });
+});
 
 describe('getExtensionNameFromId', () => {
   it('should extract the extension name from a simple ID', () => {
@@ -224,8 +232,6 @@ describe('attach', () => {
       moduleName: undefined,
       name: slotName,
       attachedIds: [extensionId],
-      config: null,
-      state: undefined,
     });
   });
 });
@@ -469,7 +475,7 @@ describe('output store recomputation', () => {
     unsubscribe();
 
     expect(attached).toBe(true);
-    expect(extensionStore.getState().slots[nestedSlot]?.assignedExtensions.map((e) => e.id)).toEqual([extensionName]);
+    expect(extensionStore.getState().slots[nestedSlot]?.candidateExtensions.map((e) => e.id)).toEqual([extensionName]);
   });
 
   it('gives up rather than spinning when a subscriber dirties on every write', () => {
@@ -489,9 +495,97 @@ describe('output store recomputation', () => {
     attach(slotName, extensionName);
     unsubscribe();
 
-    expect(writes).toBeLessThanOrEqual(20);
+    expect(writes).toBe(20);
     expect(consoleError).toHaveBeenCalledWith(expect.stringMatching(/stopped recomputing after 20 passes/));
     consoleError.mockRestore();
+
+    // Giving up leaves the guard down and the outstanding slots dirty rather than wedging the
+    // system: once whatever was dirtying them stops, the next write settles them.
+    const recoveredSlot = getUniqueName('recovered-slot');
+    attach(recoveredSlot, extensionName);
+
+    expect(extensionStore.getState().slots[recoveredSlot]?.candidateExtensions.map((e) => e.id)).toEqual([
+      extensionName,
+    ]);
+  });
+
+  it('leaves a slot it failed to derive dirty, so a later write retries it', () => {
+    const extensionStore = getExtensionStore();
+    const failingSlot = getUniqueName('failing-slot');
+    const laterSlot = getUniqueName('later-slot');
+    const guarded = getUniqueName('guarded-extension');
+    const plain = getUniqueName('plain-extension');
+
+    sessionStore.setState({ loaded: true, session: { user: { uuid: 'test-user' } } as Session });
+    registerExtension(createMockExtension(guarded, { privileges: 'Fold Back Privilege' }));
+    registerExtension(createMockExtension(plain));
+
+    // Throws while the slot's extensions are being narrowed, which is before the output store is
+    // written — so this slot is left with no entry at all rather than a partial one.
+    let failNext = true;
+    vi.mocked(userHasAccess).mockImplementation((privileges) => {
+      if (privileges === 'Fold Back Privilege' && failNext) {
+        failNext = false;
+        throw new Error('privilege lookup failed');
+      }
+
+      return true;
+    });
+
+    // Logged rather than thrown: the derivation runs from a store subscriber, so letting it escape
+    // would surface here, from `attach`, and abort the subscribers behind it.
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    expect(() => attach(failingSlot, guarded)).not.toThrow();
+    expect(consoleError).toHaveBeenCalledWith(
+      expect.stringMatching(/recomputation failed/),
+      expect.objectContaining({ message: 'privilege lookup failed' }),
+    );
+    consoleError.mockRestore();
+    expect(extensionStore.getState().slots[failingSlot]).toBeUndefined();
+
+    // A write to an unrelated slot: the folded-back slot is recomputed alongside it.
+    attach(laterSlot, plain);
+
+    expect(extensionStore.getState().slots[failingSlot]?.candidateExtensions.map((e) => e.id)).toEqual([guarded]);
+
+    vi.mocked(userHasAccess).mockImplementation(() => true);
+    sessionStore.setState({ loaded: false, session: null });
+  });
+
+  /*
+   * The session loads asynchronously, after the shell has already rendered its slots, so this is
+   * the ordinary path rather than an edge case. Privileges are applied while the slot is derived
+   * and never re-applied on read, so without this invalidation a gated extension stays missing
+   * until some unrelated input happens to dirty its slot.
+   */
+  it('re-derives a slot when the session changes', () => {
+    const extensionStore = getExtensionStore();
+    const slotName = getUniqueName('session-slot');
+    const guarded = getUniqueName('guarded-extension');
+    const plain = getUniqueName('plain-extension');
+
+    sessionStore.setState({ loaded: false, session: null });
+    vi.mocked(userHasAccess).mockImplementation((_privileges, user) => Boolean(user));
+
+    registerExtension(createMockExtension(guarded, { privileges: 'Session Privilege' }));
+    registerExtension(createMockExtension(plain));
+    attach(slotName, guarded);
+    attach(slotName, plain);
+
+    // Gated out while there is nobody to check the privilege against.
+    expect(extensionStore.getState().slots[slotName]?.candidateExtensions.map((e) => e.id)).toEqual([plain]);
+
+    sessionStore.setState({ loaded: true, session: { user: { uuid: 'test-user' } } as Session });
+
+    expect(extensionStore.getState().slots[slotName]?.candidateExtensions.map((e) => e.id)).toEqual([guarded, plain]);
+
+    sessionStore.setState({ loaded: true, session: null });
+
+    expect(extensionStore.getState().slots[slotName]?.candidateExtensions.map((e) => e.id)).toEqual([plain]);
+
+    vi.mocked(userHasAccess).mockImplementation(() => true);
+    sessionStore.setState({ loaded: false, session: null });
   });
 });
 
@@ -537,7 +631,58 @@ describe('batchExtensionUpdates', () => {
     unsubscribe();
 
     expect(writes).toBe(1);
-    expect(extensionStore.getState().slots[slotName].assignedExtensions).toHaveLength(1);
+    expect(extensionStore.getState().slots[slotName].candidateExtensions).toHaveLength(1);
+  });
+
+  /*
+   * The flush runs each queued recomputation in turn, so one that throws must not take the ones
+   * behind it with it — the config bridge and the output store are queued independently and a
+   * failure in either would otherwise leave the other's work silently dropped.
+   */
+  it('should run the remaining recomputations when one of them throws during the flush', () => {
+    const slotName = getUniqueName('isolation-slot');
+    const extensionName = getUniqueName('isolation-extension');
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    registerExtension(createMockExtension(extensionName, { privileges: 'Isolation Privilege' }));
+    sessionStore.setState({ loaded: true, session: { user: { uuid: 'test-user' } } as Session });
+
+    let failNext = true;
+    vi.mocked(userHasAccess).mockImplementation((privileges) => {
+      if (privileges === 'Isolation Privilege' && failNext) {
+        failNext = false;
+        throw new Error('privilege lookup failed');
+      }
+
+      return true;
+    });
+
+    // Both are queued: attaching dirties the slot, and registering a rendering marks the config
+    // records changed. The first throws; the second still has to run.
+    batchExtensionUpdates(() => {
+      attach(slotName, extensionName);
+      registerExtensionRendering({
+        renderingId: `${slotName}/${extensionName}-0`,
+        extensionName,
+        extensionModuleName: `${extensionName}-module`,
+        extensionId: extensionName,
+        slotName,
+        slotModuleName: 'isolation-module',
+      });
+    });
+
+    expect(consoleError).toHaveBeenCalledWith(
+      expect.stringMatching(/recomputation failed/),
+      expect.objectContaining({ message: 'privilege lookup failed' }),
+    );
+    expect(
+      configExtensionStore.getState().mountedExtensions.filter((record) => record.slotName === slotName),
+    ).toHaveLength(1);
+
+    unregisterExtensionRendering(`${slotName}/${extensionName}-0`);
+    vi.mocked(userHasAccess).mockImplementation(() => true);
+    sessionStore.setState({ loaded: false, session: null });
+    consoleError.mockRestore();
   });
 
   it('should only flush at the end of the outermost batch when batches nest', () => {
@@ -579,7 +724,7 @@ describe('the bridge to the config system', () => {
         renderingId,
         extensionName,
         extensionModuleName: `${extensionName}-module`,
-        id: extensionName,
+        extensionId: extensionName,
         slotName,
         slotModuleName: 'test-module',
       });
@@ -655,6 +800,58 @@ describe('the bridge to the config system', () => {
     expect(renderingsStore.getState().renderings.size).toBe(before + 2);
   });
 
+  it('should keep entries apart when a slot name and extension ID could run together', () => {
+    const suffix = getUniqueName('collide');
+    // Joining these on a space would give both pairs the key `a b ${suffix} test-module ...`, and
+    // the second would be folded into the first's record instead of getting one of its own.
+    const pairs = [
+      { slotName: `a b`, extensionId: `${suffix}` },
+      { slotName: `a`, extensionId: `b ${suffix}` },
+    ];
+
+    for (const { slotName, extensionId } of pairs) {
+      registerExtensionRendering({
+        renderingId: `${slotName}/${extensionId}`,
+        extensionName: extensionId,
+        extensionModuleName: 'collide-module',
+        extensionId,
+        slotName,
+        slotModuleName: 'test-module',
+      });
+    }
+
+    const records = configExtensionStore
+      .getState()
+      .mountedExtensions.filter((record) => record.extensionModuleName === 'collide-module');
+
+    expect(records).toHaveLength(2);
+    expect(records.map((record) => [record.slotName, record.extensionId]).sort()).toEqual(
+      pairs.map(({ slotName, extensionId }) => [slotName, extensionId]).sort(),
+    );
+  });
+
+  it('should ignore a rendering registered twice and a rendering released twice', () => {
+    const slotName = getUniqueName('idempotent-slot');
+    const extensionName = getUniqueName('idempotent-extension');
+    const [renderingId] = mountRenderings(slotName, extensionName, 1);
+
+    let writes = 0;
+    const unsubscribe = configExtensionStore.subscribe(() => writes++);
+
+    // A duplicate registration must not raise the count, or the record outlives its one rendering.
+    mountRenderings(slotName, extensionName, 1);
+    unregisterExtensionRendering(renderingId);
+
+    expect(configExtensionStore.getState().mountedExtensions.filter((r) => r.slotName === slotName)).toHaveLength(0);
+
+    // Releasing an unknown rendering is a no-op rather than a negative count.
+    unregisterExtensionRendering(renderingId);
+    unsubscribe();
+
+    expect(configExtensionStore.getState().mountedExtensions.filter((r) => r.slotName === slotName)).toHaveLength(0);
+    expect(writes).toBe(1);
+  });
+
   it('should record separate entries for the same extension in different slots', () => {
     const extensionName = getUniqueName('shared-extension');
     const slotNames = [getUniqueName('slot-a'), getUniqueName('slot-b')];
@@ -682,12 +879,13 @@ describe('extension ordering', () => {
     attach(slotName, first);
     attach(slotName, second);
     registerExtensionSlot('test-module', slotName);
-    updateInternalExtensionStore((state) => ({
-      ...state,
-      slots: { ...state.slots, [slotName]: { ...state.slots[slotName], config: { order: [second] } } },
+    getExtensionSlotsConfigStore().setState((state) => ({
+      slots: { ...state.slots, [slotName]: { loaded: true, config: { order: [second] } } },
     }));
 
-    expect(getAssignedExtensions(slotName).map((e) => e.id)).toEqual([first, second]);
+    // `second` has no order of its own, but the slot's configured order names it, which outranks
+    // the registered order `first` carries.
+    expect(getAssignedExtensions(slotName).map((e) => e.id)).toEqual([second, first]);
   });
 
   it('should place a registered order ahead of attachment order', () => {

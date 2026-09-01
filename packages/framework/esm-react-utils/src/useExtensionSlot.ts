@@ -15,10 +15,8 @@ export function useExtensionSlot(slotName: string, state?: ExtensionSlotCustomSt
     registerExtensionSlot(moduleName, slotName);
   }, [moduleName, slotName]);
 
-  // `state` stays local to this rendering rather than being written to the slot: the same slot can
-  // be rendered many times at once — once per row of a list — and each rendering has its own state,
-  // so there is no single value the slot could hold. It is passed to `useAssignedExtensions`, which
-  // resolves this rendering's display conditions against it.
+  // `state` must be local to the rendering rather than written to the store as state is
+  // render-specific
   const extensions = useAssignedExtensions(slotName, state);
 
   return {

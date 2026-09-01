@@ -10,6 +10,7 @@ export * from './useAbortController';
 export * from './useAppContext';
 export * from './useAssignedExtensionIds';
 export * from './useAssignedExtensions';
+export * from './useCandidateExtensions';
 export * from './useShallowStableValue';
 export * from './useAttachments';
 export * from './useBodyScrollLock';

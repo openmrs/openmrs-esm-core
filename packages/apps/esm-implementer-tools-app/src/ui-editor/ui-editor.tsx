@@ -38,7 +38,7 @@ export interface ExtensionOverlayTarget {
 
 /**
  * Turns the rendering store's records into overlay targets, each naming a slot and extension to look
- * for in the DOM. A rendering is registered before its bundle loads, so the node may not exist yet.
+ * for in the DOM. Not every rendering has a matching node.
  */
 export function getExtensionOverlayTargets(
   renderings: ExtensionRenderingsStore['renderings'] | undefined,
@@ -95,16 +95,14 @@ export default function UiEditor() {
       .filter((x): x is NonNullable<typeof x> => Boolean(x));
   }, [slots]);
 
-  const extensionElements = useMemo(
-    () =>
-      getExtensionOverlayTargets(renderingsState.renderings).map((target) => ({
-        ...target,
-        element: document.querySelector(
-          `*[data-extension-slot-name="${target.slotName}"][data-extension-slot-module-name="${target.slotModuleName}"] *[data-extension-id="${target.extensionRendering.id}"]`,
-        ) as HTMLElement | null,
-      })),
-    [renderingsState],
-  );
+  const extensionElements = useMemo(() => {
+    return getExtensionOverlayTargets(renderingsState.renderings).map((target) => ({
+      ...target,
+      element: document.querySelector(
+        `*[data-extension-rendering-id="${CSS.escape(target.extensionRendering.renderingId)}"]`,
+      ) as HTMLElement | null,
+    }));
+  }, [renderingsState]);
 
   return (
     <>
@@ -129,7 +127,7 @@ export default function UiEditor() {
             <ExtensionOverlay
               domElement={element}
               extensionName={extensionName}
-              key={`${slotName}-${extensionRendering.id}`}
+              key={extensionRendering.renderingId}
               slotModuleName={slotModuleName}
               slotName={slotName}
             />

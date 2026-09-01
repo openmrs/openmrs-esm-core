@@ -1,6 +1,5 @@
 /** @module @category Extension */
-import { isEqual } from 'lodash-es';
-import type { ConfigExtensionStoreElement, ConfigObject, ExtensionSlotConfig } from '@openmrs/esm-config';
+import type { ConfigExtensionStoreElement, ConfigObject } from '@openmrs/esm-config';
 import { configExtensionStore } from '@openmrs/esm-config';
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
 import { type LifeCycles } from 'single-spa';
@@ -37,7 +36,7 @@ export type ExtensionInfo = ExtensionRegistration;
  *  - an *extension instance* is a configurable use of one within a slot, identified by its
  *    **ID** — the name plus an optional `#`-suffix (`obs#weight`) — which is what an implementer
  *    writes under a slot's `configure` key, and what a config is derived for;
- *  - a *rendering*, this type, is one live copy of an instance on screen.
+ *  - a *rendering*, this type, is one live copy of an instance being rendered.
  *
  * One instance has any number of renderings at a time: a list renders the same slot once per row,
  * so each row holds its own rendering of every instance assigned to that slot.
@@ -50,7 +49,7 @@ export interface ExtensionRendering {
   /** The module which registered the extension. */
   readonly extensionModuleName: string;
   /** The ID of the extension instance being rendered: the name plus an optional `#`-suffix. */
-  readonly id: string;
+  readonly extensionId: string;
   readonly slotName: string;
   readonly slotModuleName: string;
 }
@@ -62,19 +61,23 @@ export interface ExtensionInternalStore {
   extensions: Record<string, ExtensionRegistration>;
 }
 
+/** @internal */
 export interface ExtensionRenderingsStore {
   /**
    * Every rendering that has started and not yet been released, indexed by rendering ID.
    *
-   * Mutated in place as extensions mount and unmount, because an application renders thousands at
-   * once and copying them all per mount is quadratic over a page's lifetime. So its identity never
-   * changes: subscribe to the state object around it, never to this map, and read it during render
-   * rather than holding a reference across a change.
+   * Mutated in place as extensions mount and unmount, retaining identity across mounts
+   * and unmounts.
    */
   renderings: ReadonlyMap<string, ExtensionRendering>;
 }
 
-export type ExtensionSlotCustomState = Record<string | symbol | number, unknown> | undefined | null;
+/**
+ * The state one rendering of a slot is displaying, which its extensions' display conditions are
+ * evaluated against. Each key becomes a variable of that name in the expression, so only string
+ * keys are reachable from a condition.
+ */
+export type ExtensionSlotCustomState = Record<string, unknown> | undefined;
 
 export interface ExtensionSlotInfo {
   /**
@@ -91,8 +94,6 @@ export interface ExtensionSlotInfo {
    * `assignedIds` is the set defining those.
    */
   attachedIds: Array<string>;
-  /** The configuration provided for this slot. `null` if not yet loaded. */
-  config: Omit<ExtensionSlotConfig, 'configuration'> | null;
 }
 
 export interface ExtensionStore {
@@ -101,7 +102,11 @@ export interface ExtensionStore {
 
 export interface ExtensionSlotState {
   moduleName?: string;
-  assignedExtensions: Array<AssignedExtension>;
+  /**
+   * Candidates only. Call `getAssignedExtensions()` for the extensions a given rendering of
+   * this slot should actually display.
+   */
+  candidateExtensions: Array<AssignedExtension>;
 }
 
 export interface AssignedExtension {
@@ -114,12 +119,7 @@ export interface AssignedExtension {
   readonly online?: boolean | object;
   readonly offline?: boolean | object;
   readonly featureFlag?: string;
-  /**
-   * The condition under which this extension should be displayed, if it has one. Unresolved: a
-   * slot can be rendered several times at once with different state, so the condition can only be
-   * evaluated against the state of a particular rendering. Pass these extensions through
-   * `filterExtensionsByDisplayConditions` with that state before displaying them.
-   */
+  /** The condition under which this extension should be displayed. */
   readonly displayConditionExpression?: string;
 }
 
@@ -168,8 +168,7 @@ export const getExtensionRenderingsStore = () =>
 
 /** @internal */
 export function updateInternalExtensionStore(updater: (state: ExtensionInternalStore) => ExtensionInternalStore) {
-  // The guard below is what makes a no-op updater free: an updater that returns the state it was
-  // given never reaches `setState`, so no subscriber runs.
+  // Skips the write entirely when the updater returns the state it was given.
   const state = extensionInternalStore.getState();
   const newState = updater(state);
 
@@ -190,11 +189,7 @@ function currentRenderings() {
   const state = extensionRenderingsStore.getState();
 
   if (!ownedRenderings || state !== publishedRenderings) {
-    // Tolerates a plain object as well as a map: this store is reset by test harnesses, and a
-    // throw here would escape from inside a `setState` call.
-    ownedRenderings = new Map(
-      state.renderings instanceof Map ? state.renderings : Object.entries(state.renderings ?? {}),
-    );
+    ownedRenderings = new Map(state.renderings);
     publishedRenderings = state;
     rebuildConfigExtensionRecords(ownedRenderings);
   }
@@ -216,7 +211,7 @@ export function registerExtensionRendering(rendering: ExtensionRendering) {
   }
 
   renderings.set(rendering.renderingId, rendering);
-  configExtensionRecordsChanged = countRenderingRecord(rendering, 1) || configExtensionRecordsChanged;
+  countRenderingRecord(rendering, 1);
   publishRenderings(renderings);
 }
 
@@ -230,7 +225,7 @@ export function unregisterExtensionRendering(renderingId: string) {
   }
 
   renderings.delete(renderingId);
-  configExtensionRecordsChanged = countRenderingRecord(rendering, -1) || configExtensionRecordsChanged;
+  countRenderingRecord(rendering, -1);
   publishRenderings(renderings);
 }
 
@@ -254,6 +249,7 @@ const pendingRecomputations = new Set<() => void>();
  *
  * Calls nest, and only the outermost one flushes. `fn` must be synchronous: the batch ends when
  * `fn` returns, so anything written after an `await` is not batched.
+ * @internal
  */
 export function batchExtensionUpdates<T>(fn: () => T): T {
   batchDepth++;
@@ -270,13 +266,21 @@ export function batchExtensionUpdates<T>(fn: () => T): T {
       for (const recompute of pending) {
         // Isolated so one failure doesn't drop the recomputations queued behind it, and so an
         // exception here can't escape the `finally` and replace one thrown by `fn` itself.
-        try {
-          recompute();
-        } catch (e) {
-          console.error(`The extension system's '${recompute.name}' recomputation failed`, e);
-        }
+        runRecomputation(recompute);
       }
     }
+  }
+}
+
+/**
+ * Simple wrapper to ensure recomputations do not throw during store state updates, as this
+ * can block other consumers.
+ */
+function runRecomputation(recompute: () => void) {
+  try {
+    recompute();
+  } catch (e) {
+    console.error(`The extension system's '${recompute.name}' recomputation failed`, e);
   }
 }
 
@@ -289,7 +293,7 @@ export function scheduleRecomputation(recompute: () => void) {
   if (batchDepth > 0) {
     pendingRecomputations.add(recompute);
   } else {
-    recompute();
+    runRecomputation(recompute);
   }
 }
 
@@ -308,16 +312,22 @@ let configExtensionRecordsChanged = false;
 updateConfigExtensionStoreToCurrent();
 extensionRenderingsStore.subscribe(() => scheduleRecomputation(updateConfigExtensionStoreToCurrent));
 
-/** @returns whether the set of records changed, rather than just the count behind one of them. */
+/**
+ * Adjusts the count behind one record, marking the records changed only when the *set* of them
+ * changes rather than merely the count behind one.
+ */
 function countRenderingRecord(rendering: ExtensionRendering, delta: 1 | -1) {
-  // `|` rather than a space, which slot names and extension IDs are allowed to contain: joining on
-  // one lets ('a b', 'c') and ('a', 'b c') collide, and the loser gets no config record at all.
-  const key = [rendering.slotName, rendering.id, rendering.slotModuleName, rendering.extensionModuleName].join('|');
+  const key = JSON.stringify([
+    rendering.slotName,
+    rendering.extensionId,
+    rendering.slotModuleName,
+    rendering.extensionModuleName,
+  ]);
   const counted = configExtensionRecordCounts.get(key);
 
   if (!counted) {
     if (delta < 0) {
-      return false;
+      return;
     }
 
     configExtensionRecordCounts.set(key, {
@@ -326,21 +336,20 @@ function countRenderingRecord(rendering: ExtensionRendering, delta: 1 | -1) {
         slotModuleName: rendering.slotModuleName,
         extensionModuleName: rendering.extensionModuleName,
         slotName: rendering.slotName,
-        extensionId: rendering.id,
+        extensionId: rendering.extensionId,
       },
     });
 
-    return true;
+    configExtensionRecordsChanged = true;
+    return;
   }
 
   counted.count += delta;
 
   if (counted.count < 1) {
     configExtensionRecordCounts.delete(key);
-    return true;
+    configExtensionRecordsChanged = true;
   }
-
-  return false;
 }
 
 function rebuildConfigExtensionRecords(renderings: ReadonlyMap<string, ExtensionRendering>) {
@@ -368,18 +377,41 @@ function updateConfigExtensionStoreToCurrent() {
   // recomputation every time a rendering is remounted in a different position.
   configExtensionRecords.sort(compareConfigExtensionRecords);
 
-  if (!isEqual(configExtensionStore.getState().mountedExtensions, configExtensionRecords)) {
+  if (!sameConfigExtensionRecords(configExtensionStore.getState().mountedExtensions, configExtensionRecords)) {
     configExtensionStore.setState({
       mountedExtensions: configExtensionRecords,
     });
   }
 }
 
+/**
+ * Deep-equality predicate for arrays of `ConfigExtensionStoreElement`, defined in terms of
+ * {@link compareConfigExtensionRecords} so that ordering and equality cannot drift apart.
+ */
+function sameConfigExtensionRecords(
+  a: Array<ConfigExtensionStoreElement>,
+  b: Array<ConfigExtensionStoreElement>,
+): boolean {
+  return a.length === b.length && a.every((record, i) => compareConfigExtensionRecords(record, b[i]) === 0);
+}
+
+/**
+ * Orders records by their four identifying strings. No collation is used as these are internal
+ * identifiers.
+ */
 function compareConfigExtensionRecords(a: ConfigExtensionStoreElement, b: ConfigExtensionStoreElement) {
   return (
-    a.slotName.localeCompare(b.slotName, 'en') ||
-    a.extensionId.localeCompare(b.extensionId, 'en') ||
-    a.slotModuleName.localeCompare(b.slotModuleName, 'en') ||
-    a.extensionModuleName.localeCompare(b.extensionModuleName, 'en')
+    compareStrings(a.slotName, b.slotName) ||
+    compareStrings(a.extensionId, b.extensionId) ||
+    compareStrings(a.slotModuleName, b.slotModuleName) ||
+    compareStrings(a.extensionModuleName, b.extensionModuleName)
   );
+}
+
+function compareStrings(a: string, b: string) {
+  if (a === b) {
+    return 0;
+  }
+
+  return a < b ? -1 : 1;
 }

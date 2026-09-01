@@ -22,6 +22,33 @@ let parcelCount = 0;
 let parcelMounter: Promise<MountParcel> | null = null;
 
 /**
+ * Mark parcels as dead if they do not succeed within 15s. Note that loading and unloading is
+ * skipped as that has an unpredictable timing. Failing here allows us to clean-up correctly
+ * if the parcel doesn't fully mount.
+ */
+const lifecycleTimeouts = {
+  bootstrap: { millis: 15_000, dieOnTimeout: true },
+  mount: { millis: 15_000, dieOnTimeout: true },
+  unmount: { millis: 15_000, dieOnTimeout: true },
+};
+
+/**
+ * Applies {@link lifecycleTimeouts} to a parcel config, resolving the function form first so that a
+ * lazily loaded config gets them too.
+ *
+ * The cast is needed because single-spa reads `timeouts` off a parcel config but doesn't declare it
+ * on `ParcelConfigObject`.
+ */
+function withLifecycleTimeouts(parcelConfig: ParcelConfig): ParcelConfig {
+  // Spread after ours, so a parcel that declares its own timeouts keeps them.
+  if (typeof parcelConfig === 'function') {
+    return (() => parcelConfig().then((resolved) => ({ timeouts: lifecycleTimeouts, ...resolved }))) as ParcelConfig;
+  }
+
+  return { timeouts: lifecycleTimeouts, ...parcelConfig } as ParcelConfig;
+}
+
+/**
  * Resolves the function used to mount extensions, which is the `mountParcel()` of a long-lived
  * parcel of our own rather than single-spa's `mountRootParcel()`.
  *
@@ -78,7 +105,7 @@ export async function renderParcel<T = CustomProps>(
   customProps: ParcelProps & T,
 ): Promise<ReturnType<MountParcel>> {
   const mountParcel = await getParcelMounter();
-  return mountParcel(parcelConfig, customProps);
+  return mountParcel(withLifecycleTimeouts(parcelConfig), customProps);
 }
 
 /**
@@ -157,16 +184,9 @@ export async function renderExtension(
       const id = parcelCount++;
       const renderingId = `${extensionSlotName}/${extensionId}-${id}`;
 
-      // Registered before loading so that the config system can start resolving this extension's
-      // config while its bundle is still in flight.
-      registerExtensionRendering({
-        renderingId,
-        extensionName,
-        extensionModuleName: moduleName,
-        id: extensionId,
-        slotName: extensionSlotName,
-        slotModuleName: extensionSlotModuleName,
-      });
+      // Marks the node for the UI editor, which needs to pair a rendering with the element it went
+      // into and cannot tell two renderings of one extension apart by any other attribute.
+      domElement.setAttribute('data-extension-rendering-id', renderingId);
 
       const forget = () => unregisterExtensionRendering(renderingId);
       const forgetSafely = (cleanupErrorMessage: string) => {
@@ -176,6 +196,25 @@ export async function renderExtension(
           console.error(cleanupErrorMessage, cleanupError);
         }
       };
+
+      // Registered before loading so that the config system can start resolving this extension's
+      // config while its bundle is still in flight. Registering drives the config derivation
+      // synchronously, so a failure there has to release the record before it propagates — nothing
+      // else has a handle on it yet.
+      try {
+        registerExtensionRendering({
+          renderingId,
+          extensionName,
+          extensionModuleName: moduleName,
+          extensionId,
+          slotName: extensionSlotName,
+          slotModuleName: extensionSlotModuleName,
+        });
+      } catch (e) {
+        forgetSafely(`Recomputing configuration after registering '${extensionId}' failed also failed`);
+
+        throw e;
+      }
 
       let lifecycle: LifeCycles;
 

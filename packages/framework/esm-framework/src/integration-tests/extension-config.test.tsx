@@ -327,7 +327,7 @@ describe('Interaction between configuration and extension systems', () => {
       return (
         <div>
           <ExtensionSlot data-testid="slot" name="A slot" />
-          {store.slots['A slot'].assignedExtensions.map((e) => (
+          {store.slots['A slot'].candidateExtensions.map((e) => (
             <div key={e.name}>{JSON.stringify(e.config)}</div>
           ))}
         </div>

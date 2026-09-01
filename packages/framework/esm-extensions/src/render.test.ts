@@ -30,6 +30,16 @@ const lifecycles = {
 };
 
 /**
+ * Every parcel the framework mounts is given these, so that a lifecycle which never settles fails
+ * rather than leaving a parcel that can never be unmounted.
+ */
+const lifecycleTimeouts = {
+  bootstrap: { millis: 15_000, dieOnTimeout: true },
+  mount: { millis: 15_000, dieOnTimeout: true },
+  unmount: { millis: 15_000, dieOnTimeout: true },
+};
+
+/**
  * A stand-in for the external parcel representation single-spa returns. single-spa only provides
  * `update()` for a config that has an update lifecycle, so `hasUpdate` allows omitting it.
  */
@@ -106,7 +116,7 @@ describe('renderExtension', () => {
       renderingId: 'test-slot/test-extension#instance-0',
       extensionName: 'test-extension#instance',
       extensionModuleName: 'test-module',
-      id: 'test-extension#instance',
+      extensionId: 'test-extension#instance',
       slotName: 'test-slot',
       slotModuleName: 'slot-module',
     });
@@ -139,6 +149,29 @@ describe('renderExtension', () => {
     await Promise.resolve();
 
     expect(unregisterExtensionRendering).toHaveBeenCalledWith('test-slot/test-extension#instance-0');
+  });
+
+  /*
+   * Attaching a handler to `mountPromise` stops single-spa's rejection reaching the global one, so
+   * this handler is the only thing left to record a failed mount.
+   */
+  it('logs a failure to mount', async () => {
+    const { hostMountParcel, mountTestExtension } = await loadRenderModule();
+    const mountError = new Error('extension mount failed');
+
+    hostMountParcel.mockImplementationOnce(
+      () => ({ ...fakeParcel(), mountPromise: Promise.reject(mountError) }) as unknown as Parcel,
+    );
+
+    const parcel = await mountTestExtension();
+
+    await expect(parcel!.mountPromise).rejects.toBe(mountError);
+    await Promise.resolve();
+
+    expect(console.error).toHaveBeenCalledWith(
+      "Extension 'test-extension#instance' in slot 'test-slot' failed to mount",
+      mountError,
+    );
   });
 
   it('contains cleanup failures after the hosted parcel fails to mount', async () => {
@@ -229,10 +262,29 @@ describe('renderParcel', () => {
 
     const parcel = await renderParcel(lifecycles, { domElement, someProp: 'value' });
 
-    expect(hostMountParcel).toHaveBeenCalledWith(lifecycles, { domElement, someProp: 'value' });
+    expect(hostMountParcel).toHaveBeenCalledWith(
+      { ...lifecycles, timeouts: lifecycleTimeouts },
+      { domElement, someProp: 'value' },
+    );
     expect(parcel).toBe(hostMountParcel.mock.results[0].value);
     expect(mountRootParcel).toHaveBeenCalledTimes(1);
     expect(mountRootParcel).toHaveBeenCalledWith(expect.objectContaining({ name: hostParcelName }), expect.anything());
+  });
+
+  it('bounds the lifecycles of both the object and the lazily-loaded config forms', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+
+    await renderParcel(lifecycles, { domElement });
+    await renderParcel(() => Promise.resolve(lifecycles), { domElement });
+
+    // Without these, a lifecycle that never settles leaves a parcel single-spa can never unmount,
+    // so nothing the caller tracks against it is ever released.
+    const [objectForm] = hostMountParcel.mock.calls[0] as [{ timeouts: unknown }];
+    const [functionForm] = hostMountParcel.mock.calls[1] as [() => Promise<{ timeouts: unknown }>];
+
+    expect(objectForm.timeouts).toEqual(lifecycleTimeouts);
+    expect((await functionForm()).timeouts).toEqual(lifecycleTimeouts);
   });
 });
 
@@ -249,7 +301,7 @@ describe('createParcelMounter', () => {
 
     await parcel.mountPromise;
 
-    expect(hostMountParcel).toHaveBeenCalledWith(lifecycles, { domElement });
+    expect(hostMountParcel).toHaveBeenCalledWith({ ...lifecycles, timeouts: lifecycleTimeouts }, { domElement });
     expect(parcel.getStatus()).toBe('MOUNTED');
   });
 

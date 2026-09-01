@@ -58,6 +58,69 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     expect(screen.getByText(/English/)).toHaveTextContent('English?');
   });
 
+  it('Extension reports a failed update instead of rejecting silently', async () => {
+    const user = userEvent.setup();
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const delivered: Array<number> = [];
+    let failNextUpdate = true;
+
+    registerExtension({
+      name: 'Flaky',
+      moduleName: 'esm-flaky-app',
+      meta: {},
+      load: async () => ({
+        bootstrap: async () => {},
+        mount: async (props: any) => {
+          props.domElement.textContent = 'flaky extension';
+        },
+        unmount: async (props: any) => {
+          props.domElement.textContent = '';
+        },
+        update: async (props: any) => {
+          if (failNextUpdate) {
+            failNextUpdate = false;
+            throw new Error('update blew up');
+          }
+
+          delivered.push(props.value);
+        },
+      }),
+    });
+    attach('FlakyBox', 'Flaky');
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-flaky-app',
+      featureName: 'Flaky',
+      disableTranslations: true,
+    })(() => {
+      const [value, next] = useReducer((value: number) => value + 1, 1);
+
+      return (
+        <div>
+          <ExtensionSlot name="FlakyBox" state={{ value }} />
+          <button onClick={next}>Next</button>
+        </div>
+      );
+    });
+
+    render(<App />);
+    expect(await screen.findByText('flaky extension')).toBeInTheDocument();
+
+    // The first of these fails, which makes single-spa hard-fail the parcel, so no later update
+    // reaches the extension. What must not happen is the failure going unreported and the promise
+    // chain being left rejected, which used to produce an unhandled rejection per later change.
+    await user.click(screen.getByText('Next'));
+    await user.click(screen.getByText('Next'));
+    await user.click(screen.getByText('Next'));
+
+    await waitFor(() =>
+      expect(consoleError).toHaveBeenCalledWith("The extension 'Flaky' failed to update", expect.any(Error)),
+    );
+    expect(consoleError).toHaveBeenCalledTimes(1);
+    expect(delivered).toEqual([]);
+    consoleError.mockRestore();
+  });
+
   it('Extension receives state changes (using <Extension>)', async () => {
     const user = userEvent.setup();
 

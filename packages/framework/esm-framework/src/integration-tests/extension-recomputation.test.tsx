@@ -9,7 +9,7 @@
 import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
 import {
   attach,
@@ -29,6 +29,7 @@ import {
   useAssignedExtensions,
 } from '../../../esm-react-utils/src';
 import {
+  type ConfigObject,
   configExtensionStore,
   configInternalStore,
   defineConfigSchema,
@@ -276,19 +277,12 @@ describe('Extension system recomputation', () => {
 
     for (let i = 0; i < 3; i++) {
       const { unmount } = render(<App />);
-      await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 10));
-      });
-
-      expect(renderingsStore.getState().renderings.size).toBe(1);
+      await waitFor(() => expect(renderingsStore.getState().renderings.size).toBe(1));
 
       unmount();
-      await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 10));
-      });
 
       // A rendering record must not outlive its parcel.
-      expect(renderingsStore.getState().renderings.size).toBe(0);
+      await waitFor(() => expect(renderingsStore.getState().renderings.size).toBe(0));
       expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
     }
   });
@@ -302,13 +296,10 @@ describe('Extension system recomputation', () => {
     await act(async () => {
       render(<App />);
     });
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 20));
-    });
 
     // StrictMode mounts, tears down and mounts again before the parcel resolves. Teardown state
     // has to be per-mount, or the live component's parcel is unmounted as soon as it arrives.
-    expect(screen.getByTestId('strict-slot')).toHaveTextContent('Fred');
+    await waitFor(() => expect(screen.getByTestId('strict-slot')).toHaveTextContent('Fred'));
     expect(getExtensionRenderingsStore().getState().renderings.size).toBe(1);
   });
 
@@ -335,19 +326,17 @@ describe('Extension system recomputation', () => {
     const App = decorate(() => <ExtensionSlot name="slow-slot" />);
     const { unmount } = render(<App />);
 
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 10));
-    });
+    // Registered before the load starts, so this settles while the bundle is still gated.
+    await waitFor(() => expect(renderingsStore.getState().renderings.size).toBe(1));
 
     unmount();
     await act(async () => {
       releaseLoad();
-      await new Promise((resolve) => setTimeout(resolve, 20));
     });
 
     // Navigating away while a lazy bundle is still downloading is routine; the record has to be
     // released even though the component never saw a parcel.
-    expect(renderingsStore.getState().renderings.size).toBe(0);
+    await waitFor(() => expect(renderingsStore.getState().renderings.size).toBe(0));
     expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
   });
 
@@ -401,19 +390,16 @@ describe('Extension system recomputation', () => {
     const App = decorate(() => <ExtensionSlot name="bootstrapping-slot" />);
     const { unmount } = render(<App />);
 
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 20));
-    });
+    await waitFor(() => expect(renderingsStore.getState().renderings.size).toBe(1));
 
     // The parcel exists but hasn't reached MOUNTED, so teardown has to wait for the mount to
     // settle rather than assuming a status it can unmount from.
     unmount();
     await act(async () => {
       releaseBootstrap();
-      await new Promise((resolve) => setTimeout(resolve, 20));
     });
 
-    expect(renderingsStore.getState().renderings.size).toBe(0);
+    await waitFor(() => expect(renderingsStore.getState().renderings.size).toBe(0));
     expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
   });
 
@@ -435,19 +421,28 @@ describe('Extension system recomputation', () => {
     attach('broken-slot', 'Broken');
 
     const renderingsStore = getExtensionRenderingsStore();
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     const App = decorate(() => <ExtensionSlot name="broken-slot" />);
 
     await act(async () => {
       render(<App />);
     });
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 20));
-    });
+
+    // The record is registered and released within the same render, so there is no moment to
+    // observe it held. Waiting on the failure itself is what makes the assertion below meaningful
+    // rather than a reading of the empty state this started in.
+    await waitFor(() =>
+      expect(consoleError).toHaveBeenCalledWith(
+        expect.stringContaining("Extension 'Broken' in slot 'broken-slot' failed to mount"),
+        expect.anything(),
+      ),
+    );
 
     // A parcel that never mounts never settles `unmountPromise`, so the mount rejection is the
     // only thing that can release the record.
     expect(renderingsStore.getState().renderings.size).toBe(0);
     expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
+    consoleError.mockRestore();
   });
 
   it('does not rewrite a module config store when nothing about the config changed', () => {
@@ -480,7 +475,11 @@ describe('Extension system recomputation', () => {
 
     const storedConfig = { untouched: true };
     getExtensionsConfigStore().setState({
-      configs: { 'merge-slot': { widget: { loaded: true, config: storedConfig as never } } },
+      configs: {
+        'merge-slot': {
+          widget: { loaded: true, translationOverridesLoaded: true, config: storedConfig as ConfigObject },
+        },
+      },
     });
 
     // The slot's `configure` block still reaches the extension...

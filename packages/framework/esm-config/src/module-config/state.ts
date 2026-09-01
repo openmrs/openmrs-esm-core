@@ -1,6 +1,7 @@
-import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
+import { createGlobalStore, getGlobalStore, registerGlobalStore } from '@openmrs/esm-state';
 import { shallowEqual } from '@openmrs/esm-utils';
 import { type StoreApi } from 'zustand';
+import { createStore } from 'zustand/vanilla';
 import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ProvidedConfig } from '../types';
 
 /**
@@ -177,11 +178,23 @@ export function getExtensionsConfigStore() {
   });
 }
 
-/** @internal */
+/**
+ * The read-only part of a store's API.
+ * @internal
+ */
+export type ReadableStore<T> = Pick<StoreApi<T>, 'getInitialState' | 'getState' | 'subscribe'>;
+
+/**
+ * A read-only view of one extension instance's config within a slot. Read-only because these
+ * configs are derived from the config system's inputs, so a write here would be overwritten by the
+ * next recomputation; provide a config or set a temporary one instead.
+ *
+ * @internal
+ */
 export function getExtensionConfig(
   slotName: string,
   extensionId: string,
-): StoreApi<Omit<ConfigStore, 'translationOverridesLoaded'>> {
+): ReadableStore<Omit<ConfigStore, 'translationOverridesLoaded'>> {
   if (
     typeof slotName !== 'string' ||
     typeof extensionId !== 'string' ||
@@ -205,25 +218,6 @@ export function getExtensionConfig(
     getState() {
       return selector(extensionConfigStore.getState()) ?? { loaded: false, config: null };
     },
-    setState(
-      partial: ConfigStore | Partial<ConfigStore> | ((state: ConfigStore) => ConfigStore | Partial<ConfigStore>),
-      replace: boolean = false,
-    ) {
-      extensionConfigStore.setState((state) => {
-        if (!state.configs[slotName]) {
-          state.configs[slotName] = {};
-        }
-
-        const newState = typeof partial === 'function' ? partial(state.configs.slotName[extensionId]) : partial;
-        if (replace) {
-          state.configs[slotName][extensionId] = Object.assign({}, newState) as ConfigStore;
-        } else {
-          state.configs[slotName][extensionId] = Object.assign({}, state.configs[slotName][extensionId], newState);
-        }
-
-        return state;
-      });
-    },
     subscribe(listener) {
       return extensionConfigStore.subscribe((state, prevState) => {
         const newState = selector(state);
@@ -233,9 +227,6 @@ export function getExtensionConfig(
           listener(newState, oldState);
         }
       });
-    },
-    destroy() {
-      /* this is a no-op */
     },
   };
 }
@@ -262,11 +253,18 @@ export function getExtensionConfigFromExtensionSlotStore(
  */
 export interface ImplementerToolsConfigStore {
   config: Config;
+  /**
+   * Set when the last attempt to derive `config` threw, in which case `config` is whatever was
+   * last derived successfully — on a first failure, nothing at all. Cleared by a later success.
+   */
+  derivationError?: string;
 }
 
-const baseImplementerToolsConfigStore = createGlobalStore<ImplementerToolsConfigStore>('config-implementer-tools', {
+// Deliberately not registered: the wrapper below is what gets published under
+// `config-implementer-tools`, so that a lookup can't hand out the store that skips the derivation.
+const baseImplementerToolsConfigStore = createStore<ImplementerToolsConfigStore>()(() => ({
   config: {},
-});
+}));
 
 /**
  * Deriving this config walks every module's schema, making it the most expensive thing the config
@@ -299,8 +297,6 @@ export function invalidateImplementerToolsConfig() {
 }
 
 function recomputeImplementerToolsConfigIfStale() {
-  // `isRecomputing` is load-bearing rather than defensive: the derivation opens by reading this
-  // store, and with nothing subscribed that read comes straight back here.
   if (!implementerToolsConfigStale || !recomputeImplementerToolsConfig || isRecomputing) {
     return;
   }
@@ -313,18 +309,38 @@ function recomputeImplementerToolsConfigIfStale() {
   try {
     recomputeImplementerToolsConfig();
   } catch (e) {
-    // Never allowed to escape: this runs from a store listener, from `getState` during a render
-    // and from `subscribe`, and a throw through any of those wedges far more than a developer
-    // tool. Left stale so the next config change tries again.
     implementerToolsConfigStale = true;
+    recordConfigDerivationError(e);
     console.error('Failed to derive the implementer tools config', e);
   } finally {
     isRecomputing = false;
   }
 }
 
-/** @internal */
-export const implementerToolsConfigStore: StoreApi<ImplementerToolsConfigStore> = {
+/**
+ * Records that configuration could not be rebuilt so that the user can be informed
+ *
+ * @internal
+ */
+export function recordConfigDerivationError(error: unknown) {
+  baseImplementerToolsConfigStore.setState({
+    derivationError: error instanceof Error ? error.message : String(error),
+  });
+}
+
+/**
+ * Cleared at the start of a derivation pass rather than the end of a successful one, so that a
+ * failure recorded partway through the pass is not wiped by the pass completing.
+ *
+ * @internal
+ */
+export function clearConfigDerivationError() {
+  if (baseImplementerToolsConfigStore.getState().derivationError) {
+    baseImplementerToolsConfigStore.setState({ derivationError: undefined });
+  }
+}
+
+const lazyImplementerToolsConfigStore: StoreApi<ImplementerToolsConfigStore> = {
   ...baseImplementerToolsConfigStore,
   getState() {
     // While something is subscribed the store is already current, so a read costs nothing. This
@@ -357,3 +373,14 @@ export const implementerToolsConfigStore: StoreApi<ImplementerToolsConfigStore> 
     };
   },
 };
+
+/**
+ * Published rather than the store it wraps, so that a lookup by name can't hand out the one that
+ * skips the derivation and always reads empty.
+ *
+ * @internal
+ */
+export const implementerToolsConfigStore = registerGlobalStore(
+  'config-implementer-tools',
+  lazyImplementerToolsConfigStore,
+);
