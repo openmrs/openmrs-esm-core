@@ -1,7 +1,7 @@
 /** @module @category UI */
-import { mountRootParcel, type Parcel } from 'single-spa';
+import { type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
-import { getModalRegistration } from '@openmrs/esm-extensions';
+import { getModalRegistration, renderParcel } from '@openmrs/esm-extensions';
 import { reportError } from '@openmrs/esm-error-handling';
 
 type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
@@ -63,7 +63,7 @@ async function renderModalIntoDOM(
 
     const lifecycle = await load();
     const id = parcelCount++;
-    parcel = mountRootParcel(
+    parcel = await renderParcel(
       {
         ...lifecycle,
         name: `${modalName}-${id}`,
