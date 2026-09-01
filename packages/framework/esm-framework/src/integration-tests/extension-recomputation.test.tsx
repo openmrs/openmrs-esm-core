@@ -340,6 +340,72 @@ describe('Extension system recomputation', () => {
     expect(configExtensionStore.getState().mountedExtensions).toEqual([]);
   });
 
+  it('applies a state change that arrived while the extension bundle was still loading', async () => {
+    let releaseLoad: () => void = () => {};
+    const loadGate = new Promise<void>((resolve) => {
+      releaseLoad = resolve;
+    });
+    const labelsSeen: Array<string> = [];
+    let container: HTMLElement | null = null;
+
+    registerExtension({
+      name: 'Gated',
+      moduleName,
+      meta: {},
+      online: true,
+      offline: true,
+      load: async () => {
+        await loadGate;
+        return {
+          bootstrap: async () => {},
+          // `domElement` is captured here rather than read from the update props, which carry only
+          // what the update was called with.
+          mount: async (props) => {
+            container = props.domElement as HTMLElement;
+            container.textContent = props.label as string;
+            labelsSeen.push(props.label as string);
+          },
+          update: async (props) => {
+            labelsSeen.push(props.label as string);
+
+            if (container) {
+              container.textContent = props.label as string;
+            }
+          },
+          unmount: async () => {
+            container = null;
+          },
+        };
+      },
+    });
+    attach('gated-slot', 'Gated');
+
+    let setLabel: (label: string) => void = () => {};
+
+    function Host() {
+      const [label, setLabelState] = React.useState('before');
+      setLabel = setLabelState;
+      return <ExtensionSlot name="gated-slot" state={{ label }} />;
+    }
+
+    await act(async () => {
+      render(React.createElement(decorate(Host)));
+    });
+
+    // The row's state moves on while the bundle is still in flight, so there is no parcel for the
+    // update to reach and no later render to retry it.
+    await act(async () => {
+      setLabel('after');
+    });
+    await act(async () => {
+      releaseLoad();
+    });
+
+    // Mounting with the state captured when the node was attached is fine; being left there is not.
+    expect(await screen.findByText('after')).toBeInTheDocument();
+    expect(labelsSeen).toEqual(['before', 'after']);
+  });
+
   it('releases an extension rendering when the extension bundle fails to load', async () => {
     registerExtension({
       name: 'Unloadable',
