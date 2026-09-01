@@ -4,7 +4,7 @@ import { createGlobalStore } from '@openmrs/esm-state';
 import { getModalRegistration, renderParcel } from '@openmrs/esm-extensions';
 import { reportError } from '@openmrs/esm-error-handling';
 
-type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
+type ModalInstanceState = 'NEW' | 'MOUNTING' | 'MOUNTED' | 'TO_BE_DELETED' | 'DELETED';
 type ModalSize = 'xs' | 'sm' | 'md' | 'lg';
 
 export interface ModalProps {
@@ -80,6 +80,16 @@ async function renderModalIntoDOM(
   return parcel;
 }
 
+function isClosing(instance: ModalInstance) {
+  return instance.state === 'TO_BE_DELETED' || instance.state === 'DELETED';
+}
+
+function unmountModalParcel(modalName: string, parcel: Parcel | null | undefined) {
+  parcel?.unmount?.().catch((err) => {
+    console.error(`The modal '${modalName}' failed to unmount`, err);
+  });
+}
+
 const original = window.getComputedStyle(document.body).overflow;
 
 function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
@@ -100,12 +110,29 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
         case 'NEW': {
           const modalFrame = createModalFrame({ size: instance.props?.size ?? 'md' });
           instance.container = modalFrame;
-          renderModalIntoDOM(modalFrame, instance.modalName, instance.props).then((parcel) => {
-            instance.parcel = parcel;
-            instance.state = 'MOUNTED';
-            modalContainer.prepend(modalFrame);
-            modalFrame.style.visibility = 'unset';
-          });
+          instance.state = 'MOUNTING';
+
+          renderModalIntoDOM(modalFrame, instance.modalName, instance.props).then(
+            (parcel) => {
+              // Release the parcel if it's been closed while mounting
+              if (isClosing(instance)) {
+                unmountModalParcel(instance.modalName, parcel);
+                return;
+              }
+
+              instance.parcel = parcel;
+              instance.state = 'MOUNTED';
+              modalContainer.prepend(modalFrame);
+              modalFrame.style.visibility = modalStore.getState().modalStack.indexOf(instance) ? 'hidden' : 'unset';
+            },
+            (err) => {
+              // Nothing is chained to this, so without a handler a modal that fails to load is
+              // only an unhandled rejection — and its instance holds the overlay open over a
+              // page the user can no longer reach.
+              reportError(err);
+              closeInstance(instance);
+            },
+          );
           break;
         }
 
@@ -116,17 +143,18 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
           break;
 
         case 'TO_BE_DELETED':
+          instance.state = 'DELETED';
           instance.onClose();
-          // A rejected unmount would otherwise be an unhandled rejection; the tear-down below runs
-          // either way.
-          instance.parcel?.unmount?.().catch((err) => {
-            console.error(`The modal '${instance.modalName}' failed to unmount`, err);
-          });
+          unmountModalParcel(instance.modalName, instance.parcel);
           instance.container?.remove();
           setTimeout(() => {
+            // Read now rather than closed over: modals opened since this was scheduled are in the
+            // store's stack but not in the one this pass saw, and would be dropped with it.
+            const current = modalStore.getState();
+
             modalStore.setState({
-              modalContainer,
-              modalStack: modalStack.filter((x) => x !== instance),
+              ...current,
+              modalStack: current.modalStack.filter((x) => x !== instance),
             });
           }, 0);
           break;
@@ -150,13 +178,18 @@ function openInstance(instance: ModalInstance) {
 }
 
 function closeInstance(instance: ModalInstance) {
+  if (isClosing(instance)) {
+    return;
+  }
+
+  // Mutated rather than replaced by a copy as an in-flight mount will close over this property
+  instance.state = 'TO_BE_DELETED';
+
   const state = modalStore.getState();
-  const modalStack = state.modalStack.map(
-    (x): ModalInstance => (x === instance ? { ...x, state: 'TO_BE_DELETED' } : x),
-  );
+
   modalStore.setState({
     ...state,
-    modalStack,
+    modalStack: [...state.modalStack],
   });
 }
 
