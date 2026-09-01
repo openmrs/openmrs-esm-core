@@ -85,7 +85,15 @@ function isClosing(instance: ModalInstance) {
 }
 
 function unmountModalParcel(modalName: string, parcel: Parcel | null | undefined) {
-  parcel?.unmount?.().catch((err) => {
+  if (!parcel?.unmount) {
+    return;
+  }
+
+  // A failed unmount rejects `unmountPromise` as well as the promise the call returns. They are
+  // separate promises, so leaving either without a handler is an unhandled rejection, but one
+  // failure is worth reporting only once.
+  parcel.unmountPromise?.catch(() => {});
+  parcel.unmount().catch((err) => {
     console.error(`The modal '${modalName}' failed to unmount`, err);
   });
 }
@@ -120,10 +128,31 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
                 return;
               }
 
+              if (!parcel) {
+                // `renderModalIntoDOM` only returns without one when it had nowhere to render it,
+                // which it has already reported.
+                closeInstance(instance);
+                return;
+              }
+
               instance.parcel = parcel;
-              instance.state = 'MOUNTED';
               modalContainer.prepend(modalFrame);
               modalFrame.style.visibility = modalStore.getState().modalStack.indexOf(instance) ? 'hidden' : 'unset';
+
+              // The parcel is handed back before it has mounted, so this is where the modal is
+              // really on screen.
+              parcel.mountPromise.then(
+                () => {
+                  if (!isClosing(instance)) {
+                    instance.state = 'MOUNTED';
+                  }
+                },
+                (err) => {
+                  reportError(err);
+                  instance.parcel = null;
+                  closeInstance(instance);
+                },
+              );
             },
             (err) => {
               // Nothing is chained to this, so without a handler a modal that fails to load is

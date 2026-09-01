@@ -1,5 +1,4 @@
 /** @module @category Extension */
-import { getCandidateExtensions } from '@openmrs/esm-extensions';
 import { useExtensionSlotStore } from './useExtensionSlotStore';
 
 /**
@@ -12,9 +11,5 @@ import { useExtensionSlotStore } from './useExtensionSlotStore';
  * @internal
  */
 export function useCandidateExtensions(slotName: string) {
-  // Subscribes so this re-runs when the slot's extensions change; `getCandidateExtensions` reads the
-  // same store, and returns the array below.
-  useExtensionSlotStore(slotName);
-
-  return getCandidateExtensions(slotName);
+  return useExtensionSlotStore(slotName).candidateExtensions;
 }

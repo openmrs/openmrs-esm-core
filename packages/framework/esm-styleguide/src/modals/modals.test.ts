@@ -20,8 +20,43 @@ const lifecycle = {
   unmount: () => Promise.resolve(),
 };
 
-function fakeParcel(unmount: () => Promise<void>) {
-  return { unmount: vi.fn(unmount) } as unknown as Parcel;
+function deferred() {
+  let reject!: (err: unknown) => void;
+  let resolve!: () => void;
+  const promise = new Promise<void>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+
+  return { promise, resolve, reject };
+}
+
+/**
+ * A stand-in for a single-spa parcel, faithful in the two respects the modal code depends on:
+ * `mountPromise` settles after the handle is already in hand, and one failed `unmount()` rejects
+ * both the promise it returns and the separate `unmountPromise`.
+ */
+function fakeParcel({ mountPromise = Promise.resolve(), unmountError }: FakeParcelOptions = {}) {
+  const unmounted = deferred();
+
+  return {
+    mountPromise,
+    unmountPromise: unmounted.promise,
+    unmount: vi.fn(() => {
+      if (unmountError) {
+        unmounted.reject(unmountError);
+        return Promise.reject(unmountError);
+      }
+
+      unmounted.resolve();
+      return Promise.resolve();
+    }),
+  } as unknown as Parcel;
+}
+
+interface FakeParcelOptions {
+  mountPromise?: Promise<void>;
+  unmountError?: Error;
 }
 
 /**
@@ -93,7 +128,7 @@ describe('modals', () => {
   it('logs a modal that fails to unmount', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     const unmountError = new Error('parcel not mounted');
-    vi.mocked(renderParcel).mockResolvedValue(fakeParcel(() => Promise.reject(unmountError)));
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel({ unmountError }));
 
     const container = setUpModalContainer();
 
@@ -108,7 +143,7 @@ describe('modals', () => {
   });
 
   it('tears the modal down even though unmounting failed', async () => {
-    vi.mocked(renderParcel).mockResolvedValue(fakeParcel(() => Promise.reject(new Error('parcel not mounted'))));
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel({ unmountError: new Error('parcel not mounted') }));
 
     const container = setUpModalContainer();
 
@@ -126,7 +161,7 @@ describe('modals', () => {
   it('does not mount a second copy when another modal opens while the first is still loading', async () => {
     const { release, load } = gatedLoad();
     registerModals({ 'slow-modal': load });
-    vi.mocked(renderParcel).mockResolvedValue(fakeParcel(() => Promise.resolve()));
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel());
 
     const container = setUpModalContainer();
 
@@ -147,7 +182,7 @@ describe('modals', () => {
   it('hides a modal that finishes loading after another has opened on top of it', async () => {
     const { release, load } = gatedLoad();
     registerModals({ 'slow-modal': load });
-    vi.mocked(renderParcel).mockResolvedValue(fakeParcel(() => Promise.resolve()));
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel());
 
     const container = setUpModalContainer();
 
@@ -168,9 +203,9 @@ describe('modals', () => {
 
   it('unmounts a modal closed while it was still loading, and never shows it', async () => {
     const { release, load } = gatedLoad();
-    const unmount = vi.fn(() => Promise.resolve());
+    const parcel = fakeParcel();
     registerModals({ 'slow-modal': load });
-    vi.mocked(renderParcel).mockResolvedValue(fakeParcel(unmount));
+    vi.mocked(renderParcel).mockResolvedValue(parcel);
 
     const container = setUpModalContainer();
 
@@ -184,11 +219,65 @@ describe('modals', () => {
     await flush();
 
     expect(container.childElementCount).toBe(0);
-    expect(unmount).toHaveBeenCalledTimes(1);
+    expect(parcel.unmount).toHaveBeenCalledTimes(1);
+  });
+
+  it('reports a modal whose parcel fails to mount and releases the overlay', async () => {
+    const mountError = new Error('mount blew up');
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel({ mountPromise: Promise.reject(mountError) }));
+
+    const container = setUpModalContainer();
+
+    const onClose = vi.fn();
+    open('unmountable-modal', {}, onClose);
+    await flush();
+    await flush();
+
+    expect(reportError).toHaveBeenCalledWith(mountError);
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(container.childElementCount).toBe(0);
+    expect(document.body).not.toHaveStyle({ overflow: 'hidden' });
+  });
+
+  it('does not try to unmount a parcel that never mounted', async () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const parcel = fakeParcel({ mountPromise: Promise.reject(new Error('mount blew up')) });
+    vi.mocked(renderParcel).mockResolvedValue(parcel);
+
+    setUpModalContainer();
+
+    const close = open('unmountable-modal');
+    await flush();
+    await flush();
+
+    // The mount failure has already closed it, so this finds nothing left to do. Were the modal
+    // still on the stack, this is the close that would unmount a parcel single-spa marked broken.
+    close();
+    await flush();
+
+    expect(parcel.unmount).not.toHaveBeenCalled();
+    expect(consoleError).not.toHaveBeenCalled();
+    consoleError.mockRestore();
+  });
+
+  it('reports one failed unmount once, over both of the promises it rejects', async () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel({ unmountError: new Error('parcel not mounted') }));
+
+    setUpModalContainer();
+
+    const close = open('a-modal');
+    await flush();
+
+    close();
+    await flush();
+
+    expect(consoleError).toHaveBeenCalledTimes(1);
+    consoleError.mockRestore();
   });
 
   it('tears a modal down once even if another opens before it leaves the stack', async () => {
-    vi.mocked(renderParcel).mockResolvedValue(fakeParcel(() => Promise.resolve()));
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel());
 
     setUpModalContainer();
 
