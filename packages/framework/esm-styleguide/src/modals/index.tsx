@@ -4,7 +4,7 @@ import { createGlobalStore } from '@openmrs/esm-state';
 import { getModalRegistration, renderParcel } from '@openmrs/esm-extensions';
 import { reportError } from '@openmrs/esm-error-handling';
 
-type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
+type ModalInstanceState = 'NEW' | 'MOUNTING' | 'MOUNTED' | 'TO_BE_DELETED' | 'DELETED';
 type ModalSize = 'xs' | 'sm' | 'md' | 'lg';
 
 export interface ModalProps {
@@ -80,6 +80,44 @@ async function renderModalIntoDOM(
   return parcel;
 }
 
+function isClosing(instance: ModalInstance) {
+  return instance.state === 'TO_BE_DELETED' || instance.state === 'DELETED';
+}
+
+function unmountModalParcel(modalName: string, parcel: Parcel | null | undefined) {
+  if (!parcel?.unmount) {
+    return;
+  }
+
+  // A failed unmount rejects `unmountPromise` as well as the promise the call returns. They are
+  // separate promises, so leaving either without a handler is an unhandled rejection, but one
+  // failure is worth reporting only once.
+  parcel.unmountPromise?.catch(() => {});
+  parcel.unmount().catch((err) => {
+    console.error(`The modal '${modalName}' failed to unmount`, err);
+  });
+}
+
+/**
+ * The modal the user is looking at: the frontmost one that isn't on its way out. Modals being torn
+ * down are skipped rather than counted, since their frames are already gone — counting them would
+ * leave the modal underneath hidden behind nothing until they finally left the stack.
+ */
+function frontmostModal(modalStack: Array<ModalInstance>) {
+  return modalStack.find((instance) => !isClosing(instance));
+}
+
+/**
+ * Only the frontmost modal is shown; the ones it was opened over stay in the DOM behind it. Applied
+ * both as the stack changes and as a frame is inserted, since a frame inserted after the last
+ * change to the stack would otherwise never be told.
+ */
+function applyModalVisibility(instance: ModalInstance, isFrontmost: boolean) {
+  if (instance.container) {
+    instance.container.style.visibility = isFrontmost ? 'unset' : 'hidden';
+  }
+}
+
 const original = window.getComputedStyle(document.body).overflow;
 
 function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
@@ -95,34 +133,84 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
       modalContainer.style.visibility = 'unset';
     }
 
-    modalStack.forEach((instance, index) => {
+    // Stable across the pass below: the only states it changes are `NEW` to `MOUNTING` and
+    // `TO_BE_DELETED` to `DELETED`, neither of which moves a modal in or out of the running.
+    const frontmost = frontmostModal(modalStack);
+
+    modalStack.forEach((instance) => {
       switch (instance.state) {
         case 'NEW': {
           const modalFrame = createModalFrame({ size: instance.props?.size ?? 'md' });
           instance.container = modalFrame;
-          renderModalIntoDOM(modalFrame, instance.modalName, instance.props).then((parcel) => {
-            instance.parcel = parcel;
-            instance.state = 'MOUNTED';
-            modalContainer.prepend(modalFrame);
-            modalFrame.style.visibility = 'unset';
-          });
+          instance.state = 'MOUNTING';
+
+          renderModalIntoDOM(modalFrame, instance.modalName, instance.props).then(
+            (parcel) => {
+              // Release the parcel if it's been closed while mounting
+              if (isClosing(instance)) {
+                unmountModalParcel(instance.modalName, parcel);
+                return;
+              }
+
+              if (!parcel) {
+                // `renderModalIntoDOM` only returns without one when it had nowhere to render it,
+                // which it has already reported.
+                closeInstance(instance);
+                return;
+              }
+
+              instance.parcel = parcel;
+              modalContainer.prepend(modalFrame);
+              // The stack decides which modal is frontmost, not the DOM order this prepend just
+              // established: another modal opened while this one loaded belongs on top of it.
+              applyModalVisibility(instance, frontmostModal(modalStore.getState().modalStack) === instance);
+
+              // The parcel is handed back before it has mounted, so this is where the modal is
+              // really on screen.
+              parcel.mountPromise.then(
+                () => {
+                  if (!isClosing(instance)) {
+                    instance.state = 'MOUNTED';
+                  }
+                },
+                (err) => {
+                  reportError(err);
+                  instance.parcel = null;
+                  closeInstance(instance);
+                },
+              );
+            },
+            (err) => {
+              // Nothing is chained to this, so without a handler a modal that fails to load is
+              // only an unhandled rejection — and its instance holds the overlay open over a
+              // page the user can no longer reach.
+              reportError(err);
+              closeInstance(instance);
+            },
+          );
           break;
         }
 
+        // A frame is inserted as soon as the parcel exists, which is before it has mounted, so a
+        // modal opened over one still mounting has to hide it just the same.
+        case 'MOUNTING':
         case 'MOUNTED':
-          if (instance.container) {
-            instance.container.style.visibility = index ? 'hidden' : 'unset';
-          }
+          applyModalVisibility(instance, instance === frontmost);
           break;
 
         case 'TO_BE_DELETED':
+          instance.state = 'DELETED';
           instance.onClose();
-          instance.parcel?.unmount?.();
+          unmountModalParcel(instance.modalName, instance.parcel);
           instance.container?.remove();
           setTimeout(() => {
+            // Read now rather than closed over: modals opened since this was scheduled are in the
+            // store's stack but not in the one this pass saw, and would be dropped with it.
+            const current = modalStore.getState();
+
             modalStore.setState({
-              modalContainer,
-              modalStack: modalStack.filter((x) => x !== instance),
+              ...current,
+              modalStack: current.modalStack.filter((x) => x !== instance),
             });
           }, 0);
           break;
@@ -146,13 +234,18 @@ function openInstance(instance: ModalInstance) {
 }
 
 function closeInstance(instance: ModalInstance) {
+  if (isClosing(instance)) {
+    return;
+  }
+
+  // Mutated rather than replaced by a copy as an in-flight mount will close over this property
+  instance.state = 'TO_BE_DELETED';
+
   const state = modalStore.getState();
-  const modalStack = state.modalStack.map(
-    (x): ModalInstance => (x === instance ? { ...x, state: 'TO_BE_DELETED' } : x),
-  );
+
   modalStore.setState({
     ...state,
-    modalStack,
+    modalStack: [...state.modalStack],
   });
 }
 
