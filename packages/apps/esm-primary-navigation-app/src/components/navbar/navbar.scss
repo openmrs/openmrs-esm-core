@@ -1,4 +1,6 @@
 @use '@carbon/layout';
+@use '@carbon/type';
+@use '@carbon/themes';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
 .topNavActionsSlot {
@@ -6,7 +8,7 @@
   align-items: center;
 
   > a {
-    color: white;
+    color: themes.$text-on-color;
     text-decoration: none;
     margin: 0 layout.$spacing-04;
   }
@@ -35,10 +37,16 @@
   margin-inline-start: layout.$spacing-05;
 }
 
+.versionText {
+  @include type.type-style(label-02);
+  color: themes.$text-on-color;
+  padding-left: layout.$spacing-04;
+}
+
 .divider {
   width: 1px;
   height: layout.$spacing-06;
-  background-color: rgba(244, 244, 244, 0.4);
+  background-color: themes.$text-placeholder;
   margin-inline-start: layout.$spacing-04;
 }
 

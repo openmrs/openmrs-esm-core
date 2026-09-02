@@ -157,15 +157,24 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
   return window.fetch(url, fetchInit as RequestInit).then(async (r) => {
     const response = r as FetchResponse<T>;
     const { redirectAuthFailure, followRedirects } = await getConfig<EsmApiConfigObject>('@openmrs/esm-api');
-    if (response.ok) {
-      if (response.status === 204) {
-        if (followRedirects && response.headers.has('location')) {
-          const location = response.headers.get('location');
-          if (location) {
-            navigate({ to: location });
-          }
-        }
 
+    if (response.ok) {
+      /*
+       * Backend modules can trigger SPA redirects by returning a `Location` header.
+       * This is required because `fetch()` hides HTTP redirects from the application.
+       *
+       * - Session endpoint (2xx): Authentication challenge URLs (e.g. TOTP,2FA).
+       * - HTTP 204: Logout redirect URLs (e.g. Keycloak IdP logout). Refer: OA-41 #1231
+       */
+      const location = response.headers.get('location');
+      const shouldRedirect =
+        followRedirects && location && (url === makeUrl(sessionEndpoint) || response.status === 204);
+
+      if (shouldRedirect) {
+        navigate({ to: location });
+      }
+
+      if (response.status === 204) {
         /* HTTP 204 - No Content
          * We should not try to download the empty response as json. Instead,
          * we return null since there is no response body.

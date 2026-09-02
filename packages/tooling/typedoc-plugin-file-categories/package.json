@@ -8,7 +8,8 @@
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
-    "build": "rimraf dist && swc --strip-leading-paths src -d dist"
+    "build": "rimraf dist && swc --strip-leading-paths src -d dist",
+    "clean": "git clean -fdX -- dist"
   },
   "peerDependencies": {
     "typedoc": ">=0.28.0"

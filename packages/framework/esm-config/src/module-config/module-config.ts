@@ -180,7 +180,7 @@ function computeExtensionConfigs(
  * configuration system how the module can be configured. It specifies
  * what makes configuration valid or invalid.
  *
- * See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
+ * See [Configuration System](https://o3-docs.openmrs.org/en-US/docs/configuration-system)
  * for more information about defining a config schema.
  *
  * @param moduleName Name of the module the schema is being defined for. Generally
@@ -255,7 +255,7 @@ export function registerTranslationNamespace(namespace: string) {
  * The schema tells the configuration system how the module can be configured.
  * It specifies what makes configuration valid or invalid.
  *
- * See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
+ * See [Configuration System](https://o3-docs.openmrs.org/en-US/docs/configuration-system)
  * for more information about defining a config schema.
  *
  * @param extensionName Name of the extension the schema is being defined for.
@@ -767,7 +767,6 @@ function runAllValidatorsInConfigTree(schema: ConfigSchema, config: ConfigObject
  */
 function checkType(keyPath: string, _type: Type | undefined, value: any) {
   if (_type) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const validator: Record<string, Function> = {
       Array: isArray,
       Boolean: isBoolean,
@@ -788,7 +787,6 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
  * Runs validators, logging errors.
  * @returns true if all pass, false otherwise.
  */
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function runValidators(keyPath: string, validators: Array<Function> | undefined, value: any) {
   let returnValue = true;
   if (validators) {

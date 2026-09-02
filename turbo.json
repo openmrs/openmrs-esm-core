@@ -2,6 +2,9 @@
   "$schema": "https://turborepo.org/schema.json",
   "ui": "stream",
   "tasks": {
+    "clean": {
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": [
@@ -79,8 +82,10 @@
     "watch": {},
     "lint": {
       "inputs": [
-        "src/**/*.{ts,tsx}",
-        "$TURBO_ROOT$/.eslintrc"
+        "src/**/*.{js,cjs,mjs,ts,tsx}",
+        ".storybook/**",
+        "mocks/**",
+        "$TURBO_ROOT$/eslint.config.mjs"
       ]
     },
     "typescript": {

@@ -43,10 +43,12 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 // eslint-disable-next-line no-restricted-imports
 import { isArray, merge, mergeWith } from 'lodash';
-import { inc } from 'semver';
+import { inc, parse } from 'semver';
+import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
 import {
-  container,
+  BannerPlugin,
   DefinePlugin,
+  ExternalsPlugin,
   type ModuleOptions,
   type RuleSetRule,
   type WebpackOptionsNormalized as WebpackConfiguration,
@@ -60,7 +62,44 @@ type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module' | 'outp
 };
 
 const production = 'production';
-const { ModuleFederationPlugin } = container;
+
+// Read from our own pin rather than `@module-federation/enhanced/package.json`, which its `exports` map
+// makes unreadable. `parse` rather than `coerce`, so that loosening the pin to a range disables the skew
+// warning instead of misreporting it: `coerce` turns `2.x` and `^2` into 2.0, which would warn forever.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const moduleFederationPin: string = require('../package.json').dependencies['@module-federation/enhanced'];
+const moduleFederationVersion = parse(moduleFederationPin);
+
+/**
+ * Prepended to this app's entry chunks. Without it, an app running under an app shell too old to
+ * publish the runtime globals fails with a `TypeError` from inside minified runtime code. All three
+ * globals are checked because `_OPENMRS_FEDERATION_ERROR_CODES` is what describes the failure, and a runtime
+ * minor differing from the app shell's warns. `@openmrs/rspack-config` has a copy of this; keep them in step.
+ */
+function buildFederationRuntimeGuard(appName: string, expectedMinor: string | undefined) {
+  const missingRuntime =
+    "(function(){var g=typeof globalThis!=='undefined'?globalThis:self;" +
+    "if(typeof g._FEDERATION_RUNTIME_CORE==='undefined'||typeof g._OPENMRS_FEDERATION_SDK==='undefined'||typeof g._OPENMRS_FEDERATION_ERROR_CODES==='undefined'){" +
+    'throw new Error(' +
+    JSON.stringify(appName) +
+    " + ' cannot start: the OpenMRS app shell serving this page does not provide the Module Federation runtime. " +
+    'This app was built with newer OpenMRS tooling than the app shell, so either upgrade @openmrs/esm-app-shell, ' +
+    "or rebuild this app with tooling matching the app shell.');}";
+
+  // Skipped rather than always warning if the pin couldn't be coerced to a version.
+  const skew = expectedMinor
+    ? 'var from=g._FEDERATION_RUNTIME_CORE_FROM;' +
+      'if(from&&from.version&&String(from.version).split(".").slice(0,2).join(".")!==' +
+      JSON.stringify(expectedMinor) +
+      '){console.warn(' +
+      JSON.stringify(appName) +
+      " + ' was built against Module Federation " +
+      expectedMinor +
+      ".x but the app shell provides ' + from.version + '. Shared dependencies may not de-duplicate correctly.');}"
+    : '';
+
+  return missingRuntime + skew + '})();';
+}
 
 function getFrameworkVersion() {
   try {
@@ -297,6 +336,14 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         name,
         library: { type: 'var', name: slugify(name) },
         filename,
+        // Building on `@module-federation/enhanced` gives webpack remotes the MF 2.0 runtime, which they
+        // read from the globals the app shell publishes rather than embedding. See `@openmrs/rspack-config`.
+        experiments: {
+          externalRuntime: true,
+        },
+        // Nothing consumes an mf-manifest or federated types here, so skip both plugins.
+        manifest: false,
+        dts: false,
         exposes: {
           './start': srcFile,
         },
@@ -344,6 +391,22 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
             },
           ],
         }),
+      // The two runtime packages a remote can safely borrow from the app shell; see the
+      // `ExternalsPlugin` block in `@openmrs/rspack-config` for why only these two are shareable,
+      // what still ships per remote, and why this is a plugin rather than an `externals` entry.
+      new ExternalsPlugin('global', {
+        '@module-federation/sdk': '_OPENMRS_FEDERATION_SDK',
+        '@module-federation/error-codes': '_OPENMRS_FEDERATION_ERROR_CODES',
+      }),
+      new BannerPlugin({
+        raw: true,
+        entryOnly: true,
+        test: /\.[cm]?js$/,
+        banner: buildFederationRuntimeGuard(
+          name,
+          moduleFederationVersion ? `${moduleFederationVersion.major}.${moduleFederationVersion.minor}` : undefined,
+        ),
+      }),
       new StatsWriterPlugin({
         filename: `${filename}.buildmanifest.json`,
         stats: {

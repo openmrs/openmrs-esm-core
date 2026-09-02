@@ -22,6 +22,7 @@ describe('openmrsFetch', () => {
           errors: [401],
           resolvePromise: false,
         },
+        followRedirects: true,
       }),
     );
     window.openmrsBase = '/openmrs';
@@ -131,6 +132,10 @@ describe('openmrsFetch', () => {
       Promise.resolve({
         ok: true,
         status: 200,
+        headers: {
+          has: () => false,
+          get: () => null,
+        },
         clone: () => ({
           text: () => Promise.resolve('{ "value": "hi" }'),
         }),
@@ -148,6 +153,10 @@ describe('openmrsFetch', () => {
       Promise.resolve({
         ok: true,
         status: 204,
+        headers: {
+          has: () => false,
+          get: () => null,
+        },
         json: () => Promise.reject(Error("No json for HTTP 204's!!")),
       }),
     );
@@ -241,6 +250,33 @@ describe('openmrsFetch', () => {
     });
   });
 
+  it('redirects to the Location header URL when session endpoint called and it contains a Location header', async () => {
+    // @ts-expect-error
+    window.fetch.mockReturnValue(
+      Promise.resolve({
+        ok: true,
+        status: 200,
+        statusText: 'OK',
+        headers: {
+          has: (name: string) => name.toLowerCase() === 'location',
+          get: (name: string) => (name.toLowerCase() === 'location' ? '/openmrs/spa/login' : null),
+        },
+        clone() {
+          return this;
+        },
+        text: () => Promise.resolve(''),
+      }),
+    );
+
+    const fetchPromise = openmrsFetch('/ws/rest/v1/session');
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(mockNavigate).toHaveBeenCalledWith({
+      to: '/openmrs/spa/login',
+    });
+  });
+
   it('redirects to the default login URL when a 401 response has no Location header (genuine auth failure)', async () => {
     mockGetConfig.mockResolvedValueOnce({
       redirectAuthFailure: {
@@ -312,6 +348,10 @@ describe('openmrsObservableFetch', () => {
       Promise.resolve({
         ok: true,
         status: 200,
+        headers: {
+          has: () => false,
+          get: () => null,
+        },
         clone: () => ({
           text: () => Promise.resolve('{"value": "hi"}'),
         }),

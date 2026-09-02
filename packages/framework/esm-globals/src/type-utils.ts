@@ -50,10 +50,18 @@ export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes i
  * @returns true if the routes value is an OpenmrsRoutes
  */
 export function isOpenmrsRoutes(routes: OpenmrsRoutes | unknown): routes is OpenmrsRoutes {
-  if (routes && typeof routes === 'object') {
+  if (
+    routes &&
+    typeof routes === 'object' &&
+    'routes' in routes &&
+    routes['routes'] &&
+    typeof routes['routes'] === 'object'
+  ) {
     const maybeRoutes = routes as OpenmrsRoutes;
 
-    return Object.entries(maybeRoutes).every(([key, value]) => typeof key === 'string' && isOpenmrsAppRoutes(value));
+    return Object.entries(maybeRoutes.routes).every(
+      ([key, value]) => typeof key === 'string' && isOpenmrsAppRoutes(value),
+    );
   }
 
   return false;

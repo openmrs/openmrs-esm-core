@@ -26,9 +26,10 @@
   "source": true,
   "scripts": {
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "clean": "git clean -fdX -- dist",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "typescript": "tsc --project tsconfig.build.json",
-    "lint": "eslint src --ext ts,tsx",
+    "lint": "eslint src",
     "extract-translations": "i18next src/translations.ts --config='i18next-parser.config.mjs'"
   },
   "keywords": [

@@ -102,8 +102,8 @@ export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
           const updatedApp = watchedRoutesByPath[name];
           if (updatedApp) {
             const jsonRoutes = JSON.parse(stringifiedRoutes);
-            const version = jsonRoutes[updatedApp]?.version;
-            jsonRoutes[updatedApp] = {
+            const version = jsonRoutes.routes[updatedApp]?.version;
+            jsonRoutes.routes[updatedApp] = {
               ...JSON.parse(await readFile(name, 'utf8')),
               version,
             };

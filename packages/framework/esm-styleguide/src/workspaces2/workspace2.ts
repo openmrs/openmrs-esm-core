@@ -410,6 +410,7 @@ export function promptForClosingWorkspaces(promptReason: PromptReason): Promise<
 
   return new Promise((resolve) => {
     const dispose = showModal('workspace2-close-prompt', {
+      size: 'sm',
       onConfirm: () => {
         dispose();
         resolve(true);
