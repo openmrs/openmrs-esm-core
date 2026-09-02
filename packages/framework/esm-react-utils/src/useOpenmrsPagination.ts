@@ -223,7 +223,7 @@ export function useServerPagination<T, R>(
     totalPages,
     totalCount: totalCount.current,
     currentPage,
-    currentPageSize,
+    currentPageSize: currentPageSize.current,
     paginated: totalPages > 1,
     showNextButton: currentPage < totalPages,
     showPreviousButton: currentPage > 1,
