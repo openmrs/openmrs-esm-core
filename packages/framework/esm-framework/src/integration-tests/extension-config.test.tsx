@@ -5,7 +5,12 @@ import '@testing-library/jest-dom/vitest';
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
-import { attach, registerExtension, updateInternalExtensionStore } from '../../../esm-extensions/src';
+import {
+  attach,
+  getExtensionRenderingsStore,
+  registerExtension,
+  updateInternalExtensionStore,
+} from '../../../esm-extensions/src';
 import {
   ExtensionSlot,
   getSyncLifecycle,
@@ -36,6 +41,10 @@ vi.mock('@openmrs/esm-api', async () => {
 
 describe('Interaction between configuration and extension systems', () => {
   beforeEach(() => {
+    // A rendering outliving its module's schema makes the config system derive a config for an
+    // extension this test never registered.
+    // eslint-disable-next-line testing-library/no-render-in-lifecycle -- not a render; the rule matches any callee name containing "render"
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
     temporaryConfigStore.setState({ config: {} });
     configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
     mockSessionStore.setState({});
@@ -187,6 +196,52 @@ describe('Interaction between configuration and extension systems', () => {
     });
   });
 
+  it('Should give each extension instance its own config in every rendering of the slot', async () => {
+    registerSimpleExtension('obs', 'esm-widgets', true);
+    defineConfigSchema('esm-widgets', {
+      concept: { _type: Type.String, _default: '(none)' },
+    });
+    registerModuleLoad('esm-widgets');
+
+    attach('Vitals slot', 'obs#weight');
+    attach('Vitals slot', 'obs#height');
+    provide({
+      'esm-chart': {
+        extensionSlots: {
+          'Vitals slot': {
+            configure: {
+              'obs#weight': { concept: 'Weight (kg)' },
+              'obs#height': { concept: 'Height (cm)' },
+            },
+          },
+        },
+      },
+    });
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-chart',
+      featureName: 'The chart',
+      disableTranslations: true,
+    })(() => (
+      <>
+        <ExtensionSlot data-testid="row-1" name="Vitals slot" />
+        <ExtensionSlot data-testid="row-2" name="Vitals slot" />
+      </>
+    ));
+
+    act(() => {
+      render(<App />);
+    });
+
+    await waitFor(() => {
+      for (const testId of ['row-1', 'row-2']) {
+        const slot = screen.getByTestId(testId);
+        expect(slot.firstChild).toHaveTextContent(/Weight \(kg\)/);
+        expect(slot.lastChild).toHaveTextContent(/Height \(cm\)/);
+      }
+    });
+  });
+
   it('Slot config should update with temporary config', async () => {
     registerSimpleExtension('Pearl', 'esm-slaghoople');
     attach('A slot', 'Pearl');
@@ -272,7 +327,7 @@ describe('Interaction between configuration and extension systems', () => {
       return (
         <div>
           <ExtensionSlot data-testid="slot" name="A slot" />
-          {store.slots['A slot'].assignedExtensions.map((e) => (
+          {store.slots['A slot'].candidateExtensions.map((e) => (
             <div key={e.name}>{JSON.stringify(e.config)}</div>
           ))}
         </div>
