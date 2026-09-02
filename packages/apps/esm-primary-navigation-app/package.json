@@ -39,11 +39,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.92.1",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@carbon/icons-react": "11.x",
     "@carbon/react": "1.x",
     "@openmrs/esm-framework": "10.x",
     "react": "18.x",
@@ -54,6 +52,7 @@
     "single-spa": "6.x"
   },
   "devDependencies": {
+    "@carbon/react": "^1.92.1",
     "@vitest/coverage-v8": "^4.1.2",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",

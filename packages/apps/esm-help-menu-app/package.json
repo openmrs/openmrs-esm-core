@@ -39,7 +39,6 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@carbon/icons-react": "11.x",
     "@carbon/react": "1.x",
     "@openmrs/esm-framework": "10.x",
     "react": "18.x",
@@ -48,6 +47,7 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
+    "@carbon/react": "^1.92.1",
     "cross-env": "^10.1.0",
     "happy-dom": "^20.6.0",
     "openmrs": "workspace:*",
@@ -57,7 +57,6 @@
     "vitest": "^4.1.2"
   },
   "dependencies": {
-    "@carbon/react": "^1.92.1",
     "fuzzy": "^0.1.3"
   }
 }

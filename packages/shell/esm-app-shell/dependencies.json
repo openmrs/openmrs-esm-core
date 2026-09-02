@@ -1,5 +1,4 @@
 [
-  "@carbon/icons-react",
   "@carbon/react",
   "i18next",
   "dayjs",
