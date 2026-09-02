@@ -60,7 +60,8 @@ jobs:
   build:
     needs: resolve
     permissions:
-      contents: write
+      actions: write
+      contents: read
       issues: read
       pull-requests: write
     # Shared group with the auto callers — a manual rebuild cancels any
@@ -80,3 +81,4 @@ jobs:
     secrets:
       OMRS_PR_BOT_CLIENT_ID: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
       OMRS_PR_BOT_PRIVATE_KEY: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
+      OMRS_BOT_GH_TOKEN: ${{ secrets.OMRS_BOT_GH_TOKEN }}
