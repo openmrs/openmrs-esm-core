@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Column, FlexGrid, Row, TextInput, Toggle } from '@carbon/react';
+import { Button, Column, FlexGrid, InlineNotification, Row, TextInput, Toggle } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { cloneDeep, isEmpty } from 'lodash-es';
 import type { Config } from '@openmrs/esm-framework/src/internal';
@@ -70,7 +70,7 @@ export const Configuration: React.FC = () => {
     isConfigToolbarOpen,
     toggleIsToolbarOpen,
   } = useStoreWithActions(implementerToolsStore, actions);
-  const { config } = useStore(implementerToolsConfigStore);
+  const { config, derivationError } = useStore(implementerToolsConfigStore);
   const extensionStore = useStore(getExtensionInternalStore());
   const tempConfigStore = useStore(temporaryConfigStore);
   const [filterText, setFilterText] = useState('');
@@ -183,6 +183,18 @@ export const Configuration: React.FC = () => {
           </FlexGrid>
         ) : null}
       </div>
+      {derivationError ? (
+        <InlineNotification
+          kind="error"
+          lowContrast
+          hideCloseButton
+          title={t('configDerivationFailed', 'This configuration is out of date')}
+          subtitle={`${t(
+            'configDerivationFailedSubtitle',
+            'The configuration could not be rebuilt, so what is shown below is the last version that did build.',
+          )} ${derivationError}`}
+        />
+      ) : null}
       <div className={styles.mainContent} style={{ height: mainContentHeight }}>
         {isJsonModeEnabled ? (
           <JsonEditor height={mainContentHeight} />

@@ -2,15 +2,18 @@
 
 # Interface: ExtensionSlotState
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L71)
+Defined in: [packages/framework/esm-extensions/src/store.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L103)
 
 ## Properties
 
-### assignedExtensions
+### candidateExtensions
 
-> **assignedExtensions**: [`AssignedExtension`](AssignedExtension.md)[]
+> **candidateExtensions**: [`AssignedExtension`](AssignedExtension.md)[]
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L73)
+Defined in: [packages/framework/esm-extensions/src/store.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L109)
+
+Candidates only. Call `getAssignedExtensions()` for the extensions a given rendering of
+this slot should actually display.
 
 ***
 
@@ -18,12 +21,4 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:73](https://github.c
 
 > `optional` **moduleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L72)
-
-***
-
-### state?
-
-> `optional` **state**: `ExtensionSlotCustomState`
-
-Defined in: [packages/framework/esm-extensions/src/store.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L74)
+Defined in: [packages/framework/esm-extensions/src/store.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L104)
