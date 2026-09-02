@@ -1,4 +1,5 @@
 import {
+  asResolvedShare,
   getFederationGlobal,
   preferLoadedProvider,
   registerFederationPlugin,
@@ -67,8 +68,9 @@ export function pinFrameworkToAppShell(shareScope: Record<string, unknown>) {
         return args;
       }
 
-      // The framework is not shared with tree shaking enabled, so there is no shaken variant to pick.
-      args.resolver = () => ({ shared: preferLoadedProvider(appShellProviders), useTreesShaking: false });
+      // `asResolvedShare` is what keeps frontend modules carrying an older Module Federation runtime
+      // working; the app shell's plugin is applied to theirs too, and they expect the older shape.
+      args.resolver = () => asResolvedShare(preferLoadedProvider(appShellProviders));
       return args;
     },
   };
