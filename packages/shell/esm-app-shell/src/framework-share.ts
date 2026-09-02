@@ -11,8 +11,8 @@ import {
  * openmrs-pin-framework-to-app-shell
  *
  * This is a runtime Module Federation plugin to induce Module Federation to work as we expect.
- * Specifically, e expect the version of @openmrs/esm-framework used to match the version loaded
- * by the shell regardless of the versions available elsewhere. With Module Fedderation v2's
+ * Specifically, we expect the version of @openmrs/esm-framework used to match the version loaded
+ * by the shell regardless of the versions available elsewhere. With Module Federation v2's
  * default "version-first" loading strategy, the exact version of a resolution can be changed as
  * new apps are added. This runtime plugin ensures we only ever load the framework from the shell.
  */
