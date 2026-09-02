@@ -49,7 +49,7 @@ export function usePagination<T>(data: Array<T> = [], resultsPerPage = defaultRe
     setRequestedPage(page);
   }, []);
 
-  // overflow clamping happens in render; see the setRequestPage() call above
+  // overflow clamping happens in render; see the setRequestedPage() call above
   const goToNext = useCallback(() => {
     setRequestedPage((p) => p + 1);
   }, []);

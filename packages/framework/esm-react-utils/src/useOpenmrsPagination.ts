@@ -170,7 +170,7 @@ export function useServerPagination<T, R>(
         return;
       }
 
-      // page coung is not known prior to running any query when `bound` will be `NaN`, so in this
+      // page count is not known prior to running any query when `bound` will be `NaN`, so in this
       // case we assume the requested page is fine; after results return, things will settle properly
       // clamped
       const bound = Math.ceil(totalCount.current / pageSize);
