@@ -201,6 +201,53 @@ describe('modals', () => {
     expect(quickFrame).not.toHaveStyle({ visibility: 'hidden' });
   });
 
+  it('hides a modal already on screen when another opens before its parcel has mounted', async () => {
+    const mounting = deferred();
+    vi.mocked(renderParcel)
+      .mockResolvedValueOnce(fakeParcel({ mountPromise: mounting.promise }))
+      .mockResolvedValueOnce(fakeParcel());
+
+    const container = setUpModalContainer();
+
+    open('first-modal');
+    await flush();
+
+    // On screen, but its parcel has not finished mounting.
+    expect(container.childElementCount).toBe(1);
+
+    open('second-modal');
+    await flush();
+
+    const [secondFrame, firstFrame] = Array.from(container.children);
+    expect(firstFrame).toHaveStyle({ visibility: 'hidden' });
+    expect(secondFrame).not.toHaveStyle({ visibility: 'hidden' });
+
+    mounting.resolve();
+    await flush();
+  });
+
+  it('shows the modal underneath the moment the one over it is closed', async () => {
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel());
+
+    const container = setUpModalContainer();
+
+    open('under-modal');
+    await flush();
+
+    const closeOver = open('over-modal');
+    await flush();
+
+    const [overFrame, underFrame] = Array.from(container.children);
+    expect(overFrame).not.toHaveStyle({ visibility: 'hidden' });
+    expect(underFrame).toHaveStyle({ visibility: 'hidden' });
+
+    // Asserted without flushing: the closed modal stays on the stack until its removal timeout,
+    // and the one underneath must not wait on that to come back.
+    closeOver();
+
+    expect(underFrame).not.toHaveStyle({ visibility: 'hidden' });
+  });
+
   it('unmounts a modal closed while it was still loading, and never shows it', async () => {
     const { release, load } = gatedLoad();
     const parcel = fakeParcel();

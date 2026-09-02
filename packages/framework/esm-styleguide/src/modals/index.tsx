@@ -98,6 +98,26 @@ function unmountModalParcel(modalName: string, parcel: Parcel | null | undefined
   });
 }
 
+/**
+ * The modal the user is looking at: the frontmost one that isn't on its way out. Modals being torn
+ * down are skipped rather than counted, since their frames are already gone — counting them would
+ * leave the modal underneath hidden behind nothing until they finally left the stack.
+ */
+function frontmostModal(modalStack: Array<ModalInstance>) {
+  return modalStack.find((instance) => !isClosing(instance));
+}
+
+/**
+ * Only the frontmost modal is shown; the ones it was opened over stay in the DOM behind it. Applied
+ * both as the stack changes and as a frame is inserted, since a frame inserted after the last
+ * change to the stack would otherwise never be told.
+ */
+function applyModalVisibility(instance: ModalInstance, isFrontmost: boolean) {
+  if (instance.container) {
+    instance.container.style.visibility = isFrontmost ? 'unset' : 'hidden';
+  }
+}
+
 const original = window.getComputedStyle(document.body).overflow;
 
 function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
@@ -113,7 +133,11 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
       modalContainer.style.visibility = 'unset';
     }
 
-    modalStack.forEach((instance, index) => {
+    // Stable across the pass below: the only states it changes are `NEW` to `MOUNTING` and
+    // `TO_BE_DELETED` to `DELETED`, neither of which moves a modal in or out of the running.
+    const frontmost = frontmostModal(modalStack);
+
+    modalStack.forEach((instance) => {
       switch (instance.state) {
         case 'NEW': {
           const modalFrame = createModalFrame({ size: instance.props?.size ?? 'md' });
@@ -137,7 +161,9 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
 
               instance.parcel = parcel;
               modalContainer.prepend(modalFrame);
-              modalFrame.style.visibility = modalStore.getState().modalStack.indexOf(instance) ? 'hidden' : 'unset';
+              // The stack decides which modal is frontmost, not the DOM order this prepend just
+              // established: another modal opened while this one loaded belongs on top of it.
+              applyModalVisibility(instance, frontmostModal(modalStore.getState().modalStack) === instance);
 
               // The parcel is handed back before it has mounted, so this is where the modal is
               // really on screen.
@@ -165,10 +191,11 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
           break;
         }
 
+        // A frame is inserted as soon as the parcel exists, which is before it has mounted, so a
+        // modal opened over one still mounting has to hide it just the same.
+        case 'MOUNTING':
         case 'MOUNTED':
-          if (instance.container) {
-            instance.container.style.visibility = index ? 'hidden' : 'unset';
-          }
+          applyModalVisibility(instance, instance === frontmost);
           break;
 
         case 'TO_BE_DELETED':
