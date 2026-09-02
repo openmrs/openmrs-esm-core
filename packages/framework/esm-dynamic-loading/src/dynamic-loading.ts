@@ -109,7 +109,8 @@ function humanReadableMs(ms: number) {
  * @internal
  *
  * This internal method is used to ensure that the script belonging
- * to the given package is loaded and added to the head.
+ * to the given package is loaded and added to the head. Concurrent and
+ * repeat calls for the same package share a single request for it.
  *
  * @param jsPackage The package to load
  * @param importMap The import map to use for loading this package.
@@ -140,9 +141,7 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
 
     const isOverridden = jsPackage in getImportMapOverrideMap().imports;
     try {
-      return await new Promise<void>((resolve, reject) => {
-        loadScript(url, resolve, reject);
-      });
+      return await loadScript(url);
     } catch (err: any) {
       if (isOverridden) {
         dispatchToastShown({
@@ -198,99 +197,81 @@ function isFederatedModule(a: unknown): a is FederatedModule {
 }
 
 // internals to track script loading
-// basically, if we're already loading a script, we should wait until the script is loaded
-// we use a global to track this
-const OPENMRS_SCRIPT_LOADING = Symbol('__openmrs_script_loading');
+
+// if we're already loading a script, we should wait until the script is loaded
+// we use a global to track this; we use `Symbol.for()` in case this gets loaded
+// twice
+const OPENMRS_SCRIPT_LOADING = Symbol.for('__openmrs_script_loading');
 
 /**
- * Appends a `<script>` to the DOM with the given URL.
+ * The scripts this loader has requested, keyed by URL. A pending entry is in flight and a settled
+ * one has loaded; failed requests are removed, so any entry can be awaited rather than re-requested.
  */
-function loadScript(
-  url: string,
-  resolve: (value: unknown | PromiseLike<unknown>) => void,
-  reject: (reason?: any) => void,
-) {
-  const scriptElement = document.head.querySelector(`script[src="${url}"]`);
-  let scriptLoading: Set<string> = window[OPENMRS_SCRIPT_LOADING];
-  if (!scriptLoading) {
-    scriptLoading = window[OPENMRS_SCRIPT_LOADING] = new Set([]);
+function getScriptRegistry(): Map<string, Promise<void>> {
+  return (window[OPENMRS_SCRIPT_LOADING] ??= new Map<string, Promise<void>>());
+}
+
+/**
+ * Appends a `<script>` to the DOM with the given URL, unless it has been requested already, and
+ * resolves once it has loaded. Callers arriving at any point in a script's lifecycle share one
+ * request for it.
+ *
+ * A script which fails loading is removed from the DOM and can be retried. A script which throws
+ * when loading, however, will remain in the DOM as the script loaded.
+ */
+function loadScript(url: string): Promise<void> {
+  const registry = getScriptRegistry();
+
+  const requested = registry.get(url);
+  if (requested) {
+    return requested;
   }
 
-  if (!scriptElement) {
-    scriptLoading.add(url);
-    const element = document.createElement('script');
-    element.src = url;
-    element.type = 'text/javascript';
-    element.async = true;
+  if (document.head.querySelector(`script[src="${url}"]`)) {
+    // something other than this loader put the script in the document, so assume it's usable
+    console.warn(`Script at ${url} already loaded. Not loading it again.`);
+    return Promise.resolve();
+  }
 
-    // loadTime() displays an error if a script takes more than 5 seconds to load
+  const element = document.createElement('script');
+  element.src = url;
+  element.type = 'text/javascript';
+  element.async = true;
+
+  const request = new Promise<void>((resolve, reject) => {
+    // displays an error if a script takes more than 5 seconds to load
     const loadTimeout = setTimeout(() => {
       console.error(
         `The script at ${url} did not load within 5 seconds. This may indicate an issue with the imports in the script's entry-point file or with the script's bundler configuration.`,
       );
     }, 5_000); // 5 seconds; this is arbitrary
 
-    let loadFn: () => void, errFn: (ev: ErrorEvent) => void, finishScriptLoading: () => void;
-
-    finishScriptLoading = () => {
+    function finishScriptLoading() {
       clearTimeout(loadTimeout);
-      scriptLoading.delete(url);
+      element.removeEventListener('load', loadFn);
+      element.removeEventListener('error', errFn);
+    }
 
-      if (loadFn) {
-        element.removeEventListener('load', loadFn);
-      }
-
-      if (errFn) {
-        element.removeEventListener('error', errFn);
-      }
-    };
-
-    loadFn = () => {
+    function loadFn() {
       finishScriptLoading();
-      resolve(null);
-    };
+      resolve();
+    }
 
-    errFn = (ev: ErrorEvent) => {
+    function errFn(ev: ErrorEvent) {
       finishScriptLoading();
+      registry.delete(url);
+      element.remove();
       const msg = `Failed to load script from ${url}`;
       console.error(msg, ev);
       reject(ev.message ?? msg);
-    };
+    }
 
     element.addEventListener('load', loadFn);
     element.addEventListener('error', errFn);
 
     document.head.appendChild(element);
-  } else {
-    if (scriptLoading.has(url)) {
-      let loadFn: () => void, errFn: (ev: ErrorEvent) => void, finishScriptLoading: () => void;
+  });
 
-      finishScriptLoading = () => {
-        if (loadFn) {
-          scriptElement.removeEventListener('load', loadFn);
-        }
-
-        if (errFn) {
-          scriptElement.removeEventListener('error', errFn);
-        }
-      };
-
-      loadFn = () => {
-        finishScriptLoading();
-        resolve(null);
-      };
-
-      // this errFn does not log anything
-      errFn = (ev: ErrorEvent) => {
-        finishScriptLoading();
-        reject(ev.message);
-      };
-
-      scriptElement.addEventListener('load', loadFn);
-      scriptElement.addEventListener('error', errFn);
-    } else {
-      console.warn(`Script at ${url} already loaded. Not loading it again.`);
-      resolve(null);
-    }
-  }
+  registry.set(url, request);
+  return request;
 }
