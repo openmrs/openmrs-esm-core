@@ -1,8 +1,9 @@
 import {
-  findProviderVersion,
   getFederationGlobal,
+  preferLoadedProvider,
   registerFederationPlugin,
   type ModuleFederationRuntimePlugin,
+  type Shared,
   type ShareVersionMap,
 } from './federation-plugins';
 
@@ -45,13 +46,13 @@ export function pinFrameworkToAppShell(shareScope: Record<string, unknown>) {
     return;
   }
 
-  // Read while the app shell is the only registered provider, so this identifies the app shell
-  // without hard-coding its name.
+  // Read while the app shell is the only registered provider, so these are its own entries and
+  // recognising them later needs neither a name nor a lookup.
   const provided = shareScope['@openmrs/esm-framework/src/internal'] as ShareVersionMap | undefined;
-  const appShellName = Object.values(provided ?? {}).find((entry) => entry?.from)?.from;
+  const appShellProviders = Object.values(provided ?? {}).filter((entry): entry is Shared => Boolean(entry));
 
   // Paranoia
-  if (!appShellName) {
+  if (appShellProviders.length === 0) {
     console.error(
       'The app shell has not registered @openmrs/esm-framework as a shared module, so frontend ' +
         'modules may each load their own copy of the framework. This is a bug in the app shell build.',
@@ -66,15 +67,8 @@ export function pinFrameworkToAppShell(shareScope: Record<string, unknown>) {
         return args;
       }
 
-      const versions = args.shareScopeMap[args.scope]?.[args.pkgName];
-      const version = versions && findProviderVersion(versions, appShellName);
-
-      if (!versions || !version) {
-        return args;
-      }
-
       // The framework is not shared with tree shaking enabled, so there is no shaken variant to pick.
-      args.resolver = () => ({ shared: versions[version], useTreesShaking: false });
+      args.resolver = () => ({ shared: preferLoadedProvider(appShellProviders), useTreesShaking: false });
       return args;
     },
   };

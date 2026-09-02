@@ -20,21 +20,17 @@ export function getFederationGlobal(): Federation | undefined {
   return typeof __FEDERATION__ === 'undefined' ? undefined : __FEDERATION__;
 }
 
-function isLoaded(entry: Shared | undefined) {
-  return Boolean(entry && (entry.loaded || typeof entry.lib === 'function'));
+function isLoaded(entry: Shared) {
+  return Boolean(entry.loaded || typeof entry.lib === 'function');
 }
 
 /**
- * Finds the version of a shared module provided by a particular frontend module, preferring one
- * that is already loaded, since that is the copy currently backing the page.
+ * Picks the provider already backing the page, or the first one if none has loaded yet.
  *
- * @param versions The providers of one shared module, i.e. `shareScopeMap[scope][pkgName]`.
- * @param from The name of the providing build, as it appears in a share entry's `from`.
- * @returns The version key to use, or `undefined` if that build provides none.
+ * @param providers Candidate providers of one shared module. Must not be empty.
  */
-export function findProviderVersion(versions: ShareVersionMap, from: string) {
-  const provided = Object.keys(versions).filter((version) => versions[version]?.from === from);
-  return provided.find((version) => isLoaded(versions[version])) ?? provided[0];
+export function preferLoadedProvider(providers: Array<Shared>) {
+  return providers.find(isLoaded) ?? providers[0];
 }
 
 /**
