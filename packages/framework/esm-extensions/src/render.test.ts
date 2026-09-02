@@ -18,12 +18,25 @@ vi.mock('./extensions', () => ({
 
 vi.mock('./helpers', () => ({ checkStatus: () => true }));
 
-vi.mock('./store', () => ({ updateInternalExtensionStore: vi.fn() }));
+vi.mock('./store', () => ({
+  registerExtensionRendering: vi.fn(),
+  unregisterExtensionRendering: vi.fn(),
+}));
 
 const lifecycles = {
   bootstrap: () => Promise.resolve(),
   mount: () => Promise.resolve(),
   unmount: () => Promise.resolve(),
+};
+
+/**
+ * Every parcel the framework mounts is given these, so that a lifecycle which never settles fails
+ * rather than leaving a parcel that can never be unmounted.
+ */
+const lifecycleTimeouts = {
+  bootstrap: { millis: 15_000, dieOnTimeout: true },
+  mount: { millis: 15_000, dieOnTimeout: true },
+  unmount: { millis: 15_000, dieOnTimeout: true },
 };
 
 /**
@@ -51,6 +64,7 @@ async function loadRenderModule({ hostMountFails = false } = {}) {
   vi.resetModules();
 
   const { mountRootParcel } = await import('single-spa');
+  const { registerExtensionRendering, unregisterExtensionRendering } = await import('./store');
   const hostMountParcel = vi.fn(() => fakeParcel());
 
   vi.mocked(mountRootParcel).mockImplementation(((config: ParcelConfig, props: Record<string, unknown>) => {
@@ -79,6 +93,8 @@ async function loadRenderModule({ hostMountFails = false } = {}) {
   return {
     mountRootParcel: vi.mocked(mountRootParcel),
     hostMountParcel,
+    registerExtensionRendering: vi.mocked(registerExtensionRendering),
+    unregisterExtensionRendering: vi.mocked(unregisterExtensionRendering),
     mountTestExtension,
     renderParcel,
     createParcelMounter,
@@ -91,16 +107,117 @@ describe('renderExtension', () => {
   });
 
   it('mounts extensions through the host parcel rather than as root parcels', async () => {
-    const { mountRootParcel, hostMountParcel, mountTestExtension } = await loadRenderModule();
+    const { mountRootParcel, hostMountParcel, registerExtensionRendering, mountTestExtension } =
+      await loadRenderModule();
 
     const parcel = await mountTestExtension();
 
+    expect(registerExtensionRendering).toHaveBeenCalledWith({
+      renderingId: 'test-slot/test-extension#instance-0',
+      extensionName: 'test-extension#instance',
+      extensionModuleName: 'test-module',
+      extensionId: 'test-extension#instance',
+      slotName: 'test-slot',
+      slotModuleName: 'slot-module',
+    });
     expect(hostMountParcel).toHaveBeenCalledTimes(1);
     expect(parcel).toBe(hostMountParcel.mock.results[0].value);
     expect(mountRootParcel).toHaveBeenCalledTimes(1);
     expect(mountRootParcel).toHaveBeenCalledWith(
       expect.objectContaining({ name: hostParcelName }),
       expect.objectContaining({ domElement: expect.anything() }),
+    );
+  });
+
+  it('releases the rendering record after the hosted parcel unmounts', async () => {
+    const { hostMountParcel, registerExtensionRendering, unregisterExtensionRendering, mountTestExtension } =
+      await loadRenderModule();
+    let resolveUnmount: () => void;
+    const unmountPromise = new Promise<void>((resolve) => {
+      resolveUnmount = resolve;
+    });
+
+    hostMountParcel.mockImplementationOnce(() => ({ ...fakeParcel(), unmountPromise }) as unknown as Parcel);
+
+    await mountTestExtension();
+
+    expect(registerExtensionRendering).toHaveBeenCalledTimes(1);
+    expect(unregisterExtensionRendering).not.toHaveBeenCalled();
+
+    resolveUnmount!();
+    await unmountPromise;
+    await Promise.resolve();
+
+    expect(unregisterExtensionRendering).toHaveBeenCalledWith('test-slot/test-extension#instance-0');
+  });
+
+  /*
+   * Attaching a handler to `mountPromise` stops single-spa's rejection reaching the global one, so
+   * this handler is the only thing left to record a failed mount.
+   */
+  it('logs a failure to mount', async () => {
+    const { hostMountParcel, mountTestExtension } = await loadRenderModule();
+    const mountError = new Error('extension mount failed');
+
+    hostMountParcel.mockImplementationOnce(
+      () => ({ ...fakeParcel(), mountPromise: Promise.reject(mountError) }) as unknown as Parcel,
+    );
+
+    const parcel = await mountTestExtension();
+
+    await expect(parcel!.mountPromise).rejects.toBe(mountError);
+    await Promise.resolve();
+
+    expect(console.error).toHaveBeenCalledWith(
+      "Extension 'test-extension#instance' in slot 'test-slot' failed to mount",
+      mountError,
+    );
+  });
+
+  it('contains cleanup failures after the hosted parcel fails to mount', async () => {
+    const { hostMountParcel, unregisterExtensionRendering, mountTestExtension } = await loadRenderModule();
+    const mountError = new Error('extension mount failed');
+    const cleanupError = new Error('configuration recomputation failed');
+
+    hostMountParcel.mockImplementationOnce(
+      () => ({ ...fakeParcel(), mountPromise: Promise.reject(mountError) }) as unknown as Parcel,
+    );
+    unregisterExtensionRendering.mockImplementationOnce(() => {
+      throw cleanupError;
+    });
+
+    const parcel = await mountTestExtension();
+
+    await expect(parcel!.mountPromise).rejects.toBe(mountError);
+    await Promise.resolve();
+
+    expect(console.error).toHaveBeenCalledWith(
+      "Recomputing configuration after 'test-extension#instance' failed to mount also failed",
+      cleanupError,
+    );
+  });
+
+  it('contains cleanup failures after the hosted parcel unmounts', async () => {
+    const { hostMountParcel, unregisterExtensionRendering, mountTestExtension } = await loadRenderModule();
+    const cleanupError = new Error('configuration recomputation failed');
+    let resolveUnmount: () => void;
+    const unmountPromise = new Promise<void>((resolve) => {
+      resolveUnmount = resolve;
+    });
+
+    hostMountParcel.mockImplementationOnce(() => ({ ...fakeParcel(), unmountPromise }) as unknown as Parcel);
+    unregisterExtensionRendering.mockImplementationOnce(() => {
+      throw cleanupError;
+    });
+
+    await mountTestExtension();
+    resolveUnmount!();
+    await unmountPromise;
+    await Promise.resolve();
+
+    expect(console.error).toHaveBeenCalledWith(
+      "Recomputing configuration after unmounting 'test-extension#instance' failed",
+      cleanupError,
     );
   });
 
@@ -145,10 +262,29 @@ describe('renderParcel', () => {
 
     const parcel = await renderParcel(lifecycles, { domElement, someProp: 'value' });
 
-    expect(hostMountParcel).toHaveBeenCalledWith(lifecycles, { domElement, someProp: 'value' });
+    expect(hostMountParcel).toHaveBeenCalledWith(
+      { ...lifecycles, timeouts: lifecycleTimeouts },
+      { domElement, someProp: 'value' },
+    );
     expect(parcel).toBe(hostMountParcel.mock.results[0].value);
     expect(mountRootParcel).toHaveBeenCalledTimes(1);
     expect(mountRootParcel).toHaveBeenCalledWith(expect.objectContaining({ name: hostParcelName }), expect.anything());
+  });
+
+  it('bounds the lifecycles of both the object and the lazily-loaded config forms', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+
+    await renderParcel(lifecycles, { domElement });
+    await renderParcel(() => Promise.resolve(lifecycles), { domElement });
+
+    // Without these, a lifecycle that never settles leaves a parcel single-spa can never unmount,
+    // so nothing the caller tracks against it is ever released.
+    const [objectForm] = hostMountParcel.mock.calls[0] as [{ timeouts: unknown }];
+    const [functionForm] = hostMountParcel.mock.calls[1] as [() => Promise<{ timeouts: unknown }>];
+
+    expect(objectForm.timeouts).toEqual(lifecycleTimeouts);
+    expect((await functionForm()).timeouts).toEqual(lifecycleTimeouts);
   });
 });
 
@@ -165,7 +301,7 @@ describe('createParcelMounter', () => {
 
     await parcel.mountPromise;
 
-    expect(hostMountParcel).toHaveBeenCalledWith(lifecycles, { domElement });
+    expect(hostMountParcel).toHaveBeenCalledWith({ ...lifecycles, timeouts: lifecycleTimeouts }, { domElement });
     expect(parcel.getStatus()).toBe('MOUNTED');
   });
 

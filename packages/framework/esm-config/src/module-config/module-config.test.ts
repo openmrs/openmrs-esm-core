@@ -9,6 +9,7 @@ import type { ConfigExtensionStore, ConfigInternalStore, ImplementerToolsConfigS
 import {
   configExtensionStore,
   configInternalStore,
+  getConfigStore,
   getExtensionConfig,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -1260,6 +1261,49 @@ describe('extension config', () => {
 
   afterEach(resetAll);
 
+  it('does not re-derive the configs of extensions that were already mounted', () => {
+    let derivations = 0;
+    Config.defineExtensionConfigSchema('countedExt', {
+      bar: {
+        _default: 'barry',
+        _validators: [
+          validator(() => {
+            derivations++;
+            return true;
+          }, 'never fails'),
+        ],
+      },
+    });
+    // Validators are skipped for a value that is still its default, so the counter only moves
+    // when the config is genuinely rebuilt.
+    Config.provide({ countedExt: { bar: 'qux' } });
+
+    const mount = (extensionIds: Array<string>) =>
+      configExtensionStore.setState({
+        mountedExtensions: extensionIds.map((extensionId) => ({
+          slotModuleName: 'slot-mod',
+          extensionModuleName: 'ext-mod',
+          slotName: 'countedSlot',
+          extensionId,
+        })),
+      });
+
+    mount(['countedExt#0']);
+    expect(derivations).toBe(1);
+
+    // Mounting a second extension must not rebuild the first one's config: a list that mounts
+    // extensions one at a time would otherwise cost O(mounted²) derivations to fill.
+    mount(['countedExt#0', 'countedExt#1']);
+    expect(derivations).toBe(2);
+
+    mount(['countedExt#0', 'countedExt#1', 'countedExt#2']);
+    expect(derivations).toBe(3);
+
+    // Unmounting is likewise not a reason to rebuild what is left.
+    mount(['countedExt#0']);
+    expect(derivations).toBe(3);
+  });
+
   it('returns the module config', async () => {
     const moduleLevelConfig = { 'ext-mod': { bar: 'qux' } };
     updateConfigExtensionStore();
@@ -1432,6 +1476,80 @@ describe('translation overrides', () => {
     const config = Config.getConfig('corge-module');
     expect(config).resolves.toStrictEqual({ corges: true });
     expect(console.error).not.toHaveBeenCalled();
+  });
+});
+
+describe('promise-based config accessors', () => {
+  beforeAll(resetAll);
+  beforeEach(() => {
+    console.error = vi.fn();
+  });
+  afterEach(resetAll);
+
+  /**
+   * Counts subscriptions that are currently live on a module's config store, so a leak shows up
+   * as a non-zero count. This patches the store the mock registry holds rather than the object
+   * `getConfigStore` hands back, because the mock instruments a fresh wrapper on every call.
+   */
+  function countSubscriptions(moduleName: string) {
+    getConfigStore(moduleName);
+    const store = mockStores[`config-module-${moduleName}`].value;
+    const realSubscribe = store.subscribe.bind(store);
+    const counter = { live: 0 };
+
+    store.subscribe = ((listener: Parameters<typeof store.subscribe>[0]) => {
+      counter.live++;
+      const unsubscribe = realSubscribe(listener);
+
+      return () => {
+        counter.live--;
+        unsubscribe();
+      };
+    }) as typeof store.subscribe;
+
+    return counter;
+  }
+
+  it('getConfig does not subscribe at all when the config has already loaded', async () => {
+    Config.defineConfigSchema('leak-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('leak-module');
+    await Config.getConfig('leak-module');
+
+    const subscriptions = countSubscriptions('leak-module');
+
+    // openmrs-fetch calls this on every HTTP request, so a subscription per call is unbounded.
+    for (let i = 0; i < 25; i++) {
+      await Config.getConfig('leak-module');
+    }
+
+    expect(subscriptions.live).toBe(0);
+  });
+
+  it('getConfig releases its subscription once the config loads', async () => {
+    const subscriptions = countSubscriptions('slow-module');
+    const config = Config.getConfig('slow-module');
+
+    expect(subscriptions.live).toBe(1);
+
+    Config.defineConfigSchema('slow-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('slow-module');
+
+    await expect(config).resolves.toStrictEqual({ foo: 'qux' });
+    expect(subscriptions.live).toBe(0);
+  });
+
+  it('getTranslationOverrides does not leave subscriptions behind', async () => {
+    Config.defineConfigSchema('overrides-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('overrides-module');
+    await Config.getTranslationOverrides('overrides-module');
+
+    const subscriptions = countSubscriptions('overrides-module');
+
+    for (let i = 0; i < 25; i++) {
+      await Config.getTranslationOverrides('overrides-module');
+    }
+
+    expect(subscriptions.live).toBe(0);
   });
 });
 

@@ -93,7 +93,8 @@ const mockImplToolsConfig = {
 
 describe('Configuration', () => {
   afterEach(() => {
-    implementerToolsConfigStore.setState({ config: {} });
+    // `setState` merges, so a test that recorded a derivation failure would leave it for the next.
+    implementerToolsConfigStore.setState({ config: {}, derivationError: undefined });
     temporaryConfigStore.setState({ config: {} });
   });
 
@@ -109,6 +110,27 @@ describe('Configuration', () => {
     screen.getByRole('switch', { name: /ui editor/i });
     screen.getByRole('button', { name: /clear local config/i });
     screen.getByRole('button', { name: /download config/i });
+  });
+
+  /*
+   * A failed derivation leaves the previous config on screen, so without this the panel presents
+   * stale — on a first failure, empty — configuration as though it were current.
+   */
+  it('warns that the configuration is stale when the last derivation failed', () => {
+    implementerToolsConfigStore.setState({ config: {}, derivationError: 'derivation blew up' });
+
+    renderConfiguration();
+
+    expect(screen.getByText(/this configuration is out of date/i)).toBeInTheDocument();
+    expect(screen.getByText(/derivation blew up/)).toBeInTheDocument();
+  });
+
+  it('does not warn when the configuration derived successfully', () => {
+    implementerToolsConfigStore.setState({ config: {} });
+
+    renderConfiguration();
+
+    expect(screen.queryByText(/this configuration is out of date/i)).not.toBeInTheDocument();
   });
 
   it('displays correct boolean value and editor', async () => {

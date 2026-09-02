@@ -1,5 +1,6 @@
 import { type ActivityFn, pathToActiveWhen, registerApplication } from 'single-spa';
 import { registerModuleWithConfigSystem } from '@openmrs/esm-config';
+import { batchExtensionUpdates } from '@openmrs/esm-extensions';
 import {
   type WorkspaceGroupDefinition,
   type ExtensionDefinition,
@@ -97,6 +98,12 @@ function wrapPageActivityFn(
  * definition.
  */
 export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
+  // An app registers every one of its extensions in one go, and each registration would
+  // otherwise re-derive the whole extension graph. Batching collapses that into one pass.
+  batchExtensionUpdates(() => registerAppRoutes(appName, routes));
+}
+
+function registerAppRoutes(appName: string, routes: OpenmrsAppRoutes) {
   if (appName && routes && typeof routes === 'object') {
     registerModuleWithConfigSystem(appName);
 
