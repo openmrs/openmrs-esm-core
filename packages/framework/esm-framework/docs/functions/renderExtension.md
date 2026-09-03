@@ -4,7 +4,7 @@
 
 > **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction`, `additionalProps`): `Promise`\<`null` \| `Parcel`\>
 
-Defined in: [packages/framework/esm-extensions/src/render.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L136)
+Defined in: [packages/framework/esm-extensions/src/render.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L164)
 
 Mounts into a DOM node (representing an extension slot)
 a lazy-loaded component from *any* frontend module
