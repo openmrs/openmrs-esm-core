@@ -6,8 +6,8 @@
 // download. Nothing throws when that happens, which is why it needs a test rather than a smoke check.
 import { getRegisteredShare } from '@module-federation/runtime-core';
 import type { Shared, ShareScopeMap } from '@module-federation/runtime-core/types';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ResolvedShare } from './federation-plugins';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { pinFrameworkToAppShell } from './framework-share';
 
 const appShell = '@openmrs/esm-app-shell';
@@ -213,8 +213,18 @@ describe('pinning @openmrs/esm-framework to the app shell', () => {
   });
 
   it('leaves resolution alone when the app shell provides no framework at all', () => {
-    pinFrameworkToAppShell({});
+    const consoleMock = vi.spyOn(console, 'error').mockImplementation(() => undefined);
 
-    expect(federationGlobal().__GLOBAL_PLUGIN__).toHaveLength(0);
+    try {
+      pinFrameworkToAppShell({});
+
+      expect(federationGlobal().__GLOBAL_PLUGIN__).toHaveLength(0);
+      expect(consoleMock).toHaveBeenCalledOnce();
+      expect(consoleMock).toHaveBeenCalledWith(
+        'The app shell has not registered @openmrs/esm-framework as a shared module, so frontend modules may each load their own copy of the framework. This is a bug in the app shell build.',
+      );
+    } finally {
+      consoleMock.mockReset();
+    }
   });
 });
