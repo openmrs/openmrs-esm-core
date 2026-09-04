@@ -97,6 +97,22 @@ function scratchApp(packageJson: Record<string, unknown>) {
   return root;
 }
 
+/**
+ * A scratch module that reaches the policy through `extends <name>`, alongside a shared config package
+ * of that name exporting `moduleExports`.
+ *
+ * Written into the scratch module's own `node_modules` so the `extends` query resolves from the module
+ * being built, which is where browserslist looks.
+ */
+function scratchAppExtending(name: string, moduleExports: string) {
+  const root = scratchApp({ browserslist: [`extends ${name}`] });
+  const configDir = join(root, 'node_modules', name);
+  mkdirSync(configDir, { recursive: true });
+  writeFileSync(join(configDir, 'package.json'), JSON.stringify({ name, version: '1.0.0', main: 'index.js' }));
+  writeFileSync(join(configDir, 'index.js'), moduleExports);
+  return root;
+}
+
 describe.each(bundlers)('the %s config', (bundler) => {
   it('compiles for the browsers RFC 0003 supports', async () => {
     const options = scriptLoaderOptions(await loadConfigFrom(bundler, fixtureRoot));
@@ -124,6 +140,86 @@ describe.each(bundlers)('the %s config', (bundler) => {
 
     expect(options.env.targets).toEqual(openmrsQueries);
     expect(options.env.targets.some((query: string) => query.startsWith('extends '))).toBe(false);
+  });
+
+  // A shared config is not simply an array of queries, and getting any of this wrong reads as the
+  // module's policy being silently swapped for the OpenMRS default. Each case is pinned against what
+  // browserslist itself resolves, which is also what would fail if the loader borrowed from its internal
+  // `node` entry point ever moved.
+  describe('a shared browserslist config', () => {
+    // Sections keyed by environment, which is the shape Greptile flagged: read as a flat array this
+    // throws, and the catch below would report the module's policy as unloadable and quietly build for
+    // OpenMRS's instead.
+    const envConfig =
+      "module.exports = { production: ['chrome 120'], development: ['chrome 90'], defaults: ['chrome 100'] };";
+
+    it.each([
+      ['production', ['chrome 120']],
+      ['development', ['chrome 90']],
+      // No section of this name, so browserslist falls to `defaults`.
+      ['staging', ['chrome 100']],
+    ])('is read as the %s section when it exports an object of envs', async (env, expected) => {
+      const root = scratchAppExtending('browserslist-config-envs', envConfig);
+      const previous = process.env.BROWSERSLIST_ENV;
+      // Set explicitly rather than left to `NODE_ENV`, which vitest pins to `test`.
+      process.env.BROWSERSLIST_ENV = env;
+      browserslist.clearCaches();
+
+      try {
+        const options = scriptLoaderOptions(await loadConfigFrom(bundler, root));
+
+        expect(options.env.targets).toEqual(expected);
+        // The same section browserslist itself would have picked.
+        expect(browserslist(options.env.targets)).toEqual(
+          browserslist(['extends browserslist-config-envs'], { path: root }),
+        );
+      } finally {
+        process.env.BROWSERSLIST_ENV = previous;
+        browserslist.clearCaches();
+      }
+    });
+
+    it('is unwrapped when it is a transpiled ES module', async () => {
+      const root = scratchAppExtending(
+        'browserslist-config-esm',
+        "exports.__esModule = true;\nexports.default = ['chrome 118'];",
+      );
+      const options = scriptLoaderOptions(await loadConfigFrom(bundler, root));
+
+      expect(options.env.targets).toEqual(['chrome 118']);
+    });
+
+    it('is refused, not loaded, when its name lacks the browserslist-config- prefix', async () => {
+      const root = scratchAppExtending('sneaky-config', "module.exports = ['chrome 100'];");
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      try {
+        // browserslist declines to `require` a package not named as a browserslist config, and so must
+        // this: an `extends` query otherwise executes whatever package it names.
+        const options = scriptLoaderOptions(await loadConfigFrom(bundler, root));
+        expect(options.env.targets).toEqual(openmrsQueries);
+        expect(options.env.targets).not.toContain('chrome 100');
+      } finally {
+        warn.mockRestore();
+      }
+    });
+
+    it('resolves a config that extends another config', async () => {
+      const root = scratchAppExtending(
+        'browserslist-config-outer',
+        "module.exports = ['extends browserslist-config-inner'];",
+      );
+      const inner = join(root, 'node_modules', 'browserslist-config-inner');
+      mkdirSync(inner, { recursive: true });
+      writeFileSync(
+        join(inner, 'package.json'),
+        JSON.stringify({ name: 'browserslist-config-inner', version: '1.0.0', main: 'index.js' }),
+      );
+      writeFileSync(join(inner, 'index.js'), "module.exports = ['chrome 117'];");
+
+      const options = scriptLoaderOptions(await loadConfigFrom(bundler, root));
+      expect(options.env.targets).toEqual(['chrome 117']);
+    });
   });
 
   it('warns and keeps building when an app names a browserslist config that will not load', async () => {

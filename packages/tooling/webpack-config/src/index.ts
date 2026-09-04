@@ -39,6 +39,8 @@
 import { existsSync, statSync } from 'fs';
 import { basename, dirname, resolve } from 'path';
 import browserslist from 'browserslist';
+import { loadQueries } from 'browserslist/node';
+import { default as defaultBrowserslistQueries } from 'browserslist-config-openmrs';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
@@ -70,10 +72,6 @@ const production = 'production';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const moduleFederationPin: string = require('../package.json').dependencies['@module-federation/enhanced'];
 const moduleFederationVersion = parse(moduleFederationPin);
-
-// Used when a module declares no browserslist of its own, and when one it names can't be loaded.
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const defaultBrowserslistQueries: Array<string> = require('browserslist-config-openmrs');
 
 /**
  * Prepended to this app's entry chunks. Without it, an app running under an app shell too old to
@@ -147,9 +145,9 @@ function expandBrowserslistExtends(queries: Array<string>, root: string, seen = 
     seen.add(extended[1]);
 
     try {
-      // Resolved from the module being built, so that it picks up that module's own shared config.
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const resolved = require(require.resolve(extended[1], { paths: [root] }));
+      // Resolved from the module being built, so that it picks up that module's own shared config. A
+      // config naming a further `extends` recurses, which is what `seen` keeps from looping.
+      const resolved = loadQueries({ path: root }, extended[1]);
 
       return expandBrowserslistExtends(Array.isArray(resolved) ? resolved : [resolved], root, seen);
     } catch {
