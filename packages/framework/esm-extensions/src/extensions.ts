@@ -5,7 +5,7 @@
  * - attached (set via code in form of: attach, detach, ...)
  * - configured (set via configuration in form of: added, removed, ...)
  * - assigned (computed from attached and configured)
- * - connected (computed from assigned using connectivity and online / offline)
+ * - displayed (computed from assigned)
  */
 
 import { type Session, type SessionStore, sessionStore, userHasAccess } from '@openmrs/esm-api';
@@ -15,12 +15,11 @@ import {
   type ExtensionsConfigStore,
   getExtensionConfigFromExtensionSlotStore,
   getExtensionConfigFromStore,
-  getExtensionSlotConfig,
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
   getExtensionsConfigStore,
 } from '@openmrs/esm-config';
-import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
+import { evaluateAsBoolean, type VariablesMap } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
 import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
@@ -33,8 +32,10 @@ import {
   type ExtensionSlotCustomState,
   type ExtensionSlotInfo,
   type ExtensionSlotState,
+  getExtensionRenderingsStore,
   getExtensionInternalStore,
   getExtensionStore,
+  scheduleRecomputation,
   updateInternalExtensionStore,
 } from './store';
 
@@ -43,114 +44,200 @@ const extensionStore = getExtensionStore();
 const slotsConfigStore = getExtensionSlotsConfigStore();
 const extensionsConfigStore = getExtensionsConfigStore();
 
-// Keep the output store updated
+/**
+ * Slots whose derived state may have changed since the output store was last updated. `null`
+ * stands for "every slot", and is used when an input changes that isn't scoped to one slot —
+ * the session, a feature flag, connectivity, or a new extension registration.
+ */
+let dirtySlots: Set<string> | null = new Set();
+let isRecomputingOutputStore = false;
+
+function markSlotsDirty(slots: Set<string> | null) {
+  if (slots === null) {
+    dirtySlots = null;
+  } else if (dirtySlots !== null) {
+    for (const slotName of slots) {
+      dirtySlots.add(slotName);
+    }
+  }
+
+  scheduleRecomputation(recomputeExtensionOutputStore);
+}
+
+/**
+ * A subscriber that dirties a slot every time the output store is published would loop here for
+ * ever, so the drain gives up after this many passes and leaves the rest for the next write. Any
+ * real cascade settles in two or three.
+ */
+const maxRecomputationPasses = 20;
+
+function recomputeExtensionOutputStore() {
+  // Publishing notifies subscribers synchronously, so one that dirties a slot re-enters here. The
+  // loop below picks that work up; recursing instead would nest without bound.
+  if (isRecomputingOutputStore) {
+    return;
+  }
+
+  isRecomputingOutputStore = true;
+
+  try {
+    for (let pass = 1; ; pass++) {
+      const slots = dirtySlots;
+
+      if (slots !== null && slots.size === 0) {
+        return;
+      }
+
+      // Taken before the work so that anything dirtied while it runs accumulates for the next pass
+      // rather than being discarded when this one finishes.
+      dirtySlots = new Set();
+
+      try {
+        updateExtensionOutputStore(
+          extensionInternalStore.getState(),
+          slotsConfigStore.getState(),
+          extensionsConfigStore.getState(),
+          featureFlagsStore.getState(),
+          sessionStore.getState(),
+          slots,
+        );
+      } catch (e) {
+        // Fold the work back in, so a failure leaves these slots marked for the next recomputation
+        // instead of stranding them stale.
+        dirtySlots = slots === null || dirtySlots === null ? null : new Set([...slots, ...dirtySlots]);
+        throw e;
+      }
+
+      if (pass >= maxRecomputationPasses) {
+        console.error(
+          `The extension system stopped recomputing after ${maxRecomputationPasses} passes because ` +
+            `something keeps invalidating slots in response to the extension store being written. ` +
+            `Some slots are left stale until the next write.`,
+        );
+        return;
+      }
+    }
+  } finally {
+    isRecomputingOutputStore = false;
+  }
+}
+
+/**
+ * Re-derives the output store from the extension system's inputs.
+ *
+ * Two things keep this cheap. `dirtySlotNames` limits which slots are recomputed at all; passing
+ * `null` recomputes every slot. And slots whose derived value hasn't changed keep their existing
+ * object, so that components subscribed to one slot don't re-render because a different slot
+ * changed.
+ */
 function updateExtensionOutputStore(
   internalState: ExtensionInternalStore,
   extensionSlotConfigs: ExtensionSlotsConfigStore,
-  extensionsConfigStore: ExtensionsConfigStore,
-  featureFlagStore: FeatureFlagsStore,
-  sessionStore: SessionStore,
+  extensionsConfigState: ExtensionsConfigStore,
+  featureFlagState: FeatureFlagsStore,
+  sessionState: SessionStore,
+  dirtySlotNames: Set<string> | null = null,
 ) {
+  const previousSlots = extensionStore.getState().slots;
   const slots: Record<string, ExtensionSlotState> = {};
+  let changed = false;
 
   const isOnline = isOnlineFn();
-  const enabledFeatureFlags = Object.entries(featureFlagStore.flags)
+  const enabledFeatureFlags = Object.entries(featureFlagState.flags)
     .filter(([, { enabled }]) => enabled)
     .map(([name]) => name);
 
   for (let [slotName, slot] of Object.entries(internalState.slots)) {
+    const previous = previousSlots[slotName];
+
+    if (previous && dirtySlotNames && !dirtySlotNames.has(slotName)) {
+      slots[slotName] = previous;
+      continue;
+    }
+
     const { config } = getExtensionSlotConfigFromStore(extensionSlotConfigs, slot.name);
-    const assignedExtensions = getAssignedExtensionsFromSlotData(
+    const candidateExtensions = getAssignedExtensionsFromSlotData(
       slotName,
       internalState,
       config,
-      extensionsConfigStore,
+      extensionsConfigState,
       enabledFeatureFlags,
       isOnline,
-      sessionStore.session,
+      sessionState.session,
     );
-    slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
+
+    if (
+      previous &&
+      previous.moduleName === slot.moduleName &&
+      isEqual(previous.candidateExtensions, candidateExtensions)
+    ) {
+      slots[slotName] = previous;
+    } else {
+      slots[slotName] = { moduleName: slot.moduleName, candidateExtensions };
+      changed = true;
+    }
   }
 
-  if (!isEqual(extensionStore.getState().slots, slots)) {
+  if (changed || Object.keys(previousSlots).length !== Object.keys(slots).length) {
     extensionStore.setState({ slots });
   }
 }
 
-extensionInternalStore.subscribe((internalStore) => {
-  updateExtensionOutputStore(
-    internalStore,
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-  );
+/**
+ * Returns the keys whose values differ between two records, including keys present in only one.
+ */
+function changedKeys(next: Record<string, unknown>, previous: Record<string, unknown>): Set<string> {
+  const changed = new Set<string>();
+
+  for (const key of Object.keys(next)) {
+    if (next[key] !== previous[key]) {
+      changed.add(key);
+    }
+  }
+
+  for (const key of Object.keys(previous)) {
+    if (!(key in next)) {
+      changed.add(key);
+    }
+  }
+
+  return changed;
+}
+
+extensionInternalStore.subscribe((state, previousState) => {
+  // A new or changed registration can affect any slot the extension might be assigned to. Every
+  // other kind of change here — attaching, registering a slot — is scoped to the slots whose
+  // entries actually changed.
+  markSlotsDirty(state.extensions !== previousState.extensions ? null : changedKeys(state.slots, previousState.slots));
 });
 
-slotsConfigStore.subscribe((slotConfigs) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotConfigs,
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-  );
+// Slot configs are per-slot, so a config change invalidates only the slots it names.
+slotsConfigStore.subscribe((state, previousState) => {
+  markSlotsDirty(changedKeys(state.slots, previousState.slots));
 });
 
-extensionsConfigStore.subscribe((extensionConfigs) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionConfigs,
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-  );
+// Extension configs are keyed by slot too, and the config system hands back the same per-slot
+// object when nothing under it changed, so only the slots whose configs actually moved are dirtied.
+extensionsConfigStore.subscribe((state, previousState) => {
+  markSlotsDirty(changedKeys(state.configs, previousState.configs));
 });
 
-featureFlagsStore.subscribe((featureFlagStore) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagStore,
-    sessionStore.getState(),
-  );
-});
+featureFlagsStore.subscribe(() => markSlotsDirty(null));
 
-sessionStore.subscribe((session) => {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    session,
-  );
-});
+sessionStore.subscribe(() => markSlotsDirty(null));
 
 function updateOutputStoreToCurrent() {
-  updateExtensionOutputStore(
-    extensionInternalStore.getState(),
-    slotsConfigStore.getState(),
-    extensionsConfigStore.getState(),
-    featureFlagsStore.getState(),
-    sessionStore.getState(),
-  );
+  markSlotsDirty(null);
 }
 
 updateOutputStoreToCurrent();
 subscribeConnectivityChanged(updateOutputStoreToCurrent);
 
-function createNewExtensionSlotInfo(
-  slotName: string,
-  moduleName?: string,
-  state?: ExtensionSlotCustomState,
-): ExtensionSlotInfo {
+function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
   return {
     moduleName,
     name: slotName,
     attachedIds: [],
-    config: null,
-    state,
   };
 }
 
@@ -192,13 +279,13 @@ export function getExtensionRegistration(extensionId: string): ExtensionRegistra
  * @internal
  */
 export const registerExtension: (extensionRegistration: ExtensionRegistration) => void = (extensionRegistration) =>
-  extensionInternalStore.setState((state) => {
-    state.extensions[extensionRegistration.name] = {
-      ...extensionRegistration,
-      instances: [],
-    };
-    return state;
-  });
+  updateInternalExtensionStore((state) => ({
+    ...state,
+    extensions: {
+      ...state.extensions,
+      [extensionRegistration.name]: { ...extensionRegistration },
+    },
+  }));
 
 /**
  * Attach an extension to an extension slot.
@@ -310,6 +397,10 @@ export function detachAll(extensionSlotName: string) {
  * Get an order index for the extension. This will
  * come from either its configured order, its registered order
  * parameter, or the order in which it happened to be attached.
+ *
+ * The four bands below keep the comparison a total order: every extension lands in exactly one, and
+ * those with no ordering information share the last band rather than taking a sentinel that can't be
+ * compared against itself.
  */
 function getOrder(
   extensionId: string,
@@ -330,7 +421,9 @@ function getOrder(
       // after all others
       return 2000 + assignedIndex;
     } else {
-      return -1;
+      // Added by configuration with no order of any kind — after everything else, and among
+      // themselves in the order the configuration lists them.
+      return 3000;
     }
   }
 }
@@ -348,14 +441,14 @@ function getAssignedExtensionsFromSlotData(
   const assignedIds = calculateAssignedIds(config, attachedIds);
   const extensions: Array<AssignedExtension> = [];
 
-  // Create context once for all extensions in this slot
-  const slotState = internalState.slots[slotName]?.state;
-  const expressionContext = slotState && typeof slotState === 'object' ? { session, ...slotState } : { session };
-
   for (let id of assignedIds) {
     const { config: rawExtensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
     const rawExtensionSlotExtensionConfig = getExtensionConfigFromExtensionSlotStore(config, slotName, id);
-    const extensionConfig = merge(rawExtensionConfig, rawExtensionSlotExtensionConfig);
+    // `merge` mutates its first argument, and `rawExtensionConfig` belongs to the config store,
+    // so never merge into it.
+    const extensionConfig = rawExtensionSlotExtensionConfig
+      ? merge({}, rawExtensionConfig, rawExtensionSlotExtensionConfig)
+      : rawExtensionConfig;
 
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
@@ -372,27 +465,6 @@ function getAssignedExtensionsFromSlotData(
         }
 
         if (!userHasAccess(requiredPrivileges, session.user)) {
-          continue;
-        }
-      }
-
-      const displayConditionExpression =
-        extensionConfig?.['Display conditions']?.expression || extension.displayExpression;
-
-      if (
-        displayConditionExpression !== undefined &&
-        typeof displayConditionExpression === 'string' &&
-        displayConditionExpression.trim().length > 0
-      ) {
-        try {
-          if (!evaluateAsBoolean(displayConditionExpression, expressionContext)) {
-            continue;
-          }
-        } catch (e) {
-          console.error(
-            `Error while evaluating expression '${displayConditionExpression}' for extension ${name} in slot ${slotName}`,
-            e,
-          );
           continue;
         }
       }
@@ -414,6 +486,7 @@ function getAssignedExtensionsFromSlotData(
         meta: extension.meta,
         online: extensionConfig?.['Display conditions']?.online ?? extension.online ?? true,
         offline: extensionConfig?.['Display conditions']?.offline ?? extension.offline ?? false,
+        displayConditionExpression: extensionConfig?.['Display conditions']?.expression || extension.displayExpression,
       });
     }
   }
@@ -422,31 +495,83 @@ function getAssignedExtensionsFromSlotData(
 }
 
 /**
- * Gets the list of extensions assigned to a given slot
+ * Narrows `extensions` to those whose display condition holds for one particular rendering of a
+ * slot, evaluating each condition against `state`.
  *
- * @param slotName The slot to load the assigned extensions for
- * @returns An array of extensions assigned to the named slot
+ * An extension whose display condition throws is left out, on the grounds that a condition that cannot be
+ * evaluated has not been met.
+ *
+ * @param extensions The extensions assigned to the slot, as the extension store holds them
+ * @param state The state of this rendering of the slot
+ * @param session The current session, which conditions may refer to as `session`
+ * @param slotName The slot these were assigned to, used only to identify them if a condition throws
+ * @returns Those of `extensions` that should be displayed, in the same order. Always a new array.
  */
-export function getAssignedExtensions(slotName: string): Array<AssignedExtension> {
-  const internalState = extensionInternalStore.getState();
-  const { config: slotConfig } = getExtensionSlotConfig(slotName);
-  const extensionStoreState = extensionsConfigStore.getState();
-  const featureFlagState = featureFlagsStore.getState();
-  const sessionState = sessionStore.getState();
-  const isOnline = isOnlineFn();
-  const enabledFeatureFlags = Object.entries(featureFlagState.flags)
-    .filter(([, { enabled }]) => enabled)
-    .map(([name]) => name);
+function filterExtensionsByDisplayConditions(
+  extensions: Array<AssignedExtension>,
+  state?: ExtensionSlotCustomState,
+  session: Session | null = null,
+  slotName?: string,
+): Array<AssignedExtension> {
+  // Built once for the whole slot rather than per extension: the context is the same for all of
+  // them, and most slots have no conditions at all.
+  let expressionContext: VariablesMap | undefined;
 
-  return getAssignedExtensionsFromSlotData(
+  return extensions.filter((extension) => {
+    const expression = extension.displayConditionExpression;
+
+    if (typeof expression !== 'string' || expression.trim().length === 0) {
+      return true;
+    }
+
+    expressionContext ??= state && typeof state === 'object' ? { session, ...state } : { session };
+
+    try {
+      return Boolean(evaluateAsBoolean(expression, expressionContext));
+    } catch (e) {
+      console.error(
+        `Error while evaluating expression '${expression}' for ${extension.id}` + (slotName ? ` in ${slotName}` : ''),
+        e,
+      );
+      return false;
+    }
+  });
+}
+
+/**
+ * Gets the extensions a given rendering of a slot should display, in order. This is the supported
+ * way to ask what belongs in a slot; reading the extension store directly skips display conditions.
+ *
+ * Display conditions are evaluated against `state`, so pass whatever the slot is being rendered
+ * for. The same slot can be rendered many times with different state — once per row of a table,
+ * say — and each rendering can resolve to a different set of extensions. Omitting `state` hides
+ * every extension whose condition refers to it, since the condition cannot be evaluated.
+ *
+ * @param slotName The slot to load the extensions for
+ * @param state The state of the rendering of the slot the extensions will be displayed in
+ * @returns Those extensions assigned to the slot whose display conditions hold
+ */
+export function getAssignedExtensions(slotName: string, state?: ExtensionSlotCustomState): Array<AssignedExtension> {
+  return filterExtensionsByDisplayConditions(
+    getCandidateExtensions(slotName),
+    state,
+    sessionStore.getState().session,
     slotName,
-    internalState,
-    slotConfig,
-    extensionStoreState,
-    enabledFeatureFlags,
-    isOnline,
-    sessionState.session,
   );
+}
+
+/**
+ * Gets everything assigned to a slot without evaluating any display condition, which
+ * {@link getAssignedExtensions} cannot do without knowing the state of a particular rendering.
+ *
+ * This exists for tools that present a slot's configuration rather than render it — the UI editor
+ * has to list an extension in order to let an implementer reorder or remove it, even where no
+ * rendering would display it. Anything deciding what to render wants `getAssignedExtensions()`.
+ *
+ * @internal
+ */
+export function getCandidateExtensions(slotName: string): Array<AssignedExtension> {
+  return extensionStore.getState().slots[slotName]?.candidateExtensions ?? [];
 }
 
 function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<string>) {
@@ -461,13 +586,10 @@ function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<st
       const ai = getOrder(idA, idOrder, extensions[getExtensionNameFromId(idA)]?.order, attachedIds);
       const bi = getOrder(idB, idOrder, extensions[getExtensionNameFromId(idB)]?.order, attachedIds);
 
-      if (bi === -1) {
-        return -1;
-      } else if (ai === -1) {
-        return 1;
-      } else {
-        return ai - bi;
-      }
+      // Ties keep their input order — `Array.prototype.sort` is stable, and the input is
+      // `[...attachedIds, ...addedIds]`, so two extensions the ordering rules can't separate
+      // come out in the order the code and the configuration declared them.
+      return ai - bi;
     });
 }
 
@@ -476,14 +598,9 @@ function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<st
  *
  * @param moduleName The name of the module that contains the extension slot
  * @param slotName The extension slot name that is actually used
- * @param state Optional custom state for the slot, which will be stored in the extension store.
  * @internal
  */
-export const registerExtensionSlot: (moduleName: string, slotName: string, state?: ExtensionSlotCustomState) => void = (
-  moduleName,
-  slotName,
-  state,
-) =>
+export const registerExtensionSlot: (moduleName: string, slotName: string) => void = (moduleName, slotName) =>
   extensionInternalStore.setState((currentState) => {
     const existingModuleName = currentState.slots[slotName]?.moduleName;
     if (existingModuleName && existingModuleName != moduleName) {
@@ -506,13 +623,12 @@ export const registerExtensionSlot: (moduleName: string, slotName: string, state
           [slotName]: {
             ...currentState.slots[slotName],
             moduleName,
-            state,
           },
         },
       };
     }
 
-    const slot = createNewExtensionSlotInfo(slotName, moduleName, state);
+    const slot = createNewExtensionSlotInfo(slotName, moduleName);
     return {
       ...currentState,
       slots: {
@@ -525,36 +641,14 @@ export const registerExtensionSlot: (moduleName: string, slotName: string, state
   });
 
 /**
- * Used by extension slots to update the copy of the state for the extension slot
- *
- * @param slotName The name of the slot with state to update
- * @param state A copy of the new state
- * @param partial Whether this should be applied as a partial
- */
-export function updateExtensionSlotState(slotName: string, state: ExtensionSlotCustomState, partial: boolean = false) {
-  extensionInternalStore.setState((currentState) => {
-    const newState = partial ? merge(currentState.slots[slotName].state, state) : state;
-    return {
-      ...currentState,
-      slots: {
-        ...currentState.slots,
-        [slotName]: {
-          ...currentState.slots[slotName],
-          state: newState,
-        },
-      },
-    };
-  });
-}
-
-/**
  * @internal
  * Just for testing.
  */
-export const reset: () => void = () =>
-  extensionStore.setState(() => {
-    return {
-      slots: {},
-      extensions: {},
-    };
-  });
+export const reset: () => void = () => {
+  // Invalidation is carried in module state, so it has to be reset too or it bleeds into the
+  // next test as either a stale dirty set or a missing one.
+  dirtySlots = null;
+  updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
+  getExtensionRenderingsStore().setState({ renderings: new Map() });
+  extensionStore.setState({ slots: {} });
+};

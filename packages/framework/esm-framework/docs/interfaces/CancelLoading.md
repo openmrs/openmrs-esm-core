@@ -2,11 +2,11 @@
 
 # Interface: CancelLoading()
 
-Defined in: [packages/framework/esm-extensions/src/render.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L7)
+Defined in: [packages/framework/esm-extensions/src/render.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L15)
 
 > **CancelLoading**(): `void`
 
-Defined in: [packages/framework/esm-extensions/src/render.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L8)
+Defined in: [packages/framework/esm-extensions/src/render.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L16)
 
 ## Returns
 

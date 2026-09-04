@@ -7,6 +7,7 @@ import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 import {
   attach,
+  getExtensionRenderingsStore,
   getExtensionNameFromId,
   registerExtension,
   updateInternalExtensionStore,
@@ -55,6 +56,69 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     expect(screen.getByText(/English/)).toHaveTextContent('English!');
     await user.click(screen.getByText('Toggle suffix'));
     expect(screen.getByText(/English/)).toHaveTextContent('English?');
+  });
+
+  it('Extension reports a failed update instead of rejecting silently', async () => {
+    const user = userEvent.setup();
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const delivered: Array<number> = [];
+    let failNextUpdate = true;
+
+    registerExtension({
+      name: 'Flaky',
+      moduleName: 'esm-flaky-app',
+      meta: {},
+      load: async () => ({
+        bootstrap: async () => {},
+        mount: async (props: any) => {
+          props.domElement.textContent = 'flaky extension';
+        },
+        unmount: async (props: any) => {
+          props.domElement.textContent = '';
+        },
+        update: async (props: any) => {
+          if (failNextUpdate) {
+            failNextUpdate = false;
+            throw new Error('update blew up');
+          }
+
+          delivered.push(props.value);
+        },
+      }),
+    });
+    attach('FlakyBox', 'Flaky');
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-flaky-app',
+      featureName: 'Flaky',
+      disableTranslations: true,
+    })(() => {
+      const [value, next] = useReducer((value: number) => value + 1, 1);
+
+      return (
+        <div>
+          <ExtensionSlot name="FlakyBox" state={{ value }} />
+          <button onClick={next}>Next</button>
+        </div>
+      );
+    });
+
+    render(<App />);
+    expect(await screen.findByText('flaky extension')).toBeInTheDocument();
+
+    // The first of these fails, which makes single-spa hard-fail the parcel, so no later update
+    // reaches the extension. What must not happen is the failure going unreported and the promise
+    // chain being left rejected, which used to produce an unhandled rejection per later change.
+    await user.click(screen.getByText('Next'));
+    await user.click(screen.getByText('Next'));
+    await user.click(screen.getByText('Next'));
+
+    await waitFor(() =>
+      expect(consoleError).toHaveBeenCalledWith("The extension 'Flaky' failed to update", expect.any(Error)),
+    );
+    expect(consoleError).toHaveBeenCalledTimes(1);
+    expect(delivered).toEqual([]);
+    consoleError.mockRestore();
   });
 
   it('Extension receives state changes (using <Extension>)', async () => {
@@ -278,6 +342,54 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     render(<App />);
 
     expect(await screen.findByText('Spanish hola')).toBeInTheDocument();
+  });
+});
+
+describe('Extension teardown', () => {
+  beforeEach(() => {
+    updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
+  });
+
+  it('releases the rendering when the slot unmounts while the bundle is still loading', async () => {
+    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    let releaseLoad = () => {};
+    const loadGate = new Promise<void>((resolve) => (releaseLoad = resolve));
+    const lifecycle = getSyncLifecycle(() => <div>Fred</div>, {
+      moduleName: 'esm-flintstone',
+      featureName: 'Flintstone',
+      disableTranslations: true,
+    });
+
+    registerExtension({
+      name: 'Fred',
+      moduleName: 'esm-flintstone',
+      load: async () => {
+        await loadGate;
+        return lifecycle();
+      },
+      meta: {},
+    });
+    attach('Box', 'Fred');
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-flintstone',
+      featureName: 'Flintstone',
+      disableTranslations: true,
+    })(() => <ExtensionSlot name="Box" />);
+
+    const { unmount } = render(<App />);
+    await act(async () => {});
+    expect(getExtensionRenderingsStore().getState().renderings.size).toBe(1);
+
+    unmount();
+    releaseLoad();
+
+    await waitFor(() => expect(getExtensionRenderingsStore().getState().renderings.size).toBe(0));
+    // React detaches the ref by calling it with `null`; taking that for a render request starts a
+    // second render that resolves to null and clears the parcel still coming up.
+    expect(consoleWarn).not.toHaveBeenCalledWith(expect.stringContaining('no DOM element was available'));
+    consoleWarn.mockRestore();
   });
 });
 

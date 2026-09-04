@@ -334,6 +334,94 @@ describe('import-maps', () => {
     });
   });
 
+  describe('remote import map caching', () => {
+    function setRemoteImportMap(src = 'http://localhost/importmap.json') {
+      const script = document.createElement('script');
+      script.type = 'systemjs-importmap';
+      Object.defineProperty(script, 'src', { value: src, writable: false });
+      document.head.appendChild(script);
+    }
+
+    beforeEach(() => {
+      (window as any).spaEnv = 'production';
+      vi.resetModules();
+    });
+
+    it('fetches the import map with the default credentials mode so the preloaded response is reused', async () => {
+      setRemoteImportMap();
+      fetchMock.mockResponse(JSON.stringify({ imports: { '@openmrs/esm-remote': '/remote.js' } }));
+
+      const { setupImportMapOverrides, getCurrentPageMap } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      await getCurrentPageMap();
+
+      // `crossorigin="anonymous"` on the preload link gives it a `same-origin` credentials mode,
+      // which is also `fetch()`'s default; passing anything else here misses the preload cache.
+      expect(fetchMock).toHaveBeenCalledWith('http://localhost/importmap.json');
+    });
+
+    it('fetches the import map only once across repeated reads', async () => {
+      setRemoteImportMap();
+      fetchMock.mockResponse(JSON.stringify({ imports: { '@openmrs/esm-remote': '/remote.js' } }));
+
+      const { setupImportMapOverrides, getCurrentPageMap, getImportMapDefaultMap, getImportMapNextPageMap } =
+        await import('./import-maps');
+      setupImportMapOverrides();
+
+      const [first, second, third] = await Promise.all([
+        getCurrentPageMap(),
+        getImportMapDefaultMap(),
+        getImportMapNextPageMap(),
+      ]);
+      const fourth = await getCurrentPageMap();
+
+      for (const map of [first, second, third, fourth]) {
+        expect(map.imports['@openmrs/esm-remote']).toBe('/remote.js');
+      }
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not cache a map whose fetch failed', async () => {
+      setRemoteImportMap();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      fetchMock.mockRejectOnce(new Error('network is down'));
+      fetchMock.mockResponse(JSON.stringify({ imports: { '@openmrs/esm-remote': '/remote.js' } }));
+
+      const { setupImportMapOverrides, getCurrentPageMap } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      const failed = await getCurrentPageMap();
+      expect(failed.imports).toEqual({});
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse import map'), expect.anything());
+
+      // The failed read was not cached, so the next call retries and succeeds
+      const retried = await getCurrentPageMap();
+      expect(retried.imports['@openmrs/esm-remote']).toBe('/remote.js');
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+
+    it('does not cache a map whose fetch returned an error status', async () => {
+      setRemoteImportMap();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      fetchMock.mockResponseOnce(JSON.stringify({ error: 'service unavailable' }), { status: 503 });
+      fetchMock.mockResponse(JSON.stringify({ imports: { '@openmrs/esm-remote': '/remote.js' } }));
+
+      const { setupImportMapOverrides, getCurrentPageMap } = await import('./import-maps');
+      setupImportMapOverrides();
+
+      const failed = await getCurrentPageMap();
+      expect(failed.imports).toEqual({});
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Failed to parse import map'), expect.anything());
+
+      const retried = await getCurrentPageMap();
+      expect(retried.imports['@openmrs/esm-remote']).toBe('/remote.js');
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('error handling', () => {
     it('skips malformed inline import map script tags', async () => {
       (window as any).spaEnv = 'production';

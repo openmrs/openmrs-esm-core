@@ -11,6 +11,7 @@
     "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"production\" rspack --mode production",
     "build:development": "cross-env OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack --mode development",
     "build": "yarn run build:production && yarn run build:development",
+    "clean": "git clean -fdX -- dist",
     "analyze": "rspack --mode=production --env analyze=true",
     "lint": "eslint src"
   },
@@ -35,6 +36,9 @@
   "dependencies": {
     "@carbon/react": "^1.92.1",
     "@internationalized/date": "^3.8.0",
+    "@module-federation/enhanced": "2.8.1",
+    "@module-federation/error-codes": "2.8.1",
+    "@module-federation/sdk": "2.8.1",
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/esm-styleguide": "workspace:*",
     "@rspack/cli": "1.7.9",
@@ -58,6 +62,7 @@
     "webpack-pwa-manifest": "4.3.0"
   },
   "devDependencies": {
+    "@module-federation/runtime-core": "2.8.1",
     "cross-env": "^10.1.0",
     "vitest": "^4.1.2"
   }

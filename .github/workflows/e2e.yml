@@ -96,7 +96,7 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
 
       - name: 🎭 Install Playwright Browsers
-        run: npx playwright install chromium --with-deps
+        run: yarn playwright install chromium --with-deps
 
       - name: 🖥️ Start dev server and wait for backend
         run: bash e2e/support/github/run-e2e-docker-env.sh

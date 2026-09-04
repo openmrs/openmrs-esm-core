@@ -161,6 +161,19 @@ describe('build command', () => {
     const parsed = await createCli(['build']).parseAsync();
     expect(parsed.fresh).toBe(false);
   });
+
+  it('enables precompression by default', async () => {
+    const parsed = await createCli(['build']).parseAsync();
+    expect(parsed.compress).toBe(true);
+    expect(parsed.compressGzip).toBe(true);
+    expect(parsed.compressBrotli).toBe(true);
+  });
+
+  it('allows precompression to be disabled entirely or per encoding', async () => {
+    expect((await createCli(['build', '--no-compress']).parseAsync()).compress).toBe(false);
+    expect((await createCli(['build', '--no-compress-brotli']).parseAsync()).compressBrotli).toBe(false);
+    expect((await createCli(['build', '--no-compress-gzip']).parseAsync()).compressGzip).toBe(false);
+  });
 });
 
 describe('assemble command', () => {
@@ -194,6 +207,16 @@ describe('assemble command', () => {
   it('defaults build-routes to true', async () => {
     const parsed = await createCli(['assemble']).parseAsync();
     expect(parsed.buildRoutes).toBe(true);
+  });
+
+  it('defaults ensure-entrypoints to true', async () => {
+    const parsed = await createCli(['assemble']).parseAsync();
+    expect(parsed.ensureEntrypoints).toBe(true);
+  });
+
+  it('allows opting out of entrypoint checks via --no-ensure-entrypoints', async () => {
+    const parsed = await createCli(['assemble', '--no-ensure-entrypoints']).parseAsync();
+    expect(parsed.ensureEntrypoints).toBe(false);
   });
 });
 

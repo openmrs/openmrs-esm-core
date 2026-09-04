@@ -45,6 +45,10 @@ declare global {
      */
     spaVersion: string;
     /**
+     * The application-level version for the frontend, as set by the distribution.
+     */
+    applicationVersion?: string;
+    /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */
     installedModules: Array<[string, OpenmrsAppRoutes]>;
@@ -315,6 +319,10 @@ export interface WorkspaceGroupDefinition2 {
 
   /**
    * URL pattern that defines the scope where workspaces in this group should persist.
+   * The pattern is matched against the pathname relative to the configured SPA base path.
+   * Navigating outside the configured SPA base path closes the workspace group.
+   * For backward compatibility, if the pattern does not match both SPA-relative pathnames, it is
+   * retried against both full pathnames.
    * - If not defined: workspaces close only when navigating to a different app
    * - If defined without capture groups: workspaces close when URL doesn't match pattern
    * - If defined with capture groups: workspaces close when captured values change
@@ -397,7 +405,12 @@ export interface OpenmrsAppRoutes {
  * This interfaces describes the format of the overall routes.json loaded by the app shell.
  * Basically, this is the same as the app routes, with each routes definition keyed by the app's name
  */
-export type OpenmrsRoutes = Record<string, OpenmrsAppRoutes>;
+export interface OpenmrsRoutes {
+  /** The overall version for this application */
+  version?: string;
+  /** The routes associated with this application keyed by module id */
+  routes: Record<Exclude<string, 'version'>, OpenmrsAppRoutes>;
+}
 
 export interface ResourceLoader<T = any> {
   (): Promise<T>;

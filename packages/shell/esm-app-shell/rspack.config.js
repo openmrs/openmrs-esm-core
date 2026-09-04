@@ -2,9 +2,9 @@ const {
   CssExtractRspackPlugin,
   CopyRspackPlugin,
   DefinePlugin,
-  container,
   util: { createHash },
 } = require('@rspack/core');
+const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -22,7 +22,6 @@ const frameworkVersion = require('@openmrs/esm-framework/package.json').version;
 const timestamp = getTimestamp();
 const production = 'production';
 const allowedSuffixes = ['-app', '-widgets'];
-const { ModuleFederationPlugin } = container;
 
 const openmrsAddCookie = process.env.OMRS_ADD_COOKIE;
 const openmrsApiUrl = removeTrailingSlash(process.env.OMRS_API_URL || '/openmrs');
@@ -432,7 +431,7 @@ module.exports = (env, argv = []) => {
           openmrsEnvironment,
           openmrsConfigUrls,
           openmrsCoreImportmap: appPatterns.length > 0 && JSON.stringify(coreImportmap),
-          openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
+          openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify({ routes: coreRoutes }),
           openmrsCssFilename,
           openmrsExtraAssets: openmrsJsCssAssets.map((fileName) => 'assets/' + basename(fileName)),
         },
@@ -462,6 +461,20 @@ module.exports = (env, argv = []) => {
       }),
       new ModuleFederationPlugin({
         name,
+        // The app shell is the only build that ships `@module-federation/runtime-core`:
+        // `provideExternalRuntime` publishes it as `_FEDERATION_RUNTIME_CORE` for remotes to read, and
+        // Module Federation only allows it on a build with no `exposes`. `src/federation-runtime.ts`
+        // publishes the runtime's stateless helpers alongside it.
+        experiments: {
+          provideExternalRuntime: true,
+          // Every app shares this build's `runtime-core`, so anything pruned here is pruned for all of
+          // them. `target` is safe on those terms — nothing in a distribution runs the runtime in Node,
+          // and it saves ~5 kB gzipped. `disableSnapshot` is deliberately not set: it would leave every
+          // app's federation instance with an empty plugin array, and it saved 16 gzipped bytes.
+          optimization: { target: 'web' },
+        },
+        manifest: false,
+        dts: false,
         shared: sharedDependencies.reduce((obj, depName) => {
           // This just attempts to align the requiredVersion with what we usually have in peerDependencies
           let version = dependencies[depName];

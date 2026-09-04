@@ -14,6 +14,7 @@
     "test:watch": "cross-env TZ=UTC vitest watch",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rspack --mode=production",
+    "clean": "git clean -fdX -- dist",
     "build:development": "rspack --mode=development",
     "analyze": "rspack --mode=production --env analyze=true",
     "typescript": "tsc",
