@@ -40,7 +40,7 @@ import { existsSync, statSync } from 'fs';
 import { basename, dirname, resolve } from 'path';
 import browserslist from 'browserslist';
 import { loadQueries } from 'browserslist/node';
-import { default as defaultBrowserslistQueries } from 'browserslist-config-openmrs';
+import defaultBrowserslistQueries from 'browserslist-config-openmrs';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 // eslint-disable-next-line no-restricted-imports
