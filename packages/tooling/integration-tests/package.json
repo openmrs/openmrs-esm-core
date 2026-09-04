@@ -22,15 +22,15 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "devDependencies": {
-    "@module-federation/error-codes": "2.8.1",
-    "@module-federation/runtime-core": "2.8.1",
-    "@module-federation/sdk": "2.8.1",
+    "@module-federation/error-codes": "2.9.0",
+    "@module-federation/runtime-core": "2.9.0",
+    "@module-federation/sdk": "2.9.0",
     "@openmrs/rspack-config": "workspace:*",
     "@openmrs/webpack-config": "workspace:*",
     "@rspack/core": "1.7.9",
     "@types/semver": "^7.7.3",
     "cross-env": "^10.1.0",
-    "semver": "^7.7.3",
+    "semver": "^7.8.5",
     "typescript": "^5.8.3",
     "vitest": "^4.1.2",
     "webpack": "5.105.3"
