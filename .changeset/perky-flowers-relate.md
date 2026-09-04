@@ -4,4 +4,4 @@
 "openmrs": minor
 ---
 
-(feat) Add a guard for framework-internal guards
+(feat) Add a guard for framework-internal imports

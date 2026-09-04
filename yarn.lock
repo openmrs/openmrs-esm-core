@@ -3854,9 +3854,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/framework-import-guard@workspace:packages/tooling/framework-import-guard"
   dependencies:
+    "@rspack/core": "npm:1.7.9"
     cross-env: "npm:^7.0.3"
     typescript: "npm:^5.8.3"
     vitest: "npm:^4.1.2"
+    webpack: "npm:5.105.3"
   languageName: unknown
   linkType: soft
 

@@ -415,7 +415,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           chunks: true,
         },
       }),
-      new FrameworkImportGuardPlugin(),
     ].filter(Boolean),
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss', '.json'],
@@ -429,5 +428,12 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     },
     ...overrides,
   };
-  return mergeWith(baseConfig, additionalConfig, mergeFunction);
+  const config = mergeWith(baseConfig, additionalConfig, mergeFunction);
+
+  // Appended after the merge rather than listed above, because `overrides.plugins` replaces the
+  // plugin array wholesale and an app doing that would drop the guard without noticing. Same
+  // reasoning as the `ExternalsPlugin` block above, which avoids `externals` for the same reason.
+  config.plugins = [...(config.plugins ?? []), new FrameworkImportGuardPlugin()];
+
+  return config;
 };
