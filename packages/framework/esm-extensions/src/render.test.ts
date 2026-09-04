@@ -30,13 +30,13 @@ const lifecycles = {
 };
 
 /**
- * Every parcel the framework mounts is given these, so that a lifecycle which never settles fails
- * rather than leaving a parcel that can never be unmounted.
+ * The config single-spa is handed. Each lifecycle is replaced by a deadline-wrapped stand-in, and
+ * no `timeouts` are set, so single-spa keeps its own (short, warn-only) defaults.
  */
-const lifecycleTimeouts = {
-  bootstrap: { millis: 15_000, dieOnTimeout: true },
-  mount: { millis: 15_000, dieOnTimeout: true },
-  unmount: { millis: 15_000, dieOnTimeout: true },
+const boundedConfig = {
+  bootstrap: expect.any(Function),
+  mount: expect.any(Function),
+  unmount: expect.any(Function),
 };
 
 /**
@@ -262,10 +262,7 @@ describe('renderParcel', () => {
 
     const parcel = await renderParcel(lifecycles, { domElement, someProp: 'value' });
 
-    expect(hostMountParcel).toHaveBeenCalledWith(
-      { ...lifecycles, timeouts: lifecycleTimeouts },
-      { domElement, someProp: 'value' },
-    );
+    expect(hostMountParcel).toHaveBeenCalledWith(boundedConfig, { domElement, someProp: 'value' });
     expect(parcel).toBe(hostMountParcel.mock.results[0].value);
     expect(mountRootParcel).toHaveBeenCalledTimes(1);
     expect(mountRootParcel).toHaveBeenCalledWith(expect.objectContaining({ name: hostParcelName }), expect.anything());
@@ -280,11 +277,52 @@ describe('renderParcel', () => {
 
     // Without these, a lifecycle that never settles leaves a parcel single-spa can never unmount,
     // so nothing the caller tracks against it is ever released.
-    const [objectForm] = hostMountParcel.mock.calls[0] as [{ timeouts: unknown }];
-    const [functionForm] = hostMountParcel.mock.calls[1] as [() => Promise<{ timeouts: unknown }>];
+    const [objectForm] = hostMountParcel.mock.calls[0] as [typeof lifecycles];
+    const [functionForm] = hostMountParcel.mock.calls[1] as [() => Promise<typeof lifecycles>];
 
-    expect(objectForm.timeouts).toEqual(lifecycleTimeouts);
-    expect((await functionForm()).timeouts).toEqual(lifecycleTimeouts);
+    expect(objectForm).toEqual(boundedConfig);
+    expect(objectForm.mount).not.toBe(lifecycles.mount);
+    expect(await functionForm()).toEqual(boundedConfig);
+    expect((await functionForm()).mount).not.toBe(lifecycles.mount);
+  });
+
+  it('fails a lifecycle that overruns its deadline, and clears the deadline when it does not', async () => {
+    vi.useFakeTimers();
+
+    try {
+      const { hostMountParcel, renderParcel } = await loadRenderModule();
+      const domElement = document.createElement('div');
+
+      await renderParcel({ ...lifecycles, mount: () => new Promise(() => {}) }, { domElement });
+      await renderParcel(lifecycles, { domElement });
+
+      const [hung] = hostMountParcel.mock.calls[0] as [typeof lifecycles];
+      const [settles] = hostMountParcel.mock.calls[1] as [typeof lifecycles];
+
+      const timersBefore = vi.getTimerCount();
+      await expect(settles.mount({ domElement })).resolves.toBeUndefined();
+      // The deadline is cleared as soon as the lifecycle settles, so nothing is left holding the
+      // parcel — and with it the DOM it rendered into — until the deadline would have elapsed.
+      expect(vi.getTimerCount()).toBe(timersBefore);
+
+      // Asserted against before the clock is advanced, so the rejection is never unhandled.
+      const overran = expect(hung.mount({ domElement })).rejects.toThrow(/did not settle within 15000ms/);
+      expect(vi.getTimerCount()).toBe(timersBefore + 1);
+      await vi.advanceTimersByTimeAsync(15_000);
+      await overran;
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('leaves a parcel that declares its own timeouts to single-spa', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const selfBounded = { ...lifecycles, timeouts: { mount: { millis: 500, dieOnTimeout: true } } };
+
+    await renderParcel(selfBounded, { domElement });
+
+    expect(hostMountParcel).toHaveBeenCalledWith(selfBounded, { domElement });
   });
 });
 
@@ -301,7 +339,7 @@ describe('createParcelMounter', () => {
 
     await parcel.mountPromise;
 
-    expect(hostMountParcel).toHaveBeenCalledWith({ ...lifecycles, timeouts: lifecycleTimeouts }, { domElement });
+    expect(hostMountParcel).toHaveBeenCalledWith(boundedConfig, { domElement });
     expect(parcel.getStatus()).toBe('MOUNTED');
   });
 
