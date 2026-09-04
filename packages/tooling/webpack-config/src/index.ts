@@ -45,6 +45,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
+import { FrameworkImportGuardPlugin } from '@openmrs/framework-import-guard';
 import {
   BannerPlugin,
   DefinePlugin,
@@ -427,5 +428,12 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     },
     ...overrides,
   };
-  return mergeWith(baseConfig, additionalConfig, mergeFunction);
+  const config = mergeWith(baseConfig, additionalConfig, mergeFunction);
+
+  // Appended after the merge rather than listed above, because `overrides.plugins` replaces the
+  // plugin array wholesale and an app doing that would drop the guard without noticing. Same
+  // reasoning as the `ExternalsPlugin` block above, which avoids `externals` for the same reason.
+  config.plugins = [...(config.plugins ?? []), new FrameworkImportGuardPlugin()];
+
+  return config;
 };
