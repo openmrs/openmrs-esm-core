@@ -64,6 +64,6 @@
   "devDependencies": {
     "@module-federation/runtime-core": "2.8.1",
     "cross-env": "^10.1.0",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.11"
   }
 }
