@@ -5,14 +5,8 @@ import * as errorCodes from '@module-federation/error-codes';
 import * as runtimeCore from '@module-federation/runtime-core';
 import * as sdk from '@module-federation/sdk';
 import { createContext, Script } from 'node:vm';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
 import { afterAll, describe, expect, it } from 'vitest';
-
-const fixtureRoot = resolve(__dirname, '..', '__fixtures__', 'remote-app');
-const entryFilename = 'openmrs-esm-fixture-app.js';
-const fixturePackageName = '@openmrs/esm-fixture-app';
+import { buildFixtureApp, cleanUpFixtureBuilds, fixturePackageName, fixtureRoot } from './build-fixture';
 
 // Mirrors `slugify` in `@openmrs/esm-dynamic-loading`, which is how the app shell finds a container.
 const slugify = (name: string) => name.replace(/[\/\-@]/g, '_');
@@ -54,105 +48,11 @@ const bundlableModules = [
 // the check below into a silent no-op.
 const expectedBundledModule = '@module-federation/webpack-bundler-runtime';
 
-type BuildResult = { contents: string; moduleIdentifiers: string[] };
-
-const builds = new Map<string, Promise<BuildResult>>();
-const tempDirs: string[] = [];
-
-afterAll(() => {
-  for (const dir of tempDirs) {
-    rmSync(dir, { recursive: true, force: true });
-  }
-  // Module Federation generates its entry module inside the fixture rather than in `output.path`.
-  rmSync(join(fixtureRoot, 'node_modules', '.federation'), { recursive: true, force: true });
-});
-
-/**
- * Builds the fixture app with one of the shared configs and returns the remote entry it emitted, memoized.
- *
- * Both configs read the app's `package.json` from `process.cwd()`, so the build runs from the fixture
- * directory with `output.path` pointed at a temp dir. Module Federation writes its generated entry into
- * the fixture's `node_modules/.federation/`, so parallel runs of this file aren't isolated. `chdir` needs
- * Vitest's `forks` pool, the default here.
- */
-function buildRemoteEntry(bundler: 'rspack' | 'webpack'): Promise<BuildResult> {
-  const cached = builds.get(bundler);
-  if (cached) {
-    return cached;
-  }
-
-  const build = (async () => {
-    const outDir = mkdtempSync(join(tmpdir(), 'openmrs-federation-runtime-'));
-    tempDirs.push(outDir);
-
-    const originalCwd = process.cwd();
-    process.chdir(fixtureRoot);
-
-    try {
-      // From source, not `dist`, so this can't pass against a stale build; resolvable only because neither
-      // config package declares an `exports` map. Imported here rather than at the top of the file because
-      // `@module-federation/enhanced` derives its scratch directory from `process.cwd()` on first import.
-      const configModule =
-        bundler === 'rspack'
-          ? await import('@openmrs/rspack-config/src/index')
-          : /* webpack */ await import('@openmrs/webpack-config/src/index');
-      const config = configModule.default({}, { mode: 'production' }) as Record<string, any>;
-
-      config.output.path = outDir;
-      // Type checking the fixture is not what this test is about, and the plugin would report on the
-      // repo's own sources from here.
-      config.plugins = config.plugins.filter(
-        (plugin: { constructor?: { name?: string } }) =>
-          plugin?.constructor?.name !== 'TsCheckerRspackPlugin' &&
-          plugin?.constructor?.name !== 'ForkTsCheckerWebpackPlugin',
-      );
-
-      const { default: bundlerModule } = bundler === 'rspack' ? await import('@rspack/core') : await import('webpack');
-
-      // The two bundlers' call signatures don't unify, hence the cast.
-      const compiler = (bundlerModule as (options: unknown) => any)(config);
-      const stats = await new Promise<any>((res, rej) => {
-        compiler.run((err: unknown, result: any) => {
-          if (err) {
-            rej(err);
-            return;
-          }
-          if (result?.hasErrors()) {
-            rej(new Error(result.toString({ all: false, errors: true })));
-            return;
-          }
-          res(result);
-        });
-      });
-      // Unclosed compilers keep worker threads alive, which surfaces as a vitest hang.
-      await new Promise<void>((res) => compiler.close(() => res()));
-
-      // `ids` populates `identifier`; without `nestedModules` scope hoisting hides concatenated modules
-      // behind a "… + n modules" entry, which made this blind on the webpack path.
-      const { modules = [] } = stats.toJson({ all: false, modules: true, ids: true, nestedModules: true });
-
-      const collectIdentifiers = (list: { identifier?: string; name?: string; modules?: unknown[] }[]): string[] =>
-        list.flatMap((module) => [
-          module.identifier ?? module.name ?? '',
-          ...collectIdentifiers((module.modules ?? []) as typeof list),
-        ]);
-
-      return {
-        contents: readFileSync(join(outDir, entryFilename), 'utf8'),
-        moduleIdentifiers: collectIdentifiers(modules),
-      };
-    } finally {
-      process.chdir(originalCwd);
-    }
-  })();
-
-  builds.set(bundler, build);
-  return build;
-}
+afterAll(cleanUpFixtureBuilds);
 
 describe.each(['rspack', 'webpack'] as const)('%s remote entries', (bundler) => {
   it('read the Module Federation runtime from the app shell instead of bundling it', async () => {
-    const { moduleIdentifiers } = await buildRemoteEntry(bundler);
+    const { moduleIdentifiers } = await buildFixtureApp(bundler);
 
     // Proves the matching below can see into this build's module list at all.
     expect(moduleIdentifiers.filter((id) => id.includes(`node_modules/${expectedBundledModule}/`))).not.toEqual([]);
@@ -178,21 +78,21 @@ describe.each(['rspack', 'webpack'] as const)('%s remote entries', (bundler) => 
   }, 180_000);
 
   it('refuses to start, with a diagnosable error, when no app shell published the runtime', async () => {
-    const { contents } = await buildRemoteEntry(bundler);
+    const { entry } = await buildFixtureApp(bundler);
 
     // A bare global is what an app shell too old to publish the runtime looks like. Executing the entry
     // also proves the guard landed in this chunk, ahead of the code that reads the runtime.
     const context = createContext({ console, self: {} });
-    expect(() => new Script(contents).runInContext(context)).toThrow(/does not provide the Module Federation runtime/);
+    expect(() => new Script(entry).runInContext(context)).toThrow(/does not provide the Module Federation runtime/);
   }, 180_000);
 
   it('starts and exposes its container when the app shell has published the runtime', async () => {
-    const { contents } = await buildRemoteEntry(bundler);
+    const { entry } = await buildFixtureApp(bundler);
     const context = publishedRuntimeContext();
 
     // Without this, a guard checking a global nobody publishes — `_OPENMRS_FEDERATION_SDK`, say — would satisfy
     // every other assertion here while making every app in the distribution permanently unstartable.
-    expect(() => new Script(contents).runInContext(context)).not.toThrow();
+    expect(() => new Script(entry).runInContext(context)).not.toThrow();
 
     // The container protocol `esm-dynamic-loading` uses: a `var` named for the slugified package.
     const container = context[slugify(fixturePackageName)];

@@ -38,6 +38,9 @@
  */
 import { existsSync, statSync } from 'fs';
 import { basename, dirname, resolve } from 'path';
+import browserslist from 'browserslist';
+import { loadQueries } from 'browserslist/node';
+import defaultBrowserslistQueries from 'browserslist-config-openmrs';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
@@ -109,6 +112,56 @@ function getFrameworkVersion() {
   } catch {
     return '5.x';
   }
+}
+
+/**
+ * The browserslist queries this module's output is compiled and minified against, falling back to
+ * OpenMRS's shared config when the module declares none, so that frontend RFC 0003 stays the single
+ * source of truth. Without any of this swc down-levels to ES5, and every supported browser pays for
+ * transform helpers it doesn't need.
+ *
+ * Queries rather than resolved versions, and `extends` expanded here rather than left to the consumer,
+ * because these are resolved by Rust ports of browserslist — swc's, and rspack's Lightning CSS — which
+ * do not implement `extends` and reject version numbers newer than the browser data they bundle. swc
+ * aborts the process rather than reporting an error when a query defeats it.
+ *
+ * @param root The directory of the module being built
+ */
+function browserslistQueries(root: string): Array<string> {
+  const loaded = browserslist.loadConfig({ path: root });
+  const configured = loaded === undefined ? [] : Array.isArray(loaded) ? loaded : [loaded];
+
+  return expandBrowserslistExtends(configured.length > 0 ? configured : defaultBrowserslistQueries, root);
+}
+
+function expandBrowserslistExtends(queries: Array<string>, root: string, seen = new Set<string>()): Array<string> {
+  return queries.flatMap((query) => {
+    const extended = /^extends\s+(\S+)$/.exec(query.trim());
+
+    if (!extended || seen.has(extended[1])) {
+      return extended ? [] : [query];
+    }
+
+    seen.add(extended[1]);
+
+    try {
+      // Resolved from the module being built, so that it picks up that module's own shared config. A
+      // config naming a further `extends` recurses, which is what `seen` keeps from looping.
+      const resolved = loadQueries({ path: root }, extended[1]);
+
+      return expandBrowserslistExtends(Array.isArray(resolved) ? resolved : [resolved], root, seen);
+    } catch {
+      // A config that can't be loaded shouldn't take the whole build — or the dev server — down over
+      // which browsers it targets. Fall back to the default queries and say so.
+      console.warn(
+        `Could not load the browserslist config "${extended[1]}". Targeting ${defaultBrowserslistQueries.join(
+          ', ',
+        )} instead.`,
+      );
+
+      return defaultBrowserslistQueries;
+    }
+  });
 }
 
 function makeIdent(name: string): string {
@@ -201,6 +254,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
+  const browserTargets = browserslistQueries(root);
   const frameworkVersion = getFrameworkVersion();
   const routes = resolve(root, 'src', 'routes.json');
   const hasRoutesDefined = fileExistsSync(routes);
@@ -239,7 +293,16 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.m?(js|ts|tsx)$/,
             exclude: /node_modules/,
-            use: require.resolve('swc-loader'),
+            use: {
+              loader: require.resolve('swc-loader'),
+              options: {
+                env: {
+                  targets: browserTargets,
+                },
+                // ignore a project .swcrc to match rspack behavior
+                swcrc: false,
+              },
+            },
           },
           scriptRuleConfig,
         ),
@@ -282,6 +345,10 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       ],
     },
     mode,
+    // Governs webpack's own runtime and chunk-loading glue, which the swc targets above don't reach —
+    // swc only compiles module sources. Derived from the same queries, so the policy is stated once and
+    // a module that supports older browsers gets a runtime to match.
+    target: ['web', `browserslist:${browserTargets.join(', ')}`],
     devtool: mode === production ? 'hidden-nosources-source-map' : 'source-map',
     devServer: {
       headers: {
