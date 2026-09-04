@@ -21,6 +21,16 @@ const frameworkVersion = require('@openmrs/esm-framework/package.json').version;
 
 const timestamp = getTimestamp();
 const production = 'production';
+
+/**
+ * The browserslist queries swc compiles the app shell for. Given no target, swc down-levels to ES5 and
+ * every supported browser pays for transform helpers it doesn't need.
+ *
+ * Read from `browserslist-config-openmrs` rather than through this package's own `browserslist` field,
+ * as swc can't follow the extends we were using.
+ */
+const browserTargets = require('browserslist-config-openmrs');
+
 const allowedSuffixes = ['-app', '-widgets'];
 
 const openmrsAddCookie = process.env.OMRS_ADD_COOKIE;
@@ -237,7 +247,9 @@ module.exports = (env, argv = []) => {
       publicPath: '',
       hashFunction: 'xxhash64',
     },
-    target: 'web',
+    // set targets for the rspack runtime code which is not run through swc
+    // targets are expanded here because rspack can't properly handle browserlist extends
+    target: ['web', `browserslist:${browserTargets.join(', ')}`],
     // Module Federation v1.5 is incompatible with lazy compilation
     lazyCompilation: false,
     devServer: {
@@ -369,6 +381,12 @@ module.exports = (env, argv = []) => {
           use: [
             {
               loader: 'builtin:swc-loader',
+              options: {
+                // No `jsc.parser`, so that swc keeps inferring syntax from each file's extension.
+                env: {
+                  targets: browserTargets,
+                },
+              },
             },
           ],
         },
