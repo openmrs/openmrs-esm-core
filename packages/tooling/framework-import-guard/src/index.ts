@@ -14,29 +14,28 @@
  * variables, which is a stylesheet-level dependency and carries no runtime state.
  */
 
-interface StatsModuleReason {
-  moduleName?: string | null;
-  userRequest?: string | null;
-}
-
-interface StatsModule {
-  name?: string | null;
-  reasons?: Array<StatsModuleReason>;
-}
-
 interface Compilation {
   errors: Array<Error>;
   warnings: Array<Error>;
-  getStats(): { toJson(options: Record<string, boolean>): { modules?: Array<StatsModule> } };
+}
+
+/** The subset of a resolution we need: what was asked for, and which file asked for it. */
+interface ResolveData {
+  request?: string;
+  contextInfo?: { issuer?: string };
+}
+
+interface Tap<T> {
+  tap(name: string, callback: (value: T) => void): void;
 }
 
 interface Compiler {
   /** The directory the build runs in, i.e. the root of the app being built. */
   context: string;
   hooks: {
-    afterEmit: {
-      tap(name: string, callback: (compilation: Compilation) => void): void;
-    };
+    normalModuleFactory: Tap<{ hooks: { afterResolve: Tap<ResolveData> } }>;
+    thisCompilation: Tap<Compilation>;
+    afterEmit: Tap<Compilation>;
   };
 }
 
@@ -82,7 +81,10 @@ const frameworkManifest = '@openmrs/esm-framework/package.json';
  * apps have no local copy of the framework.
  */
 function getFrameworkPackages(context: string): Array<string> {
-  const locations = [() => require.resolve(frameworkManifest, { paths: [context] }), () => require.resolve(frameworkManifest)];
+  const locations = [
+    () => require.resolve(frameworkManifest, { paths: [context] }),
+    () => require.resolve(frameworkManifest),
+  ];
 
   for (const locate of locations) {
     try {
@@ -107,84 +109,99 @@ function packageOf(request: string, packages: Array<string>) {
 
 export class FrameworkImportGuardPlugin {
   private readonly allowedPackages: Array<string>;
-  private readonly frameworkPackages: Array<string> | undefined;
+  private readonly configuredPackages: Array<string> | undefined;
 
-  constructor({
-    allowedPackages = ['@openmrs/esm-framework'],
-    frameworkPackages,
-  }: FrameworkImportGuardOptions = {}) {
+  /**
+   * Offending imports found in the compilation currently running, keyed by the file that made them.
+   * Reset for each compilation so a watch rebuild does not inherit the previous run's findings.
+   */
+  private offenders = new Map<string, Set<string>>();
+
+  constructor({ allowedPackages = ['@openmrs/esm-framework'], frameworkPackages }: FrameworkImportGuardOptions = {}) {
     this.allowedPackages = allowedPackages;
-    this.frameworkPackages = frameworkPackages;
+    this.configuredPackages = frameworkPackages;
   }
 
   apply(compiler: Compiler) {
+    // Imports are collected as they resolve rather than read back out of the finished module graph.
+    // By the time a build is sealed, `optimization.concatenateModules` has merged scope-hoisted
+    // modules into single stats entries whose nested modules carry no reasons at all, so a direct
+    // import of a framework package leaves no trace there — production builds would pass whatever
+    // they import. A resolution has not been optimised yet, and it names both the literal request
+    // and the file that made it.
+    compiler.hooks.normalModuleFactory.tap(pluginName, (factory) => {
+      factory.hooks.afterResolve.tap(pluginName, (resolveData) => {
+        this.record(compiler.context, resolveData);
+      });
+    });
+
+    compiler.hooks.thisCompilation.tap(pluginName, () => {
+      this.offenders = new Map();
+    });
+
     compiler.hooks.afterEmit.tap(pluginName, (compilation) => {
-      const known = this.frameworkPackages ?? getFrameworkPackages(compiler.context);
-      const guarded = known.filter((pkg) => !this.allowedPackages.includes(pkg));
+      this.report(compiler.context, compilation);
+    });
+  }
 
-      if (guarded.length === 0) {
-        compilation.warnings.push(
-          new Error(
-            `${pluginName} could not read the dependencies of @openmrs/esm-framework, so imports of ` +
-              'framework packages were not checked. Pass `frameworkPackages` to check them anyway.',
-          ),
-        );
-        return;
-      }
+  private guardedPackages(context: string) {
+    const known = this.configuredPackages ?? getFrameworkPackages(context);
+    return known.filter((pkg) => !this.allowedPackages.includes(pkg));
+  }
 
-      const { modules = [] } = compilation.getStats().toJson({ all: false, modules: true, reasons: true });
-      const offenders = new Map<string, Set<string>>();
+  private record(context: string, { request = '', contextInfo }: ResolveData) {
+    const issuer = contextInfo?.issuer ?? '';
+    const pkg = packageOf(request, this.guardedPackages(context));
 
-      for (const module of modules) {
-        const moduleName = module.name ?? '';
+    if (!pkg || !issuer) {
+      return;
+    }
 
-        if (isFederationModule(moduleName)) {
-          continue;
-        }
+    // Imports between framework packages are the framework's own business, as is anything Module
+    // Federation pulls in to build a share or the fallback behind it.
+    if (frameworkModulePattern.test(issuer) || isFederationModule(issuer)) {
+      return;
+    }
 
-        for (const reason of module.reasons ?? []) {
-          const request = reason.userRequest ?? '';
-          const issuer = reason.moduleName ?? '';
-          const pkg = packageOf(request, guarded);
+    // Stylesheets pull rules and variables straight out of the styleguide. That is a stylesheet
+    // dependency with no runtime state behind it, so it is allowed.
+    if (pkg === '@openmrs/esm-styleguide' && stylesheetPattern.test(issuer)) {
+      return;
+    }
 
-          if (!pkg) {
-            continue;
-          }
+    const relative = issuer.startsWith(context) ? `.${issuer.slice(context.length)}` : issuer;
+    const requests = this.offenders.get(relative) ?? new Set<string>();
+    requests.add(request);
+    this.offenders.set(relative, requests);
+  }
 
-          // Imports between framework packages are the framework's own business.
-          if (isFederationModule(issuer) || frameworkModulePattern.test(issuer)) {
-            continue;
-          }
-
-          // SCSS pulls rules and variables straight out of the styleguide. That is a stylesheet
-          // dependency with no runtime state behind it, so it is allowed.
-          if (
-            pkg === '@openmrs/esm-styleguide' &&
-            (stylesheetPattern.test(issuer) || stylesheetPattern.test(moduleName) || stylesheetPattern.test(request))
-          ) {
-            continue;
-          }
-
-          const requests = offenders.get(issuer) ?? new Set<string>();
-          requests.add(request);
-          offenders.set(issuer, requests);
-        }
-      }
-
-      if (offenders.size === 0) {
-        return;
-      }
-
-      const detail = Array.from(offenders, ([issuer, requests]) => `  ${issuer} imports ${[...requests].join(', ')}`);
-      compilation.errors.push(
+  private report(context: string, compilation: Compilation) {
+    if (this.guardedPackages(context).length === 0) {
+      compilation.warnings.push(
         new Error(
-          `${pluginName}: these imports reach into the internals of @openmrs/esm-framework, which bundles a ` +
-            "private copy of that package rather than sharing the app shell's. Import from " +
-            "'@openmrs/esm-framework' instead:\n" +
-            detail.join('\n'),
+          `${pluginName} could not read the dependencies of @openmrs/esm-framework, so imports of ` +
+            'framework packages were not checked. Pass `frameworkPackages` to check them anyway.',
         ),
       );
-    });
+      return;
+    }
+
+    if (this.offenders.size === 0) {
+      return;
+    }
+
+    const detail = Array.from(
+      this.offenders,
+      ([issuer, requests]) => `  ${issuer} imports ${[...requests].join(', ')}`,
+    );
+    compilation.errors.push(
+      new Error(
+        `${pluginName}: these imports reach into the internals of @openmrs/esm-framework, which bundles a ` +
+          "private copy of that package rather than sharing the app shell's. Import from " +
+          "'@openmrs/esm-framework' instead:\n" +
+          detail.join('\n'),
+      ),
+    );
   }
 }
 
