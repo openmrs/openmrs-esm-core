@@ -40,7 +40,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.92.1",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
@@ -53,6 +52,7 @@
     "swr": "2.x"
   },
   "devDependencies": {
+    "@carbon/react": "^1.92.1",
     "@vitest/coverage-v8": "^4.1.2",
     "ace-builds": "^1.43.3",
     "cross-env": "^10.1.0",
