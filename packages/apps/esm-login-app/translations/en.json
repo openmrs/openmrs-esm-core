@@ -3,7 +3,6 @@
   "authenticatorApp": "Authenticator App",
   "authenticatorAppDescription": "Use an authentication app to generate one-time codes",
   "backToLogin": "Back to login",
-  "backToLoginFailed": "Failed to cancel the verification process. Please refresh the page and try again.",
   "builtWith": "Built with",
   "cancel": "Cancel",
   "cantScanQrCode": "Can't scan the QR code?",
