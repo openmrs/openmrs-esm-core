@@ -158,6 +158,19 @@ jobs:
             exit 0
           fi
 
+          # A build for this exact SHA already under way (e.g. the push-driven
+          # one) would be cancelled by our entering the shared concurrency
+          # group, so yield to it. Bounded by age so a status check that was
+          # never finalized can't block rebuilds forever.
+          building=$(gh api --paginate --method GET "repos/${REPO}/commits/${HEAD_SHA}/check-runs" \
+            -f check_name="Docs / Build" -f status=in_progress \
+            --jq '.check_runs[] | select((now - (.started_at | fromdateiso8601)) < 1800) | .details_url')
+          if [ -n "${building}" ]; then
+            echo "A docs build for ${HEAD_SHA} is already in progress: ${building}"
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           # The reviewer has write access, but the request workflow is
           # fork-controlled, so it can't be trusted to have fired on an
           # *approval* — a comment-only review is enough to start it. Confirm
@@ -197,7 +210,8 @@ jobs:
     # workflow_call caps the called workflow's GITHUB_TOKEN at the calling
     # job's permissions; this is the union of what its jobs need.
     permissions:
-      contents: write
+      actions: write
+      contents: read
       issues: read
       pull-requests: write
     # Set here because workflow_call ignores the called workflow's own
@@ -216,3 +230,4 @@ jobs:
     secrets:
       OMRS_PR_BOT_CLIENT_ID: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
       OMRS_PR_BOT_PRIVATE_KEY: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
+      OMRS_BOT_GH_TOKEN: ${{ secrets.OMRS_BOT_GH_TOKEN }}

@@ -2,6 +2,9 @@
   "$schema": "https://turborepo.org/schema.json",
   "ui": "stream",
   "tasks": {
+    "clean": {
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": [

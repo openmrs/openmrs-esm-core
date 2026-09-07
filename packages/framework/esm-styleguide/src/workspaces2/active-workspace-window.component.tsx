@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Parcel from 'single-spa-react/parcel';
-import { mountRootParcel, type ParcelConfig } from 'single-spa';
+import { type ParcelConfig } from 'single-spa';
 import { InlineLoading } from '@carbon/react';
-import { type OpenedWindow, type OpenedWorkspace, workspace2Store } from '@openmrs/esm-extensions';
+import { type OpenedWindow, type OpenedWorkspace, createParcelMounter, workspace2Store } from '@openmrs/esm-extensions';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { promptForClosingWorkspaces, useWorkspace2Store } from './workspace2';
@@ -71,6 +71,8 @@ interface ActiveWorkspaceProps {
   isLeafWorkspace: boolean;
   showActionMenu: boolean;
 }
+
+const mountParcel = createParcelMounter();
 
 const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
   lifeCycle,
@@ -195,7 +197,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
     );
   }
 
-  return <Parcel key={openedWorkspace.workspaceName} config={lifeCycle} mountParcel={mountRootParcel} {...props} />;
+  return <Parcel key={openedWorkspace.workspaceName} config={lifeCycle} mountParcel={mountParcel} {...props} />;
 };
 
 export default ActiveWorkspaceWindow;

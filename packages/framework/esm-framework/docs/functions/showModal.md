@@ -4,7 +4,7 @@
 
 > **showModal**(`modalName`, `props`, `onClose`): () => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/modals/index.tsx:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L200)
+Defined in: [packages/framework/esm-styleguide/src/modals/index.tsx:293](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L293)
 
 Shows a modal dialog.
 

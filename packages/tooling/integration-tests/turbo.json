@@ -1,0 +1,29 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "test": {
+      "inputs": [
+        "src/**",
+        "__fixtures__/**",
+        "vitest.config.ts",
+        "$TURBO_ROOT$/packages/tooling/rspack-config/src/**",
+        "$TURBO_ROOT$/packages/tooling/webpack-config/src/**",
+        "$TURBO_ROOT$/packages/tooling/rspack-config/package.json",
+        "$TURBO_ROOT$/packages/tooling/webpack-config/package.json",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/package.json"
+      ]
+    },
+    "coverage": {
+      "inputs": [
+        "src/**",
+        "__fixtures__/**",
+        "vitest.config.ts",
+        "$TURBO_ROOT$/packages/tooling/rspack-config/src/**",
+        "$TURBO_ROOT$/packages/tooling/webpack-config/src/**",
+        "$TURBO_ROOT$/packages/tooling/rspack-config/package.json",
+        "$TURBO_ROOT$/packages/tooling/webpack-config/package.json",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/package.json"
+      ]
+    }
+  }
+}

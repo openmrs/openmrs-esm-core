@@ -23,6 +23,7 @@
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "clean": "git clean -fdX -- dist",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "typescript": "tsc --project tsconfig.build.json",
     "lint": "eslint src"

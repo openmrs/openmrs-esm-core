@@ -2,6 +2,24 @@ import { useEffect, useId } from 'react';
 import { getVisitStore, type Visit, type VisitStoreState } from '@openmrs/esm-emr-api';
 import { type Actions, useStoreWithActions } from './useStore';
 
+/**
+ * The mutate callbacks to invoke when visit data changes, keyed by the `useId()` of the
+ * component that registered each one.
+ */
+const mutateVisitCallbacks = new Map<string, () => void>();
+
+/**
+ * Invokes every registered mutate callback, revalidating visit data across the application.
+ *
+ * Iterates over a copy so that a callback which registers or unregisters another does not
+ * disturb the traversal.
+ */
+function mutateVisit() {
+  for (const mutateCallback of Array.from(mutateVisitCallbacks.values())) {
+    mutateCallback();
+  }
+}
+
 const visitContextStoreActions = {
   setVisitContext(_: VisitStoreState, newSelectedVisit: Visit | null) {
     if (newSelectedVisit == null) {
@@ -12,46 +30,32 @@ const visitContextStoreActions = {
       patientUuid: newSelectedVisit.patient?.uuid,
     };
   },
-  mutateVisit(currState: VisitStoreState) {
-    for (const mutateCallback of Object.values(currState.mutateVisitCallbacks ?? {})) {
-      mutateCallback();
-    }
-    return {};
-  },
 } satisfies Actions<VisitStoreState>;
 
 /**
  * A hook to return the visit context store and corresponding actions.
+ *
  * @param mutateVisitCallback An optional mutate callback to register. If provided, the
- * store action's `mutateVisit` function will invoke this callback (along with any other
- * callbacks also registered into the store)
+ * returned `mutateVisit` function will invoke this callback (along with any other
+ * callbacks registered by other components). Pass a callback with a stable identity;
+ * one that changes on every render re-registers on every render.
  * @returns
  */
 export function useVisitContextStore(mutateVisitCallback?: () => void) {
   const id = useId();
 
   useEffect(() => {
-    const visitStore = getVisitStore();
-
-    // register the callback if it exists
-    if (mutateVisitCallback) {
-      visitStore.setState({
-        mutateVisitCallbacks: {
-          ...visitStore.getState().mutateVisitCallbacks,
-          [id]: mutateVisitCallback,
-        },
-      });
+    if (!mutateVisitCallback) {
+      return;
     }
 
-    // deregister the callback on unmount, if it exists
+    mutateVisitCallbacks.set(id, mutateVisitCallback);
     return () => {
-      if (mutateVisitCallback) {
-        const mutateVisitCallbacks = { ...visitStore.getState().mutateVisitCallbacks };
-        delete mutateVisitCallbacks[id];
-        visitStore.setState({ mutateVisitCallbacks });
-      }
+      mutateVisitCallbacks.delete(id);
     };
   }, [id, mutateVisitCallback]);
 
-  return useStoreWithActions(getVisitStore(), visitContextStoreActions);
+  const visitContextStore = useStoreWithActions(getVisitStore(), visitContextStoreActions);
+
+  return { ...visitContextStore, mutateVisit };
 }

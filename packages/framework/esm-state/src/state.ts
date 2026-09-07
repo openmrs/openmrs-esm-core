@@ -13,6 +13,30 @@ interface StoreEntity {
 
 const availableStores: Record<string, StoreEntity> = {};
 
+/**
+ * Each copy of this module owns a separate `availableStores`, so a page running more than one copy
+ * has stores, config and extension state that cannot see each other. Nothing fails outright, which
+ * is what makes it expensive: the symptoms are missing state and "store already exists" errors far
+ * from the cause. The count lives on a global registry key rather than in module scope, since a
+ * second copy would not share module scope — that is the whole problem being detected.
+ *
+ * A hot reload re-evaluates this module and so also trips this, which is the honest answer: after a
+ * hot reload the page really is running two copies.
+ */
+const instanceCountKey = Symbol.for('openmrs.esm-state.instanceCount');
+const globalCounters = globalThis as unknown as Record<symbol, number | undefined>;
+const instanceCount = (globalCounters[instanceCountKey] ?? 0) + 1;
+globalCounters[instanceCountKey] = instanceCount;
+
+if (instanceCount > 1 && !isTestEnvironment()) {
+  console.error(
+    `Detected ${instanceCount} copies of @openmrs/esm-framework running on this page. Each copy keeps ` +
+      'its own store registry, so stores, configuration and extension state are not shared between ' +
+      'them. This usually means a frontend module loaded its own bundled framework instead of the one ' +
+      'the app shell provides.',
+  );
+}
+
 // spaEnv isn't available immediately. Wait a bit before making stores available
 // on window in development mode.
 globalThis.setTimeout?.(() => {

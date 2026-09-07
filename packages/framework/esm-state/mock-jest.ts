@@ -32,6 +32,10 @@ export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T>
 }
 
 export function registerGlobalStore<T>(name: string, store: StoreApi<T>): StoreApi<T> {
+  // Recorded so `resetMock()` has something to restore; an already-built store carries its initial
+  // state in itself rather than being handed one.
+  initialStates[name] = store.getState();
+
   availableStores[name] = {
     value: store,
     active: true,

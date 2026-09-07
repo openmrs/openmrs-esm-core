@@ -6,6 +6,7 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build": "storybook build -o dist",
+    "clean": "git clean -fdX -- dist",
     "lint": "eslint .storybook mocks"
   },
   "devDependencies": {

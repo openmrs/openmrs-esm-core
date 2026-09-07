@@ -44,10 +44,14 @@ function bindActions<T>(store: StoreApi<T>, actions: Actions<T>): BoundActions<T
   return bound;
 }
 
-const defaultSelectFunction =
-  <T, U>() =>
-  (x: T) =>
-    x as unknown as U;
+/**
+ * A single shared identity function, rather than one built per call: `getSnapshot` below takes
+ * the selector as a dependency, so a fresh default each render would leave it unstable for every
+ * caller that doesn't pass a selector of its own.
+ */
+const identitySelect = (x: unknown) => x;
+
+const defaultSelectFunction = <T, U>() => identitySelect as (x: T) => U;
 
 function useStore<T>(store: StoreApi<T>): T;
 function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U): U;
@@ -79,12 +83,15 @@ function useStore<T, U, A extends Actions<T>>(
 
   const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 
-  let boundActions: BoundActions<T, Actions<T>> = useMemo(
-    () => (actions ? bindActions(store, actions) : {}),
+  let boundActions: BoundActions<T, Actions<T>> | null = useMemo(
+    () => (actions ? bindActions(store, actions) : null),
     [store, actions],
   );
 
-  return { ...state, ...boundActions };
+  // Returned as-is when there are no actions to merge in, so the reference stays stable for as
+  // long as the selected value does. That value is not a copy — it is whatever the selector
+  // returned, usually the store's own state.
+  return useMemo(() => (boundActions ? { ...state, ...boundActions } : state), [state, boundActions]);
 }
 
 /**
@@ -110,12 +117,12 @@ function createUseStore<T>(store: StoreApi<T>) {
     const getSnapshot = useCallback(() => store.getState(), []);
     const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 
-    let boundActions: BoundActions<T, Actions<T>> = useMemo(
-      () => (actions ? bindActions(store, actions) : {}),
+    let boundActions: BoundActions<T, Actions<T>> | null = useMemo(
+      () => (actions ? bindActions(store, actions) : null),
       [actions],
     );
 
-    return { ...state, ...boundActions };
+    return useMemo(() => (boundActions ? { ...state, ...boundActions } : state), [state, boundActions]);
   }
 
   return useStore;

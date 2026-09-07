@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import EditableValue from './editable-value.component';
 import isEqual from 'lodash-es/isEqual';
 import type { ExtensionSlotConfigureValueObject } from '@openmrs/esm-framework';
-import { useAssignedExtensions } from '@openmrs/esm-framework';
+import { useCandidateExtensions } from '@openmrs/esm-framework/src/internal';
 import { ExtensionConfigureTree } from './extension-configure-tree';
 import { Subtree } from './layout/subtree.component';
 import { implementerToolsStore } from '../../store';
@@ -52,7 +52,9 @@ interface ExtensionSlotConfigProps {
 function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   const moduleName = path[0];
   const slotName = path[2];
-  const assignedExtensions = useAssignedExtensions(slotName);
+  // Candidates rather than assigned: the editor lists what is configured for the slot, which is not
+  // narrowed by any one rendering's display conditions.
+  const candidateExtensions = useCandidateExtensions(slotName);
   const { uiSelectedPath } = useStore(implementerToolsStore);
 
   const itemRef = useRef<HTMLLIElement>(null);
@@ -69,7 +71,7 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
       implementerToolsStore.setState({
         activeItemDescription: {
           path: [moduleName, slotName],
-          value: assignedExtensions.map((e) => e.id),
+          value: candidateExtensions.map((e) => e.id),
         },
       });
     }

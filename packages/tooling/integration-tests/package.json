@@ -1,0 +1,38 @@
+{
+  "name": "@openmrs/integration-tests",
+  "version": "10.0.0",
+  "private": true,
+  "license": "MPL-2.0",
+  "description": "Tests that span more than one OpenMRS package and so belong to none of them. Not published; nothing depends on this package, which keeps its fixtures out of every other package's Turborepo cache key.",
+  "engines": {
+    "node": ">= 20.0.0"
+  },
+  "scripts": {
+    "test": "cross-env TZ=UTC vitest run",
+    "test:watch": "cross-env TZ=UTC vitest watch",
+    "coverage": "cross-env TZ=UTC vitest run --coverage",
+    "lint": "eslint src --ext ts,tsx",
+    "typescript": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "devDependencies": {
+    "@module-federation/error-codes": "2.8.1",
+    "@module-federation/runtime-core": "2.8.1",
+    "@module-federation/sdk": "2.8.1",
+    "@openmrs/rspack-config": "workspace:*",
+    "@openmrs/webpack-config": "workspace:*",
+    "@rspack/core": "1.7.9",
+    "@types/semver": "^7.7.3",
+    "cross-env": "^10.1.0",
+    "semver": "^7.7.3",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.2",
+    "webpack": "5.105.3"
+  }
+}

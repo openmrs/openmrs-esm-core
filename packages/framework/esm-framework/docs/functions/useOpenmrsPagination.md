@@ -58,7 +58,7 @@ The options object
 
 ### currentPageSize
 
-> **currentPageSize**: `MutableRefObject`\<`number`\>
+> **currentPageSize**: `number` = `currentPageSize.current`
 
 ### data
 

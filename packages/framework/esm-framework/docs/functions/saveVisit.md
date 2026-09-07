@@ -4,7 +4,7 @@
 
 > **saveVisit**(`payload`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`Visit`](../interfaces/Visit.md)\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L137)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L127)
 
 Creates a new visit by sending a POST request to the OpenMRS REST API.
 
