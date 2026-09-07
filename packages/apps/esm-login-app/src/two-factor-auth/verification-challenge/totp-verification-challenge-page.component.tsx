@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, Checkbox } from '@carbon/react';
@@ -13,10 +13,9 @@ import {
   ArrowLeftIcon,
 } from '@openmrs/esm-framework';
 import type { ConfigSchema } from '../../config-schema';
-import { performLogout } from '../../redirect-logout/logout.resource';
 import VerificationCodeInput from './verification-code-input.component';
-import styles from './totp-verification-challenge-page.scss';
 import LoginPageWrapper from '../../login-page-wrapper/login-page-wrapper.component';
+import styles from './totp-verification-challenge-page.scss';
 
 const TotpVerificationChallengePage: React.FC = () => {
   const { t } = useTranslation();
@@ -27,7 +26,6 @@ const TotpVerificationChallengePage: React.FC = () => {
   const [code, setCode] = useState('');
   const [rememberDevice, setRememberDevice] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isBackToLogin, setIsBackToLogin] = useState(false);
   const [verificationError, setVerificationError] = useState('');
 
   const handleVerify = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -69,7 +67,7 @@ const TotpVerificationChallengePage: React.FC = () => {
       let errorMessage = t('verificationFailedError', 'A network or server error occurred. Please try again.');
 
       if (error instanceof OpenmrsFetchError) {
-        if (error.response?.status === 401 || error.response?.status === 403) {
+        if (error.response?.status === 401) {
           errorMessage = t('invalidCode', 'Invalid verification code. Please try again.');
         }
         if (typeof error.responseBody === 'object' && error.responseBody !== null) {
@@ -89,23 +87,8 @@ const TotpVerificationChallengePage: React.FC = () => {
     }
   };
 
-  const backToLogin = useCallback(
-    async (event: React.MouseEvent) => {
-      event.preventDefault();
-      setIsBackToLogin(true);
-      try {
-        await performLogout();
-        navigate('/login');
-      } catch (error) {
-        setVerificationError(t('backToLoginFailed', 'Failed to cancel the verification process. Please try again.'));
-        setIsBackToLogin(false);
-      }
-    },
-    [navigate, t],
-  );
-
   return (
-    <LoginPageWrapper errorMessage={verificationError} onClearError={() => setVerificationError('')}>
+    <LoginPageWrapper errorMessage={verificationError} onClearError={() => setVerificationError('')} showFooter={false}>
       <div className={styles.title}>
         <h1>{t('twoFactorVerification', 'Two-Factor Verification')}</h1>
       </div>
@@ -132,8 +115,8 @@ const TotpVerificationChallengePage: React.FC = () => {
             type="button"
             className={styles.backToLoginButton}
             kind="ghost"
-            onClick={backToLogin}
-            disabled={isVerifying || isBackToLogin}
+            onClick={() => navigate('/logout')}
+            disabled={isVerifying}
           >
             <ArrowLeftIcon size={16} />
             {t('backToLogin', 'Back to login')}
@@ -142,7 +125,7 @@ const TotpVerificationChallengePage: React.FC = () => {
             type="submit"
             className={styles.verifyButton}
             renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-            disabled={!isOnline || isVerifying || code.length !== 6 || isBackToLogin}
+            disabled={!isOnline || isVerifying || code.length !== 6}
           >
             {isVerifying ? t('verifying', 'Verifying...') : t('verify', 'Verify')}
           </Button>

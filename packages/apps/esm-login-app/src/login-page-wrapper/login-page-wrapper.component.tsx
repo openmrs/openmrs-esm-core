@@ -12,9 +12,15 @@ interface LoginPageWrapperProps {
   children: React.ReactNode;
   errorMessage?: string;
   onClearError?: () => void;
+  showFooter?: boolean;
 }
 
-const LoginPageWrapper: React.FC<LoginPageWrapperProps> = ({ children, onClearError, errorMessage }) => {
+const LoginPageWrapper: React.FC<LoginPageWrapperProps> = ({
+  children,
+  onClearError,
+  errorMessage,
+  showFooter = true,
+}) => {
   const { t } = useTranslation();
   const { announcements = [], background = { image: '', color: '' } } = useConfig<ConfigSchema>();
 
@@ -68,7 +74,7 @@ const LoginPageWrapper: React.FC<LoginPageWrapperProps> = ({ children, onClearEr
         {children}
       </Tile>
 
-      <Footer />
+      {showFooter && <Footer />}
     </div>
   );
 };
