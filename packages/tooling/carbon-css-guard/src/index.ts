@@ -20,12 +20,11 @@
 const anchorPattern = /[.#](?:[-\w]|\\.)+/g;
 
 /**
- * Only the unscoped form counts. The shared configs run every stylesheet through CSS Modules, so a
- * Carbon class reaches the page verbatim only when the module wrote it inside `:global`; anything else
- * is renamed to `.-esm-login__footer__cds--btn___1a2b3` and can no longer restyle the shell's Carbon.
+ * Carbon's class prefix, matched only where a selector starts with it. The shared configs run every
+ * stylesheet through CSS Modules, so a Carbon class reaches the page verbatim only when the module
+ * wrote it inside `:global`; anything else is renamed to `.-esm-login__footer__cds--btn___1a2b3` and
+ * can no longer restyle the shell's Carbon.
  */
-const carbonAnchorPattern = /^\.cds--/;
-
 const carbonPrefix = '.cds--';
 
 /**
@@ -163,7 +162,7 @@ function isGlobal(selector: string): boolean {
   const anchors = stripNegations(trimmed).match(anchorPattern) ?? [];
 
   return anchors.length > 0
-    ? anchors.every((anchor) => carbonAnchorPattern.test(anchor))
+    ? anchors.every((anchor) => anchor.startsWith(carbonPrefix))
     : !anchorlessExemptPattern.test(trimmed);
 }
 
