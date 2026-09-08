@@ -3125,6 +3125,7 @@ __metadata:
     "@openmrs/esm-styleguide": "workspace:*"
     "@rspack/cli": "npm:1.7.9"
     "@rspack/core": "npm:1.7.9"
+    browserslist: "npm:4.28.9"
     browserslist-config-openmrs: "npm:^1.0.1"
     cross-env: "npm:^10.1.0"
     dayjs: "npm:^1.11.13"

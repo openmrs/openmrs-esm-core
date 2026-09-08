@@ -19,15 +19,11 @@ const openmrsQueries: string[] = require('browserslist-config-openmrs');
 // need to ask what a browser actually supports go through this.
 const openmrsTargets = browserslist(['extends browserslist-config-openmrs'], { path: fixtureRoot });
 
-// Named exactly as swc emits them. Each is the helper for one of the constructs the fixture uses, so if a
-// build stops declaring a target these reappear alongside the syntax checks below failing.
-const es5Helpers = [
-  '_async_to_generator',
-  '_class_call_check',
-  '_class_private_field_get',
-  '_create_class',
-  '_ts_generator',
-];
+// Text from the body of swc's `_class_call_check` helper, which it emits to down-level the fixture's
+// class. The helper *names* are useless for this: the production minifier inlines and renames every one
+// of them, so asserting on `_class_call_check` passes against genuinely ES5 output. This string is
+// inside a `throw new TypeError(...)` and survives minification.
+const es5HelperMarker = 'Cannot call a class as a function';
 
 const tempDirs: string[] = [];
 
@@ -38,6 +34,29 @@ afterAll(() => {
   }
   rmSync(join(__dirname, '..', 'node_modules', '.scratch-apps'), { recursive: true, force: true });
 });
+
+/**
+ * The messages a config's browserslist plugin would push onto a compilation, without running a build.
+ *
+ * The plugin is what carries these to somewhere a developer sees them, so this reaches into it with a
+ * stub compilation rather than asserting on a `console.warn` the factory only ever emits once.
+ */
+function compilationWarnings(config: Record<string, any>): string {
+  const plugin = config.plugins.find(
+    (candidate: { constructor?: { name?: string } }) => candidate?.constructor?.name === 'BrowserslistWarningsPlugin',
+  );
+
+  if (!plugin) {
+    return '';
+  }
+
+  const compilation = { warnings: [] as Array<{ message: string }> };
+  plugin.apply({
+    hooks: { thisCompilation: { tap: (_name: string, fn: (c: typeof compilation) => void) => fn(compilation) } },
+  });
+
+  return compilation.warnings.map((warning) => warning.message).join('\n');
+}
 
 /** The `swc-loader` / `builtin:swc-loader` options a config puts on its JS/TS rule. */
 function scriptLoaderOptions(config: Record<string, any>) {
@@ -133,8 +152,10 @@ describe.each(bundlers)('the %s config', (bundler) => {
     expect(options.env.targets).toEqual(['chrome 91']);
   });
 
-  it("expands an app's `extends` query, which swc itself cannot follow", async () => {
-    // How every OpenMRS module in practice names the policy.
+  it("expands an app's `extends` query rather than leaving it to swc", async () => {
+    // How every OpenMRS module in practice names the policy. swc resolves an `extends` query relative
+    // to `process.cwd()` rather than the module it compiles, and aborts the process when it cannot, so
+    // the expansion is what makes this independent of where the build ran from.
     const root = scratchApp({ browserslist: ['extends browserslist-config-openmrs'] });
     const options = scriptLoaderOptions(await loadConfigFrom(bundler, root));
 
@@ -147,9 +168,8 @@ describe.each(bundlers)('the %s config', (bundler) => {
   // browserslist itself resolves, which is also what would fail if the loader borrowed from its internal
   // `node` entry point ever moved.
   describe('a shared browserslist config', () => {
-    // Sections keyed by environment, which is the shape Greptile flagged: read as a flat array this
-    // throws, and the catch below would report the module's policy as unloadable and quietly build for
-    // OpenMRS's instead.
+    // Sections keyed by environment. Read as a flat array this throws, and the catch below would then
+    // report the module's policy as unloadable and quietly build for OpenMRS's instead.
     const envConfig =
       "module.exports = { production: ['chrome 120'], development: ['chrome 90'], defaults: ['chrome 100'] };";
 
@@ -224,18 +244,23 @@ describe.each(bundlers)('the %s config', (bundler) => {
 
   it('warns and keeps building when an app names a browserslist config that will not load', async () => {
     const root = scratchApp({ browserslist: ['extends browserslist-config-nonexistent'] });
-    const warnings: string[] = [];
-    const warn = vi.spyOn(console, 'warn').mockImplementation((message) => void warnings.push(String(message)));
 
-    try {
-      // Loading the config at all is the assertion.
-      const options = scriptLoaderOptions(await loadConfigFrom(bundler, root));
-      expect(options.env.targets).toEqual(openmrsQueries);
-    } finally {
-      warn.mockRestore();
-    }
+    // Loading the config at all is half the assertion: how a module's browsers are chosen is not worth
+    // taking down a build, let alone a running dev server.
+    const config = await loadConfigFrom(bundler, root);
+    expect(scriptLoaderOptions(config).env.targets).toEqual(openmrsQueries);
 
-    expect(warnings.join('\n')).toContain('browserslist-config-nonexistent');
+    // Reported as a compilation warning, not `console.warn`: the config factory runs once, before a
+    // compiler exists, so a logged message appears at startup and never again on rebuild.
+    expect(compilationWarnings(config)).toContain('browserslist-config-nonexistent');
+  });
+
+  it('fails the build, rather than guessing, when a config is malformed', async () => {
+    // browserslist's own errors for these are clear and the developer has to act on them, so they are
+    // deliberately not swallowed the way an unloadable *named* config is.
+    const root = scratchApp({ browserslist: [1, 2] as unknown as string[] });
+
+    await expect(loadConfigFrom(bundler, root)).rejects.toThrow(/browserslist/i);
   });
 
   it('falls back to the OpenMRS policy for an app that declares no browsers', async () => {
@@ -263,57 +288,93 @@ describe.each(bundlers)('the %s config', (bundler) => {
     expect(exposedChunk).toMatch(/\basync\b/);
     expect(exposedChunk).toMatch(/\?\./);
 
-    for (const helper of es5Helpers) {
-      expect(exposedChunk).not.toContain(helper);
-    }
+    expect(exposedChunk).not.toContain(es5HelperMarker);
   }, 180_000);
 });
 
 describe('the bundler runtime target', () => {
-  // `output.environment` is what decides the syntax of the runtime and chunk-loading glue the bundler
-  // writes itself, which swc never sees. Both configs derive it from the module's browserslist, and the
-  // two bundlers resolve those queries with different browser data — webpack with this repo's, rspack
-  // with the older set its Rust port bundles — so these checks are what hold the two together.
-  async function environmentFor(bundler: (typeof bundlers)[number], target: unknown) {
+  // `output.environment` decides the syntax of the runtime and chunk-loading glue a bundler writes
+  // itself, which swc never sees. The two configs reach it differently — webpack-config sets
+  // `output.environment` from webpack's own browserslist target handler; rspack-config passes the
+  // queries as a `browserslist:` target, which rspack does resolve as queries. These checks are what
+  // hold the two results together.
+  const esFeatures = (environment: Record<string, unknown>) =>
+    Object.fromEntries(
+      Object.entries(environment).filter(([key, value]) => key !== 'nodePrefixForCoreModules' && value != null),
+    ) as Record<string, boolean>;
+
+  /**
+   * The ES features a bundler ends up allowing itself for a module in `root`.
+   *
+   * `context` has to be that same root: webpack re-reads the module's own browserslist config from it,
+   * so pointing this at a directory without one would only ever exercise webpack's fallback branch and
+   * never what a real build does.
+   */
+  async function environmentFor(bundler: (typeof bundlers)[number], root: string) {
+    const config = await loadConfigFrom(bundler, root);
     const { default: bundlerModule } = bundler === 'rspack' ? await import('@rspack/core') : await import('webpack');
-    const compiler = (bundlerModule as (options: unknown) => any)({ context: fixtureRoot, target });
+    const compiler = (bundlerModule as (options: unknown) => any)({
+      context: root,
+      target: config.target,
+      output: { environment: config.output?.environment },
+    });
     const { environment } = compiler.options.output;
     await new Promise<void>((res) => compiler.close(() => res()));
-    return Object.fromEntries(
-      Object.entries(environment as Record<string, boolean>).filter(([key]) => key !== 'nodePrefixForCoreModules'),
-    );
+
+    return esFeatures(environment as Record<string, unknown>);
   }
 
-  it('is derived from the policy rather than pinned to an ES level', async () => {
-    const { target } = await loadConfigFrom('rspack', fixtureRoot);
+  it.each(bundlers)('lets %s use everything the supported browsers allow', async (bundler) => {
+    const environment = await environmentFor(bundler, fixtureRoot);
 
-    // Inlined, not a bare `browserslist`, which would send rspack back to a config it can't fully read.
-    expect(target).toEqual(['web', `browserslist:${openmrsQueries.join(', ')}`]);
+    // The features a bare `web` target leaves off, which is the point of setting this at all.
+    expect(environment.dynamicImport).toBe(true);
+    expect(environment.globalThis).toBe(true);
+    expect(environment.arrowFunction).toBe(true);
   });
 
-  it('narrows to match a module that supports older browsers', async () => {
-    // The reason for deriving this rather than pinning a level: an ES2020 runtime shipped to a browser
-    // this old is a syntax error, however correctly swc compiled the module's own sources.
-    const root = scratchApp({ browserslist: ['ie 11'] });
-    const { target } = await loadConfigFrom('rspack', root);
-    const environment = await environmentFor('rspack', target);
+  it.each(bundlers)('narrows %s to match a module that supports older browsers', async (bundler) => {
+    // An ES2020 runtime shipped to a browser this old is a syntax error, however correctly swc compiled
+    // the module's own sources.
+    const root = scratchApp({ browserslist: ['chrome 60'] });
+    const environment = await environmentFor(bundler, root);
 
-    expect(environment.arrowFunction).toBe(false);
     expect(environment.dynamicImport).toBe(false);
     expect(environment.optionalChaining).toBe(false);
   });
 
+  it.each(bundlers)("reads the right env section of a module's config in %s", async (bundler) => {
+    // The case that was silently wrong: webpack took the inlined query list as an env name, failed to
+    // match a section by it, fell back to `defaults`, and built a modern runtime for a module whose
+    // production browsers were ancient — while swc correctly down-levelled that module's own sources.
+    const root = scratchApp({ browserslist: { production: ['chrome 60'], defaults: ['chrome 120'] } });
+    const previous = process.env.BROWSERSLIST_ENV;
+    process.env.BROWSERSLIST_ENV = 'production';
+    browserslist.clearCaches();
+
+    try {
+      const options = scriptLoaderOptions(await loadConfigFrom(bundler, root));
+      expect(options.env.targets).toEqual(['chrome 60']);
+
+      const environment = await environmentFor(bundler, root);
+      expect(environment.optionalChaining).toBe(false);
+      expect(environment.dynamicImport).toBe(false);
+    } finally {
+      process.env.BROWSERSLIST_ENV = previous;
+      browserslist.clearCaches();
+    }
+  });
+
   it('claims no ES feature the supported browsers lack', async () => {
-    // Taken from the config rather than restated, so this tracks whatever the config declares.
-    const { target } = await loadConfigFrom('rspack', fixtureRoot);
-    const configured = await environmentFor('rspack', target);
+    const configured = await environmentFor('rspack', fixtureRoot);
 
-    // What webpack derives from the resolved policy: the browser data's own verdict, and the only place
-    // in this repo that can read it, since rspack's port cannot.
-    const supported = await environmentFor('webpack', `browserslist:${openmrsTargets.join(', ')}`);
+    // webpack's reading of the resolved policy, straight from the browser data.
+    const { default: webpack } = await import('webpack');
+    const oracle = webpack({ context: fixtureRoot, target: `browserslist:${openmrsTargets.join(', ')}` } as never);
+    const supported = esFeatures(oracle.options.output.environment as Record<string, unknown>);
+    await new Promise<void>((res) => oracle.close(() => res()));
 
-    // Proves `supported` is a real reading of the browser data rather than something empty that would
-    // make the comparison below vacuous.
+    // Proves `supported` is a real reading rather than something empty that would make this vacuous.
     expect(supported.arrowFunction).toBe(true);
 
     const overclaimed = Object.keys(configured).filter((feature) => configured[feature] && !supported[feature]);
@@ -321,20 +382,12 @@ describe('the bundler runtime target', () => {
   });
 
   it('is identical between the two bundlers', async () => {
-    const { target: rspackTarget } = await loadConfigFrom('rspack', fixtureRoot);
-    const { target: webpackTarget } = await loadConfigFrom('webpack', fixtureRoot);
-    expect(rspackTarget).toEqual(webpackTarget);
-
     const [rspackEnvironment, webpackEnvironment] = [
-      await environmentFor('rspack', rspackTarget),
-      await environmentFor('webpack', webpackTarget),
+      await environmentFor('rspack', fixtureRoot),
+      await environmentFor('webpack', fixtureRoot),
     ];
 
     expect(rspackEnvironment).toEqual(webpackEnvironment);
-    // The features a bare `web` target leaves off, which is the point of setting this at all. Also what
-    // fails if rspack's bundled browser data ever ages far enough to stop resolving the policy.
-    expect(rspackEnvironment.dynamicImport).toBe(true);
-    expect(rspackEnvironment.globalThis).toBe(true);
   });
 });
 

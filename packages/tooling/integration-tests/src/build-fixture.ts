@@ -101,8 +101,19 @@ export function buildFixtureApp(bundler: 'rspack' | 'webpack', mode = 'productio
           .map((file) => [file, readFileSync(join(outDir, file), 'utf8')]),
       );
 
+      const entry = scripts[entryFilename];
+
+      // Checked rather than handed on as `undefined`: `new Script(undefined)` compiles the source text
+      // `"undefined"` and runs without complaint, so a change to the emitted filename would leave the
+      // tests that execute the entry passing while executing nothing.
+      if (!entry) {
+        throw new Error(
+          `The ${bundler} build emitted no ${entryFilename}. Emitted: ${Object.keys(scripts).join(', ')}`,
+        );
+      }
+
       return {
-        entry: scripts[entryFilename],
+        entry,
         scripts,
         moduleIdentifiers: collectIdentifiers(modules),
       };
