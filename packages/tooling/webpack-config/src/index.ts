@@ -50,18 +50,20 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 // eslint-disable-next-line no-restricted-imports
 import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
-import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
-import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
 import {
   BannerPlugin,
+  type Compiler,
   DefinePlugin,
   ExternalsPlugin,
   type ModuleOptions,
   type RuleSetRule,
+  WebpackError,
   type WebpackOptionsNormalized as WebpackConfiguration,
 } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
+import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
+import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
 
 type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module' | 'output'> & {
   module: ModuleOptions;
@@ -118,54 +120,107 @@ function getFrameworkVersion() {
   }
 }
 
+/** What a module's browsers resolved to, plus anything worth telling the developer about getting there. */
+type BrowserPolicy = { queries: Array<string>; warnings: Array<string> };
+
 /**
- * The browserslist queries this module's output is compiled and minified against, falling back to
- * OpenMRS's shared config when the module declares none, so that frontend RFC 0003 stays the single
- * source of truth. Without any of this swc down-levels to ES5, and every supported browser pays for
- * transform helpers it doesn't need.
+ * The browserslist queries swc compiles this module against, falling back to OpenMRS's shared config
+ * when the module declares none, so that frontend RFC 0003 stays the single source of truth. Given no
+ * target at all swc down-levels to ES5, and every supported browser pays for transform helpers it
+ * doesn't need.
  *
- * Queries rather than resolved versions, and `extends` expanded here rather than left to the consumer,
- * because these are resolved by Rust ports of browserslist — swc's, and rspack's Lightning CSS — which
- * do not implement `extends` and reject version numbers newer than the browser data they bundle. swc
- * aborts the process rather than reporting an error when a query defeats it.
+ * `@openmrs/rspack-config` has a copy of this; keep them in step. `browser-targets.test.ts` compares
+ * what the two hand their loaders and fails if they drift.
  *
  * @param root The directory of the module being built
  */
-function browserslistQueries(root: string): Array<string> {
+function browserslistQueries(root: string): BrowserPolicy {
+  const warnings: Array<string> = [];
+  // deliberately unguarded
   const loaded = browserslist.loadConfig({ path: root });
   const configured = loaded === undefined ? [] : Array.isArray(loaded) ? loaded : [loaded];
 
-  return expandBrowserslistExtends(configured.length > 0 ? configured : defaultBrowserslistQueries, root);
+  if (loaded !== undefined && configured.length === 0) {
+    // warn when a browserlist config is empty
+    warnings.push(
+      `This module declares a browserslist config, but it resolves to no queries for the ` +
+        `${process.env.BROWSERSLIST_ENV ?? process.env.NODE_ENV ?? production} environment. ` +
+        `Targeting ${defaultBrowserslistQueries.join(', ')} instead.`,
+    );
+  }
+
+  const expanded = expandBrowserslistExtends(
+    configured.length > 0 ? configured : defaultBrowserslistQueries,
+    root,
+    warnings,
+  );
+
+  return { queries: expanded.length > 0 ? expanded : defaultBrowserslistQueries, warnings };
 }
 
-function expandBrowserslistExtends(queries: Array<string>, root: string, seen = new Set<string>()): Array<string> {
-  return queries.flatMap((query) => {
-    const extended = /^extends\s+(\S+)$/.exec(query.trim());
+function expandBrowserslistExtends(
+  queries: Array<string>,
+  root: string,
+  warnings: Array<string>,
+  seen = new Set<string>(),
+): Array<string> {
+  // Split on commas because a browserslist config may be a single string of them
+  return queries.flatMap((query) =>
+    query
+      .split(',')
+      .flatMap((part) => {
+        const extended = /^extends\s+(.+)$/i.exec(part.trim());
 
-    if (!extended || seen.has(extended[1])) {
-      return extended ? [] : [query];
-    }
+        if (!extended) {
+          return [part.trim()];
+        }
 
-    seen.add(extended[1]);
+        const name = extended[1].trim();
 
-    try {
-      // Resolved from the module being built, so that it picks up that module's own shared config. A
-      // config naming a further `extends` recurses, which is what `seen` keeps from looping.
-      const resolved = loadQueries({ path: root }, extended[1]);
+        if (seen.has(name)) {
+          return [];
+        }
 
-      return expandBrowserslistExtends(Array.isArray(resolved) ? resolved : [resolved], root, seen);
-    } catch {
-      // A config that can't be loaded shouldn't take the whole build — or the dev server — down over
-      // which browsers it targets. Fall back to the default queries and say so.
-      console.warn(
-        `Could not load the browserslist config "${extended[1]}". Targeting ${defaultBrowserslistQueries.join(
-          ', ',
-        )} instead.`,
-      );
+        seen.add(name);
 
-      return defaultBrowserslistQueries;
-    }
-  });
+        try {
+          // browserslist's own loader, rather than a bare `require` so we handle the same syntax
+          const resolved = loadQueries({ path: root }, name);
+
+          return expandBrowserslistExtends(Array.isArray(resolved) ? resolved : [resolved], root, warnings, seen);
+        } catch (err) {
+          // Only browserslist's own verdict on a named config is survivable: not installed, or refused
+          // for its name.
+          const notInstalled = (err as { code?: string })?.code === 'MODULE_NOT_FOUND';
+          const refused = (err as { browserslist?: boolean })?.browserslist === true;
+
+          if (!notInstalled && !refused) {
+            throw err;
+          }
+
+          warnings.push(
+            `Could not load the browserslist config "${name}" (${(err as Error).message}). ` +
+              `Targeting ${defaultBrowserslistQueries.join(', ')} instead.`,
+          );
+
+          return defaultBrowserslistQueries;
+        }
+      })
+      .filter((part) => part.length > 0),
+  );
+}
+
+/** Reports how a module's browsers were worked out, where a developer will actually see it. */
+class BrowserslistWarningsPlugin {
+  constructor(private readonly messages: Array<string>) {}
+
+  apply(compiler: Compiler) {
+    compiler.hooks.thisCompilation.tap('OpenmrsBrowserslistWarnings', (compilation) => {
+      for (const message of this.messages) {
+        compilation.warnings.push(new WebpackError(message));
+      }
+    });
+  }
 }
 
 function makeIdent(name: string): string {
@@ -263,7 +318,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
-  const browserTargets = browserslistQueries(root);
+  const { queries: browserTargets, warnings: browserslistWarnings } = browserslistQueries(root);
   const frameworkVersion = getFrameworkVersion();
   const routes = resolve(root, 'src', 'routes.json');
   const hasRoutesDefined = fileExistsSync(routes);
@@ -397,6 +452,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       optimizationConfig,
     ),
     plugins: [
+      browserslistWarnings.length > 0 && new BrowserslistWarningsPlugin(browserslistWarnings),
       new ForkTsCheckerWebpackPlugin({
         issue: {
           exclude: [
@@ -519,9 +575,10 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   };
   const config = mergeWith(baseConfig, additionalConfig, mergeFunction);
 
-  // Appended after the merge rather than listed above, because `overrides.plugins` replaces the
-  // plugin array wholesale and an app doing that would drop the guard without noticing. Same
-  // reasoning as the `ExternalsPlugin` block above, which avoids `externals` for the same reason.
+  // Appended after the merge rather than listed above. `overrides` is spread over the config object, so
+  // an app setting `overrides.plugins` replaces the whole array — not a lodash merge, which would keep
+  // the entries — and would drop the guard without noticing. Same reasoning as the `ExternalsPlugin`
+  // block above, which avoids `externals` for the same reason.
   // Production only: under `style-loader` there are no `.css` assets to check.
   config.plugins = [...(config.plugins ?? []), ...(isProd ? [new CarbonCssGuardPlugin(name)] : [])];
 

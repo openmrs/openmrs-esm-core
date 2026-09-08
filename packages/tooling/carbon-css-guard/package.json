@@ -12,9 +12,10 @@
     "build:development": "tsc",
     "clean": "git clean -fdX -- dist",
     "lint": "eslint src",
-    "test": "cross-env TZ=UTC vitest run --passWithNoTests",
+    "test": "cross-env TZ=UTC vitest run",
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
-    "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests"
+    "coverage": "cross-env TZ=UTC vitest run --coverage",
+    "typescript": "tsc --noEmit --project tsconfig.test.json"
   },
   "repository": {
     "type": "git",
@@ -35,10 +36,8 @@
   ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "devDependencies": {
-    "@rspack/core": "1.7.9",
     "cross-env": "^10.1.0",
     "typescript": "^5.8.3",
-    "vitest": "^4.1.2",
-    "webpack": "5.105.3"
+    "vitest": "^4.1.2"
   }
 }

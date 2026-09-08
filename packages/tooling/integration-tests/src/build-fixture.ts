@@ -26,7 +26,7 @@ export type FixtureBuild = {
 
 const builds = new Map<string, Promise<FixtureBuild>>();
 const tempDirs: string[] = [];
-const builtRoots = new Set<string>([fixtureRoot]);
+const builtRoots = new Set<string>();
 
 /** Call from `afterAll`. Deletes the output directories the builds in this process wrote. */
 export function cleanUpFixtureBuilds() {

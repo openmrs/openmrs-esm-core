@@ -41,7 +41,10 @@ const carbonPrefix = '.cds--';
  */
 const anchorlessExemptPattern = /^:(?:root|host)\b/;
 
-type BlockKind = 'style' | 'at-rule' | 'keyframes';
+/** Ceiling on the `:is(…)`/`:where(…)` cross product, so a pathological selector can't stall a build. */
+const maxSelectorExpansions = 256;
+
+type BlockKind = 'style' | 'at-rule' | 'keyframes' | 'scope';
 
 /**
  * The subset of a compilation this plugin needs. Declaring it structurally, rather than importing
@@ -124,6 +127,55 @@ function splitSelectorList(list: string): Array<string> {
   return selectors;
 }
 
+/** The first `:is(…)` or `:where(…)` in `selector`, or `undefined` if it holds none. */
+function findSelectorListGroup(selector: string) {
+  const match = /:(?:is|where)\(/.exec(selector);
+
+  if (!match) {
+    return undefined;
+  }
+
+  let depth = 0;
+
+  for (let i = match.index + match[0].length - 1; i < selector.length; i++) {
+    if (selector[i] === '(') {
+      depth += 1;
+    } else if (selector[i] === ')' && (depth -= 1) === 0) {
+      return { start: match.index, end: i + 1, inner: selector.slice(match.index + match[0].length, i) };
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * Rewrites `:is(…)`/`:where(…)` into the plain selectors they stand for, so `.a:is(.b,.c)` becomes
+ * `.a.b` and `.a.c`.
+ *
+ * Without this a single anchored branch covers for the rest: `:is(.cds--btn, .myThing)` would read as
+ * anchored even though its first branch restyles every Carbon button on the page, while the equivalent
+ * `.cds--btn, .myThing` is caught. It matters for what gets built as much as for what gets written —
+ * Lightning CSS lowers native CSS nesting into `:is()` when the browserslist targets call for it, and
+ * this scanner reads minified output.
+ *
+ * The expansion is a cross product, so it is bounded. No selector in real stylesheets comes close; one
+ * that did would be left partly expanded and read as it is today, which is the behaviour this replaces.
+ */
+function expandSelectorLists(selector: string, budget = { left: maxSelectorExpansions }): Array<string> {
+  const group = findSelectorListGroup(selector);
+
+  if (!group || budget.left <= 0) {
+    return [selector];
+  }
+
+  const branches = splitSelectorList(group.inner);
+  budget.left -= branches.length;
+
+  return branches.flatMap((branch) =>
+    expandSelectorLists(selector.slice(0, group.start) + branch.trim() + selector.slice(group.end), budget),
+  );
+}
+
 /**
  * Removes `:not(…)` groups. A class inside a negation narrows which elements the rule skips; it never
  * confines the rule to this module's markup, so `.cds--btn:not(.myThing)` is still a page-wide rule.
@@ -156,7 +208,14 @@ function classify(prelude: string): BlockKind {
     return 'style';
   }
 
-  return /^@(?:-\w+-)?keyframes\b/.test(prelude) ? 'keyframes' : 'at-rule';
+  if (/^@(?:-\w+-)?keyframes\b/.test(prelude)) {
+    return 'keyframes';
+  }
+
+  // `@scope (.card) { … }` confines everything inside it to the subtree its root selects, so its rules
+  // are local by definition however they read. The scoping root itself is not checked: an app that
+  // scopes to Carbon's own markup would still be reaching page-wide, which this does not catch.
+  return /^@scope\b/.test(prelude) ? 'scope' : 'at-rule';
 }
 
 /** Whether this single (comma-free) selector restyles the page rather than the module's own markup. */
@@ -180,7 +239,8 @@ function isGlobal(selector: string): boolean {
  * Only rules that aren't nested inside another style rule are considered: native CSS nesting puts the
  * scoping class on the parent, so `.myThing { .cds--btn { … } }` is a correctly scoped override even
  * though the inner selector reads as a bare Carbon one. Rules nested in an at-rule — `@media`,
- * `@supports`, `@layer` — are considered, since those don't scope anything.
+ * `@supports`, `@layer` — are considered, since those don't scope anything; those inside `@scope`,
+ * which does, are not.
  *
  * @param css The contents of an emitted stylesheet
  */
@@ -195,7 +255,8 @@ export function findGlobalCarbonRules(css: string): Array<string> {
 
       if (kind === 'style' && !blocks.some((block) => block !== 'at-rule')) {
         for (const selector of splitSelectorList(prelude)) {
-          if (isGlobal(selector)) {
+          // Reported as written, not as expanded, so the message names something findable in the source.
+          if (expandSelectorLists(selector).some(isGlobal)) {
             globals.add(selector.trim());
           }
         }

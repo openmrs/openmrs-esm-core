@@ -42,13 +42,13 @@ describe.each(bundlers)('a production build with %s', (bundler) => {
     expect(Object.values(stylesheets).join('')).toMatch(/__styles-module__panel___[\w-]+ \.cds--btn/);
   });
 
-  it('emits no stylesheet for the entry chunk, which nothing loads', async () => {
-    const { stylesheets } = await buildFixtureApp(bundler, 'production', 'styled-app');
+  it('emits no entry chunk at all, since nothing would load one', async () => {
+    const { stylesheets, scripts } = await buildFixtureApp(bundler, 'production', 'styled-app');
 
-    // The app shell loads the Module Federation container, never a `main` chunk, so a `main.css` would
-    // be bytes no browser fetches. The configs set `entry: {}` to stop one being created at all.
+    // The app shell loads the Module Federation container, never a `main` chunk, so a `main.js` and its
+    // `main.css` would be bytes no browser fetches. The configs set `entry: {}` to stop one existing.
+    expect(Object.keys(scripts)).not.toContain('main.js');
     expect(Object.keys(stylesheets)).not.toContain('main.css');
-    expect(Object.keys(stylesheets).map((name) => name.replace(/\.css$/, '.js'))).not.toContain('main.js');
   });
 });
 

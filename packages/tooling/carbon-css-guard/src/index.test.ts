@@ -2,7 +2,7 @@
 // as a whole (RFC 0033). It reads minified CSS with a hand-rolled scanner, and it is a hard build error
 // for every module in the ecosystem, so a false positive is as costly as a miss.
 import { describe, expect, it } from 'vitest';
-import { buildGlobalCarbonRuleError, findGlobalCarbonRules } from './index';
+import { buildGlobalCarbonRuleError, CarbonCssGuardPlugin, findGlobalCarbonRules } from './index';
 
 // A module's own classes always reach the emitted CSS in this shape, since both configs set
 // `localIdentName` to `${ident}__[name]__[local]___[hash:base64:5]`.
@@ -57,6 +57,46 @@ const cases: Array<{ label: string; css: string; expected: Array<string> }> = [
   { label: 'universal reset', css: '*{box-sizing:border-box}', expected: ['*'] },
   { label: 'attribute-only selector', css: '[dir=rtl]{text-align:right}', expected: ['[dir=rtl]'] },
   { label: ':root carries custom properties', css: ':root{--omrs-x:1}', expected: [] },
+
+  // `:is()`/`:where()` hold selector lists, so one anchored branch must not cover for an unanchored one.
+  // Lightning CSS also lowers native nesting into `:is()`, so these turn up in output as well as source.
+  {
+    label: ':is() with one page-wide branch',
+    css: `:is(.cds--btn,${scoped}){color:red}`,
+    expected: [`:is(.cds--btn,${scoped})`],
+  },
+  {
+    label: ':where() with one page-wide branch',
+    css: `:where(.cds--btn,${scoped}){color:red}`,
+    expected: [`:where(.cds--btn,${scoped})`],
+  },
+  {
+    label: ':is() with an anchorless branch',
+    css: `:is(body,${scoped}){margin:0}`,
+    expected: [`:is(body,${scoped})`],
+  },
+  {
+    label: ':is() of Carbon classes only',
+    css: ':is(.cds--btn,.cds--tag){color:red}',
+    expected: [':is(.cds--btn,.cds--tag)'],
+  },
+  { label: ':is() with every branch anchored', css: `${scoped} :is(.a___a1,.b___b2){color:red}`, expected: [] },
+  {
+    label: ':is() of pseudo-classes anchors nothing away',
+    css: `${scoped}:is(:hover,:focus){color:red}`,
+    expected: [],
+  },
+  { label: 'a scoped :is() of Carbon classes', css: `${scoped} :is(.cds--btn,.cds--tag){color:red}`, expected: [] },
+
+  // `@scope` confines its contents to a subtree, so rules inside it are local however they read.
+  { label: '@scope makes a bare Carbon rule local', css: `@scope (${scoped}){.cds--btn{color:red}}`, expected: [] },
+  { label: '@scope with a limit', css: `@scope (${scoped}) to (.inner___b2){img{border:0}}`, expected: [] },
+  { label: '@scope makes a bare element rule local', css: `@scope (${scoped}){p{margin:0}}`, expected: [] },
+  {
+    label: 'a rule after a @scope block is judged normally',
+    css: `@scope (${scoped}){p{margin:0}}body{margin:0}`,
+    expected: ['body'],
+  },
 
   // Extension wrappers are the framework's markup, so an app has no class of its own to hang on them.
   // A named extension or slot is as specific as a class; a valueless one matches every extension there is.
@@ -148,6 +188,67 @@ describe('the Carbon CSS guard', () => {
 
       expect(message).toMatch(carbonAdvice);
       expect(message).toMatch(anchorlessAdvice);
+    });
+  });
+
+  // The scanner is covered above; this is the wiring around it. The integration tests exercise the same
+  // path against today's bundlers, so what's worth unit-testing here is what they can't reach: the asset
+  // filter, and the refusal to register against a compiler exposing neither bundler's namespace.
+  describe('the plugin', () => {
+    function fakeCompiler(namespace: 'rspack' | 'webpack' | 'neither', assets: Record<string, string>) {
+      const compilation = {
+        errors: [] as Array<Error>,
+        hooks: {
+          processAssets: {
+            tap: (_options: unknown, callback: (a: Record<string, { source(): string }>) => void) =>
+              callback(Object.fromEntries(Object.entries(assets).map(([name, css]) => [name, { source: () => css }]))),
+          },
+        },
+      };
+      const bundler = { Compilation: { PROCESS_ASSETS_STAGE_REPORT: 5000 } };
+
+      return {
+        compilation,
+        compiler: {
+          ...(namespace === 'neither' ? {} : { [namespace]: bundler }),
+          hooks: { compilation: { tap: (_name: string, cb: (c: typeof compilation) => void) => cb(compilation) } },
+        },
+      };
+    }
+
+    it.each(['rspack', 'webpack'] as const)('reports offences found in a %s build', (namespace) => {
+      const { compiler, compilation } = fakeCompiler(namespace, { 'a.css': '.cds--btn{color:red}' });
+
+      new CarbonCssGuardPlugin('@openmrs/esm-x-app').apply(compiler as never);
+
+      expect(compilation.errors).toHaveLength(1);
+      expect(compilation.errors[0].message).toContain('.cds--btn');
+      expect(compilation.errors[0].message).toContain('@openmrs/esm-x-app');
+    });
+
+    it('reads stylesheets only, not the JavaScript or source maps that carry the same text', () => {
+      const { compiler, compilation } = fakeCompiler('rspack', {
+        'a.js': '.cds--btn{color:red}',
+        'a.css.map': '.cds--btn{color:red}',
+      });
+
+      new CarbonCssGuardPlugin('app').apply(compiler as never);
+
+      expect(compilation.errors).toEqual([]);
+    });
+
+    it('stays quiet when nothing is global', () => {
+      const { compiler, compilation } = fakeCompiler('rspack', { 'a.css': `${scoped} .cds--btn{color:red}` });
+
+      new CarbonCssGuardPlugin('app').apply(compiler as never);
+
+      expect(compilation.errors).toEqual([]);
+    });
+
+    it('refuses to register against a compiler exposing neither bundler, rather than checking nothing', () => {
+      const { compiler } = fakeCompiler('neither', { 'a.css': '.cds--btn{color:red}' });
+
+      expect(() => new CarbonCssGuardPlugin('app').apply(compiler as never)).toThrow(/neither `rspack` nor `webpack`/);
     });
   });
 });
