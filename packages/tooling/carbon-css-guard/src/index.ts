@@ -16,8 +16,16 @@
  * because the many valid ways to import a Carbon token defeat checking imports at the source level.
  */
 
-/** Selector-position class and id tokens, e.g. `.cds--btn`, `#main`, `.a\\:b`. */
-const anchorPattern = /[.#](?:[-\w]|\\.)+/g;
+/**
+ * What can confine a rule to markup this module owns: class and id tokens (`.cds--btn`, `#main`,
+ * `.a\\:b`), plus an attribute selector naming a specific extension or slot
+ * (`[data-extension-id='my-thing']`).
+ *
+ * Extension wrappers are rendered by the framework, so an app has nowhere to put a class of its own on
+ * them; the attribute's value is what makes the rule specific, exactly as a class would. It has to be a
+ * value test — a bare `[data-extension-id]` matches every extension on the page and anchors nothing.
+ */
+const anchorPattern = /[.#](?:[-\w]|\\.)+|\[data-extension-[\w-]*[~^|*$]?=[^\]]*\]/g;
 
 /**
  * Carbon's class prefix, matched only where a selector starts with it. The shared configs run every

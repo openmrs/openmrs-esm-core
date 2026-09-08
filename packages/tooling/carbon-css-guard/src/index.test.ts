@@ -57,6 +57,34 @@ const cases: Array<{ label: string; css: string; expected: Array<string> }> = [
   { label: 'universal reset', css: '*{box-sizing:border-box}', expected: ['*'] },
   { label: 'attribute-only selector', css: '[dir=rtl]{text-align:right}', expected: ['[dir=rtl]'] },
   { label: ':root carries custom properties', css: ':root{--omrs-x:1}', expected: [] },
+
+  // Extension wrappers are the framework's markup, so an app has no class of its own to hang on them.
+  // A named extension or slot is as specific as a class; a valueless one matches every extension there is.
+  {
+    label: 'a named extension wrapper anchors the rule',
+    css: "[data-extension-id='sticky-notes-button']:empty{display:none}",
+    expected: [],
+  },
+  {
+    label: 'a named extension wrapper anchors a Carbon override',
+    css: "[data-extension-slot-name='my-slot'] .cds--btn{min-width:7rem}",
+    expected: [],
+  },
+  {
+    label: 'quotes stripped by minification still anchor',
+    css: '[data-extension-id=clinical-views-summary]{display:block}',
+    expected: [],
+  },
+  {
+    label: 'a valueless extension attribute anchors nothing',
+    css: '[data-extension-id]{display:block}',
+    expected: ['[data-extension-id]'],
+  },
+  {
+    label: 'a non-extension attribute still anchors nothing',
+    css: 'html[dir=rtl] .cds--side-nav{margin:0}',
+    expected: ['html[dir=rtl] .cds--side-nav'],
+  },
   { label: ':host carries custom properties', css: ':host{--omrs-x:1}', expected: [] },
 
   // Keyframe steps read like element selectors but select nothing.
