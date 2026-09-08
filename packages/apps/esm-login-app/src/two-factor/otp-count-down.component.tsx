@@ -1,3 +1,4 @@
+import { Button } from '@carbon/react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './count-down.scss';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +10,8 @@ export interface OTPCountdownProps {
   onResend?: () => Promise<void>;
   /** Whether to auto-start the countdown on mount */
   autoStart?: boolean;
+  /** Whether to request the first OTP automatically on mount */
+  autoRequest?: boolean;
   /** Additional CSS class name */
   className?: string;
   /** Text to display before the countdown */
@@ -21,6 +24,7 @@ const OTPCountdown: React.FC<OTPCountdownProps> = ({
   duration = 60,
   onResend,
   autoStart = true,
+  autoRequest = false,
   className,
   prefixText,
   resendText,
@@ -46,10 +50,18 @@ const OTPCountdown: React.FC<OTPCountdownProps> = ({
 
   // Handle resend click
   const handleResend = useCallback(async () => {
-    setRequested(true);
-    startCountdown();
     await onResend?.();
-  }, [startCountdown, onResend]);
+    setRequested(true);
+    if (autoStart) {
+      startCountdown();
+    }
+  }, [autoStart, startCountdown, onResend]);
+
+  useEffect(() => {
+    if (autoRequest) {
+      void handleResend();
+    }
+  }, [autoRequest, handleResend]);
 
   // Countdown effect
   useEffect(() => {
@@ -88,9 +100,9 @@ const OTPCountdown: React.FC<OTPCountdownProps> = ({
 
   if (!requested) {
     return (
-      <button type="button" onClick={handleResend} className={styles.resendButton} aria-label={resendText}>
+      <Button type="button" kind="secondary" size="md" onClick={handleResend} aria-label={resendText}>
         {resendText || t('sendOTPCode', 'Send OTP Code')}
-      </button>
+      </Button>
     );
   }
 
@@ -102,9 +114,9 @@ const OTPCountdown: React.FC<OTPCountdownProps> = ({
           <span className={styles.time}>{formatTime(timeLeft)}</span>
         </span>
       ) : (
-        <button type="button" onClick={handleResend} className={styles.resendButton} aria-label={resendText}>
+        <Button type="button" kind="secondary" size="md" onClick={handleResend} aria-label={resendText}>
           {resendText || t('resendCode', 'Resend code')}
-        </button>
+        </Button>
       )}
     </div>
   );

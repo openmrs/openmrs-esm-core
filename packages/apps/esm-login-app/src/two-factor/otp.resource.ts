@@ -22,6 +22,43 @@ export interface OTPSource {
   otpSource?: string;
 }
 
+function parseServerResponse(rawText: string): any {
+  const trimmedText = rawText.trim();
+
+  try {
+    const parsed = JSON.parse(trimmedText);
+    if (typeof parsed !== 'string') {
+      return parsed;
+    }
+    rawText = parsed;
+  } catch {
+    // The endpoint may prefix its JSON response with a status message.
+  }
+
+  const jsonStart = rawText.indexOf('{');
+  const jsonEnd = rawText.lastIndexOf('}');
+  if (jsonStart === -1 || jsonEnd < jsonStart) {
+    throw new Error('Invalid response from server');
+  }
+
+  return JSON.parse(rawText.slice(jsonStart, jsonEnd + 1).replace(/\\"/g, '"'));
+}
+
+async function getOtpSource(headers: Record<string, string>): Promise<'kehmis' | 'hie'> {
+  const response = await openmrsFetch<OTPSource>(`${restBaseUrl}/kenyaemr/checkotpsource`, { headers });
+
+  if (!response.ok) {
+    throw new Error(`Unable to retrieve OTP source: HTTP ${response.status}`);
+  }
+
+  const source = response.data?.otpSource?.toLowerCase();
+  if (source === 'kehmis' || source === 'hie') {
+    return source;
+  }
+
+  throw new Error('Unable to retrieve OTP source: invalid response');
+}
+
 /**
  * Generates a random OTP of a specified length.
  */
@@ -54,9 +91,30 @@ export function parseMessage<T extends Record<string, string | number>>(context:
 /**
  * Builds a URL for sending an SMS message.
  */
-function buildSmsUrl(message: string, receiver: string, nationalId: string | null = null): string {
+function formatKenyanPhoneNumber(phoneNumber: string): string {
+  const normalizedPhoneNumber = phoneNumber.replace(/\D/g, '');
+
+  if (normalizedPhoneNumber.startsWith('254')) {
+    return normalizedPhoneNumber;
+  }
+
+  if (normalizedPhoneNumber.startsWith('0')) {
+    return `254${normalizedPhoneNumber.substring(1)}`;
+  }
+
+  return normalizedPhoneNumber;
+}
+
+function buildSmsUrl(
+  message: string,
+  receiver: string,
+  nationalId: string | null = null,
+  otpSource: 'kehmis' | 'hie' = 'kehmis',
+): string {
   const encodedMessage = encodeURIComponent(message);
-  let url = `${restBaseUrl}/kenyaemr/send-palkehmis-sms?message=${encodedMessage}&phone=${receiver}`;
+  const formattedReceiver = otpSource === 'hie' ? formatKenyanPhoneNumber(receiver) : receiver;
+  const endpoint = otpSource === 'hie' ? 'send-kenyaemr-sms' : 'send-palkehmis-sms';
+  let url = `${restBaseUrl}/kenyaemr/${endpoint}?message=${encodedMessage}&phone=${formattedReceiver}`;
 
   if (nationalId?.trim()) {
     url += `&nationalId=${encodeURIComponent(nationalId)}`;
@@ -223,6 +281,7 @@ async function requestOtpFromServer(
   expiryMinutes: number = 5,
   nationalId: string | null = null,
   headers: Record<string, string>,
+  otpSource: 'kehmis' | 'hie' = 'hie',
 ): Promise<{ id: string; message: string }> {
   validateOtpInputs(receiver, patientName);
 
@@ -233,12 +292,12 @@ async function requestOtpFromServer(
   };
 
   const messageTemplate =
-    'Dear {{patient_name}}, Your OTP to access your Shared Health Records is {{otp}}.' +
-    ' By entering this code, you consent to accessing your records. Valid for {{expiry_time}} minutes.';
+    'Dear {{patient_name}}, Your One-Time Password (OTP) for access is {{otp}}.' +
+    ' Do not share this code with anyone. The code is valid for {{expiry_time}} minutes.';
 
   try {
     const message = parseMessage(context, messageTemplate);
-    const url = buildSmsUrl(message, receiver, nationalId);
+    const url = buildSmsUrl(message, receiver, nationalId, otpSource);
 
     const response = await openmrsFetch(url, {
       method: 'POST',
@@ -250,34 +309,25 @@ async function requestOtpFromServer(
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    let responseText = await response.text();
+    const responseText = await response.text();
+    let data: any = parseServerResponse(responseText);
 
-    let unwrappedText: string;
-    try {
-      unwrappedText = JSON.parse(responseText);
-    } catch (e) {
-      unwrappedText = responseText;
+    if (typeof data === 'string') {
+      data = JSON.parse(data);
     }
 
-    const jsonMatch = unwrappedText.match(/\{.*\}/);
-    if (!jsonMatch) {
-      throw new Error('No valid JSON in server response');
+    if (data.response && typeof data.response === 'string') {
+      data = JSON.parse(data.response);
     }
 
-    let data;
-    try {
-      data = JSON.parse(jsonMatch[0]);
-    } catch (parseError) {
-      throw new Error('Invalid JSON response from server');
-    }
-
-    if (data.status === 'success' && data.id) {
+    const otpId = data.id ?? data.otpId ?? data.data?.id ?? data.data?.otpId;
+    if (otpId) {
       return {
-        id: data.id,
+        id: otpId,
         message: data.message || 'OTP sent successfully',
       };
     } else {
-      const errorMessage = data.message || 'Failed to send OTP - no ID returned';
+      const errorMessage = data.message || `Failed to send OTP - no ID returned (${responseText})`;
       throw new Error(errorMessage);
     }
   } catch (error) {
@@ -315,12 +365,7 @@ async function verifyOtpWithServer(otpId: string, otp: string): Promise<boolean>
 
     const rawText = await response.text();
 
-    let parsedResponse;
-    try {
-      parsedResponse = JSON.parse(rawText);
-    } catch (e) {
-      throw new Error('Invalid response from server');
-    }
+    const parsedResponse = parseServerResponse(rawText);
 
     let data = parsedResponse;
     if (parsedResponse.response && typeof parsedResponse.response === 'string') {
@@ -366,10 +411,21 @@ class HieOTPManager {
   ): Promise<void> {
     this.cleanupExpiredOTPs();
 
+    if (!nationalId?.trim()) {
+      throw new Error('A national ID is required to request an HIE OTP.');
+    }
+
     const expiryTime = expiryMinutes * 60 * 1000;
 
     try {
-      const { id, message } = await requestOtpFromServer(phoneNumber, patientName, expiryMinutes, nationalId, headers);
+      const { id, message } = await requestOtpFromServer(
+        phoneNumber,
+        patientName,
+        expiryMinutes,
+        nationalId,
+        headers,
+        'hie',
+      );
       const sessionData = {
         otpId: id,
         timestamp: Date.now(),
@@ -515,6 +571,7 @@ class OTPManagerAdapter implements IOTPManager {
     nationalId: string | null = null,
     headers: Record<string, string>,
   ): Promise<void> {
+    this.currentSource = await getOtpSource(headers);
     this.cleanupExpiredOTPs();
     return this.getManager().requestOTP(phoneNumber, patientName, expiryMinutes, nationalId, headers);
   }

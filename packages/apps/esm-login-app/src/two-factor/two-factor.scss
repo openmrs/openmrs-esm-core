@@ -8,3 +8,11 @@
   align-items: center;
   gap: layout.$spacing-05;
 }
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: layout.$spacing-05;
+  width: 100%;
+}
