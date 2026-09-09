@@ -315,6 +315,48 @@ describe('renderParcel', () => {
     }
   });
 
+  it('rejects a lifecycle that does not return a promise', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+
+    await renderParcel({ ...lifecycles, mount: (() => undefined) as never }, { domElement });
+
+    const [bounded] = hostMountParcel.mock.calls[0] as [typeof lifecycles];
+
+    // single-spa makes this check itself, but only ever sees the deadline wrapper's own promise, so
+    // without it a mount that forgets to return its work would report as instantly complete.
+    await expect(bounded.mount({ domElement })).rejects.toThrow(
+      /Lifecycle function mount at array index 0 for parcel .* did not return a promise/,
+    );
+  });
+
+  it('runs the functions of an array lifecycle in turn, checking each for a promise', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const order: Array<string> = [];
+
+    await renderParcel(
+      {
+        ...lifecycles,
+        mount: [
+          () => Promise.resolve().then(() => void order.push('first')),
+          () => Promise.resolve().then(() => void order.push('second')),
+        ],
+      },
+      { domElement },
+    );
+    await renderParcel({ ...lifecycles, mount: [() => Promise.resolve(), (() => undefined) as never] }, { domElement });
+
+    const [chained] = hostMountParcel.mock.calls[0] as [typeof lifecycles];
+    const [broken] = hostMountParcel.mock.calls[1] as [typeof lifecycles];
+
+    await expect(chained.mount({ domElement })).resolves.toBeUndefined();
+    expect(order).toEqual(['first', 'second']);
+    await expect(broken.mount({ domElement })).rejects.toThrow(
+      /Lifecycle function mount at array index 1 for parcel .* did not return a promise/,
+    );
+  });
+
   it('leaves a parcel that declares its own timeouts to single-spa', async () => {
     const { hostMountParcel, renderParcel } = await loadRenderModule();
     const domElement = document.createElement('div');

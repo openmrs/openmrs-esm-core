@@ -26,10 +26,8 @@ type LifecycleFn = Exclude<LifeCycles['mount'], readonly unknown[]>;
 type LifecycleName = keyof typeof lifecycleDeadlines;
 
 /**
- * How long each lifecycle gets before the parcel is marked dead. Mounting covers an extension's
- * first render and so is given a long budget; unmounting only tears that render down and should
- * never be slow, so it fails much sooner. Loading and unloading are left out, as their timing is
- * unpredictable.
+ * How long each lifecycle gets before the parcel is marked dead. Loading and unloading are left
+ * out, as their timing is unpredictable. These are meant to be generous.
  *
  * These are enforced by {@link withDeadline} rather than through single-spa's `timeouts`, because
  * `reasonableTime()` never clears the timers it schedules from that config: until one fires its
@@ -38,16 +36,38 @@ type LifecycleName = keyof typeof lifecycleDeadlines;
 const lifecycleDeadlines = {
   bootstrap: 15_000,
   mount: 15_000,
-  unmount: 3_000,
+  unmount: 15_000,
 };
 
-/** Collapses single-spa's "function or array of functions" lifecycle shape into one function. */
-function toSingleFn(lifecycle: LifecycleFn | Array<LifecycleFn>): LifecycleFn {
-  if (!Array.isArray(lifecycle)) {
-    return lifecycle;
-  }
+/** single-spa's own test for a thenable, which is all it requires a lifecycle to return. */
+function isPromiseLike(value: unknown): value is Promise<unknown> {
+  const thenable = value as Promise<unknown> | undefined;
+  return typeof thenable?.then === 'function' && typeof thenable?.catch === 'function';
+}
 
-  return (props) => lifecycle.reduce((chain, fn) => chain.then(() => fn(props)), Promise.resolve<unknown>(undefined));
+/**
+ * Collapses single-spa's "function or array of functions" lifecycle shape into one function that
+ * runs each in turn, rejecting if any of them returns something that is not a promise.
+ */
+function toSingleFn(lifecycle: LifecycleFn | Array<LifecycleFn>, name: string, which: LifecycleName): LifecycleFn {
+  const fns = Array.isArray(lifecycle) ? lifecycle : [lifecycle];
+
+  return (props) =>
+    fns.reduce<Promise<unknown>>(
+      (chain, fn, index) =>
+        chain.then(() => {
+          const result = fn(props);
+
+          return isPromiseLike(result)
+            ? result
+            : Promise.reject(
+                new Error(
+                  `Lifecycle function ${which} at array index ${index} for parcel ${name} did not return a promise`,
+                ),
+              );
+        }),
+      Promise.resolve<unknown>(undefined),
+    );
 }
 
 /**
@@ -55,7 +75,14 @@ function toSingleFn(lifecycle: LifecycleFn | Array<LifecycleFn>): LifecycleFn {
  * settles either way. Rejecting puts the parcel into the same broken state single-spa's own
  * `dieOnTimeout` would, but without leaving a timer holding the parcel for the full deadline.
  */
-function withDeadline(lifecycle: LifecycleFn, millis: number, name: string, which: LifecycleName): LifecycleFn {
+function withDeadline(
+  lifecycle: LifecycleFn | Array<LifecycleFn>,
+  millis: number,
+  name: string,
+  which: LifecycleName,
+): LifecycleFn {
+  const run = toSingleFn(lifecycle, name, which);
+
   return (props) => {
     let timer: ReturnType<typeof setTimeout> | undefined;
     const deadline = new Promise<never>((_, reject) => {
@@ -65,7 +92,7 @@ function withDeadline(lifecycle: LifecycleFn, millis: number, name: string, whic
       );
     });
 
-    return Promise.race([Promise.resolve().then(() => lifecycle(props)), deadline]).finally(() => clearTimeout(timer));
+    return Promise.race([run(props), deadline]).finally(() => clearTimeout(timer));
   };
 }
 
@@ -80,7 +107,7 @@ function boundLifecycles(parcelConfig: ParcelConfigObject): ParcelConfigObject {
   const bounded = Object.fromEntries(
     (Object.keys(lifecycleDeadlines) as Array<LifecycleName>)
       .filter((which) => parcelConfig[which])
-      .map((which) => [which, withDeadline(toSingleFn(parcelConfig[which]), lifecycleDeadlines[which], name, which)]),
+      .map((which) => [which, withDeadline(parcelConfig[which], lifecycleDeadlines[which], name, which)]),
   );
 
   return { ...parcelConfig, ...bounded };
