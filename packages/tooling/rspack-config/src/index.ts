@@ -365,6 +365,9 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
             exclude: /node_modules/,
             loader: 'builtin:swc-loader',
             options: {
+              env: {
+                targets: browserTargets,
+              },
               jsc: {
                 parser: {
                   syntax: 'typescript',
@@ -414,6 +417,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       ],
     },
     mode,
+    // governs rspack's own runtime and chunk-loading glue
+    target: ['web', `browserslist:${browserTargets.join(', ')}`],
     devtool: mode === production ? 'hidden-nosources-source-map' : 'source-map',
     devServer: {
       headers: {

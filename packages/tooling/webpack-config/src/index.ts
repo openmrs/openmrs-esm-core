@@ -60,6 +60,8 @@ import {
   WebpackError,
   type WebpackOptionsNormalized as WebpackConfiguration,
 } from 'webpack';
+// webpack's own browsers-to-features mapping
+import browserslistTargetHandler from 'webpack/lib/config/browserslistTargetHandler';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
@@ -78,6 +80,26 @@ const production = 'production';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const moduleFederationPin: string = require('../package.json').dependencies['@module-federation/enhanced'];
 const moduleFederationVersion = parse(moduleFederationPin);
+
+// The subset of what `browserslistTargetHandler.resolve` reports that `output.environment` accepts;
+// the rest describe the platform and available APIs, and webpack's schema rejects them here.
+const environmentFlags = [
+  'arrowFunction',
+  'asyncFunction',
+  'bigIntLiteral',
+  'const',
+  'destructuring',
+  'document',
+  'dynamicImport',
+  'dynamicImportInWorker',
+  'forOf',
+  'globalThis',
+  'importMetaDirnameAndFilename',
+  'methodShorthand',
+  'module',
+  'optionalChaining',
+  'templateLiteral',
+] as const;
 
 /**
  * Prepended to this app's entry chunks. Without it, an app running under an app shell too old to
@@ -223,6 +245,29 @@ class BrowserslistWarningsPlugin {
   }
 }
 
+/**
+ * The `output.environment` flags for a set of browserslist queries: which JavaScript features webpack
+ * may use in the runtime it generates.
+ *
+ * Derived with webpack's own browserslist target handler, so the browsers-to-features mapping is the
+ * caniuse-backed one webpack uses for `target: 'browserslist'` rather than a table maintained here.
+ * `resolve` also reports platform and API properties that `output.environment` rejects, hence the
+ * filter to the flags webpack's schema accepts.
+ *
+ * @param queries Browserslist queries, already `extends`-expanded
+ * @param root The directory of the module being built, for resolving relative queries
+ */
+function browserEnvironment(queries: Array<string>, root: string): WebpackConfiguration['output']['environment'] {
+  const supported = browserslistTargetHandler.resolve(browserslist(queries, { path: root })) as Record<
+    string,
+    boolean | null | undefined
+  >;
+
+  return Object.fromEntries(
+    environmentFlags.filter((flag) => typeof supported[flag] === 'boolean').map((flag) => [flag, supported[flag]]),
+  );
+}
+
 function makeIdent(name: string): string {
   if (name.includes('/')) {
     name = name.slice(name.indexOf('/'));
@@ -360,6 +405,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       publicPath: 'auto',
       path: resolve(root, outDir),
       hashFunction: 'xxhash64',
+      environment: browserEnvironment(browserTargets, root),
     },
     module: {
       rules: [
@@ -367,7 +413,16 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.m?(js|ts|tsx)$/,
             exclude: /node_modules/,
-            use: require.resolve('swc-loader'),
+            use: {
+              loader: require.resolve('swc-loader'),
+              options: {
+                env: {
+                  targets: browserTargets,
+                },
+                // ignore a project .swcrc to match rspack behavior
+                swcrc: false,
+              },
+            },
           },
           scriptRuleConfig,
         ),
@@ -410,6 +465,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       ],
     },
     mode,
+    target: 'web',
     devtool: mode === production ? 'hidden-nosources-source-map' : 'source-map',
     devServer: {
       headers: {

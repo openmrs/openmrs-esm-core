@@ -119,11 +119,22 @@ export function buildFixtureApp(
             .map((file) => [file, readFileSync(join(outDir, file), 'utf8')]),
         );
       const scripts = emitted('.js');
+
       // Read from the fixture's own manifest, since the shared configs name the remote entry after it.
       const { browser } = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+      const entry = scripts[basename(browser)];
+
+      // Checked rather than handed on as `undefined`: `new Script(undefined)` compiles the source text
+      // `"undefined"` and runs without complaint, so a change to the emitted filename would leave the
+      // tests that execute the entry passing while executing nothing.
+      if (!entry) {
+        throw new Error(
+          `The ${bundler} build emitted no ${basename(browser)}. Emitted: ${Object.keys(scripts).join(', ')}`,
+        );
+      }
 
       return {
-        entry: scripts[basename(browser)],
+        entry,
         scripts,
         stylesheets: emitted('.css'),
         moduleIdentifiers: collectIdentifiers(modules),
