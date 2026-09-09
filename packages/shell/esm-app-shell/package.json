@@ -19,9 +19,6 @@
     "openmrs",
     "microfrontends"
   ],
-  "browserslist": [
-    "extends browserslist-config-openmrs"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
@@ -43,6 +40,7 @@
     "@openmrs/esm-styleguide": "workspace:*",
     "@rspack/cli": "1.7.9",
     "@rspack/core": "1.7.9",
+    "browserslist-config-openmrs": "^1.0.1",
     "dayjs": "^1.11.13",
     "dexie": "^3.0.3",
     "html-webpack-plugin": "5.6.6",
@@ -63,6 +61,7 @@
   },
   "devDependencies": {
     "@module-federation/runtime-core": "2.8.1",
+    "browserslist": "4.28.9",
     "cross-env": "^10.1.0",
     "vitest": "^4.1.2"
   }
