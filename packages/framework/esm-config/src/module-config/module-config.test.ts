@@ -1341,6 +1341,83 @@ describe('extension config', () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
+  it("uses the 'configure' config written by a module other than the one owning the slot", () => {
+    updateConfigExtensionStore('fooExt#id6');
+    // A slot opened by an extension belongs to the module that renders that extension, which is
+    // not the module an implementer configures the slot's contents from. A nav group is the case
+    // in point: the group comes from the primary navigation app, the links in it are configured
+    // by whichever app the group was added to.
+    const configureConfig = {
+      'ext-mod': { bar: 'qux' },
+      'other-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id6': { baz: 'quiz' } },
+          },
+        },
+      },
+    };
+    Config.provide(configureConfig);
+    const result = getExtensionConfig('barSlot', 'fooExt#id6').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'qux',
+      baz: 'quiz',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("prefers the slot-owning module's 'configure' config to another module's", () => {
+    updateConfigExtensionStore('fooExt#id7');
+    const configureConfig = {
+      'other-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id7': { bar: 'from-other', baz: 'from-other' } },
+          },
+        },
+      },
+      'slot-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id7': { baz: 'from-owner' } },
+          },
+        },
+      },
+    };
+    Config.provide(configureConfig);
+    const result = getExtensionConfig('barSlot', 'fooExt#id7').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'from-other',
+      baz: 'from-owner',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('keeps the slot configuration of every module that configures the slot', () => {
+    updateConfigExtensionStore('fooExt#id8');
+    Config.provide({
+      'adding-mod': { extensionSlots: { barSlot: { add: ['fooExt#id8'] } } },
+      'configuring-mod': {
+        extensionSlots: { barSlot: { configure: { 'fooExt#id8': { baz: 'quiz' } } } },
+      },
+    });
+
+    expect(getExtensionSlotsConfigStore().getState().slots['barSlot'].config).toStrictEqual({
+      add: ['fooExt#id8'],
+      configure: { 'fooExt#id8': { baz: 'quiz' } },
+    });
+    expect(getExtensionConfig('barSlot', 'fooExt#id8').getState().config).toStrictEqual({
+      bar: 'barry',
+      baz: 'quiz',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+  });
+
   it('validates the extension configure config, with module config schema', () => {
     updateConfigExtensionStore('fooExt#id1');
     const badConfig = {

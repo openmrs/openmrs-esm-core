@@ -73,8 +73,11 @@ function recomputeAllConfigs() {
   const extensionState = configExtensionStore.getState();
 
   computeModuleConfig(configState, tempConfigState);
-  computeExtensionSlotConfigs(configState, tempConfigState);
-  computeExtensionConfigs(configState, extensionState, tempConfigState);
+
+  const slotConfigs = getExtensionSlotConfigs(configState, tempConfigState);
+  computeExtensionSlotConfigs(slotConfigs);
+  computeExtensionConfigs(configState, extensionState, tempConfigState, slotConfigs);
+
   // Last, because a failure here must not skip the outputs above. Only kept current while the
   // implementer tools are watching it; otherwise derived on read.
   invalidateImplementerToolsConfig();
@@ -185,8 +188,7 @@ function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryCon
   }
 }
 
-function computeExtensionSlotConfigs(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
-  const slotConfigs = getExtensionSlotConfigs(state, tempState);
+function computeExtensionSlotConfigs(slotConfigs: Record<string, ExtensionSlotConfig>) {
   const slotStore = getExtensionSlotsConfigStore();
   const oldSlots = slotStore.getState().slots;
   const slots: ExtensionSlotsConfigStore['slots'] = {};
@@ -228,6 +230,7 @@ function computeExtensionConfigs(
   configState: ConfigInternalStore,
   extensionState: ConfigExtensionStore,
   tempConfigState: TemporaryConfigStore,
+  slotConfigs: Record<string, ExtensionSlotConfig>,
 ) {
   const extensionsConfigStore = getExtensionsConfigStore();
   const oldConfigs = extensionsConfigStore.getState().configs;
@@ -245,6 +248,7 @@ function computeExtensionConfigs(
       extension.extensionId,
       configState,
       tempConfigState,
+      slotConfigs[extension.slotName],
     );
 
     const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
@@ -555,6 +559,7 @@ const extensionConfigCache = new Map<string, ExtensionConfigCacheEntry>();
  * @param extensionModuleName The name of the module which defines the extension (and therefore the config schema)
  * @param slotName The name of the extension slot where the extension is mounted
  * @param extensionId The ID of the extension in its slot
+ * @param slotConfig The slot's configuration, gathered from every module that configures it
  */
 function computeExtensionConfig(
   slotModuleName: string,
@@ -563,6 +568,7 @@ function computeExtensionConfig(
   extensionId: string,
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
+  slotConfig: ExtensionSlotConfig | undefined,
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
@@ -582,10 +588,11 @@ function computeExtensionConfig(
 
   const nameOfSchemaSource = extensionConfigSchema ? extensionName : extensionModuleName;
   const providedConfigs = getProvidedConfigs(configState, tempConfigState);
+  const sharedOverride = slotConfig?.configure?.[extensionId] ?? {};
   const slotModuleConfig = mergeConfigsFor(slotModuleName, providedConfigs);
   const configOverride = slotModuleConfig?.extensionSlots?.[slotName]?.configure?.[extensionId] ?? {};
   const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
-  const combinedConfig = mergeConfigs([extensionConfig, configOverride]);
+  const combinedConfig = mergeConfigs([extensionConfig, sharedOverride, configOverride]);
   const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
   validateStructure(schema, combinedConfig, nameOfSchemaSource);
   const config = setDefaults(schema, combinedConfig);
@@ -739,12 +746,9 @@ function getExtensionSlotConfigs(
     },
     {},
   );
+
   validateAllExtensionSlotConfigs(slotConfigPerModule);
-  const slotConfigs = Object.keys(slotConfigPerModule).reduce((obj, key) => {
-    obj = { ...obj, ...slotConfigPerModule[key] };
-    return obj;
-  }, {});
-  return slotConfigs;
+  return mergeConfigs(Object.values(slotConfigPerModule));
 }
 
 function validateAllExtensionSlotConfigs(slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>>) {
