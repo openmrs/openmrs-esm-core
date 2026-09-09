@@ -32,12 +32,14 @@ import { type TemporaryConfigStore } from '..';
  * Arrays are replaced entirely (not merged by index), matching the
  * behavior of ramda's mergeDeepRight.
  */
+function replaceArrays(_objValue: unknown, srcValue: unknown) {
+  if (Array.isArray(srcValue)) {
+    return srcValue;
+  }
+}
+
 function mergeDeepReplace<T extends object>(left: T, right: Partial<T>): T {
-  return mergeWith({}, left, right, (_objValue: unknown, srcValue: unknown) => {
-    if (Array.isArray(srcValue)) {
-      return srcValue;
-    }
-  }) as T;
+  return mergeWith({}, left, right, replaceArrays) as T;
 }
 
 /**
@@ -748,7 +750,29 @@ function getExtensionSlotConfigs(
   );
 
   validateAllExtensionSlotConfigs(slotConfigPerModule);
-  return mergeConfigs(Object.values(slotConfigPerModule));
+
+  const slotConfigs: Record<string, ExtensionSlotConfig> = {};
+  const configureBlocks: Record<string, Array<NonNullable<ExtensionSlotConfig['configure']>>> = {};
+
+  for (const configBySlotName of Object.values(slotConfigPerModule)) {
+    for (const [slotName, config] of Object.entries(configBySlotName)) {
+      slotConfigs[slotName] = config;
+
+      if (config.configure) {
+        (configureBlocks[slotName] ??= []).push(config.configure);
+      }
+    }
+  }
+
+  for (const [slotName, blocks] of Object.entries(configureBlocks)) {
+    const configure = blocks.length === 1 ? blocks[0] : (mergeConfigs(blocks) as ExtensionSlotConfig['configure']);
+
+    if (slotConfigs[slotName].configure !== configure) {
+      slotConfigs[slotName] = { ...slotConfigs[slotName], configure };
+    }
+  }
+
+  return slotConfigs;
 }
 
 function validateAllExtensionSlotConfigs(slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>>) {
@@ -905,8 +929,11 @@ function mergeConfigsFor(moduleName: string, allConfigs: Array<Config>): ConfigO
   return mergeConfigs(allConfigsForModule);
 }
 
+/**
+ * Merges a whole list at once, accumulating into one destination.
+ */
 function mergeConfigs(configs: Array<Config>) {
-  return configs.reduce<Config>((acc, config) => mergeDeepReplace(acc, config), {});
+  return configs.reduce<Config>((acc, config) => mergeWith(acc, config, replaceArrays), {});
 }
 
 /**

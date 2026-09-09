@@ -9,7 +9,9 @@ import {
   openmrsComponentDecorator,
   provide,
   registerExtension,
+  Type,
   updateInternalExtensionStore,
+  useConfig,
 } from '@openmrs/esm-framework/src/internal';
 import Dashboard, { dashboardConfigSchema } from '../dashboard/dashboard.component';
 import { NavGroup, navGroupConfigSchema } from './nav-group.component';
@@ -56,10 +58,16 @@ describe('the nav group extension', () => {
   });
 
   it('opens the slot named by its configuration', async () => {
+    function GroupMember() {
+      const { label } = useConfig<{ label: string }>();
+      return <div>a link labelled {label}</div>;
+    }
+
+    defineExtensionConfigSchema('group-member', { label: { _type: Type.String, _default: 'nothing' } });
     registerExtension({
       name: 'group-member',
       moduleName: navApp,
-      load: getSyncLifecycle(() => <div>a link in the group</div>, {
+      load: getSyncLifecycle(GroupMember, {
         moduleName: navApp,
         featureName: 'group member',
         disableTranslations: true,
@@ -77,7 +85,9 @@ describe('the nav group extension', () => {
                 'nav-group#titled': { title: 'Clinical Views', slotName: 'titled-group-slot' },
               },
             },
-            'titled-group-slot': { add: ['group-member'] },
+            // The group's own slot belongs to the nav app, so configuring its contents from here
+            // is the case that has to keep working.
+            'titled-group-slot': { add: ['group-member'], configure: { 'group-member': { label: 'Vitals' } } },
           },
         },
       },
@@ -87,12 +97,12 @@ describe('the nav group extension', () => {
     renderChartSlot('titled-group-outer-slot');
 
     expect(await screen.findByText('Clinical Views')).toBeInTheDocument();
-    expect(await screen.findByText('a link in the group')).toBeInTheDocument();
+    expect(await screen.findByText(/a link labelled/)).toHaveTextContent('a link labelled Vitals');
   });
 
-  // The reported regression: the slot a nav group opens belongs to this app, because this app
-  // renders the group, but the implementer only ever sees the app they added the group to.
-  // Configuration for the group's contents has to be honored from there.
+  // The slot a nav group opens belongs to the nav app, since the nav app renders the group, but
+  // the implementer only sees the app they added the group to. Configuration written there has to
+  // reach the group's contents.
   it("applies the configuration the outer slot's module gives to extensions inside the group", async () => {
     provide(
       {

@@ -25,10 +25,13 @@ function registerDashboard() {
   });
 }
 
+// Hosted by this app rather than the chart app, so the slot belongs to this app while the
+// configuration below is written by the app that put the dashboard there. That is the arrangement
+// a nav group produces, and the one the dashboard has to work under.
 function renderSlot(slotName: string) {
   const Host = openmrsComponentDecorator({
-    moduleName: chartApp,
-    featureName: 'patient chart',
+    moduleName: navApp,
+    featureName: 'primary navigation',
     disableTranslations: true,
   })(() => <ExtensionSlot name={slotName} state={{ basePath: '/patient/123/chart' }} />);
 
@@ -37,6 +40,7 @@ function renderSlot(slotName: string) {
 
 describe('the dashboard extension', () => {
   beforeAll(() => {
+    defineConfigSchema(navApp, {});
     defineConfigSchema(chartApp, {});
     defineExtensionConfigSchema('dashboard', dashboardConfigSchema);
   });

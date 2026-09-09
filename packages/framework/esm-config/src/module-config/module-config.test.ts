@@ -1341,12 +1341,10 @@ describe('extension config', () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
+  // The module that renders an extension owns the slot it opens, which need not be the module an
+  // implementer configures that slot from.
   it("uses the 'configure' config written by a module other than the one owning the slot", () => {
     updateConfigExtensionStore('fooExt#id6');
-    // A slot opened by an extension belongs to the module that renders that extension, which is
-    // not the module an implementer configures the slot's contents from. A nav group is the case
-    // in point: the group comes from the primary navigation app, the links in it are configured
-    // by whichever app the group was added to.
     const configureConfig = {
       'ext-mod': { bar: 'qux' },
       'other-mod': {
@@ -1371,17 +1369,17 @@ describe('extension config', () => {
   it("prefers the slot-owning module's 'configure' config to another module's", () => {
     updateConfigExtensionStore('fooExt#id7');
     const configureConfig = {
-      'other-mod': {
-        extensionSlots: {
-          barSlot: {
-            configure: { 'fooExt#id7': { bar: 'from-other', baz: 'from-other' } },
-          },
-        },
-      },
       'slot-mod': {
         extensionSlots: {
           barSlot: {
             configure: { 'fooExt#id7': { baz: 'from-owner' } },
+          },
+        },
+      },
+      'other-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id7': { bar: 'from-other', baz: 'from-other' } },
           },
         },
       },
@@ -1397,25 +1395,43 @@ describe('extension config', () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
-  it('keeps the slot configuration of every module that configures the slot', () => {
+  it("gathers 'configure' from every module but leaves 'add' to the last one to declare the slot", () => {
     updateConfigExtensionStore('fooExt#id8');
     Config.provide({
-      'adding-mod': { extensionSlots: { barSlot: { add: ['fooExt#id8'] } } },
-      'configuring-mod': {
-        extensionSlots: { barSlot: { configure: { 'fooExt#id8': { baz: 'quiz' } } } },
+      'first-mod': {
+        extensionSlots: {
+          barSlot: { add: ['fooExt#unwanted'], configure: { 'fooExt#id8': { bar: 'from-first' } } },
+        },
+      },
+      'last-mod': {
+        extensionSlots: {
+          barSlot: { add: ['fooExt#id8'], configure: { 'fooExt#id8': { baz: 'from-last' } } },
+        },
       },
     });
 
-    expect(getExtensionSlotsConfigStore().getState().slots['barSlot'].config).toStrictEqual({
-      add: ['fooExt#id8'],
-      configure: { 'fooExt#id8': { baz: 'quiz' } },
-    });
+    // Composing `add` across modules would resurrect entries another module had removed, so the
+    // last module to name the slot still supplies it whole.
+    expect(getExtensionSlotsConfigStore().getState().slots['barSlot'].config.add).toStrictEqual(['fooExt#id8']);
     expect(getExtensionConfig('barSlot', 'fooExt#id8').getState().config).toStrictEqual({
-      bar: 'barry',
-      baz: 'quiz',
+      bar: 'from-first',
+      baz: 'from-last',
       'Display conditions': { expression: undefined, privileges: [] },
       'Translation overrides': {},
     });
+  });
+
+  it('releases a cross-module configure when the temporary config that set it is cleared', () => {
+    updateConfigExtensionStore('fooExt#id9');
+    temporaryConfigStore.setState({
+      config: { 'other-mod': { extensionSlots: { barSlot: { configure: { 'fooExt#id9': { baz: 'temporary' } } } } } },
+    });
+    expect(getExtensionConfig('barSlot', 'fooExt#id9').getState().config.baz).toBe('temporary');
+
+    // The derived slot config is not part of the extension config cache key, so a released override
+    // is only picked up because that cache also keys on the temporary config it was derived from.
+    temporaryConfigStore.setState({ config: {} });
+    expect(getExtensionConfig('barSlot', 'fooExt#id9').getState().config.baz).toBe('bazzy');
   });
 
   it('validates the extension configure config, with module config schema', () => {
