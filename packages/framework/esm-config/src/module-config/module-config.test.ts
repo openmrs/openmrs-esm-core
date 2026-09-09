@@ -1341,6 +1341,99 @@ describe('extension config', () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
+  // The module that renders an extension owns the slot it opens, which need not be the module an
+  // implementer configures that slot from.
+  it("uses the 'configure' config written by a module other than the one owning the slot", () => {
+    updateConfigExtensionStore('fooExt#id6');
+    const configureConfig = {
+      'ext-mod': { bar: 'qux' },
+      'other-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id6': { baz: 'quiz' } },
+          },
+        },
+      },
+    };
+    Config.provide(configureConfig);
+    const result = getExtensionConfig('barSlot', 'fooExt#id6').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'qux',
+      baz: 'quiz',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("prefers the slot-owning module's 'configure' config to another module's", () => {
+    updateConfigExtensionStore('fooExt#id7');
+    const configureConfig = {
+      'slot-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id7': { baz: 'from-owner' } },
+          },
+        },
+      },
+      'other-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id7': { bar: 'from-other', baz: 'from-other' } },
+          },
+        },
+      },
+    };
+    Config.provide(configureConfig);
+    const result = getExtensionConfig('barSlot', 'fooExt#id7').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'from-other',
+      baz: 'from-owner',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("gathers 'configure' from every module but leaves 'add' to the last one to declare the slot", () => {
+    updateConfigExtensionStore('fooExt#id8');
+    Config.provide({
+      'first-mod': {
+        extensionSlots: {
+          barSlot: { add: ['fooExt#unwanted'], configure: { 'fooExt#id8': { bar: 'from-first' } } },
+        },
+      },
+      'last-mod': {
+        extensionSlots: {
+          barSlot: { add: ['fooExt#id8'], configure: { 'fooExt#id8': { baz: 'from-last' } } },
+        },
+      },
+    });
+
+    // Composing `add` across modules would resurrect entries another module had removed, so the
+    // last module to name the slot still supplies it whole.
+    expect(getExtensionSlotsConfigStore().getState().slots['barSlot'].config.add).toStrictEqual(['fooExt#id8']);
+    expect(getExtensionConfig('barSlot', 'fooExt#id8').getState().config).toStrictEqual({
+      bar: 'from-first',
+      baz: 'from-last',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+  });
+
+  it('releases a cross-module configure when the temporary config that set it is cleared', () => {
+    updateConfigExtensionStore('fooExt#id9');
+    temporaryConfigStore.setState({
+      config: { 'other-mod': { extensionSlots: { barSlot: { configure: { 'fooExt#id9': { baz: 'temporary' } } } } } },
+    });
+    expect(getExtensionConfig('barSlot', 'fooExt#id9').getState().config.baz).toBe('temporary');
+
+    // The derived slot config is not part of the extension config cache key, so a released override
+    // is only picked up because that cache also keys on the temporary config it was derived from.
+    temporaryConfigStore.setState({ config: {} });
+    expect(getExtensionConfig('barSlot', 'fooExt#id9').getState().config.baz).toBe('bazzy');
+  });
+
   it('validates the extension configure config, with module config schema', () => {
     updateConfigExtensionStore('fooExt#id1');
     const badConfig = {
