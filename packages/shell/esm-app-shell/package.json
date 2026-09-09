@@ -63,6 +63,6 @@
     "@module-federation/runtime-core": "2.8.1",
     "browserslist": "4.28.9",
     "cross-env": "^10.1.0",
-    "vitest": "^4.1.2"
+    "vitest": "^5.0.0"
   }
 }
