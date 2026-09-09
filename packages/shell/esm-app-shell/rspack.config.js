@@ -21,6 +21,18 @@ const frameworkVersion = require('@openmrs/esm-framework/package.json').version;
 
 const timestamp = getTimestamp();
 const production = 'production';
+
+/**
+ * The browserslist queries the app shell is built for, driving both swc and rspack's own runtime. Given
+ * no target at all swc down-levels to ES5, and every supported browser pays for transform helpers it
+ * doesn't need.
+ *
+ * Read straight from `browserslist-config-openmrs`, so frontend RFC 0003 is the single source of truth
+ * here as it is for the modules built by the shared configs. Those resolve a module's own browserslist
+ * config first; the app shell has no reason to differ from the policy, and doesn't declare one.
+ */
+const browserTargets = require('browserslist-config-openmrs');
+
 const allowedSuffixes = ['-app', '-widgets'];
 
 const openmrsAddCookie = process.env.OMRS_ADD_COOKIE;
@@ -237,7 +249,11 @@ module.exports = (env, argv = []) => {
       publicPath: '',
       hashFunction: 'xxhash64',
     },
-    target: 'web',
+    // Governs the runtime and chunk-loading glue rspack writes itself, which swc never sees. The
+    // queries are inlined because this package declares no browserslist config of its own, and rspack
+    // answers a bare `browserslist` target with browserslist's `defaults` — browsers far older than O3
+    // supports — rather than reporting that it found nothing.
+    target: ['web', `browserslist:${browserTargets.join(', ')}`],
     // Module Federation v1.5 is incompatible with lazy compilation
     lazyCompilation: false,
     devServer: {
@@ -369,6 +385,12 @@ module.exports = (env, argv = []) => {
           use: [
             {
               loader: 'builtin:swc-loader',
+              options: {
+                // No `jsc.parser`, so that swc keeps inferring syntax from each file's extension.
+                env: {
+                  targets: browserTargets,
+                },
+              },
             },
           ],
         },

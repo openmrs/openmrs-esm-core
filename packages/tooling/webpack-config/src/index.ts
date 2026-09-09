@@ -38,23 +38,30 @@
  */
 import { existsSync, statSync } from 'fs';
 import { basename, dirname, resolve } from 'path';
+import browserslist from 'browserslist';
+import { loadQueries } from 'browserslist/node';
+import defaultBrowserslistQueries from 'browserslist-config-openmrs';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 // eslint-disable-next-line no-restricted-imports
 import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
-import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
 import {
   BannerPlugin,
+  type Compiler,
   DefinePlugin,
   ExternalsPlugin,
   type ModuleOptions,
   type RuleSetRule,
+  WebpackError,
   type WebpackOptionsNormalized as WebpackConfiguration,
 } from 'webpack';
+// webpack's own browsers-to-features mapping
+import browserslistTargetHandler from 'webpack/lib/config/browserslistTargetHandler';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
+import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
 
 type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module' | 'output'> & {
   module: ModuleOptions;
@@ -69,6 +76,26 @@ const production = 'production';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const moduleFederationPin: string = require('../package.json').dependencies['@module-federation/enhanced'];
 const moduleFederationVersion = parse(moduleFederationPin);
+
+// The subset of what `browserslistTargetHandler.resolve` reports that `output.environment` accepts;
+// the rest describe the platform and available APIs, and webpack's schema rejects them here.
+const environmentFlags = [
+  'arrowFunction',
+  'asyncFunction',
+  'bigIntLiteral',
+  'const',
+  'destructuring',
+  'document',
+  'dynamicImport',
+  'dynamicImportInWorker',
+  'forOf',
+  'globalThis',
+  'importMetaDirnameAndFilename',
+  'methodShorthand',
+  'module',
+  'optionalChaining',
+  'templateLiteral',
+] as const;
 
 /**
  * Prepended to this app's entry chunks. Without it, an app running under an app shell too old to
@@ -109,6 +136,132 @@ function getFrameworkVersion() {
   } catch {
     return '5.x';
   }
+}
+
+/** What a module's browsers resolved to, plus anything worth telling the developer about getting there. */
+type BrowserPolicy = { queries: Array<string>; warnings: Array<string> };
+
+/**
+ * The browserslist queries swc compiles this module against, falling back to OpenMRS's shared config
+ * when the module declares none, so that frontend RFC 0003 stays the single source of truth. Given no
+ * target at all swc down-levels to ES5, and every supported browser pays for transform helpers it
+ * doesn't need.
+ *
+ * `@openmrs/rspack-config` has a copy of this; keep them in step. `browser-targets.test.ts` compares
+ * what the two hand their loaders and fails if they drift.
+ *
+ * @param root The directory of the module being built
+ */
+function browserslistQueries(root: string): BrowserPolicy {
+  const warnings: Array<string> = [];
+  // deliberately unguarded
+  const loaded = browserslist.loadConfig({ path: root });
+  const configured = loaded === undefined ? [] : Array.isArray(loaded) ? loaded : [loaded];
+
+  if (loaded !== undefined && configured.length === 0) {
+    // warn when a browserlist config is empty
+    warnings.push(
+      `This module declares a browserslist config, but it resolves to no queries for the ` +
+        `${process.env.BROWSERSLIST_ENV ?? process.env.NODE_ENV ?? production} environment. ` +
+        `Targeting ${defaultBrowserslistQueries.join(', ')} instead.`,
+    );
+  }
+
+  const expanded = expandBrowserslistExtends(
+    configured.length > 0 ? configured : defaultBrowserslistQueries,
+    root,
+    warnings,
+  );
+
+  return { queries: expanded.length > 0 ? expanded : defaultBrowserslistQueries, warnings };
+}
+
+function expandBrowserslistExtends(
+  queries: Array<string>,
+  root: string,
+  warnings: Array<string>,
+  seen = new Set<string>(),
+): Array<string> {
+  // Split on commas because a browserslist config may be a single string of them
+  return queries.flatMap((query) =>
+    query
+      .split(',')
+      .flatMap((part) => {
+        const extended = /^extends\s+(.+)$/i.exec(part.trim());
+
+        if (!extended) {
+          return [part.trim()];
+        }
+
+        const name = extended[1].trim();
+
+        if (seen.has(name)) {
+          return [];
+        }
+
+        seen.add(name);
+
+        try {
+          // browserslist's own loader, rather than a bare `require` so we handle the same syntax
+          const resolved = loadQueries({ path: root }, name);
+
+          return expandBrowserslistExtends(Array.isArray(resolved) ? resolved : [resolved], root, warnings, seen);
+        } catch (err) {
+          // Only browserslist's own verdict on a named config is survivable: not installed, or refused
+          // for its name.
+          const notInstalled = (err as { code?: string })?.code === 'MODULE_NOT_FOUND';
+          const refused = (err as { browserslist?: boolean })?.browserslist === true;
+
+          if (!notInstalled && !refused) {
+            throw err;
+          }
+
+          warnings.push(
+            `Could not load the browserslist config "${name}" (${(err as Error).message}). ` +
+              `Targeting ${defaultBrowserslistQueries.join(', ')} instead.`,
+          );
+
+          return defaultBrowserslistQueries;
+        }
+      })
+      .filter((part) => part.length > 0),
+  );
+}
+
+/** Reports how a module's browsers were worked out, where a developer will actually see it. */
+class BrowserslistWarningsPlugin {
+  constructor(private readonly messages: Array<string>) {}
+
+  apply(compiler: Compiler) {
+    compiler.hooks.thisCompilation.tap('OpenmrsBrowserslistWarnings', (compilation) => {
+      for (const message of this.messages) {
+        compilation.warnings.push(new WebpackError(message));
+      }
+    });
+  }
+}
+
+/**
+ * The `output.environment` flags for a set of browserslist queries: which JavaScript features webpack
+ * may use in the runtime it generates.
+ *
+ * Derived with webpack's own browserslist target handler, so the browsers-to-features mapping is the
+ * caniuse-backed one webpack uses for `target: 'browserslist'` rather than a table maintained here.
+ * `resolve` also reports platform and API properties that `output.environment` rejects, hence the
+ * filter to the flags webpack's schema accepts.
+ *
+ * @param queries Browserslist queries, already `extends`-expanded
+ * @param root The directory of the module being built, for resolving relative queries
+ */
+function browserEnvironment(queries: Array<string>, root: string): WebpackConfiguration['output']['environment'] {
+  const supported = browserslistTargetHandler.resolve(browserslist(queries, { path: root })) as Record<
+    string,
+    boolean | null | undefined
+  >;
+
+  return Object.fromEntries(
+    environmentFlags.filter((flag) => typeof supported[flag] === 'boolean').map((flag) => [flag, supported[flag]]),
+  );
 }
 
 function makeIdent(name: string): string {
@@ -201,6 +354,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
+  const { queries: browserTargets, warnings: browserslistWarnings } = browserslistQueries(root);
   const frameworkVersion = getFrameworkVersion();
   const routes = resolve(root, 'src', 'routes.json');
   const hasRoutesDefined = fileExistsSync(routes);
@@ -232,6 +386,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       publicPath: 'auto',
       path: resolve(root, outDir),
       hashFunction: 'xxhash64',
+      environment: browserEnvironment(browserTargets, root),
     },
     module: {
       rules: [
@@ -239,7 +394,16 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.m?(js|ts|tsx)$/,
             exclude: /node_modules/,
-            use: require.resolve('swc-loader'),
+            use: {
+              loader: require.resolve('swc-loader'),
+              options: {
+                env: {
+                  targets: browserTargets,
+                },
+                // ignore a project .swcrc to match rspack behavior
+                swcrc: false,
+              },
+            },
           },
           scriptRuleConfig,
         ),
@@ -282,6 +446,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       ],
     },
     mode,
+    target: 'web',
     devtool: mode === production ? 'hidden-nosources-source-map' : 'source-map',
     devServer: {
       headers: {
@@ -313,6 +478,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       optimizationConfig,
     ),
     plugins: [
+      browserslistWarnings.length > 0 && new BrowserslistWarningsPlugin(browserslistWarnings),
       new ForkTsCheckerWebpackPlugin({
         issue: {
           exclude: [
