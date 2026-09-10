@@ -12,11 +12,13 @@ import {
   registerExtension,
   updateInternalExtensionStore,
 } from '@openmrs/esm-extensions';
+import { defineConfigSchema, defineExtensionConfigSchema, provide, Type } from '@openmrs/esm-config';
 import {
   getSyncLifecycle,
   Extension,
   ExtensionSlot,
   openmrsComponentDecorator,
+  useConfig,
   useExtensionSlotMeta,
   useRenderableExtensions,
 } from '.';
@@ -390,6 +392,61 @@ describe('Extension teardown', () => {
     // second render that resolves to null and clears the parcel still coming up.
     expect(consoleWarn).not.toHaveBeenCalledWith(expect.stringContaining('no DOM element was available'));
     consoleWarn.mockRestore();
+  });
+});
+
+describe('a slot opened by an extension from another module', () => {
+  beforeEach(() => {
+    updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
+  });
+
+  it('configures the extensions in that slot from whichever module configures the slot', async () => {
+    defineConfigSchema('esm-chart-app', {});
+    defineConfigSchema('esm-nav-app', {});
+    defineExtensionConfigSchema('group', { slotName: { _type: Type.String, _default: '' } });
+    defineExtensionConfigSchema('link', { path: { _type: Type.String, _default: '' } });
+
+    function Group() {
+      const { slotName } = useConfig<{ slotName: string }>();
+      return <ExtensionSlot name={slotName} />;
+    }
+
+    function Link() {
+      const { path } = useConfig<{ path: string }>();
+      return <div>path is {path || 'unset'}</div>;
+    }
+
+    registerSimpleExtension('group', 'esm-nav-app', Group);
+    registerSimpleExtension('link', 'esm-nav-app', Link);
+
+    provide(
+      {
+        'esm-chart-app': {
+          extensionSlots: {
+            'chart-slot': {
+              add: ['group#clinical'],
+              configure: { 'group#clinical': { slotName: 'clinical-group-slot' } },
+            },
+            'clinical-group-slot': {
+              add: ['link#ckd'],
+              configure: { 'link#ckd': { path: 'ckd-specific' } },
+            },
+          },
+        },
+      },
+      'test',
+    );
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-chart-app',
+      featureName: 'Chart',
+      disableTranslations: true,
+    })(() => <ExtensionSlot name="chart-slot" />);
+
+    render(<App />);
+
+    expect(await screen.findByText(/path is/)).toHaveTextContent('path is ckd-specific');
   });
 });
 
