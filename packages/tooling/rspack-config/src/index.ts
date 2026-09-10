@@ -47,9 +47,11 @@ import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
+import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
 import rspack, {
   type Compiler,
   CopyRspackPlugin,
+  CssExtractRspackPlugin,
   DefinePlugin,
   type ModuleOptions,
   type RuleSetRule,
@@ -292,6 +294,10 @@ export const watchConfig: Partial<OpenmrsRspackConfig['watchOptions']> = {};
  * This object will be merged with the webpack optimization
  * object.
  * Make sure to modify this object and not reassign it.
+ *
+ * Arrays here merge by index rather than replacing, so a `minimizer` set on this object lands on top of
+ * the defaults entry by entry instead of taking their place. Use `overrides.optimization` to replace
+ * them outright.
  */
 export const optimizationConfig: Partial<OpenmrsRspackConfig['optimization']> = {};
 
@@ -301,6 +307,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const { name, version, peerDependencies, browser, main, types } = require(resolve(root, 'package.json'));
   // this typing is provably incorrect, but actually works
   const mode = (argv.mode || process.env.NODE_ENV || 'development') as OpenmrsRspackConfig['mode'];
+  const isProd = mode === production;
   const devServerPort = argv.port ? Number(argv.port) : undefined;
   const devServerHost = argv.host || 'localhost';
   const filename = basename(browser || main);
@@ -321,20 +328,30 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     process.exit(9819023573289);
   }
 
-  const cssLoader = {
+  // These are factories rather than shared objects because `cssRuleConfig` and `scssRuleConfig` are
+  // merged into the rules with lodash `merge`, which mutates: one shared entry would let an override
+  // aimed at the CSS rule silently leak into the SCSS rule as well.
+  const cssLoader = () => ({
     loader: require.resolve('css-loader'),
     options: {
       modules: {
         localIdentName: `${ident}__[name]__[local]___[hash:base64:5]`,
       },
     },
-  };
+  });
+
+  // Production emits real `.css` assets; development keeps `style-loader` for its better HMR story.
+  // See RFC 0033. The chunk-loading runtime resolves a chunk only once its stylesheet has loaded,
+  // so nothing mounts unstyled.
+  const styleLoader = () =>
+    isProd ? { loader: require.resolve(CssExtractRspackPlugin.loader) } : { loader: require.resolve('style-loader') };
 
   const baseConfig: OpenmrsRspackConfig = {
     // The only `entry` in the application is the app shell. Everything else is
     // a Webpack Module Federation "remote." This ensures that there is always
     // only one container context--i.e., if we had an entry point per module,
     // WMF could get confused and not resolve shared dependencies correctly.
+    entry: {},
     output: {
       publicPath: 'auto',
       path: resolve(root, outDir),
@@ -364,7 +381,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         merge(
           {
             test: /\.css$/,
-            use: [require.resolve('style-loader'), cssLoader],
+            use: [styleLoader(), cssLoader()],
           },
           cssRuleConfig,
         ),
@@ -372,8 +389,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.s[ac]ss$/i,
             use: [
-              require.resolve('style-loader'),
-              cssLoader,
+              styleLoader(),
+              cssLoader(),
               {
                 loader: require.resolve('sass-loader'),
                 options: {
@@ -426,7 +443,13 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           maxAsyncRequests: 3,
           maxInitialRequests: 1,
         },
-        minimizer: [new rspack.SwcJsMinimizerRspackPlugin(), new rspack.LightningCssMinimizerRspackPlugin()],
+        minimizer: [
+          new rspack.SwcJsMinimizerRspackPlugin(),
+          // `targets` is passed explicitly rather than left to the minimizer's own default
+          new rspack.LightningCssMinimizerRspackPlugin({
+            minimizerOptions: { targets: browserTargets },
+          }),
+        ],
       },
       optimizationConfig,
     ),
@@ -434,6 +457,12 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       browserslistWarnings.length > 0 && new BrowserslistWarningsPlugin(browserslistWarnings),
       new TsCheckerRspackPlugin(),
       new CleanWebpackPlugin(),
+      isProd &&
+        new CssExtractRspackPlugin({
+          // `ignoreOrder` because nearly every class here is uniquely scoped by CSS Modules, so the
+          // conflicting-order warnings this would otherwise emit across chunks are almost all noise.
+          ignoreOrder: true,
+        }),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? 'server' : 'disabled',
       }),
@@ -554,5 +583,14 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     }),
     ...overrides,
   };
-  return mergeWith(baseConfig, additionalConfig, mergeFunction);
+  const config = mergeWith(baseConfig, additionalConfig, mergeFunction);
+
+  // Appended after the merge rather than listed above. `overrides` is spread over the config object, so
+  // an app setting `overrides.plugins` replaces the whole array — not a lodash merge, which would keep
+  // the entries — and would drop the guard without noticing. Same reasoning as the `ExternalsPlugin`
+  // block above, which avoids `externals` for the same reason.
+  // Production only: under `style-loader` there are no `.css` assets to check.
+  config.plugins = [...(config.plugins ?? []), ...(isProd ? [new CarbonCssGuardPlugin(name)] : [])];
+
+  return config;
 };

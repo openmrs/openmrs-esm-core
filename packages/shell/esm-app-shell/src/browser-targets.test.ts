@@ -17,13 +17,20 @@ const openmrsQueries: string[] = require('browserslist-config-openmrs');
  * Loaded from `shellRoot` because the config resolves paths and the styleguide stylesheet relative to
  * its own directory.
  */
+let shellConfig: Record<string, any> | undefined;
+
 async function loadShellConfig() {
+  if (shellConfig) {
+    return shellConfig;
+  }
+
   const originalCwd = process.cwd();
   process.chdir(shellRoot);
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    return require('../rspack.config.js')({}, { mode: 'production' }) as Record<string, any>;
+    shellConfig = require('../rspack.config.js')({}, { mode: 'production' }) as Record<string, any>;
+    return shellConfig;
   } finally {
     process.chdir(originalCwd);
   }

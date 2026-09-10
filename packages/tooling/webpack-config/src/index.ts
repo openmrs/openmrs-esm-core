@@ -43,7 +43,10 @@ import { loadQueries } from 'browserslist/node';
 import defaultBrowserslistQueries from 'browserslist-config-openmrs';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import { browserslistToTargets, type Targets } from 'lightningcss';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 // eslint-disable-next-line no-restricted-imports
 import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
@@ -62,6 +65,7 @@ import browserslistTargetHandler from 'webpack/lib/config/browserslistTargetHand
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
+import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
 
 type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module' | 'output'> & {
   module: ModuleOptions;
@@ -341,6 +345,10 @@ export const watchConfig: Partial<WebpackConfiguration['watchOptions']> = {};
  * This object will be merged with the webpack optimization
  * object.
  * Make sure to modify this object and not reassign it.
+ *
+ * Arrays here merge by index rather than replacing, so a `minimizer` set on this object lands on top of
+ * the defaults entry by entry instead of taking their place. Use `overrides.optimization` to replace
+ * them outright.
  */
 export const optimizationConfig: Partial<WebpackConfiguration['optimization']> = {};
 
@@ -350,6 +358,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const { name, version, peerDependencies, browser, main, types } = require(resolve(root, 'package.json'));
   // this typing is provably incorrect, but actually works
   const mode = (argv.mode || process.env.NODE_ENV || 'development') as WebpackConfiguration['mode'];
+  const isProd = mode === production;
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
@@ -368,20 +377,30 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     process.exit(9819023573289);
   }
 
-  const cssLoader = {
+  // These are factories rather than shared objects because `cssRuleConfig` and `scssRuleConfig` are
+  // merged into the rules with lodash `merge`, which mutates: one shared entry would let an override
+  // aimed at the CSS rule silently leak into the SCSS rule as well.
+  const cssLoader = () => ({
     loader: require.resolve('css-loader'),
     options: {
       modules: {
         localIdentName: `${ident}__[name]__[local]___[hash:base64:5]`,
       },
     },
-  };
+  });
+
+  // Production emits real `.css` assets; development keeps `style-loader` for its better HMR story.
+  // See RFC 0033. The chunk-loading runtime resolves a chunk only once its stylesheet has loaded,
+  // so nothing mounts unstyled.
+  const styleLoader = () =>
+    isProd ? { loader: require.resolve(MiniCssExtractPlugin.loader) } : { loader: require.resolve('style-loader') };
 
   const baseConfig: OpenmrsWebpackConfig = {
     // The only `entry` in the application is the app shell. Everything else is
     // a Webpack Module Federation "remote." This ensures that there is always
     // only one container context--i.e., if we had an entry point per module,
     // WMF could get confused and not resolve shared dependencies correctly.
+    entry: {},
     output: {
       publicPath: 'auto',
       path: resolve(root, outDir),
@@ -410,7 +429,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         merge(
           {
             test: /\.css$/,
-            use: [require.resolve('style-loader'), cssLoader],
+            use: [styleLoader(), cssLoader()],
           },
           cssRuleConfig,
         ),
@@ -418,8 +437,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.s[ac]ss$/i,
             use: [
-              require.resolve('style-loader'),
-              cssLoader,
+              styleLoader(),
+              cssLoader(),
               {
                 loader: require.resolve('sass-loader'),
                 options: {
@@ -474,6 +493,17 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           maxAsyncRequests: 3,
           maxInitialRequests: 1,
         },
+        // `'...'` keeps webpack's default JS minifier; naming any minimizer would otherwise replace it.
+        // Lightning CSS so that extracted stylesheets are minified the same way `@openmrs/rspack-config`
+        // minifies them. `targets` is passed explicitly because neither bundler's default consults the
+        // module's browserslist.
+        minimizer: [
+          '...',
+          new CssMinimizerPlugin<{ targets: Targets }>({
+            minify: CssMinimizerPlugin.lightningCssMinify,
+            minimizerOptions: { targets: browserslistToTargets(browserslist(browserTargets)) },
+          }),
+        ],
       },
       optimizationConfig,
     ),
@@ -490,6 +520,12 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         },
       }),
       new CleanWebpackPlugin(),
+      isProd &&
+        new MiniCssExtractPlugin({
+          // `ignoreOrder` because nearly every class here is uniquely scoped by CSS Modules, so the
+          // conflicting-order warnings this would otherwise emit across chunks are almost all noise.
+          ignoreOrder: true,
+        }),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? 'server' : 'disabled',
       }),
@@ -593,5 +629,14 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     },
     ...overrides,
   };
-  return mergeWith(baseConfig, additionalConfig, mergeFunction);
+  const config = mergeWith(baseConfig, additionalConfig, mergeFunction);
+
+  // Appended after the merge rather than listed above. `overrides` is spread over the config object, so
+  // an app setting `overrides.plugins` replaces the whole array — not a lodash merge, which would keep
+  // the entries — and would drop the guard without noticing. Same reasoning as the `ExternalsPlugin`
+  // block above, which avoids `externals` for the same reason.
+  // Production only: under `style-loader` there are no `.css` assets to check.
+  config.plugins = [...(config.plugins ?? []), ...(isProd ? [new CarbonCssGuardPlugin(name)] : [])];
+
+  return config;
 };
