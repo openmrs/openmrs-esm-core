@@ -15,5 +15,8 @@ export default defineConfig({
       },
     },
     mockReset: true,
+    // `browser-targets.test.ts` builds the real rspack config, which compiles the styleguide stylesheet
+    // through sass; on CI that alone can exceed vitest's unit-test-sized default.
+    testTimeout: 20_000,
   },
 });

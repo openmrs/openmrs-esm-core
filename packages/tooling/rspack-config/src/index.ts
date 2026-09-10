@@ -38,14 +38,20 @@
  */
 import { existsSync, statSync } from 'fs';
 import { basename, dirname, resolve } from 'path';
+import browserslist from 'browserslist';
+import { loadQueries } from 'browserslist/node';
+import defaultBrowserslistQueries from 'browserslist-config-openmrs';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 // eslint-disable-next-line no-restricted-imports
 import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
+import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
 import rspack, {
+  type Compiler,
   CopyRspackPlugin,
+  CssExtractRspackPlugin,
   DefinePlugin,
   type ModuleOptions,
   type RuleSetRule,
@@ -105,6 +111,109 @@ function getFrameworkVersion() {
     return `^${version}`;
   } catch {
     return '5.x';
+  }
+}
+
+/** What a module's browsers resolved to, plus anything worth telling the developer about getting there. */
+type BrowserPolicy = { queries: Array<string>; warnings: Array<string> };
+
+/**
+ * The browserslist queries swc compiles this module against, falling back to OpenMRS's shared config
+ * when the module declares none, so that frontend RFC 0003 stays the single source of truth. Given no
+ * target at all swc down-levels to ES5, and every supported browser pays for transform helpers it
+ * doesn't need.
+ *
+ * `@openmrs/webpack-config` has a copy of this; keep them in step. `browser-targets.test.ts` compares
+ * what the two hand their loaders and fails if they drift.
+ *
+ * @param root The directory of the module being built
+ */
+function browserslistQueries(root: string): BrowserPolicy {
+  const warnings: Array<string> = [];
+  // deliberately unguarded
+  const loaded = browserslist.loadConfig({ path: root });
+  const configured = loaded === undefined ? [] : Array.isArray(loaded) ? loaded : [loaded];
+
+  if (loaded !== undefined && configured.length === 0) {
+    // warn when a browserlist config is empty
+    warnings.push(
+      `This module declares a browserslist config, but it resolves to no queries for the ` +
+        `${process.env.BROWSERSLIST_ENV ?? process.env.NODE_ENV ?? production} environment. ` +
+        `Targeting ${defaultBrowserslistQueries.join(', ')} instead.`,
+    );
+  }
+
+  const expanded = expandBrowserslistExtends(
+    configured.length > 0 ? configured : defaultBrowserslistQueries,
+    root,
+    warnings,
+  );
+
+  return { queries: expanded.length > 0 ? expanded : defaultBrowserslistQueries, warnings };
+}
+
+function expandBrowserslistExtends(
+  queries: Array<string>,
+  root: string,
+  warnings: Array<string>,
+  seen = new Set<string>(),
+): Array<string> {
+  // Split on commas because a browserslist config may be a single string of them
+  return queries.flatMap((query) =>
+    query
+      .split(',')
+      .flatMap((part) => {
+        const extended = /^extends\s+(.+)$/i.exec(part.trim());
+
+        if (!extended) {
+          return [part.trim()];
+        }
+
+        const name = extended[1].trim();
+
+        if (seen.has(name)) {
+          return [];
+        }
+
+        seen.add(name);
+
+        try {
+          // browserslist's own loader, rather than a bare `require` so we handle the same syntax
+          const resolved = loadQueries({ path: root }, name);
+
+          return expandBrowserslistExtends(Array.isArray(resolved) ? resolved : [resolved], root, warnings, seen);
+        } catch (err) {
+          // Only browserslist's own verdict on a named config is survivable: not installed, or refused
+          // for its name.
+          const notInstalled = (err as { code?: string })?.code === 'MODULE_NOT_FOUND';
+          const refused = (err as { browserslist?: boolean })?.browserslist === true;
+
+          if (!notInstalled && !refused) {
+            throw err;
+          }
+
+          warnings.push(
+            `Could not load the browserslist config "${name}" (${(err as Error).message}). ` +
+              `Targeting ${defaultBrowserslistQueries.join(', ')} instead.`,
+          );
+
+          return defaultBrowserslistQueries;
+        }
+      })
+      .filter((part) => part.length > 0),
+  );
+}
+
+/** Reports how a module's browsers were worked out, where a developer will actually see it. */
+class BrowserslistWarningsPlugin {
+  constructor(private readonly messages: Array<string>) {}
+
+  apply(compiler: Compiler) {
+    compiler.hooks.thisCompilation.tap('OpenmrsBrowserslistWarnings', (compilation) => {
+      for (const message of this.messages) {
+        compilation.warnings.push(new rspack.WebpackError(message));
+      }
+    });
   }
 }
 
@@ -185,6 +294,10 @@ export const watchConfig: Partial<OpenmrsRspackConfig['watchOptions']> = {};
  * This object will be merged with the webpack optimization
  * object.
  * Make sure to modify this object and not reassign it.
+ *
+ * Arrays here merge by index rather than replacing, so a `minimizer` set on this object lands on top of
+ * the defaults entry by entry instead of taking their place. Use `overrides.optimization` to replace
+ * them outright.
  */
 export const optimizationConfig: Partial<OpenmrsRspackConfig['optimization']> = {};
 
@@ -194,12 +307,14 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const { name, version, peerDependencies, browser, main, types } = require(resolve(root, 'package.json'));
   // this typing is provably incorrect, but actually works
   const mode = (argv.mode || process.env.NODE_ENV || 'development') as OpenmrsRspackConfig['mode'];
+  const isProd = mode === production;
   const devServerPort = argv.port ? Number(argv.port) : undefined;
   const devServerHost = argv.host || 'localhost';
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
+  const { queries: browserTargets, warnings: browserslistWarnings } = browserslistQueries(root);
   const frameworkVersion = getFrameworkVersion();
   const routes = resolve(root, 'src', 'routes.json');
   const hasRoutesDefined = fileExistsSync(routes);
@@ -213,20 +328,30 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     process.exit(9819023573289);
   }
 
-  const cssLoader = {
+  // These are factories rather than shared objects because `cssRuleConfig` and `scssRuleConfig` are
+  // merged into the rules with lodash `merge`, which mutates: one shared entry would let an override
+  // aimed at the CSS rule silently leak into the SCSS rule as well.
+  const cssLoader = () => ({
     loader: require.resolve('css-loader'),
     options: {
       modules: {
         localIdentName: `${ident}__[name]__[local]___[hash:base64:5]`,
       },
     },
-  };
+  });
+
+  // Production emits real `.css` assets; development keeps `style-loader` for its better HMR story.
+  // See RFC 0033. The chunk-loading runtime resolves a chunk only once its stylesheet has loaded,
+  // so nothing mounts unstyled.
+  const styleLoader = () =>
+    isProd ? { loader: require.resolve(CssExtractRspackPlugin.loader) } : { loader: require.resolve('style-loader') };
 
   const baseConfig: OpenmrsRspackConfig = {
     // The only `entry` in the application is the app shell. Everything else is
     // a Webpack Module Federation "remote." This ensures that there is always
     // only one container context--i.e., if we had an entry point per module,
     // WMF could get confused and not resolve shared dependencies correctly.
+    entry: {},
     output: {
       publicPath: 'auto',
       path: resolve(root, outDir),
@@ -240,6 +365,9 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
             exclude: /node_modules/,
             loader: 'builtin:swc-loader',
             options: {
+              env: {
+                targets: browserTargets,
+              },
               jsc: {
                 parser: {
                   syntax: 'typescript',
@@ -253,7 +381,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         merge(
           {
             test: /\.css$/,
-            use: [require.resolve('style-loader'), cssLoader],
+            use: [styleLoader(), cssLoader()],
           },
           cssRuleConfig,
         ),
@@ -261,8 +389,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.s[ac]ss$/i,
             use: [
-              require.resolve('style-loader'),
-              cssLoader,
+              styleLoader(),
+              cssLoader(),
               {
                 loader: require.resolve('sass-loader'),
                 options: {
@@ -289,6 +417,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       ],
     },
     mode,
+    // governs rspack's own runtime and chunk-loading glue
+    target: ['web', `browserslist:${browserTargets.join(', ')}`],
     devtool: mode === production ? 'hidden-nosources-source-map' : 'source-map',
     devServer: {
       headers: {
@@ -313,13 +443,26 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           maxAsyncRequests: 3,
           maxInitialRequests: 1,
         },
-        minimizer: [new rspack.SwcJsMinimizerRspackPlugin(), new rspack.LightningCssMinimizerRspackPlugin()],
+        minimizer: [
+          new rspack.SwcJsMinimizerRspackPlugin(),
+          // `targets` is passed explicitly rather than left to the minimizer's own default
+          new rspack.LightningCssMinimizerRspackPlugin({
+            minimizerOptions: { targets: browserTargets },
+          }),
+        ],
       },
       optimizationConfig,
     ),
     plugins: [
+      browserslistWarnings.length > 0 && new BrowserslistWarningsPlugin(browserslistWarnings),
       new TsCheckerRspackPlugin(),
       new CleanWebpackPlugin(),
+      isProd &&
+        new CssExtractRspackPlugin({
+          // `ignoreOrder` because nearly every class here is uniquely scoped by CSS Modules, so the
+          // conflicting-order warnings this would otherwise emit across chunks are almost all noise.
+          ignoreOrder: true,
+        }),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? 'server' : 'disabled',
       }),
@@ -440,5 +583,14 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     }),
     ...overrides,
   };
-  return mergeWith(baseConfig, additionalConfig, mergeFunction);
+  const config = mergeWith(baseConfig, additionalConfig, mergeFunction);
+
+  // Appended after the merge rather than listed above. `overrides` is spread over the config object, so
+  // an app setting `overrides.plugins` replaces the whole array — not a lodash merge, which would keep
+  // the entries — and would drop the guard without noticing. Same reasoning as the `ExternalsPlugin`
+  // block above, which avoids `externals` for the same reason.
+  // Production only: under `style-loader` there are no `.css` assets to check.
+  config.plugins = [...(config.plugins ?? []), ...(isProd ? [new CarbonCssGuardPlugin(name)] : [])];
+
+  return config;
 };
