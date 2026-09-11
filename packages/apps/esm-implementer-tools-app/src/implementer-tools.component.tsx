@@ -41,7 +41,7 @@ function PopupHandler() {
   const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(implementerToolsStore);
 
   return (
-    <div className={styles.darkTheme}>
+    <>
       {isOpen ? (
         <Popup
           close={togglePopup}
@@ -51,7 +51,7 @@ function PopupHandler() {
         />
       ) : null}
       {isUIEditorEnabled ? <UiEditor /> : null}
-    </div>
+    </>
   );
 }
 
