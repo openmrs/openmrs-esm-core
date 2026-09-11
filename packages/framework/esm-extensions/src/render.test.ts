@@ -357,6 +357,98 @@ describe('renderParcel', () => {
     );
   });
 
+  it('holds the props single-spa retains until the unmount that follows a failed mount', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const callerProps = { domElement, someProp: 'value' };
+    const failure = new Error('mount failed');
+
+    await renderParcel({ ...lifecycles, mount: () => Promise.reject(failure) }, callerProps);
+
+    const [bounded, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    await expect(bounded.mount({ domElement })).rejects.toBe(failure);
+
+    // single-spa unmounts a parcel whose mount failed before breaking it, and hands that unmount
+    // these props, so releasing them any earlier would deny the extension its own cleanup.
+    expect(retained).toEqual({ domElement, someProp: 'value' });
+
+    await bounded.unmount({ domElement });
+
+    // single-spa keeps a broken parcel, and with it these props, for the lifetime of the page, so
+    // emptying them is the only way to stop it retaining the element and everything rendered into it.
+    expect(retained).toEqual({});
+    expect(callerProps).toEqual({ domElement, someProp: 'value' });
+  });
+
+  it('empties the retained props as soon as bootstrap fails', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const failure = new Error('bootstrap failed');
+
+    await renderParcel({ ...lifecycles, bootstrap: () => Promise.reject(failure) }, { domElement });
+
+    const [bounded, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    // Nothing follows a failed bootstrap, so there is no later lifecycle to hold the props for.
+    await expect(bounded.bootstrap({ domElement })).rejects.toBe(failure);
+
+    expect(retained).toEqual({});
+  });
+
+  it('empties the retained props when unmount fails', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const failure = new Error('unmount failed');
+
+    await renderParcel({ ...lifecycles, unmount: () => Promise.reject(failure) }, { domElement });
+
+    const [bounded, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    await bounded.mount({ domElement });
+    await expect(bounded.unmount({ domElement })).rejects.toBe(failure);
+
+    expect(retained).toEqual({});
+  });
+
+  it('empties the retained props when a lifecycle overruns its deadline', async () => {
+    vi.useFakeTimers();
+
+    try {
+      const { hostMountParcel, renderParcel } = await loadRenderModule();
+      const domElement = document.createElement('div');
+
+      await renderParcel({ ...lifecycles, unmount: () => new Promise(() => {}) }, { domElement });
+
+      const [hung, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+      await hung.mount({ domElement });
+
+      // Asserted against before the clock is advanced, so the rejection is never unhandled.
+      const overran = expect(hung.unmount({ domElement })).rejects.toThrow(/did not settle within 15000ms/);
+      await vi.advanceTimersByTimeAsync(15_000);
+      await overran;
+
+      expect(retained).toEqual({});
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('leaves the retained props alone while the parcel is healthy', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+
+    await renderParcel(lifecycles, { domElement });
+
+    const [bounded, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    await bounded.mount({ domElement });
+    await bounded.unmount({ domElement });
+
+    expect(retained).toEqual({ domElement });
+  });
+
   it('leaves a parcel that declares its own timeouts to single-spa', async () => {
     const { hostMountParcel, renderParcel } = await loadRenderModule();
     const domElement = document.createElement('div');

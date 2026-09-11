@@ -25,6 +25,9 @@ type ParcelConfigObject = Extract<ParcelConfig, LifeCycles>;
 type LifecycleFn = Exclude<LifeCycles['mount'], readonly unknown[]>;
 type LifecycleName = keyof typeof lifecycleDeadlines;
 
+/** Reports how one of a parcel's lifecycles settled. */
+type LifecycleSettled = (which: LifecycleName, failed: boolean) => void;
+
 /**
  * How long each lifecycle gets before the parcel is marked dead. Loading and unloading are left
  * out, as their timing is unpredictable. These are meant to be generous.
@@ -71,15 +74,69 @@ function toSingleFn(lifecycle: LifecycleFn | Array<LifecycleFn>, name: string, w
 }
 
 /**
+ * Empties the props object single-spa was mounted with.
+ *
+ * If a parcel's `unmount()` rejects, single-spa retains it in the `SKIP_BECAUSE_BROKEN` state,
+ * including holding on to the props, which can include the DOM node if it was successfully
+ * mounted. Since we hand single-spa the props, we can clear that object here which helps reduce
+ * the memory pressure of the retained parcels
+ */
+function releaseProps(props: Record<string, unknown>) {
+  for (const key of Object.keys(props)) {
+    delete props[key];
+  }
+}
+
+/**
+ * Watches a parcel's lifecycles and releases its props once single-spa has no further use for them,
+ * which is only ever after a failure: a parcel that unmounts cleanly is dropped by single-spa
+ * itself, taking its props with it.
+ *
+ * The timing matters, because single-spa keeps calling lifecycles past the failure that broke the
+ * parcel and they are handed these same props.
+ */
+function trackForRelease(props: Record<string, unknown>): LifecycleSettled {
+  let mountFailed = false;
+
+  return (which, failed) => {
+    switch (which) {
+      case 'bootstrap':
+        // single-spa breaks the parcel there and then, without calling anything else.
+        if (failed) {
+          releaseProps(props);
+        }
+
+        return;
+      case 'mount':
+        // A parcel whose mount fails is unmounted before it is broken, so that the extension gets
+        // to tear down whatever it managed to render. The release waits for that unmount.
+        mountFailed ||= failed;
+
+        return;
+      case 'unmount':
+        if (failed || mountFailed) {
+          releaseProps(props);
+        }
+
+        return;
+    }
+  };
+}
+
+/**
  * Wraps a lifecycle so that it rejects once `millis` have elapsed, clearing the timer as soon as it
  * settles either way. Rejecting puts the parcel into the same broken state single-spa's own
  * `dieOnTimeout` would, but without leaving a timer holding the parcel for the full deadline.
+ *
+ * Reporting each outcome to `onSettled` from here rather than from the parcel's own promises leaves
+ * a rejection no caller handles free to reach the global unhandled rejection handler.
  */
 function withDeadline(
   lifecycle: LifecycleFn | Array<LifecycleFn>,
   millis: number,
   name: string,
   which: LifecycleName,
+  onSettled: LifecycleSettled,
 ): LifecycleFn {
   const run = toSingleFn(lifecycle, name, which);
 
@@ -92,12 +149,23 @@ function withDeadline(
       );
     });
 
-    return Promise.race([run(props), deadline]).finally(() => clearTimeout(timer));
+    return Promise.race([run(props), deadline])
+      .finally(() => clearTimeout(timer))
+      .then(
+        (value) => {
+          onSettled(which, false);
+          return value;
+        },
+        (err) => {
+          onSettled(which, true);
+          throw err;
+        },
+      );
   };
 }
 
 /** Applies {@link lifecycleDeadlines} to a resolved parcel config. */
-function boundLifecycles(parcelConfig: ParcelConfigObject): ParcelConfigObject {
+function boundLifecycles(parcelConfig: ParcelConfigObject, onSettled: LifecycleSettled): ParcelConfigObject {
   // A parcel that declares its own timeouts is bounding itself, so it is left to single-spa.
   if ((parcelConfig as { timeouts?: unknown }).timeouts) {
     return parcelConfig;
@@ -107,7 +175,7 @@ function boundLifecycles(parcelConfig: ParcelConfigObject): ParcelConfigObject {
   const bounded = Object.fromEntries(
     (Object.keys(lifecycleDeadlines) as Array<LifecycleName>)
       .filter((which) => parcelConfig[which])
-      .map((which) => [which, withDeadline(parcelConfig[which], lifecycleDeadlines[which], name, which)]),
+      .map((which) => [which, withDeadline(parcelConfig[which], lifecycleDeadlines[which], name, which, onSettled)]),
   );
 
   return { ...parcelConfig, ...bounded };
@@ -117,12 +185,12 @@ function boundLifecycles(parcelConfig: ParcelConfigObject): ParcelConfigObject {
  * Applies {@link boundLifecycles} to a parcel config, resolving the function form first so that a
  * lazily loaded config gets the deadlines too.
  */
-function withLifecycleDeadlines(parcelConfig: ParcelConfig): ParcelConfig {
+function withLifecycleDeadlines(parcelConfig: ParcelConfig, onSettled: LifecycleSettled): ParcelConfig {
   if (typeof parcelConfig === 'function') {
-    return (() => parcelConfig().then(boundLifecycles)) as ParcelConfig;
+    return (() => parcelConfig().then((resolved) => boundLifecycles(resolved, onSettled))) as ParcelConfig;
   }
 
-  return boundLifecycles(parcelConfig);
+  return boundLifecycles(parcelConfig, onSettled);
 }
 
 /**
@@ -182,7 +250,11 @@ export async function renderParcel<T = CustomProps>(
   customProps: ParcelProps & T,
 ): Promise<ReturnType<MountParcel>> {
   const mountParcel = await getParcelMounter();
-  return mountParcel(withLifecycleDeadlines(parcelConfig), customProps);
+  // Copied because single-spa holds onto this object for as long as it holds the parcel, and
+  // {@link releaseProps} empties it; the caller's own object is unchanged.
+  const props = { ...customProps };
+
+  return mountParcel(withLifecycleDeadlines(parcelConfig, trackForRelease(props)), props);
 }
 
 /**

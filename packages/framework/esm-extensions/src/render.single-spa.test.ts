@@ -32,6 +32,32 @@ describe('renderParcel against the real single-spa', () => {
     expect(parcel.getStatus()).toBe('NOT_MOUNTED');
   });
 
+  it('leaves the props intact for the unmount single-spa runs after a failed mount', async () => {
+    const domElement = document.createElement('div');
+    const callerProps = { domElement };
+    const unmountedWith: Array<unknown> = [];
+
+    const parcel = await renderParcel(
+      {
+        ...goodLifecycles(),
+        mount: () => Promise.reject(new Error('mount failed')),
+        unmount: (props) => {
+          unmountedWith.push((props as { domElement?: HTMLElement }).domElement);
+          return Promise.resolve();
+        },
+      },
+      callerProps,
+    );
+
+    await expect(parcel.mountPromise).rejects.toThrow(/mount failed/);
+
+    // single-spa unmounts a parcel whose mount failed so the extension can tear down whatever it
+    // rendered, so the props it retains cannot be released until that unmount has had them.
+    expect(unmountedWith).toEqual([domElement]);
+    expect(parcel.getStatus()).toBe('SKIP_BECAUSE_BROKEN');
+    expect(callerProps).toEqual({ domElement });
+  });
+
   it('breaks a parcel whose mount does not return a promise', async () => {
     // single-spa would fail this parcel on its own; the deadline wrapper has to not paper over it.
     const lifecycles = { ...goodLifecycles(), mount: (() => undefined) as never };
