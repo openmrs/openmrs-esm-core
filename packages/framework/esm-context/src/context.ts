@@ -115,7 +115,8 @@ export function subscribeToContext<T extends NonNullable<object> = NonNullable<o
   namespace: string,
   callback: ContextCallback<T>,
 ) {
-  let previous = getContext<T>(namespace);
+  const initialState = contextStore.getState();
+  let previous: Readonly<T> | null = namespace in initialState ? (initialState[namespace] as T) : null;
 
   callback(snapshot(previous));
 
