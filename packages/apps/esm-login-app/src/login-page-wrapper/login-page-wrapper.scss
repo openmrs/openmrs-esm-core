@@ -1,0 +1,53 @@
+@use '@carbon/layout';
+@use '@carbon/type';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.center {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: calc(100vh - var(--omrs-navbar-height));
+}
+
+.containerWithImage {
+  background-image: var(--login-bg-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.containerWithColor {
+  background-color: var(--login-bg-color);
+}
+
+.announcements {
+  width: 23rem;
+  margin-bottom: layout.$spacing-07;
+  display: flex;
+  flex-direction: column;
+  gap: layout.$spacing-03;
+}
+
+.loginCard {
+  border: 1px solid $ui-03;
+  background-color: $ui-02;
+  width: 23rem;
+  padding: layout.$spacing-08;
+  padding-bottom: layout.$spacing-06;
+  border-radius: layout.$spacing-03;
+  position: relative;
+  min-height: fit-content;
+}
+
+.errorMessage {
+  width: 23rem;
+  margin-bottom: layout.$spacing-09;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+}
