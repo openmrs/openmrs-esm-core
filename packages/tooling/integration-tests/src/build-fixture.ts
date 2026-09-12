@@ -20,8 +20,8 @@ export type FixtureBuild = {
   scripts: Record<string, string>;
   /** Every emitted stylesheet, keyed by filename. Empty in development, where `style-loader` inlines. */
   stylesheets: Record<string, string>;
-  /** Module identifiers from the build's stats, flattened through concatenated modules. */
-  moduleIdentifiers: string[];
+  /** Graph of every module in the build. Keys are module names. Values are modules that depend on that module. */
+  moduleGraph: Record<string, string[]>;
 };
 
 const builds = new Map<string, Promise<FixtureBuild>>();
@@ -104,12 +104,28 @@ export function buildFixtureApp(
 
       // `ids` populates `identifier`; without `nestedModules` scope hoisting hides concatenated modules
       // behind a "… + n modules" entry, which made this blind on the webpack path.
-      const { modules = [] } = stats.toJson({ all: false, modules: true, ids: true, nestedModules: true });
+      const { modules = [] } = stats.toJson({
+        all: false,
+        modules: true,
+        ids: true,
+        nestedModules: true,
+        reasons: true,
+      });
 
-      const collectIdentifiers = (list: { identifier?: string; name?: string; modules?: unknown[] }[]): string[] =>
+      type StatsModule = {
+        identifier?: string;
+        name?: string;
+        modules?: unknown[];
+        reasons?: Array<{ moduleIdentifier?: string; module?: string }>;
+      };
+
+      const collectModules = (list: StatsModule[]): Array<[string, string[]]> =>
         list.flatMap((module) => [
-          module.identifier ?? module.name ?? '',
-          ...collectIdentifiers((module.modules ?? []) as typeof list),
+          [
+            module.identifier ?? module.name ?? '',
+            (module.reasons ?? []).map((reason) => reason.moduleIdentifier ?? reason.module ?? '').filter(Boolean),
+          ] as [string, string[]],
+          ...collectModules((module.modules ?? []) as StatsModule[]),
         ]);
 
       const emitted = (extension: string) =>
@@ -137,7 +153,7 @@ export function buildFixtureApp(
         entry,
         scripts,
         stylesheets: emitted('.css'),
-        moduleIdentifiers: collectIdentifiers(modules),
+        moduleGraph: Object.fromEntries(collectModules(modules)),
       };
     } finally {
       process.chdir(originalCwd);

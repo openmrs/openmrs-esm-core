@@ -1,15 +1,12 @@
 /** @module @category UI */
 import { type FetchResponse, openmrsFetch } from '@openmrs/esm-api';
 import { useCallback } from 'react';
-import useSWRInfinite, { type SWRInfiniteConfiguration, type SWRInfiniteResponse } from 'swr/infinite';
+import useSWRInfinite, { type SWRInfiniteConfiguration, type SWRInfiniteKeyedMutator } from 'swr/infinite';
 import {
   openmrsServerPaginationHandlers,
   type ServerPaginationHandlers,
   type OpenMRSPaginatedResponse,
 } from './useOpenmrsPagination';
-
-// "swr/infinite" doesn't export InfiniteKeyedMutator directly
-type InfiniteKeyedMutator<T> = SWRInfiniteResponse<T extends (infer I)[] ? I : T>['mutate'];
 
 export interface UseServerInfiniteOptions<R> {
   /**
@@ -58,7 +55,7 @@ export interface UseServerInfiniteReturnObject<T, R> {
   /**
    * from useSWRInfinite
    */
-  mutate: InfiniteKeyedMutator<FetchResponse<R>[]>;
+  mutate: SWRInfiniteKeyedMutator<FetchResponse<R>[]>;
 
   /**
    * from useSWRInfinite

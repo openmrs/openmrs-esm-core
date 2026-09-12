@@ -52,7 +52,8 @@ afterAll(cleanUpFixtureBuilds);
 
 describe.each(['rspack', 'webpack'] as const)('%s remote entries', (bundler) => {
   it('read the Module Federation runtime from the app shell instead of bundling it', async () => {
-    const { moduleIdentifiers } = await buildFixtureApp(bundler);
+    const { moduleGraph } = await buildFixtureApp(bundler);
+    const moduleIdentifiers = Object.keys(moduleGraph);
 
     // Proves the matching below can see into this build's module list at all.
     expect(moduleIdentifiers.filter((id) => id.includes(`node_modules/${expectedBundledModule}/`))).not.toEqual([]);
