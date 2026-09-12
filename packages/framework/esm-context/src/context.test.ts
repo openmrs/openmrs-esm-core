@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   contextStore,
   getContext,
@@ -9,9 +9,17 @@ import {
 } from './context';
 
 describe('esm-context', () => {
+  let unsubscribers: Array<() => void> = [];
+
   beforeEach(() => {
     // Reset the context store state between tests
     contextStore.setState({}, true);
+    unsubscribers = [];
+  });
+
+  afterEach(() => {
+    unsubscribers.forEach((unsub) => unsub());
+    unsubscribers = [];
   });
 
   describe('registerContext', () => {
@@ -121,7 +129,7 @@ describe('esm-context', () => {
       registerContext('sub-ns', { initialized: true });
       const callback = vi.fn();
 
-      subscribeToContext('sub-ns', callback);
+      unsubscribers.push(subscribeToContext('sub-ns', callback));
 
       expect(callback).toHaveBeenCalledTimes(1);
       expect(callback).toHaveBeenCalledWith({ initialized: true });
@@ -130,7 +138,7 @@ describe('esm-context', () => {
     it('immediately calls callback with null if namespace is not registered', () => {
       const callback = vi.fn();
 
-      subscribeToContext('unregistered-sub-ns', callback);
+      unsubscribers.push(subscribeToContext('unregistered-sub-ns', callback));
 
       expect(callback).toHaveBeenCalledTimes(1);
       expect(callback).toHaveBeenCalledWith(null);
@@ -140,7 +148,7 @@ describe('esm-context', () => {
       registerContext('sub-ns', { count: 0 });
       const callback = vi.fn();
 
-      subscribeToContext('sub-ns', callback);
+      unsubscribers.push(subscribeToContext('sub-ns', callback));
       expect(callback).toHaveBeenLastCalledWith({ count: 0 });
 
       updateContext<{ count: number }>('sub-ns', (state) => ({ count: state.count + 1 }));
@@ -154,7 +162,7 @@ describe('esm-context', () => {
       registerContext('sub-ns-b', { count: 0 });
       const callback = vi.fn();
 
-      subscribeToContext('sub-ns-a', callback);
+      unsubscribers.push(subscribeToContext('sub-ns-a', callback));
       expect(callback).toHaveBeenCalledTimes(1);
 
       updateContext<{ count: number }>('sub-ns-b', (state) => ({ count: state.count + 1 }));
@@ -167,6 +175,7 @@ describe('esm-context', () => {
       const callback = vi.fn();
 
       const unsubscribe = subscribeToContext('sub-ns', callback);
+      unsubscribers.push(unsubscribe);
       expect(callback).toHaveBeenCalledTimes(1);
 
       updateContext<{ count: number }>('sub-ns', (state) => ({ count: 1 }));
