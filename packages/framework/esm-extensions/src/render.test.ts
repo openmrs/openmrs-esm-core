@@ -57,6 +57,16 @@ function fakeParcel({ hasUpdate = true } = {}): Parcel {
 }
 
 /**
+ * A fake parcel paired with its own `update` mock. `renderParcel()` replaces `update` on the parcel
+ * it is given, so this is the only way left to see the props single-spa was actually handed.
+ */
+function fakeParcelWithUpdate() {
+  const update = vi.fn((_: Record<string, unknown>) => Promise.resolve());
+
+  return { parcel: { ...fakeParcel(), update } as unknown as Parcel, update };
+}
+
+/**
  * Loads a fresh copy of the module under test, which caches the host parcel's mounter in module
  * scope, wired to a fake single-spa whose host parcel either mounts or fails to mount.
  */
@@ -357,6 +367,169 @@ describe('renderParcel', () => {
     );
   });
 
+  it('holds the props single-spa retains until the unmount that follows a failed mount', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const callerProps = { domElement, someProp: 'value' };
+    const failure = new Error('mount failed');
+
+    await renderParcel({ ...lifecycles, mount: () => Promise.reject(failure) }, callerProps);
+
+    const [bounded, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    await expect(bounded.mount({ domElement })).rejects.toBe(failure);
+
+    // single-spa unmounts a parcel whose mount failed before breaking it, and hands that unmount
+    // these props, so releasing them any earlier would deny the extension its own cleanup.
+    expect(retained).toEqual({ domElement, someProp: 'value' });
+
+    await bounded.unmount({ domElement });
+
+    // single-spa keeps a broken parcel, and with it these props, for the lifetime of the page, so
+    // emptying them is the only way to stop it retaining the element and everything rendered into it.
+    expect(retained).toEqual({});
+    expect(callerProps).toEqual({ domElement, someProp: 'value' });
+  });
+
+  it('empties the retained props as soon as bootstrap fails', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const failure = new Error('bootstrap failed');
+
+    await renderParcel({ ...lifecycles, bootstrap: () => Promise.reject(failure) }, { domElement });
+
+    const [bounded, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    // Nothing follows a failed bootstrap, so there is no later lifecycle to hold the props for.
+    await expect(bounded.bootstrap({ domElement })).rejects.toBe(failure);
+
+    expect(retained).toEqual({});
+  });
+
+  it('empties the retained props when unmount fails', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const failure = new Error('unmount failed');
+
+    await renderParcel({ ...lifecycles, unmount: () => Promise.reject(failure) }, { domElement });
+
+    const [bounded, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    await bounded.mount({ domElement });
+    await expect(bounded.unmount({ domElement })).rejects.toBe(failure);
+
+    expect(retained).toEqual({});
+  });
+
+  it('empties the retained props when a lifecycle overruns its deadline', async () => {
+    vi.useFakeTimers();
+
+    try {
+      const { hostMountParcel, renderParcel } = await loadRenderModule();
+      const domElement = document.createElement('div');
+
+      await renderParcel({ ...lifecycles, unmount: () => new Promise(() => {}) }, { domElement });
+
+      const [hung, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+      await hung.mount({ domElement });
+
+      // Asserted against before the clock is advanced, so the rejection is never unhandled.
+      const overran = expect(hung.unmount({ domElement })).rejects.toThrow(/did not settle within 15000ms/);
+      await vi.advanceTimersByTimeAsync(15_000);
+      await overran;
+
+      expect(retained).toEqual({});
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('leaves the retained props alone while the parcel is healthy', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+
+    await renderParcel(lifecycles, { domElement });
+
+    const [bounded, retained] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    await bounded.mount({ domElement });
+    await bounded.unmount({ domElement });
+
+    expect(retained).toEqual({ domElement });
+  });
+
+  it('tracks a copy of the props update() replaces the retained ones with', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const updatedElement = document.createElement('div');
+    const callerProps = { domElement: updatedElement, someProp: 'updated' };
+    const failure = new Error('unmount failed');
+
+    const { parcel: hosted, update } = fakeParcelWithUpdate();
+
+    hostMountParcel.mockImplementationOnce(() => hosted);
+
+    const parcel = await renderParcel({ ...lifecycles, unmount: () => Promise.reject(failure) }, { domElement });
+    const [bounded] = hostMountParcel.mock.calls[0] as [typeof lifecycles, Record<string, unknown>];
+
+    await parcel.update?.(callerProps);
+
+    // single-spa assigns these over the props it holds rather than merging into them, so it is this
+    // copy — the one carrying the updated `domElement` — that a failure has to empty.
+    const [retained] = update.mock.calls[0];
+    expect(retained).toEqual(callerProps);
+    expect(retained).not.toBe(callerProps);
+
+    await bounded.mount({ domElement });
+    await expect(bounded.unmount({ domElement })).rejects.toBe(failure);
+
+    expect(retained).toEqual({});
+    expect(callerProps).toEqual({ domElement: updatedElement, someProp: 'updated' });
+  });
+
+  it('empties the props of an update that leaves the parcel broken', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const failure = new Error('update failed');
+
+    const { parcel: hosted, update } = fakeParcelWithUpdate();
+
+    hostMountParcel.mockImplementationOnce(() => hosted);
+
+    const parcel = await renderParcel(lifecycles, { domElement });
+
+    update.mockImplementationOnce(() => Promise.reject(failure));
+    vi.spyOn(hosted, 'getStatus').mockReturnValue('SKIP_BECAUSE_BROKEN');
+
+    await expect(parcel.update?.({ domElement })).rejects.toBe(failure);
+
+    // A broken parcel never runs another lifecycle, so nothing later would release these.
+    const [retained] = update.mock.calls[0];
+    expect(retained).toEqual({});
+  });
+
+  it('keeps the props of an update rejected because the parcel is not mounted', async () => {
+    const { hostMountParcel, renderParcel } = await loadRenderModule();
+    const domElement = document.createElement('div');
+    const failure = new Error('Cannot update parcel because it is not mounted');
+
+    const { parcel: hosted, update } = fakeParcelWithUpdate();
+
+    hostMountParcel.mockImplementationOnce(() => hosted);
+
+    const parcel = await renderParcel(lifecycles, { domElement });
+
+    update.mockImplementationOnce(() => Promise.reject(failure));
+    vi.spyOn(hosted, 'getStatus').mockReturnValue('NOT_MOUNTED');
+
+    await expect(parcel.update?.({ domElement, someProp: 'value' })).rejects.toBe(failure);
+
+    // These are the props a remount would use, and an unmounted parcel can still be mounted again.
+    const [retained] = update.mock.calls[0];
+    expect(retained).toEqual({ domElement, someProp: 'value' });
+  });
+
   it('leaves a parcel that declares its own timeouts to single-spa', async () => {
     const { hostMountParcel, renderParcel } = await loadRenderModule();
     const domElement = document.createElement('div');
@@ -389,14 +562,17 @@ describe('createParcelMounter', () => {
     const { hostMountParcel, createParcelMounter } = await loadRenderModule();
     const domElement = document.createElement('div');
 
+    const { parcel: hosted, update } = fakeParcelWithUpdate();
+
+    hostMountParcel.mockImplementationOnce(() => hosted);
+
     const parcel = createParcelMounter()(lifecycles, { domElement });
     await parcel.mountPromise;
     await parcel.update?.({ domElement, someProp: 'value' });
     await parcel.unmount();
 
-    const realParcel = hostMountParcel.mock.results[0].value;
-    expect(realParcel.update).toHaveBeenCalledWith({ domElement, someProp: 'value' });
-    expect(realParcel.unmount).toHaveBeenCalledTimes(1);
+    expect(update).toHaveBeenCalledWith({ domElement, someProp: 'value' });
+    expect(hosted.unmount).toHaveBeenCalledTimes(1);
     await expect(parcel.unmountPromise).resolves.toBeUndefined();
   });
 
