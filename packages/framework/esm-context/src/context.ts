@@ -95,9 +95,24 @@ export function updateContext<T extends NonNullable<object> = NonNullable<object
       state[namespace] = {};
     }
 
-    state[namespace] = update(state[namespace] as T);
+    state[namespace] = cloneNamespaceValue(update(state[namespace] as T));
     return Object.assign({}, state);
   });
+}
+
+/**
+ * Produces a shallow copy of a namespace value, preserving its runtime type (array,
+ * class instance, or plain object). This guarantees that `updateContext` always assigns
+ * a new reference to the namespace, even when the updater mutates and returns the same
+ * object, so that `subscribeToContext` can reliably detect the change via identity
+ * comparison without mistaking arrays or class instances for plain objects.
+ */
+function cloneNamespaceValue<T extends NonNullable<object>>(value: T): T {
+  if (Array.isArray(value)) {
+    return [...value] as unknown as T;
+  }
+
+  return Object.assign(Object.create(Object.getPrototypeOf(value)), value) as T;
 }
 
 export type ContextCallback<T extends NonNullable<object> = NonNullable<object>> = (

@@ -170,6 +170,23 @@ describe('esm-context', () => {
       expect(callback).toHaveBeenCalledTimes(1);
     });
 
+    it('notifies when an updater mutates and returns the same object', () => {
+      registerContext('mutate-ns', { count: 0 });
+      const callback = vi.fn();
+      unsubscribers.push(subscribeToContext('mutate-ns', callback));
+      callback.mockClear();
+
+      const mutate = (state: { count: number }) => {
+        state.count += 1;
+        return state;
+      };
+      updateContext('mutate-ns', mutate);
+      updateContext('mutate-ns', mutate);
+
+      expect(callback).toHaveBeenCalledTimes(2);
+      expect(callback).toHaveBeenLastCalledWith({ count: 2 });
+    });
+
     it('stops receiving updates after unsubscribing', () => {
       registerContext('sub-ns', { count: 0 });
       const callback = vi.fn();
