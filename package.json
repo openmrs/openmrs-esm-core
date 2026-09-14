@@ -43,7 +43,7 @@
     "dotenv": "^16.0.3",
     "eslint": "^9.39.0",
     "fake-indexeddb": "^4.0.2",
-    "fork-ts-checker-webpack-plugin": "^7.2.13",
+    "fork-ts-checker-webpack-plugin": "^9.1.0",
     "husky": "^8.0.3",
     "i18next-parser": "^9.3.0",
     "identity-obj-proxy": "^3.0.0",
