@@ -142,6 +142,20 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/** A trailing file extension, which is what separates a request for a file from one of the app's routes. */
+const fileExtension = /\.[a-z0-9]{1,10}$/i;
+
+/**
+ * Whether a request under the SPA path is for a file. Files are proxied as they are; everything else
+ * falls through to `historyApiFallback` and is served the locally built `index.html`.
+ *
+ * @param {string} path
+ * @returns {boolean}
+ */
+function isFileRequest(path) {
+  return fileExtension.test(basename(path.split(/[?#]/)[0]));
+}
+
 /**
  * @param {Record<string, string>} env
  * @param {Array<string>} argv
@@ -281,11 +295,7 @@ module.exports = (env, argv = []) => {
             }
 
             if (path.startsWith(openmrsPublicPath)) {
-              if (basename(path).indexOf('.') >= 0) {
-                return true;
-              } else {
-                return false;
-              }
+              return isFileRequest(path);
             }
 
             if (path.startsWith(openmrsApiUrl)) {
@@ -313,21 +323,6 @@ module.exports = (env, argv = []) => {
             if (proxyRes.headers) {
               delete proxyRes.headers['content-security-policy'];
             }
-          },
-          /**
-           * @param {string} path
-           * @param {Request} req
-           * @returns {string}
-           */
-          pathRewrite(path) {
-            if (path.startsWith(openmrsPublicPath)) {
-              const matcher = /^.*\/([^\/]*\.(?!html|js)[^.]+)$/i.exec(path);
-              if (matcher) {
-                return `${openmrsPublicPath}/${matcher[1]}`;
-              }
-            }
-
-            return path;
           },
         },
       ],
