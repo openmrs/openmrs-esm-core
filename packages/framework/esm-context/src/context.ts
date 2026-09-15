@@ -3,6 +3,7 @@
 
 import { createStore } from 'zustand/vanilla';
 import { registerGlobalStore } from '@openmrs/esm-state';
+import { shallowEqual } from '@openmrs/esm-utils';
 
 interface OpenmrsAppContext {
   [namespace: string]: NonNullable<object>;
@@ -95,24 +96,9 @@ export function updateContext<T extends NonNullable<object> = NonNullable<object
       state[namespace] = {};
     }
 
-    state[namespace] = cloneNamespaceValue(update(state[namespace] as T));
+    state[namespace] = update(state[namespace] as T);
     return Object.assign({}, state);
   });
-}
-
-/**
- * Produces a shallow copy of a namespace value, preserving its runtime type (array,
- * class instance, or plain object). This guarantees that `updateContext` always assigns
- * a new reference to the namespace, even when the updater mutates and returns the same
- * object, so that `subscribeToContext` can reliably detect the change via identity
- * comparison without mistaking arrays or class instances for plain objects.
- */
-function cloneNamespaceValue<T extends NonNullable<object>>(value: T): T {
-  if (Array.isArray(value)) {
-    return [...value] as unknown as T;
-  }
-
-  return Object.assign(Object.create(Object.getPrototypeOf(value)), value) as T;
 }
 
 export type ContextCallback<T extends NonNullable<object> = NonNullable<object>> = (
@@ -131,16 +117,19 @@ export function subscribeToContext<T extends NonNullable<object> = NonNullable<o
   callback: ContextCallback<T>,
 ) {
   const initialState = contextStore.getState();
-  let previous: Readonly<T> | null = namespace in initialState ? (initialState[namespace] as T) : null;
+  let previousValue: Readonly<T> | null = namespace in initialState ? (initialState[namespace] as T) : null;
+  let previousSnapshot = snapshot(previousValue);
 
-  callback(snapshot(previous));
+  callback(previousSnapshot);
 
   return contextStore.subscribe((state) => {
-    const current: Readonly<T> | null = namespace in state ? (state[namespace] as T) : null;
+    const currentValue: Readonly<T> | null = namespace in state ? (state[namespace] as T) : null;
+    const currentSnapshot = snapshot(currentValue);
 
-    if (current !== previous) {
-      previous = current;
-      callback(snapshot(current));
+    if (currentValue !== previousValue || !shallowEqual(currentSnapshot, previousSnapshot)) {
+      previousValue = currentValue;
+      previousSnapshot = currentSnapshot;
+      callback(currentSnapshot);
     }
   });
 }
