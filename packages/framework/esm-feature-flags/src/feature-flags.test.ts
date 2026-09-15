@@ -147,6 +147,23 @@ describe('esm-feature-flags', () => {
       setFeatureFlag('flag-sub-3', false);
       expect(callback).toHaveBeenCalledTimes(2);
     });
+
+    it('catches synchronous state modifications made during the initial callback invocation', () => {
+      registerFeatureFlag('flag-sync', 'Flag Sync', 'Desc');
+      const receivedValues: Array<boolean> = [];
+
+      unsubscribers.push(
+        subscribeToFeatureFlag('flag-sync', (value) => {
+          receivedValues.push(value);
+          if (!value) {
+            setFeatureFlag('flag-sync', true);
+          }
+        }),
+      );
+
+      expect(receivedValues).toEqual([false, true]);
+      expect(getFeatureFlag('flag-sync')).toBe(true);
+    });
   });
 
   describe('cleanupObsoleteFeatureFlags', () => {

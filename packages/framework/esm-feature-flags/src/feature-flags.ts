@@ -126,15 +126,18 @@ export function getFeatureFlag(flagName: string) {
  */
 export function subscribeToFeatureFlag(flagName: string, callback: (value: boolean) => void) {
   let previous = getFeatureFlag(flagName);
-  callback(previous);
 
-  return featureFlagsStore.subscribe((state) => {
+  const unsubscribe = featureFlagsStore.subscribe((state) => {
     const current = state.flags[flagName]?.enabled ?? false;
     if (current !== previous) {
       previous = current;
       callback(current);
     }
   });
+
+  callback(previous);
+
+  return unsubscribe;
 }
 
 /** @internal for Implementer Tools */
