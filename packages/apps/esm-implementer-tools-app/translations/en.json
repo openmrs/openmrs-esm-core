@@ -6,6 +6,8 @@
   "checkImplementerToolsMessage": "Check the Backend Modules tab in the Implementer Tools for more details",
   "clearConfig": "Clear local config",
   "close": "Close",
+  "configDerivationFailed": "This configuration is out of date",
+  "configDerivationFailedSubtitle": "The configuration could not be rebuilt, so what is shown below is the last version that did build.",
   "configuration": "Configuration",
   "description": "Description",
   "downloadConfig": "Download config",

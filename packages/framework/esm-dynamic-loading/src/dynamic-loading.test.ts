@@ -58,6 +58,7 @@ describe('dynamic-loading', () => {
   beforeEach(() => {
     localStorage.clear();
     document.head.querySelectorAll('script').forEach((el) => el.remove());
+    delete (window as any)[Symbol.for('__openmrs_script_loading')];
     (globalThis as any).__webpack_share_scopes__ = { default: {} };
     (window as any).spaBase = '/openmrs/spa';
     mockGetImportMapOverrideMap.mockReturnValue({ imports: {} });
@@ -128,7 +129,7 @@ describe('dynamic-loading', () => {
 
       script.dispatchEvent(new Event('load'));
 
-      await expect(promise).resolves.toBeNull();
+      await expect(promise).resolves.toBeUndefined();
     });
 
     it('rejects when the script fails to load', async () => {
@@ -201,7 +202,7 @@ describe('dynamic-loading', () => {
 
       script.dispatchEvent(new Event('load'));
 
-      await expect(promise).resolves.toBeNull();
+      await expect(promise).resolves.toBeUndefined();
       expect(mockGetCurrentPageMap).not.toHaveBeenCalled();
     });
 
@@ -216,24 +217,89 @@ describe('dynamic-loading', () => {
       expect(script).not.toBeNull();
       script.dispatchEvent(new Event('load'));
 
-      await expect(promise).resolves.toBeNull();
+      await expect(promise).resolves.toBeUndefined();
     });
 
-    it('does not reload a script that is already in the DOM and finished loading', async () => {
+    it('does not re-request a script that has already loaded', async () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       mockGetCurrentPageMap.mockResolvedValue({
         imports: { '@openmrs/esm-foo': 'http://localhost/foo.js' },
       });
 
-      // First load
       const firstPromise = preloadImport('@openmrs/esm-foo');
       const script = await waitForScript('http://localhost/foo.js');
       script.dispatchEvent(new Event('load'));
       await firstPromise;
 
-      // Second load — script is in DOM but slug not on window, so it resolves with a warning
-      await expect(preloadImport('@openmrs/esm-foo')).resolves.toBeNull();
+      // the package defines no container global, so this is decided by the script registry alone
+      await expect(preloadImport('@openmrs/esm-foo')).resolves.toBeUndefined();
+      expect(warnSpy).not.toHaveBeenCalled();
+      expect(document.head.querySelectorAll('script[src="http://localhost/foo.js"]')).toHaveLength(1);
+    });
+
+    it('shares the request with a caller that reaches it after the script loaded', async () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const importMap = { imports: { '@openmrs/esm-foo': 'http://localhost/foo.js' } };
+
+      let releaseSecondMap!: () => void;
+      const secondMap = new Promise((resolve) => {
+        releaseSecondMap = () => resolve(importMap);
+      });
+      mockGetCurrentPageMap.mockResolvedValueOnce(importMap).mockReturnValueOnce(secondMap);
+
+      const first = preloadImport('@openmrs/esm-foo');
+      const second = preloadImport('@openmrs/esm-foo');
+
+      const script = await waitForScript('http://localhost/foo.js');
+      script.dispatchEvent(new Event('load'));
+      await first;
+
+      // the second caller only learns the URL now, long after the load event it needed to see
+      releaseSecondMap();
+
+      await expect(second).resolves.toBeUndefined();
+      expect(warnSpy).not.toHaveBeenCalled();
+      expect(document.head.querySelectorAll('script[src="http://localhost/foo.js"]')).toHaveLength(1);
+    });
+
+    it('warns about, and does not re-request, a script it did not load itself', async () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      mockGetCurrentPageMap.mockResolvedValue({
+        imports: { '@openmrs/esm-foo': 'http://localhost/foo.js' },
+      });
+
+      const foreign = document.createElement('script');
+      foreign.src = 'http://localhost/foo.js';
+      document.head.appendChild(foreign);
+
+      await expect(preloadImport('@openmrs/esm-foo')).resolves.toBeUndefined();
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('already loaded'));
+      expect(document.head.querySelectorAll('script[src="http://localhost/foo.js"]')).toHaveLength(1);
+    });
+
+    it('retries a script that failed to load', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      mockGetCurrentPageMap.mockResolvedValue({
+        imports: { '@openmrs/esm-foo': 'http://localhost/foo.js' },
+      });
+
+      const firstPromise = preloadImport('@openmrs/esm-foo');
+      const failed = await waitForScript('http://localhost/foo.js');
+      failed.dispatchEvent(new ErrorEvent('error', { message: 'net::ERR_FAILED' }));
+      await expect(firstPromise).rejects.toBe('net::ERR_FAILED');
+
+      // the dead element is gone, so the retry is a real request rather than a false success
+      expect(document.head.querySelector('script[src="http://localhost/foo.js"]')).toBeNull();
+
+      const secondPromise = preloadImport('@openmrs/esm-foo');
+      const retried = await waitForScript('http://localhost/foo.js');
+      expect(retried).not.toBe(failed);
+
+      retried.dispatchEvent(new Event('load'));
+
+      await expect(secondPromise).resolves.toBeUndefined();
+      expect(warnSpy).not.toHaveBeenCalled();
     });
 
     it('resolves both callers when the same script is preloaded concurrently', async () => {
@@ -248,8 +314,8 @@ describe('dynamic-loading', () => {
       const script = await waitForScript('http://localhost/foo.js');
       script.dispatchEvent(new Event('load'));
 
-      await expect(first).resolves.toBeNull();
-      await expect(second).resolves.toBeNull();
+      await expect(first).resolves.toBeUndefined();
+      await expect(second).resolves.toBeUndefined();
     });
 
     it('rejects both callers when a concurrently-loaded script fails', async () => {

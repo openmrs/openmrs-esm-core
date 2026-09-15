@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { mountRootParcel, type ParcelConfig } from 'single-spa';
+import { type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import { InlineLoading } from '@carbon/react';
+import { createParcelMounter } from '@openmrs/esm-extensions';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import styles from './workspace.module.scss';
 import { type OpenWorkspace } from '../workspaces';
@@ -11,6 +12,8 @@ interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
   additionalPropsFromPage?: object;
 }
+
+const mountParcel = createParcelMounter();
 
 export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: WorkspaceRendererProps) {
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
@@ -43,7 +46,7 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
   );
 
   return lifecycle ? (
-    <Parcel key={workspace.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
+    <Parcel key={workspace.name} config={lifecycle} mountParcel={mountParcel} {...props} />
   ) : (
     <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading', 'Loading')} ...`} />
   );

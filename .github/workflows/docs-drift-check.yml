@@ -4,29 +4,24 @@ name: Docs - Drift check
 # file always runs from base, so a PR can't modify what gates merge) and
 # gives access to the App token used to verify skip-docs provenance.
 #
-# `check_run.completed` re-fires this workflow when the bot posts the
-# `Docs / Regenerated` check run, so the required-check status updates on
-# the head SHA without needing a label-edit hop.
+# This is deliberately the only trigger. A required check is satisfied only
+# by a check run on the PR head SHA, and a run started by any event other
+# than the PR's own (`check_run`, `workflow_run`, ...) executes on the
+# default branch and reports against its HEAD instead. The bot's docs
+# commit therefore has to arrive as an ordinary push, which is why
+# docs-build.yml pushes with the App token rather than GITHUB_TOKEN.
 on:
   pull_request_target:
     types: [opened, reopened, synchronize, labeled, unlabeled]
-  check_run:
-    types: [completed]
 
 permissions: {}
 
 concurrency:
-  group: docs-drift-${{ github.event.pull_request.number || github.event.check_run.head_sha }}
+  group: docs-drift-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
   drift:
-    # Noise filter only — skips check_run completions for unrelated checks.
-    # Trust comes from the API re-query below; only the bot's App token can
-    # post a successful 'Docs / Regenerated' check run.
-    if: |
-      github.event_name == 'pull_request_target' ||
-      (github.event_name == 'check_run' && github.event.check_run.name == 'Docs / Regenerated')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -35,49 +30,14 @@ jobs:
       pull-requests: read
     env:
       REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
     steps:
-      - name: Resolve PR context
-        id: pr
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EVENT_NAME: ${{ github.event_name }}
-          PR_PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          CR_HEAD_SHA: ${{ github.event.check_run.head_sha }}
-        run: |
-          set -euo pipefail
-          if [ "${EVENT_NAME}" = "pull_request_target" ]; then
-            {
-              echo "number=${PR_PR_NUMBER}"
-              echo "head_sha=${PR_HEAD_SHA}"
-              echo "base_sha=${PR_BASE_SHA}"
-            } >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          # check_run events have no PR context — look up the PR for the SHA.
-          # If the SHA isn't currently the head of any open PR, there's
-          # nothing to evaluate.
-          pr=$(gh api "repos/${REPO}/commits/${CR_HEAD_SHA}/pulls" --jq '.[0].number // empty')
-          if [ -z "${pr}" ]; then
-            echo "No open PR for SHA ${CR_HEAD_SHA}; skipping"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          base_sha=$(gh api "repos/${REPO}/pulls/${pr}" --jq '.base.sha')
-          {
-            echo "number=${pr}"
-            echo "head_sha=${CR_HEAD_SHA}"
-            echo "base_sha=${base_sha}"
-          } >> "$GITHUB_OUTPUT"
-
       - name: Inspect labels and check run
-        if: steps.pr.outputs.skip != 'true'
         id: labels
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ steps.pr.outputs.number }}
-          HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
         run: |
           set -euo pipefail
           # Authoritative signal first: only the bot's App token can post the
@@ -119,7 +79,6 @@ jobs:
         id: provenance
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          PR_NUMBER: ${{ steps.pr.outputs.number }}
         run: |
           set -euo pipefail
           # Defense in depth: skip-docs by itself is necessary but not
@@ -147,7 +106,6 @@ jobs:
 
       - name: Checkout base for diff
         if: |
-          steps.pr.outputs.skip != 'true' &&
           steps.labels.outputs.pass != 'true' &&
           steps.provenance.outputs.verified != 'true'
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -161,12 +119,8 @@ jobs:
 
       - name: Verify drift
         if: |
-          steps.pr.outputs.skip != 'true' &&
           steps.labels.outputs.pass != 'true' &&
           steps.provenance.outputs.verified != 'true'
-        env:
-          PR_NUMBER: ${{ steps.pr.outputs.number }}
-          BASE_SHA: ${{ steps.pr.outputs.base_sha }}
         run: |
           set -euo pipefail
           # refs/pull/N/head lives in the base repo, so it works for fork

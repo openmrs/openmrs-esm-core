@@ -13,6 +13,7 @@
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch",
     "build": "rspack --mode=production",
+    "clean": "git clean -fdX -- dist",
     "build:development": "rspack --mode=development",
     "analyze": "rspack --mode=production --env analyze=true",
     "typescript": "tsc",
@@ -39,7 +40,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.92.1",
     "@hookform/resolvers": "^3.6.0",
     "lodash-es": "^4.17.21",
     "react-hook-form": "^7.52.2",
@@ -56,6 +56,7 @@
     "swr": "2.x"
   },
   "devDependencies": {
+    "@carbon/react": "^1.92.1",
     "@vitest/coverage-v8": "^4.1.2",
     "cross-env": "^10.1.0",
     "happy-dom": "^20.6.0",

@@ -3,14 +3,15 @@ import {
   getCurrentUser,
   subscribeOpenmrsEvent,
 } from '@openmrs/esm-framework/src/internal';
+import { filter, take } from 'rxjs/operators';
 import { setupOptionalDependencies } from './optionaldeps';
 
 subscribeOpenmrsEvent('started', () => cleanupObsoleteFeatureFlags());
 subscribeOpenmrsEvent('started', () => {
-  const subscription = getCurrentUser().subscribe((session) => {
-    if (session.authenticated) {
-      subscription?.unsubscribe();
-      setupOptionalDependencies();
-    }
-  });
+  getCurrentUser()
+    .pipe(
+      filter((session) => session.authenticated),
+      take(1),
+    )
+    .subscribe(() => setupOptionalDependencies());
 });

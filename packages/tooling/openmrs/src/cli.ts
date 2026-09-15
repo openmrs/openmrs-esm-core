@@ -358,6 +358,12 @@ export function buildCli(y: Argv) {
             'The overall application version to record as the top-level `version` in the routes registry. Exposed at runtime as `window.applicationVersion`. If omitted, the version is not set.',
           type: 'string',
         })
+        .option('ensure-entrypoints', {
+          default: true,
+          description:
+            'Whether to fail the assemble run if a frontend module is missing its routes.json or the code entrypoint referenced from the import map. Use --no-ensure-entrypoints to downgrade these to warnings.',
+          type: 'boolean',
+        })
         .option('mode', {
           choices: ['config', 'survey'],
           default: 'survey',

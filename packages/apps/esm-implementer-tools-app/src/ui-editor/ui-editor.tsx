@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@carbon/react';
 import {
   CloseIcon,
-  type ExtensionInfo,
+  type ExtensionRendering,
+  type ExtensionRenderingsStore,
+  getExtensionRenderingsStore,
   getExtensionInternalStore,
   useStore,
   useStoreWithActions,
@@ -31,31 +33,30 @@ export interface ExtensionOverlayTarget {
   extensionName: string;
   slotModuleName: string;
   slotName: string;
-  extensionInstance: ExtensionInfo['instances'][number];
+  extensionRendering: ExtensionRendering;
 }
 
 /**
- * Flattens `extensions[name].instances` into a flat list of overlay targets. `instances` is an
- * `Array<ExtensionInstance>`, so it must be iterated directly. Treating it as a nested object (via
- * `Object.entries`) yields array indices as the module name and instance property names as the slot
- * name, so the generated selectors never match a real extension DOM node.
+ * Turns the rendering store's records into overlay targets, each naming a slot and extension to look
+ * for in the DOM. Not every rendering has a matching node.
  */
 export function getExtensionOverlayTargets(
-  extensions: Record<string, ExtensionInfo> | undefined,
+  renderings: ExtensionRenderingsStore['renderings'] | undefined,
 ): Array<ExtensionOverlayTarget> {
-  return Object.entries(extensions ?? {}).flatMap(([extensionName, extensionInfo]) =>
-    (extensionInfo.instances ?? []).map((extensionInstance) => ({
-      extensionName,
-      slotModuleName: extensionInstance.slotModuleName,
-      slotName: extensionInstance.slotName,
-      extensionInstance,
-    })),
-  );
+  return Array.from(renderings?.values() ?? [], (extensionRendering) => ({
+    extensionName: extensionRendering.extensionName,
+    slotModuleName: extensionRendering.slotModuleName,
+    slotName: extensionRendering.slotName,
+    extensionRendering,
+  }));
 }
 
 export default function UiEditor() {
   const { t } = useTranslation();
   const { slots, extensions } = useStore(getExtensionInternalStore());
+  // Depended on as a whole below: the rendering map is mutated in place, so only the state
+  // object around it changes identity when an extension mounts or unmounts.
+  const renderingsState = useStore(getExtensionRenderingsStore());
   const { isOpen: areImplementerToolsOpen } = useStore(implementerToolsStore);
 
   const getExtensionCount = (slotName: string, moduleName: string) => {
@@ -94,16 +95,14 @@ export default function UiEditor() {
       .filter((x): x is NonNullable<typeof x> => Boolean(x));
   }, [slots]);
 
-  const extensionElements = useMemo(
-    () =>
-      getExtensionOverlayTargets(extensions).map((target) => ({
-        ...target,
-        element: document.querySelector(
-          `*[data-extension-slot-name="${target.slotName}"][data-extension-slot-module-name="${target.slotModuleName}"] *[data-extension-id="${target.extensionInstance.id}"]`,
-        ) as HTMLElement | null,
-      })),
-    [extensions],
-  );
+  const extensionElements = useMemo(() => {
+    return getExtensionOverlayTargets(renderingsState.renderings).map((target) => ({
+      ...target,
+      element: document.querySelector(
+        `*[data-extension-rendering-id="${CSS.escape(target.extensionRendering.renderingId)}"]`,
+      ) as HTMLElement | null,
+    }));
+  }, [renderingsState]);
 
   return (
     <>
@@ -123,12 +122,12 @@ export default function UiEditor() {
           ),
       )}
       {extensionElements.map(
-        ({ extensionName, slotModuleName, slotName, extensionInstance, element }) =>
+        ({ extensionName, slotModuleName, slotName, extensionRendering, element }) =>
           element && (
             <ExtensionOverlay
               domElement={element}
               extensionName={extensionName}
-              key={`${slotName}-${extensionInstance.id}`}
+              key={extensionRendering.renderingId}
               slotModuleName={slotModuleName}
               slotName={slotName}
             />

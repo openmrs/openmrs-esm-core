@@ -1,0 +1,11 @@
+// Deliberately ill-behaved: this app exists so that a real build of it fails the Carbon CSS guard.
+// Both of the guard's cases are here — a Carbon class with nothing of this app's own anchoring it, and
+// a selector with no class or id at all. Neither may ship from a frontend module.
+
+:global(.cds--btn) {
+  min-width: 7rem;
+}
+
+body {
+  margin: 0;
+}

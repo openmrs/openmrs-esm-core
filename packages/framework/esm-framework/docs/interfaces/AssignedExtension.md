@@ -2,7 +2,7 @@
 
 # Interface: AssignedExtension
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L77)
+Defined in: [packages/framework/esm-extensions/src/store.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L112)
 
 ## Properties
 
@@ -10,9 +10,19 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:77](https://github.c
 
 > `readonly` **config**: `null` \| `Readonly`\<[`ConfigObject`](ConfigObject.md)\>
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L83)
+Defined in: [packages/framework/esm-extensions/src/store.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L118)
 
 The extension's config. Note that this will be `null` until the slot is mounted.
+
+***
+
+### displayConditionExpression?
+
+> `readonly` `optional` **displayConditionExpression**: `string`
+
+Defined in: [packages/framework/esm-extensions/src/store.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L123)
+
+The condition under which this extension should be displayed.
 
 ***
 
@@ -20,7 +30,7 @@ The extension's config. Note that this will be `null` until the slot is mounted.
 
 > `readonly` `optional` **featureFlag**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)
+Defined in: [packages/framework/esm-extensions/src/store.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L121)
 
 ***
 
@@ -28,7 +38,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:86](https://github.c
 
 > `readonly` **id**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L78)
+Defined in: [packages/framework/esm-extensions/src/store.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L113)
 
 ***
 
@@ -36,7 +46,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:78](https://github.c
 
 > `readonly` **meta**: `Readonly`\<[`ExtensionMeta`](ExtensionMeta.md)\>
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L81)
+Defined in: [packages/framework/esm-extensions/src/store.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L116)
 
 ***
 
@@ -44,7 +54,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:81](https://github.c
 
 > `readonly` **moduleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L80)
+Defined in: [packages/framework/esm-extensions/src/store.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L115)
 
 ***
 
@@ -52,7 +62,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:80](https://github.c
 
 > `readonly` **name**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L79)
+Defined in: [packages/framework/esm-extensions/src/store.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L114)
 
 ***
 
@@ -60,7 +70,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:79](https://github.c
 
 > `readonly` `optional` **offline**: `boolean` \| `object`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L85)
+Defined in: [packages/framework/esm-extensions/src/store.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L120)
 
 ***
 
@@ -68,4 +78,4 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:85](https://github.c
 
 > `readonly` `optional` **online**: `boolean` \| `object`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L84)
+Defined in: [packages/framework/esm-extensions/src/store.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L119)

@@ -25,15 +25,6 @@ export enum VisitStatus {
 export interface VisitStoreState {
   patientUuid: string | null;
   manuallySetVisitUuid: string | null;
-
-  /**
-   * Stores a record of SWR mutate callbacks that should be called when
-   * the Visit with the specified uuid is modified. The callbacks are keyed
-   * by unique component IDs.
-   */
-  mutateVisitCallbacks: {
-    [componentId: string]: () => void;
-  };
 }
 
 /**
@@ -56,7 +47,6 @@ export const defaultVisitCustomRepresentation =
 const initialState: VisitStoreState = getVisitSessionStorage() || {
   patientUuid: null,
   manuallySetVisitUuid: null,
-  mutateVisitCallbacks: {},
 };
 
 /**

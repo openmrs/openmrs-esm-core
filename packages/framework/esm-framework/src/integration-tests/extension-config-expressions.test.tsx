@@ -2,10 +2,15 @@
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import { type Person } from '@openmrs/esm-api';
 import { mockSessionStore } from '@openmrs/esm-api/mock';
-import { attach, registerExtension, updateInternalExtensionStore } from '../../../esm-extensions/src';
+import {
+  attach,
+  getExtensionRenderingsStore,
+  registerExtension,
+  updateInternalExtensionStore,
+} from '../../../esm-extensions/src';
 import { ExtensionSlot, getSyncLifecycle, openmrsComponentDecorator, useConfig } from '../../../esm-react-utils/src';
 import {
   configInternalStore,
@@ -41,6 +46,10 @@ vi.mock('@openmrs/esm-api', async () => {
  */
 describe('Expression evaluation in extension display conditions', () => {
   beforeEach(() => {
+    // A rendering outliving its module's schema makes the config system derive a config for an
+    // extension this test never registered.
+    // eslint-disable-next-line testing-library/no-render-in-lifecycle -- not a render; the rule matches any callee name containing "render"
+    getExtensionRenderingsStore().setState({ renderings: new Map() });
     temporaryConfigStore.setState({ config: {} });
     configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
     mockSessionStore.setState({});
@@ -223,6 +232,59 @@ describe('Expression evaluation in extension display conditions', () => {
       const slot = screen.getByTestId('slot');
       expect(slot.firstChild).toBeNull();
     });
+  }, 10000);
+
+  it('evaluates a display condition against each rendering of a slot', async () => {
+    registerExtension({
+      name: 'Always',
+      moduleName: 'esm-bedrock',
+      load: getSyncLifecycle(() => <div>Always</div>, {
+        moduleName: 'esm-bedrock',
+        featureName: 'Bedrock',
+        disableTranslations: true,
+      }),
+      meta: {},
+    });
+    registerExtension({
+      name: 'Flagged',
+      moduleName: 'esm-bedrock',
+      load: getSyncLifecycle(() => <div>Flagged</div>, {
+        moduleName: 'esm-bedrock',
+        featureName: 'Bedrock',
+        disableTranslations: true,
+      }),
+      meta: {},
+      displayExpression: 'patient.flagged',
+    });
+    attach('rows-slot', 'Always');
+    attach('rows-slot', 'Flagged');
+
+    // A virtualized list renders the same slot once per row, each with its own patient. The slot
+    // is not "a place on the screen" here, so the condition has to be evaluated per rendering.
+    const Rows = openmrsComponentDecorator({
+      moduleName: 'esm-bedrock',
+      featureName: 'Bedrock',
+      disableTranslations: true,
+    })(() => (
+      <div>
+        <div data-testid="row-flagged">
+          <ExtensionSlot name="rows-slot" state={{ patient: { flagged: true } }} />
+        </div>
+        <div data-testid="row-plain">
+          <ExtensionSlot name="rows-slot" state={{ patient: { flagged: false } }} />
+        </div>
+      </div>
+    ));
+
+    await act(async () => {
+      render(<Rows />);
+    });
+
+    await waitFor(() => expect(within(screen.getByTestId('row-flagged')).getByText('Always')).toBeInTheDocument());
+
+    expect(within(screen.getByTestId('row-flagged')).getByText('Flagged')).toBeInTheDocument();
+    expect(within(screen.getByTestId('row-plain')).getByText('Always')).toBeInTheDocument();
+    expect(within(screen.getByTestId('row-plain')).queryByText('Flagged')).not.toBeInTheDocument();
   }, 10000);
 });
 

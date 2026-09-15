@@ -2,7 +2,7 @@
 
 # Interface: OpenmrsRoutes
 
-Defined in: [packages/framework/esm-globals/src/types.ts:404](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L404)
+Defined in: [packages/framework/esm-globals/src/types.ts:408](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L408)
 
 This interfaces describes the format of the overall routes.json loaded by the app shell.
 Basically, this is the same as the app routes, with each routes definition keyed by the app's name
@@ -13,7 +13,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 > **routes**: `Record`\<`Exclude`\<`string`, `"version"`\>, [`OpenmrsAppRoutes`](OpenmrsAppRoutes.md)\>
 
-Defined in: [packages/framework/esm-globals/src/types.ts:408](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L408)
+Defined in: [packages/framework/esm-globals/src/types.ts:412](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L412)
 
 The routes associated with this application keyed by module id
 
@@ -23,6 +23,6 @@ The routes associated with this application keyed by module id
 
 > `optional` **version**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:406](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L406)
+Defined in: [packages/framework/esm-globals/src/types.ts:410](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L410)
 
 The overall version for this application

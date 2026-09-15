@@ -6,7 +6,7 @@
 
 > **subscribeTo**\<`T`, `U`\>(`store`, `handle`): () => `void`
 
-Defined in: [packages/framework/esm-state/src/state.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L137)
+Defined in: [packages/framework/esm-state/src/state.ts:161](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L161)
 
 Subscribes to a store and invokes a callback when the state changes.
 The callback is also immediately invoked with the current state upon subscription.
@@ -54,7 +54,7 @@ An unsubscribe function to stop listening for changes.
 
 > **subscribeTo**\<`T`, `U`\>(`store`, `select`, `handle`): () => `void`
 
-Defined in: [packages/framework/esm-state/src/state.ts:138](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L138)
+Defined in: [packages/framework/esm-state/src/state.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L162)
 
 Subscribes to a store and invokes a callback when the state changes.
 The callback is also immediately invoked with the current state upon subscription.

@@ -44,6 +44,9 @@ on:
         required: true
       OMRS_PR_BOT_PRIVATE_KEY:
         required: true
+      # Bot user PAT, used only to push docs commits to fork branches.
+      OMRS_BOT_GH_TOKEN:
+        required: true
 
 permissions: {}
 
@@ -65,6 +68,7 @@ jobs:
       BYPASS_ATTACK_FILES: ${{ inputs.bypass_attack_files }}
     outputs:
       proceed: ${{ steps.gate.outputs.proceed }}
+      status_check_id: ${{ steps.status.outputs.id }}
     steps:
       - name: Gate
         id: gate
@@ -193,6 +197,38 @@ jobs:
 
           echo "proceed=true" >> "$GITHUB_OUTPUT"
 
+      - name: Mint app token
+        if: steps.gate.outputs.proceed == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          client-id: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
+          permission-checks: write
+
+      # The approval-driven caller runs on the default branch, so its own
+      # jobs are invisible on the PR. This check run is the PR-visible signal
+      # that a build is under way, and the callers' decide jobs read it to
+      # avoid starting (and thereby cancelling) a duplicate build for the
+      # same SHA. `finalize` completes it.
+      - name: Post build status
+        if: steps.gate.outputs.proceed == 'true'
+        id: status
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          id=$(gh api -X POST "repos/${REPO}/check-runs" \
+            -f name='Docs / Build' \
+            -f head_sha="${HEAD_SHA}" \
+            -f status=in_progress \
+            -f details_url="${RUN_URL}" \
+            -f 'output[title]=Regenerating documentation' \
+            -f "output[summary]=Building docs for \`${HEAD_SHA}\`; see the linked run." \
+            --jq '.id')
+          echo "id=${id}" >> "$GITHUB_OUTPUT"
+
   build:
     needs: preflight
     if: needs.preflight.outputs.proceed == 'true'
@@ -261,15 +297,15 @@ jobs:
     if: needs.preflight.outputs.proceed == 'true'
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      actions: write
+      contents: read
       pull-requests: write
     env:
       REPO: ${{ github.repository }}
       PR_NUMBER: ${{ inputs.pr_number || github.event.pull_request.number }}
       HEAD_REF: ${{ inputs.head_ref || github.event.pull_request.head.ref }}
       HEAD_REPO: ${{ inputs.head_repo || github.event.pull_request.head.repo.full_name }}
-    outputs:
-      pushed_sha: ${{ steps.commit.outputs.pushed_sha }}
+      HEAD_SHA: ${{ inputs.head_sha || github.event.pull_request.head.sha }}
     steps:
       - name: Checkout the SHA the build ran against
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -312,19 +348,47 @@ jobs:
           mkdir -p "$docs_dir"
           cp -a /tmp/docs-artifact/. "$docs_dir/"
 
+      # The push must not use GITHUB_TOKEN: GitHub creates no
+      # `pull_request_target` runs for pushes made with it, so the drift,
+      # title, and description checks would never run on the docs commit and
+      # the PR could not merge. Same-repo branches are pushed with the App
+      # token. Forks need the bot user's PAT instead: "Allow edits by
+      # maintainers" grants push access to users with write access to this
+      # repo, and an App is not such a user. The PR tree is on disk in this
+      # job, but nothing below executes PR-controlled code (no scripts, no
+      # hooks), and whichever token is used only ever appears on a command
+      # line.
+      - name: Mint app token
+        id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          client-id: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
+          permission-contents: write
+          permission-checks: write
+
       - name: Commit and push
         id: commit
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          BOT_TOKEN: ${{ secrets.OMRS_BOT_GH_TOKEN }}
         run: |
           set -euo pipefail
+          if [ "${HEAD_REPO}" = "${REPO}" ]; then
+            push_token="${APP_TOKEN}"
+          else
+            push_token="${BOT_TOKEN}"
+          fi
           git config user.name "openmrs-bot"
           git config user.email "infrastructure@openmrs.org"
           git add packages/framework/esm-framework/docs/
           if git diff --cached --quiet; then
             echo "No doc changes; treating as success"
-            echo "pushed=true" >> "$GITHUB_OUTPUT"
-            echo "pushed_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            {
+              echo "pushed=true"
+              echo "committed=false"
+              echo "pushed_sha=$(git rev-parse HEAD)"
+            } >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "(chore) Add docs"
@@ -333,17 +397,81 @@ jobs:
           # on this command line, never persisted to .git/config, so the
           # working tree never holds a write-scoped credential reachable
           # from PR-controlled paths.
-          push_url="https://x-access-token:${GH_TOKEN}@github.com/${HEAD_REPO}.git"
+          push_url="https://x-access-token:${push_token}@github.com/${HEAD_REPO}.git"
           if git push "${push_url}" "HEAD:refs/heads/${HEAD_REF}"; then
-            echo "pushed=true" >> "$GITHUB_OUTPUT"
             # Pin to local HEAD (= the SHA we just pushed). A fresh
             # `current head` API lookup would race against contributor
             # pushes and could attest a SHA whose docs we didn't build.
-            echo "pushed_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            {
+              echo "pushed=true"
+              echo "committed=true"
+              echo "pushed_sha=$(git rev-parse HEAD)"
+            } >> "$GITHUB_OUTPUT"
           else
             echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 1
           fi
+
+      # Only runs when the SHA was actually pushed (or already current):
+      # attesting a SHA we didn't publish would falsely claim its docs are
+      # fresh. Posted in this job, right after the push, because the push
+      # itself fires `synchronize` runs that query this check within seconds;
+      # deferring it to another job races them into a redundant rebuild and
+      # a spurious drift failure.
+      - name: Post check run
+        if: steps.commit.outputs.pushed_sha != ''
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PUSHED_SHA: ${{ steps.commit.outputs.pushed_sha }}
+        run: |
+          set -euo pipefail
+          # A commit pushed to a fork only becomes visible here once GitHub
+          # has updated refs/pull/N/head, which can lag the push by a few
+          # seconds; until then the API rejects the SHA.
+          for attempt in 1 2 3 4 5; do
+            if gh api -X POST "repos/${REPO}/check-runs" \
+              -f name='Docs / Regenerated' \
+              -f head_sha="${PUSHED_SHA}" \
+              -f status=completed \
+              -f conclusion=success \
+              -f 'output[title]=Documentation regenerated' \
+              -f "output[summary]=Generated docs reflect the PR head at \`${PUSHED_SHA}\`."; then
+              exit 0
+            fi
+            echo "Attempt ${attempt} failed; retrying"
+            sleep 3
+          done
+          exit 1
+
+      # When the build produced no new commit there is no push to fire a
+      # fresh `synchronize`, so the drift run that already failed for this
+      # SHA would stay red even though the check run above now satisfies it.
+      # Re-running that run is the only way to get a passing `drift` onto
+      # the head SHA; a run started by any other event reports against main.
+      - name: Re-run drift check
+        if: steps.commit.outputs.committed == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          run=$(gh api --method GET "repos/${REPO}/actions/workflows/docs-drift-check.yml/runs" \
+            -f head_sha="${HEAD_SHA}" -f event=pull_request_target -f per_page=1 \
+            --jq '.workflow_runs[0] | select(. != null) | "\(.id) \(.status) \(.conclusion)"')
+          if [ -z "${run}" ]; then
+            echo "No drift run found for ${HEAD_SHA}; nothing to re-run"
+            exit 0
+          fi
+          read -r id status conclusion <<< "${run}"
+          if [ "${status}" != "completed" ]; then
+            echo "Drift run ${id} is still ${status}; it will pick up the check run itself"
+            exit 0
+          fi
+          if [ "${conclusion}" = "success" ]; then
+            echo "Drift run ${id} already passed"
+            exit 0
+          fi
+          echo "Re-running drift run ${id} (was ${conclusion})"
+          gh api -X POST "repos/${REPO}/actions/runs/${id}/rerun"
 
       - name: Comment on push failure
         if: failure() && steps.commit.outputs.pushed == 'false'
@@ -357,19 +485,19 @@ jobs:
 
           If neither applies, apply the \`skip-docs\` label and push the docs commit yourself."
 
-  publish-state:
-    needs: [preflight, commit]
-    # Skip when commit didn't actually publish (e.g., non-FF push fail).
-    # Posting a check run for a SHA we didn't push would falsely claim
-    # docs are current for that SHA.
-    if: needs.preflight.outputs.proceed == 'true' && needs.commit.outputs.pushed_sha != ''
+  finalize:
+    needs: [preflight, build, commit]
+    # `always()` so a cancelled or failed build still closes the status
+    # check; an in-progress check left behind would make the callers'
+    # decide jobs treat the SHA as still building.
+    if: always() && needs.preflight.outputs.status_check_id != ''
     runs-on: ubuntu-latest
-    # API-only — no checkout, no PR working tree on disk. Keeps the App
-    # token isolated from anything PR-controlled.
     permissions: {}
     env:
       REPO: ${{ github.repository }}
-      PUSHED_SHA: ${{ needs.commit.outputs.pushed_sha }}
+      CHECK_ID: ${{ needs.preflight.outputs.status_check_id }}
+      BUILD_RESULT: ${{ needs.build.result }}
+      COMMIT_RESULT: ${{ needs.commit.result }}
     steps:
       - name: Mint app token
         id: app-token
@@ -377,16 +505,25 @@ jobs:
         with:
           client-id: ${{ secrets.OMRS_PR_BOT_CLIENT_ID }}
           private-key: ${{ secrets.OMRS_PR_BOT_PRIVATE_KEY }}
+          permission-checks: write
 
-      - name: Post check run
+      - name: Complete build status
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           set -euo pipefail
-          gh api -X POST "repos/${REPO}/check-runs" \
-            -f name='Docs / Regenerated' \
-            -f head_sha="${PUSHED_SHA}" \
+          if [ "${COMMIT_RESULT}" = "success" ]; then
+            conclusion=success
+            title="Documentation build finished"
+          elif [ "${BUILD_RESULT}" = "cancelled" ] || [ "${COMMIT_RESULT}" = "cancelled" ]; then
+            conclusion=cancelled
+            title="Documentation build cancelled"
+          else
+            conclusion=failure
+            title="Documentation build failed"
+          fi
+          gh api -X PATCH "repos/${REPO}/check-runs/${CHECK_ID}" \
             -f status=completed \
-            -f conclusion=success \
-            -f 'output[title]=Documentation regenerated' \
-            -f "output[summary]=Generated docs reflect the PR head at \`${PUSHED_SHA}\`."
+            -f conclusion="${conclusion}" \
+            -f "output[title]=${title}" \
+            -f "output[summary]=build: ${BUILD_RESULT}, commit: ${COMMIT_RESULT}. See the linked run for details."

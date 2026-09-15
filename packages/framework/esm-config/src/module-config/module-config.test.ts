@@ -9,6 +9,7 @@ import type { ConfigExtensionStore, ConfigInternalStore, ImplementerToolsConfigS
 import {
   configExtensionStore,
   configInternalStore,
+  getConfigStore,
   getExtensionConfig,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -1260,6 +1261,49 @@ describe('extension config', () => {
 
   afterEach(resetAll);
 
+  it('does not re-derive the configs of extensions that were already mounted', () => {
+    let derivations = 0;
+    Config.defineExtensionConfigSchema('countedExt', {
+      bar: {
+        _default: 'barry',
+        _validators: [
+          validator(() => {
+            derivations++;
+            return true;
+          }, 'never fails'),
+        ],
+      },
+    });
+    // Validators are skipped for a value that is still its default, so the counter only moves
+    // when the config is genuinely rebuilt.
+    Config.provide({ countedExt: { bar: 'qux' } });
+
+    const mount = (extensionIds: Array<string>) =>
+      configExtensionStore.setState({
+        mountedExtensions: extensionIds.map((extensionId) => ({
+          slotModuleName: 'slot-mod',
+          extensionModuleName: 'ext-mod',
+          slotName: 'countedSlot',
+          extensionId,
+        })),
+      });
+
+    mount(['countedExt#0']);
+    expect(derivations).toBe(1);
+
+    // Mounting a second extension must not rebuild the first one's config: a list that mounts
+    // extensions one at a time would otherwise cost O(mounted²) derivations to fill.
+    mount(['countedExt#0', 'countedExt#1']);
+    expect(derivations).toBe(2);
+
+    mount(['countedExt#0', 'countedExt#1', 'countedExt#2']);
+    expect(derivations).toBe(3);
+
+    // Unmounting is likewise not a reason to rebuild what is left.
+    mount(['countedExt#0']);
+    expect(derivations).toBe(3);
+  });
+
   it('returns the module config', async () => {
     const moduleLevelConfig = { 'ext-mod': { bar: 'qux' } };
     updateConfigExtensionStore();
@@ -1295,6 +1339,99 @@ describe('extension config', () => {
       'Translation overrides': {},
     });
     expect(console.error).not.toHaveBeenCalled();
+  });
+
+  // The module that renders an extension owns the slot it opens, which need not be the module an
+  // implementer configures that slot from.
+  it("uses the 'configure' config written by a module other than the one owning the slot", () => {
+    updateConfigExtensionStore('fooExt#id6');
+    const configureConfig = {
+      'ext-mod': { bar: 'qux' },
+      'other-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id6': { baz: 'quiz' } },
+          },
+        },
+      },
+    };
+    Config.provide(configureConfig);
+    const result = getExtensionConfig('barSlot', 'fooExt#id6').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'qux',
+      baz: 'quiz',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("prefers the slot-owning module's 'configure' config to another module's", () => {
+    updateConfigExtensionStore('fooExt#id7');
+    const configureConfig = {
+      'slot-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id7': { baz: 'from-owner' } },
+          },
+        },
+      },
+      'other-mod': {
+        extensionSlots: {
+          barSlot: {
+            configure: { 'fooExt#id7': { bar: 'from-other', baz: 'from-other' } },
+          },
+        },
+      },
+    };
+    Config.provide(configureConfig);
+    const result = getExtensionConfig('barSlot', 'fooExt#id7').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'from-other',
+      baz: 'from-owner',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("gathers 'configure' from every module but leaves 'add' to the last one to declare the slot", () => {
+    updateConfigExtensionStore('fooExt#id8');
+    Config.provide({
+      'first-mod': {
+        extensionSlots: {
+          barSlot: { add: ['fooExt#unwanted'], configure: { 'fooExt#id8': { bar: 'from-first' } } },
+        },
+      },
+      'last-mod': {
+        extensionSlots: {
+          barSlot: { add: ['fooExt#id8'], configure: { 'fooExt#id8': { baz: 'from-last' } } },
+        },
+      },
+    });
+
+    // Composing `add` across modules would resurrect entries another module had removed, so the
+    // last module to name the slot still supplies it whole.
+    expect(getExtensionSlotsConfigStore().getState().slots['barSlot'].config.add).toStrictEqual(['fooExt#id8']);
+    expect(getExtensionConfig('barSlot', 'fooExt#id8').getState().config).toStrictEqual({
+      bar: 'from-first',
+      baz: 'from-last',
+      'Display conditions': { expression: undefined, privileges: [] },
+      'Translation overrides': {},
+    });
+  });
+
+  it('releases a cross-module configure when the temporary config that set it is cleared', () => {
+    updateConfigExtensionStore('fooExt#id9');
+    temporaryConfigStore.setState({
+      config: { 'other-mod': { extensionSlots: { barSlot: { configure: { 'fooExt#id9': { baz: 'temporary' } } } } } },
+    });
+    expect(getExtensionConfig('barSlot', 'fooExt#id9').getState().config.baz).toBe('temporary');
+
+    // The derived slot config is not part of the extension config cache key, so a released override
+    // is only picked up because that cache also keys on the temporary config it was derived from.
+    temporaryConfigStore.setState({ config: {} });
+    expect(getExtensionConfig('barSlot', 'fooExt#id9').getState().config.baz).toBe('bazzy');
   });
 
   it('validates the extension configure config, with module config schema', () => {
@@ -1432,6 +1569,80 @@ describe('translation overrides', () => {
     const config = Config.getConfig('corge-module');
     expect(config).resolves.toStrictEqual({ corges: true });
     expect(console.error).not.toHaveBeenCalled();
+  });
+});
+
+describe('promise-based config accessors', () => {
+  beforeAll(resetAll);
+  beforeEach(() => {
+    console.error = vi.fn();
+  });
+  afterEach(resetAll);
+
+  /**
+   * Counts subscriptions that are currently live on a module's config store, so a leak shows up
+   * as a non-zero count. This patches the store the mock registry holds rather than the object
+   * `getConfigStore` hands back, because the mock instruments a fresh wrapper on every call.
+   */
+  function countSubscriptions(moduleName: string) {
+    getConfigStore(moduleName);
+    const store = mockStores[`config-module-${moduleName}`].value;
+    const realSubscribe = store.subscribe.bind(store);
+    const counter = { live: 0 };
+
+    store.subscribe = ((listener: Parameters<typeof store.subscribe>[0]) => {
+      counter.live++;
+      const unsubscribe = realSubscribe(listener);
+
+      return () => {
+        counter.live--;
+        unsubscribe();
+      };
+    }) as typeof store.subscribe;
+
+    return counter;
+  }
+
+  it('getConfig does not subscribe at all when the config has already loaded', async () => {
+    Config.defineConfigSchema('leak-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('leak-module');
+    await Config.getConfig('leak-module');
+
+    const subscriptions = countSubscriptions('leak-module');
+
+    // openmrs-fetch calls this on every HTTP request, so a subscription per call is unbounded.
+    for (let i = 0; i < 25; i++) {
+      await Config.getConfig('leak-module');
+    }
+
+    expect(subscriptions.live).toBe(0);
+  });
+
+  it('getConfig releases its subscription once the config loads', async () => {
+    const subscriptions = countSubscriptions('slow-module');
+    const config = Config.getConfig('slow-module');
+
+    expect(subscriptions.live).toBe(1);
+
+    Config.defineConfigSchema('slow-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('slow-module');
+
+    await expect(config).resolves.toStrictEqual({ foo: 'qux' });
+    expect(subscriptions.live).toBe(0);
+  });
+
+  it('getTranslationOverrides does not leave subscriptions behind', async () => {
+    Config.defineConfigSchema('overrides-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('overrides-module');
+    await Config.getTranslationOverrides('overrides-module');
+
+    const subscriptions = countSubscriptions('overrides-module');
+
+    for (let i = 0; i < 25; i++) {
+      await Config.getTranslationOverrides('overrides-module');
+    }
+
+    expect(subscriptions.live).toBe(0);
   });
 });
 

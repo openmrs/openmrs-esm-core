@@ -15,6 +15,7 @@ export {
   type ExtensionStore,
   type AssignedExtension,
   type ConnectedExtension,
+  type ExtensionSlotCustomState,
   type ExtensionSlotState,
   getExtensionStore,
 } from './store';
