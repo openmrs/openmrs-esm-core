@@ -1,17 +1,42 @@
 // SWR has had a history of being written in ways that make module federation
 // sharing hard. Here we add regression tests to try and catch any future divergences.
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { afterAll, describe, expect, it } from 'vitest';
-import { buildFixtureApp, cleanUpFixtureBuilds, fixtureRootOf } from './build-fixture';
+import { buildAppShell, buildFixtureApp, cleanUpFixtureBuilds, fixtureRootOf } from './build-fixture';
 
 /** The entry points `__fixtures__/swr-app` imports directly. */
 const importedByFixture = ['swr', 'swr/immutable', 'swr/infinite', 'swr/mutation', 'swr/subscription'];
 
 const fixture = 'swr-app';
 const fixtureRoot = fixtureRootOf(fixture);
+const appShellRoot = resolve(__dirname, '..', '..', '..', 'shell', 'esm-app-shell');
+
+/**
+ * Every entry point SWR publishes, read from its own `exports` map rather than listed here, so that
+ * a version adding one fails these tests instead of silently going unshared.
+ */
+function swrEntryPoints() {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { exports: exported } = require('swr/package.json');
+
+  return Object.keys(exported)
+    .filter((key) => key !== './package.json')
+    .map((key) => (key === '.' ? 'swr' : `swr/${key.slice(2)}`))
+    .sort();
+}
 
 afterAll(cleanUpFixtureBuilds);
+
+/** Digs the `shared` block out of whichever `ModuleFederationPlugin` a config registered. */
+function sharedOf(config: Record<string, any>) {
+  const federation = config.plugins.find(
+    (plugin: { constructor?: { name?: string } }) => plugin?.constructor?.name === 'ModuleFederationPlugin',
+  );
+  const options = federation._options ?? federation.options ?? federation._pluginOptions;
+
+  return options.shared as Record<string, { requiredVersion?: unknown }>;
+}
 
 /**
  * The `shared` block one of the configs produces for the fixture. Read from source for the same
@@ -27,13 +52,22 @@ async function sharedFor(bundler: 'rspack' | 'webpack') {
         ? await import('@openmrs/rspack-config/src/index')
         : /* webpack */ await import('@openmrs/webpack-config/src/index');
 
-    const config = configModule.default({}, { mode: 'production' }) as Record<string, any>;
-    const federation = config.plugins.find(
-      (plugin: { constructor?: { name?: string } }) => plugin?.constructor?.name === 'ModuleFederationPlugin',
-    );
-    const options = federation._options ?? federation.options ?? federation._pluginOptions;
+    return sharedOf(configModule.default({}, { mode: 'production' }) as Record<string, any>);
+  } finally {
+    process.chdir(originalCwd);
+  }
+}
 
-    return options.shared as Record<string, unknown>;
+/** The `shared` block the app shell's own federation config produces. */
+function sharedForAppShell() {
+  const originalCwd = process.cwd();
+  process.chdir(appShellRoot);
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const configFactory = require(join(appShellRoot, 'rspack.config.js'));
+
+    return sharedOf(configFactory({}, { mode: 'production' }) as Record<string, any>);
   } finally {
     process.chdir(originalCwd);
   }
@@ -57,6 +91,17 @@ function consumedEntryPoints(moduleGraph: Record<string, string[]>) {
       Object.keys(moduleGraph)
         .flatMap((identifier) => patterns.map((pattern) => pattern.exec(identifier)?.[1] ?? []))
         .flat(),
+    ),
+  ].sort();
+}
+
+/** The SWR entry points a build publishes into the share scope for other builds to consume. */
+function providedEntryPoints(moduleGraph: Record<string, string[]>) {
+  return [
+    ...new Set(
+      Object.keys(moduleGraph).flatMap(
+        (identifier) => /^provide shared module \(default\) (swr(?:\/\w+)?)@/.exec(identifier)?.[1] ?? [],
+      ),
     ),
   ].sort();
 }
@@ -125,4 +170,27 @@ describe.each(['rspack', 'webpack'] as const)('the %s config sharing SWR', (bund
     expect(Object.keys(moduleGraph).some((identifier) => isSwrFile(identifier))).toBe(true);
     expect(reachedFromOutside).toEqual([]);
   });
+});
+
+describe('the app shell sharing SWR', () => {
+  it('shares bare `swr` alongside the `swr/` prefix, as the shared configs do', () => {
+    expect(Object.keys(sharedForAppShell())).toEqual(expect.arrayContaining(['swr', 'swr/']));
+  });
+
+  it('provides every entry point SWR publishes', async () => {
+    const { moduleGraph } = await buildAppShell();
+
+    expect(providedEntryPoints(moduleGraph)).toEqual(swrEntryPoints());
+  }, 180_000);
+
+  it('provides every entry point a frontend module consumes', async () => {
+    // The pairing that matters: a key a remote consumes but the shell never provides falls back to
+    // the remote's own copy, silently, with a second cache behind it.
+    const [{ moduleGraph: shell }, { moduleGraph: remote }] = await Promise.all([
+      buildAppShell(),
+      buildFixtureApp('rspack', 'production', fixture),
+    ]);
+
+    expect(providedEntryPoints(shell)).toEqual(expect.arrayContaining(consumedEntryPoints(remote)));
+  }, 180_000);
 });
