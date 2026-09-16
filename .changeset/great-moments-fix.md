@@ -1,5 +1,5 @@
 ---
-"@openmrs/esm-expression": minor
+"@openmrs/esm-expression-evaluator": minor
 "@openmrs/esm-framework": minor
 ---
 
