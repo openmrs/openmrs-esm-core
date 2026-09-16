@@ -488,26 +488,20 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           './start': srcFile,
         },
         shared: [...Object.keys(peerDependencies), '@openmrs/esm-framework/src/internal'].reduce((obj, depName) => {
+          const shareNames = [depName];
+
+          // Also handle swr/immutable, etc.
           if (depName === 'swr') {
-            // SWR is annoying with Module Federation
-            // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
-            obj['swr/'] = {
-              requiredVersion: peerDependencies['swr'] ?? false,
-              strictVersion: false,
-              singleton: true,
-              import: 'swr/',
-              shareKey: 'swr/',
-              shareScope: 'default',
-              // eslint-disable-next-line @typescript-eslint/no-require-imports
-              version: require('swr/package.json').version,
-            };
-          } else {
-            obj[depName] = {
+            shareNames.push('swr/');
+          }
+
+          for (const shareName of shareNames) {
+            obj[shareName] = {
               requiredVersion: peerDependencies[depName] ?? false,
               strictVersion: false,
               singleton: true,
-              import: depName,
-              shareKey: depName,
+              import: shareName,
+              shareKey: shareName,
               shareScope: 'default',
             };
           }

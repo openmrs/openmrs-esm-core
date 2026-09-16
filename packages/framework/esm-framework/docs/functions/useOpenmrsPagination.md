@@ -70,6 +70,8 @@ The options object
 
 The error object thrown by the fetcher function.
 
+`undefined` when there's no error or when a request is in progress.
+
 ### goTo()
 
 > **goTo**: (`page`) => `void`
@@ -104,13 +106,28 @@ The error object thrown by the fetcher function.
 
 > **isLoading**: `boolean`
 
+Whether the request is in initial loading state.
+
+`true` only during the initial load when there's no cached data.
+Unlike `isValidating`, this becomes `false` once data is available.
+
 ### isValidating
 
 > **isValidating**: `boolean`
 
+Whether the request is currently being validated (loading fresh data).
+
+`true` during initial load, revalidation, or when mutate is called
+with a promise or async function.
+
 ### mutate
 
 > **mutate**: `KeyedMutator`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`OpenMRSPaginatedResponse`\<`T`\>\>\>
+
+Function to mutate the cached data for this specific key.
+
+This is a bound version of the global mutate function that automatically
+uses the current key, providing type safety and convenience.
 
 ### paginated
 
