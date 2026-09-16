@@ -210,6 +210,23 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(() => evaluate('a?.b.c', { a: {} })).toThrow("TypeError: cannot read properties of undefined (reading 'c')");
   });
 
+  it('should support optional calls', () => {
+    const arg = vi.fn(() => 1);
+
+    expect(evaluate('cb?.(arg())', { cb: null, arg })).toBeUndefined();
+    expect(evaluate('o.cb?.(arg())', { o: {}, arg })).toBeUndefined();
+    expect(evaluate('cb?.(arg()).b.c', { cb: undefined, arg })).toBeUndefined();
+
+    // a call that does not happen must not evaluate its arguments
+    expect(arg).not.toHaveBeenCalled();
+
+    expect(evaluate('cb?.(arg())', { cb: (n: number) => n + 1, arg })).toBe(2);
+    expect(arg).toHaveBeenCalledTimes(1);
+
+    // `?.()` only guards against a nullish callee; a non-callable value is still an error
+    expect(() => evaluate('cb?.()', { cb: { notCallable: true } })).toThrow('cb is not a function');
+  });
+
   it('should allow values that share a name with a forbidden property', () => {
     expect(evaluate('a', { a: 'constructor' })).toBe('constructor');
     expect(evaluate("a === 'const' + 'ructor'", { a: 'constructor' })).toBe(true);

@@ -20,6 +20,8 @@ when `a` is nullish. A property that is genuinely missing is still an error: `a?
 ## What the sandbox guarantees
 
 Expressions are interpreted from a jsep AST; they are never compiled or run by the JS engine. The
-interpreter supports only the expression language—there is no assignment, no statements, no object or
-function creation, and no `this`. An expression sees nothing but the `variables` it is handed and the
-small set of globals in `globals.ts`.
+interpreter supports only the expression language, so there is no assignment, no statements, no object
+literals, and no `this`. Inline arrow functions *are* supported, since callbacks like
+`arr.find((v) => v === needle)` are a large part of what expressions are for; what is prohibited is
+building a function from a string, which is what an escape to the `Function` constructor would give you.
+An expression sees nothing but the `variables` it is handed and the small set of globals in `globals.ts`.

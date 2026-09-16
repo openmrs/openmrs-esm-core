@@ -487,6 +487,12 @@ function visitCallExpression(expression: jsep.CallExpression, context: Evaluatio
     return shortCircuit;
   }
 
+  // `cb?.()` abandons the chain before its arguments are evaluated, so this has to come first; otherwise
+  // an argument's side effects happen for a call that never takes place
+  if (expression.optional && (callee === null || callee === undefined)) {
+    return shortCircuit;
+  }
+
   let args = expression.arguments?.map(handleNullableExpression(context));
 
   if (!callee) {
