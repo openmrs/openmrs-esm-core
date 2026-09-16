@@ -507,28 +507,24 @@ module.exports = (env, argv = []) => {
             }
           }
 
+          const shareNames = [depName];
+
+          // Also handle swr/immutable, etc.
           if (depName === 'swr') {
-            // SWR is annoying with Module Federation
-            // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
-            obj['swr/_internal'] = {
-              requiredVersion: version,
-              strictVersion: false,
-              singleton: true,
-              import: 'swr/_internal',
-              shareKey: 'swr/_internal',
-              shareScope: 'default',
-              version: require('swr/package.json').version,
-            };
-          } else {
-            obj[depName] = {
+            shareNames.push('swr/');
+          }
+
+          for (const shareName of shareNames) {
+            obj[shareName] = {
               requiredVersion: version ?? false,
               strictVersion: false,
               singleton: true,
-              import: depName,
-              shareKey: depName,
+              import: shareName,
+              shareKey: shareName,
               shareScope: 'default',
             };
           }
+
           return obj;
         }, {}),
       }),
