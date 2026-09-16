@@ -127,7 +127,7 @@ describe('Expression evaluation in extension display conditions', () => {
     provide({
       'esm-bedrock': {
         'Display conditions': {
-          expression: 'session.user ? session.user.privileges.some(p => p.display === "YOWTCH!") : false',
+          expression: 'session?.user ? session.user.privileges.some(p => p.display === "YOWTCH!") : false',
         },
       },
     });
