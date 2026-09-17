@@ -27,6 +27,9 @@ import {
 } from './state';
 import { type TemporaryConfigStore } from '..';
 
+/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
+let displayedValidationMessages = new Set<string>();
+
 /**
  * Deep merge two objects, with right-side values taking precedence.
  * Arrays are replaced entirely (not merged by index), matching the
@@ -92,7 +95,7 @@ function setupConfigSubscriptions() {
   );
 
   // Initial computation
-  recomputeAllConfigs();
+  recomputeAllConfigsSafely();
 
   // Subscribe to all input stores with a single handler
   // This ensures we only recompute once even if multiple stores change simultaneously
@@ -1147,15 +1150,9 @@ function hasObjectSchema(elementsSchema: unknown): elementsSchema is ConfigSchem
 function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
-/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
-let displayedValidationMessages = new Set<string>();
 
 function logError(keyPath: string, message: string) {
   const key = `${keyPath}:::${message}`;
-  // technically, this should not be possible, but because of how things wind-up transpiled, this isn't impossible
-  if (!displayedValidationMessages) {
-    displayedValidationMessages = new Set<string>();
-  }
 
   if (!displayedValidationMessages.has(key)) {
     console.error(message);
