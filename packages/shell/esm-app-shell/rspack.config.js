@@ -3,6 +3,8 @@ const {
   CopyRspackPlugin,
   DefinePlugin,
   util: { createHash },
+  SwcJsMinimizerRspackPlugin,
+  LightningCssMinimizerRspackPlugin,
 } = require('@rspack/core');
 const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
@@ -392,6 +394,18 @@ module.exports = (env, argv = []) => {
       ],
     },
     optimization: {
+      // `minimizer` replaces rspack's default pair, so the JS minimizer is listed too. Lightning CSS is
+      // given our browserslist; on its own defaults it downlevels every logical property for old browsers.
+      // The styleguide stylesheet is left out: it is named above after a hash of the sass output and copied
+      // in as a static file, so minifying it here would change its bytes under a name that no longer
+      // matches them. Sass already emits it compressed.
+      minimizer: [
+        new SwcJsMinimizerRspackPlugin(),
+        new LightningCssMinimizerRspackPlugin({
+          exclude: /^openmrs\.[a-f0-9]{16}\.css$/,
+          minimizerOptions: { targets: browserTargets },
+        }),
+      ],
       splitChunks: {
         maxAsyncRequests: Infinity,
         maxInitialRequests: 1,
