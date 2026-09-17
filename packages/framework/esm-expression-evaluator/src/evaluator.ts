@@ -371,11 +371,11 @@ function visitExpression(expression: jsep.Expression, context: EvaluationContext
     case 'ConditionalExpression':
       return visitConditionalExpression(expression as jsep.ConditionalExpression, context);
     case 'CallExpression':
-      return visitCallExpression(expression as jsep.CallExpression, context);
+      return unwrapShortCircuit(visitCallExpression(expression as jsep.CallExpression, context));
     case 'ArrowFunctionExpression':
       return visitArrowFunctionExpression(expression as ArrowExpression, context);
     case 'MemberExpression':
-      return visitMemberExpression(expression as jsep.MemberExpression, context);
+      return unwrapShortCircuit(visitMemberExpression(expression as jsep.MemberExpression, context));
     case 'ArrayExpression':
       return visitArrayExpression(expression as jsep.ArrayExpression, context);
     case 'SequenceExpression':
@@ -426,6 +426,16 @@ function visitUnaryExpression(expression: jsep.UnaryExpression, context: Evaluat
 }
 
 function visitBinaryExpression(expression: jsep.BinaryExpression, context: EvaluationContext) {
+  // these binary operators are meant to short-circuit
+  switch (expression.operator) {
+    case '&&':
+      return visitExpression(expression.left, context) && visitExpression(expression.right, context);
+    case '||':
+      return visitExpression(expression.left, context) || visitExpression(expression.right, context);
+    case '??':
+      return visitExpression(expression.left, context) ?? visitExpression(expression.right, context);
+  }
+
   let left = visitExpression(expression.left, context);
   let right = visitExpression(expression.right, context);
 
@@ -460,12 +470,6 @@ function visitBinaryExpression(expression: jsep.BinaryExpression, context: Evalu
       return left <= right;
     case 'in':
       return left in right;
-    case '&&':
-      return left && right;
-    case '||':
-      return left || right;
-    case '??':
-      return left ?? right;
     default:
       throw `Expression evaluator does not support operator '${expression.operator}' operator`;
   }
@@ -477,8 +481,19 @@ function visitConditionalExpression(expression: jsep.ConditionalExpression, cont
 }
 
 function visitCallExpression(expression: jsep.CallExpression, context: EvaluationContext) {
+  let callee = visitChainOperand(expression.callee, context);
+
+  if (callee === shortCircuit) {
+    return shortCircuit;
+  }
+
+  // `cb?.()` abandons the chain before its arguments are evaluated, so this has to come first; otherwise
+  // an argument's side effects happen for a call that never takes place
+  if (expression.optional && (callee === null || callee === undefined)) {
+    return shortCircuit;
+  }
+
   let args = expression.arguments?.map(handleNullableExpression(context));
-  let callee = visitExpression(expression.callee, context);
 
   if (!callee) {
     throw `No function named ${getCallTargetName(expression.callee)} is defined in this context`;
@@ -516,11 +531,25 @@ function visitArrowFunctionExpression(expression: ArrowExpression, context: Eval
     );
 
     return visitExpression(expression.body, context.addVariables(vars));
-  }.bind(context.thisObj ?? null);
+  }.bind(null);
 }
 
 function visitMemberExpression(expression: jsep.MemberExpression, context: EvaluationContext) {
-  let obj = visitExpression(expression.object, context);
+  const obj = visitChainOperand(expression.object, context);
+
+  if (obj === shortCircuit) {
+    return shortCircuit;
+  }
+
+  if (expression.optional && (obj === null || obj === undefined)) {
+    return shortCircuit;
+  }
+
+  if (obj === null) {
+    throw TypeError(
+      `TypeError: cannot read properties of null (reading '${describePropertyName(expression.property, context)}')`,
+    );
+  }
 
   if (obj === undefined) {
     switch (expression.object.type) {
@@ -529,42 +558,32 @@ function visitMemberExpression(expression: jsep.MemberExpression, context: Evalu
         throw ReferenceError(`ReferenceError: ${objectName} is not defined`);
       }
       case 'MemberExpression': {
-        let propertyName = visitExpressionName(expression.property, context);
-        throw TypeError(`TypeError: cannot read properties of undefined (reading '${propertyName}')`);
+        throw TypeError(
+          `TypeError: cannot read properties of undefined (reading '${describePropertyName(
+            expression.property,
+            context,
+          )}')`,
+        );
       }
       default:
         throw `VisitMemberExpression does not support operator '${expression.object.type}' type`;
     }
   }
 
-  let newObj = obj;
-  if (typeof obj === 'string') {
-    newObj = String.prototype;
-  } else if (typeof obj === 'number') {
-    newObj = Number.prototype;
-  } else if (typeof obj === 'function') {
-    // no-op
-  } else if (typeof obj !== 'object') {
+  if (typeof obj !== 'object' && typeof obj !== 'function' && typeof obj !== 'string' && typeof obj !== 'number') {
     throw `VisitMemberExpression does not support member access on type ${typeof obj}`;
   }
 
-  context.thisObj = newObj;
+  // `a.b` names its property statically; `a[b]` evaluates it, so the result has to be turned into the
+  // exact key the indexer will use before it can be validated
+  const key = expression.computed
+    ? toPropertyKey(visitExpression(expression.property, context))
+    : staticPropertyName(expression.property);
 
-  let result: unknown;
-  switch (expression.property.type) {
-    case 'Identifier':
-    case 'MemberExpression':
-      result = visitExpression(expression.property, context);
-      break;
-    default: {
-      const property = visitExpression(expression.property, context);
-      if (typeof property === 'undefined') {
-        throw { type: 'Illegal property access', message: 'No property was supplied to the property access' };
-      }
-      validatePropertyName(property);
-      result = obj[property];
-    }
-  }
+  validatePropertyName(key);
+  validatePropertyAccess(obj, key);
+
+  const result = obj[key];
 
   if (typeof result === 'function') {
     return result.bind(obj);
@@ -629,19 +648,9 @@ function visitTemplateElement(expression: TemplateElement, context: EvaluationCo
 function visitIdentifier(expression: jsep.Identifier, context: EvaluationContext) {
   validatePropertyName(expression.name);
 
-  // we support both `object` and `function` in the same way as technically property access on functions
-  // is possible; the use-case here is to support JS's "static" functions like `Number.isInteger()`, which
-  // is technically reading a property on a function
-  const thisObj = context.thisObj;
-  if (thisObj && (typeof thisObj === 'object' || typeof thisObj === 'function') && expression.name in thisObj) {
-    const result = thisObj[expression.name];
-    validatePropertyName(result);
-    return result;
-  } else if (context.variables && expression.name in context.variables) {
-    const result = context.variables[expression.name];
-    validatePropertyName(result);
-    return result;
-  } else if (expression.name in context.globals) {
+  if (context.variables && Object.hasOwn(context.variables, expression.name)) {
+    return context.variables[expression.name];
+  } else if (Object.hasOwn(context.globals, expression.name)) {
     return context.globals[expression.name];
   } else {
     return undefined;
@@ -649,14 +658,12 @@ function visitIdentifier(expression: jsep.Identifier, context: EvaluationContext
 }
 
 function visitLiteral(expression: jsep.Literal, context: EvaluationContext) {
-  validatePropertyName(expression.value);
   return expression.value;
 }
 
 // Internal helpers and utilities
 
 interface EvaluationContext {
-  thisObj: object | undefined;
   variables: VariablesMap;
   globals: typeof globals | typeof globalsAsync;
   addVariables(vars: VariablesMap): EvaluationContext;
@@ -672,7 +679,6 @@ function createAsynchronousContext(variables: VariablesMap): EvaluationContext {
 
 function createContextInternal(variables: VariablesMap, globals_: typeof globals | typeof globalsAsync) {
   const context = {
-    thisObj: undefined,
     variables: { ...variables },
     globals: { ...globals_ },
     addVariables(vars: VariablesMap) {
@@ -684,6 +690,35 @@ function createContextInternal(variables: VariablesMap, globals_: typeof globals
   context.addVariables.bind(context);
 
   return context;
+}
+
+/**
+ * Marks that an optional link (`a?.b`) found a nullish value. Optional chaining abandons the rest of the
+ * chain rather than just the one access, so this is returned in place of a value and passed along by each
+ * member access and call until it reaches the end of the chain, where {@link unwrapShortCircuit} turns it
+ * into `undefined`. It has to be distinguishable from a real `undefined`, since `a.b.c` where `a.b` is
+ * genuinely undefined is still an error.
+ */
+const shortCircuit = Symbol('optional chain short-circuited');
+
+/**
+ * Visits the object of a member access or the callee of a call, i.e. a link in a chain rather than the end
+ * of one. Dispatching directly keeps a short circuit intact, where {@link visitExpression} would have
+ * already flattened it to `undefined`.
+ */
+function visitChainOperand(expression: jsep.Expression, context: EvaluationContext) {
+  switch (expression.type) {
+    case 'MemberExpression':
+      return visitMemberExpression(expression as jsep.MemberExpression, context);
+    case 'CallExpression':
+      return visitCallExpression(expression as jsep.CallExpression, context);
+    default:
+      return visitExpression(expression, context);
+  }
+}
+
+function unwrapShortCircuit(result: unknown) {
+  return result === shortCircuit ? undefined : result;
 }
 
 // helper useful for handling arrays of expressions, since `null` expressions should not be
@@ -701,6 +736,73 @@ function handleNullableExpression(context: EvaluationContext) {
 function validatePropertyName(name: unknown) {
   if (name === '__proto__' || name === 'prototype' || name === 'constructor') {
     throw { type: 'Illegal property access', message: `Cannot access the ${name} property of objects` };
+  }
+}
+
+/**
+ * Returns the name of a statically-accessed property, i.e. the `b` of `a.b`. jsep only ever parses an
+ * identifier here, so anything else means we were handed an AST we did not build.
+ */
+function staticPropertyName(expression: jsep.Expression) {
+  if (expression.type !== 'Identifier') {
+    throw `VisitMemberExpression does not support a property of type '${expression.type}'`;
+  }
+
+  return (expression as jsep.Identifier).name;
+}
+
+/**
+ * Narrows the result of a computed property expression to the key that `obj[key]` would actually read.
+ * Anything else is refused rather than converted: JS applies ToPropertyKey to whatever it is given, so a
+ * value like `['const' + 'ructor']` reads `constructor` even though it compares equal to nothing.
+ */
+function toPropertyKey(value: unknown): string | number {
+  if (typeof value === 'undefined') {
+    throw { type: 'Illegal property access', message: 'No property was supplied to the property access' };
+  }
+
+  if (typeof value !== 'string' && typeof value !== 'number') {
+    throw {
+      type: 'Illegal property access',
+      message: `Cannot use a value of type ${value === null ? 'null' : typeof value} as a property name`,
+    };
+  }
+
+  return value;
+}
+
+/** Properties of `Object.prototype` that are harmless enough to leave reachable */
+const safeBasePropertyNames = new Set(['toString', 'valueOf', 'hasOwnProperty']);
+
+/**
+ * Refuses any property that resolves on `Object.prototype` or `Function.prototype`.
+ */
+function validatePropertyAccess(obj: object | string | number, key: string | number) {
+  if (safeBasePropertyNames.has(String(key))) {
+    return;
+  }
+
+  // primitives are boxed so that `hasOwn()` sees a string's `length` and indices
+  let holder: object | null = Object(obj);
+  while (holder !== null) {
+    if (Object.hasOwn(holder, key)) {
+      if (holder === Object.prototype || holder === Function.prototype) {
+        throw { type: 'Illegal property access', message: `Cannot access the ${key} property of objects` };
+      }
+
+      return;
+    }
+
+    holder = Object.getPrototypeOf(holder);
+  }
+}
+
+/** Best-effort name for a property, used only to build error messages */
+function describePropertyName(expression: jsep.Expression, context: EvaluationContext) {
+  try {
+    return visitExpressionName(expression, context);
+  } catch {
+    return '<computed>';
   }
 }
 
