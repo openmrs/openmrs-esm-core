@@ -8,5 +8,6 @@ export default defineConfig({
     pool: 'forks',
     fileParallelism: false,
     include: ['src/**/*.test.ts'],
+    testTimeout: 20_000,
   },
 });

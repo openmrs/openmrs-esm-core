@@ -28,6 +28,12 @@ describe('OpenMRS Expression Extractor', () => {
     expect(extractVariableNames('`${a.b}`')).toEqual(['a']);
   });
 
+  it('reports computed property names as variables', () => {
+    expect(extractVariableNames('o[k]')).toEqual(['o', 'k']);
+    expect(extractVariableNames('o["x"]')).toEqual(['o']);
+    expect(extractVariableNames('o.x')).toEqual(['o']);
+  });
+
   it('supports RegExp', () => {
     expect(extractVariableNames('/.*/.test(a)')).toEqual(['a']);
   });

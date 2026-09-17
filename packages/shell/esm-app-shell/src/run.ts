@@ -48,6 +48,9 @@ import {
   tryRegisterExtension,
 } from '@openmrs/esm-framework/src/internal';
 import { setupI18n } from './locale';
+// imported so we create the MF shares for these
+import 'swr/mutation';
+import 'swr/subscription';
 import './routing-events';
 import './events';
 import { appName, getCoreExtensions } from './ui';

@@ -1,24 +1,69 @@
-// Builds the `remote-app` fixture with one of the shared bundler configs, for tests that need to inspect
-// what a real OpenMRS app build emits rather than what its config says it will.
-import { mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
+// Builds the `remote-app` fixture with one of the shared bundler configs, and the app shell with its
+// own, for tests that need to inspect what a real OpenMRS build emits rather than what its config
+// says it will.
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { basename, join, resolve } from 'node:path';
 
 export const fixtureRoot = resolve(__dirname, '..', '__fixtures__', 'remote-app');
 export const fixturePackageName = '@openmrs/esm-fixture-app';
 export const entryFilename = 'openmrs-esm-fixture-app.js';
+
+const appShellRoot = resolve(__dirname, '..', '..', '..', 'shell', 'esm-app-shell');
+
+/** Resolves any fixture app under `__fixtures__`, for tests that need one other than `remote-app`. */
+export function fixtureRootOf(fixture: string) {
+  return resolve(__dirname, '..', '__fixtures__', fixture);
+}
 
 export type FixtureBuild = {
   /** The remote entry the app shell loads, `openmrs-esm-fixture-app.js`. */
   entry: string;
   /** Every emitted JavaScript file, keyed by filename. */
   scripts: Record<string, string>;
-  /** Module identifiers from the build's stats, flattened through concatenated modules. */
-  moduleIdentifiers: string[];
+  /** Every emitted stylesheet, keyed by filename. Empty in development, where `style-loader` inlines. */
+  stylesheets: Record<string, string>;
+  /** Graph of every module in the build. Keys are module names. Values are modules that depend on that module. */
+  moduleGraph: Record<string, string[]>;
 };
 
 const builds = new Map<string, Promise<FixtureBuild>>();
 const tempDirs: string[] = [];
+const builtRoots = new Set<string>();
+
+type StatsModule = {
+  identifier?: string;
+  name?: string;
+  modules?: unknown[];
+  reasons?: Array<{ moduleIdentifier?: string; module?: string }>;
+};
+
+/** Flattens a stats module list, including concatenated children, into `moduleGraph` pairs. */
+function collectModules(list: StatsModule[]): Array<[string, string[]]> {
+  return list.flatMap((module) => [
+    [
+      module.identifier ?? module.name ?? '',
+      (module.reasons ?? []).map((reason) => reason.moduleIdentifier ?? reason.module ?? '').filter(Boolean),
+    ] as [string, string[]],
+    ...collectModules((module.modules ?? []) as StatsModule[]),
+  ]);
+}
+
+/**
+ * `ids` populates `identifier`; without `nestedModules` scope hoisting hides concatenated modules
+ * behind a "… + n modules" entry, which made this blind on the webpack path.
+ */
+function moduleGraphOf(stats: { toJson: (options: unknown) => { modules?: StatsModule[] } }) {
+  const { modules = [] } = stats.toJson({
+    all: false,
+    modules: true,
+    ids: true,
+    nestedModules: true,
+    reasons: true,
+  });
+
+  return Object.fromEntries(collectModules(modules));
+}
 
 /** Call from `afterAll`. Deletes the output directories the builds in this process wrote. */
 export function cleanUpFixtureBuilds() {
@@ -26,14 +71,20 @@ export function cleanUpFixtureBuilds() {
     rmSync(dir, { recursive: true, force: true });
   }
   // Module Federation generates its entry module inside the fixture rather than in `output.path`.
-  rmSync(join(fixtureRoot, 'node_modules', '.federation'), { recursive: true, force: true });
+  for (const root of builtRoots) {
+    rmSync(join(root, 'node_modules', '.federation'), { recursive: true, force: true });
+  }
 }
 
 /**
  * Builds the fixture app with one of the shared configs, memoized per bundler and mode.
  */
-export function buildFixtureApp(bundler: 'rspack' | 'webpack', mode = 'production'): Promise<FixtureBuild> {
-  const key = `${bundler}:${mode}`;
+export function buildFixtureApp(
+  bundler: 'rspack' | 'webpack',
+  mode = 'production',
+  fixture = 'remote-app',
+): Promise<FixtureBuild> {
+  const key = `${bundler}:${mode}:${fixture}`;
   const cached = builds.get(key);
   if (cached) {
     return cached;
@@ -43,8 +94,11 @@ export function buildFixtureApp(bundler: 'rspack' | 'webpack', mode = 'productio
     const outDir = mkdtempSync(join(tmpdir(), 'openmrs-fixture-build-'));
     tempDirs.push(outDir);
 
+    const root = fixtureRootOf(fixture);
+    builtRoots.add(root);
+
     const originalCwd = process.cwd();
-    process.chdir(fixtureRoot);
+    process.chdir(root);
 
     try {
       // From source, not `dist`, so this can't pass against a stale build; resolvable only because neither
@@ -85,37 +139,32 @@ export function buildFixtureApp(bundler: 'rspack' | 'webpack', mode = 'productio
       // Unclosed compilers keep worker threads alive, which surfaces as a vitest hang.
       await new Promise<void>((res) => compiler.close(() => res()));
 
-      // `ids` populates `identifier`; without `nestedModules` scope hoisting hides concatenated modules
-      // behind a "… + n modules" entry, which made this blind on the webpack path.
-      const { modules = [] } = stats.toJson({ all: false, modules: true, ids: true, nestedModules: true });
+      const emitted = (extension: string) =>
+        Object.fromEntries(
+          readdirSync(outDir)
+            .filter((file) => file.endsWith(extension))
+            .map((file) => [file, readFileSync(join(outDir, file), 'utf8')]),
+        );
+      const scripts = emitted('.js');
 
-      const collectIdentifiers = (list: { identifier?: string; name?: string; modules?: unknown[] }[]): string[] =>
-        list.flatMap((module) => [
-          module.identifier ?? module.name ?? '',
-          ...collectIdentifiers((module.modules ?? []) as typeof list),
-        ]);
-
-      const scripts = Object.fromEntries(
-        readdirSync(outDir)
-          .filter((file) => file.endsWith('.js'))
-          .map((file) => [file, readFileSync(join(outDir, file), 'utf8')]),
-      );
-
-      const entry = scripts[entryFilename];
+      // Read from the fixture's own manifest, since the shared configs name the remote entry after it.
+      const { browser } = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+      const entry = scripts[basename(browser)];
 
       // Checked rather than handed on as `undefined`: `new Script(undefined)` compiles the source text
       // `"undefined"` and runs without complaint, so a change to the emitted filename would leave the
       // tests that execute the entry passing while executing nothing.
       if (!entry) {
         throw new Error(
-          `The ${bundler} build emitted no ${entryFilename}. Emitted: ${Object.keys(scripts).join(', ')}`,
+          `The ${bundler} build emitted no ${basename(browser)}. Emitted: ${Object.keys(scripts).join(', ')}`,
         );
       }
 
       return {
         entry,
         scripts,
-        moduleIdentifiers: collectIdentifiers(modules),
+        stylesheets: emitted('.css'),
+        moduleGraph: moduleGraphOf(stats),
       };
     } finally {
       process.chdir(originalCwd);
@@ -124,4 +173,71 @@ export function buildFixtureApp(bundler: 'rspack' | 'webpack', mode = 'productio
 
   builds.set(key, build);
   return build;
+}
+
+let appShellBuild: Promise<{ moduleGraph: Record<string, string[]> }> | undefined;
+
+/**
+ * Builds the app shell with its own federation config, memoized for the process.
+ *
+ * The app shell configures Module Federation separately from the two shared configs, so nothing a
+ * fixture build shows says anything about what the shell provides. That matters most for shared
+ * modules whose providers are demand-driven: the shell publishes a shared module only if something
+ * in its own graph imports it, which a config alone cannot tell you.
+ *
+ * The shell compiles against `@openmrs/esm-framework` and `@openmrs/esm-styleguide`'s `dist`, which
+ * this package's `turbo.json` declares as task dependencies of `test`. The check below only catches
+ * running vitest directly, where nothing has built them.
+ */
+export function buildAppShell() {
+  if (appShellBuild) {
+    return appShellBuild;
+  }
+
+  appShellBuild = (async () => {
+    const frameworkEntry = resolve(appShellRoot, '..', '..', 'framework', 'esm-framework', 'dist', 'internal.js');
+    if (!existsSync(frameworkEntry)) {
+      throw new Error(
+        `The app shell build needs @openmrs/esm-framework's dist, which is missing (${frameworkEntry}). ` +
+          'Run these tests through `yarn turbo run test`, which builds it first, or `yarn turbo build` by hand.',
+      );
+    }
+
+    const outDir = mkdtempSync(join(tmpdir(), 'openmrs-app-shell-build-'));
+    tempDirs.push(outDir);
+    builtRoots.add(appShellRoot);
+
+    const originalCwd = process.cwd();
+    process.chdir(appShellRoot);
+
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const configFactory = require(join(appShellRoot, 'rspack.config.js'));
+      const config = configFactory({}, { mode: 'production' }) as Record<string, any>;
+      config.output.path = outDir;
+
+      const { default: rspack } = await import('@rspack/core');
+      const compiler = (rspack as unknown as (options: unknown) => any)(config);
+      const stats = await new Promise<any>((res, rej) => {
+        compiler.run((err: unknown, result: any) => {
+          if (err) {
+            rej(err);
+            return;
+          }
+          if (result?.hasErrors()) {
+            rej(new Error(result.toString({ all: false, errors: true })));
+            return;
+          }
+          res(result);
+        });
+      });
+      await new Promise<void>((res) => compiler.close(() => res()));
+
+      return { moduleGraph: moduleGraphOf(stats) };
+    } finally {
+      process.chdir(originalCwd);
+    }
+  })();
+
+  return appShellBuild;
 }

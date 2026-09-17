@@ -129,6 +129,13 @@ function visitArrowFunctionExpression(expression: ArrowExpression, context: Eval
 
 function visitMemberExpression(expression: jsep.MemberExpression, context: EvaluationContext) {
   visitExpression(expression.object, context);
+
+  // the `b` of `a[b]` is a variable the caller has to supply, whereas the `b` of `a.b` is a property name
+  if (expression.computed) {
+    visitExpression(expression.property, context);
+    return;
+  }
+
   const newContext = { ...context };
   newContext.isLocalExpression = true;
   visitExpression(expression.property, newContext);
