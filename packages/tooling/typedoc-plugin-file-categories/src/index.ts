@@ -11,7 +11,7 @@ export function load(typedoc: Readonly<Application>) {
         return;
       }
 
-      const sourceFile = reflection.sources?.[0].fullFileName;
+      const sourceFile = reflection.sources?.[0]?.fullFileName;
 
       if (sourceFile) {
         const file = context.program.getSourceFile(sourceFile);
