@@ -119,24 +119,6 @@ describe('TotpVerificationChallengePage', () => {
     expect(sessionStorage.getItem('loginReferrer')).toBeNull();
   });
 
-  it('should show "Invalid verification code" error when the server returns a 401', async () => {
-    const mockResponse = { status: 401 } as Response;
-    const fetchError = new OpenmrsFetchError('/ws/rest/v1/session', mockResponse, null, new Error());
-    vi.mocked(openmrsFetch).mockRejectedValue(fetchError);
-
-    const { user } = setup();
-
-    const inputs = screen.getAllByRole('textbox');
-    await user.click(inputs[0]);
-    await user.paste('123456');
-
-    const verifyButton = screen.getByRole('button', { name: /verify/i });
-    await user.click(verifyButton);
-
-    const errorMessage = await screen.findByText(/Invalid verification code/i);
-    expect(errorMessage).toBeInTheDocument();
-  });
-
   it('should verify successfully and navigate to home if the user has a session location', async () => {
     vi.mocked(openmrsFetch).mockResolvedValue({
       data: { authenticated: true },

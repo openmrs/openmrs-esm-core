@@ -5,10 +5,10 @@ import styles from './verification-code-input.scss';
 
 interface VerificationCodeInputProps {
   length: number;
-  onComplete: (code: string) => void;
+  onChange: (code: string) => void;
 }
 
-const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 6, onComplete }) => {
+const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 6, onChange }) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string[]>(new Array(length).fill(''));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -24,9 +24,9 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
     newOtp[index] = value.substring(value.length - 1);
     setOtp(newOtp);
 
-    // If the user filled the last box, trigger onComplete prop
+    // Notify the parent component of the current input value
     const combinedOtp = newOtp.join('');
-    onComplete(combinedOtp);
+    onChange(combinedOtp);
 
     // Move focus to the next input box if the current one is filled
     if (value && index < length - 1 && inputRefs.current[index + 1]) {
@@ -65,9 +65,9 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
     });
     setOtp(newOtp);
 
-    // Trigger onComplete prop
+    // Notify the parent component of the pasted input value
     const combinedOtp = newOtp.join('');
-    onComplete(combinedOtp);
+    onChange(combinedOtp);
 
     if (pastedData.length === length) {
       inputRefs.current[length - 1]?.focus();

@@ -26,7 +26,6 @@
   "generateNewQrCode": "Generate a new QR code",
   "generatingQrCode": "Generating QR Code...",
   "installAppInstruction": "Install an authenticator app if you don't have one — Google Authenticator, Microsoft Authenticator and Authy all work.",
-  "invalidCode": "Invalid verification code. Please try again.",
   "invalidCredentials": "Invalid username or password",
   "learnMore": "Learn more",
   "locationPreferenceRemoved": "Login location preference removed",

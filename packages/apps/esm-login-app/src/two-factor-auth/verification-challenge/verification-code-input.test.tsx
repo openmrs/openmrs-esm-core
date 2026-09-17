@@ -6,7 +6,7 @@ import VerificationCodeInput from './verification-code-input.component';
 
 describe('VerificationCodeInput', () => {
   it('should render 6 number of input boxes', () => {
-    render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
+    render(<VerificationCodeInput length={6} onChange={vi.fn()} />);
 
     const inputs = screen.getAllByRole('textbox');
     expect(inputs).toHaveLength(6);
@@ -14,7 +14,7 @@ describe('VerificationCodeInput', () => {
 
   it('should advance focus to the next input box', async () => {
     const user = userEvent.setup();
-    render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
+    render(<VerificationCodeInput length={6} onChange={vi.fn()} />);
 
     const inputs = screen.getAllByRole('textbox');
     const firstInput = inputs[0];
@@ -27,7 +27,7 @@ describe('VerificationCodeInput', () => {
 
   it('should ignore non-numeric characters', async () => {
     const user = userEvent.setup();
-    render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
+    render(<VerificationCodeInput length={6} onChange={vi.fn()} />);
 
     const inputs = screen.getAllByRole('textbox');
     const firstInput = inputs[0];
@@ -41,7 +41,7 @@ describe('VerificationCodeInput', () => {
   it('should handle pasting a valid code', async () => {
     const user = userEvent.setup();
     const onCompleteMock = vi.fn();
-    render(<VerificationCodeInput length={6} onComplete={onCompleteMock} />);
+    render(<VerificationCodeInput length={6} onChange={onCompleteMock} />);
 
     const inputs = screen.getAllByRole('textbox');
     const firstInput = inputs[0];
@@ -56,7 +56,7 @@ describe('VerificationCodeInput', () => {
 
   it('should allow arrow key navigations', async () => {
     const user = userEvent.setup();
-    render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
+    render(<VerificationCodeInput length={6} onChange={vi.fn()} />);
 
     const inputs = screen.getAllByRole('textbox');
     const secondInput = inputs[1];
@@ -72,7 +72,7 @@ describe('VerificationCodeInput', () => {
 
   it('should clear previous box value and focus when backspace is pressed', async () => {
     const user = userEvent.setup();
-    render(<VerificationCodeInput length={6} onComplete={vi.fn()} />);
+    render(<VerificationCodeInput length={6} onChange={vi.fn()} />);
 
     const inputs = screen.getAllByRole('textbox');
     const firstInput = inputs[0];
@@ -91,7 +91,7 @@ describe('VerificationCodeInput', () => {
   it('should handle entering fields out of order correctly', async () => {
     const user = userEvent.setup();
     const onCompleteMock = vi.fn();
-    render(<VerificationCodeInput length={6} onComplete={onCompleteMock} />);
+    render(<VerificationCodeInput length={6} onChange={onCompleteMock} />);
 
     const codeInputs = screen.getAllByRole('textbox');
 

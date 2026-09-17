@@ -67,9 +67,6 @@ const TotpVerificationChallengePage: React.FC = () => {
       let errorMessage = t('verificationFailedError', 'A network or server error occurred. Please try again.');
 
       if (error instanceof OpenmrsFetchError) {
-        if (error.response?.status === 401) {
-          errorMessage = t('invalidCode', 'Invalid verification code. Please try again.');
-        }
         if (typeof error.responseBody === 'object' && error.responseBody !== null) {
           const body = error.responseBody as { error?: { translatedMessage?: string } };
           const translatedMessage = body.error?.translatedMessage ?? error.message;
@@ -95,8 +92,8 @@ const TotpVerificationChallengePage: React.FC = () => {
       <form onSubmit={handleVerify}>
         <VerificationCodeInput
           length={6}
-          onComplete={(completeCode) => {
-            setCode(completeCode);
+          onChange={(currentCode) => {
+            setCode(currentCode);
           }}
         />
         <div className={styles.checkbox}>
