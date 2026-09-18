@@ -34,7 +34,16 @@ const errorShapes: Array<{ label: string; reason: unknown; expected: string | nu
   { label: 'a plain object', reason: { foo: 'bar' }, expected: 'Object thrown as error: {"foo":"bar"}' },
   { label: 'null', reason: null, expected: "'null' was thrown as an error" },
   { label: 'undefined', reason: undefined, expected: "'undefined' was thrown as an error" },
+  // `Error#message` is writable, so an Error can reach the handlers carrying a non-string message.
+  // `ensureErrorObject()` passes such an Error through untouched, so the guard has to be downstream.
+  { label: 'an Error whose message is not a string', reason: errorWithObjectMessage(), expected: null },
 ];
+
+function errorWithObjectMessage() {
+  const error = new Error('replaced below');
+  (error as unknown as { message: unknown }).message = { nested: 'value' };
+  return error;
+}
 
 beforeEach(() => {
   vi.spyOn(console, 'error').mockImplementation(() => {});
