@@ -396,13 +396,9 @@ module.exports = (env, argv = []) => {
     optimization: {
       // `minimizer` replaces rspack's default pair, so the JS minimizer is listed too. Lightning CSS is
       // given our browserslist; on its own defaults it downlevels every logical property for old browsers.
-      // The styleguide stylesheet is left out: it is named above after a hash of the sass output and copied
-      // in as a static file, so minifying it here would change its bytes under a name that no longer
-      // matches them. Sass already emits it compressed.
       minimizer: [
         new SwcJsMinimizerRspackPlugin(),
         new LightningCssMinimizerRspackPlugin({
-          exclude: /^openmrs\.[a-f0-9]{16}\.css$/,
           minimizerOptions: { targets: browserTargets },
         }),
       ],
@@ -484,7 +480,9 @@ module.exports = (env, argv = []) => {
       new CopyRspackPlugin({
         patterns: [
           { from: resolve(__dirname, 'src/assets') },
-          { from: resolve(cssTmpDir, openmrsCssFilename), to: openmrsCssFilename },
+          // Named above after a hash of the sass output, which already emits it compressed. Marked minified so
+          // the CSS minimizer leaves its bytes matching its name.
+          { from: resolve(cssTmpDir, openmrsCssFilename), to: openmrsCssFilename, info: { minimized: true } },
           ...fontPatterns,
           ...appPatterns,
           ...assetsPatterns,
