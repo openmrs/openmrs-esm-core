@@ -9,6 +9,7 @@ import { getAttachmentsUrl, type AttachmentResponse } from '@openmrs/esm-emr-api
  * and automatic revalidation.
  *
  * @param patientUuid The UUID of the patient whose attachments should be fetched.
+ *   Nothing is fetched while this is empty, so callers can defer the request.
  * @param includeEncounterless Whether to include attachments that are not
  *   associated with any encounter. Ignored when `encounterUuid` is set.
  * @param encounterUuid When set, only attachments recorded on this encounter are
@@ -34,10 +35,14 @@ import { getAttachmentsUrl, type AttachmentResponse } from '@openmrs/esm-emr-api
  * const { data } = useAttachments(patientUuid, false, encounterUuid);
  * ```
  */
-export function useAttachments(patientUuid: string, includeEncounterless: boolean, encounterUuid?: string) {
+export function useAttachments(
+  patientUuid: string | null | undefined,
+  includeEncounterless: boolean,
+  encounterUuid?: string,
+) {
   const { data, error, mutate, isLoading, isValidating } = useSWR<
     FetchResponse<{ results: Array<AttachmentResponse> }>
-  >(getAttachmentsUrl(patientUuid, includeEncounterless, encounterUuid), openmrsFetch);
+  >(patientUuid ? getAttachmentsUrl(patientUuid, includeEncounterless, encounterUuid) : null, openmrsFetch);
 
   const results = useMemo(
     () => ({

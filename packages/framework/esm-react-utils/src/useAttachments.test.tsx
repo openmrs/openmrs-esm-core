@@ -53,6 +53,14 @@ describe('useAttachments', () => {
     expect(result.current.data).toEqual([attachment]);
   });
 
+  it('does not fetch while the patient UUID is empty', () => {
+    const { result } = renderHook(() => useAttachments(null, true), { wrapper });
+
+    expect(mockOpenmrsFetch).not.toHaveBeenCalled();
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.data).toEqual([]);
+  });
+
   it('returns an empty list while loading', () => {
     mockOpenmrsFetch.mockReturnValue(new Promise(() => {}));
     const { result } = renderHook(() => useAttachments('patient-uuid', true), { wrapper });
