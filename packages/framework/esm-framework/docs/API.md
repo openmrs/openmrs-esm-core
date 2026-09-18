@@ -12,6 +12,7 @@
 - [FetchError](interfaces/FetchError.md)
 - [getAttachmentByUuid](functions/getAttachmentByUuid.md)
 - [getAttachments](functions/getAttachments.md)
+- [getAttachmentsUrl](functions/getAttachmentsUrl.md)
 - [createAttachment](functions/createAttachment.md)
 - [deleteAttachmentPermanently](functions/deleteAttachmentPermanently.md)
 - [fetchCurrentPatient](functions/fetchCurrentPatient.md)

@@ -27,12 +27,17 @@ export function getAttachmentByUuid(attachmentUuid: string, abortController: Abo
 }
 
 /**
- * Fetches all attachments for a specific patient from the OpenMRS server.
+ * Fetches attachments for a specific patient from the OpenMRS server.
  *
  * @param patientUuid The UUID of the patient whose attachments should be fetched.
  * @param includeEncounterless Whether to include attachments that are not associated
- *   with any encounter.
+ *   with any encounter. Ignored when `encounterUuid` is set.
  * @param abortController An AbortController to allow cancellation of the request.
+ * @param encounterUuid When set, only attachments recorded on this encounter are returned.
+ *   The `includeEncounterless` parameter is not sent in that case, because the server
+ *   ignores the encounter filter whenever `includeEncounterless` is present. Pass a UUID
+ *   the server can resolve: an unknown encounter UUID makes the server fall back to every
+ *   attachment of the patient, encounterless ones included.
  * @returns A Promise that resolves with the FetchResponse containing an array of attachments.
  *
  * @example
@@ -41,12 +46,35 @@ export function getAttachmentByUuid(attachmentUuid: string, abortController: Abo
  * const abortController = new AbortController();
  * const response = await getAttachments('patient-uuid', true, abortController);
  * console.log(response.data.results);
+ *
+ * const forEncounter = await getAttachments('patient-uuid', false, abortController, 'encounter-uuid');
  * ```
  */
-export function getAttachments(patientUuid: string, includeEncounterless: boolean, abortController: AbortController) {
-  return openmrsFetch(`${attachmentUrl}?patient=${patientUuid}&includeEncounterless=${includeEncounterless}`, {
+export function getAttachments(
+  patientUuid: string,
+  includeEncounterless: boolean,
+  abortController: AbortController,
+  encounterUuid?: string,
+) {
+  return openmrsFetch(getAttachmentsUrl(patientUuid, includeEncounterless, encounterUuid), {
     signal: abortController.signal,
   });
+}
+
+/**
+ * Builds the attachment search URL for a patient. Used by `getAttachments` and `useAttachments`
+ * so both request (and cache under) the same key.
+ *
+ * @param patientUuid The UUID of the patient whose attachments should be fetched.
+ * @param includeEncounterless Whether to include attachments that are not associated
+ *   with any encounter. Ignored when `encounterUuid` is set.
+ * @param encounterUuid When set, restricts the search to attachments on this encounter.
+ */
+export function getAttachmentsUrl(patientUuid: string, includeEncounterless: boolean, encounterUuid?: string) {
+  if (encounterUuid) {
+    return `${attachmentUrl}?patient=${patientUuid}&encounter=${encounterUuid}`;
+  }
+  return `${attachmentUrl}?patient=${patientUuid}&includeEncounterless=${includeEncounterless}`;
 }
 
 /**
@@ -57,6 +85,8 @@ export function getAttachments(patientUuid: string, includeEncounterless: boolea
  * @param fileToUpload An object containing the file data and metadata to upload.
  *   Should include `file` (File object) or `base64Content`, plus `fileName` and
  *   `fileDescription`.
+ * @param encounterUuid Optional UUID of an existing encounter to record the attachment on.
+ *   When omitted the attachment is saved without an encounter.
  * @returns A Promise that resolves with the FetchResponse containing the created
  *   attachment data.
  *
@@ -68,13 +98,20 @@ export function getAttachments(patientUuid: string, includeEncounterless: boolea
  *   fileName: 'document.pdf',
  *   fileDescription: 'Patient consent form'
  * });
+ *
+ * // Record the attachment on a specific encounter
+ * await createAttachment('patient-uuid', uploadedFile, 'encounter-uuid');
  * ```
  */
-export async function createAttachment(patientUuid: string, fileToUpload: UploadedFile) {
+export async function createAttachment(patientUuid: string, fileToUpload: UploadedFile, encounterUuid?: string) {
   const formData = new FormData();
 
   formData.append('fileCaption', fileToUpload.fileDescription);
   formData.append('patient', patientUuid);
+
+  if (encounterUuid) {
+    formData.append('encounter', encounterUuid);
+  }
 
   if (fileToUpload.file) {
     formData.append('file', fileToUpload.file, fileToUpload.fileName);
