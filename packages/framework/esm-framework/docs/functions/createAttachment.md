@@ -2,9 +2,9 @@
 
 # Function: createAttachment()
 
-> **createAttachment**(`patientUuid`, `fileToUpload`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
+> **createAttachment**(`patientUuid`, `fileToUpload`, `encounterUuid?`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/attachments.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L73)
+Defined in: [packages/framework/esm-emr-api/src/attachments.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L104)
 
 Creates a new attachment for a patient by uploading a file to the OpenMRS server.
 The file can be provided either as a File object or as base64-encoded content.
@@ -25,6 +25,13 @@ An object containing the file data and metadata to upload.
   Should include `file` (File object) or `base64Content`, plus `fileName` and
   `fileDescription`.
 
+### encounterUuid?
+
+`string`
+
+Optional UUID of an existing encounter to record the attachment on.
+  When omitted the attachment is saved without an encounter.
+
 ## Returns
 
 `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
@@ -41,4 +48,7 @@ const response = await createAttachment('patient-uuid', {
   fileName: 'document.pdf',
   fileDescription: 'Patient consent form'
 });
+
+// Record the attachment on a specific encounter
+await createAttachment('patient-uuid', uploadedFile, 'encounter-uuid');
 ```

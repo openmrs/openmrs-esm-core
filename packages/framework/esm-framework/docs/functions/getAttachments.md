@@ -2,11 +2,11 @@
 
 # Function: getAttachments()
 
-> **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
+> **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`, `encounterUuid?`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/attachments.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L46)
+Defined in: [packages/framework/esm-emr-api/src/attachments.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L51)
 
-Fetches all attachments for a specific patient from the OpenMRS server.
+Fetches attachments for a specific patient from the OpenMRS server.
 
 ## Parameters
 
@@ -21,13 +21,21 @@ The UUID of the patient whose attachments should be fetched.
 `boolean`
 
 Whether to include attachments that are not associated
-  with any encounter.
+  with any encounter. Ignored when `encounterUuid` is set.
 
 ### abortController
 
 `AbortController`
 
 An AbortController to allow cancellation of the request.
+
+### encounterUuid?
+
+`string`
+
+When set, only attachments recorded on this encounter are returned.
+  The `includeEncounterless` parameter is not sent in that case, because the server
+  ignores the encounter filter whenever `includeEncounterless` is present.
 
 ## Returns
 
@@ -42,4 +50,6 @@ import { getAttachments } from '@openmrs/esm-framework';
 const abortController = new AbortController();
 const response = await getAttachments('patient-uuid', true, abortController);
 console.log(response.data.results);
+
+const forEncounter = await getAttachments('patient-uuid', false, abortController, 'encounter-uuid');
 ```
