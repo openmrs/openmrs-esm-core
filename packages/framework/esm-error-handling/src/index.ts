@@ -4,7 +4,7 @@ import { dispatchToastShown } from '@openmrs/esm-globals';
 window.onerror = function (error) {
   console.error('Unexpected error: ', error);
   dispatchToastShown({
-    description: error ?? 'Oops! An unexpected error occurred.',
+    description: ensureErrorObject(error).message || 'Oops! An unexpected error occurred.',
     kind: 'error',
     title: 'Error',
   });
@@ -14,7 +14,7 @@ window.onerror = function (error) {
 window.onunhandledrejection = function (event: PromiseRejectionEvent) {
   console.error('Unhandled rejection: ', event.reason);
   dispatchToastShown({
-    description: event.reason ?? 'Oops! An unhandled promise rejection occurred.',
+    description: ensureErrorObject(event.reason).message || 'Oops! An unhandled promise rejection occurred.',
     kind: 'error',
     title: 'Error',
   });
