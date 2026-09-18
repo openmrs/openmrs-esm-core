@@ -4,7 +4,7 @@
 
 > **getAttachmentsUrl**(`patientUuid`, `includeEncounterless`, `encounterUuid?`): `string`
 
-Defined in: [packages/framework/esm-emr-api/src/attachments.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L71)
+Defined in: [packages/framework/esm-emr-api/src/attachments.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L73)
 
 Builds the attachment search URL for a patient. Used by `getAttachments` and `useAttachments`
 so both request (and cache under) the same key.

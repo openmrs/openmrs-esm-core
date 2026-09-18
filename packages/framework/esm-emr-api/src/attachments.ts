@@ -35,7 +35,9 @@ export function getAttachmentByUuid(attachmentUuid: string, abortController: Abo
  * @param abortController An AbortController to allow cancellation of the request.
  * @param encounterUuid When set, only attachments recorded on this encounter are returned.
  *   The `includeEncounterless` parameter is not sent in that case, because the server
- *   ignores the encounter filter whenever `includeEncounterless` is present.
+ *   ignores the encounter filter whenever `includeEncounterless` is present. Pass a UUID
+ *   the server can resolve: an unknown encounter UUID makes the server fall back to every
+ *   attachment of the patient, encounterless ones included.
  * @returns A Promise that resolves with the FetchResponse containing an array of attachments.
  *
  * @example

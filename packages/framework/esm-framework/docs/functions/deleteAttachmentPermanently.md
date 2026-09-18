@@ -4,7 +4,7 @@
 
 > **deleteAttachmentPermanently**(`attachmentUuid`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/attachments.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L142)
+Defined in: [packages/framework/esm-emr-api/src/attachments.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L144)
 
 Permanently deletes an attachment from the OpenMRS server. This action cannot
 be undone.

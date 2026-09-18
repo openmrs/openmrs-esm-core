@@ -13,7 +13,8 @@ import { getAttachmentsUrl, type AttachmentResponse } from '@openmrs/esm-emr-api
  * @param includeEncounterless Whether to include attachments that are not
  *   associated with any encounter. Ignored when `encounterUuid` is set.
  * @param encounterUuid When set, only attachments recorded on this encounter are
- *   returned.
+ *   returned. An unknown encounter UUID makes the server fall back to every attachment
+ *   of the patient, so only pass a UUID you have loaded.
  * @returns An object containing:
  *   - `data`: Array of attachment objects (empty array while loading)
  *   - `isLoading`: Whether the initial fetch is in progress

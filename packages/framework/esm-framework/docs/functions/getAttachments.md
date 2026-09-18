@@ -4,7 +4,7 @@
 
 > **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`, `encounterUuid?`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/attachments.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L51)
+Defined in: [packages/framework/esm-emr-api/src/attachments.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L53)
 
 Fetches attachments for a specific patient from the OpenMRS server.
 
@@ -35,7 +35,9 @@ An AbortController to allow cancellation of the request.
 
 When set, only attachments recorded on this encounter are returned.
   The `includeEncounterless` parameter is not sent in that case, because the server
-  ignores the encounter filter whenever `includeEncounterless` is present.
+  ignores the encounter filter whenever `includeEncounterless` is present. Pass a UUID
+  the server can resolve: an unknown encounter UUID makes the server fall back to every
+  attachment of the patient, encounterless ones included.
 
 ## Returns
 

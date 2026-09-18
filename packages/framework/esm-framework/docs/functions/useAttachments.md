@@ -4,7 +4,7 @@
 
 > **useAttachments**(`patientUuid`, `includeEncounterless`, `encounterUuid?`): `object`
 
-Defined in: [packages/framework/esm-react-utils/src/useAttachments.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L38)
+Defined in: [packages/framework/esm-react-utils/src/useAttachments.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L39)
 
 A React hook that fetches attachments for a patient using SWR for caching
 and automatic revalidation.
@@ -30,7 +30,8 @@ Whether to include attachments that are not
 `string`
 
 When set, only attachments recorded on this encounter are
-  returned.
+  returned. An unknown encounter UUID makes the server fall back to every attachment
+  of the patient, so only pass a UUID you have loaded.
 
 ## Returns
 
