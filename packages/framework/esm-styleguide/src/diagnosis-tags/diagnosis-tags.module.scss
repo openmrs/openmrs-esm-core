@@ -1,8 +1,33 @@
+@use '@carbon/colors';
 @use '@carbon/layout';
+@use '@carbon/type';
 
 .container {
   display: flex;
-  flex-flow: row wrap;
+  flex-wrap: wrap;
   align-items: center;
   gap: layout.$spacing-02;
+}
+
+.diagnosisTag:focus-visible {
+  outline: 2px solid colors.$blue-60;
+  outline-offset: 1px;
+}
+
+.tagTooltip {
+  @include type.type-style('body-compact-01');
+  max-width: min(18rem, calc(100vw - 1rem));
+  overflow-wrap: anywhere;
+  padding: layout.$spacing-01 layout.$spacing-03;
+  border-radius: 2px;
+  background-color: colors.$gray-80;
+  color: colors.$white-0;
+}
+
+.certaintySuffix {
+  @include type.type-style('label-01');
+  margin-inline-start: layout.$spacing-01;
+  white-space: nowrap;
+  // The name truncates; the certainty must stay fully visible inside the tag
+  flex-shrink: 0;
 }
