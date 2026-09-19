@@ -429,11 +429,18 @@ export function provide(config: Config, sourceName = 'provided') {
  * subscription behind: nothing subscribes at all when the store is already ready. That matters
  * because `getConfig` runs on every HTTP request, and a subscription that outlives its promise
  * both retains its closure forever and slows down every later write to that store.
+ *
+ * When `canEverBeReady` is supplied and returns `false` for the current state, the promise
+ * resolves immediately with `fallback()` instead of subscribing. This prevents an unbounded
+ * wait when the awaited condition is structurally unreachable (e.g. a module that is not
+ * registered with the config system, or an extension that is no longer mounted).
  */
 function whenStoreReady<S, T>(
   store: { getState(): S; subscribe(listener: (state: S) => void): () => void },
   ready: (state: S) => boolean,
   select: (state: S) => T,
+  fallback?: () => T,
+  canEverBeReady?: (state: S) => boolean,
 ): Promise<T> {
   return new Promise<T>((resolve) => {
     let unsubscribe: (() => void) | undefined;
@@ -447,7 +454,14 @@ function whenStoreReady<S, T>(
       }
     }
 
-    update(store.getState());
+    const currentState = store.getState();
+    // Resolve immediately with the fallback value and skip subscribing entirely.
+    if (canEverBeReady && !canEverBeReady(currentState)) {
+      resolve(fallback ? fallback() : select(currentState));
+      return;
+    }
+
+    update(currentState);
 
     if (!resolved) {
       unsubscribe = store.subscribe(update);
@@ -495,6 +509,11 @@ export function getTranslationOverrides(
       getConfigStore(moduleName),
       (state) => Boolean(state.translationOverridesLoaded && state.config),
       (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
+      // Fallback when the module is unknown: contribute no overrides rather than hanging.
+      () => ({}) as Record<string, Record<string, string>>,
+      // A module whose name is not in the schema registry will never be iterated by
+      // computeModuleConfig, so its store's translationOverridesLoaded will never flip.
+      () => moduleName in configInternalStore.getState().schemas,
     ),
   ];
 
@@ -504,6 +523,14 @@ export function getTranslationOverrides(
         getExtensionConfig(slotName, extensionId),
         (state) => Boolean(state.loaded && state.config),
         (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
+        // Fallback when the extension is not mounted: contribute no overrides rather than hanging.
+        () => ({}) as Record<string, Record<string, string>>,
+        // An extension that is not currently mounted has no entry in extensionsConfigStore and
+        // computeExtensionConfigs will never add one, so the store's loaded flag will never flip.
+        () =>
+          configExtensionStore
+            .getState()
+            .mountedExtensions.some((ext) => ext.slotName === slotName && ext.extensionId === extensionId),
       ),
     );
   }

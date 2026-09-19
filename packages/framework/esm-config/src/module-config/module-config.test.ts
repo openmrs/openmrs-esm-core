@@ -1542,6 +1542,9 @@ describe('extension config', () => {
 });
 
 describe('translation overrides', () => {
+  beforeEach(resetAll);
+  afterEach(resetAll);
+
   it('allows obtaining translation overrides before schema is registered', async () => {
     console.error = vi.fn();
     Config.provide({
@@ -1569,6 +1572,30 @@ describe('translation overrides', () => {
     const config = Config.getConfig('corge-module');
     expect(config).resolves.toStrictEqual({ corges: true });
     expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('resolves with empty overrides when the module is not registered with the config system', async () => {
+    const result = await Config.getTranslationOverrides('ghost-module');
+    expect(result).toStrictEqual([{}]);
+  });
+
+  it('resolves with empty overrides when the module is registered but has no Translation overrides', async () => {
+    Config.registerModuleWithConfigSystem('plain-module');
+    const result = await Config.getTranslationOverrides('plain-module');
+    expect(result).toStrictEqual([{}]);
+  });
+
+  it('returns module-level overrides when the module is registered and overrides are provided', async () => {
+    Config.provide({
+      'override-module': {
+        'Translation overrides': {
+          fr: { greeting: 'Bonjour' },
+        },
+      },
+    });
+    Config.registerModuleWithConfigSystem('override-module');
+    const result = await Config.getTranslationOverrides('override-module');
+    expect(result).toStrictEqual([{ fr: { greeting: 'Bonjour' } }]);
   });
 });
 
@@ -1643,6 +1670,81 @@ describe('promise-based config accessors', () => {
     }
 
     expect(subscriptions.live).toBe(0);
+  });
+
+  it('getTranslationOverrides resolves with empty extension overrides when the extension is not mounted', async () => {
+    Config.registerModuleWithConfigSystem('ext-mod');
+    // configExtensionStore has no mountedExtensions — default empty array.
+    const result = await Config.getTranslationOverrides('ext-mod', 'someSlot', 'ghostExt');
+    expect(result).toStrictEqual([{}, {}]);
+  });
+
+  it('getTranslationOverrides resolves with empty extension overrides when the extension unmounts before its config loads', async () => {
+    configExtensionStore.setState({
+      mountedExtensions: [
+        {
+          slotModuleName: 'slot-mod',
+          extensionModuleName: 'ext-mod',
+          slotName: 'raceSlot',
+          extensionId: 'raceExt',
+        },
+      ],
+    });
+    Config.registerModuleWithConfigSystem('ext-mod');
+
+    const promise = Config.getTranslationOverrides('ext-mod', 'raceSlot', 'raceExt');
+
+    configExtensionStore.setState({ mountedExtensions: [] });
+
+    await expect(promise).resolves.toStrictEqual([{}, {}]);
+  });
+
+  it('getTranslationOverrides returns extension-level overrides when the extension is mounted and its config has loaded', async () => {
+    Config.provide({
+      'ext-mod': {
+        '@openmrs/esm-test-app': {
+          'Translation overrides': { de: { hello: 'Hallo' } },
+        },
+      },
+    });
+    configExtensionStore.setState({
+      mountedExtensions: [
+        {
+          slotModuleName: 'slot-mod',
+          extensionModuleName: 'ext-mod',
+          slotName: 'testSlot',
+          extensionId: 'testExt',
+        },
+      ],
+    });
+    Config.registerModuleWithConfigSystem('ext-mod');
+
+    // Both halves resolve; the extension config store entry is populated by
+    // computeExtensionConfigs which fires when configExtensionStore changes.
+    const result = await Config.getTranslationOverrides('ext-mod', 'testSlot', 'testExt');
+
+    expect(result).toHaveLength(2);
+  });
+
+  it('getTranslationOverrides does not leave a subscription behind for an unmounted extension', async () => {
+    Config.registerModuleWithConfigSystem('ext-mod');
+    const extensionsStore = getExtensionConfig('leakSlot', 'leakExt');
+    const realSubscribe = extensionsStore.subscribe.bind(extensionsStore);
+    let liveExtensionSubscriptions = 0;
+    extensionsStore.subscribe = ((listener: Parameters<typeof realSubscribe>[0]) => {
+      liveExtensionSubscriptions++;
+      const unsubscribe = realSubscribe(listener);
+      return () => {
+        liveExtensionSubscriptions--;
+        unsubscribe();
+      };
+    }) as typeof realSubscribe;
+
+    for (let i = 0; i < 10; i++) {
+      await Config.getTranslationOverrides('ext-mod', 'leakSlot', 'leakExt');
+    }
+
+    expect(liveExtensionSubscriptions).toBe(0);
   });
 });
 
