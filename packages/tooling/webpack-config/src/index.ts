@@ -130,6 +130,11 @@ function buildFederationRuntimeGuard(appName: string, expectedMinor: string | un
 
   return missingRuntime + skew + '})();';
 }
+const sharedDependencyRoots: Record<string, string> = {
+  'react/jsx-runtime': 'react',
+  'react/jsx-dev-runtime': 'react',
+  'react-dom/client': 'react-dom',
+};
 
 function getFrameworkVersion() {
   try {
@@ -420,6 +425,14 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
                 },
                 // ignore a project .swcrc to match rspack behavior
                 swcrc: false,
+                jsc: {
+                  transform: {
+                    react: {
+                      runtime: 'automatic',
+                      development: mode !== production,
+                    },
+                  },
+                },
               },
             },
           },
@@ -548,7 +561,14 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         exposes: {
           './start': srcFile,
         },
-        shared: [...Object.keys(peerDependencies), '@openmrs/esm-framework/src/internal'].reduce((obj, depName) => {
+        shared: [
+          ...new Set([
+            ...Object.keys(peerDependencies),
+            '@openmrs/esm-framework/src/internal',
+            ...Object.keys(sharedDependencyRoots),
+          ]),
+        ].reduce((obj, depName) => {
+          const rootDependency = sharedDependencyRoots[depName] ?? depName;
           const shareNames = [depName];
 
           // Also handle swr/immutable, etc.
@@ -558,12 +578,16 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
 
           for (const shareName of shareNames) {
             obj[shareName] = {
-              requiredVersion: peerDependencies[depName] ?? false,
+              requiredVersion: peerDependencies[rootDependency] ?? false,
               strictVersion: false,
               singleton: true,
               import: shareName,
               shareKey: shareName,
               shareScope: 'default',
+              ...(rootDependency !== depName && {
+                // eslint-disable-next-line @typescript-eslint/no-require-imports
+                version: require(`${rootDependency}/package.json`).version,
+              }),
             };
           }
 

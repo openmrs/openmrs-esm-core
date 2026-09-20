@@ -22,6 +22,12 @@ const { name, version, dependencies } = require('./package.json');
 const sharedDependencies = require('./dependencies.json');
 const frameworkVersion = require('@openmrs/esm-framework/package.json').version;
 
+const sharedDependencyRoots = {
+  'react/jsx-runtime': 'react',
+  'react/jsx-dev-runtime': 'react',
+  'react-dom/client': 'react-dom',
+};
+
 const timestamp = getTimestamp();
 const production = 'production';
 
@@ -387,6 +393,14 @@ module.exports = (env, argv = []) => {
                 env: {
                   targets: browserTargets,
                 },
+                jsc: {
+                  transform: {
+                    react: {
+                      runtime: 'automatic',
+                      development: mode !== production,
+                    },
+                  },
+                },
               },
             },
           ],
@@ -503,8 +517,9 @@ module.exports = (env, argv = []) => {
         manifest: false,
         dts: false,
         shared: sharedDependencies.reduce((obj, depName) => {
+          const rootDependency = sharedDependencyRoots[depName] ?? depName;
           // This just attempts to align the requiredVersion with what we usually have in peerDependencies
-          let version = dependencies[depName];
+          let version = dependencies[rootDependency];
 
           if (version) {
             if (version.startsWith('^')) {
@@ -513,7 +528,7 @@ module.exports = (env, argv = []) => {
               const semVer = semver.parse(version.slice(1));
               version = `${semVer.major}.${semVer.minor}.x`;
             } else if (version === 'workspace:*') {
-              version = `${semver.parse(require(`${depName}/package.json`).version).major}.X`;
+              version = `${semver.parse(require(`${rootDependency}/package.json`).version).major}.X`;
             }
           }
 
@@ -532,6 +547,9 @@ module.exports = (env, argv = []) => {
               import: shareName,
               shareKey: shareName,
               shareScope: 'default',
+              ...(rootDependency !== depName && {
+                version: require(`${rootDependency}/package.json`).version,
+              }),
             };
           }
 
