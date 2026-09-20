@@ -23,7 +23,54 @@ export const sessionStore = createGlobalStore<SessionStore>('session', {
   loaded: false,
   session: null,
 });
+
+const sessionStaleAfterMillis = 1000 * 60;
+
 let lastFetchTimeMillis = 0;
+
+// Holds the anonymous session request that is in flight, so that callers asking before it answers
+// share it. The store only becomes `loaded` once the first response arrives, so otherwise each of
+// them starts another request, and each of those reaches the backend without a session cookie and
+// is given a session of its own.
+let inFlightSessionRefresh: Promise<SessionStore> | null = null;
+
+function isSessionStale() {
+  return lastFetchTimeMillis < Date.now() - sessionStaleAfterMillis || !sessionStore.getState().loaded;
+}
+
+function fetchSession(username?: string, password?: string) {
+  lastFetchTimeMillis = Date.now();
+  const headers: Record<string, string> = {};
+  if (username && password) {
+    headers['Authorization'] = `Basic ${window.btoa(`${username}:${password}`)}`;
+  }
+
+  return handleSessionResponse(
+    openmrsFetch(sessionEndpoint, {
+      headers,
+    }),
+  );
+}
+
+/**
+ * Fetches the session, sharing the request with any caller that asks while it is in flight, so
+ * that a burst of callers at startup produces a single request. The shared request is dropped once
+ * it settles, so a failed one does not stop a later caller from trying again.
+ *
+ * This is the refresh that {@link getCurrentUser} and {@link getSessionStore} perform, which only
+ * report what the session is. A caller that establishes or re-reads the session — a login, or a
+ * refetch after changing the session — uses {@link refetchCurrentUser}, which always issues its
+ * own request.
+ *
+ * @internal
+ */
+export function refreshSession() {
+  inFlightSessionRefresh ??= fetchSession().finally(() => {
+    inFlightSessionRefresh = null;
+  });
+
+  return inFlightSessionRefresh;
+}
 
 /**
  * The getCurrentUser function returns an observable that produces
@@ -79,8 +126,8 @@ function getCurrentUser(opts: { includeAuthStatus: true }): Observable<Session>;
  */
 function getCurrentUser(opts: { includeAuthStatus: false }): Observable<LoggedInUser>;
 function getCurrentUser(opts = { includeAuthStatus: true }): Observable<Session | LoggedInUser> {
-  if (lastFetchTimeMillis < Date.now() - 1000 * 60 || !sessionStore.getState().loaded) {
-    refetchCurrentUser();
+  if (isSessionStale()) {
+    refreshSession();
   }
 
   return new Observable((subscriber) => {
@@ -105,7 +152,8 @@ export { getCurrentUser };
 /**
  * Returns the global session store containing the current user's session information.
  * If the session data is stale (older than 1 minute) or not yet loaded, this function
- * will trigger a refetch of the current user's session.
+ * will trigger a refetch of the current user's session. Callers that ask while such a
+ * refetch is in flight share it rather than starting another one.
  *
  * @returns The global session store that can be subscribed to for session updates.
  *
@@ -121,8 +169,8 @@ export { getCurrentUser };
  * ```
  */
 export function getSessionStore() {
-  if (lastFetchTimeMillis < Date.now() - 1000 * 60 || !sessionStore.getState().loaded) {
-    refetchCurrentUser();
+  if (isSessionStale()) {
+    refreshSession();
   }
 
   return sessionStore;
@@ -197,6 +245,10 @@ function isSuperUser(user: { roles: Array<Role> }) {
  * the user. All subscribers to the current user will be notified of the
  * new users once the new version of the user object is downloaded.
  *
+ * The request is always sent, never answered from one already in flight: given credentials it
+ * establishes the session rather than reporting it, and without them it is how a caller reads
+ * back a session it has just changed, such as after a login or a logout.
+ *
  * @returns The same observable as returned by {@link getCurrentUser}.
  *
  * @example
@@ -206,17 +258,7 @@ function isSuperUser(user: { roles: Array<Role> }) {
  * ```
  */
 export function refetchCurrentUser(username?: string, password?: string) {
-  lastFetchTimeMillis = Date.now();
-  let headers = {};
-  if (username && password) {
-    headers['Authorization'] = `Basic ${window.btoa(`${username}:${password}`)}`;
-  }
-
-  return handleSessionResponse(
-    openmrsFetch(sessionEndpoint, {
-      headers,
-    }),
-  );
+  return fetchSession(username, password);
 }
 
 /**
