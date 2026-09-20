@@ -57,6 +57,15 @@ function createMockFetchResponse<T>(data: T, ok = true): any {
   };
 }
 
+// Lets a request settle, along with the `finally` that releases it as the shared request.
+const settleRequests = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+
+const mockSession: Session = {
+  authenticated: true,
+  sessionId: 'test-session',
+  user: {} as LoggedInUser,
+};
+
 describe('userHasAccess', () => {
   const createPrivilege = (display: string): Privilege => ({
     uuid: `${display}-uuid`,
@@ -749,15 +758,6 @@ describe('setUserProperties', () => {
 });
 
 describe('sharing the session request', () => {
-  const mockSession: Session = {
-    authenticated: true,
-    sessionId: 'test-session',
-    user: {} as LoggedInUser,
-  };
-
-  // Lets a request settle, along with the `finally` that releases it as the shared request.
-  const settleRequests = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
-
   beforeEach(async () => {
     sessionStore.setState({ loaded: false, session: null });
     mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(mockSession));
@@ -777,7 +777,7 @@ describe('sharing the session request', () => {
     await settleRequests();
   });
 
-  it('should keep refetching a session that is stale rather than one that is in flight', async () => {
+  it('should refetch a stale session but not one fetched within the last minute', async () => {
     const now = vi.spyOn(Date, 'now').mockReturnValue(1_000_000);
 
     getSessionStore();
@@ -826,5 +826,60 @@ describe('sharing the session request', () => {
     expect(mockOpenmrsFetch).toHaveBeenCalledTimes(2);
 
     await settleRequests();
+  });
+});
+
+describe('applying session responses in order', () => {
+  // Hands back a response the test answers itself, to control the order responses arrive in.
+  function deferResponse() {
+    let answer: (response: unknown) => void;
+    mockOpenmrsFetch.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          answer = resolve;
+        }),
+    );
+
+    return (response: unknown) => answer(response);
+  }
+
+  beforeEach(async () => {
+    sessionStore.setState({ loaded: false, session: null });
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(mockSession));
+    await settleRequests();
+    mockOpenmrsFetch.mockClear();
+  });
+
+  it('should not let a refresh that answers after a login overwrite it', async () => {
+    const answerRefresh = deferResponse();
+
+    getSessionStore();
+
+    const loggedIn: Session = {
+      authenticated: true,
+      sessionId: 'logged-in-session',
+      user: {} as LoggedInUser,
+    };
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(loggedIn));
+
+    await refetchCurrentUser('testuser', 'testpass');
+    expect(sessionStore.getState().session).toEqual(loggedIn);
+
+    answerRefresh(createMockFetchResponse({ authenticated: false, sessionId: 'anonymous-session' }));
+    await settleRequests();
+
+    expect(sessionStore.getState().session).toEqual(loggedIn);
+  });
+
+  it('should not let a refresh that answers after a logout restore the session', async () => {
+    const answerRefresh = deferResponse();
+
+    getSessionStore();
+    clearCurrentUser();
+
+    answerRefresh(createMockFetchResponse(mockSession));
+    await settleRequests();
+
+    expect(sessionStore.getState().session).toEqual({ authenticated: false, sessionId: '' });
   });
 });

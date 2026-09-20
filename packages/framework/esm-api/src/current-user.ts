@@ -34,6 +34,22 @@ let lastFetchTimeMillis = 0;
 // is given a session of its own.
 let inFlightSessionRefresh: Promise<SessionStore> | null = null;
 
+// Session responses do not necessarily arrive in the order they were asked for, so each request is
+// numbered and a response older than one already applied is dropped instead of overwriting it.
+// Otherwise a refresh that started before a login or a logout lands after it and puts the session
+// it replaced back into the store.
+let lastSessionRequestId = 0;
+let lastAppliedSessionRequestId = 0;
+
+function applySessionState(requestId: number, nextState: SessionStore) {
+  if (requestId < lastAppliedSessionRequestId) {
+    return;
+  }
+
+  lastAppliedSessionRequestId = requestId;
+  sessionStore.setState(nextState);
+}
+
 function isSessionStale() {
   return lastFetchTimeMillis < Date.now() - sessionStaleAfterMillis || !sessionStore.getState().loaded;
 }
@@ -274,7 +290,9 @@ export function refetchCurrentUser(username?: string, password?: string) {
  * ```
  */
 export function clearCurrentUser() {
-  sessionStore.setState({
+  // Numbered like a request of its own, so that a refresh already in flight cannot answer after
+  // the logout and put the session that was just cleared back into the store.
+  applySessionState(++lastSessionRequestId, {
     loaded: true,
     session: { authenticated: false, sessionId: '' },
   });
@@ -453,24 +471,26 @@ export async function setUserProperties(
 }
 
 function handleSessionResponse(result: Promise<FetchResponse<Session>>) {
+  const requestId = ++lastSessionRequestId;
+
   return new Promise<SessionStore>((resolve, reject) => {
     result
       .then((res) => {
         let nextState: SessionStore;
         if (typeof res?.data === 'object') {
           nextState = { loaded: true, session: res.data };
-          sessionStore.setState(nextState);
+          applySessionState(requestId, nextState);
           resolve(nextState);
         } else {
           nextState = { loaded: false, session: null };
-          sessionStore.setState(nextState);
+          applySessionState(requestId, nextState);
           reject(nextState);
         }
       })
       .catch((err) => {
         reportError(`Failed to fetch new session information: ${err}`);
         const nextState: SessionStore = { loaded: false, session: null };
-        sessionStore.setState(nextState);
+        applySessionState(requestId, nextState);
         reject(nextState);
       });
   });
