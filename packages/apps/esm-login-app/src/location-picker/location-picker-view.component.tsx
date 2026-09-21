@@ -39,7 +39,6 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
-  const isLoginEnabled = navigator.onLine;
   const [searchParams] = useSearchParams();
   const checkboxId = useId();
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
@@ -187,7 +186,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
                   className={styles.confirmButton}
                   kind="primary"
                   type="submit"
-                  disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+                  disabled={!activeLocation || isSubmitting}
                 >
                   {isSubmitting ? (
                     <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
