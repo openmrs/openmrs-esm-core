@@ -3238,6 +3238,7 @@ __metadata:
   resolution: "@openmrs/esm-core@workspace:."
   dependencies:
     "@openmrs/eslint-config": "npm:^2.1.0"
+    "@openmrs/prettier-config": "npm:^1.0.0"
     "@playwright/test": "npm:^1.55.1"
     "@swc/core": "npm:1.15.21"
     "@testing-library/dom": "npm:^10.4.1"
@@ -3258,7 +3259,7 @@ __metadata:
     identity-obj-proxy: "npm:^3.0.0"
     lint-staged: "npm:^15.2.9"
     openmrs: "workspace:*"
-    prettier: "npm:^3.1.0"
+    prettier: "npm:3.9.8"
     swc-loader: "npm:0.2.7"
     timezone-mock: "npm:^1.2.2"
     turbo: "npm:^2.5.2"
@@ -3912,6 +3913,15 @@ __metadata:
     webpack: "npm:5.105.3"
   languageName: unknown
   linkType: soft
+
+"@openmrs/prettier-config@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@openmrs/prettier-config@npm:1.0.0"
+  peerDependencies:
+    prettier: ^3.0.0
+  checksum: 10/774fa686feaa3224006e4a0afc0220a5ae43e3b5d59109a602dbfa7a6220e3da5a3f8cc9a25052ff04829f02cb9f08a8cae2258f72e5f6a98d755204f6035241
+  languageName: node
+  linkType: hard
 
 "@openmrs/rspack-config@workspace:*, @openmrs/rspack-config@workspace:packages/tooling/rspack-config":
   version: 0.0.0-use.local
@@ -17140,12 +17150,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "prettier@npm:3.1.0"
+"prettier@npm:3.9.8":
+  version: 3.9.8
+  resolution: "prettier@npm:3.9.8"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10/e95e8f93c6b9aea2ac1e86bebe329bee90c8c50d9a23d1f593eba8d7f39b33b3641eb28785001505b6723c47895a5322ad12a2fb855b289cb7bae450ffc34425
+  checksum: 10/4ac262aaf9a5e221b02cc17447ebe7aa9689be59b85ab9de8152cd7422fb363ed3e09da6df585fa19ab1fc6cffebdc3ea34db1a75c978536aeba3f87bfd06ab3
   languageName: node
   linkType: hard
 
