@@ -39,9 +39,7 @@ export interface RegisterDynamicRouteMessage extends OmrsServiceWorkerMessage<'r
 }
 
 export type KnownOmrsServiceWorkerMessages =
-  | OnImportMapChangedMessage
-  | ClearDynamicRoutesMessage
-  | RegisterDynamicRouteMessage;
+  OnImportMapChangedMessage | ClearDynamicRoutesMessage | RegisterDynamicRouteMessage;
 
 export interface MessageServiceWorkerResult<T> {
   success: boolean;

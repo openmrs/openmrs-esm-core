@@ -24,7 +24,8 @@ import { DEFAULT_MIN_DATE_FLOOR } from './defaults';
 
 /** Properties for the OpenmrsDateRangePicker */
 export interface OpenmrsDateRangePickerProps
-  extends Omit<DateRangePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'>,
+  extends
+    Omit<DateRangePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'>,
     DatePickerBaseProps {
   /** The default value (uncontrolled) */
   defaultValue?: [DateInputValue, DateInputValue];

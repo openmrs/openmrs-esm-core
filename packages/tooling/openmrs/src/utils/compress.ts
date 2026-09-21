@@ -179,7 +179,7 @@ function describeError(e: unknown) {
       return `${code}: ${e}`;
     }
 
-    return e instanceof Error ? e.message : JSON.stringify(e) ?? String(e);
+    return e instanceof Error ? e.message : (JSON.stringify(e) ?? String(e));
   } catch {
     return 'an error that could not be rendered';
   }

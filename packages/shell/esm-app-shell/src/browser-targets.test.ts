@@ -40,7 +40,7 @@ describe('the app shell build', () => {
   it('compiles its sources for the browsers RFC 0003 supports', async () => {
     const config = await loadShellConfig();
     const rule = config.module.rules.find((candidate: { test?: RegExp }) => candidate.test?.test?.('index.ts'));
-    const options = Array.isArray(rule.use) ? rule.use[0].options : rule.options ?? rule.use?.options;
+    const options = Array.isArray(rule.use) ? rule.use[0].options : (rule.options ?? rule.use?.options);
 
     // Queries, not resolved versions: swc resolves them with a Rust port of browserslist whose bundled
     // browser data is older than this repo's.
@@ -73,7 +73,7 @@ describe('the app shell build', () => {
     // browserslist config first. Nothing forces those to agree, so this is what catches them drifting.
     const config = await loadShellConfig();
     const rule = config.module.rules.find((candidate: { test?: RegExp }) => candidate.test?.test?.('index.ts'));
-    const options = Array.isArray(rule.use) ? rule.use[0].options : rule.options ?? rule.use?.options;
+    const options = Array.isArray(rule.use) ? rule.use[0].options : (rule.options ?? rule.use?.options);
 
     expect(browserslist(options.env.targets)).toEqual(
       browserslist(['extends browserslist-config-openmrs'], { path: shellRoot }),

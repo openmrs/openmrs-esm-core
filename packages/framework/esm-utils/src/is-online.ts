@@ -13,5 +13,5 @@ import type {} from '@openmrs/esm-globals';
  * @category Utility
  */
 export function isOnline(online?: boolean) {
-  return window.offlineEnabled ? online ?? navigator.onLine : true;
+  return window.offlineEnabled ? (online ?? navigator.onLine) : true;
 }
