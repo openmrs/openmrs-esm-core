@@ -1,16 +1,17 @@
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { Observable, type Subscriber } from 'rxjs';
-import type { LoggedInUser, Privilege, Role, getCurrentUser, userHasAccess } from '@openmrs/esm-api';
+import type { LoggedInUser, Privilege, Role } from '@openmrs/esm-api';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { getSessionStore, userHasAccess } from '@openmrs/esm-api';
 import { UserHasAccess } from './UserHasAccess';
 
-// Mock getCurrentUser and userHasAccess
-const mockGetCurrentUser = vi.fn();
+// Mock getSessionStore and userHasAccess
+const mockGetSessionStore = vi.fn();
 const mockUserHasAccess = vi.fn();
 
 vi.mock('@openmrs/esm-api', () => ({
-  getCurrentUser: (...args: Parameters<typeof getCurrentUser>) => mockGetCurrentUser(...args),
+  getSessionStore: (...args: Parameters<typeof getSessionStore>) => mockGetSessionStore(...args),
   userHasAccess: (...args: Parameters<typeof userHasAccess>) => mockUserHasAccess(...args),
 }));
 
@@ -40,6 +41,37 @@ function createMockUser(privileges: string[] = [], roles: string[] = []): Logged
   };
 }
 
+type SessionState = { loaded: boolean; session: { authenticated: boolean; sessionId: string; user?: LoggedInUser } };
+
+/**
+ * Builds a minimal stand-in for the session store {@link UserHasAccess} consumes:
+ * `getState()` returns the current state synchronously and `subscribe()` registers
+ * a listener and returns an unsubscribe function. `emit()` lets tests push updates.
+ */
+function createFakeStore(user: LoggedInUser | null, unsubscribe: () => void = vi.fn()) {
+  const listeners = new Set<(state: SessionState) => void>();
+  let state: SessionState = {
+    loaded: true,
+    session: user ? { authenticated: true, sessionId: 'test-session', user } : { authenticated: false, sessionId: '' },
+  };
+  return {
+    getState: () => state,
+    subscribe: vi.fn((listener: (state: SessionState) => void) => {
+      listeners.add(listener);
+      return unsubscribe;
+    }),
+    emit(nextUser: LoggedInUser | null) {
+      state = {
+        loaded: true,
+        session: nextUser
+          ? { authenticated: true, sessionId: 'test-session', user: nextUser }
+          : { authenticated: false, sessionId: '' },
+      };
+      listeners.forEach((listener) => listener(state));
+    },
+  };
+}
+
 describe('UserHasAccess', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -53,7 +85,7 @@ describe('UserHasAccess', () => {
     it('should render children for single privilege', () => {
       const user = createMockUser(['Edit Patients']);
 
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(user)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(user));
       mockUserHasAccess.mockReturnValue(true);
 
       render(
@@ -69,7 +101,7 @@ describe('UserHasAccess', () => {
     it('should render children for multiple privileges', () => {
       const user = createMockUser(['Edit Patients', 'Delete Patients']);
 
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(user)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(user));
       mockUserHasAccess.mockReturnValue(true);
 
       render(
@@ -85,7 +117,7 @@ describe('UserHasAccess', () => {
     it('should render multiple children', () => {
       const user = createMockUser(['Edit Patients']);
 
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(user)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(user));
       mockUserHasAccess.mockReturnValue(true);
 
       render(
@@ -104,7 +136,7 @@ describe('UserHasAccess', () => {
     it('should render nothing when no fallback provided', () => {
       const user = createMockUser(['View Patients']);
 
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(user)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(user));
       mockUserHasAccess.mockReturnValue(false);
 
       const { container } = render(
@@ -121,7 +153,7 @@ describe('UserHasAccess', () => {
     it('should render fallback when provided', () => {
       const user = createMockUser(['View Patients']);
 
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(user)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(user));
       mockUserHasAccess.mockReturnValue(false);
 
       render(
@@ -137,7 +169,7 @@ describe('UserHasAccess', () => {
     it('should render fallback for missing privilege in array', () => {
       const user = createMockUser(['Edit Patients']); // Has one but not both
 
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(user)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(user));
       mockUserHasAccess.mockReturnValue(false);
 
       render(
@@ -153,7 +185,7 @@ describe('UserHasAccess', () => {
 
   describe('when user is not logged in', () => {
     it('should render nothing when no fallback provided', () => {
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(null)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(null));
       mockUserHasAccess.mockReturnValue(false);
 
       const { container } = render(
@@ -168,7 +200,7 @@ describe('UserHasAccess', () => {
     });
 
     it('should render fallback when provided', () => {
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(null)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(null));
       mockUserHasAccess.mockReturnValue(false);
 
       render(
@@ -182,18 +214,12 @@ describe('UserHasAccess', () => {
     });
   });
 
-  describe('observable subscription management', () => {
-    it('should subscribe to getCurrentUser on mount', () => {
+  describe('session subscription management', () => {
+    it('should subscribe to the session store on mount', () => {
       const user = createMockUser(['Edit Patients']);
-      const subscribeMock = vi.fn();
+      const store = createFakeStore(user);
 
-      mockGetCurrentUser.mockReturnValue(
-        new Observable((subscriber) => {
-          subscribeMock();
-          subscriber.next(user);
-          return () => {};
-        }),
-      );
+      mockGetSessionStore.mockReturnValue(store);
       mockUserHasAccess.mockReturnValue(true);
 
       render(
@@ -202,20 +228,16 @@ describe('UserHasAccess', () => {
         </UserHasAccess>,
       );
 
-      expect(mockGetCurrentUser).toHaveBeenCalledWith({ includeAuthStatus: false });
-      expect(subscribeMock).toHaveBeenCalled();
+      expect(mockGetSessionStore).toHaveBeenCalled();
+      expect(store.subscribe).toHaveBeenCalled();
     });
 
-    it('should unsubscribe from getCurrentUser on unmount', () => {
+    it('should unsubscribe from the session store on unmount', () => {
       const user = createMockUser(['Edit Patients']);
       const unsubscribeMock = vi.fn();
+      const store = createFakeStore(user, unsubscribeMock);
 
-      mockGetCurrentUser.mockReturnValue(
-        new Observable((subscriber) => {
-          subscriber.next(user);
-          return unsubscribeMock;
-        }),
-      );
+      mockGetSessionStore.mockReturnValue(store);
       mockUserHasAccess.mockReturnValue(true);
 
       const { unmount } = render(
@@ -231,23 +253,17 @@ describe('UserHasAccess', () => {
   });
 
   describe('user updates', () => {
-    it('should update when user changes', async () => {
+    it('should update when the session changes', async () => {
       const user1 = createMockUser(['View Patients']);
       const user2 = createMockUser(['Edit Patients']);
+      const store = createFakeStore(user1);
 
-      let subscriber: Subscriber<unknown> | undefined = undefined;
-      mockGetCurrentUser.mockReturnValue(
-        new Observable((sub) => {
-          subscriber = sub;
-          sub.next(user1);
-          return () => {};
-        }),
-      );
+      mockGetSessionStore.mockReturnValue(store);
 
       // Initially user doesn't have access
       mockUserHasAccess.mockReturnValue(false);
 
-      const { rerender } = render(
+      render(
         <UserHasAccess privilege="Edit Patients" fallback={<div>No Access</div>}>
           <div>Protected Content</div>
         </UserHasAccess>,
@@ -258,7 +274,7 @@ describe('UserHasAccess', () => {
 
       // User gains access
       mockUserHasAccess.mockReturnValue(true);
-      (subscriber as unknown as Subscriber<unknown>)?.next(user2);
+      store.emit(user2);
 
       await waitFor(() => {
         expect(screen.queryByText('No Access')).not.toBeInTheDocument();
@@ -271,7 +287,7 @@ describe('UserHasAccess', () => {
     it('should handle empty children gracefully', () => {
       const user = createMockUser(['Edit Patients']);
 
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(user)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(user));
       mockUserHasAccess.mockReturnValue(true);
 
       const { container } = render(<UserHasAccess privilege="Edit Patients" />);
@@ -284,7 +300,7 @@ describe('UserHasAccess', () => {
     it('should handle complex fallback component', () => {
       const user = createMockUser(['View Patients']);
 
-      mockGetCurrentUser.mockReturnValue(new Observable((subscriber) => subscriber.next(user)));
+      mockGetSessionStore.mockReturnValue(createFakeStore(user));
       mockUserHasAccess.mockReturnValue(false);
 
       render(

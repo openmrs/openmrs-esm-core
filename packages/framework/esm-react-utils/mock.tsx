@@ -144,8 +144,6 @@ export const useAppContext = vi.fn();
 
 export const useAssignedExtensionIds = vi.fn();
 
-export const useConnectivity = vi.fn();
-
 export const useDefineAppContext = vi.fn();
 
 export const useExtensionSlot = vi.fn();

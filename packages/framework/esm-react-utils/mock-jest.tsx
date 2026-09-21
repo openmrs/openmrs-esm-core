@@ -139,8 +139,6 @@ export const useAppContext = jest.fn();
 
 export const useAssignedExtensionIds = jest.fn();
 
-export const useConnectivity = jest.fn();
-
 export const useDefineAppContext = jest.fn();
 
 export const useExtensionSlot = jest.fn();

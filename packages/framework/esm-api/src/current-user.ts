@@ -2,7 +2,6 @@
 import { reportError } from '@openmrs/esm-error-handling';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { isUndefined } from 'lodash-es';
-import { Observable } from 'rxjs';
 import { openmrsFetch, restBaseUrl, sessionEndpoint } from './openmrs-fetch';
 import type { LoggedInUser, SessionLocation, Privilege, Role, Session, FetchResponse } from './types';
 
@@ -26,77 +25,61 @@ export const sessionStore = createGlobalStore<SessionStore>('session', {
 let lastFetchTimeMillis = 0;
 
 /**
- * The getCurrentUser function returns an observable that produces
- * **zero or more values, over time**. It will produce zero values
- * by default if the user is not logged in. And it will provide a
- * first value when the logged in user is fetched from the server.
- * Subsequent values will be produced whenever the user object is
- * updated.
+ * The getCurrentUser function returns a Promise that resolves once with the
+ * current user's session, fetching it from the server first if it hasn't been
+ * loaded (or is stale). The function accepts an optional `opts` object with an
+ * `includeAuthStatus` boolean property that defaults to `true`. When `true`, the
+ * entire {@link Session} object from the API is provided. When `false`, only the
+ * {@link LoggedInUser} property of the response is provided.
  *
- * The function accepts an optional `opts` object with an `includeAuthStatus`
- * boolean property that defaults to `true`. When `includeAuthStatus` is `true`,
- * the entire {@link Session} object from the API will be provided. When
- * `includeAuthStatus` is `false`, only the {@link LoggedInUser} property of the
- * response object will be provided.
+ * To react to subsequent session changes (login, logout, user-property updates),
+ * use {@link getSessionStore} (`getState()` / `subscribe()`) or the `useSession`
+ * React hook rather than calling this repeatedly.
  *
- * @returns An Observable that produces zero or more values (as described above).
- *   The values produced will be a {@link LoggedInUser} object (if `includeAuthStatus`
- *   is set to `false`) or a {@link Session} object with authentication status
- *   (if `includeAuthStatus` is set to `true` or not provided).
+ * @returns A Promise resolving to a {@link LoggedInUser} object (if `includeAuthStatus`
+ *   is `false`) or a {@link Session} object (if `includeAuthStatus` is `true` or not
+ *   provided).
  *
  * @example
  *
  * ```js
  * import { getCurrentUser } from '@openmrs/esm-api'
- * const subscription = getCurrentUser().subscribe(
- *   user => console.log(user)
- * )
- * subscription.unsubscribe()
- * getCurrentUser({includeAuthStatus: true}).subscribe(
- *   data => console.log(data.authenticated)
- * )
+ * const session = await getCurrentUser({ includeAuthStatus: true })
+ * console.log(session.authenticated)
  * ```
- *
- * #### Be sure to unsubscribe when your component unmounts
- *
- * Otherwise your code will continue getting updates to the user object
- * even after the UI component is gone from the screen. This is a memory
- * leak and source of bugs.
  */
-function getCurrentUser(): Observable<Session>;
+function getCurrentUser(): Promise<Session>;
 /**
  * @param opts Options for controlling the response format.
- * @param opts.includeAuthStatus When `true`, returns the full {@link Session} object
+ * @param opts.includeAuthStatus When `true`, resolves with the full {@link Session} object
  *   including authentication status.
- * @returns An Observable that produces {@link Session} objects.
+ * @returns A Promise resolving to a {@link Session} object.
  */
-function getCurrentUser(opts: { includeAuthStatus: true }): Observable<Session>;
+function getCurrentUser(opts: { includeAuthStatus: true }): Promise<Session>;
 /**
  * @param opts Options for controlling the response format.
- * @param opts.includeAuthStatus When `false`, returns only the {@link LoggedInUser} object
+ * @param opts.includeAuthStatus When `false`, resolves with only the {@link LoggedInUser} object
  *   without the surrounding session information.
- * @returns An Observable that produces {@link LoggedInUser} objects.
+ * @returns A Promise resolving to a {@link LoggedInUser} object.
  */
-function getCurrentUser(opts: { includeAuthStatus: false }): Observable<LoggedInUser>;
-function getCurrentUser(opts = { includeAuthStatus: true }): Observable<Session | LoggedInUser> {
+function getCurrentUser(opts: { includeAuthStatus: false }): Promise<LoggedInUser>;
+function getCurrentUser(opts = { includeAuthStatus: true }): Promise<Session | LoggedInUser> {
   if (lastFetchTimeMillis < Date.now() - 1000 * 60 || !sessionStore.getState().loaded) {
     refetchCurrentUser();
   }
 
-  return new Observable((subscriber) => {
+  let unsubscribe: () => void;
+  return new Promise<Session | LoggedInUser>((resolve) => {
     const handler = (state: SessionStore) => {
       if (state.loaded) {
-        if (opts.includeAuthStatus) {
-          subscriber.next(state.session);
-        } else {
-          subscriber.next(state.session?.user);
-        }
+        resolve(opts.includeAuthStatus ? state.session : (state.session.user as LoggedInUser));
+        unsubscribe?.();
       }
     };
     handler(sessionStore.getState());
-    // The observable subscribe function should return an unsubscribe function,
-    // which happens to be exactly what `subscribe` returns.
-    return sessionStore.subscribe(handler);
+    if (!sessionStore.getState().loaded) {
+      unsubscribe = sessionStore.subscribe(handler);
+    }
   });
 }
 
@@ -194,10 +177,10 @@ function isSuperUser(user: { roles: Array<Role> }) {
 
 /**
  * The `refetchCurrentUser` function causes a network request to redownload
- * the user. All subscribers to the current user will be notified of the
- * new users once the new version of the user object is downloaded.
+ * the user. All subscribers to the session store will be notified of the
+ * new user once the new version of the user object is downloaded.
  *
- * @returns The same observable as returned by {@link getCurrentUser}.
+ * @returns A Promise resolving to the updated session store state.
  *
  * @example
  * ```js
@@ -326,13 +309,9 @@ export function getLoggedInUser() {
  * }
  * ```
  */
-export function getSessionLocation() {
-  return new Promise<SessionLocation | undefined>((res, rej) => {
-    const sub = getCurrentUser().subscribe((session) => {
-      res(session.sessionLocation);
-    }, rej);
-    sub.unsubscribe();
-  });
+export async function getSessionLocation(): Promise<SessionLocation | undefined> {
+  const session = await getCurrentUser();
+  return session.sessionLocation;
 }
 
 /**

@@ -16,8 +16,6 @@ vi.mock('./extensions', () => ({
   }),
 }));
 
-vi.mock('./helpers', () => ({ checkStatus: () => true }));
-
 vi.mock('./store', () => ({
   registerExtensionRendering: vi.fn(),
   unregisterExtensionRendering: vi.fn(),

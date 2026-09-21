@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils/mock';
 import dayjs from 'dayjs';
@@ -47,7 +46,7 @@ export function setupPaths(config: any) {
 export const importDynamic = jest.fn();
 
 /* esm-error-handling */
-export const createErrorHandler = () => jest.fn().mockReturnValue(NEVER);
+export const createErrorHandler = () => jest.fn();
 
 export const reportError = jest.fn().mockImplementation((error) => {
   throw error;
@@ -64,10 +63,6 @@ export const navigate = jest.fn();
 export const getHistory = jest.fn(() => ['https://o3.openmrs.org/home']);
 export const clearHistory = jest.fn();
 export const goBackInHistory = jest.fn();
-
-/* esm-offline */
-export const useConnectivity = jest.fn().mockReturnValue(true);
-export const subscribeConnectivity = jest.fn();
 
 /* esm-styleguide */
 export const showNotification = jest.fn();

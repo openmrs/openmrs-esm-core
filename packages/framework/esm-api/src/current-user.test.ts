@@ -1,6 +1,5 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { Observable } from 'rxjs';
 import {
   userHasAccess,
   getCurrentUser,
@@ -314,8 +313,6 @@ describe('getLoggedInUser', () => {
 });
 
 describe('getCurrentUser', () => {
-  let subscriptions: Array<{ unsubscribe?: () => void }> = [];
-
   beforeEach(() => {
     sessionStore.setState({ loaded: false, session: null });
     mockOpenmrsFetch.mockClear();
@@ -328,183 +325,79 @@ describe('getCurrentUser', () => {
     );
   });
 
-  afterEach(() => {
-    // Clean up any active subscriptions
-    subscriptions.forEach((sub) => sub.unsubscribe?.());
-    subscriptions = [];
+  const buildMockUser = (): LoggedInUser => ({
+    uuid: 'user-uuid',
+    display: 'Test User',
+    username: 'testuser',
+    systemId: 'test-sys-id',
+    userProperties: {},
+    person: {} as any,
+    privileges: [],
+    roles: [],
+    retired: false,
+    locale: 'en',
+    allowedLocales: ['en'],
   });
 
-  it('should return an Observable', () => {
-    const result = getCurrentUser();
-    expect(result).toBeInstanceOf(Observable);
+  it('should return a Promise', () => {
+    expect(getCurrentUser()).toBeInstanceOf(Promise);
   });
 
-  it('should emit user when session is loaded and includeAuthStatus is false', () => {
-    return new Promise<void>((resolve) => {
-      const mockUser: LoggedInUser = {
-        uuid: 'user-uuid',
-        display: 'Test User',
-        username: 'testuser',
-        systemId: 'test-sys-id',
-        userProperties: {},
-        person: {} as any,
-        privileges: [],
-        roles: [],
-        retired: false,
-        locale: 'en',
-        allowedLocales: ['en'],
-      };
+  it('should resolve with the user when session is loaded and includeAuthStatus is false', async () => {
+    const mockUser = buildMockUser();
 
-      sessionStore.setState({
-        loaded: true,
-        session: {
-          authenticated: true,
-          sessionId: 'test-session',
-          user: mockUser,
-        },
-      });
-
-      const sub = getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
-        expect(user).toEqual(mockUser);
-        resolve();
-      });
-      subscriptions.push(sub);
-    });
-  });
-
-  it('should emit full session when includeAuthStatus is true', () => {
-    return new Promise<void>((resolve) => {
-      const mockUser: LoggedInUser = {
-        uuid: 'user-uuid',
-        display: 'Test User',
-        username: 'testuser',
-        systemId: 'test-sys-id',
-        userProperties: {},
-        person: {} as any,
-        privileges: [],
-        roles: [],
-        retired: false,
-        locale: 'en',
-        allowedLocales: ['en'],
-      };
-
-      const mockSession: Session = {
+    sessionStore.setState({
+      loaded: true,
+      session: {
         authenticated: true,
         sessionId: 'test-session',
         user: mockUser,
-      };
-
-      sessionStore.setState({
-        loaded: true,
-        session: mockSession,
-      });
-
-      const sub = getCurrentUser({ includeAuthStatus: true }).subscribe((session) => {
-        expect(session).toEqual(mockSession);
-        resolve();
-      });
-      subscriptions.push(sub);
+      },
     });
+
+    await expect(getCurrentUser({ includeAuthStatus: false })).resolves.toEqual(mockUser);
   });
 
-  it('should not emit when session is not loaded', () => {
-    const handler = vi.fn();
-    const sub = getCurrentUser({ includeAuthStatus: false }).subscribe(handler);
-    subscriptions.push(sub);
+  it('should resolve with the full session when includeAuthStatus is true', async () => {
+    const mockSession: Session = {
+      authenticated: true,
+      sessionId: 'test-session',
+      user: buildMockUser(),
+    };
 
-    expect(handler).not.toHaveBeenCalled();
-  });
-
-  it('should emit updates when session changes', () => {
-    return new Promise<void>((resolve) => {
-      const mockUser1: LoggedInUser = {
-        uuid: 'user-1',
-        display: 'User 1',
-        username: 'user1',
-        systemId: 'sys-1',
-        userProperties: {},
-        person: {} as any,
-        privileges: [],
-        roles: [],
-        retired: false,
-        locale: 'en',
-        allowedLocales: ['en'],
-      };
-
-      const mockUser2: LoggedInUser = {
-        uuid: 'user-2',
-        display: 'User 2',
-        username: 'user2',
-        systemId: 'sys-2',
-        userProperties: {},
-        person: {} as any,
-        privileges: [],
-        roles: [],
-        retired: false,
-        locale: 'en',
-        allowedLocales: ['en'],
-      };
-
-      const emittedUsers: LoggedInUser[] = [];
-
-      sessionStore.setState({
-        loaded: true,
-        session: {
-          authenticated: true,
-          sessionId: 'session-1',
-          user: mockUser1,
-        },
-      });
-
-      const sub = getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
-        emittedUsers.push(user);
-        if (emittedUsers.length === 2) {
-          expect(emittedUsers[0]).toEqual(mockUser1);
-          expect(emittedUsers[1]).toEqual(mockUser2);
-          resolve();
-        }
-      });
-      subscriptions.push(sub);
-
-      setTimeout(() => {
-        sessionStore.setState({
-          loaded: true,
-          session: {
-            authenticated: true,
-            sessionId: 'session-2',
-            user: mockUser2,
-          },
-        });
-      }, 10);
+    sessionStore.setState({
+      loaded: true,
+      session: mockSession,
     });
+
+    await expect(getCurrentUser({ includeAuthStatus: true })).resolves.toEqual(mockSession);
   });
 
-  it('should allow unsubscribing', () => {
-    const handler = vi.fn();
-    const subscription = getCurrentUser({ includeAuthStatus: false }).subscribe(handler);
-    subscriptions.push(subscription);
+  it('should not resolve until the session is loaded', async () => {
+    // Prevent the automatic refetch from resolving the session so the only way
+    // the promise settles is the manual store update below.
+    mockOpenmrsFetch.mockReturnValue(new Promise(() => {}));
+    const mockUser = buildMockUser();
+
+    let resolvedUser: LoggedInUser | undefined;
+    const promise = getCurrentUser({ includeAuthStatus: false }).then((user) => {
+      resolvedUser = user as LoggedInUser;
+    });
+
+    await Promise.resolve();
+    expect(resolvedUser).toBeUndefined();
 
     sessionStore.setState({
       loaded: true,
       session: {
         authenticated: true,
         sessionId: 'test-session',
-        user: {} as LoggedInUser,
+        user: mockUser,
       },
     });
 
-    handler.mockClear();
-    subscription.unsubscribe();
-
-    sessionStore.setState({
-      loaded: true,
-      session: {
-        authenticated: false,
-        sessionId: 'new-session',
-      },
-    });
-
-    expect(handler).not.toHaveBeenCalled();
+    await promise;
+    expect(resolvedUser).toEqual(mockUser);
   });
 });
 

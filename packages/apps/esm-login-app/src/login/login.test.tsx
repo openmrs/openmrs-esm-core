@@ -2,14 +2,7 @@ import { useState } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  getSessionStore,
-  refetchCurrentUser,
-  type SessionStore,
-  useConfig,
-  useConnectivity,
-  useSession,
-} from '@openmrs/esm-framework';
+import { getSessionStore, refetchCurrentUser, type SessionStore, useConfig, useSession } from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
@@ -17,7 +10,6 @@ import Login from './login.component';
 const mockGetSessionStore = vi.mocked(getSessionStore);
 const mockLogin = vi.mocked(refetchCurrentUser);
 const mockUseConfig = vi.mocked(useConfig);
-const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockUseSession = vi.mocked(useSession);
 
 const loginLocations = [
@@ -27,7 +19,6 @@ const loginLocations = [
 
 describe('Login', () => {
   beforeEach(() => {
-    mockUseConnectivity.mockReturnValue(true);
     mockLogin.mockResolvedValue({} as SessionStore);
     mockGetSessionStore.mockImplementation(() => {
       return {

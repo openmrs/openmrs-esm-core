@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import { NEVER } from 'rxjs';
 import { vi } from 'vitest';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils/mock';
@@ -48,7 +47,7 @@ export function setupPaths(config: any) {
 export const importDynamic = vi.fn();
 
 /* esm-error-handling */
-export const createErrorHandler = () => vi.fn().mockReturnValue(NEVER);
+export const createErrorHandler = () => vi.fn();
 
 export const reportError = vi.fn().mockImplementation((error) => {
   throw error;
@@ -65,10 +64,6 @@ export const navigate = vi.fn();
 export const getHistory = vi.fn(() => ['https://o3.openmrs.org/home']);
 export const clearHistory = vi.fn();
 export const goBackInHistory = vi.fn();
-
-/* esm-offline */
-export const useConnectivity = vi.fn().mockReturnValue(true);
-export const subscribeConnectivity = vi.fn();
 
 /* esm-styleguide */
 export const showNotification = vi.fn();

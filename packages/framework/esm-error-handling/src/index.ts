@@ -1,10 +1,13 @@
 /** @module @category Error Handling */
 import { dispatchToastShown } from '@openmrs/esm-globals';
 
-window.onerror = function (error) {
-  console.error('Unexpected error: ', error);
+// Uses the standard `window.onerror` signature: the first argument is the error
+// message (a string) or an Event, and the fifth is the actual Error object (when
+// the browser provides it). We prefer the Error so the toast shows its message.
+window.onerror = function (message, _source, _lineno, _colno, error) {
+  console.error('Unexpected error: ', error ?? message);
   dispatchToastShown({
-    description: error ?? 'Oops! An unexpected error occurred.',
+    description: getErrorMessage(error ?? message, 'Oops! An unexpected error occurred.'),
     kind: 'error',
     title: 'Error',
   });
@@ -14,11 +17,32 @@ window.onerror = function (error) {
 window.onunhandledrejection = function (event: PromiseRejectionEvent) {
   console.error('Unhandled rejection: ', event.reason);
   dispatchToastShown({
-    description: event.reason ?? 'Oops! An unhandled promise rejection occurred.',
+    // `event.reason` is whatever the promise rejected with, frequently an Error
+    // object. `showToast` expects `description` to be a renderable, non-empty
+    // value, so resolve it to a string message rather than passing the raw
+    // rejection (which renders as "[object Object]" and fails the non-empty check).
+    description: getErrorMessage(event.reason, 'Oops! An unhandled promise rejection occurred.'),
     kind: 'error',
     title: 'Error',
   });
 };
+
+/**
+ * Resolves an arbitrary thrown/rejected value to a user-facing, non-empty
+ * message string suitable for use as a toast description, falling back to the
+ * provided message when no usable message can be derived.
+ */
+function getErrorMessage(reason: unknown, fallback: string): string {
+  if (reason instanceof Error) {
+    return reason.message || fallback;
+  }
+
+  if (typeof reason === 'string' && reason.trim().length > 0) {
+    return reason;
+  }
+
+  return fallback;
+}
 
 /**
  * Reports an error to the global error handler. The error will be displayed

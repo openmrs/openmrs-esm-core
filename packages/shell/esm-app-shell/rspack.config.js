@@ -75,7 +75,6 @@ function resolveEnvironment(buildMode) {
   const fallback = process.env.NODE_ENV || buildMode || '';
   return fallback === 'development' ? 'development' : 'production';
 }
-const openmrsOffline = process.env.OMRS_OFFLINE === 'enable';
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsImportmapUrl = process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -444,7 +443,6 @@ module.exports = (env, argv = []) => {
           openmrsImportmapUrl,
           openmrsRoutesDef,
           openmrsRoutesUrl,
-          openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,
           openmrsCoreImportmap: appPatterns.length > 0 && JSON.stringify(coreImportmap),
@@ -542,6 +540,5 @@ module.exports = (env, argv = []) => {
         analyzerMode: env?.analyze ? 'static' : 'disabled',
       }),
     ].filter(Boolean),
-    ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };
 };

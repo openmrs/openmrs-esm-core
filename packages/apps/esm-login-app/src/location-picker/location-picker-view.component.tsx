@@ -8,7 +8,6 @@ import {
   navigate,
   setSessionLocation,
   useConfig,
-  useConnectivity,
   useSession,
   WarningIcon,
 } from '@openmrs/esm-framework';
@@ -40,7 +39,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
-  const isLoginEnabled = useConnectivity();
+  const isLoginEnabled = navigator.onLine;
   const [searchParams] = useSearchParams();
   const checkboxId = useId();
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);

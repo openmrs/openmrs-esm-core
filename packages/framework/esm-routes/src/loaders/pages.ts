@@ -52,40 +52,24 @@ function getActivityFn(route: RouteDefinition | Array<RouteDefinition>): Activit
 }
 
 /**
- * For pages, we also add support for rendered them based on online and offline mode as well as
- * any feature flags.
- *
- * By default, we assume that all pages should be rendered when online, but only rendered
- * offline if specifically configured to do so.
+ * For pages, we also add support for rendering them based on any feature flags.
  *
  * @param activityFn A standard single-spa activityFn such as that returned by {@link getActivityFn()}
  * @param pageDefinition The RegisteredPageDefinition object for this page
  * @returns An activityFn suitable to use for a single-spa application
  */
-function wrapPageActivityFn(
-  activityFn: ActivityFn,
-  { online, offline, featureFlag }: RegisteredPageDefinition,
-): ActivityFn {
-  if (window.offlineEnabled) {
-    return (location) => {
-      // basically, if the page should only work online and we're offline or if the
-      // page should only work offline and we're online, defaulting to always rendering
-      // the page
-      if (!((navigator.onLine && (online ?? true)) || (!navigator.onLine && (offline ?? false)))) {
-        return false;
-      }
-
-      if (featureFlag) {
-        if (!getFeatureFlag(featureFlag)) {
-          return false;
-        }
-      }
-
-      return activityFn(location);
-    };
-  } else {
+function wrapPageActivityFn(activityFn: ActivityFn, { featureFlag }: RegisteredPageDefinition): ActivityFn {
+  if (!featureFlag) {
     return activityFn;
   }
+
+  return (location) => {
+    if (!getFeatureFlag(featureFlag)) {
+      return false;
+    }
+
+    return activityFn(location);
+  };
 }
 
 /**

@@ -10,7 +10,6 @@ import {
   refetchCurrentUser,
   navigate as openmrsNavigate,
   useConfig,
-  useConnectivity,
   useSession,
 } from '@openmrs/esm-framework';
 import { type ConfigSchema } from '../config-schema';
@@ -30,7 +29,7 @@ const Login: React.FC = () => {
     provider: loginProvider,
     links: loginLinks,
   } = useConfig<ConfigSchema>();
-  const isLoginEnabled = useConnectivity();
+  const isLoginEnabled = navigator.onLine;
   const { t } = useTranslation();
   const { user } = useSession();
   const location = useLocation() as unknown as Omit<Location, 'state'> & {

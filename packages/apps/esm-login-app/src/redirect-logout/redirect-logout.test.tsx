@@ -11,7 +11,6 @@ import {
   restBaseUrl,
   setUserLanguage,
   useConfig,
-  useConnectivity,
   useSession,
 } from '@openmrs/esm-framework';
 import RedirectLogout from './redirect-logout.component';
@@ -25,12 +24,10 @@ const mockNavigate = vi.mocked(navigate);
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
 const mockSetUserLanguage = vi.mocked(setUserLanguage);
 const mockUseConfig = vi.mocked(useConfig);
-const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockUseSession = vi.mocked(useSession);
 
 describe('RedirectLogout', () => {
   beforeEach(() => {
-    mockUseConnectivity.mockReturnValue(true);
     mockOpenmrsFetch.mockResolvedValue({} as FetchResponse<unknown>);
 
     mockUseSession.mockReturnValue({
@@ -100,11 +97,13 @@ describe('RedirectLogout', () => {
   });
 
   it('should redirect to login if the application is offline', async () => {
-    mockUseConnectivity.mockReturnValue(false);
+    const onLineSpy = vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
 
     render(<RedirectLogout />);
 
     expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
+
+    onLineSpy.mockRestore();
   });
 
   it('should handle logout failure gracefully', async () => {
