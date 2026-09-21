@@ -15,6 +15,7 @@ import inPatient from './svgs/in-patient.svg';
 import stockManagement from './svgs/inventory.svg';
 import labs from './svgs/labs.svg';
 import labs2 from './svgs/labs-2.svg';
+import metadataExport from './svgs/metadata-export.svg';
 import obstetrics from './svgs/obstetrics.svg';
 import patientSearch from './svgs/patient-search.svg';
 import patients from './svgs/patients.svg';
@@ -44,6 +45,7 @@ export function setupPictograms() {
   addPictogramSvg('omrs-pict-in-patient', inPatient);
   addPictogramSvg('omrs-pict-laboratory', labs);
   addPictogramSvg('omrs-pict-labs-2', labs2);
+  addPictogramSvg('omrs-pict-metadata-export', metadataExport);
   addPictogramSvg('omrs-pict-obstetrics', obstetrics);
   addPictogramSvg('omrs-pict-patient-search', patientSearch);
   addPictogramSvg('omrs-pict-patients', patients);
