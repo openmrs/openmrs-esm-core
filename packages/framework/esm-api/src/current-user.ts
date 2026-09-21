@@ -63,7 +63,8 @@ function getCurrentUser(opts: { includeAuthStatus: true }): Promise<Session>;
  * @returns A Promise resolving to a {@link LoggedInUser} object.
  */
 function getCurrentUser(opts: { includeAuthStatus: false }): Promise<LoggedInUser>;
-function getCurrentUser(opts = { includeAuthStatus: true }): Promise<Session | LoggedInUser> {
+function getCurrentUser(opts?: { includeAuthStatus: boolean }): Promise<Session | LoggedInUser> {
+  opts = { ...{ includeAuthStatus: true }, ...(opts ?? {}) };
   if (lastFetchTimeMillis < Date.now() - 1000 * 60 || !sessionStore.getState().loaded) {
     refetchCurrentUser();
   }
