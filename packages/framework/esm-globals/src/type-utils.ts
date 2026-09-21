@@ -23,12 +23,6 @@ export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes i
       }
     }
 
-    if (Object.hasOwn(routes, 'workspaces')) {
-      if (!Boolean(maybeRoutes.workspaces) || !Array.isArray(maybeRoutes.workspaces)) {
-        return false;
-      }
-    }
-
     if (Object.hasOwn(routes, 'modals')) {
       if (!Boolean(maybeRoutes.modals) || !Array.isArray(maybeRoutes.modals)) {
         return false;

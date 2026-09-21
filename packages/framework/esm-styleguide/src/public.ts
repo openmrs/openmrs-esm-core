@@ -26,7 +26,6 @@ export * from './pictograms/pictograms';
 export * from './responsive-wrapper';
 export { showSnackbar, type SnackbarDescriptor, type SnackbarType, type SnackbarMeta } from './snackbars';
 export { showToast, type ToastDescriptor, type ToastType, type ToastNotificationMeta } from './toasts';
-export * from './workspaces/public';
 export {
   launchWorkspace2,
   launchWorkspaceGroup2,

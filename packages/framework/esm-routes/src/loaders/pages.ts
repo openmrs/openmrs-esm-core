@@ -2,14 +2,12 @@ import { type ActivityFn, pathToActiveWhen, registerApplication } from 'single-s
 import { registerModuleWithConfigSystem } from '@openmrs/esm-config';
 import { batchExtensionUpdates } from '@openmrs/esm-extensions';
 import {
-  type WorkspaceGroupDefinition,
   type ExtensionDefinition,
   type FeatureFlagDefinition,
   type ModalDefinition,
   type OpenmrsAppRoutes,
   type RegisteredPageDefinition,
   type RouteDefinition,
-  type WorkspaceDefinition,
 } from '@openmrs/esm-globals';
 import { getFeatureFlag } from '@openmrs/esm-feature-flags';
 import { routeRegex } from './helpers';
@@ -17,9 +15,7 @@ import {
   tryRegisterExtension,
   tryRegisterFeatureFlag,
   tryRegisterModal,
-  tryRegisterWorkspace,
   tryRegisterWorkspace2,
-  tryRegisterWorkspaceGroup,
   tryRegisterWorkspaceGroups2,
   tryRegisterWorkspaceWindows2,
 } from './components';
@@ -109,8 +105,6 @@ function registerAppRoutes(appName: string, routes: OpenmrsAppRoutes) {
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];
-    const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
-    const availableWorkspaceGroups: Array<WorkspaceGroupDefinition> = routes.workspaceGroups ?? [];
     const availableFeatureFlags: Array<FeatureFlagDefinition> = routes.featureFlags ?? [];
     const availableWorkspaceGroups2 = routes.workspaceGroups2 ?? [];
     const availableWorkspaceWindows2 = routes.workspaceWindows2 ?? [];
@@ -157,32 +151,6 @@ function registerAppRoutes(appName: string, routes: OpenmrsAppRoutes) {
       }
     });
 
-    availableWorkspaces.forEach((workspace) => {
-      if (
-        workspace &&
-        typeof workspace === 'object' &&
-        Object.hasOwn(workspace, 'name') &&
-        Object.hasOwn(workspace, 'component')
-      ) {
-        tryRegisterWorkspace(appName, workspace);
-      } else {
-        console.warn(
-          `A workspace for ${appName} could not be registered as it does not appear to have the required properties`,
-          workspace,
-        );
-      }
-    });
-
-    availableWorkspaceGroups.forEach((workspaceGroup) => {
-      if (workspaceGroup && typeof workspaceGroup === 'object' && Object.hasOwn(workspaceGroup, 'name')) {
-        tryRegisterWorkspaceGroup(appName, workspaceGroup);
-      } else {
-        console.warn(
-          `A workspace group for ${appName} could not be registered as it does not appear to have the required properties`,
-          workspaceGroup,
-        );
-      }
-    });
     tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
     tryRegisterWorkspaceWindows2(appName, availableWorkspaceWindows2);
     tryRegisterWorkspace2(appName, availableWorkspaces2);
