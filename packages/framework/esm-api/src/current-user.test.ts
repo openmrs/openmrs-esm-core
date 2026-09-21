@@ -316,6 +316,7 @@ describe('getCurrentUser', () => {
   beforeEach(() => {
     sessionStore.setState({ loaded: false, session: null });
     mockOpenmrsFetch.mockClear();
+    mockReportError.mockClear();
     // Mock openmrsFetch to prevent unhandled promise rejections
     mockOpenmrsFetch.mockResolvedValue(
       createMockFetchResponse({
@@ -343,19 +344,16 @@ describe('getCurrentUser', () => {
     expect(getCurrentUser()).toBeInstanceOf(Promise);
   });
 
-  it('should resolve with the user when session is loaded and includeAuthStatus is false', async () => {
+  it('should resolve with the user when the session is fresh and includeAuthStatus is false', async () => {
     const mockUser = buildMockUser();
-
-    sessionStore.setState({
-      loaded: true,
-      session: {
-        authenticated: true,
-        sessionId: 'test-session',
-        user: mockUser,
-      },
-    });
+    mockOpenmrsFetch.mockResolvedValue(
+      createMockFetchResponse({ authenticated: true, sessionId: 'test-session', user: mockUser }),
+    );
+    await refetchCurrentUser();
+    mockOpenmrsFetch.mockClear();
 
     await expect(getCurrentUser({ includeAuthStatus: false })).resolves.toEqual(mockUser);
+    expect(mockOpenmrsFetch).not.toHaveBeenCalled();
   });
 
   it('should resolve with the full session when includeAuthStatus is true', async () => {
@@ -364,13 +362,61 @@ describe('getCurrentUser', () => {
       sessionId: 'test-session',
       user: buildMockUser(),
     };
-
-    sessionStore.setState({
-      loaded: true,
-      session: mockSession,
-    });
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(mockSession));
+    await refetchCurrentUser();
+    mockOpenmrsFetch.mockClear();
 
     await expect(getCurrentUser({ includeAuthStatus: true })).resolves.toEqual(mockSession);
+    expect(mockOpenmrsFetch).not.toHaveBeenCalled();
+  });
+
+  it('should refetch and resolve with the fresh session when the loaded session is stale', async () => {
+    vi.useFakeTimers();
+
+    try {
+      const staleSession: Session = { authenticated: true, sessionId: 'stale-session', user: buildMockUser() };
+      const freshSession: Session = { authenticated: true, sessionId: 'fresh-session', user: buildMockUser() };
+
+      mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(staleSession));
+      await refetchCurrentUser();
+
+      vi.setSystemTime(Date.now() + 61 * 1000);
+      mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(freshSession));
+
+      await expect(getCurrentUser({ includeAuthStatus: true })).resolves.toEqual(freshSession);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('should share a single request between concurrent callers', async () => {
+    const mockSession: Session = {
+      authenticated: true,
+      sessionId: 'test-session',
+      user: buildMockUser(),
+    };
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(mockSession));
+
+    await expect(Promise.all([getCurrentUser(), getCurrentUser()])).resolves.toEqual([mockSession, mockSession]);
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not reject when the fetch fails, resolving once a session is loaded', async () => {
+    mockOpenmrsFetch.mockRejectedValue(new Error('Network error'));
+
+    let resolvedSession: Session | undefined;
+    const promise = getCurrentUser({ includeAuthStatus: true }).then((session) => {
+      resolvedSession = session;
+    });
+
+    await vi.waitFor(() => expect(mockReportError).toHaveBeenCalled());
+    expect(resolvedSession).toBeUndefined();
+
+    const mockSession: Session = { authenticated: true, sessionId: 'test-session', user: buildMockUser() };
+    sessionStore.setState({ loaded: true, session: mockSession });
+
+    await promise;
+    expect(resolvedSession).toEqual(mockSession);
   });
 
   it('should not resolve until the session is loaded', async () => {

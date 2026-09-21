@@ -22,15 +22,48 @@ export const sessionStore = createGlobalStore<SessionStore>('session', {
   loaded: false,
   session: null,
 });
+
+/** How long a fetched session is treated as fresh before a read triggers a new fetch. */
+const sessionMaxAgeMillis = 60 * 1000;
+
 let lastFetchTimeMillis = 0;
+let inFlightRefresh: Promise<SessionStore> | null = null;
+
+/**
+ * Fetches the session if the store is unloaded or its session is older than `sessionMaxAgeMillis`,
+ * joining a fetch already in flight rather than starting a second one. Returns `null` if the store
+ * already holds a fresh session. The returned promise rejects if the fetch fails, but the rejection
+ * is already handled and reported, so a caller that only needs the fetch started can ignore it.
+ */
+function refreshSessionIfStale(): Promise<SessionStore> | null {
+  if (sessionStore.getState().loaded && lastFetchTimeMillis >= Date.now() - sessionMaxAgeMillis) {
+    return null;
+  }
+
+  if (!inFlightRefresh) {
+    const refresh = refetchCurrentUser();
+    const clear = () => {
+      if (inFlightRefresh === refresh) {
+        inFlightRefresh = null;
+      }
+    };
+    refresh.then(clear, clear);
+    inFlightRefresh = refresh;
+  }
+
+  return inFlightRefresh;
+}
 
 /**
  * The getCurrentUser function returns a Promise that resolves once with the
- * current user's session, fetching it from the server first if it hasn't been
- * loaded (or is stale). The function accepts an optional `opts` object with an
- * `includeAuthStatus` boolean property that defaults to `true`. When `true`, the
- * entire {@link Session} object from the API is provided. When `false`, only the
- * {@link LoggedInUser} property of the response is provided.
+ * current user's session. If the session hasn't been loaded, or was loaded more
+ * than a minute ago, it is fetched from the server first and the Promise waits
+ * for that fetch rather than resolving with data that may be out of date.
+ *
+ * The function accepts an optional `opts` object with an `includeAuthStatus` boolean
+ * property that defaults to `true`. When `true`, the entire {@link Session} object
+ * from the API is provided. When `false`, only the {@link LoggedInUser} property of
+ * the response is provided.
  *
  * To react to subsequent session changes (login, logout, user-property updates),
  * use {@link getSessionStore} (`getState()` / `subscribe()`) or the `useSession`
@@ -63,24 +96,21 @@ function getCurrentUser(opts: { includeAuthStatus: true }): Promise<Session>;
  * @returns A Promise resolving to a {@link LoggedInUser} object.
  */
 function getCurrentUser(opts: { includeAuthStatus: false }): Promise<LoggedInUser>;
-function getCurrentUser(opts?: { includeAuthStatus: boolean }): Promise<Session | LoggedInUser> {
-  opts = { ...{ includeAuthStatus: true }, ...(opts ?? {}) };
-  if (lastFetchTimeMillis < Date.now() - 1000 * 60 || !sessionStore.getState().loaded) {
-    refetchCurrentUser();
+function getCurrentUser(opts?: { includeAuthStatus?: boolean }): Promise<Session | LoggedInUser> {
+  const includeAuthStatus = opts?.includeAuthStatus ?? true;
+  const select = (session: Session) => (includeAuthStatus ? session : (session.user as LoggedInUser));
+
+  if (!refreshSessionIfStale()) {
+    return Promise.resolve(select((sessionStore.getState() as LoadedSessionStore).session));
   }
 
-  let unsubscribe: () => void;
   return new Promise<Session | LoggedInUser>((resolve) => {
-    const handler = (state: SessionStore) => {
+    const unsubscribe = sessionStore.subscribe((state) => {
       if (state.loaded) {
-        resolve(opts.includeAuthStatus ? state.session : (state.session.user as LoggedInUser));
-        unsubscribe?.();
+        unsubscribe();
+        resolve(select(state.session));
       }
-    };
-    handler(sessionStore.getState());
-    if (!sessionStore.getState().loaded) {
-      unsubscribe = sessionStore.subscribe(handler);
-    }
+    });
   });
 }
 
@@ -105,10 +135,7 @@ export { getCurrentUser };
  * ```
  */
 export function getSessionStore() {
-  if (lastFetchTimeMillis < Date.now() - 1000 * 60 || !sessionStore.getState().loaded) {
-    refetchCurrentUser();
-  }
-
+  refreshSessionIfStale();
   return sessionStore;
 }
 
