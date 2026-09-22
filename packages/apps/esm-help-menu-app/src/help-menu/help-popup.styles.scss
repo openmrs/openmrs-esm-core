@@ -9,7 +9,7 @@
   right: layout.$spacing-09;
   width: 11rem;
   z-index: 8000;
-  background-color: $ui-02;
+  background-color: $ui-01;
   gap: layout.$spacing-05;
   padding: layout.$spacing-02;
   margin: layout.$spacing-02;
@@ -21,11 +21,11 @@
 }
 
 .helpextension {
-  margin: layout.$spacing-04;
+  margin: layout.$spacing-02;
   padding: layout.$spacing-01;
   cursor: pointer;
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: layout.$spacing-05;
+  gap: layout.$spacing-02;
 }
