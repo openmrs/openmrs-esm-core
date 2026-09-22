@@ -29,7 +29,6 @@ const Login: React.FC = () => {
     provider: loginProvider,
     links: loginLinks,
   } = useConfig<ConfigSchema>();
-  const isLoginEnabled = navigator.onLine;
   const { t } = useTranslation();
   const { user } = useSession();
   const location = useLocation() as unknown as Omit<Location, 'state'> & {
@@ -243,7 +242,7 @@ const Login: React.FC = () => {
                       className={styles.continueButton}
                       renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                       iconDescription={t('loginButtonIconDescription', 'Log in button')}
-                      disabled={!isLoginEnabled || isLoggingIn}
+                      disabled={isLoggingIn}
                     >
                       {isLoggingIn ? (
                         <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
@@ -261,7 +260,6 @@ const Login: React.FC = () => {
                         evt.preventDefault();
                         continueLogin();
                       }}
-                      disabled={!isLoginEnabled}
                     >
                       {t('continue', 'Continue')}
                     </Button>
@@ -286,7 +284,7 @@ const Login: React.FC = () => {
                     className={styles.continueButton}
                     renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                     iconDescription={t('loginButtonIconDescription', 'Log in button')}
-                    disabled={!isLoginEnabled || isLoggingIn}
+                    disabled={isLoggingIn}
                   >
                     {isLoggingIn ? (
                       <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />

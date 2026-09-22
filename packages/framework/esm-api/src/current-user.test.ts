@@ -389,6 +389,33 @@ describe('getCurrentUser', () => {
     }
   });
 
+  it('should wait for a refetch already in flight rather than resolving with the session it replaces', async () => {
+    const oldSession: Session = { authenticated: true, sessionId: 'old-session', user: buildMockUser() };
+    const newSession: Session = { authenticated: true, sessionId: 'new-session', user: buildMockUser() };
+
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(oldSession));
+    await refetchCurrentUser();
+    mockOpenmrsFetch.mockClear();
+
+    // The store still holds `oldSession` and its fetch timestamp is well inside the freshness window,
+    // so only the in-flight refetch stops `getCurrentUser` from handing back the session on its way out.
+    let resolveFetch: (response: unknown) => void;
+    mockOpenmrsFetch.mockReturnValue(
+      new Promise((resolve) => {
+        resolveFetch = resolve;
+      }),
+    );
+    const refetch = refetchCurrentUser();
+
+    const pending = getCurrentUser({ includeAuthStatus: true });
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+
+    resolveFetch!(createMockFetchResponse(newSession));
+    await refetch;
+
+    await expect(pending).resolves.toEqual(newSession);
+  });
+
   it('should share a single request between concurrent callers', async () => {
     const mockSession: Session = {
       authenticated: true,

@@ -32,6 +32,24 @@ export function setupDynamicOfflineDataHandler(_handler: { id: string; type: str
 }
 
 /**
+ * @deprecated Offline support has been removed from the framework. This is a stub kept only so that
+ * frontend modules that still read the dynamic offline data registry keep working. It always resolves
+ * to an empty array, since nothing is registered for offline use any more.
+ */
+export function getDynamicOfflineDataEntries<T = unknown>(_type?: string): Promise<Array<T>> {
+  return Promise.resolve([]);
+}
+
+/**
+ * @deprecated Offline support has been removed from the framework. This is a stub kept only so that
+ * frontend modules that still read the sync queue keep working. It always resolves to an empty array,
+ * since nothing is queued for synchronization any more.
+ */
+export function getSynchronizationItems<T = unknown>(_type?: string): Promise<Array<T>> {
+  return Promise.resolve([]);
+}
+
+/**
  * @deprecated The offline service worker has been removed from the framework.
  * This is a no-op kept only so that frontend modules that still call
  * `messageOmrsServiceWorker` don't throw. It always resolves to an

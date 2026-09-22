@@ -65,6 +65,19 @@ export const getHistory = vi.fn(() => ['https://o3.openmrs.org/home']);
 export const clearHistory = vi.fn();
 export const goBackInHistory = vi.fn();
 
+/* deprecated offline shims; these mirror the no-op implementations in src/deprecated.ts */
+export const useConnectivity = vi.fn().mockReturnValue(true);
+export const setupOfflineSync = vi.fn();
+export const setupDynamicOfflineDataHandler = vi.fn();
+export const getDynamicOfflineDataEntries = vi.fn().mockResolvedValue([]);
+export const getSynchronizationItems = vi.fn().mockResolvedValue([]);
+export const subscribePrecacheStaticDependencies = vi.fn(() => () => {});
+export const messageOmrsServiceWorker = vi.fn().mockResolvedValue({
+  success: false,
+  result: undefined,
+  error: 'No service worker has been registered. Offline-related features have been removed from the framework.',
+});
+
 /* esm-styleguide */
 export const showNotification = vi.fn();
 export const showActionableNotification = vi.fn();

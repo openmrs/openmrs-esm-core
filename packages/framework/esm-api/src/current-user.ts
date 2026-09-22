@@ -23,42 +23,46 @@ export const sessionStore = createGlobalStore<SessionStore>('session', {
   session: null,
 });
 
-/** How long a fetched session is treated as fresh before a read triggers a new fetch. */
+/**
+ * The upper bound on how old the session handed to a reader may be. It is measured from the moment a
+ * fetch is *started*, not from the moment its response lands, so the session a reader sees is always
+ * strictly newer than this.
+ */
 const sessionMaxAgeMillis = 60 * 1000;
 
 let lastFetchTimeMillis = 0;
 let inFlightRefresh: Promise<SessionStore> | null = null;
 
 /**
- * Fetches the session if the store is unloaded or its session is older than `sessionMaxAgeMillis`,
- * joining a fetch already in flight rather than starting a second one. Returns `null` if the store
- * already holds a fresh session. The returned promise rejects if the fetch fails, but the rejection
- * is already handled and reported, so a caller that only needs the fetch started can ignore it.
+ * Fetches the session if the store is unloaded or its session is older than `sessionMaxAgeMillis`.
+ * Returns `null` only when the store already holds a session fresh enough to be read as-is, so a
+ * caller that gets a promise back must wait for it rather than read the store.
+ *
+ * A fetch already in flight is joined rather than duplicated. This is what keeps `sessionMaxAgeMillis`
+ * an upper bound: while a fetch is running, the store still holds the previous session, and returning
+ * that would hand back data older than the bound allows.
+ *
+ * The returned promise rejects if the fetch fails, but the rejection is already handled and reported,
+ * so a caller that only needs the fetch started can ignore it.
  */
 function refreshSessionIfStale(): Promise<SessionStore> | null {
+  if (inFlightRefresh) {
+    return inFlightRefresh;
+  }
+
   if (sessionStore.getState().loaded && lastFetchTimeMillis >= Date.now() - sessionMaxAgeMillis) {
     return null;
   }
 
-  if (!inFlightRefresh) {
-    const refresh = refetchCurrentUser();
-    const clear = () => {
-      if (inFlightRefresh === refresh) {
-        inFlightRefresh = null;
-      }
-    };
-    refresh.then(clear, clear);
-    inFlightRefresh = refresh;
-  }
-
-  return inFlightRefresh;
+  return refetchCurrentUser();
 }
 
 /**
  * The getCurrentUser function returns a Promise that resolves once with the
- * current user's session. If the session hasn't been loaded, or was loaded more
- * than a minute ago, it is fetched from the server first and the Promise waits
- * for that fetch rather than resolving with data that may be out of date.
+ * current user's session. If the session hasn't been loaded, was loaded more than
+ * a minute ago, or is in the middle of being refetched, the Promise waits for the
+ * fetch in question rather than resolving with data that may be out of date. The
+ * session it resolves with is therefore never more than a minute old.
  *
  * The function accepts an optional `opts` object with an `includeAuthStatus` boolean
  * property that defaults to `true`. When `true`, the entire {@link Session} object
@@ -223,11 +227,23 @@ export function refetchCurrentUser(username?: string, password?: string) {
     headers['Authorization'] = `Basic ${window.btoa(`${username}:${password}`)}`;
   }
 
-  return handleSessionResponse(
+  const refresh = handleSessionResponse(
     openmrsFetch(sessionEndpoint, {
       headers,
     }),
   );
+
+  // Publish the request so that readers can wait on it instead of reading the session it is about to
+  // replace. Each call still issues its own request; this only tracks the most recent one.
+  const clear = () => {
+    if (inFlightRefresh === refresh) {
+      inFlightRefresh = null;
+    }
+  };
+  refresh.then(clear, clear);
+  inFlightRefresh = refresh;
+
+  return refresh;
 }
 
 /**

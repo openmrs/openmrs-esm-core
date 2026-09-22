@@ -1,6 +1,6 @@
 /** @module @category API */
 import useSWRImmutable from 'swr/immutable';
-import { getVisitTypes, type VisitType } from '@openmrs/esm-emr-api';
+import { getVisitTypes, visitTypesUrl, type VisitType } from '@openmrs/esm-emr-api';
 
 const noVisitTypes: Array<VisitType> = [];
 
@@ -27,6 +27,6 @@ const noVisitTypes: Array<VisitType> = [];
  * ```
  */
 export function useVisitTypes() {
-  const { data } = useSWRImmutable('visit-types', getVisitTypes);
+  const { data } = useSWRImmutable(visitTypesUrl, getVisitTypes);
   return data ?? noVisitTypes;
 }

@@ -6,12 +6,11 @@ import { performLogout } from './logout.resource';
 
 const RedirectLogout: React.FC = () => {
   const config = useConfig<ConfigSchema>();
-  const isLoginEnabled = navigator.onLine;
   const session = useSession();
 
   useEffect(() => {
     clearHistory();
-    if (!session.authenticated || !isLoginEnabled) {
+    if (!session.authenticated) {
       if (config.provider.type === 'custom') {
         navigate({ to: config.provider.loginUrl });
       } else if (config.provider.type === 'oauth2') {
@@ -42,7 +41,7 @@ const RedirectLogout: React.FC = () => {
           console.error('Logout failed:', error);
         });
     }
-  }, [config, isLoginEnabled, session]);
+  }, [config, session]);
 
   return null;
 };

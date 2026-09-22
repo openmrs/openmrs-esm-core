@@ -64,6 +64,19 @@ export const getHistory = jest.fn(() => ['https://o3.openmrs.org/home']);
 export const clearHistory = jest.fn();
 export const goBackInHistory = jest.fn();
 
+/* deprecated offline shims; these mirror the no-op implementations in src/deprecated.ts */
+export const useConnectivity = jest.fn().mockReturnValue(true);
+export const setupOfflineSync = jest.fn();
+export const setupDynamicOfflineDataHandler = jest.fn();
+export const getDynamicOfflineDataEntries = jest.fn().mockResolvedValue([]);
+export const getSynchronizationItems = jest.fn().mockResolvedValue([]);
+export const subscribePrecacheStaticDependencies = jest.fn(() => () => {});
+export const messageOmrsServiceWorker = jest.fn().mockResolvedValue({
+  success: false,
+  result: undefined,
+  error: 'No service worker has been registered. Offline-related features have been removed from the framework.',
+});
+
 /* esm-styleguide */
 export const showNotification = jest.fn();
 export const showActionableNotification = jest.fn();

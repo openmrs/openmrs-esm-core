@@ -96,16 +96,6 @@ describe('RedirectLogout', () => {
     expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
   });
 
-  it('should redirect to login if the application is offline', async () => {
-    const onLineSpy = vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
-
-    render(<RedirectLogout />);
-
-    expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
-
-    onLineSpy.mockRestore();
-  });
-
   it('should handle logout failure gracefully', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     mockOpenmrsFetch.mockRejectedValue(new Error('Logout failed'));
