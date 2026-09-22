@@ -66,4 +66,16 @@ describe('navigate', () => {
     expect(navigateToUrl).toHaveBeenCalledWith('/openmrs/spa/qux/page');
     expect(window.location.assign).not.toHaveBeenCalled();
   });
+
+  it('strips trailing hash from target URL to prevent Firefox back button issues', () => {
+    navigate({ to: '/openmrs/spa/home#' });
+    expect(navigateToUrl).toHaveBeenCalledWith('/openmrs/spa/home');
+    expect(window.location.assign).not.toHaveBeenCalled();
+  });
+
+  it('strips trailing hash from interpolated SPA path', () => {
+    navigate({ to: '${openmrsSpaBase}/home#' });
+    expect(navigateToUrl).toHaveBeenCalledWith('/openmrs/spa/home');
+    expect(window.location.assign).not.toHaveBeenCalled();
+  });
 });
