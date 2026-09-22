@@ -37,4 +37,7 @@ export {
   Workspace2,
   type Workspace2Definition,
   type Workspace2DefinitionProps,
+  ExportedWorkspace,
+  type ExportedWorkspaceProps,
+  type ExportedWorkspaceWindowInfo,
 } from './workspaces2';

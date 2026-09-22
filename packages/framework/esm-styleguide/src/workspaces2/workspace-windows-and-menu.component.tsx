@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { subscribeOpenmrsEvent } from '@openmrs/esm-emr-api';
 import classNames from 'classnames';
 import { createRoot } from 'react-dom/client';
+import { type OpenedWindow } from '@openmrs/esm-extensions';
 import { ActionMenu } from './action-menu2/action-menu2.component';
 import { closeWorkspaceGroup2, useWorkspace2Store } from './workspace2';
+import { createGlobalWindowActions } from './workspace-window-actions';
 import { shouldCloseOnUrlChange } from './scope-utils';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import styles from './workspace-windows-and-menu.module.scss';
@@ -84,9 +86,10 @@ function WorkspaceWindowsAndMenu() {
       <div className={styles.workspaceWindowsContainer}>
         {openedWindows.map((openedWindow) => {
           return (
-            <ActiveWorkspaceWindow
+            <GlobalWorkspaceWindow
               key={openedWindow.windowName}
               openedWindow={openedWindow}
+              groupProps={openedGroup.props}
               showActionMenu={showActionMenu}
             />
           );
@@ -94,5 +97,29 @@ function WorkspaceWindowsAndMenu() {
       </div>
       {showActionMenu && <ActionMenu workspaceGroup={group} groupProps={openedGroup.props} />}
     </div>
+  );
+}
+
+interface GlobalWorkspaceWindowProps {
+  openedWindow: OpenedWindow;
+  groupProps: Record<string, any> | null;
+  showActionMenu: boolean;
+}
+
+/**
+ * Renders a window of the global workspace window system, with chrome.
+ */
+function GlobalWorkspaceWindow({ openedWindow, groupProps, showActionMenu }: GlobalWorkspaceWindowProps) {
+  const { windowName } = openedWindow;
+  const actions = useMemo(() => createGlobalWindowActions(windowName), [windowName]);
+
+  return (
+    <ActiveWorkspaceWindow
+      openedWindow={openedWindow}
+      groupProps={groupProps}
+      actions={actions}
+      renderChrome
+      showActionMenu={showActionMenu}
+    />
   );
 }
