@@ -14,6 +14,19 @@ import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
 
+/*
+Mock the React Router 'useNavigate' hook so we can track and assert
+if the user is redirected to the correct route after a successful login.
+*/
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual<any>('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+
 const mockGetSessionStore = vi.mocked(getSessionStore);
 const mockLogin = vi.mocked(refetchCurrentUser);
 const mockUseConfig = vi.mocked(useConfig);
@@ -126,14 +139,19 @@ describe('Login', () => {
     await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
-  // TODO: Complete the test
+  // TODO: Complete the test  - DONE
   it('sends the user to the location select page on login if there is more than one location', async () => {
     let refreshUser = (user: any) => {};
     mockLogin.mockImplementation(() => {
       refreshUser({
         display: 'my name',
       });
-      return Promise.resolve({ data: { authenticated: true } } as unknown as SessionStore);
+
+      /*
+        FIX: Changed 'data' to 'session' to match the actual response structure
+        expected by the login component (sessionStore.session.authenticated).
+      */
+      return Promise.resolve({ session: { authenticated: true } } as unknown as SessionStore);
     });
     mockUseSession.mockImplementation(() => {
       const [user, setUser] = useState();
@@ -151,11 +169,22 @@ describe('Login', () => {
 
     const user = userEvent.setup();
 
+    mockNavigate.mockClear(); // clear the navigate mock to ensure we're only checking for navigation caused by this test
+
     await user.type(screen.getByRole('textbox', { name: /Username/i }), 'yoshi');
     await user.click(screen.getByRole('button', { name: /Continue/i }));
     await screen.findByLabelText(/^password$/i);
     await user.type(screen.getByLabelText(/^password$/i), 'no-tax-fraud');
     await user.click(screen.getByRole('button', { name: /log in/i }));
+
+    // Assert that the authentication API was called with the correct user credentials
+    await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
+
+    /*
+      Assert that after successful authentication without a pre-selected location,
+      the user is properly redirected to the location picker page.
+    */
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/login/location'));
   });
 
   it('should render the both the username and password fields when the showPasswordOnSeparateScreen config is false', async () => {
