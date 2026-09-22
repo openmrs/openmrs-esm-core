@@ -31,17 +31,9 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "single-spa-react"
         update-types: ["version-update:semver-major"]
-      # RxJS v7 migration deliberately deferred
-      - dependency-name: "rxjs"
-        update-types: ["version-update:semver-major"]
-      # Dexie v4 has breaking API changes
-      - dependency-name: "dexie"
-        update-types: ["version-update:semver-major"]
       # Zustand v5 API changes affect all consumers
       - dependency-name: "zustand"
         update-types: ["version-update:semver-major"]
-      # Workbox — handled manually; tightly coupled to service worker implementation
-      - dependency-name: "workbox-*"
       # ESM-only in newer major versions, breaks CJS tooling
       - dependency-name: "inquirer"
         update-types: ["version-update:semver-major"]

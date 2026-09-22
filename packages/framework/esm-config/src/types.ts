@@ -37,10 +37,6 @@ export interface DisplayConditionsConfigObject {
   privileges?: string[];
   /** An expression to evaluate whether or not the user should see this extension */
   expression?: string;
-  /** Whether to display this extension when connected to the server */
-  online?: boolean;
-  /** Whether to display this extension when not connected to the server */
-  offline?: boolean;
 }
 
 export type ConfigValue = string | number | boolean | void | Array<any> | object;

@@ -11,14 +11,3 @@
   margin-left: 0;
   transition: margin-left 0.5s ease;
 }
-
-.omrs-offline {
-  --omrs-offline-banner-height: #{layout.$spacing-06};
-  --omrs-topnav-height: 4.5rem;
-
-  .cds--side-nav,
-  .cds--header-panel--expanded,
-  .cds--side-nav__overlay {
-    top: var(--omrs-topnav-height);
-  }
-}
