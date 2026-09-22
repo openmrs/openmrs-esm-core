@@ -480,8 +480,6 @@ module.exports = (env, argv = []) => {
       new CopyRspackPlugin({
         patterns: [
           { from: resolve(__dirname, 'src/assets') },
-          // Named above after a hash of the sass output, which already emits it compressed. Marked minified so
-          // the CSS minimizer leaves its bytes matching its name.
           { from: resolve(cssTmpDir, openmrsCssFilename), to: openmrsCssFilename, info: { minimized: true } },
           ...fontPatterns,
           ...appPatterns,
