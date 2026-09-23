@@ -43,7 +43,9 @@ function readInitialExtensionConfig(store: StoreApi<ExtensionsConfigStore>, exte
 }
 
 function createConfigPromise(store: StoreApi<ConfigStore>, cacheId: string) {
-  const p = new Promise<ConfigObject>((resolve) => {
+  return new Promise<ConfigObject>((resolve) => {
+    // ...
+   ).then(() => delete promises[cacheId]);
     // check current state first — config may already be loaded
     const current = store.getState();
     if (current.loaded && current.config) {
