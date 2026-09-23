@@ -45,7 +45,7 @@ export interface Workspace2DefinitionProps<
    * The workspace's `meta` from its registration (the `meta` field of its `workspaces2` entry in
    * `routes.json`).
    */
-  workspaceMeta?: Readonly<Record<string, any>>;
+  workspaceMeta?: Readonly<Record<string, unknown>>;
   workspaceName: string;
   windowName: string;
   isRootWorkspace: boolean;

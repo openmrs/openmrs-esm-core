@@ -4,7 +4,7 @@ export interface ExtensionData {
   extensionSlotName: string;
   extensionSlotModuleName: string;
   extensionId: string;
-  extensionMeta?: Readonly<ExtensionMeta>;
+  extensionMeta?: Readonly<Record<string, unknown>>;
 }
 
 export interface ComponentConfig {
