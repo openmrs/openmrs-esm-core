@@ -66,4 +66,10 @@ describe('navigate', () => {
     expect(navigateToUrl).toHaveBeenCalledWith('/openmrs/spa/qux/page');
     expect(window.location.assign).not.toHaveBeenCalled();
   });
+
+  it('rejects not http URLs', () => {
+    expect(() => navigate({ to: 'ftp://${openmrsSpaBase}/qux/page' })).toThrow(Error);
+    expect(navigateToUrl).not.toHaveBeenCalled();
+    expect(window.location.assign).not.toHaveBeenCalled();
+  });
 });

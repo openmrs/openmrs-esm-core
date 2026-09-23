@@ -1,5 +1,6 @@
 /** @module @category Navigation */
 import { navigateToUrl } from 'single-spa';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { interpolateUrl } from './interpolate-string';
 import type {} from '@openmrs/esm-globals';
 
@@ -54,6 +55,12 @@ export function navigate({ to, templateParams }: NavigateOptions): void {
   if (isSpaPath) {
     navigateToUrl(target);
   } else {
+    const targetURL = new URL(target, window.location.origin);
+    if (targetURL.protocol != 'http:' && targetURL.protocol != 'https:') {
+      console.error(`Received request to navigate to non-http URL: ${targetURL.toString()}`);
+      throw new Error(getCoreTranslation('navigateNonHttp'));
+    }
+
     window.location.assign(target);
   }
 }
