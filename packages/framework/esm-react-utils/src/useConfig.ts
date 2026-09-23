@@ -52,12 +52,12 @@ function createConfigPromise(store: StoreApi<ConfigStore>, cacheId: string) {
       resolve(current.config);
       return;
     }
-    const unsubscribe = store.subscribe((state) => {
-      if (state.loaded && state.config) {
-        resolve(state.config);
-        unsubscribe();
-      }
-    });
+const unsubscribe = store.subscribe((state) => {
+  if (state.loaded) {
+    resolve(state.config ?? {});
+    unsubscribe();
+   }
+});
   });
   // evict once settled so a future suspend creates a fresh promise
   p.then(() => {
