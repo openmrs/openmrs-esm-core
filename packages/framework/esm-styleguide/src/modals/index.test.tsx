@@ -57,7 +57,7 @@ describe('showModal close disposer idempotency', () => {
   });
 
   it('single unmount rejection is routed through reportError, not left unhandled', async () => {
-    const rejectionError = new Error("Cannot unmount parcel '...' -- it is in a NOT_MOUNTED status");
+    const rejectionError = new Error('Cannot unmount parcel \'...\' -- it is in a NOT_MOUNTED status');
     unmountSpy.mockRejectedValueOnce(rejectionError);
 
     const onClose = vi.fn();
