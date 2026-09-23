@@ -120,6 +120,7 @@ export const HomePictogram = () => <span>HomePictogram</span>;
 export const InPatientPictogram = () => <span>InPatientPictogram</span>;
 export const LaboratoryPictogram = () => <span>LaboratoryPictogram</span>;
 export const Labs2Pictogram = () => <span>Labs2Pictogram</span>;
+export const MetadataExportPictogram = () => <span>MetadataExportPictogram</span>;
 export const ObstetricsPictogram = () => <span>ObstetricsPictogram</span>;
 export const PatientListsPictogram = () => <span>PatientListsPictogram</span>;
 export const PatientSearchPictogram = () => <span>PatientSearchPictogram</span>;
