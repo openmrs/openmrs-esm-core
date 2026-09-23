@@ -3589,6 +3589,7 @@ __metadata:
     vitest: "npm:^4.1.2"
   peerDependencies:
     "@openmrs/esm-state": "workspace:^"
+    "@openmrs/esm-translations": "workspace:^"
   languageName: unknown
   linkType: soft
 
