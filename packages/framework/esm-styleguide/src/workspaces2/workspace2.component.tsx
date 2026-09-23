@@ -41,6 +41,13 @@ export interface Workspace2DefinitionProps<
   workspaceProps: WorkspaceProps | null;
   windowProps: WindowProps | null;
   groupProps: GroupProps | null;
+  /**
+   * The workspace's `meta` from its registration (the `meta` field of its `workspaces2` entry in
+   * `routes.json`). The framework always supplies an object, empty when the workspace declares no
+   * meta; it is optional only so existing prop literals need not be updated. Values are typed as
+   * `any` to match `useExtensionContext().extensionMeta`, so fields can be read without a cast.
+   */
+  workspaceMeta?: Readonly<Record<string, any>>;
   workspaceName: string;
   windowName: string;
   isRootWorkspace: boolean;

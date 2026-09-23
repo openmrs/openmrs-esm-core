@@ -9,8 +9,15 @@ vi.mock('@openmrs/esm-routes', () => ({
   loadLifeCycles: vi.fn(),
 }));
 
+// Captures the props single-spa-react's <Parcel> is handed, so the passthrough of workspace props
+// (workspaceMeta included) can be asserted. Hoisted so the mock factory can reference it.
+const { parcelProps } = vi.hoisted(() => ({ parcelProps: [] as Array<Record<string, any>> }));
+
 vi.mock('single-spa-react/parcel', () => ({
-  default: ({ config }: { config: { name: string } }) => <div data-testid="parcel">{config.name}</div>,
+  default: (props: { config: { name: string } }) => {
+    parcelProps.push(props);
+    return <div data-testid="parcel">{props.config.name}</div>;
+  },
 }));
 
 const mockLoadLifeCycles = vi.mocked(loadLifeCycles);
@@ -37,6 +44,7 @@ describe('ActiveWorkspaceWindow', () => {
           component: 'form',
           window: 'test-window',
           moduleName: 'test-module',
+          meta: { columns: 3, title: 'Form' },
         },
         'admit-workspace': {
           name: 'admit-workspace',
@@ -55,6 +63,7 @@ describe('ActiveWorkspaceWindow', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    parcelProps.length = 0;
   });
 
   it('does not render a replaced workspace with the previous workspace lifecycle at the same stack position', async () => {
@@ -95,5 +104,33 @@ describe('ActiveWorkspaceWindow', () => {
       await Promise.resolve();
     });
     expect(screen.getByTestId('parcel')).toHaveTextContent('admit-lifecycle');
+  });
+
+  it("passes the workspace's registered meta to the parcel via workspaceMeta", async () => {
+    mockLoadLifeCycles.mockResolvedValue({ name: 'form-lifecycle' } as never);
+
+    const formWorkspace = makeOpenedWorkspace('form-workspace', 'uuid-form');
+    render(<ActiveWorkspaceWindow openedWindow={makeOpenedWindow([formWorkspace])} showActionMenu={false} />);
+
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    const props = parcelProps.find((p) => p.config.name === 'form-lifecycle');
+    expect(props?.workspaceMeta).toEqual({ columns: 3, title: 'Form' });
+  });
+
+  it('passes an empty workspaceMeta when the workspace declares no meta', async () => {
+    mockLoadLifeCycles.mockResolvedValue({ name: 'admit-lifecycle' } as never);
+
+    const admitWorkspace = makeOpenedWorkspace('admit-workspace', 'uuid-admit');
+    render(<ActiveWorkspaceWindow openedWindow={makeOpenedWindow([admitWorkspace])} showActionMenu={false} />);
+
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    const props = parcelProps.find((p) => p.config.name === 'admit-lifecycle');
+    expect(props?.workspaceMeta).toEqual({});
   });
 });
