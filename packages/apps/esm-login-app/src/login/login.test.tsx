@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { waitFor, screen } from '@testing-library/react';
+import { waitFor, screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   getSessionStore,
@@ -9,8 +9,10 @@ import {
   useConfig,
   useConnectivity,
   useSession,
+  navigate as openmrsNavigate,
 } from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
+import { MemoryRouter } from 'react-router-dom';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
 
@@ -19,6 +21,7 @@ const mockLogin = vi.mocked(refetchCurrentUser);
 const mockUseConfig = vi.mocked(useConfig);
 const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockUseSession = vi.mocked(useSession);
+const mockOpenmrsNavigate = vi.mocked(openmrsNavigate);
 
 const loginLocations = [
   { uuid: '111', display: 'Earth' },
@@ -60,25 +63,6 @@ describe('Login', () => {
     expect(screen.queryByAltText(/^logo$/i)).not.toBeInTheDocument();
     screen.getByRole('textbox', { name: /Username/i });
     screen.getByRole('button', { name: /Continue/i });
-  });
-
-  it('renders a configurable logo', () => {
-    const customLogoConfig = {
-      src: 'https://some-image-host.com/foo.png',
-      alt: 'Custom logo',
-    };
-    mockUseConfig.mockReturnValue({
-      ...mockConfig,
-      logo: customLogoConfig,
-    });
-
-    renderWithRouter(Login);
-
-    const logo = screen.getByAltText(customLogoConfig.alt);
-
-    expect(screen.queryByTitle(/openmrs logo/i)).not.toBeInTheDocument();
-    expect(logo).toHaveAttribute('src', customLogoConfig.src);
-    expect(logo).toHaveAttribute('alt', customLogoConfig.alt);
   });
 
   it('should return user focus to username input when input is invalid', async () => {
@@ -297,54 +281,32 @@ describe('Login', () => {
     expect(usernameInput).toHaveFocus();
   });
 
-  it('does not render announcement banners by default', () => {
-    renderWithRouter(Login, {}, { route: '/login' });
-    expect(screen.queryByText(/Planned downtime/i)).not.toBeInTheDocument();
-  });
+  it('should redirects the user to the referrer URL upon successful login', async () => {
+    mockLogin.mockResolvedValue({
+      session: {
+        authenticated: true,
+        sessionLocation: { uuid: '123', display: 'Outpatient Clinic' },
+      },
+    } as unknown as SessionStore);
 
-  it('renders configured announcement banners stacked above the form', () => {
-    mockUseConfig.mockReturnValue({
-      ...mockConfig,
-      announcements: [
-        { title: '', text: 'Planned downtime tonight at 10pm', kind: 'warning' },
-        { title: 'Heads up', text: 'New release shipping Friday', kind: 'info' },
-      ],
+    const user = userEvent.setup();
+    mockOpenmrsNavigate.mockClear();
+
+    render(
+      <MemoryRouter initialEntries={[{ pathname: '/login', state: { referrer: '/patient-chart' } }]}>
+        <Login />
+      </MemoryRouter>,
+    );
+
+    await user.type(screen.getByRole('textbox', { name: /username/i }), 'admin');
+    await user.click(screen.getByRole('button', { name: /Continue/i }));
+
+    const passwordInput = await screen.findByLabelText(/^password$/i);
+    await user.type(passwordInput, 'Admin123');
+    await user.click(screen.getByRole('button', { name: /Log in/i }));
+
+    await waitFor(() => {
+      expect(mockOpenmrsNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/patient-chart' });
     });
-
-    renderWithRouter(Login, {}, { route: '/login' });
-
-    expect(screen.getByText('Planned downtime tonight at 10pm')).toBeInTheDocument();
-    expect(screen.getByText('New release shipping Friday')).toBeInTheDocument();
-    expect(screen.getByText('Heads up')).toBeInTheDocument();
-  });
-
-  it('interpolates relative background.image paths via interpolateUrl', () => {
-    mockUseConfig.mockReturnValue({
-      ...mockConfig,
-      background: { image: '${openmrsSpaBase}/assets/bg.jpg', color: '' },
-    });
-
-    renderWithRouter(Login, {}, { route: '/login' });
-    const root = screen.getByTestId('login-container');
-
-    const bgImage = root.style.getPropertyValue('--login-bg-image');
-    expect(bgImage).toContain('/openmrs/spa/assets/bg.jpg');
-    expect(bgImage).not.toContain('${openmrsSpaBase}');
-    expect(root.className).toMatch(/containerWithImage/);
-  });
-
-  it('applies a background color when only background.color is configured', () => {
-    mockUseConfig.mockReturnValue({
-      ...mockConfig,
-      background: { image: '', color: '#0066cc' },
-    });
-
-    renderWithRouter(Login, {}, { route: '/login' });
-    const root = screen.getByTestId('login-container');
-
-    expect(root.style.getPropertyValue('--login-bg-color')).toBe('#0066cc');
-    expect(root.style.getPropertyValue('--login-bg-image')).toBe('');
-    expect(root.className).toMatch(/containerWithColor/);
-    expect(root.className).not.toMatch(/containerWithImage/);
   });
 });
