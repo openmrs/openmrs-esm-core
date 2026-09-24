@@ -13,6 +13,7 @@ vi.mock('yargs', () => {
 vi.mock('node:child_process');
 vi.mock('./utils');
 
+import { isAbsolute } from 'node:path';
 import { fork, type ChildProcess } from 'node:child_process';
 import {
   getAvailablePort,
@@ -123,13 +124,13 @@ describe('develop command', () => {
 describe('build command', () => {
   it('coerces target to an absolute path', async () => {
     const parsed = await createCli(['build', '--target', 'output']).parseAsync();
-    expect(parsed.target).toMatch(/^\//);
+    expect(isAbsolute(parsed.target as string)).toBe(true);
     expect(parsed.target).toContain('output');
   });
 
   it('coerces build-config to an absolute path', async () => {
     const parsed = await createCli(['build', '--build-config', 'config.json']).parseAsync();
-    expect(parsed.buildConfig).toMatch(/^\//);
+    expect(isAbsolute(parsed.buildConfig as string)).toBe(true);
     expect(parsed.buildConfig).toContain('config.json');
   });
 
@@ -137,14 +138,14 @@ describe('build command', () => {
     const parsed = await createCli(['build', '--config-path', 'a.json', '--config-path', 'b.json']).parseAsync();
     const paths = parsed.configPath as string[];
     expect(paths).toHaveLength(2);
-    paths.forEach((p) => expect(p).toMatch(/^\//));
+    paths.forEach((p) => expect(isAbsolute(p)).toBe(true));
   });
 
   it('coerces asset entries to absolute paths', async () => {
     const parsed = await createCli(['build', '--asset', 'style.css']).parseAsync();
     const assets = parsed.asset as string[];
     expect(assets).toHaveLength(1);
-    expect(assets[0]).toMatch(/^\//);
+    expect(isAbsolute(assets[0])).toBe(true);
   });
 
   it('defaults env to production', async () => {
@@ -184,7 +185,7 @@ describe('assemble command', () => {
 
   it('coerces target to an absolute path', async () => {
     const parsed = await createCli(['assemble', '--target', 'output']).parseAsync();
-    expect(parsed.target).toMatch(/^\//);
+    expect(isAbsolute(parsed.target as string)).toBe(true);
     expect(parsed.target).toContain('output');
   });
 
