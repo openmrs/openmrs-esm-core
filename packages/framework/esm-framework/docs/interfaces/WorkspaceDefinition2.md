@@ -14,6 +14,21 @@ Defined in: [packages/framework/esm-globals/src/types.ts:347](https://github.com
 
 ***
 
+### meta?
+
+> `optional` **meta**: `object`
+
+Defined in: [packages/framework/esm-globals/src/types.ts:353](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L353)
+
+Meta describes any properties that are passed down to the workspace when it is loaded. It is
+available to the workspace component via `useWorkspace2Context().workspaceMeta`.
+
+#### Index Signature
+
+\[`k`: `string`\]: `unknown`
+
+***
+
 ### name
 
 > **name**: `string`
