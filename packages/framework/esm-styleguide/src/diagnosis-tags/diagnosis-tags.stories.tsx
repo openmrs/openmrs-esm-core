@@ -38,3 +38,14 @@ export const MultipleDiagnoses: Story = {
     ],
   },
 };
+
+export const WithCertainty: Story = {
+  args: {
+    showCertainty: true,
+    diagnoses: [
+      { uuid: '1', display: 'Extrinsic Asthma with Asthma Attack', rank: 1, certainty: 'CONFIRMED' },
+      { uuid: '2', display: 'Malaria', rank: 2, certainty: 'PROVISIONAL' },
+      { uuid: '3', display: 'Anemia', rank: 2 },
+    ],
+  },
+};

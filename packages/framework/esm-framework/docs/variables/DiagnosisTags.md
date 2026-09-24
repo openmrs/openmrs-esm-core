@@ -2,10 +2,8 @@
 
 # Variable: DiagnosisTags
 
-> `const` **DiagnosisTags**: `React.FC`\<`DiagnosisTagsProps`\>
+> `const` **DiagnosisTags**: `React.FC`\<[`DiagnosisTagsProps`](../interfaces/DiagnosisTagsProps.md)\>
 
-Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L17)
+Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L18)
 
-This component takes a list of diagnoses and displays them as
-Carbon tags, with colors configured base on whether the diagnoses are primary
-or secondary.
+Displays diagnoses with configured rank colours and optional certainty labels.

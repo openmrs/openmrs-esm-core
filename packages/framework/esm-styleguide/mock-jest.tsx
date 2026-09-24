@@ -197,13 +197,22 @@ export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   );
 });
 
-export const DiagnosisTags = jest.fn(({ diagnoses }: { diagnoses: Array<Diagnosis> }) => (
-  <>
-    {diagnoses.map((d) => (
-      <span key={d.uuid}>{d.display}</span>
-    ))}
-  </>
-));
+export const DiagnosisTags = jest.fn(
+  ({ diagnoses, showCertainty = false }: { diagnoses: Array<Diagnosis>; showCertainty?: boolean }) => (
+    <>
+      {diagnoses.map((d) => (
+        <span key={d.uuid}>
+          {d.display}
+          {showCertainty && d.certainty === 'CONFIRMED'
+            ? ' (Confirmed)'
+            : showCertainty && d.certainty === 'PROVISIONAL'
+              ? ' (Provisional)'
+              : ''}
+        </span>
+      ))}
+    </>
+  ),
+);
 
 export const Workspace2 = jest.fn(({ title, children }) => (
   <div>
