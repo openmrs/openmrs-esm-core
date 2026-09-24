@@ -56,7 +56,10 @@ export const reportError = jest.fn().mockImplementation((error) => {
 /* esm-feature-flags */
 export const registerFeatureFlags = jest.fn();
 export const getFeatureFlag = jest.fn().mockReturnValue(true);
-export const subscribeToFeatureFlag = jest.fn((name: string, callback) => callback(true));
+export const subscribeToFeatureFlag = jest.fn((name: string, callback) => {
+  callback(true);
+  return jest.fn();
+});
 
 /* esm-navigation */
 export { interpolateUrl, interpolateString } from '@openmrs/esm-navigation';

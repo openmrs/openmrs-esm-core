@@ -57,7 +57,10 @@ export const reportError = vi.fn().mockImplementation((error) => {
 /* esm-feature-flags */
 export const registerFeatureFlags = vi.fn();
 export const getFeatureFlag = vi.fn().mockReturnValue(true);
-export const subscribeToFeatureFlag = vi.fn((name: string, callback) => callback(true));
+export const subscribeToFeatureFlag = vi.fn((name: string, callback) => {
+  callback(true);
+  return vi.fn();
+});
 
 /* esm-navigation */
 export { interpolateUrl, interpolateString } from '@openmrs/esm-navigation';
