@@ -346,6 +346,13 @@ export interface WorkspaceDefinition2 {
   name: string;
   component: string;
   window: string;
+  /**
+   * Meta describes any properties that are passed down to the workspace when it is loaded. It is
+   * available to the workspace component via `useWorkspace2Context().workspaceMeta`.
+   */
+  meta?: {
+    [k: string]: unknown;
+  };
 }
 
 /**

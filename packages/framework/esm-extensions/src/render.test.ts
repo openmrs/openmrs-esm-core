@@ -11,7 +11,7 @@ vi.mock('./extensions', () => ({
   getExtensionRegistration: () => ({
     name: 'test-extension',
     moduleName: 'test-module',
-    meta: {},
+    meta: extensionMeta,
     load: () => Promise.resolve(lifecycles),
   }),
 }));
@@ -22,6 +22,8 @@ vi.mock('./store', () => ({
   registerExtensionRendering: vi.fn(),
   unregisterExtensionRendering: vi.fn(),
 }));
+
+const extensionMeta = { title: 'Test Extension', column: 2 };
 
 const lifecycles = {
   bootstrap: () => Promise.resolve(),
@@ -255,7 +257,10 @@ describe('renderExtension', () => {
     expect(mountRootParcel).toHaveBeenLastCalledWith(
       expect.objectContaining({ name: 'test-slot/test-extension#instance-0' }),
       expect.objectContaining({
-        _extensionContext: expect.objectContaining({ extensionId: 'test-extension#instance' }),
+        _extensionContext: expect.objectContaining({
+          extensionId: 'test-extension#instance',
+          extensionMeta,
+        }),
       }),
     );
 

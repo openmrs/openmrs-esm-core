@@ -3,6 +3,7 @@ import { openmrsFetch } from '@openmrs/esm-api/mock';
 import { configSchema } from '@openmrs/esm-config/mock';
 import { getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
+import { ComponentContext as realComponentContext } from './src/ComponentContext';
 import { isDesktop as realIsDesktop } from './src/useLayoutType';
 import { useFhirFetchAll as realUseFhirFetchAll } from './src/useFhirFetchAll';
 import { useFhirInfinite as realUseFhirInfinite } from './src/useFhirInfinite';
@@ -17,7 +18,7 @@ export { ConfigurableLink } from './src/ConfigurableLink';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
 import * as utils from '@openmrs/esm-utils';
 
-export const ComponentContext = React.createContext(null);
+export const ComponentContext = realComponentContext;
 
 export const openmrsComponentDecorator = jest.fn().mockImplementation(() => (component) => component);
 
@@ -28,6 +29,8 @@ export const useAttachments = jest.fn(() => ({
   mutate: jest.fn(),
   isValidating: true,
 }));
+
+export const useExtensionContext = jest.fn(() => React.useContext(ComponentContext).extension);
 
 export const useConfig = jest.fn().mockImplementation((options?: { externalModuleName?: string }) => {
   if (options?.externalModuleName) {
