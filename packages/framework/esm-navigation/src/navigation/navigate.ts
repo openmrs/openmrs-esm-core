@@ -50,17 +50,15 @@ export interface NavigateOptions {
 export function navigate({ to, templateParams }: NavigateOptions): void {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
   const target = interpolateUrl(to, templateParams).replace(window.location.origin, '');
-  const isSpaPath = target.startsWith(openmrsSpaBase);
+  const targetURL = new URL(target, window.location.origin);
+  if (targetURL.protocol != 'http:' && targetURL.protocol != 'https:') {
+    console.error(`Received request to navigate to non-http URL: ${targetURL.toString()}`);
+    throw new Error(getCoreTranslation('navigateNonHttp'));
+  }
 
-  if (isSpaPath) {
+  if (target.startsWith(openmrsSpaBase)) {
     navigateToUrl(target);
   } else {
-    const targetURL = new URL(target, window.location.origin);
-    if (targetURL.protocol != 'http:' && targetURL.protocol != 'https:') {
-      console.error(`Received request to navigate to non-http URL: ${targetURL.toString()}`);
-      throw new Error(getCoreTranslation('navigateNonHttp'));
-    }
-
     window.location.assign(target);
   }
 }

@@ -18,6 +18,10 @@ describe('interpolateUrl', () => {
     const result = interpolateUrl('test ok');
     expect(result).toBe('test ok');
   });
+
+  it('preserves protocol-relative URLs', () => {
+    expect(interpolateUrl('//evil.example/${openmrsSpaBase}')).toBe('//evil.example//openmrs/spa');
+  });
 });
 
 describe('interpolateString', () => {

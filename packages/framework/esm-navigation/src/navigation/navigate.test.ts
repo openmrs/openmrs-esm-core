@@ -67,9 +67,17 @@ describe('navigate', () => {
     expect(window.location.assign).not.toHaveBeenCalled();
   });
 
-  it('rejects not http URLs', () => {
+  it('rejects non-http URLs', () => {
     expect(() => navigate({ to: 'ftp://${openmrsSpaBase}/qux/page' })).toThrow(Error);
+    expect(() => navigate({ to: 'javascript:alert(1)' })).toThrow(Error);
     expect(navigateToUrl).not.toHaveBeenCalled();
     expect(window.location.assign).not.toHaveBeenCalled();
+  });
+
+  it('rejects non-http URLs when the SPA base is the root', () => {
+    const getOpenmrsSpaBase = vi.spyOn(window, 'getOpenmrsSpaBase').mockReturnValue('/');
+    expect(() => navigate({ to: 'javascript:alert(1)' })).toThrow(Error);
+    expect(navigateToUrl).not.toHaveBeenCalled();
+    getOpenmrsSpaBase.mockRestore();
   });
 });

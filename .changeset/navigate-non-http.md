@@ -1,7 +1,7 @@
 ---
 "@openmrs/esm-login-app": patch
 "@openmrs/esm-navigation": patch
-"@openmrs/esm-translation": patch
+"@openmrs/esm-translations": patch
 "@openmrs/esm-framework": patch
 ---
 
