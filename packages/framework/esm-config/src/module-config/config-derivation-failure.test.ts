@@ -18,7 +18,7 @@ describe('a configuration that cannot be derived', () => {
   beforeEach(() => {
     consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     temporaryConfigStore.setState({ config: {} });
-    configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {}, moduleStarted: {} });
+    configInternalStore.setState({ providedConfigs: [], schemas: {}, schemaDefined: {}, moduleStarted: {} });
     implementerToolsConfigStore.setState({ config: {}, derivationError: undefined });
     resetConfigSystem();
     defineConfigSchema('esm-probe', { thing: { _type: Type.Object, _default: {} } });
