@@ -19,6 +19,7 @@ export * from './useConnectedExtensions';
 export * from './useDebounce';
 export * from './useDefineAppContext';
 export * from './useEmrConfiguration';
+export * from './useExtensionContext';
 export * from './useExtensionInternalStore';
 export * from './useExtensionSlot';
 export * from './useExtensionSlotMeta';

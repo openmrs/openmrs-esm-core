@@ -3561,6 +3561,7 @@ __metadata:
   resolution: "@openmrs/esm-navigation@workspace:packages/framework/esm-navigation"
   dependencies:
     "@openmrs/esm-state": "workspace:*"
+    "@openmrs/esm-translations": "workspace:*"
     "@swc/cli": "npm:0.8.1"
     "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.1.2"
@@ -3574,6 +3575,7 @@ __metadata:
     vitest: "npm:^4.1.2"
   peerDependencies:
     "@openmrs/esm-state": "workspace:^"
+    "@openmrs/esm-translations": "workspace:^"
   languageName: unknown
   linkType: soft
 
