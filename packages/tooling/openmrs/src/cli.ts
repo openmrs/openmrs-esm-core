@@ -117,11 +117,6 @@ export function buildCli(y: Argv) {
             'The routes.registry.json file to use. Can be a path to a valid routes registry to be taken literally, an URL, or a fixed JSON object.',
           type: 'string',
         })
-        .option('support-offline', {
-          default: false,
-          describe: 'Determines if a service worker should be installed for offline support.',
-          type: 'boolean',
-        })
         .option('use-rspack', {
           default: undefined,
           describe:
@@ -204,11 +199,6 @@ export function buildCli(y: Argv) {
         .option('fresh', {
           default: false,
           describe: 'Whether to clear the output directory before running the build.',
-          type: 'boolean',
-        })
-        .option('support-offline', {
-          default: false,
-          describe: 'Determines if a service worker should be installed for offline support.',
           type: 'boolean',
         })
         .option('build-config', {
@@ -409,7 +399,7 @@ export function buildCli(y: Argv) {
     .epilog(
       'The SPA assemble config JSON is a JSON file, typically `spa-assemble-config.json`, which defines parameters for the `build` and `assemble` ' +
         'commands. The keys used by `build` are:\n' +
-        '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, `supportOffline`, `compress`, ' +
+        '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, `compress`, ' +
         '`compressGzip`, and `compressBrotli`;\n' +
         'each of which is equivalent to the corresponding command line argument (see `openmrs build --help`). ' +
         'Multiple values provided to `configPaths` and `configUrls` should be comma-separated. `compress`, ' +

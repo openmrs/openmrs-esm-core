@@ -9,7 +9,6 @@ import {
   type ParcelProps,
 } from 'single-spa';
 import { getExtensionNameFromId, getExtensionRegistration } from './extensions';
-import { checkStatus } from './helpers';
 import { registerExtensionRendering, unregisterExtensionRendering } from './store';
 
 export interface CancelLoading {
@@ -389,94 +388,92 @@ export async function renderExtension(
       throw Error(`Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`);
     }
 
-    const { meta, moduleName, online, offline, load } = extensionRegistration;
+    const { meta, moduleName, load } = extensionRegistration;
 
-    if (checkStatus(online, offline)) {
-      const id = parcelCount++;
-      const renderingId = `${extensionSlotName}/${extensionId}-${id}`;
+    const id = parcelCount++;
+    const renderingId = `${extensionSlotName}/${extensionId}-${id}`;
 
-      // Marks the node for the UI editor, which needs to pair a rendering with the element it went
-      // into and cannot tell two renderings of one extension apart by any other attribute.
-      domElement.dataset.extensionRenderingId = renderingId;
+    // Marks the node for the UI editor, which needs to pair a rendering with the element it went
+    // into and cannot tell two renderings of one extension apart by any other attribute.
+    domElement.dataset.extensionRenderingId = renderingId;
 
-      const forget = () => unregisterExtensionRendering(renderingId);
-      const forgetSafely = (cleanupErrorMessage: string) => {
-        try {
-          forget();
-        } catch (cleanupError) {
-          console.error(cleanupErrorMessage, cleanupError);
-        }
-      };
-
-      // Registered before loading so that the config system can start resolving this extension's
-      // config while its bundle is still in flight. Registering drives the config derivation
-      // synchronously, so a failure there has to release the record before it propagates — nothing
-      // else has a handle on it yet.
+    const forget = () => unregisterExtensionRendering(renderingId);
+    const forgetSafely = (cleanupErrorMessage: string) => {
       try {
-        registerExtensionRendering({
-          renderingId,
-          extensionName,
-          extensionModuleName: moduleName,
-          extensionId,
-          slotName: extensionSlotName,
-          slotModuleName: extensionSlotModuleName,
-        });
-      } catch (e) {
-        forgetSafely(`Recomputing configuration after registering '${extensionId}' failed also failed`);
-
-        throw e;
+        forget();
+      } catch (cleanupError) {
+        console.error(cleanupErrorMessage, cleanupError);
       }
+    };
 
-      let lifecycle: LifeCycles;
-
-      try {
-        lifecycle = await load();
-      } catch (e) {
-        forgetSafely(`Recomputing configuration after '${extensionId}' failed to load also failed`);
-
-        throw e;
-      }
-
-      try {
-        parcel = await renderParcel(
-          renderFunction({
-            ...lifecycle,
-            name: `${extensionSlotName}/${extensionName}-${id}`,
-          }),
-          {
-            ...additionalProps,
-            _meta: meta,
-            _extensionContext: {
-              extensionId,
-              extensionSlotName,
-              extensionSlotModuleName,
-              extensionModuleName: moduleName,
-              extensionMeta: meta,
-            },
-            domElement,
-          },
-        );
-      } catch (e) {
-        forgetSafely(`Recomputing configuration after '${extensionId}' failed to mount also failed`);
-
-        throw e;
-      }
-
-      // A parcel that fails to bootstrap or mount never settles `unmountPromise`, so the mount
-      // rejection has to release the record too. single-spa hard-fails parcels, so its own error
-      // handlers never see either failure and the rejected promise is the only channel left.
-      parcel.mountPromise.then(undefined, (err) => {
-        console.error(`Extension '${extensionId}' in slot '${extensionSlotName}' failed to mount`, err);
-        forgetSafely(`Recomputing configuration after '${extensionId}' failed to mount also failed`);
+    // Registered before loading so that the config system can start resolving this extension's
+    // config while its bundle is still in flight. Registering drives the config derivation
+    // synchronously, so a failure there has to release the record before it propagates — nothing
+    // else has a handle on it yet.
+    try {
+      registerExtensionRendering({
+        renderingId,
+        extensionName,
+        extensionModuleName: moduleName,
+        extensionId,
+        slotName: extensionSlotName,
+        slotModuleName: extensionSlotModuleName,
       });
-      parcel.unmountPromise.then(
-        () => forgetSafely(`Recomputing configuration after unmounting '${extensionId}' failed`),
-        (err) => {
-          console.error(`Extension '${extensionId}' in slot '${extensionSlotName}' failed to unmount`, err);
-          forgetSafely(`Recomputing configuration after '${extensionId}' failed to unmount also failed`);
+    } catch (e) {
+      forgetSafely(`Recomputing configuration after registering '${extensionId}' failed also failed`);
+
+      throw e;
+    }
+
+    let lifecycle: LifeCycles;
+
+    try {
+      lifecycle = await load();
+    } catch (e) {
+      forgetSafely(`Recomputing configuration after '${extensionId}' failed to load also failed`);
+
+      throw e;
+    }
+
+    try {
+      parcel = await renderParcel(
+        renderFunction({
+          ...lifecycle,
+          name: `${extensionSlotName}/${extensionName}-${id}`,
+        }),
+        {
+          ...additionalProps,
+          _meta: meta,
+          _extensionContext: {
+            extensionId,
+            extensionSlotName,
+            extensionSlotModuleName,
+            extensionModuleName: moduleName,
+            extensionMeta: meta,
+          },
+          domElement,
         },
       );
+    } catch (e) {
+      forgetSafely(`Recomputing configuration after '${extensionId}' failed to mount also failed`);
+
+      throw e;
     }
+
+    // A parcel that fails to bootstrap or mount never settles `unmountPromise`, so the mount
+    // rejection has to release the record too. single-spa hard-fails parcels, so its own error
+    // handlers never see either failure and the rejected promise is the only channel left.
+    parcel.mountPromise.then(undefined, (err) => {
+      console.error(`Extension '${extensionId}' in slot '${extensionSlotName}' failed to mount`, err);
+      forgetSafely(`Recomputing configuration after '${extensionId}' failed to mount also failed`);
+    });
+    parcel.unmountPromise.then(
+      () => forgetSafely(`Recomputing configuration after unmounting '${extensionId}' failed`),
+      (err) => {
+        console.error(`Extension '${extensionId}' in slot '${extensionSlotName}' failed to unmount`, err);
+        forgetSafely(`Recomputing configuration after '${extensionId}' failed to unmount also failed`);
+      },
+    );
   } else {
     console.warn(`Tried to render ${extensionId} into ${extensionSlotName} but no DOM element was available.`);
   }

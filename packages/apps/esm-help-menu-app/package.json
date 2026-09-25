@@ -44,8 +44,7 @@
     "@openmrs/esm-framework": "10.x",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-i18next": "16.x",
-    "rxjs": "6.x"
+    "react-i18next": "16.x"
   },
   "devDependencies": {
     "@carbon/react": "^1.92.1",

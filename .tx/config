@@ -17,14 +17,6 @@ type                   = KEYVALUEJSON
 replace_edited_strings = false
 keep_translations      = false
 
-[o:openmrs:p:openmrs3:r:esm-offline-tools-app]
-file_filter            = packages/apps/esm-offline-tools-app/translations/<lang>.json
-source_file            = packages/apps/esm-offline-tools-app/translations/en.json
-source_lang            = en
-type                   = KEYVALUEJSON
-replace_edited_strings = false
-keep_translations      = false
-
 [o:openmrs:p:openmrs3:r:esm-primary-navigation-app]
 file_filter            = packages/apps/esm-primary-navigation-app/translations/<lang>.json
 source_file            = packages/apps/esm-primary-navigation-app/translations/en.json

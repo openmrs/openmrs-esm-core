@@ -116,12 +116,7 @@ function initializeSpa(config: SpaConfig) {
     // to the app shell's copy no matter what version they bring.
     pinFrameworkToAppShell(shareScope);
 
-    const { configUrls = [], offline = false } = config;
-    Object.defineProperty(window, 'offlineEnabled', {
-      value: offline,
-      writable: false,
-      configurable: false,
-    });
+    const { configUrls = [] } = config;
 
     const { run } = await import(/* webpackPreload: true */ './run');
     return run(configUrls);

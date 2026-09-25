@@ -1,5 +1,4 @@
 // Storybook-compatible mock for @openmrs/esm-api.
-import { of } from 'rxjs';
 import humanPhotoUrl from '../public/human.jpg';
 
 // Recognises specific URL patterns and returns canned responses so that
@@ -20,12 +19,8 @@ export function openmrsFetch(url?: string) {
   return Promise.resolve({ data: { results: [] } });
 }
 
-export function openmrsObservableFetch() {
-  return of({ data: { entry: [] } });
-}
-
 export function getCurrentUser() {
-  return of({ authenticated: false });
+  return Promise.resolve({ authenticated: false });
 }
 
 export function getSessionStore() {

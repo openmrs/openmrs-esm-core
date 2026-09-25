@@ -1,11 +1,11 @@
 /** @module @category UI */
 import React, { useCallback, useEffect, useState } from 'react';
-import type { Subject } from 'rxjs';
 import type { ToastNotificationMeta } from './toast.component';
 import { Toast } from './toast.component';
+import type { Emitter } from '../emitter';
 
 interface ActiveToastsProps {
-  subject: Subject<ToastNotificationMeta>;
+  subject: Emitter<ToastNotificationMeta>;
 }
 
 const ActiveToasts: React.FC<ActiveToastsProps> = ({ subject }) => {

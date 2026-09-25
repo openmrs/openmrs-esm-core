@@ -64,8 +64,6 @@ To fix this, ensure that you define a 'component' field inside the extension def
     order: extension.order,
     moduleName: appName,
     privileges: extension.privileges,
-    online: extension.online ?? true,
-    offline: extension.offline ?? false,
     featureFlag: extension.featureFlag,
     displayExpression: extension.displayExpression,
   });

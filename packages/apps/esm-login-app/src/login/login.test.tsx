@@ -7,7 +7,6 @@ import {
   refetchCurrentUser,
   type SessionStore,
   useConfig,
-  useConnectivity,
   useSession,
   navigate as openmrsNavigate,
 } from '@openmrs/esm-framework';
@@ -19,7 +18,6 @@ import Login from './login.component';
 const mockGetSessionStore = vi.mocked(getSessionStore);
 const mockLogin = vi.mocked(refetchCurrentUser);
 const mockUseConfig = vi.mocked(useConfig);
-const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockUseSession = vi.mocked(useSession);
 const mockOpenmrsNavigate = vi.mocked(openmrsNavigate);
 
@@ -30,7 +28,6 @@ const loginLocations = [
 
 describe('Login', () => {
   beforeEach(() => {
-    mockUseConnectivity.mockReturnValue(true);
     mockLogin.mockResolvedValue({} as SessionStore);
     mockGetSessionStore.mockImplementation(() => {
       return {

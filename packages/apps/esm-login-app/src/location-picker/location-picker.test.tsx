@@ -12,7 +12,6 @@ import {
   setUserProperties,
   showSnackbar,
   useConfig,
-  useConnectivity,
   useSession,
   type LoggedInUser,
   type Session,
@@ -54,13 +53,11 @@ const mockUseConfig = vi.mocked(useConfig);
 const mockUseSession = vi.mocked(useSession);
 const mockSetSessionLocation = vi.mocked(setSessionLocation);
 const mockSetUserProperties = vi.mocked(setUserProperties);
-const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockShowSnackbar = vi.mocked(showSnackbar);
 const mockNavigate = vi.mocked(navigate);
 
 describe('LocationPickerView', () => {
   beforeEach(() => {
-    mockUseConnectivity.mockReturnValue(true);
     mockUseConfig.mockReturnValue(mockConfig);
 
     mockUseSession.mockReturnValue({
@@ -430,7 +427,6 @@ describe('isSafeReturnUrl', () => {
 
 describe('returnToUrl open-redirect protection', () => {
   beforeEach(() => {
-    vi.mocked(useConnectivity).mockReturnValue(true);
     vi.mocked(useConfig).mockReturnValue(mockConfig);
 
     vi.mocked(useSession).mockReturnValue({

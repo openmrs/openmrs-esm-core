@@ -1,5 +1,4 @@
 /** @module @category API */
-import { Observable } from 'rxjs';
 import { isPlainObject } from 'lodash-es';
 import { getConfig } from '@openmrs/esm-config';
 import { clearHistory, navigate } from '@openmrs/esm-navigation';
@@ -253,67 +252,6 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
           );
       }
     }
-  });
-}
-
-/**
- * The openmrsObservableFetch function is a wrapper around openmrsFetch
- * that returns an [Observable](https://rxjs-dev.firebaseapp.com/guide/observable)
- * instead of a promise. It exists in case using an Observable is
- * preferred or more convenient than a promise.
- *
- * @param url See [[openmrsFetch]]
- * @param fetchInit See [[openmrsFetch]]
- * @returns An Observable that produces exactly one Response object.
- * The response object is exactly the same as for [[openmrsFetch]].
- *
- * @example
- *
- * ```js
- * import { openmrsObservableFetch } from '@openmrs/esm-api'
- * const subscription = openmrsObservableFetch(`${restBaseUrl}/session').subscribe(
- *   response => console.log(response.data),
- *   err => {throw err},
- *   () => console.log('finished')
- * )
- * subscription.unsubscribe()
- * ```
- *
- * #### Cancellation
- *
- * To cancel the network request, simply call `subscription.unsubscribe();`
- *
- * @category API
- */
-export function openmrsObservableFetch<T>(url: string, fetchInit: FetchConfig = {}) {
-  if (typeof fetchInit !== 'object') {
-    throw Error('The second argument to openmrsObservableFetch must be either omitted or an object');
-  }
-
-  const abortController = new AbortController();
-
-  fetchInit.signal = abortController.signal;
-
-  return new Observable<FetchResponse<T>>((observer) => {
-    let hasResponse = false;
-
-    openmrsFetch(url, fetchInit).then(
-      (response) => {
-        hasResponse = true;
-        observer.next(response);
-        observer.complete();
-      },
-      (err) => {
-        hasResponse = true;
-        observer.error(err);
-      },
-    );
-
-    return () => {
-      if (!hasResponse) {
-        abortController.abort();
-      }
-    };
   });
 }
 

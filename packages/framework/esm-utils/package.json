@@ -60,8 +60,7 @@
   "peerDependencies": {
     "@openmrs/esm-globals": "workspace:^",
     "dayjs": "1.x",
-    "i18next": "25.x",
-    "rxjs": "6.x"
+    "i18next": "25.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
@@ -75,7 +74,6 @@
     "dayjs": "^1.11.13",
     "happy-dom": "^20.6.0",
     "rimraf": "^6.1.3",
-    "rxjs": "^6.5.3",
     "vitest": "^4.1.2"
   }
 }

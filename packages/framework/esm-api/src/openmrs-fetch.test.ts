@@ -1,8 +1,7 @@
-import { isObservable } from 'rxjs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getConfig } from '@openmrs/esm-config';
 import { navigate } from '@openmrs/esm-navigation';
-import { openmrsFetch, openmrsObservableFetch } from './openmrs-fetch';
+import { openmrsFetch } from './openmrs-fetch';
 
 vi.mock('@openmrs/esm-navigation', () => ({
   clearHistory: vi.fn(),
@@ -333,63 +332,5 @@ describe('openmrsFetch', () => {
     expect(mockNavigate.mock.calls[0][0]).toStrictEqual({
       to: '/openmrs/spa/login',
     });
-  });
-});
-
-describe('openmrsObservableFetch', () => {
-  beforeEach(() => {
-    window.openmrsBase = '/openmrs';
-    window.fetch = vi.fn();
-  });
-
-  it('calls window.fetch with the correct arguments for a basic GET request', async () => {
-    // @ts-ignore
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: true,
-        status: 200,
-        headers: {
-          has: () => false,
-          get: () => null,
-        },
-        clone: () => ({
-          text: () => Promise.resolve('{"value": "hi"}'),
-        }),
-      }),
-    );
-
-    const observable = openmrsObservableFetch('/ws/rest/v1/session');
-    expect(isObservable(observable)).toBe(true);
-
-    await new Promise<void>((resolve, reject) =>
-      observable.subscribe(
-        (response) => {
-          expect(response.data).toEqual({ value: 'hi' });
-          resolve();
-        },
-        (err) => {
-          reject(err);
-        },
-      ),
-    );
-
-    expect(window.fetch).toHaveBeenCalled();
-    // @ts-expect-error
-    expect(window.fetch.mock.calls[0][0]).toEqual('/openmrs/ws/rest/v1/session');
-    // @ts-expect-error
-    expect(window.fetch.mock.calls[0][1].headers.Accept).toEqual('application/json');
-  });
-
-  it('aborts the fetch request when subscription is unsubscribed', () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(new Promise(() => {}));
-
-    const subscription = openmrsObservableFetch('/ws/rest/v1/session').subscribe();
-    // @ts-expect-error
-    const abortSignal: AbortSignal = window.fetch.mock.calls[0][1].signal;
-    expect(abortSignal.aborted).toBe(false);
-
-    subscription.unsubscribe();
-    expect(abortSignal.aborted).toBe(true);
   });
 });

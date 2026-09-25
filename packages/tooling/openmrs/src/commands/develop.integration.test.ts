@@ -54,7 +54,6 @@ function defaultArgs(overrides: Partial<DevelopArgs> = {}): DevelopArgs {
     configUrls: [],
     configFiles: [],
     addCookie: '',
-    supportOffline: false,
     ...overrides,
   };
 }

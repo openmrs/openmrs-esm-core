@@ -24,11 +24,6 @@ declare global {
      */
     initializeSpa(config: SpaConfig): void;
     /**
-     * Indicates whether offline mode is enabled in this install or not.
-     * This is used to determine whether offline functionality is present or not.
-     */
-    offlineEnabled: boolean;
-    /**
      * Gets the API base path, e.g. /openmrs
      */
     openmrsBase: string;
@@ -86,11 +81,6 @@ export interface SpaConfig {
    * URLs of configurations to load in the system.
    */
   configUrls?: Array<string>;
-  /**
-   * Defines if offline should be supported by installing a service worker.
-   * @default true
-   */
-  offline?: boolean;
 }
 
 /** @internal */
@@ -113,14 +103,6 @@ export type PageDefinition = {
    * If supplied, the page will only be rendered when this feature flag is enabled.
    */
   featureFlag?: string;
-  /**
-   * Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
-   */
-  online?: boolean;
-  /**
-   * Determines whether the component renders while the browser is not connected to the internet. If false, this page will never render while offline.
-   */
-  offline?: boolean;
   /**
    * If supplied, the page will be rendered within the DOM element with the specified ID. Defaults to "omrs-apps-container" if not supplied.
    */
@@ -178,14 +160,6 @@ export type ExtensionDefinition = {
    * If supplied, the slots that this extension is rendered into by default.
    */
   slots?: Array<string>;
-  /**
-   * Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
-   */
-  online?: boolean;
-  /**
-   * Determines whether the component renders while the browser is not connected to the internet. If false, this page will never render while offline.
-   */
-  offline?: boolean;
   /**
    * Determines the order in which this component renders in its default extension slot. Note that this can be overridden by configuration.
    */
