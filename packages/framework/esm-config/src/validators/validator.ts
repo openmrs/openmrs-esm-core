@@ -1,5 +1,6 @@
 /** @module @category Config Validation */
 import type { Validator, ValidatorFunction } from '../types';
+import { describeValidatorParts } from './descriptor';
 
 /**
  * Constructs a custom validator.
@@ -26,7 +27,7 @@ export function validator(
   validationFunction: ValidatorFunction,
   message: string | ((value: any) => string),
 ): Validator {
-  return (value) => {
+  const built: Validator = (value) => {
     if (!validationFunction(value)) {
       if (typeof message === 'function') {
         return message(value);
@@ -35,4 +36,8 @@ export function validator(
       }
     }
   };
+
+  // Lets build tooling lift an inline validator into `./config-validators`: the wrapper can't be
+  // written out on its own, but what it closes over can.
+  return describeValidatorParts(built, { validationFunction, message });
 }
