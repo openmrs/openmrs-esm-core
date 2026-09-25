@@ -37,6 +37,8 @@ const harness = vi.hoisted(() => {
 vi.mock('@openmrs/esm-framework/src/internal', () => {
   const noop = () => {};
   return {
+    beginInitialConfigLoad: noop,
+    finishInitialConfigLoad: noop,
     finishRegisteringAllApps: noop,
     fireOpenmrsEvent: noop,
     getConfig: async () => ({ preferredCalendar: {} }),
