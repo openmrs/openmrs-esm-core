@@ -1,5 +1,5 @@
 import { type OpenedWindow, workspace2Store } from '@openmrs/esm-extensions';
-import { type StoreApi } from '@openmrs/esm-state';
+import { type StoreApi } from 'zustand/vanilla';
 import {
   closeWorkspaceInWindow,
   openChildWorkspaceInWindow,

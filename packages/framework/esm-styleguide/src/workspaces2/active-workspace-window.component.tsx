@@ -190,16 +190,20 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
     [openedWorkspace, openedWindow, groupProps, actions, isRootWorkspace, isLeafWorkspace, showActionMenu],
   );
 
-  const content = lifeCycle ? (
-    <Parcel
-      key={openedWorkspace.workspaceName}
-      config={lifeCycle}
-      mountParcel={mountParcel}
-      wrapWith="div"
-      wrapClassName={styles.workspaceContent}
-      {...props}
-    />
-  ) : null;
+  const content = useMemo(
+    () =>
+      lifeCycle ? (
+        <Parcel
+          key={openedWorkspace.workspaceName}
+          config={lifeCycle}
+          mountParcel={mountParcel}
+          wrapWith="div"
+          wrapClassName={styles.workspaceContent}
+          {...props}
+        />
+      ) : null,
+    [lifeCycle, openedWorkspace.workspaceName, props],
+  );
 
   if (!renderChrome) {
     return content ?? <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading')}`} />;

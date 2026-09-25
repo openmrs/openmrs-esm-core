@@ -6,8 +6,6 @@ import type { StoreApi } from 'zustand/vanilla';
 import { createStore } from 'zustand/vanilla';
 import { isTestEnvironment } from './utils';
 
-export type { StoreApi } from 'zustand/vanilla';
-
 interface StoreEntity {
   value: StoreApi<unknown>;
   active: boolean;
