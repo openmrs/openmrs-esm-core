@@ -83,6 +83,22 @@ export function createGlobalStore<T>(name: string, initialState: T, storageType:
 }
 
 /**
+ * Creates a Zustand store that is NOT registered in the global store registry.
+ *
+ * Unlike {@link createGlobalStore}, this store has no name and is never added to `availableStores`,
+ * so it does not appear on `window.stores`, cannot collide with another store's name, and is
+ * garbage-collected once no longer referenced. Use this for per-instance/component-local state that
+ * must be isolated from every other instance (for example, one store per rendered component), where
+ * a named global store would either collide across instances or leak.
+ *
+ * @param initialState An object which will be the initial state of the store.
+ * @returns The newly created store.
+ */
+export function createLocalStore<T>(initialState: T): StoreApi<T> {
+  return createStore<T>()(() => initialState);
+}
+
+/**
  * Registers an existing Zustand store.
  *
  * @param name A name by which the store can be looked up later.

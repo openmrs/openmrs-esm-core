@@ -1,13 +1,5 @@
 import React, { useEffect, type ReactNode } from 'react';
-import classNames from 'classnames';
-import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderName } from '@carbon/react';
-import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
-import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import { getCoreTranslation } from '@openmrs/esm-translations';
-import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
-import { ArrowRightIcon, CloseIcon } from '../icons';
-import { useWorkspace2Store, useWorkspace2Context, closeWorkspaceGroup2 } from './workspace2';
-import styles from './workspace2.module.scss';
+import { useWorkspace2Context } from './workspace2';
 
 interface Workspace2Props {
   title: string;
@@ -50,6 +42,18 @@ export interface Workspace2DefinitionProps<
   windowName: string;
   isRootWorkspace: boolean;
   showActionMenu: boolean;
+
+  /**
+   * Records the title of this workspace, for display in the workspace window header.
+   * @internal Called by `<Workspace2>`; use its `title` prop instead.
+   */
+  setWorkspaceTitle(title: string): void;
+
+  /**
+   * Records whether this workspace has unsaved changes.
+   * @internal Called by `<Workspace2>`; use its `hasUnsavedChanges` prop instead.
+   */
+  setHasUnsavedChanges(hasUnsavedChanges: boolean): void;
 }
 
 export type Workspace2Definition<
@@ -65,150 +69,20 @@ export type Workspace2Definition<
  * wrapping all of the workspace content.
  */
 export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsavedChanges = false }) => {
-  const layout = useLayoutType();
-  const {
-    setWindowMaximized,
-    hideWindow,
-    setHasUnsavedChanges,
-    openedWindows,
-    openedGroup,
-    registeredGroupsByName,
-    registeredWindowsByName,
-    registeredWorkspacesByName,
-    workspaceTitleByWorkspaceName,
-    setWorkspaceTitle,
-    isMostRecentlyOpenedWindowHidden,
-  } = useWorkspace2Store();
-  const { workspaceName, isRootWorkspace, closeWorkspace, showActionMenu } = useWorkspace2Context();
-
-  const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
-
-  const openedWindow = openedWindows[openedWindowIndex];
-  const openedWorkspace = openedWindow?.openedWorkspaces.find((workspace) => workspace.workspaceName === workspaceName);
+  // These are bound to this workspace instance, in whichever store holds it (the global store, or an
+  // `<ExportedWorkspace>`'s local store). They skip writes that change nothing.
+  const { setHasUnsavedChanges, setWorkspaceTitle } = useWorkspace2Context();
 
   useEffect(() => {
-    if (openedWorkspace?.hasUnsavedChanges != hasUnsavedChanges) {
-      setHasUnsavedChanges(workspaceName, hasUnsavedChanges ?? false);
-    }
-  }, [openedWorkspace?.hasUnsavedChanges, hasUnsavedChanges, workspaceName, setHasUnsavedChanges]);
+    setHasUnsavedChanges(hasUnsavedChanges ?? false);
+  }, [hasUnsavedChanges, setHasUnsavedChanges]);
 
   useEffect(() => {
-    if (workspaceTitleByWorkspaceName[workspaceName] !== title) {
-      setWorkspaceTitle(workspaceName, title);
-    }
-  }, [workspaceTitleByWorkspaceName, workspaceName, title, setWorkspaceTitle]);
+    setWorkspaceTitle(title);
+  }, [title, setWorkspaceTitle]);
 
-  if (openedWindowIndex < 0 || openedGroup == null || openedWorkspace == null) {
-    // workspace window / group has likely just closed
-    return null;
-  }
-
-  const group = registeredGroupsByName[openedGroup.groupName];
-  if (!group) {
-    throw new Error(`Cannot find registered workspace group ${openedGroup.groupName}`);
-  }
-  const workspaceDef = registeredWorkspacesByName[workspaceName];
-  const windowName = workspaceDef.window;
-  const windowDef = registeredWindowsByName[windowName];
-  if (!windowDef) {
-    throw new Error(`Cannot find registered workspace window ${windowName}`);
-  }
-
-  const { icon, canMaximize } = windowDef;
-  const canCloseGroup = group.persistence === 'closable';
-  const canHide = !!icon && !canCloseGroup;
-  const { maximized } = openedWindow;
-  const width = windowDef?.width ?? 'narrow';
-
-  const isActionMenuOpened = Object.values(registeredWindowsByName).some(
-    (window) => window.group === openedGroup.groupName && window.icon !== undefined,
-  );
-
-  const isWindowHidden = openedWindowIndex < openedWindows.length - 1 || isMostRecentlyOpenedWindowHidden;
-
-  return (
-    <div
-      className={classNames(styles.workspaceOuterContainer, {
-        [styles.narrowWorkspace]: width === 'narrow',
-        [styles.widerWorkspace]: width === 'wider',
-        [styles.extraWideWorkspace]: width === 'extra-wide',
-        [styles.isActionMenuOpened]: isActionMenuOpened,
-      })}
-    >
-      <div
-        className={classNames(styles.workspaceSpacer, {
-          [styles.hidden]: isWindowHidden,
-        })}
-      />
-      <div
-        className={classNames(styles.workspaceMiddleContainer, {
-          [styles.maximized]: maximized,
-          [styles.hidden]: isWindowHidden,
-          [styles.isRootWorkspace]: isRootWorkspace,
-          [styles.showActionMenu]: showActionMenu,
-        })}
-      >
-        <div
-          className={classNames(styles.workspaceInnerContainer, {
-            [styles.maximized]: maximized,
-            [styles.hidden]: isWindowHidden,
-            [styles.isRootWorkspace]: isRootWorkspace,
-          })}
-        >
-          <Header aria-label={getCoreTranslation('workspaceHeader')} className={styles.header}>
-            <HeaderName prefix="">{title}</HeaderName>
-            <div className={styles.overlayHeaderSpacer} />
-            <HeaderGlobalBar className={styles.headerButtons}>
-              {isDesktop(layout) ? (
-                <>
-                  {(canMaximize || maximized) && (
-                    <HeaderGlobalAction
-                      aria-label={maximized ? getCoreTranslation('minimize') : getCoreTranslation('maximize')}
-                      onClick={() => setWindowMaximized(windowName, !maximized)}
-                    >
-                      {maximized ? <Minimize /> : <Maximize />}
-                    </HeaderGlobalAction>
-                  )}
-                  {canHide && (
-                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
-                      <ArrowRightIcon />
-                    </HeaderGlobalAction>
-                  )}
-                  {!canCloseGroup && (
-                    <HeaderGlobalAction
-                      aria-label={getCoreTranslation('close')}
-                      onClick={() => closeWorkspace({ closeWindow: true })}
-                    >
-                      <CloseIcon />
-                    </HeaderGlobalAction>
-                  )}
-                </>
-              ) : (
-                <>
-                  {canHide && (
-                    <HeaderGlobalAction aria-label={getCoreTranslation('hide')} onClick={() => hideWindow()}>
-                      <DownToBottom />
-                    </HeaderGlobalAction>
-                  )}
-                  <HeaderGlobalAction
-                    aria-label={getCoreTranslation('close')}
-                    onClick={() => {
-                      if (canCloseGroup) {
-                        closeWorkspaceGroup2();
-                      } else {
-                        closeWorkspace({ closeWindow: true });
-                      }
-                    }}
-                  >
-                    <CloseIcon />
-                  </HeaderGlobalAction>
-                </>
-              )}
-            </HeaderGlobalBar>
-          </Header>
-          <div className={classNames(styles.workspaceContent)}>{children}</div>
-        </div>
-      </div>
-    </div>
-  );
+  // The chrome surrounding the workspace (containers, header, action buttons) is rendered by
+  // `<ActiveWorkspace>`, outside the single-spa parcel. `title` and `hasUnsavedChanges` are
+  // reported up to it through the store (above), so this component stays as thin as possible.
+  return <>{children}</>;
 };

@@ -1,0 +1,8 @@
+// The <ExportedWorkspace> renders only the workspace content (no chrome). It fills its parent as a
+// flex column so that the workspace content (which uses flex-grow / height: 100%) is sized correctly.
+// The caller is responsible for sizing the parent and rendering any title / close controls it wants.
+.exportedWorkspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

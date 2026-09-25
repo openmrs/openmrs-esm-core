@@ -9,6 +9,8 @@ export interface OpenedWorkspace {
   workspaceName: string;
   props: Record<string, any> | null;
   hasUnsavedChanges: boolean;
+  /** The title reported by the workspace's `<Workspace2>`; undefined until it mounts */
+  title?: string;
   /** Unique identifier for the workspace instance, used to track unique instances of the same workspace */
   uuid: string;
 }
@@ -37,8 +39,6 @@ export interface WorkspaceStoreState2 {
    * toggled shown or hidden, the rest are implicitly hidden.
    **/
   isMostRecentlyOpenedWindowHidden: boolean;
-
-  workspaceTitleByWorkspaceName: Record<string, string>;
 }
 
 const initialState: WorkspaceStoreState2 = {
@@ -47,7 +47,6 @@ const initialState: WorkspaceStoreState2 = {
   registeredWorkspacesByName: {},
   openedGroup: null,
   openedWindows: [],
-  workspaceTitleByWorkspaceName: {},
   isMostRecentlyOpenedWindowHidden: false,
 };
 
