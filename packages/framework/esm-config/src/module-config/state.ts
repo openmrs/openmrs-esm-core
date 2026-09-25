@@ -14,24 +14,43 @@ export interface ConfigInternalStore {
   /** An object with module names for keys and schemas for values */
   schemas: Record<string, ConfigSchema>;
   /**
-   * Before modules are loaded, they get implicit schemas added to `schemas`. Therefore
-   * we need to track separately whether they have actually been loaded (that is,
-   * whether the schema has actually been defined).
+   * Which names in `schemas` hold a module's real schema rather than the implicit one. Until this
+   * is set, a module's config is derived against the implicit schema alone.
+   *
+   * Extension schemas are never listed: an extension is not a module, and listing one would produce
+   * a module config for a name that has no module.
    */
-  moduleLoaded: Record<string, boolean>;
+  schemaDefined: Record<string, boolean>;
   /**
    * Whether the app shell has finished starting each module (run its `startupApp`). Unlike
-   * `moduleLoaded`, `defineConfigSchema` does not set this, so it stays false while `startupApp`
+   * `schemaDefined`, defining a schema does not set this, so it stays false while `startupApp`
    * is still defining the module's extension schemas.
    */
   moduleStarted: Record<string, boolean>;
+  /**
+   * Where each real schema, module or extension, came from. A `'static'` schema was read from the
+   * routes registry and wins: a later `defineConfigSchema` for the same name is ignored. A
+   * `'runtime'` schema was declared by the module itself.
+   */
+  schemaSource: Record<string, 'static' | 'runtime'>;
+  /**
+   * Whether the configs the application boots with have been provided.
+   *
+   * Defaults to `true`, so tests and code outside the app shell see configuration as ready. The app
+   * shell clears it between registering the apps and providing their configs: schemas are known
+   * before the configs that fill them in, and `getConfig()` resolves only once, so without this it
+   * would resolve to defaults.
+   */
+  initialConfigsLoaded: boolean;
 }
 
 const configInternalStoreInitialValue = {
   providedConfigs: [],
   schemas: {},
-  moduleLoaded: {},
+  schemaDefined: {},
   moduleStarted: {},
+  schemaSource: {},
+  initialConfigsLoaded: true,
 };
 
 /**
@@ -228,6 +247,46 @@ let implementerToolsSubscribers = 0;
 let implementerToolsConfigStale = true;
 let isRecomputing = false;
 let recomputeImplementerToolsConfig: (() => void) | undefined;
+
+let configValidationRequested = false;
+
+/**
+ * Whether configuration should be validated. Validation only writes to the console, so it is
+ * skipped in production unless the implementer tools are open or validation was requested with
+ * `setConfigValidationEnabled`.
+ *
+ * @internal
+ */
+export function shouldValidateConfig(): boolean {
+  if (configValidationRequested || implementerToolsSubscribers > 0) {
+    return true;
+  }
+
+  // Read on each call: the app shell may define `spaEnv` after this module is evaluated.
+  return typeof window === 'undefined' || window.spaEnv !== 'production';
+}
+
+/**
+ * Restores the default validation behaviour. Part of `resetConfigSystem`, so one test's setting
+ * does not leak into the next.
+ *
+ * @internal
+ */
+export function resetConfigValidation() {
+  configValidationRequested = false;
+  implementerToolsSubscribers = 0;
+}
+
+/**
+ * Requests configuration validation regardless of environment. Passing `false` withdraws the
+ * request; it cannot suppress validation that a non-production environment or the implementer
+ * tools turn on.
+ *
+ * @internal
+ */
+export function setConfigValidationEnabled(enabled: boolean) {
+  configValidationRequested = enabled;
+}
 
 /**
  * Registers how to derive the implementer tools config; the store decides whether to.

@@ -1,6 +1,7 @@
 /** @module @category Config */
+import type { SerializedConfigSchema } from '@openmrs/esm-globals';
 import { cloneDeep, isEqual, mergeWith, omit as lodashOmit } from 'lodash-es';
-import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig } from '../types';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, Validator } from '../types';
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
 import { validator } from '../validators/validator';
@@ -23,9 +24,12 @@ import {
   implementerToolsConfigStore,
   invalidateImplementerToolsConfig,
   recordConfigDerivationError,
+  resetConfigValidation,
   setImplementerToolsConfigRecomputer,
+  shouldValidateConfig,
   temporaryConfigStore,
 } from './state';
+import { hydrateConfigSchema, type HydrationProblem } from './hydrate-schema';
 import { type TemporaryConfigStore } from '..';
 
 /**
@@ -153,15 +157,117 @@ function recomputeAllConfigsSafely() {
 setupConfigSubscriptions();
 
 /**
- * A module's config is a pure function of its schema, whether it has loaded, and the provided and
- * temporary configs. Every module is recomputed whenever any input store changes, so without this
- * cache loading N modules costs N² full derivations.
+ * Static schemas as they arrived from the registry, kept so a schema can be rebuilt once its
+ * module's validators load. Outside the store because nothing derives from it.
+ */
+const staticSchemas = new Map<string, { serialized: SerializedConfigSchema; owningApp: string }>();
+
+/** Names whose schemas refer to validators that have not been loaded yet. */
+const schemasAwaitingValidators = new Set<string>();
+
+/** Apps whose `./config-validators` has already been asked for, successfully or not. */
+const requestedValidatorApps = new Set<string>();
+
+type CustomValidatorLoader = (appName: string) => Promise<Record<string, unknown>>;
+
+let loadCustomValidators: CustomValidatorLoader | undefined;
+
+/**
+ * Supplies the loader for a module's `./config-validators` entry point. Injected because loading
+ * one needs `@openmrs/esm-dynamic-loading`, which this package cannot depend on.
+ *
+ * @internal
+ */
+export function registerCustomValidatorLoader(loader: CustomValidatorLoader) {
+  loadCustomValidators = loader;
+
+  // Validators may have been wanted before the loader arrived. Nothing awaits this, so it reports
+  // its own failures.
+  void resolvePendingCustomValidators().catch(reportValidatorResolutionFailure);
+}
+
+/**
+ * Loads `./config-validators` for every app with a schema waiting on one, and rebuilds those schemas
+ * with the validators in place. Call only when validators are about to run, so that production with
+ * validation off never fetches them.
+ */
+async function resolvePendingCustomValidators(): Promise<void> {
+  if (!loadCustomValidators || schemasAwaitingValidators.size === 0) {
+    return;
+  }
+
+  const appsToLoad = new Set<string>();
+
+  for (const name of schemasAwaitingValidators) {
+    const owningApp = staticSchemas.get(name)?.owningApp;
+
+    if (owningApp && !requestedValidatorApps.has(owningApp)) {
+      appsToLoad.add(owningApp);
+    }
+  }
+
+  // Every app has already been asked. A failed load leaves its schemas waiting for good, since there
+  // is nothing left to try, so this keeps them from costing work on every later derivation.
+  if (appsToLoad.size === 0) {
+    return;
+  }
+
+  await Promise.all(
+    Array.from(appsToLoad, async (appName) => {
+      requestedValidatorApps.add(appName);
+
+      let namespace: Record<string, unknown>;
+
+      try {
+        namespace = await loadCustomValidators!(appName);
+      } catch (e) {
+        console.error(
+          `Could not load the custom configuration validators of ${appName}. Its configuration will ` +
+            `be validated without them.`,
+          e,
+        );
+        return;
+      }
+
+      const rebuilt: Array<[string, ConfigSchema]> = [];
+
+      for (const name of Array.from(schemasAwaitingValidators)) {
+        const entry = staticSchemas.get(name);
+
+        if (entry?.owningApp !== appName) {
+          continue;
+        }
+
+        const { schema, problems } = hydrateConfigSchema(entry.serialized, (exportName) => {
+          const candidate = namespace[exportName];
+          return typeof candidate === 'function' ? (candidate as Validator) : undefined;
+        });
+
+        reportHydrationProblems(name, problems);
+        schemasAwaitingValidators.delete(name);
+        rebuilt.push([name, schema]);
+      }
+
+      // Installed together because every install recomputes every module and extension config.
+      installSchemas(rebuilt, 'static');
+    }),
+  );
+}
+
+/**
+ * A module's config is a pure function of its schema, whether that schema and the initial configs
+ * are loaded, whether validation is on, and the provided and temporary configs. Every module is
+ * recomputed whenever any input store changes, so without this cache loading N modules costs N² full
+ * derivations.
  */
 interface ModuleConfigCacheEntry {
   schema: ConfigSchema;
-  moduleLoaded: boolean;
+  schemaDefined: boolean;
+  initialConfigsLoaded: boolean;
   providedConfigs: ConfigInternalStore['providedConfigs'];
   temporaryConfig: Config;
+  /** Whether validation ran, so that turning validation on re-derives entries that skipped it. */
+  validated: boolean;
   state: ConfigStore;
 }
 
@@ -177,7 +283,8 @@ function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryCon
     // for modules loaded based on their extensions.
     const moduleStore = getConfigStore(moduleName);
     const schema = state.schemas[moduleName];
-    const moduleLoaded = Boolean(state.moduleLoaded[moduleName]);
+    const schemaDefined = state.schemaDefined[moduleName] === true;
+    const validate = shouldValidateConfig();
     const cached = moduleConfigCache.get(moduleName);
 
     let newState: ConfigStore;
@@ -185,27 +292,33 @@ function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryCon
     if (
       cached &&
       cached.schema === schema &&
-      cached.moduleLoaded === moduleLoaded &&
+      cached.schemaDefined === schemaDefined &&
+      cached.initialConfigsLoaded === state.initialConfigsLoaded &&
       cached.providedConfigs === state.providedConfigs &&
-      cached.temporaryConfig === tempState.config
+      cached.temporaryConfig === tempState.config &&
+      (cached.validated || !validate)
     ) {
       newState = cached.state;
     } else {
-      const config = moduleLoaded
+      const config = schemaDefined
         ? getConfigForModule(moduleName, state, tempState)
         : getConfigForModuleImplicitSchema(moduleName, state, tempState);
 
       newState = {
         translationOverridesLoaded: true,
-        loaded: moduleLoaded,
+        // The schema alone is not enough: schemas are known before configs are provided, and
+        // `getConfig()` resolves only once.
+        loaded: schemaDefined && state.initialConfigsLoaded,
         config,
       };
 
       moduleConfigCache.set(moduleName, {
         schema,
-        moduleLoaded,
+        schemaDefined,
+        initialConfigsLoaded: state.initialConfigsLoaded,
         providedConfigs: state.providedConfigs,
         temporaryConfig: tempState.config,
+        validated: validate,
         state: newState,
       });
     }
@@ -367,14 +480,189 @@ function computeExtensionConfigs(
  * @param schema The config schema for the module
  */
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
-  validateConfigSchema(moduleName, schema);
+  // The registry schema wins. A module that also declares one at runtime has not yet been rebuilt
+  // with current tooling.
+  if (getSchemaSource(configInternalStore.getState(), moduleName) === 'static') {
+    return;
+  }
+
+  if (shouldValidateConfig()) {
+    validateConfigSchema(moduleName, schema);
+  }
+
+  installSchema(moduleName, schema, 'runtime', true);
+}
+
+/**
+ * Replaces a module's `defineConfigSchema` call when its build ships the schema in the routes
+ * registry instead. Reports an error if the registry has no schema for the module, whose config
+ * would otherwise silently fall back to the implicit schema: no defaults, no validators.
+ *
+ * Reported rather than thrown, because this runs inside `startupApp()` and the problem is a
+ * deployment mismatch, not a broken module.
+ *
+ * @internal
+ */
+export function requireStaticConfigSchema(moduleName: string) {
+  if (getSchemaSource(configInternalStore.getState(), moduleName) === 'static') {
+    return;
+  }
+
+  console.error(
+    `${moduleName} was built expecting its configuration schema to come from the routes registry, but no schema ` +
+      `for it is there. Its configuration will be empty: every option will be undefined, and none will be ` +
+      `validated.\n\nIf you are assembling this distribution: rebuild it with a version of the OpenMRS tooling ` +
+      `that carries configuration schemas into routes.registry.json, or use a build of ${moduleName} that still ` +
+      `declares its schema at runtime.`,
+  );
+
+  // Marked loaded anyway, or every `getConfig()` for this module would hang forever.
+  registerModuleLoad(moduleName);
+}
+
+/**
+ * The extension-schema counterpart of {@link requireStaticConfigSchema}.
+ *
+ * @internal
+ */
+export function requireStaticExtensionConfigSchema(extensionName: string) {
+  if (getSchemaSource(configInternalStore.getState(), extensionName) === 'static') {
+    return;
+  }
+
+  console.error(
+    `The extension '${extensionName}' was built expecting its configuration schema to come from the routes ` +
+      `registry, but no schema for it is there. It will be configured as though it had no schema.`,
+  );
+}
+
+/**
+ * Installs a module's configuration schema from the routes registry, so the module can be configured
+ * without executing it. The first schema installed for a name wins, and a later `defineConfigSchema`
+ * for it does nothing.
+ *
+ * @internal
+ * @param owningApp The app whose `./config-validators` any custom validators are exported from.
+ *   For a module's own schema this is the module; for an extension's it is the app that declared it.
+ */
+export function defineStaticConfigSchema(moduleName: string, serialized: SerializedConfigSchema, owningApp: string) {
+  installStaticSchema(moduleName, serialized, owningApp, true);
+}
+
+/**
+ * The extension-schema counterpart of {@link defineStaticConfigSchema}. Extension names are global,
+ * so the first registry entry to claim one keeps it; `openmrs assemble` reports collisions.
+ *
+ * @internal
+ */
+export function defineStaticExtensionConfigSchema(
+  extensionName: string,
+  serialized: SerializedConfigSchema,
+  owningApp: string,
+) {
+  installStaticSchema(extensionName, serialized, owningApp, false);
+}
+
+function installStaticSchema(
+  name: string,
+  serialized: SerializedConfigSchema,
+  owningApp: string,
+  isModuleSchema: boolean,
+): void {
+  if (getSchemaSource(configInternalStore.getState(), name) !== undefined) {
+    return;
+  }
+
+  const { schema, problems, unresolvedValidators } = hydrateConfigSchema(serialized);
+
+  reportHydrationProblems(name, problems);
+
+  // Custom validators are only loaded once something will run them; the schema is rebuilt then.
+  staticSchemas.set(name, { serialized, owningApp });
+
+  if (unresolvedValidators.length > 0) {
+    schemasAwaitingValidators.add(name);
+  }
+
+  if (shouldValidateConfig()) {
+    validateConfigSchema(name, schema);
+  }
+
+  installSchema(name, schema, 'static', isModuleSchema);
+}
+
+/**
+ * @param isModuleSchema Whether this is a module's own schema, and so should start being used to
+ *   derive that module's config. False for extension schemas, whose configs are derived elsewhere.
+ */
+function installSchema(
+  name: string,
+  schema: ConfigSchema,
+  source: 'static' | 'runtime',
+  isModuleSchema: boolean,
+): void {
   const enhancedSchema = mergeDeepReplace(schema, implicitConfigSchema);
 
   configInternalStore.setState((state) => ({
     ...state,
-    schemas: { ...state.schemas, [moduleName]: enhancedSchema },
-    moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+    schemas: { ...state.schemas, [name]: enhancedSchema },
+    schemaSource: { ...state.schemaSource, [name]: source },
+    schemaDefined: isModuleSchema ? { ...state.schemaDefined, [name]: true } : state.schemaDefined,
   }));
+}
+
+/**
+ * Replaces the schemas of names that already have one, in a single update.
+ *
+ * Only for reinstalling: whether each name is a module's own schema was settled when it was first
+ * installed, and is carried over rather than decided again.
+ */
+function installSchemas(entries: Array<[string, ConfigSchema]>, source: 'static' | 'runtime'): void {
+  if (entries.length === 0) {
+    return;
+  }
+
+  configInternalStore.setState((state) => {
+    const schemas = { ...state.schemas };
+    const schemaSource = { ...state.schemaSource };
+
+    for (const [name, schema] of entries) {
+      // Defined rather than assigned: an extension may be named `__proto__`, and assigning that
+      // would set the prototype instead.
+      define(schemas, name, mergeDeepReplace(schema, implicitConfigSchema));
+      define(schemaSource, name, source);
+    }
+
+    return { ...state, schemas, schemaSource };
+  });
+}
+
+/** Adds a key that may be `__proto__` without it reaching `Object.prototype`'s setter. */
+function define<T>(target: Record<string, T>, key: string, value: T): void {
+  Object.defineProperty(target, key, { value, enumerable: true, writable: true, configurable: true });
+}
+
+/** Reports a failure to rebuild schemas with their custom validators, which nothing awaits. */
+function reportValidatorResolutionFailure(error: unknown): void {
+  console.error('Configuration validators could not be resolved.', error);
+}
+
+/**
+ * Reads a name's schema source. A bare lookup of `__proto__` would return the prototype and report
+ * a schema for a name that has none.
+ */
+function getSchemaSource(state: ConfigInternalStore, name: string): 'static' | 'runtime' | undefined {
+  const source = state.schemaSource[name];
+  return source === 'static' || source === 'runtime' ? source : undefined;
+}
+
+function reportHydrationProblems(name: string, problems: Array<HydrationProblem>): void {
+  for (const problem of problems) {
+    logError(
+      `${name}.${problem.keyPath}`,
+      `${name} has an unusable configuration schema at '${problem.keyPath}': ${problem.message}`,
+    );
+  }
 }
 
 /**
@@ -388,10 +676,18 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
  * @param moduleName
  */
 export function registerModuleWithConfigSystem(moduleName: string) {
-  configInternalStore.setState((state) => ({
-    ...state,
-    schemas: { ...state.schemas, [moduleName]: implicitConfigSchema },
-  }));
+  configInternalStore.setState((state) => {
+    // A module with a real schema keeps it. Otherwise registering an app twice would overwrite its
+    // static schema, and the first-source-wins rule would then refuse to reinstall it.
+    if (getSchemaSource(state, moduleName) !== undefined) {
+      return state;
+    }
+
+    return {
+      ...state,
+      schemas: { ...state.schemas, [moduleName]: implicitConfigSchema },
+    };
+  });
 }
 
 /**
@@ -405,7 +701,7 @@ export function registerModuleWithConfigSystem(moduleName: string) {
 export function registerModuleLoad(moduleName: string) {
   configInternalStore.setState((state) => ({
     ...state,
-    moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+    schemaDefined: { ...state.schemaDefined, [moduleName]: true },
     moduleStarted: { ...state.moduleStarted, [moduleName]: true },
   }));
 }
@@ -444,20 +740,44 @@ export function registerTranslationNamespace(namespace: string) {
  * @param schema The config schema for the extension
  */
 export function defineExtensionConfigSchema(extensionName: string, schema: ConfigSchema) {
-  validateConfigSchema(extensionName, schema);
-  const enhancedSchema = mergeDeepReplace(schema, implicitConfigSchema);
-
   const state = configInternalStore.getState();
+
+  // As in `defineConfigSchema`, the registry schema wins.
+  if (getSchemaSource(state, extensionName) === 'static') {
+    return;
+  }
+
   if (state.schemas[extensionName]) {
     console.error(
       `Config schema for extension ${extensionName} already exists. If there are multiple extensions with this same name, one will probably crash.`,
     );
   }
 
-  configInternalStore.setState((state) => ({
-    ...state,
-    schemas: { ...state.schemas, [extensionName]: enhancedSchema },
-  }));
+  if (shouldValidateConfig()) {
+    validateConfigSchema(extensionName, schema);
+  }
+
+  installSchema(extensionName, schema, 'runtime', false);
+}
+
+/**
+ * Marks the start of the window in which schemas are known but their configs have not been
+ * provided, so that `getConfig()` waits rather than resolving to defaults. Should only be used in
+ * esm-app-shell, and must be paired with {@link finishInitialConfigLoad}.
+ *
+ * @internal
+ */
+export function beginInitialConfigLoad() {
+  configInternalStore.setState((state) => ({ ...state, initialConfigsLoaded: false }));
+}
+
+/**
+ * Marks the configurations the application boots with as loaded. See {@link beginInitialConfigLoad}.
+ *
+ * @internal
+ */
+export function finishInitialConfigLoad() {
+  configInternalStore.setState((state) => ({ ...state, initialConfigsLoaded: true }));
 }
 
 /**
@@ -636,7 +956,7 @@ function computeExtensionConfig(
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
-  // Not `moduleLoaded`: `defineConfigSchema` sets that while `startupApp` is still running, before it
+  // Not `schemaDefined`: `defineConfigSchema` sets that while `startupApp` is still running, before it
   // reaches `defineExtensionConfigSchema`, so the extension would be checked against the module schema.
   const extensionModuleStarted = Boolean(configState.moduleStarted[extensionModuleName]);
   // JSON string of these elements should be unique-per-extension
@@ -976,9 +1296,20 @@ function getConfigForModule(
 ): ConfigObject {
   const schema = configState.schemas[moduleName];
   const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs(configState, tempConfigState));
-  validateStructure(schema, inputConfig, moduleName);
+  const validate = shouldValidateConfig();
+
+  if (validate) {
+    validateStructure(schema, inputConfig, moduleName);
+  }
+
   const config = setDefaults(schema, inputConfig);
-  runAllValidatorsInConfigTree(schema, config, moduleName);
+
+  if (validate) {
+    // Requested here, not at startup: they are only worth a request once something will run them.
+    void resolvePendingCustomValidators().catch(reportValidatorResolutionFailure);
+    runAllValidatorsInConfigTree(schema, config, moduleName);
+  }
+
   delete config.extensionSlots;
   return config;
 }
@@ -990,7 +1321,11 @@ function getConfigForModuleImplicitSchema(
 ): ConfigObject {
   const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs(configState, tempConfigState));
   const config = setDefaults(implicitConfigSchema, inputConfig);
-  runAllValidatorsInConfigTree(implicitConfigSchema, config, moduleName);
+
+  if (shouldValidateConfig()) {
+    runAllValidatorsInConfigTree(implicitConfigSchema, config, moduleName);
+  }
+
   delete config.extensionSlots;
   return config;
 }
@@ -1265,6 +1600,12 @@ export function resetConfigSystem() {
   implementerToolsModuleCache.clear();
   lastDerivation = null;
   entryOrigins = new WeakMap();
+  staticSchemas.clear();
+  schemasAwaitingValidators.clear();
+  requestedValidatorApps.clear();
+  // Including the loader, so a test does not inherit the previous test's.
+  loadCustomValidators = undefined;
+  resetConfigValidation();
   setupConfigSubscriptions();
 }
 
