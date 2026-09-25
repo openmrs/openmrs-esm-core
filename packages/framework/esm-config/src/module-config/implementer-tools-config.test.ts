@@ -28,7 +28,7 @@ type ImplementerToolsTree = Record<string, ConfigNode>;
 describe('implementer tools config', () => {
   beforeEach(() => {
     temporaryConfigStore.setState({ config: {} });
-    configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
+    configInternalStore.setState({ providedConfigs: [], schemas: {}, schemaDefined: {} });
     resetConfigSystem();
     defineConfigSchema('esm-flintstone', {
       label: { _type: Type.String, _default: 'default-label', _description: 'x' },

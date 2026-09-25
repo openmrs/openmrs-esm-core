@@ -15,17 +15,41 @@ export interface ConfigInternalStore {
   /** An object with module names for keys and schemas for values */
   schemas: Record<string, ConfigSchema>;
   /**
-   * Before modules are loaded, they get implicit schemas added to `schemas`. Therefore
-   * we need to track separately whether they have actually been loaded (that is,
-   * whether the schema has actually been defined).
+   * Which names in `schemas` hold a module's real schema, as opposed to the implicit one every
+   * name starts out with. A module's config is only derived against its own schema once this says
+   * so; until then it is derived against the implicit schema alone.
+   *
+   * Extension schemas are deliberately absent. They live in `schemas` under the extension's name,
+   * but an extension is not a module and its config is derived separately, so listing one here
+   * would start producing a module config for a name that has no module.
    */
-  moduleLoaded: Record<string, boolean>;
+  schemaDefined: Record<string, boolean>;
+  /**
+   * Where each real schema came from, for module and extension names alike.
+   *
+   * `'static'` means it was read from the routes registry, and is authoritative: a later
+   * `defineConfigSchema` for the same name is ignored, because the registry is the direction this
+   * is all moving in. `'runtime'` means it was declared by the module executing.
+   */
+  schemaSource: Record<string, 'static' | 'runtime'>;
+  /**
+   * Whether the configurations the application boots with have finished loading.
+   *
+   * Defaults to `true`, so that tests and anything running outside the app shell behave as though
+   * configuration were ready from the start. The app shell clears it for the span between
+   * registering the apps and providing their configs, because a schema is now known long before the
+   * config that fills it in is: `getConfig()` resolves permanently the first time a module reports
+   * itself loaded, so without this it would hand its callers defaults-only config forever.
+   */
+  initialConfigsLoaded: boolean;
 }
 
 const configInternalStoreInitialValue = {
   providedConfigs: [],
   schemas: {},
-  moduleLoaded: {},
+  schemaDefined: {},
+  schemaSource: {},
+  initialConfigsLoaded: true,
 };
 
 /**
@@ -275,6 +299,55 @@ let implementerToolsSubscribers = 0;
 let implementerToolsConfigStale = true;
 let isRecomputing = false;
 let recomputeImplementerToolsConfig: (() => void) | undefined;
+
+let configValidationRequested = false;
+
+/**
+ * Whether configuration should be validated.
+ *
+ * Validation writes to the console and nowhere else, so it is only worth what it costs when
+ * somebody is reading the console. It is skipped in production, where the alternative is walking
+ * every schema of every module in the distribution on every configuration change to produce
+ * messages nobody sees.
+ *
+ * It switches back on for the two cases where someone is looking: any environment that is not
+ * production, and the implementer tools, which count as watching by virtue of being open.
+ *
+ * @internal
+ */
+export function shouldValidateConfig(): boolean {
+  if (configValidationRequested || implementerToolsSubscribers > 0) {
+    return true;
+  }
+
+  // Read on each call rather than captured: the app shell defines `spaEnv` while it starts up, and
+  // this module may well have been evaluated before that happened.
+  return typeof window === 'undefined' || window.spaEnv !== 'production';
+}
+
+/**
+ * Puts validation back to deciding for itself, which is what a fresh page load would do.
+ *
+ * Part of `resetConfigSystem`, so that a test that turns validation on does not leave it on for
+ * every test after it.
+ *
+ * @internal
+ */
+export function resetConfigValidation() {
+  configValidationRequested = false;
+  implementerToolsSubscribers = 0;
+}
+
+/**
+ * Turns configuration validation on or off explicitly, independently of the environment and of
+ * whether the implementer tools are open. Either of those still switches it on by itself, so this
+ * can ask for validation but cannot suppress it.
+ *
+ * @internal
+ */
+export function setConfigValidationEnabled(enabled: boolean) {
+  configValidationRequested = enabled;
+}
 
 /**
  * Registers how to derive the implementer tools config; the store decides whether to.

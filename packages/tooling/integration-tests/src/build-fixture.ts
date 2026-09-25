@@ -23,6 +23,10 @@ export type FixtureBuild = {
   scripts: Record<string, string>;
   /** Every emitted stylesheet, keyed by filename. Empty in development, where `style-loader` inlines. */
   stylesheets: Record<string, string>;
+  /** Every emitted JSON file, keyed by filename: `routes.json`, `config-schema.json`. */
+  json: Record<string, string>;
+  /** Every warning the compilation reported, for tests about what a build tells a developer. */
+  warnings: Array<string>;
   /** Graph of every module in the build. Keys are module names. Values are modules that depend on that module. */
   moduleGraph: Record<string, string[]>;
 };
@@ -70,9 +74,11 @@ export function cleanUpFixtureBuilds() {
   for (const dir of tempDirs) {
     rmSync(dir, { recursive: true, force: true });
   }
-  // Module Federation generates its entry module inside the fixture rather than in `output.path`.
+  // Module Federation generates its entry module inside the fixture rather than in `output.path`,
+  // and the config schema plugin writes its generated validators and its cache there too.
   for (const root of builtRoots) {
     rmSync(join(root, 'node_modules', '.federation'), { recursive: true, force: true });
+    rmSync(join(root, 'node_modules', '.cache', 'openmrs'), { recursive: true, force: true });
   }
 }
 
@@ -164,6 +170,10 @@ export function buildFixtureApp(
         entry,
         scripts,
         stylesheets: emitted('.css'),
+        json: emitted('.json'),
+        warnings: (stats.toJson({ all: false, warnings: true }).warnings ?? []).map((warning: any) =>
+          String(warning?.message ?? warning),
+        ),
         moduleGraph: moduleGraphOf(stats),
       };
     } finally {

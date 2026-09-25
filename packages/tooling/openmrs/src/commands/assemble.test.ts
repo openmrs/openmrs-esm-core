@@ -76,6 +76,7 @@ function defaultArgs(overrides: Partial<AssembleArgs> = {}): AssembleArgs {
     buildRoutes: false,
     manifest: false,
     ensureEntrypoints: false,
+    strictSchemas: false,
     ...overrides,
   };
 }
@@ -460,7 +461,7 @@ describe('runAssemble', () => {
       const routes = { pages: ['/home'], extensions: [] };
       setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0', 'dist/main.js', routes);
 
-      // Technically, `null` is invalid
+      // @ts-expect-error Technically, `null` is invalid
       await runAssemble(defaultArgs({ buildRoutes: true, applicationVersion: null }));
 
       const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).includes('routes.registry'));

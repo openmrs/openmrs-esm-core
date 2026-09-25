@@ -66,6 +66,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
 import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
+import { ConfigSchemaPlugin, getConfigSchemaPaths } from '@openmrs/config-schema-plugin';
 
 type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module' | 'output'> & {
   module: ModuleOptions;
@@ -367,6 +368,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const frameworkVersion = getFrameworkVersion();
   const routes = resolve(root, 'src', 'routes.json');
   const hasRoutesDefined = fileExistsSync(routes);
+  // Unlike routes.json, a module with no configuration is ordinary, so nothing here is fatal.
+  const configSchemaPaths = getConfigSchemaPaths(root);
 
   if (!hasRoutesDefined) {
     console.error(
@@ -548,6 +551,11 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         dts: false,
         exposes: {
           './start': srcFile,
+          // Custom config validators are loaded by name from here, so that the framework can run
+          // them without loading the module itself.
+          ...(configSchemaPaths.configValidatorsExpose
+            ? { './config-validators': configSchemaPaths.configValidatorsExpose }
+            : {}),
         },
         shared: [...Object.keys(peerDependencies), '@openmrs/esm-framework/src/internal'].reduce((obj, depName) => {
           const shareNames = [depName];
@@ -587,6 +595,12 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
             },
           ],
         }),
+      // A hand-written config schema is shipped as-is; otherwise it is read out of the module's
+      // own `startupApp()`. Unlike routes.json it carries no version, since assemble keys it to
+      // the package it ships in.
+      configSchemaPaths.handWrittenSchema
+        ? new CopyWebpackPlugin({ patterns: [{ from: configSchemaPaths.handWrittenSchema }] })
+        : new ConfigSchemaPlugin({ moduleName: name, root, srcFile }),
       // The two runtime packages a remote can safely borrow from the app shell; see the
       // `ExternalsPlugin` block in `@openmrs/rspack-config` for why only these two are shareable,
       // what still ships per remote, and why this is a plugin rather than an `externals` entry.

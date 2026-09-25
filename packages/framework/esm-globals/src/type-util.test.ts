@@ -94,3 +94,33 @@ describe('isOpenmrsAppRoutes', () => {
     expect(isOpenmrsAppRoutes({})).toBe(true);
   });
 });
+
+describe('isOpenmrsAppRoutes with config schemas', () => {
+  // This predicate also guards the route overrides a developer can hand-write into local storage,
+  // so it is what stands between a typo there and a malformed config schema reaching the
+  // configuration system.
+  it('should accept a routes object carrying a config schema', () => {
+    expect(
+      isOpenmrsAppRoutes({
+        configurationSchema: { foo: { _type: 'String', _default: 'bar' } },
+        extensionConfigurationSchemas: { 'my-extension': { baz: { _type: 'Number', _default: 1 } } },
+      }),
+    ).toBe(true);
+  });
+
+  it('should accept empty schemas', () => {
+    expect(isOpenmrsAppRoutes({ configurationSchema: {}, extensionConfigurationSchemas: {} })).toBe(true);
+  });
+
+  it.each([null, 'a string', 42, ['an array']])('should reject %p as a configurationSchema', (configurationSchema) => {
+    expect(isOpenmrsAppRoutes({ configurationSchema })).toBe(false);
+  });
+
+  it('should reject an extensionConfigurationSchemas that is not an object', () => {
+    expect(isOpenmrsAppRoutes({ extensionConfigurationSchemas: ['nope'] })).toBe(false);
+  });
+
+  it('should reject an extension schema that is not an object', () => {
+    expect(isOpenmrsAppRoutes({ extensionConfigurationSchemas: { 'my-extension': 'nope' } })).toBe(false);
+  });
+});
