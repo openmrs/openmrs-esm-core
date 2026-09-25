@@ -68,6 +68,7 @@ export default function Dashboard({ basePath, moduleName }: DashboardProps) {
           extensionId: componentContext.extension?.extensionId,
           extensionSlotName: componentContext.extension?.extensionSlotName,
           extensionSlotModuleName: module,
+          extensionMeta: componentContext.extension?.extensionMeta,
         }}
       />
     </BrowserRouter>

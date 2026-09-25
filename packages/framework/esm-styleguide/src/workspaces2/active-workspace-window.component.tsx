@@ -150,6 +150,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
         workspaceProps: openedWorkspace.props,
         windowProps: openedWindow.props,
         groupProps: openedGroup && openedGroup.props ? openedGroup.props : null,
+        workspaceMeta: workspace2Store.getState().registeredWorkspacesByName[openedWorkspace.workspaceName]?.meta ?? {},
         isRootWorkspace,
         isLeafWorkspace,
         windowName: openedWindow.windowName,

@@ -2,7 +2,7 @@
 
 # Interface: ExtensionData
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L1)
+Defined in: [packages/framework/esm-extensions/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L3)
 
 ## Properties
 
@@ -10,7 +10,15 @@ Defined in: [packages/framework/esm-extensions/src/types.ts:1](https://github.co
 
 > **extensionId**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L4)
+Defined in: [packages/framework/esm-extensions/src/types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L6)
+
+***
+
+### extensionMeta?
+
+> `optional` **extensionMeta**: `Readonly`\<`Record`\<`string`, `unknown`\>\>
+
+Defined in: [packages/framework/esm-extensions/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L7)
 
 ***
 
@@ -18,7 +26,7 @@ Defined in: [packages/framework/esm-extensions/src/types.ts:4](https://github.co
 
 > **extensionSlotModuleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L3)
+Defined in: [packages/framework/esm-extensions/src/types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L5)
 
 ***
 
@@ -26,4 +34,4 @@ Defined in: [packages/framework/esm-extensions/src/types.ts:3](https://github.co
 
 > **extensionSlotName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L2)
+Defined in: [packages/framework/esm-extensions/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L4)
