@@ -1,5 +1,11 @@
 import { type ActivityFn, pathToActiveWhen, registerApplication } from 'single-spa';
-import { registerModuleWithConfigSystem } from '@openmrs/esm-config';
+import {
+  defineStaticConfigSchema,
+  defineStaticExtensionConfigSchema,
+  registerCustomValidatorLoader,
+  registerModuleWithConfigSystem,
+} from '@openmrs/esm-config';
+import { importDynamic } from '@openmrs/esm-dynamic-loading';
 import { batchExtensionUpdates } from '@openmrs/esm-extensions';
 import {
   type WorkspaceGroupDefinition,
@@ -103,9 +109,48 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
   batchExtensionUpdates(() => registerAppRoutes(appName, routes));
 }
 
+/**
+ * Installs the configuration schemas an app's registry entry carries, which is how a module's
+ * configuration becomes known without loading the module.
+ *
+ * Both kinds are attributed to `appName`, because that is the app whose `./config-validators`
+ * exports any validators they refer to. For an extension schema that is the app that declared the
+ * extension, not whatever app ends up rendering it.
+ */
+function registerConfigSchemas(appName: string, routes: OpenmrsAppRoutes) {
+  // A schema is one thing a registry entry carries, and a bad one must not cost the app the rest:
+  // this runs before the pages, extensions, modals and workspaces are registered, and the
+  // rejection would land in a promise nothing awaits, so the app would simply not appear.
+  try {
+    if (routes.configurationSchema) {
+      defineStaticConfigSchema(appName, routes.configurationSchema, appName);
+    }
+
+    for (const [extensionName, schema] of Object.entries(routes.extensionConfigurationSchemas ?? {})) {
+      defineStaticExtensionConfigSchema(extensionName, schema, appName);
+    }
+  } catch (e) {
+    console.error(
+      `The configuration schema in ${appName}'s registry entry could not be installed. Its configuration ` +
+        `will be empty until it loads.`,
+      e,
+    );
+  }
+}
+
+// Hands the config system the one thing it cannot reach for itself. Loading a module federation
+// expose means `@openmrs/esm-dynamic-loading`, which `@openmrs/esm-config` does not depend on and
+// should not: the config system is further down the stack than the loader.
+//
+// Deliberately not `loadLifeCycles`, which calls `initializeApp` and would run the module's
+// `startupApp()`. The whole point of a separate `./config-validators` entry point is that reaching
+// a validator costs a small chunk rather than the module.
+registerCustomValidatorLoader((appName) => importDynamic<Record<string, unknown>>(appName, './config-validators'));
+
 function registerAppRoutes(appName: string, routes: OpenmrsAppRoutes) {
   if (appName && routes && typeof routes === 'object') {
     registerModuleWithConfigSystem(appName);
+    registerConfigSchemas(appName, routes);
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];

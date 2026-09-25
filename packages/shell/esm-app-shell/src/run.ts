@@ -2,10 +2,12 @@ import { start, triggerAppChange } from 'single-spa';
 import { type CalendarIdentifier } from '@internationalized/date';
 import {
   activateOfflineCapability,
+  beginInitialConfigLoad,
   type Config,
   dispatchConnectivityChanged,
   dispatchPrecacheStaticDependencies,
   type ExtensionDefinition,
+  finishInitialConfigLoad,
   finishRegisteringAllApps,
   fireOpenmrsEvent,
   getConfig,
@@ -158,6 +160,9 @@ async function runShell() {
 }
 
 function handleInitFailure(e: Error) {
+  // Released on the way out too: the initial configs are finished either way, and leaving the gate
+  // closed would strand every `getConfig()` promise that had already been made.
+  finishInitialConfigLoad();
   console.error(e);
   renderFatalErrorPage(e);
 }
@@ -359,45 +364,58 @@ export function run(configUrls: Array<string>) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
-  return import('@openmrs/esm-styleguide/src/index').then(() => {
-    integrateBreakpoints();
-    showToasts();
-    showModals();
-    showNotifications();
-    showActionableNotifications();
-    showSnackbars();
-    showWorkspacesAndActionMenu();
-    subscribeNotificationShown(showNotification);
-    subscribeActionableNotificationShown(showActionableNotification);
-    subscribeToastShown(showToast);
-    subscribeSnackbarShown(showSnackbar);
-    subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
-    setupApiModule();
-    setupHistory();
-    registerCoreExtensions();
-    setupCoreConfig();
+  // Registering the apps teaches the config system every module's schema, which happens well before
+  // the configurations that fill those schemas in are provided. Held until `provideConfigs` has run
+  // so that a `getConfig()` during startup waits for the real configuration instead of resolving,
+  // permanently, against defaults.
+  //
+  // Closed here, after everything that can throw synchronously and immediately before the chain
+  // whose `.catch` reopens it. `handleInitFailure` is what releases the gate on the way out, so a
+  // throw it cannot see is a throw that leaves every `getConfig()` waiting forever, with no failure
+  // page to say why. Nothing between `run()` being called and this line asks for a config.
+  beginInitialConfigLoad();
 
-    const polyfillReady =
-      typeof Intl !== 'undefined' && 'DurationFormat' in Intl
-        ? Promise.resolve()
-        : import(
-            /* webpackChunkName: "intl-durationformat-polyfill" */
-            '@formatjs/intl-durationformat/lib/polyfill'
-          ).then(() => undefined);
+  return import('@openmrs/esm-styleguide/src/index')
+    .then(() => {
+      integrateBreakpoints();
+      showToasts();
+      showModals();
+      showNotifications();
+      showActionableNotifications();
+      showSnackbars();
+      showWorkspacesAndActionMenu();
+      subscribeNotificationShown(showNotification);
+      subscribeActionableNotificationShown(showActionableNotification);
+      subscribeToastShown(showToast);
+      subscribeSnackbarShown(showSnackbar);
+      subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
+      setupApiModule();
+      setupHistory();
+      registerCoreExtensions();
+      setupCoreConfig();
 
-    return polyfillReady
-      .then(setupApps)
-      .then(() => Promise.resolve(finishRegisteringAllApps()))
-      .then(offlineEnabled ? setupOfflineCssClasses : undefined)
-      .then(offlineEnabled ? registerOfflineHandlers : undefined)
-      .then(provideConfigs)
-      .then(runShell)
-      .catch(handleInitFailure)
-      .then(closeLoading)
-      .then(offlineEnabled ? setupOffline : undefined)
-      .then(() => {
-        // intentionally not returned so that processing the "started" event doesn't block
-        fireOpenmrsEvent('started');
-      });
-  });
+      const polyfillReady =
+        typeof Intl !== 'undefined' && 'DurationFormat' in Intl
+          ? Promise.resolve()
+          : import(
+              /* webpackChunkName: "intl-durationformat-polyfill" */
+              '@formatjs/intl-durationformat/lib/polyfill'
+            ).then(() => undefined);
+
+      return polyfillReady
+        .then(setupApps)
+        .then(() => Promise.resolve(finishRegisteringAllApps()))
+        .then(offlineEnabled ? setupOfflineCssClasses : undefined)
+        .then(offlineEnabled ? registerOfflineHandlers : undefined)
+        .then(provideConfigs)
+        .then(finishInitialConfigLoad)
+        .then(runShell);
+    })
+    .catch(handleInitFailure)
+    .then(closeLoading)
+    .then(offlineEnabled ? setupOffline : undefined)
+    .then(() => {
+      // intentionally not returned so that processing the "started" event doesn't block
+      fireOpenmrsEvent('started');
+    });
 }
