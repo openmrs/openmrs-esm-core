@@ -48,6 +48,7 @@ import { isArray, merge, mergeWith } from 'lodash';
 import { inc, parse } from 'semver';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
 import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
+import { ConfigSchemaPlugin, getConfigSchemaPaths } from '@openmrs/config-schema-plugin';
 import rspack, {
   type Compiler,
   CopyRspackPlugin,
@@ -318,6 +319,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const frameworkVersion = getFrameworkVersion();
   const routes = resolve(root, 'src', 'routes.json');
   const hasRoutesDefined = fileExistsSync(routes);
+  // Unlike routes.json, a module with no configuration is ordinary, so nothing here is fatal.
+  const configSchemaPaths = getConfigSchemaPaths(root);
 
   if (!hasRoutesDefined) {
     console.error(
@@ -486,6 +489,11 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         filename,
         exposes: {
           './start': srcFile,
+          // Custom config validators are loaded by name from here, so that the framework can run
+          // them without loading the module itself.
+          ...(configSchemaPaths.configValidatorsExpose
+            ? { './config-validators': configSchemaPaths.configValidatorsExpose }
+            : {}),
         },
         shared: [...Object.keys(peerDependencies), '@openmrs/esm-framework/src/internal'].reduce((obj, depName) => {
           const shareNames = [depName];
@@ -525,6 +533,12 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
             },
           ],
         }),
+      // A hand-written config schema is shipped as-is; otherwise it is read out of the module's
+      // own `startupApp()`. Unlike routes.json it carries no version, since assemble keys it to
+      // the package it ships in.
+      configSchemaPaths.handWrittenSchema
+        ? new CopyRspackPlugin({ patterns: [{ from: configSchemaPaths.handWrittenSchema }] })
+        : new ConfigSchemaPlugin({ moduleName: name, root, srcFile }),
       // The rest of what a remote can borrow from the app shell; see `src/federation-runtime.ts` there.
       // `@module-federation/runtime` and `webpack-bundler-runtime` stay bundled (~14 kB) because they
       // cache a federation instance at module scope: a shared copy hands remotes the app shell's instance,
