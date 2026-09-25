@@ -24,8 +24,10 @@ function triggerOnUnhandledRejection(reason: unknown) {
 }
 
 /**
- * The shapes that reach the global handlers in the wild. `expected` is the description the toast
- * should carry; `null` means the handler's own fallback text is expected instead.
+ * The shapes that can reach `window.onunhandledrejection` as `event.reason`.
+ * For normal browser-reported script errors, `window.onerror` receives a message string;
+ * the other shapes exercise defensive handling. `null` in `expected` means the handler's
+ * fallback text is expected.
  */
 const errorShapes: Array<{ label: string; reason: unknown; expected: string | null }> = [
   { label: 'an Error instance', reason: new Error('something exploded'), expected: 'something exploded' },
