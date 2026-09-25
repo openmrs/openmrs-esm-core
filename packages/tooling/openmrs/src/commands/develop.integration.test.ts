@@ -48,7 +48,7 @@ function defaultArgs(overrides: Partial<DevelopArgs> = {}): DevelopArgs {
     open: false,
     importmap: { type: 'inline', value: '{"imports":{}}' },
     routes: { type: 'inline', value: '{}' },
-    watchedRoutesPaths: {},
+    watchedApps: {},
     spaPath: '/openmrs/spa',
     apiUrl: '/openmrs',
     configUrls: [],
