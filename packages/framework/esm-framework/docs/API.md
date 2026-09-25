@@ -151,6 +151,7 @@
 - [ExtensionSlotProps](interfaces/ExtensionSlotProps.md)
 - [~~useAssignedExtensionIds~~](functions/useAssignedExtensionIds.md)
 - [useAssignedExtensions](functions/useAssignedExtensions.md)
+- [useExtensionContext](functions/useExtensionContext.md)
 - [useExtensionSlotMeta](functions/useExtensionSlotMeta.md)
 - [useExtensionSlotStore](functions/useExtensionSlotStore.md)
 - [useRenderableExtensions](functions/useRenderableExtensions.md)

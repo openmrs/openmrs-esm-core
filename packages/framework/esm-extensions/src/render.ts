@@ -451,6 +451,7 @@ export async function renderExtension(
               extensionSlotName,
               extensionSlotModuleName,
               extensionModuleName: moduleName,
+              extensionMeta: meta,
             },
             domElement,
           },

@@ -4,6 +4,7 @@ import { openmrsFetch } from '@openmrs/esm-api/mock';
 import { configSchema } from '@openmrs/esm-config/mock';
 import { getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
+import { ComponentContext as realComponentContext } from './src/ComponentContext';
 import { isDesktop as realIsDesktop } from './src/useLayoutType';
 import { useFhirFetchAll as realUseFhirFetchAll } from './src/useFhirFetchAll';
 import { useFhirInfinite as realUseFhirInfinite } from './src/useFhirInfinite';
@@ -19,7 +20,7 @@ export { RenderIfValueIsTruthy } from './src/RenderIfValueIsTruthy';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
 import * as utils from '@openmrs/esm-utils';
 
-export const ComponentContext = React.createContext(null);
+export const ComponentContext = realComponentContext;
 
 export const openmrsComponentDecorator = vi.fn().mockImplementation(() => (component: React.ReactNode) => component);
 
@@ -30,6 +31,8 @@ export const useAttachments = vi.fn(() => ({
   mutate: vi.fn(),
   isValidating: true,
 }));
+
+export const useExtensionContext = vi.fn(() => React.useContext(ComponentContext).extension);
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 export const useConfig = vi.fn<typeof import('@openmrs/esm-react-utils').useConfig>(

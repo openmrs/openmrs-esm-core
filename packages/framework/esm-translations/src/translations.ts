@@ -79,6 +79,7 @@ export const coreTranslations = {
   loading: 'Loading',
   localVersion: 'Local Build',
   male: 'Male',
+  navigateNonHttp: 'Could not navigate to the requested page as it is not a safe URL',
   noResultsToDisplay: 'No results to display',
   notAvailable: 'Not available',
   other: 'Other',
