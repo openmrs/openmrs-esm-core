@@ -3105,7 +3105,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/config-schema-plugin@workspace:packages/tooling/config-schema-plugin":
+"@openmrs/config-schema-plugin@workspace:*, @openmrs/config-schema-plugin@workspace:packages/tooling/config-schema-plugin":
   version: 0.0.0-use.local
   resolution: "@openmrs/config-schema-plugin@workspace:packages/tooling/config-schema-plugin"
   dependencies:
@@ -3936,6 +3936,7 @@ __metadata:
   dependencies:
     "@module-federation/enhanced": "npm:2.8.1"
     "@openmrs/carbon-css-guard": "workspace:*"
+    "@openmrs/config-schema-plugin": "workspace:*"
     "@rspack/cli": "npm:1.7.9"
     "@rspack/core": "npm:1.7.9"
     "@swc/core": "npm:1.15.21"
@@ -4020,6 +4021,7 @@ __metadata:
   dependencies:
     "@module-federation/enhanced": "npm:2.8.1"
     "@openmrs/carbon-css-guard": "workspace:*"
+    "@openmrs/config-schema-plugin": "workspace:*"
     "@swc/core": "npm:1.15.21"
     "@types/lodash-es": "npm:4.17.12"
     "@types/semver": "npm:^7.7.3"
