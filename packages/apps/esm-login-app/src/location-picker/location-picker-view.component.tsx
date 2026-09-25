@@ -4,6 +4,7 @@ import { useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   getCoreTranslation,
+  interpolateUrl,
   LocationPicker,
   navigate,
   setSessionLocation,
@@ -22,9 +23,13 @@ import styles from './location-picker.scss';
  * Only same-origin URLs are permitted, preventing open-redirect attacks after login.
  */
 export function isSafeReturnUrl(url: string): boolean {
-  if (!url) return false;
+  if (!url) {
+    return false;
+  }
+
   try {
-    const parsed = new URL(url, window.location.origin);
+    const interpolatedUrl = interpolateUrl(url);
+    const parsed = new URL(interpolatedUrl, window.location.origin);
     return parsed.origin === window.location.origin;
   } catch {
     return false;
