@@ -3,6 +3,7 @@ import { workspace2Store, type WorkspaceStoreState2 } from '@openmrs/esm-extensi
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
 import { useStore } from '@openmrs/esm-react-utils';
 import { createLocalStore, type StoreApi } from '@openmrs/esm-state';
+import { shallowEqual } from '@openmrs/esm-utils';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import { createExportedWorkspaceWindow } from './workspace2';
 import { createLocalWindowActions, type ExportedWorkspaceState } from './workspace-window-actions';
@@ -23,19 +24,17 @@ export interface ExportedWorkspaceWindowInfo {
 }
 
 export interface ExportedWorkspaceProps {
-  /** The name of the workspace to open. */
+  /**
+   * The name of the workspace to open. Changing it (like changing `workspaceProps`, `windowProps` or
+   * `groupProps`) discards the current workspaces, without prompting for unsaved changes, and opens
+   * `name` afresh. To force a fresh instance without changing any of these, change the React `key`.
+   */
   name: string;
 
   /**
-   * Identifies the workspace instance being shown. Changing it (like changing `name`) discards the
-   * current workspaces, without prompting for unsaved changes, and opens `name` afresh.
-   *
-   * Note: this is named `instanceKey` rather than `key` because `key` is reserved by React and never
-   * reaches the component.
+   * The props passed into the workspace. Changing these (compared shallowly), or `windowProps` /
+   * `groupProps`, discards the current workspaces and opens `name` afresh with the new props.
    */
-  instanceKey: string;
-
-  /** The props passed into the workspace. */
   workspaceProps: Record<string, any>;
   windowProps?: Record<string, any>;
   groupProps?: Record<string, any>;
@@ -47,6 +46,8 @@ export interface ExportedWorkspaceProps {
 // module-level so the store subscription's snapshot getter stays stable across renders
 const selectRegisteredWorkspacesByName = (state: WorkspaceStoreState2) => state.registeredWorkspacesByName;
 
+type SeedInputs = Pick<ExportedWorkspaceProps, 'name' | 'workspaceProps' | 'windowProps' | 'groupProps'>;
+
 /**
  * Renders the content of a registered workspace (the `children` of its `<Workspace2>`) within its own
  * DOM subtree, independent of the real global workspace window system. It emulates the workspace
@@ -57,7 +58,6 @@ const selectRegisteredWorkspacesByName = (state: WorkspaceStoreState2) => state.
  */
 export const ExportedWorkspace: React.FC<ExportedWorkspaceProps> = ({
   name,
-  instanceKey,
   workspaceProps,
   windowProps,
   groupProps,
@@ -66,36 +66,41 @@ export const ExportedWorkspace: React.FC<ExportedWorkspaceProps> = ({
   // Reactive so the seed effect below retries when `name` registers after this component mounts.
   const registeredWorkspacesByName = useStore(workspace2Store, selectRegisteredWorkspacesByName);
 
+  const seedInputs: SeedInputs = { name, workspaceProps, windowProps, groupProps };
   const storeRef = useRef<StoreApi<ExportedWorkspaceState>>();
-  // Tracks the (instanceKey, name) pair this instance has already seeded, so we re-seed when the
-  // caller changes either, but do NOT clobber the user's own navigation/close of the current one.
-  const seededKeyRef = useRef<string | null>(null);
+  // The inputs this instance has already seeded, so we re-seed when the caller changes any of them,
+  // but do NOT clobber the user's own navigation/close of the current one.
+  const seededInputsRef = useRef<SeedInputs | null>(null);
   if (!storeRef.current) {
     const openedWindow = createExportedWorkspaceWindow(name, workspaceProps, windowProps);
     storeRef.current = createLocalStore<ExportedWorkspaceState>({ openedWindow, groupProps: groupProps ?? null });
     if (openedWindow) {
-      seededKeyRef.current = `${instanceKey}\u0000${name}`;
+      seededInputsRef.current = seedInputs;
     }
   }
   const store = storeRef.current;
 
   useEffect(() => {
-    const key = `${instanceKey}\u0000${name}`;
-    if (seededKeyRef.current === key) {
-      // Already seeded this (instanceKey, name); leave the user's navigation/close alone.
+    const seeded = seededInputsRef.current;
+    // Props are compared shallowly so that callers passing inline object literals do not re-seed on
+    // every render.
+    if (
+      seeded &&
+      seeded.name === name &&
+      shallowEqual(seeded.workspaceProps, workspaceProps) &&
+      shallowEqual(seeded.windowProps, windowProps) &&
+      shallowEqual(seeded.groupProps, groupProps)
+    ) {
+      // Already seeded these inputs; leave the user's navigation/close alone.
       return;
     }
-    // When `name` is not registered yet, this shows nothing and leaves the key unmarked, so we seed
-    // once it registers. Replacing the window deliberately skips the unsaved-changes prompt: per the
-    // RFC, changing `name`/`instanceKey` (like unmounting) bypasses it.
+    // When `name` is not registered yet, this shows nothing and leaves the inputs unmarked, so we seed
+    // once it registers. Changes to props resets the state (like navigation) and bypassed the unsaved-changes prompt
     const openedWindow = createExportedWorkspaceWindow(name, workspaceProps, windowProps);
     store.setState({ openedWindow, groupProps: groupProps ?? null }, true);
-    // Clear the key when nothing was seeded, so switching back to a previously seeded key re-seeds.
-    seededKeyRef.current = openedWindow ? key : null;
-    // `workspaceProps`/`windowProps`/`groupProps` are intentionally read but not depended on: prop
-    // changes should not reset an active window, only an instanceKey/name change (or first
-    // registration) should.
-  }, [instanceKey, name, registeredWorkspacesByName, store]);
+    // Clear the inputs when nothing was seeded, so switching back to previously seeded inputs re-seeds.
+    seededInputsRef.current = openedWindow ? seedInputs : null;
+  }, [name, workspaceProps, windowProps, groupProps, registeredWorkspacesByName, store]);
 
   const actions = useMemo(() => createLocalWindowActions(store), [store]);
   const { openedWindow, groupProps: openedGroupProps } = useStore(store);

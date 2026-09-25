@@ -77,7 +77,7 @@ describe('<ExportedWorkspace>', () => {
 
   it('renders the named workspace content when the workspace is registered', async () => {
     registerWorkspaces();
-    render(<ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{ patientUuid: 'p1' }} />);
+    render(<ExportedWorkspace name="foo-workspace" workspaceProps={{ patientUuid: 'p1' }} />);
 
     expect(await screen.findByTestId('parcel')).toHaveTextContent('foo-workspace');
     expect(parcelProps['foo-workspace'].workspaceProps).toEqual({ patientUuid: 'p1' });
@@ -85,7 +85,7 @@ describe('<ExportedWorkspace>', () => {
 
   it('renders nothing until the workspace registers, then seeds it', async () => {
     // Registered after mount, as can happen since <ExportedWorkspace> is declarative.
-    render(<ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} />);
+    render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} />);
     expect(screen.queryByTestId('parcel')).not.toBeInTheDocument();
 
     await act(async () => {
@@ -97,28 +97,28 @@ describe('<ExportedWorkspace>', () => {
 
   it('re-seeds with the new workspace when `name` changes', async () => {
     registerWorkspaces();
-    const { rerender } = render(<ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} />);
+    const { rerender } = render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} />);
     expect(await screen.findByTestId('parcel')).toHaveTextContent('foo-workspace');
 
-    rerender(<ExportedWorkspace name="bar-workspace" instanceKey="a" workspaceProps={{}} />);
+    rerender(<ExportedWorkspace name="bar-workspace" workspaceProps={{}} />);
     await waitFor(() => expect(renderedWorkspaceNames()).toEqual(['bar-workspace']));
   });
 
   it('re-seeds when `name` switches to an unregistered workspace and back', async () => {
     registerWorkspaces();
-    const { rerender } = render(<ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} />);
+    const { rerender } = render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} />);
     expect(await screen.findByTestId('parcel')).toHaveTextContent('foo-workspace');
 
-    rerender(<ExportedWorkspace name="unregistered-workspace" instanceKey="a" workspaceProps={{}} />);
+    rerender(<ExportedWorkspace name="unregistered-workspace" workspaceProps={{}} />);
     await waitFor(() => expect(renderedWorkspaceNames()).toEqual([]));
 
-    rerender(<ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} />);
+    rerender(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} />);
     await waitFor(() => expect(renderedWorkspaceNames()).toEqual(['foo-workspace']));
   });
 
   it('navigates child workspaces within itself, without touching the global window system', async () => {
     registerWorkspaces();
-    render(<ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} />);
+    render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} />);
     await screen.findByTestId('parcel');
 
     await act(async () => {
@@ -140,9 +140,7 @@ describe('<ExportedWorkspace>', () => {
   it('reports window state through onWindowChanged', async () => {
     registerWorkspaces();
     const onWindowChanged = vi.fn<(info: ExportedWorkspaceWindowInfo) => void>();
-    render(
-      <ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} onWindowChanged={onWindowChanged} />,
-    );
+    render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} onWindowChanged={onWindowChanged} />);
 
     await waitFor(() =>
       expect(onWindowChanged).toHaveBeenLastCalledWith({
@@ -185,7 +183,7 @@ describe('<ExportedWorkspace>', () => {
 
   it('prompts before closing a workspace with unsaved changes from within it', async () => {
     registerWorkspaces();
-    render(<ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} />);
+    render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} />);
     await screen.findByTestId('parcel');
 
     await act(async () => {
@@ -223,9 +221,9 @@ describe('<ExportedWorkspace>', () => {
     await waitFor(() => expect(renderedWorkspaceNames()).toEqual(['foo-workspace']));
   });
 
-  it('discards its child workspaces, without prompting, when `instanceKey` changes', async () => {
+  it('discards its child workspaces, without prompting, when remounted with a new React `key`', async () => {
     registerWorkspaces();
-    const { rerender } = render(<ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} />);
+    const { rerender } = render(<ExportedWorkspace name="foo-workspace" key="a" workspaceProps={{}} />);
     await screen.findByTestId('parcel');
 
     await act(async () => {
@@ -236,9 +234,54 @@ describe('<ExportedWorkspace>', () => {
       parcelProps['bar-workspace'].setHasUnsavedChanges(true);
     });
 
-    rerender(<ExportedWorkspace name="foo-workspace" instanceKey="b" workspaceProps={{}} />);
+    rerender(<ExportedWorkspace name="foo-workspace" key="b" workspaceProps={{}} />);
     await waitFor(() => expect(renderedWorkspaceNames()).toEqual(['foo-workspace']));
     expect(mockShowModal).not.toHaveBeenCalled();
+  });
+
+  it('re-seeds with the new props, discarding its child workspaces, when `workspaceProps` change', async () => {
+    registerWorkspaces();
+    const { rerender } = render(<ExportedWorkspace name="foo-workspace" workspaceProps={{ patientUuid: 'p1' }} />);
+    await screen.findByTestId('parcel');
+
+    await act(async () => {
+      await parcelProps['foo-workspace'].launchChildWorkspace('bar-workspace');
+    });
+    await waitFor(() => expect(renderedWorkspaceNames()).toEqual(['foo-workspace', 'bar-workspace']));
+
+    rerender(<ExportedWorkspace name="foo-workspace" workspaceProps={{ patientUuid: 'p2' }} />);
+    await waitFor(() => expect(renderedWorkspaceNames()).toEqual(['foo-workspace']));
+    expect(parcelProps['foo-workspace'].workspaceProps).toEqual({ patientUuid: 'p2' });
+    expect(mockShowModal).not.toHaveBeenCalled();
+  });
+
+  it('re-seeds with the new props when `windowProps` or `groupProps` change', async () => {
+    registerWorkspaces();
+    const { rerender } = render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} windowProps={{ w: 1 }} />);
+    await screen.findByTestId('parcel');
+    expect(parcelProps['foo-workspace'].windowProps).toEqual({ w: 1 });
+
+    rerender(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} windowProps={{ w: 2 }} />);
+    await waitFor(() => expect(parcelProps['foo-workspace'].windowProps).toEqual({ w: 2 }));
+
+    rerender(
+      <ExportedWorkspace name="foo-workspace" workspaceProps={{}} windowProps={{ w: 2 }} groupProps={{ g: 1 }} />,
+    );
+    await waitFor(() => expect(parcelProps['foo-workspace'].groupProps).toEqual({ g: 1 }));
+  });
+
+  it('keeps its child workspaces when rerendered with shallowly-equal props', async () => {
+    registerWorkspaces();
+    const { rerender } = render(<ExportedWorkspace name="foo-workspace" workspaceProps={{ patientUuid: 'p1' }} />);
+    await screen.findByTestId('parcel');
+
+    await act(async () => {
+      await parcelProps['foo-workspace'].launchChildWorkspace('bar-workspace');
+    });
+    await waitFor(() => expect(renderedWorkspaceNames()).toEqual(['foo-workspace', 'bar-workspace']));
+
+    rerender(<ExportedWorkspace name="foo-workspace" workspaceProps={{ patientUuid: 'p1' }} />);
+    expect(renderedWorkspaceNames()).toEqual(['foo-workspace', 'bar-workspace']);
   });
 
   it('keeps its state independent of the same workspace opened in the global window system', async () => {
@@ -263,9 +306,7 @@ describe('<ExportedWorkspace>', () => {
       ],
     });
     const onWindowChanged = vi.fn<(info: ExportedWorkspaceWindowInfo) => void>();
-    render(
-      <ExportedWorkspace name="foo-workspace" instanceKey="a" workspaceProps={{}} onWindowChanged={onWindowChanged} />,
-    );
+    render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} onWindowChanged={onWindowChanged} />);
     await screen.findByTestId('parcel');
 
     act(() => {

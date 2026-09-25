@@ -116,6 +116,7 @@ export const ActionMenuButton2 = vi.fn(({ label, tagContent, icon }) => (
 ));
 export const ActionMenu = vi.fn(() => <div>Action Menu</div>);
 export const WorkspaceContainer = vi.fn(() => <div>Workspace Container</div>);
+export const ExportedWorkspace = vi.fn(() => <div>Exported Workspace</div>);
 export const closeWorkspace = vi.fn();
 export const launchWorkspace = vi.fn();
 export const launchWorkspace2 = vi.fn();
