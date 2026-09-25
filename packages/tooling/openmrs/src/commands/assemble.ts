@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 import merge from 'lodash/merge.js';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
-import { resolve, dirname, basename } from 'node:path';
+import { resolve, dirname, basename, sep } from 'node:path';
 import { Readable } from 'node:stream';
 import { checkbox, input } from '@inquirer/prompts';
 import npmRegistryFetch from 'npm-registry-fetch';
@@ -195,12 +195,51 @@ async function downloadPackage(
   }
 }
 
+/**
+ * Resolves a file from inside a package tarball against the directory we extract that package into,
+ * and rejects anything that lands outside it.
+ *
+ * @param outputDir The directory the module is being extracted into
+ * @param fileName The tarball-supplied path of the file, relative to `outputDir`
+ * @returns The absolute path to write the file to
+ */
+function resolveExtractedFile(outputDir: string, fileName: string): string {
+  const root = resolve(outputDir);
+  const targetFile = resolve(root, fileName);
+
+  if (!targetFile.startsWith(root + sep)) {
+    throw new Error(
+      `Refusing to extract "${fileName}" to ${targetFile}, which is outside of ${root}. This package appears to be malicious.`,
+    );
+  }
+
+  return targetFile;
+}
+
+/**
+ * Validates the version a package declares for itself before we build paths out of it.
+ *
+ * @param version The version as declared in the package's package.json
+ * @param packageDir The directory prefix the package is being extracted to, used for the error
+ * @returns The version, safe to use as part of a path
+ */
+function validateVersion(version: unknown, packageDir: string): string {
+  if (semver.valid(version as string) === null) {
+    throw new Error(
+      `The package extracted to ${packageDir} declares the version "${version}", which is not a valid semver version. ` +
+        `Refusing to assemble it. This package appears to be malicious.`,
+    );
+  }
+
+  return version as string;
+}
+
 async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string, string]> {
   const packageRoot = 'package';
   const rs = Readable.from(buffer);
   const files = await untar(rs);
   const packageJson = JSON.parse(files[`${packageRoot}/package.json`].toString('utf8'));
-  const version = (packageJson.version as string) ?? '0.0.0';
+  const version = validateVersion(packageJson.version ?? '0.0.0', targetDir);
   const entryModule = packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
   const sourceDir = dirname(entryModule);
@@ -214,17 +253,38 @@ async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string,
 
   await Promise.all(
     Object.keys(files)
-      .filter((m) => m.startsWith(sourcePrefix))
+      // directory entries carry no content and are created by the mkdir() below, so writing them
+      // out would only ever mean writing an empty file over a directory
+      .filter((m) => m.startsWith(sourcePrefix) && !m.endsWith('/'))
       .map(async (m) => {
         const content = files[m];
         const fileName = m.replace(sourcePrefix, '');
-        const targetFile = resolve(outputDir, fileName);
+        const targetFile = resolveExtractedFile(outputDir, fileName);
         await mkdir(dirname(targetFile), { recursive: true });
         await writeFile(targetFile, content);
       }),
   );
 
   return [fileName, version];
+}
+
+/**
+ * Derives the directory name a frontend module is extracted into from the name it is listed under
+ * in the assemble config.
+ *
+ * @param esmName The name the module is listed under in the assemble config
+ * @returns The directory name, relative to the assembly target
+ */
+function toModuleDirName(esmName: string): string {
+  const baseDirName = `${esmName}`.replace(/^@/, '').replace(/\//, '-');
+
+  if (!/^[^/\\]+$/.test(baseDirName) || baseDirName === '.' || baseDirName === '..') {
+    throw new Error(
+      `"${esmName}" cannot be used as a frontend module name because "${baseDirName}" is not a valid directory name.`,
+    );
+  }
+
+  return baseDirName;
 }
 
 export async function runAssemble(args: AssembleArgs) {
@@ -268,9 +328,10 @@ export async function runAssemble(args: AssembleArgs) {
   await Promise.all(
     Object.keys(frontendModules).map(async (esmName) => {
       const esmVersion = frontendModules[esmName];
+      // derived before anything is downloaded so a bad name fails the run without any network I/O
+      const baseDirName = toModuleDirName(esmName);
       const tgzBuffer = await downloadPackage(esmName, esmVersion, process.cwd(), npmConf);
 
-      const baseDirName = `${esmName}`.replace(/^@/, '').replace(/\//, '-');
       const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, baseDirName));
       const dirName = `${baseDirName}-${version}`;
 

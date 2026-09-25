@@ -595,6 +595,84 @@ describe('runAssemble', () => {
     });
   });
 
+  // ─── Extraction safety ──────────────────────────────────────────────────────
+
+  describe('extraction safety', () => {
+    it('fails the run when a tarball entry resolves outside the module output directory', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0');
+      mockUntar.mockResolvedValue({
+        ...fakeUntarResult('@openmrs/esm-test-app', '1.0.0'),
+        'package/dist/../../../../evil.js': Buffer.from('pwned'),
+      });
+
+      await expect(runAssemble(defaultArgs())).rejects.toThrow(/Refusing to extract/);
+
+      expect(mockWriteFile).not.toHaveBeenCalledWith(
+        expect.stringContaining('evil.js'),
+        expect.anything(),
+        expect.anything(),
+      );
+      expect(mockWriteFile).not.toHaveBeenCalledWith(expect.stringContaining('evil.js'), expect.anything());
+    });
+
+    it('fails the run, without downloading anything, when a module name is not a valid directory name', async () => {
+      const config = { frontendModules: { '../../../evil': '1.0.0' }, publicUrl: '.' };
+      mockExistsSync.mockReturnValue(true);
+      mockReadFile.mockResolvedValue(JSON.stringify(config));
+
+      await expect(runAssemble(defaultArgs())).rejects.toThrow(/is not a valid directory name/);
+
+      expect(mockPacoteManifest).not.toHaveBeenCalled();
+    });
+
+    it('fails the run when the package declares a version that escapes the target directory', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0');
+      mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-test-app', '../../../../tmp/evil'));
+
+      await expect(runAssemble(defaultArgs())).rejects.toThrow(/not a valid semver version/);
+
+      expect(mockWriteFile).not.toHaveBeenCalledWith(
+        expect.stringContaining('evil'),
+        expect.anything(),
+        expect.anything(),
+      );
+      expect(mockWriteFile).not.toHaveBeenCalledWith(expect.stringContaining('evil'), expect.anything());
+    });
+
+    it('fails the run when the package declares a version that is not valid semver', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0');
+      mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-test-app', 'nightly'));
+
+      await expect(runAssemble(defaultArgs())).rejects.toThrow(/not a valid semver version/);
+    });
+
+    it('extracts prerelease and build-metadata versions', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0');
+      mockUntar.mockResolvedValue(fakeUntarResult('@openmrs/esm-test-app', '1.0.0-pre.3+build.7'));
+
+      await runAssemble(defaultArgs());
+
+      const writeCall = mockWriteFile.mock.calls.find(([path]) => String(path).endsWith('importmap.json'));
+      const importmap = JSON.parse(writeCall![1] as string);
+      expect(importmap.imports['@openmrs/esm-test-app']).toBe('./openmrs-esm-test-app-1.0.0-pre.3+build.7/main.js');
+    });
+
+    it('extracts entries whose names contain no traversal', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0');
+      mockUntar.mockResolvedValue({
+        ...fakeUntarResult('@openmrs/esm-test-app', '1.0.0'),
+        'package/dist/nested/chunk.js': Buffer.from('chunk'),
+      });
+
+      await runAssemble(defaultArgs());
+
+      expect(mockWriteFile).toHaveBeenCalledWith(
+        resolve('/tmp/test-output', 'openmrs-esm-test-app-1.0.0', 'nested/chunk.js'),
+        expect.anything(),
+      );
+    });
+  });
+
   // ─── Fresh mode ─────────────────────────────────────────────────────────────
 
   describe('fresh mode', () => {
