@@ -33,8 +33,8 @@
   "dependencies": {
     "@module-federation/enhanced": "2.8.1",
     "@openmrs/carbon-css-guard": "workspace:*",
-    "@rspack/cli": "1.7.9",
-    "@rspack/core": "1.7.9",
+    "@rspack/cli": "2.2.6",
+    "@rspack/core": "2.2.6",
     "@swc/core": "1.15.21",
     "browserslist": "4.28.9",
     "browserslist-config-openmrs": "^1.0.1",
