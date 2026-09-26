@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import {
   userHasAccess,
   getCurrentUser,
+  getSessionStore,
   refetchCurrentUser,
+  refreshSession,
   clearCurrentUser,
   getLoggedInUser,
   setUserLanguage,
@@ -54,6 +56,15 @@ function createMockFetchResponse<T>(data: T, ok = true): any {
     text: vi.fn(),
   };
 }
+
+// Lets a request settle, along with the `finally` that releases it as the shared request.
+const settleRequests = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+
+const mockSession: Session = {
+  authenticated: true,
+  sessionId: 'test-session',
+  user: {} as LoggedInUser,
+};
 
 describe('userHasAccess', () => {
   const createPrivilege = (display: string): Privilege => ({
@@ -743,5 +754,132 @@ describe('setUserProperties', () => {
         signal: expect.any(AbortSignal),
       }),
     );
+  });
+});
+
+describe('sharing the session request', () => {
+  beforeEach(async () => {
+    sessionStore.setState({ loaded: false, session: null });
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(mockSession));
+    // A request left in flight by an earlier test would be shared with this one.
+    await settleRequests();
+    mockOpenmrsFetch.mockClear();
+  });
+
+  it('should make one request for callers that ask before the first response arrives', async () => {
+    getSessionStore();
+    getSessionStore();
+    getCurrentUser();
+    getCurrentUser({ includeAuthStatus: false });
+
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+
+    await settleRequests();
+  });
+
+  it('should refetch a stale session but not one fetched within the last minute', async () => {
+    const now = vi.spyOn(Date, 'now').mockReturnValue(1_000_000);
+
+    getSessionStore();
+    await settleRequests();
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+
+    now.mockReturnValue(1_000_000 + 59 * 1000);
+    getSessionStore();
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+
+    now.mockReturnValue(1_000_000 + 61 * 1000);
+    getSessionStore();
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(2);
+
+    await settleRequests();
+    now.mockRestore();
+  });
+
+  it('should send a login while a refresh is in flight', async () => {
+    getSessionStore();
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+
+    await refetchCurrentUser('testuser', 'testpass');
+
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(2);
+    expect(mockOpenmrsFetch).toHaveBeenLastCalledWith(
+      expect.stringContaining('/session'),
+      expect.objectContaining({
+        headers: {
+          Authorization: `Basic ${btoa('testuser:testpass')}`,
+        },
+      }),
+    );
+
+    await settleRequests();
+  });
+
+  it('should let a later caller retry after a failed request', async () => {
+    mockOpenmrsFetch.mockRejectedValueOnce(new Error('Network error'));
+
+    await expect(refreshSession()).rejects.toMatchObject({ loaded: false, session: null });
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+
+    getSessionStore();
+
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(2);
+
+    await settleRequests();
+  });
+});
+
+describe('applying session responses in order', () => {
+  // Hands back a response the test answers itself, to control the order responses arrive in.
+  function deferResponse() {
+    let answer: (response: unknown) => void;
+    mockOpenmrsFetch.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          answer = resolve;
+        }),
+    );
+
+    return (response: unknown) => answer(response);
+  }
+
+  beforeEach(async () => {
+    sessionStore.setState({ loaded: false, session: null });
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(mockSession));
+    await settleRequests();
+    mockOpenmrsFetch.mockClear();
+  });
+
+  it('should not let a refresh that answers after a login overwrite it', async () => {
+    const answerRefresh = deferResponse();
+
+    getSessionStore();
+
+    const loggedIn: Session = {
+      authenticated: true,
+      sessionId: 'logged-in-session',
+      user: {} as LoggedInUser,
+    };
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(loggedIn));
+
+    await refetchCurrentUser('testuser', 'testpass');
+    expect(sessionStore.getState().session).toEqual(loggedIn);
+
+    answerRefresh(createMockFetchResponse({ authenticated: false, sessionId: 'anonymous-session' }));
+    await settleRequests();
+
+    expect(sessionStore.getState().session).toEqual(loggedIn);
+  });
+
+  it('should not let a refresh that answers after a logout restore the session', async () => {
+    const answerRefresh = deferResponse();
+
+    getSessionStore();
+    clearCurrentUser();
+
+    answerRefresh(createMockFetchResponse(mockSession));
+    await settleRequests();
+
+    expect(sessionStore.getState().session).toEqual({ authenticated: false, sessionId: '' });
   });
 });
