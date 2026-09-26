@@ -115,15 +115,11 @@ export const ActionMenuButton2 = vi.fn(({ label, tagContent, icon }) => (
   </button>
 ));
 export const ActionMenu = vi.fn(() => <div>Action Menu</div>);
-export const WorkspaceContainer = vi.fn(() => <div>Workspace Container</div>);
 export const closeWorkspace = vi.fn();
-export const launchWorkspace = vi.fn();
 export const launchWorkspace2 = vi.fn();
-export const launchWorkspaceGroup = vi.fn();
 export const launchWorkspaceGroup2 = vi.fn();
 export const closeWorkspaceGroup2 = vi.fn();
 export const navigateAndLaunchWorkspace = vi.fn();
-export const useWorkspaces = vi.fn();
 export const useWorkspace2Context = vi.fn();
 
 export const OpenmrsDatePicker = vi.fn(({ id, labelText, value, onChange, invalid, isInvalid, invalidText }) => (

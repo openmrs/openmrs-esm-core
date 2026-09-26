@@ -2,8 +2,6 @@ import {
   attach,
   registerExtension,
   registerModal,
-  registerWorkspace,
-  registerWorkspaceGroup,
   registerWorkspaceGroups2,
   registerWorkspaces2,
   registerWorkspaceWindows2,
@@ -12,9 +10,7 @@ import {
   type ExtensionDefinition,
   type FeatureFlagDefinition,
   type ModalDefinition,
-  type WorkspaceDefinition,
   type WorkspaceDefinition2,
-  type WorkspaceGroupDefinition,
   type WorkspaceGroupDefinition2,
   type WorkspaceWindowDefinition2,
 } from '@openmrs/esm-globals';
@@ -106,87 +102,6 @@ To fix this, ensure that you define a 'component' field inside the modal definit
     name,
     moduleName: appName,
     load: () => loadLifeCycles(appName, modal.component),
-  });
-}
-
-/**
- * This function registers a workspace definition with the framework so that it can be launched.
- *
- * @param appName The name of the app defining this workspace
- * @param workspace An object that describes the workspace, derived from `routes.json`
- */
-export function tryRegisterWorkspace(appName: string, workspace: WorkspaceDefinition) {
-  const name = workspace.name;
-  if (!name) {
-    console.error(
-      `A workspace definition in ${appName} is missing a name and thus cannot be registered.
-To fix this, ensure that you define the "name" field inside the workspace definition.`,
-      workspace,
-    );
-    return;
-  }
-
-  const title = workspace.title;
-  if (!title) {
-    console.error(
-      `A workspace definition in ${appName} is missing a title and thus cannot be registered.
-To fix this, ensure that you define the "title" field inside the workspace definition.`,
-      workspace,
-    );
-    return;
-  }
-
-  if (!workspace.component) {
-    console.error(
-      `The workspace ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
-To fix this, ensure that you define a 'component' field inside the workspace definition.`,
-      workspace,
-    );
-    return;
-  }
-
-  registerWorkspace({
-    name,
-    title,
-    component: workspace.component,
-    moduleName: appName,
-    type: workspace.type,
-    canHide: workspace.canHide,
-    canMaximize: workspace.canMaximize,
-    width: workspace.width,
-    preferredWindowSize: workspace.preferredWindowSize,
-    groups: workspace.groups,
-    load: () => loadLifeCycles(appName, workspace.component),
-  });
-
-  for (const group of workspace.groups || []) {
-    registerWorkspaceGroup({
-      name: group,
-      members: [name],
-    });
-  }
-}
-
-/**
- * This function registers a workspace group definition with the framework so that it can be launched.
- *
- * @param appName The name of the app defining this workspace
- * @param workspace An object that describes the workspace, derived from `routes.json`
- */
-export function tryRegisterWorkspaceGroup(appName: string, workspaceGroup: WorkspaceGroupDefinition) {
-  const name = workspaceGroup.name;
-  if (!name) {
-    console.error(
-      `A workspace group definition in ${appName} is missing a name and thus cannot be registered.
-To fix this, ensure that you define the "name" field inside the workspace definition.`,
-      workspaceGroup,
-    );
-    return;
-  }
-
-  registerWorkspaceGroup({
-    name,
-    members: workspaceGroup.members ?? [],
   });
 }
 
