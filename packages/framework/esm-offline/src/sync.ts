@@ -145,7 +145,7 @@ export async function runSynchronization() {
 
     // we try until the queue is depleted, but no more than queue.length tries.
     for (let iter = 0; iter < maxIter && handlerQueue.length > 0; iter++) {
-      for (let i = handlerQueue.length; i--; ) {
+      for (let i = handlerQueue.length; i--;) {
         const [name, handler] = handlerQueue[i];
         const deps = handler.dependsOn.map((dep) => promises[dep]);
 

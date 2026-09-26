@@ -28,8 +28,7 @@ export interface ExtensionSlotBaseProps {
 }
 
 export interface ExtensionSlotProps
-  extends ExtensionSlotBaseProps,
-    Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+  extends ExtensionSlotBaseProps, Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   children?: React.ReactNode | ((extension: AssignedExtension, state?: Record<string, unknown>) => React.ReactNode);
 }
 
