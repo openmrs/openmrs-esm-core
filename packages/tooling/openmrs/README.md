@@ -93,7 +93,6 @@ openmrs develop --sources 'packages/esm-*-app'
 | `--api-url` | `/openmrs/` | The path API requests go to. Requests under it are proxied to the backend. |
 | `--add-cookie` | | Extra cookies to send with proxied requests. |
 | `--no-open` | | Don't open the app in the browser. |
-| `--support-offline` | `false` | Install the service worker for offline support. |
 | `--use-rspack` | | Always use the rspack dev server. The module then needs an `rspack.config.js`. |
 
 ### Custom start commands
@@ -173,7 +172,7 @@ The config file can also have:
 
 ### `openmrs build`
 
-`build` compiles the app shell (its `index.html`, the framework bundle and the styles, plus a service worker with offline support on) into the target directory, next to what `assemble` wrote. Then it writes gzip and brotli copies of the text files in that directory, including the modules from `assemble`.
+`build` compiles the app shell (its `index.html`, the framework bundle and the styles) into the target directory, next to what `assemble` wrote. Then it writes gzip and brotli copies of the text files in that directory, including the modules from `assemble`.
 
 Its settings can come from flags or from a build config file:
 
@@ -185,8 +184,7 @@ Its settings can come from flags or from a build config file:
   "routes": "/openmrs/spa/routes.registry.json",
   "configUrls": ["/openmrs/spa/config.json"],
   "pageTitle": "My Clinic",
-  "defaultLocale": "en",
-  "supportOffline": false
+  "defaultLocale": "en"
 }
 ```
 
@@ -202,7 +200,6 @@ Its settings can come from flags or from a build config file:
 | `--config-path` | `configPaths` | | Local frontend configuration files to copy into the target and load when the app starts. Can be repeated. |
 | `--page-title` | `pageTitle` | `OpenMRS` | The title shown in the browser tab. |
 | `--default-locale` | `defaultLocale` | `en` | The default locale, like `en` or `en_GB`. |
-| `--support-offline` | `supportOffline` | `false` | Include the service worker for offline support. |
 | `--env` | `env` | `production` | The environment to build for. |
 | `--asset` | | | CSS or JS files to copy into `assets/` and include in `index.html`. Can be repeated. |
 | `--fresh` | | | Empty the target directory before building. This also removes everything `assemble` put there. |

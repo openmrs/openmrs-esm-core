@@ -411,7 +411,7 @@ export function buildCli(y: Argv) {
         '`spa-build-config.json` and `spa-assemble-config.json`. `assemble` reads `spa-build-config.json` by default, so ' +
         'one file with both sets of keys also works. The keys used by `build` are:\n' +
         '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `routes`, `pageTitle`, `defaultLocale`, ' +
-        '`supportOffline`, `env`, `compress`, `compressGzip`, and `compressBrotli`;\n' +
+        '`env`, `compress`, `compressGzip`, and `compressBrotli`;\n' +
         'each of which is equivalent to the corresponding command line argument (see `openmrs build --help`). ' +
         '`configPaths` and `configUrls` are JSON arrays. Keys in the config file take precedence over the ' +
         'corresponding command line flags, except for `importmap`, `routes` and `defaultLocale`.\n' +
