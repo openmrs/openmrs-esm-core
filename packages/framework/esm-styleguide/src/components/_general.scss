@@ -50,6 +50,10 @@ html {
   height: var(--omrs-navbar-height);
 }
 
+body > .omrs-loading-spinner {
+  grid-area: appRoots;
+}
+
 body {
   display: grid;
   grid-template-areas:
