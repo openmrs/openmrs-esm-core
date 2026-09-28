@@ -9,7 +9,6 @@ import {
   navigate as openmrsNavigate,
   ArrowRightIcon,
   OpenmrsFetchError,
-  useConnectivity,
   ArrowLeftIcon,
 } from '@openmrs/esm-framework';
 import type { ConfigSchema } from '../../config-schema';
@@ -21,7 +20,6 @@ const TotpVerificationChallengePage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const isOnline = useConnectivity();
   const { links: loginLinks } = useConfig<ConfigSchema>();
   const [code, setCode] = useState('');
   const [rememberDevice, setRememberDevice] = useState(true);
@@ -122,7 +120,7 @@ const TotpVerificationChallengePage: React.FC = () => {
             type="submit"
             className={styles.verifyButton}
             renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
-            disabled={!isOnline || isVerifying || code.length !== 6}
+            disabled={isVerifying || code.length !== 6}
           >
             {isVerifying ? t('verifying', 'Verifying...') : t('verify', 'Verify')}
           </Button>

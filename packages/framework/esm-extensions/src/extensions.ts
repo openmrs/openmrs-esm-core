@@ -21,10 +21,7 @@ import {
 } from '@openmrs/esm-config';
 import { evaluateAsBoolean, type VariablesMap } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
-import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
-import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
 import { isEqual, merge } from 'lodash-es';
-import { checkStatusFor } from './helpers';
 import {
   type AssignedExtension,
   type ExtensionInternalStore,
@@ -142,7 +139,6 @@ function updateExtensionOutputStore(
   const slots: Record<string, ExtensionSlotState> = {};
   let changed = false;
 
-  const isOnline = isOnlineFn();
   const enabledFeatureFlags = Object.entries(featureFlagState.flags)
     .filter(([, { enabled }]) => enabled)
     .map(([name]) => name);
@@ -162,7 +158,6 @@ function updateExtensionOutputStore(
       config,
       extensionsConfigState,
       enabledFeatureFlags,
-      isOnline,
       sessionState.session,
     );
 
@@ -231,7 +226,6 @@ function updateOutputStoreToCurrent() {
 }
 
 updateOutputStoreToCurrent();
-subscribeConnectivityChanged(updateOutputStoreToCurrent);
 
 function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
   return {
@@ -434,7 +428,6 @@ function getAssignedExtensionsFromSlotData(
   config: ExtensionSlotConfig,
   extensionConfigStoreState: ExtensionsConfigStore,
   enabledFeatureFlags: Array<string>,
-  isOnline: boolean,
   session: Session | null,
 ): Array<AssignedExtension> {
   const attachedIds = internalState.slots[slotName].attachedIds;
@@ -473,10 +466,6 @@ function getAssignedExtensionsFromSlotData(
         continue;
       }
 
-      if (window.offlineEnabled && !checkStatusFor(isOnline, extension.online, extension.offline)) {
-        continue;
-      }
-
       extensions.push({
         id,
         name,
@@ -484,8 +473,6 @@ function getAssignedExtensionsFromSlotData(
         config: extensionConfig,
         featureFlag: extension.featureFlag,
         meta: extension.meta,
-        online: extensionConfig?.['Display conditions']?.online ?? extension.online ?? true,
-        offline: extensionConfig?.['Display conditions']?.offline ?? extension.offline ?? false,
         displayConditionExpression: extensionConfig?.['Display conditions']?.expression || extension.displayExpression,
       });
     }

@@ -1,49 +1,42 @@
 [O3 Framework](../API.md) / setupOfflineSync
 
-# Function: setupOfflineSync()
+# Function: ~~setupOfflineSync()~~
 
-> **setupOfflineSync**\<`T`\>(`type`, `dependsOn`, `process`, `options`): `void`
+> **setupOfflineSync**\<`T`\>(`_type`, `_dependsOn`, `_process`, `_options?`): `void`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:365](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L365)
-
-Registers a new synchronization handler which is able to synchronize data of a specific type.
+Defined in: [packages/framework/esm-framework/src/deprecated.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/src/deprecated.ts#L15)
 
 ## Type Parameters
 
 ### T
 
-`T`
+`T` = `unknown`
 
 ## Parameters
 
-### type
+### \_type
 
 `string`
 
-The identifying type of the synchronization items which can be handled by this handler.
-
-### dependsOn
+### \_dependsOn
 
 `string`[]
 
-An array of other sync item types which must be synchronized before this handler
-  can synchronize its own data. Items of these types are effectively dependencies of the data
-  synchronized by this handler.
+### \_process
 
-### process
+(`item`, `options`) => `Promise`\<`unknown`\>
 
-`ProcessSyncItem`\<`T`\>
+### \_options?
 
-A function which, when invoked, performs the actual client-server synchronization of the given
-  `item` (which is the actual data to be synchronized).
-
-### options
-
-`SetupOfflineSyncOptions`\<`T`\> = `{}`
-
-Additional options which can optionally be provided when setting up a synchronization callback
-  for a specific synchronization item type.
+`unknown`
 
 ## Returns
 
 `void`
+
+## Deprecated
+
+Offline support has been removed from the framework. This is a
+no-op kept only so that frontend modules that still call `setupOfflineSync`
+during registration don't throw. Remove your offline sync handlers; queued
+items will no longer be synchronized.
