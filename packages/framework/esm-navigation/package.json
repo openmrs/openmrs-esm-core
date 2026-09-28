@@ -53,10 +53,12 @@
     "path-to-regexp": "^8.3.0"
   },
   "peerDependencies": {
-    "@openmrs/esm-state": "workspace:^"
+    "@openmrs/esm-state": "workspace:^",
+    "@openmrs/esm-translations": "workspace:^"
   },
   "devDependencies": {
     "@openmrs/esm-state": "workspace:*",
+    "@openmrs/esm-translations": "workspace:*",
     "@swc/cli": "0.8.1",
     "@swc/core": "1.15.21",
     "@vitest/coverage-v8": "^4.1.2",

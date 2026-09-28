@@ -2,7 +2,7 @@
 
 # Interface: FeatureFlagDefinition
 
-Defined in: [packages/framework/esm-globals/src/types.ts:354](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L354)
+Defined in: [packages/framework/esm-globals/src/types.ts:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L335)
 
 A definition of a feature flag extracted from the routes.json
 
@@ -12,7 +12,7 @@ A definition of a feature flag extracted from the routes.json
 
 > **description**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:360](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L360)
+Defined in: [packages/framework/esm-globals/src/types.ts:341](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L341)
 
 An explanation of what the flag does, which will be displayed in the Implementer Tools
 
@@ -22,7 +22,7 @@ An explanation of what the flag does, which will be displayed in the Implementer
 
 > **flagName**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L356)
+Defined in: [packages/framework/esm-globals/src/types.ts:337](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L337)
 
 A code-friendly name for the flag, which will be used to reference it in code
 
@@ -32,6 +32,6 @@ A code-friendly name for the flag, which will be used to reference it in code
 
 > **label**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:358](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L358)
+Defined in: [packages/framework/esm-globals/src/types.ts:339](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L339)
 
 A human-friendly name which will be displayed in the Implementer Tools

@@ -49,6 +49,7 @@
   "male": "Male",
   "maximize": "Maximize",
   "minimize": "Minimize",
+  "navigateNonHttp": "Could not navigate to the requested page as it is not a safe URL",
   "noResultsToDisplay": "No results to display",
   "notAvailable": "Not available",
   "openAnyway": "Open Anyway",

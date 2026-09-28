@@ -5,6 +5,7 @@ import LocationPickerView from './location-picker/location-picker-view.component
 import Login from './login/login.component';
 import RedirectLogout from './redirect-logout/redirect-logout.component';
 import TwoFactorAuth from './two-factor-auth/two-factor-auth.component';
+import TotpVerificationChallengePage from './two-factor-auth/verification-challenge/totp-verification-challenge-page.component';
 
 const Root: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const Root: React.FC = () => {
         <Route path="logout" element={<RedirectLogout />} />
         <Route path="change-password" element={<ChangePassword />} />
         <Route path="two-factor-auth" element={<TwoFactorAuth />} />
+        <Route path="login/totp-challenge" element={<TotpVerificationChallengePage />} />
       </Routes>
     </BrowserRouter>
   );

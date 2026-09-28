@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **isRootWorkspace**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L46)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L51)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **showActionMenu**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L47)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L52)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 > **windowName**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L45)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L50)
 
 ***
 
@@ -60,11 +60,22 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ***
 
+### workspaceMeta?
+
+> `optional` **workspaceMeta**: `Readonly`\<`Record`\<`string`, `unknown`\>\>
+
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L48)
+
+The workspace's `meta` from its registration (the `meta` field of its `workspaces2` entry in
+`routes.json`).
+
+***
+
 ### workspaceName
 
 > **workspaceName**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L44)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L49)
 
 ***
 
