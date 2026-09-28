@@ -1,11 +1,11 @@
 /** @module @category UI */
 import React, { useEffect, useState, useCallback } from 'react';
-import type { Subject } from 'rxjs';
 import type { SnackbarMeta } from './snackbar.component';
 import { Snackbar } from './snackbar.component';
+import type { Emitter } from '../emitter';
 
 interface ActiveSnackbarProps {
-  subject: Subject<SnackbarMeta>;
+  subject: Emitter<SnackbarMeta>;
 }
 
 const ActiveSnackbars: React.FC<ActiveSnackbarProps> = ({ subject }) => {

@@ -117,11 +117,6 @@ export function buildCli(y: Argv) {
             'The routes.registry.json file to use. Can be a path to a valid routes registry to be taken literally, an URL, or a fixed JSON object.',
           type: 'string',
         })
-        .option('support-offline', {
-          default: false,
-          describe: 'Determines if a service worker should be installed for offline support.',
-          type: 'boolean',
-        })
         .option('use-rspack', {
           default: undefined,
           describe:
@@ -204,11 +199,6 @@ export function buildCli(y: Argv) {
         .option('fresh', {
           default: false,
           describe: 'Whether to clear the output directory before running the build.',
-          type: 'boolean',
-        })
-        .option('support-offline', {
-          default: false,
-          describe: 'Determines if a service worker should be installed for offline support.',
           type: 'boolean',
         })
         .option('build-config', {

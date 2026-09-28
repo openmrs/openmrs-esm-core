@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
-import { navigate, setUserLanguage, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import { navigate, setUserLanguage, useConfig, useSession } from '@openmrs/esm-framework';
 import { clearHistory } from '@openmrs/esm-framework/src/internal';
 import { type ConfigSchema } from '../config-schema';
 import { performLogout } from './logout.resource';
 
 const RedirectLogout: React.FC = () => {
   const config = useConfig<ConfigSchema>();
-  const isLoginEnabled = useConnectivity();
   const session = useSession();
 
   useEffect(() => {
     clearHistory();
-    if (!session.authenticated || !isLoginEnabled) {
+    if (!session.authenticated) {
       if (config.provider.type === 'custom') {
         navigate({ to: config.provider.loginUrl });
       } else if (config.provider.type === 'oauth2') {
@@ -42,7 +41,7 @@ const RedirectLogout: React.FC = () => {
           console.error('Logout failed:', error);
         });
     }
-  }, [config, isLoginEnabled, session]);
+  }, [config, session]);
 
   return null;
 };
