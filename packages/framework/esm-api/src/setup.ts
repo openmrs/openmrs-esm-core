@@ -1,5 +1,5 @@
 import { defineConfigSchema } from '@openmrs/esm-config';
-import { refetchCurrentUser } from './current-user';
+import { refreshSession } from './current-user';
 import { configSchema } from './config-schema';
 
 /**
@@ -8,5 +8,5 @@ import { configSchema } from './config-schema';
 export function setupApiModule() {
   defineConfigSchema('@openmrs/esm-api', configSchema);
 
-  refetchCurrentUser();
+  refreshSession();
 }
