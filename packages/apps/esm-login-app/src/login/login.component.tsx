@@ -7,7 +7,6 @@ import {
   refetchCurrentUser,
   navigate as openmrsNavigate,
   useConfig,
-  useConnectivity,
   useSession,
 } from '@openmrs/esm-framework';
 import { type ConfigSchema } from '../config-schema';
@@ -20,7 +19,6 @@ export interface LoginReferrer {
 
 const Login: React.FC = () => {
   const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
-  const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
   const location = useLocation() as unknown as Omit<Location, 'state'> & {
@@ -204,7 +202,7 @@ const Login: React.FC = () => {
                     className={styles.continueButton}
                     renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                     iconDescription={t('loginButtonIconDescription', 'Log in button')}
-                    disabled={!isLoginEnabled || isLoggingIn}
+                    disabled={isLoggingIn}
                   >
                     {isLoggingIn ? (
                       <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
@@ -222,7 +220,6 @@ const Login: React.FC = () => {
                       evt.preventDefault();
                       continueLogin();
                     }}
-                    disabled={!isLoginEnabled}
                   >
                     {t('continue', 'Continue')}
                   </Button>
@@ -247,7 +244,7 @@ const Login: React.FC = () => {
                   className={styles.continueButton}
                   renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                   iconDescription={t('loginButtonIconDescription', 'Log in button')}
-                  disabled={!isLoginEnabled || isLoggingIn}
+                  disabled={isLoggingIn}
                 >
                   {isLoggingIn ? (
                     <InlineLoading className={styles.loader} description={t('loggingIn', 'Logging in') + '...'} />
@@ -258,7 +255,7 @@ const Login: React.FC = () => {
               </>
             )}
           </div>
-        {window.applicationVersion && <div className={styles.versionText}>{window.applicationVersion}</div>}
+          {window.applicationVersion && <div className={styles.versionText}>{window.applicationVersion}</div>}
         </form>
       </LoginPageWrapper>
     );
