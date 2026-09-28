@@ -123,7 +123,7 @@ function initializeSpa(config: SpaConfig) {
       configurable: false,
     });
 
-    const { run } = await import(/* webpackPreload: true */ './run');
+    const { run } = await import(/* webpackChunkName: "run", webpackPreload: true */ './run');
     return run(configUrls);
   });
   return initPromise;
