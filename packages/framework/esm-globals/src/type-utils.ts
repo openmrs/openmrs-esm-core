@@ -35,11 +35,36 @@ export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes i
       }
     }
 
+    // Config schemas reach the configuration system from here, and this predicate also guards the
+    // route overrides a developer can hand-write into local storage, so a malformed one is caught
+    // before it becomes a module's configuration.
+    //
+    // Rejecting here is not cheap: `isOpenmrsRoutes` accepts a registry only if every entry in it
+    // passes, so one bad schema costs every *other* module its routes as well. Whatever writes a
+    // registry has to check schemas to at least this depth before putting them in one.
+    if (Object.hasOwn(routes, 'configurationSchema')) {
+      if (!isSchemaObject(maybeRoutes.configurationSchema)) {
+        return false;
+      }
+    }
+
+    if (Object.hasOwn(routes, 'extensionConfigurationSchemas')) {
+      const schemas = maybeRoutes.extensionConfigurationSchemas;
+
+      if (!isSchemaObject(schemas) || !Object.values(schemas).every(isSchemaObject)) {
+        return false;
+      }
+    }
+
     // A completely empty object is a valid OpenmrsAppRoutes object.
     return true;
   }
 
   return false;
+}
+
+function isSchemaObject(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
 /**

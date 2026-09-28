@@ -67,3 +67,15 @@ export type ProvidedConfig = {
 export type ValidatorFunction = (value: any) => boolean;
 
 export type Validator = (value: any) => void | string;
+
+/**
+ * Names a built-in validator and the arguments it was built with, so that it can be written out
+ * as data and reconstructed later. `args` is empty for the validators that are values rather than
+ * factories, such as `isUrl`.
+ *
+ * @internal
+ */
+export interface ValidatorDescriptor {
+  type: string;
+  args: Array<unknown>;
+}

@@ -406,6 +406,58 @@ export interface OpenmrsAppRoutes {
 
   /** An array of all workspaces (v2) supported by this frontend module. */
   workspaces2?: Array<WorkspaceDefinition2>;
+
+  /**
+   * This frontend module's configuration schema, merged in from its `config-schema.json` build
+   * artifact by `openmrs assemble`. Lets the configuration system know how this module can be
+   * configured without executing its code.
+   */
+  configurationSchema?: SerializedConfigSchema;
+
+  /**
+   * Configuration schemas for this frontend module's extensions, keyed by extension name. These
+   * correspond to the module's `defineExtensionConfigSchema()` calls.
+   *
+   * Extension names are a global namespace, so two modules can declare a schema for the same name.
+   * The first one in the registry wins.
+   */
+  extensionConfigurationSchemas?: Record<string, SerializedConfigSchema>;
+}
+
+/**
+ * A validator as it appears in a routes registry, where it cannot be a function.
+ *
+ * Either a reference into the framework's built-in vocabulary, such as
+ * `{"type": "oneOf", "args": [[...]]}`, or, for a validator a module wrote itself, a reference to a
+ * named export of that module's `./config-validators` entry point.
+ */
+export type SerializedValidator =
+  | {
+      /** The name of a built-in validator, such as `oneOf`. */
+      type: string;
+      /** The arguments it was built with. Absent for validators that take none, such as `isUrl`. */
+      args?: Array<unknown>;
+    }
+  | {
+      type: 'custom';
+      /** The name this validator is exported under by the module the schema belongs to. */
+      export: string;
+    };
+
+/**
+ * A configuration schema as it survives JSON.
+ *
+ * Structurally a `ConfigSchema`, except that `_validators` hold references rather than functions and
+ * `_type` is a plain string. A node with a `_type` but no `_default` had a default of `undefined`,
+ * which JSON has no way to write down.
+ */
+export interface SerializedConfigSchema {
+  [key: string]: unknown;
+  _type?: string;
+  _default?: unknown;
+  _description?: string;
+  _validators?: Array<SerializedValidator>;
+  _elements?: SerializedConfigSchema;
 }
 
 /**

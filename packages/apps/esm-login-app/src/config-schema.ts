@@ -20,19 +20,19 @@ export const configSchema = {
       _description: "The URL to use to login. This is only used if the login type is 'oauth2' or 'custom'.",
       _validators: [validators.isUrl],
     },
+    _validators: [
+      validator(
+        (provider: { type: string; loginUrl: string }) => {
+          if (provider.type === 'custom' || provider.type === 'oauth2') {
+            return provider.loginUrl !== '${openmrsSpaBase}/login';
+          }
+          return true;
+        },
+        (provider: { type: string }) =>
+          `Provider type '${provider.type}' requires an explicit loginUrl that is not the default SPA login route.`,
+      ),
+    ],
   },
-  _validators: [
-    validator(
-      (provider: { type: string; loginUrl: string }) => {
-        if (provider.type === 'custom' || provider.type === 'oauth2') {
-          return provider.loginUrl !== '${openmrsSpaBase}/login';
-        }
-        return true;
-      },
-      (provider: { type: string }) =>
-        `Provider type '${provider.type}' requires an explicit loginUrl that is not the default SPA login route.`,
-    ),
-  ],
   chooseLocation: {
     enabled: {
       _type: Type.Boolean,
@@ -45,13 +45,13 @@ export const configSchema = {
       _type: Type.Number,
       _default: 8,
       _description: 'The number of locations displayed in the location picker.',
-      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
+      _validators: [validators.positiveInteger],
     },
     locationsPerRequest: {
       _type: Type.Number,
       _default: 50,
       _description: 'The number of results to fetch in each cycle of infinite scroll.',
-      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
+      _validators: [validators.positiveInteger],
     },
     useLoginLocationTag: {
       _type: Type.Boolean,
@@ -89,13 +89,11 @@ export const configSchema = {
         _type: Type.Object,
         src: {
           _type: Type.String,
-          _required: true,
           _description: 'The source URL of the logo image',
           _validators: [validators.isUrl],
         },
         alt: {
           _type: Type.String,
-          _required: true,
           _description: 'The alternative text for the logo image',
         },
       },
@@ -142,7 +140,6 @@ export const configSchema = {
       },
       text: {
         _type: Type.String,
-        _required: true,
         _description: 'Banner body text. May be a translation key.',
       },
       kind: {

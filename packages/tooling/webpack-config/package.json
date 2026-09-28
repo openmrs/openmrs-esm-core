@@ -33,6 +33,7 @@
   "dependencies": {
     "@module-federation/enhanced": "2.8.1",
     "@openmrs/carbon-css-guard": "workspace:*",
+    "@openmrs/config-schema-plugin": "workspace:*",
     "@swc/core": "1.15.21",
     "browserslist": "4.28.9",
     "browserslist-config-openmrs": "^1.0.1",

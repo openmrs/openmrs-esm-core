@@ -364,6 +364,12 @@ export function buildCli(y: Argv) {
             'Whether to fail the assemble run if a frontend module is missing its routes.json or the code entrypoint referenced from the import map. Use --no-ensure-entrypoints to downgrade these to warnings.',
           type: 'boolean',
         })
+        .option('strict-schemas', {
+          default: false,
+          description:
+            "Whether to fail the assemble run if a frontend module's config-schema.json cannot be read, or if two frontend modules define a configuration schema for the same extension name. By default these are warnings and the first schema for an extension name wins.",
+          type: 'boolean',
+        })
         .option('mode', {
           choices: ['config', 'survey'],
           default: 'survey',

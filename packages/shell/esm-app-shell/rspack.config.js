@@ -129,6 +129,74 @@ function checkFileExists(filename) {
   return false;
 }
 
+/**
+ * Reads the configuration schema an app ships next to its routes, under the keys the config system
+ * reads it from, for merging into that app's registry entry.
+ *
+ * A module's schema travels in the routes registry and not in the module's own bundle, so an app
+ * served here without one is configured with nothing but `undefined`. This is the third place a
+ * registry is assembled, after `openmrs assemble` and `openmrs develop`, and the easiest of the
+ * three to overlook: it is a bundler config rather than part of the CLI.
+ *
+ * @param {string} distDir The app's build output
+ * @param {string} name The app's package name, for the warning
+ * @returns {{ configurationSchema?: object, extensionConfigurationSchemas?: object }}
+ */
+function readConfigSchema(distDir, name) {
+  const schemaFile = resolve(distDir, 'config-schema.json');
+
+  if (!checkFileExists(schemaFile)) {
+    return {};
+  }
+
+  // `isOpenmrsRoutes` validates the registry as a whole, so an entry it rejects takes every *other*
+  // app's pages and extensions with it, silently. Checked to the same depth the framework checks,
+  // including each extension schema by itself, so nothing goes in that it will then refuse.
+  //
+  // Per schema rather than all or nothing, and reported, matching `openmrs assemble` and `openmrs
+  // develop`. A hand-written `src/config-schema.json` is copied here unchanged, so this is not
+  // only reading files the build generated.
+  const isSchemaObject = (value) => Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+
+  try {
+    const { configurationSchema, extensionConfigurationSchemas } = JSON.parse(readFileSync(schemaFile));
+    const entry = {};
+
+    if (configurationSchema !== undefined) {
+      if (isSchemaObject(configurationSchema)) {
+        entry.configurationSchema = configurationSchema;
+      } else {
+        console.warn(`Not serving ${name}'s configuration schema: it is not an object.`);
+      }
+    }
+
+    if (extensionConfigurationSchemas !== undefined) {
+      if (isSchemaObject(extensionConfigurationSchemas)) {
+        const accepted = {};
+
+        for (const [extensionName, schema] of Object.entries(extensionConfigurationSchemas)) {
+          if (isSchemaObject(schema)) {
+            accepted[extensionName] = schema;
+          } else {
+            console.warn(`Not serving ${name}'s configuration schema for extension '${extensionName}': not an object.`);
+          }
+        }
+
+        if (Object.keys(accepted).length > 0) {
+          entry.extensionConfigurationSchemas = accepted;
+        }
+      } else {
+        console.warn(`Not serving ${name}'s extension configuration schemas: they are not an object.`);
+      }
+    }
+
+    return entry;
+  } catch (e) {
+    console.warn(`Not serving a configuration schema for ${name}: its config-schema.json could not be read. ${e}`);
+    return {};
+  }
+}
+
 function checkDirectoryHasContents(dirName) {
   if (checkDirectoryExists(dirName)) {
     const contents = readdirSync(dirName);
@@ -193,7 +261,10 @@ module.exports = (env, argv = []) => {
 
             const routesFile = resolve(distDir, 'routes.json');
             if (checkFileExists(routesFile)) {
-              coreRoutes[name] = JSON.parse(readFileSync(routesFile));
+              coreRoutes[name] = {
+                ...JSON.parse(readFileSync(routesFile)),
+                ...readConfigSchema(distDir, name),
+              };
             }
           } else {
             console.warn(`Not serving ${name} because couldn't find ${distDir}`);
