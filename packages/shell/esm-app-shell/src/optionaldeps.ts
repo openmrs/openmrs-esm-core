@@ -5,7 +5,7 @@ import {
   setFeatureFlag,
   restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
-import { satisfies } from 'semver';
+import satisfies from 'semver/functions/satisfies.js';
 
 export function setupOptionalDependencies() {
   const optionalDependencyFlags = window.installedModules.reduce<

@@ -5,7 +5,6 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import {
   useConfig,
-  useConnectivity,
   openmrsFetch,
   type FetchResponse,
   OpenmrsFetchError,
@@ -20,7 +19,6 @@ vi.mock('@openmrs/esm-framework', async () => {
   return {
     ...actual,
     useConfig: vi.fn(),
-    useConnectivity: vi.fn(),
     interpolateUrl: vi.fn(),
     openmrsFetch: vi.fn(),
     refetchCurrentUser: vi.fn(),
@@ -38,8 +36,6 @@ describe('TotpVerificationChallengePage', () => {
       logo: { src: '', alt: 'Logo' },
       footer: { additionalLogos: [] },
     } as unknown as ConfigSchema);
-
-    vi.mocked(useConnectivity).mockReturnValue(true);
   });
 
   const setup = () => {
