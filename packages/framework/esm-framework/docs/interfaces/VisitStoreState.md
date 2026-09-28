@@ -2,7 +2,7 @@
 
 # Interface: VisitStoreState
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L25)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L24)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://githu
 
 > **manuallySetVisitUuid**: `null` \| `string`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L27)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L26)
 
 ***
 
@@ -18,4 +18,4 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:27](https://githu
 
 > **patientUuid**: `null` \| `string`
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L26)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L25)
