@@ -7,7 +7,6 @@
   "react-router-dom",
   "react-i18next",
   "@openmrs/esm-framework/src/internal",
-  "rxjs",
   "single-spa",
   "swr"
 ]
