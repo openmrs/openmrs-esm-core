@@ -20,6 +20,17 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllGlobals());
 
 describe('REST authentication challenge suppression', () => {
+  it('leaves malformed URLs to native fetch so callers can catch the rejected promise', async () => {
+    const error = new TypeError('Invalid URL');
+    mockFetch.mockRejectedValueOnce(error);
+
+    const request = openmrsFetch('http://[');
+
+    expect(request).toBeInstanceOf(Promise);
+    await expect(request.catch((reason) => reason)).resolves.toBe(error);
+    expect(mockFetch).toHaveBeenCalledWith('http://[', expect.any(Object));
+  });
+
   it.each([
     ['/openmrs', '/ws/rest/v1/patient', '/openmrs/ws/rest/v1/patient'],
     ['/openmrs', 'ws/rest/v1/patient', '/openmrs/ws/rest/v1/patient'],
@@ -72,10 +83,39 @@ describe('REST authentication challenge suppression', () => {
     'preserves an explicit %s override, including null',
     async (name) => {
       for (const value of ['true', 'false', null]) {
+        // null retains legacy pass-through behavior, unlike Accept: null which removes the header.
         const headers = { [name]: value };
         await openmrsFetch('/ws/rest/v1/patient', { headers });
         expect(mockFetch.mock.lastCall?.[1]?.headers).toEqual({ [name]: value, Accept: 'application/json' });
       }
     },
   );
+
+  it.each([
+    { 'Disable-WWW-Authenticate': undefined },
+    { 'disable-www-authenticate': undefined },
+    { 'DISABLE-WWW-AUTHENTICATE': undefined },
+    { 'Disable-WWW-Authenticate': undefined, 'disable-www-authenticate': undefined },
+  ])('defaults undefined overrides without combining header values: %j', async (headers) => {
+    // @ts-expect-error JavaScript callers can supply undefined despite the FetchHeaders type.
+    await openmrsFetch('/ws/rest/v1/patient', { headers });
+
+    expect(mockFetch.mock.lastCall?.[1]?.headers).toEqual({
+      Accept: 'application/json',
+      'Disable-WWW-Authenticate': 'true',
+    });
+    expect(new Headers(mockFetch.mock.lastCall?.[1]?.headers).get('Disable-WWW-Authenticate')).toBe('true');
+  });
+
+  it('preserves a defined override when another casing has an undefined value', async () => {
+    const headers = { 'Disable-WWW-Authenticate': undefined, 'disable-www-authenticate': 'false' };
+    // @ts-expect-error JavaScript callers can supply undefined despite the FetchHeaders type.
+    await openmrsFetch('/ws/rest/v1/patient', { headers });
+
+    expect(mockFetch.mock.lastCall?.[1]?.headers).toEqual({
+      Accept: 'application/json',
+      'disable-www-authenticate': 'false',
+    });
+    expect(new Headers(mockFetch.mock.lastCall?.[1]?.headers).get('Disable-WWW-Authenticate')).toBe('false');
+  });
 });

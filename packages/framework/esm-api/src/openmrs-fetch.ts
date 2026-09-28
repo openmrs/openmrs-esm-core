@@ -135,19 +135,35 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
    * header. Returning that header is useful when using the API, but
    * not from a UI.
    */
-  const requestUrl = new URL(url, window.location.href);
-  const restUrl = new URL(makeUrl(restBaseUrl), window.location.href);
-  // Compare normalized paths without changing the outgoing URL. Pagination links
-  // may omit the extra slash introduced by an openmrsBase with a trailing slash.
-  const requestPath = requestUrl.pathname.replace(/\/{2,}/g, '/');
-  const restPath = restUrl.pathname.replace(/\/{2,}/g, '/');
-  const isRestRequest =
-    requestUrl.origin === restUrl.origin && (requestPath === restPath || requestPath.startsWith(`${restPath}/`));
-  const hasAuthHeader = Object.keys(fetchInit.headers).some(
-    (name) => name.toLowerCase() === 'disable-www-authenticate',
-  );
-  if (isRestRequest && !hasAuthHeader) {
-    fetchInit.headers['Disable-WWW-Authenticate'] = 'true';
+  let isRestRequest = false;
+  try {
+    const requestUrl = new URL(url, window.location.href);
+    const restUrl = new URL(makeUrl(restBaseUrl), window.location.href);
+    // Compare normalized paths without changing the outgoing URL. Pagination links
+    // may omit the extra slash introduced by an openmrsBase with a trailing slash.
+    const requestPath = requestUrl.pathname.replace(/\/{2,}/g, '/');
+    const restPath = restUrl.pathname.replace(/\/{2,}/g, '/');
+    isRestRequest =
+      requestUrl.origin === restUrl.origin && (requestPath === restPath || requestPath.startsWith(`${restPath}/`));
+  } catch {
+    // Let native fetch reject malformed URLs instead of throwing synchronously here.
+  }
+
+  if (isRestRequest) {
+    let hasAuthHeader = false;
+    for (const [name, value] of Object.entries(fetchInit.headers)) {
+      if (name.toLowerCase() === 'disable-www-authenticate') {
+        if (value === undefined) {
+          // Remove every casing so fetch cannot combine "undefined" with the default.
+          delete fetchInit.headers[name];
+        } else {
+          hasAuthHeader = true;
+        }
+      }
+    }
+    if (!hasAuthHeader) {
+      fetchInit.headers['Disable-WWW-Authenticate'] = 'true';
+    }
   }
 
   if (path.startsWith(fhirBaseUrl)) {
