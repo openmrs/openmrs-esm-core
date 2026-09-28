@@ -53,7 +53,7 @@
     "prettier": "3.9.8",
     "swc-loader": "0.2.7",
     "timezone-mock": "^1.2.2",
-    "turbo": "^2.5.2",
+    "turbo": "^2.11.5",
     "typescript": "^5.8.3"
   },
   "lint-staged": {

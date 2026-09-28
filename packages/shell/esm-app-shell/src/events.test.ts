@@ -1,17 +1,21 @@
-// `getCurrentUser()` hands a new subscriber the session store's current state during `subscribe()`, so
-// its first emission arrives before `subscribe()` returns, and is usually an unauthenticated session.
-// Both of those shape the code under test: the first is why the subscription cannot be stopped by name
-// from inside its own callback, and the second is why the authenticated filter has to run before
-// `take(1)`. These pin optional dependencies being set up exactly once, on the first authenticated
-// session, whichever emission that turns out to be.
+// The session store does not call a new listener during `subscribe()`, so `events.ts` has to read the
+// current state itself afterwards. That is why an already-authenticated session is handled by the
+// explicit `handle(store.getState())` call rather than by the subscription. These pin optional
+// dependencies being set up exactly once, on the first authenticated session, whichever path it
+// arrives by, and the subscription being dropped once that happens.
 import { describe, expect, it, vi } from 'vitest';
+
+interface SessionState {
+  loaded: boolean;
+  session: { authenticated: boolean };
+}
 
 const harness = vi.hoisted(() => ({
   startedHandlers: [] as Array<() => void>,
   setupCount: 0,
   teardownCount: 0,
   pushSession: null as null | ((session: { authenticated: boolean }) => void),
-  /** What the store already holds when a subscriber arrives, emitted synchronously. */
+  /** What the store already holds when a subscriber arrives. */
   initialSession: { authenticated: true },
 }));
 
@@ -21,28 +25,34 @@ vi.mock('./optionaldeps', () => ({
   },
 }));
 
-vi.mock('@openmrs/esm-framework/src/internal', async () => {
-  const { Observable } = await import('rxjs');
+vi.mock('@openmrs/esm-framework/src/internal', () => ({
+  cleanupObsoleteFeatureFlags: () => {},
+  subscribeOpenmrsEvent: (name: string, handler: () => void) => {
+    if (name === 'started') {
+      harness.startedHandlers.push(handler);
+    }
+  },
+  getSessionStore: () => {
+    let state: SessionState = { loaded: true, session: harness.initialSession };
+    const listeners = new Set<(state: SessionState) => void>();
 
-  return {
-    cleanupObsoleteFeatureFlags: () => {},
-    subscribeOpenmrsEvent: (name: string, handler: () => void) => {
-      if (name === 'started') {
-        harness.startedHandlers.push(handler);
-      }
-    },
-    // Mirrors `current-user.ts`, which calls its store handler before returning the teardown.
-    getCurrentUser: () =>
-      new Observable<{ authenticated: boolean }>((subscriber) => {
-        harness.pushSession = (session) => subscriber.next(session);
-        subscriber.next(harness.initialSession);
+    harness.pushSession = (session) => {
+      state = { loaded: true, session };
+      listeners.forEach((listener) => listener(state));
+    };
 
+    return {
+      getState: () => state,
+      subscribe: (listener: (state: SessionState) => void) => {
+        listeners.add(listener);
         return () => {
+          listeners.delete(listener);
           harness.teardownCount++;
         };
-      }),
-  };
-});
+      },
+    };
+  },
+}));
 
 /** Imports `events.ts` fresh and fires the `started` handlers it registered. */
 async function startAppShell() {
@@ -61,8 +71,6 @@ describe('the started event', () => {
     harness.initialSession = { authenticated: true };
     await startAppShell();
 
-    // Reading the subscription during this emission throws, which left the app shell showing an error
-    // and no optional dependencies registered.
     expect(harness.setupCount).toBe(1);
     expect(harness.teardownCount).toBe(1);
 
@@ -71,8 +79,7 @@ describe('the started event', () => {
   });
 
   it('waits for authentication when the first session is anonymous', async () => {
-    // The ordinary startup path. With `take(1)` ahead of the filter this emission is consumed and
-    // nothing is ever set up.
+    // The ordinary startup path: the app shell starts before anyone has logged in.
     harness.initialSession = { authenticated: false };
     await startAppShell();
 
