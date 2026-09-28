@@ -135,7 +135,18 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
    * header. Returning that header is useful when using the API, but
    * not from a UI.
    */
-  if (path.startsWith(restBaseUrl) && typeof fetchInit.headers['Disable-WWW-Authenticate'] === 'undefined') {
+  const requestUrl = new URL(url, window.location.href);
+  const restUrl = new URL(makeUrl(restBaseUrl), window.location.href);
+  // Compare normalized paths without changing the outgoing URL. Pagination links
+  // may omit the extra slash introduced by an openmrsBase with a trailing slash.
+  const requestPath = requestUrl.pathname.replace(/\/{2,}/g, '/');
+  const restPath = restUrl.pathname.replace(/\/{2,}/g, '/');
+  const isRestRequest =
+    requestUrl.origin === restUrl.origin && (requestPath === restPath || requestPath.startsWith(`${restPath}/`));
+  const hasAuthHeader = Object.keys(fetchInit.headers).some(
+    (name) => name.toLowerCase() === 'disable-www-authenticate',
+  );
+  if (isRestRequest && !hasAuthHeader) {
     fetchInit.headers['Disable-WWW-Authenticate'] = 'true';
   }
 
