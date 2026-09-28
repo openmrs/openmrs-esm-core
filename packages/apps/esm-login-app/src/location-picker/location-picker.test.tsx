@@ -234,6 +234,46 @@ describe('LocationPickerView', () => {
       expect(mockSetSessionLocation).not.toHaveBeenCalled();
     });
 
+    it('auto-selects the first location at login when chooseLocation is disabled', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, enabled: false },
+      });
+
+      renderWithRouter(LocationPickerView, {});
+
+      await waitFor(() => {
+        expect(mockSetSessionLocation).toHaveBeenCalledWith(
+          mockLoginLocations.data.entry[0].resource.id,
+          expect.anything(),
+        );
+      });
+    });
+
+    it('does not auto-select a location in the update flow when chooseLocation is disabled', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, enabled: false },
+      });
+
+      // Fresh SWR cache so the location count request is actually made and awaited here.
+      render(
+        <SWRConfig value={{ provider: () => new Map() }}>
+          <MemoryRouter initialEntries={['?update=true']}>
+            <LocationPickerView />
+          </MemoryRouter>
+        </SWRConfig>,
+      );
+
+      await waitFor(() => {
+        expect(mockOpenmrsFetch).toHaveBeenCalledWith(expect.stringContaining('_count=1'));
+      });
+      expect(await screen.findByRole('radio', { name: fistLocation.name })).toBeInTheDocument();
+
+      expect(mockSetSessionLocation).not.toHaveBeenCalled();
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
     it('allows user to remove saved preference by unchecking the checkbox', async () => {
       const user = userEvent.setup();
 
