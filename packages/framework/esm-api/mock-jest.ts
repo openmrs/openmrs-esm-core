@@ -1,12 +1,10 @@
-import { of } from 'rxjs';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
 import { type SessionStore } from './src/current-user';
 
 export const setSessionLocation = jest.fn(() => Promise.resolve());
 export const openmrsFetch = jest.fn((url?: string) => new Promise(() => {}));
-export const openmrsObservableFetch = jest.fn(() => of({ data: { entry: [] } }));
 export function getCurrentUser() {
-  return of({ authenticated: false });
+  return Promise.resolve({ authenticated: false });
 }
 export const mockSessionStore = createGlobalStore<SessionStore>('mock-session-store', {
   loaded: false,

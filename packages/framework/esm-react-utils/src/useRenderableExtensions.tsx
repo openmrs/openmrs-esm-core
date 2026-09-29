@@ -41,6 +41,7 @@ export function useRenderableExtensions(name: string): Array<React.FC<Pick<Exten
               extensionId: extension.id,
               extensionSlotName: name,
               extensionSlotModuleName,
+              extensionMeta: extension.meta,
             },
           }}
         >

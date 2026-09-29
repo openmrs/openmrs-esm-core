@@ -2,15 +2,19 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import { openmrsFetch, type FetchResponse } from '@openmrs/esm-api';
-import { attachmentUrl, type AttachmentResponse } from '@openmrs/esm-emr-api';
+import { getAttachmentsUrl, type AttachmentResponse } from '@openmrs/esm-emr-api';
 
 /**
  * A React hook that fetches attachments for a patient using SWR for caching
  * and automatic revalidation.
  *
  * @param patientUuid The UUID of the patient whose attachments should be fetched.
+ *   Nothing is fetched while this is empty, so callers can defer the request.
  * @param includeEncounterless Whether to include attachments that are not
- *   associated with any encounter.
+ *   associated with any encounter. Ignored when `encounterUuid` is set.
+ * @param encounterUuid When set, only attachments recorded on this encounter are
+ *   returned. An unknown encounter UUID makes the server fall back to every attachment
+ *   of the patient, so only pass a UUID you have loaded.
  * @returns An object containing:
  *   - `data`: Array of attachment objects (empty array while loading)
  *   - `isLoading`: Whether the initial fetch is in progress
@@ -27,12 +31,19 @@ import { attachmentUrl, type AttachmentResponse } from '@openmrs/esm-emr-api';
  *   if (error) return <span>Error loading attachments</span>;
  *   return <AttachmentList attachments={data} />;
  * }
+ *
+ * // Only the attachments recorded on one encounter
+ * const { data } = useAttachments(patientUuid, false, encounterUuid);
  * ```
  */
-export function useAttachments(patientUuid: string, includeEncounterless: boolean) {
+export function useAttachments(
+  patientUuid: string | null | undefined,
+  includeEncounterless: boolean,
+  encounterUuid?: string,
+) {
   const { data, error, mutate, isLoading, isValidating } = useSWR<
     FetchResponse<{ results: Array<AttachmentResponse> }>
-  >(`${attachmentUrl}?patient=${patientUuid}&includeEncounterless=${includeEncounterless}`, openmrsFetch);
+  >(patientUuid ? getAttachmentsUrl(patientUuid, includeEncounterless, encounterUuid) : null, openmrsFetch);
 
   const results = useMemo(
     () => ({

@@ -1,6 +1,6 @@
 /** @module @category API */
 import type { LoggedInUser } from '@openmrs/esm-api';
-import { getCurrentUser, userHasAccess } from '@openmrs/esm-api';
+import { getSessionStore, userHasAccess } from '@openmrs/esm-api';
 import React, { useEffect, useState } from 'react';
 
 export interface UserHasAccessProps {
@@ -41,10 +41,15 @@ export const UserHasAccess: React.FC<UserHasAccessProps> = ({ privilege, fallbac
   const [user, setUser] = useState<LoggedInUser | null>(null);
 
   useEffect(() => {
-    const subscription = getCurrentUser({
-      includeAuthStatus: false,
-    }).subscribe(setUser);
-    return () => subscription.unsubscribe();
+    const store = getSessionStore();
+    const unsubscribe = store.subscribe(({ loaded, session }) => {
+      setUser(loaded ? session?.user ?? null : null);
+    });
+    const { loaded, session } = store.getState();
+    if (loaded) {
+      setUser(session?.user ?? null);
+    }
+    return unsubscribe;
   }, []);
 
   if (user && userHasAccess(privilege, user)) {

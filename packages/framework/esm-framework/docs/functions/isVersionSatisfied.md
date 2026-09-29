@@ -4,7 +4,7 @@
 
 > **isVersionSatisfied**(`requiredVersion`, `installedVersion`): `boolean`
 
-Defined in: [packages/framework/esm-utils/src/version.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/version.ts#L31)
+Defined in: [packages/framework/esm-utils/src/version.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/version.ts#L33)
 
 Checks if an installed version satisfies a required version range using
 semver comparison. Handles prerelease versions and normalizes version strings.

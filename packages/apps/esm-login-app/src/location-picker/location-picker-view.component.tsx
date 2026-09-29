@@ -4,11 +4,11 @@ import { useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   getCoreTranslation,
+  interpolateUrl,
   LocationPicker,
   navigate,
   setSessionLocation,
   useConfig,
-  useConnectivity,
   useSession,
   WarningIcon,
 } from '@openmrs/esm-framework';
@@ -22,9 +22,13 @@ import styles from './location-picker.scss';
  * Only same-origin URLs are permitted, preventing open-redirect attacks after login.
  */
 export function isSafeReturnUrl(url: string): boolean {
-  if (!url) return false;
+  if (!url) {
+    return false;
+  }
+
   try {
-    const parsed = new URL(url, window.location.origin);
+    const interpolatedUrl = interpolateUrl(url);
+    const parsed = new URL(interpolatedUrl, window.location.origin);
     return parsed.origin === window.location.origin;
   } catch {
     return false;
@@ -40,7 +44,6 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
-  const isLoginEnabled = useConnectivity();
   const [searchParams] = useSearchParams();
   const checkboxId = useId();
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
@@ -102,8 +105,9 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
   );
 
   // Handle cases where the location picker is disabled or there is only one location.
+  // Skipped in the update flow so the "Change location" link always shows the picker.
   useEffect(() => {
-    if (isLoadingLocationCount) return;
+    if (isLoadingLocationCount || isUpdateFlow) return;
 
     if (locationCount === 1 || (!chooseLocation.enabled && locationCount > 0)) {
       if (firstLocation?.resource?.id) {
@@ -112,7 +116,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
         console.error('Expected location data is missing', { firstLocation, locationCount });
       }
     }
-  }, [locationCount, isLoadingLocationCount]);
+  }, [locationCount, isLoadingLocationCount, isUpdateFlow]);
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
@@ -188,7 +192,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
                   className={styles.confirmButton}
                   kind="primary"
                   type="submit"
-                  disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+                  disabled={!activeLocation || isSubmitting}
                 >
                   {isSubmitting ? (
                     <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
