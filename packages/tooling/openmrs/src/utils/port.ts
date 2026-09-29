@@ -3,8 +3,18 @@ import { createServer } from 'node:net';
 const MAX_PORT = 65535;
 
 /**
+ * Whether a bind error means the host has no IPv6 loopback to bind to, as opposed to the port
+ * being taken. `EAFNOSUPPORT` is what an IPv6-disabled host reports, and `EADDRNOTAVAIL` is what
+ * one with IPv6 enabled but no `::1` on its loopback interface reports.
+ */
+function isIpv6Unavailable(err: NodeJS.ErrnoException) {
+  return err.code === 'EAFNOSUPPORT' || err.code === 'EADDRNOTAVAIL';
+}
+
+/**
  * Checks if a port is available for use by attempting to bind to it.
- * Checks both IPv4 (0.0.0.0) and IPv6 (::) to ensure the port is truly available.
+ * Checks both IPv4 (localhost) and IPv6 (::1) to ensure the port is truly available. On hosts
+ * without IPv6, only the IPv4 check applies.
  * @param port The port number to check
  * @returns A promise that resolves to true if the port is available, false otherwise
  */
@@ -21,8 +31,9 @@ export function isPortAvailable(port: number): Promise<boolean> {
       server.close(() => {
         const server6 = createServer();
 
-        server6.once('error', () => {
-          resolve(false);
+        server6.once('error', (err: NodeJS.ErrnoException) => {
+          // Without IPv6 there is nothing on ::1 to collide with, so the IPv4 result stands
+          resolve(isIpv6Unavailable(err));
         });
 
         server6.once('listening', () => {
