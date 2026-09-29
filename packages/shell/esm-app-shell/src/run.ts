@@ -8,6 +8,7 @@ import {
   getConfig,
   getCoreTranslation,
   getCurrentRouteMap,
+  getSessionStore,
   integrateBreakpoints,
   interpolateUrl,
   type OpenmrsRoutes,
@@ -131,7 +132,25 @@ function handleInitFailure(e: Error) {
   renderFatalErrorPage(e);
 }
 
-function renderFatalErrorPage(e?: Error) {
+/**
+ * No app can render without a session, so a session fetch that fails before any session has loaded
+ * gets the same error page as a failed startup. Reading the session store retries the fetch, so the
+ * page is taken down again if a later fetch succeeds, e.g. once a backend that was starting up is ready.
+ */
+function showErrorPageOnSessionFailure() {
+  let removeErrorPage: (() => void) | undefined;
+  const unsubscribe = getSessionStore().subscribe((state) => {
+    if (state.loaded) {
+      unsubscribe();
+      removeErrorPage?.();
+    } else if (state.error && !removeErrorPage) {
+      removeErrorPage = renderFatalErrorPage(state.error);
+    }
+  });
+}
+
+/** Renders the fatal error page and returns a function that removes it. */
+function renderFatalErrorPage(e?: Error): (() => void) | undefined {
   const template = document.querySelector<HTMLTemplateElement>('#app-error');
 
   if (template) {
@@ -156,7 +175,9 @@ function renderFatalErrorPage(e?: Error) {
       }
     }
 
+    const nodes = Array.from(fragment.childNodes);
     document.body.appendChild(fragment);
+    return () => nodes.forEach((node) => node.remove());
   }
 }
 
@@ -251,6 +272,7 @@ export function run(configUrls: Array<string>) {
   subscribeToastShown(showToast);
   subscribeSnackbarShown(showSnackbar);
   setupApiModule();
+  showErrorPageOnSessionFailure();
   setupHistory();
   registerCoreExtensions();
   setupCoreConfig();

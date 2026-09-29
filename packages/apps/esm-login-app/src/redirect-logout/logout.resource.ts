@@ -1,19 +1,10 @@
 import { mutate } from 'swr';
-import { clearCurrentUser, openmrsFetch, refetchCurrentUser, restBaseUrl } from '@openmrs/esm-framework';
+import { logout } from '@openmrs/esm-framework/src/internal';
 
 export async function performLogout() {
-  await openmrsFetch(`${restBaseUrl}/session`, {
-    method: 'DELETE',
-  });
+  await logout();
 
   // clear the SWR cache on logout, do not revalidate
   // taken from the SWR docs
   mutate(() => true, undefined, { revalidate: false });
-
-  clearCurrentUser();
-  try {
-    await refetchCurrentUser();
-  } catch (_) {
-    // do nothing, silence the user-visible error
-  }
 }

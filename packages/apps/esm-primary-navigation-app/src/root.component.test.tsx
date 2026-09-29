@@ -16,7 +16,6 @@ import { mockSession } from '../__mocks__/mock-session';
 import Root from './root.component';
 
 const mockUserPromise = Promise.resolve(mockUser);
-const mockSessionPromise = Promise.resolve({ data: mockSession });
 
 vi.mock('@openmrs/esm-framework', () => ({
   useConfig: vi.fn(),
@@ -28,7 +27,6 @@ vi.mock('@openmrs/esm-framework', () => ({
 
 vi.mock('./root.resource', () => ({
   getSynchronizedCurrentUser: vi.fn(() => mockUserPromise),
-  getCurrentSession: vi.fn(() => mockSessionPromise),
 }));
 
 vi.mock('./utils', () => ({

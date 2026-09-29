@@ -1,4 +1,4 @@
-import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework/src/internal';
+import { openmrsFetch, restBaseUrl, setSessionLocale } from '@openmrs/esm-framework/src/internal';
 
 export type PostUserProperties = (
   userUuid: string,
@@ -23,12 +23,7 @@ export async function updateUserProperties(
 }
 
 export async function updateSessionLocale(locale: string, abortController?: AbortController): Promise<void> {
-  await openmrsFetch(`${restBaseUrl}/session`, {
-    method: 'POST',
-    body: { locale },
-    headers: { 'Content-Type': 'application/json' },
-    signal: abortController?.signal,
-  });
+  await setSessionLocale(locale, abortController);
 
   // Force the reload of the page to ensure all data coming from the backend is fetched in the newly set locale.
   window.location.reload();

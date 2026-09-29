@@ -2,7 +2,7 @@
 import { reportError } from '@openmrs/esm-error-handling';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { isUndefined } from 'lodash-es';
-import { openmrsFetch, restBaseUrl, sessionEndpoint } from './openmrs-fetch';
+import { OpenmrsFetchError, openmrsFetch, restBaseUrl, sessionEndpoint } from './openmrs-fetch';
 import type { LoggedInUser, SessionLocation, Privilege, Role, Session, FetchResponse } from './types';
 
 export type SessionStore = LoadedSessionStore | UnloadedSessionStore;
@@ -15,6 +15,8 @@ export type LoadedSessionStore = {
 export type UnloadedSessionStore = {
   loaded: false;
   session: null;
+  /** Set when fetching the session failed before any session had loaded. */
+  error?: Error;
 };
 
 /** @internal */
@@ -62,7 +64,8 @@ function refreshSessionIfStale(): Promise<SessionStore> | null {
  * current user's session. If the session hasn't been loaded, was loaded more than
  * a minute ago, or is in the middle of being refetched, the Promise waits for the
  * fetch in question rather than resolving with data that may be out of date. The
- * session it resolves with is therefore never more than a minute old.
+ * session it resolves with is therefore never more than a minute old, unless that fetch fails,
+ * in which case it resolves with the last session that loaded.
  *
  * The function accepts an optional `opts` object with an `includeAuthStatus` boolean
  * property that defaults to `true`. When `true`, the entire {@link Session} object
@@ -104,17 +107,23 @@ function getCurrentUser(opts?: { includeAuthStatus?: boolean }): Promise<Session
   const includeAuthStatus = opts?.includeAuthStatus ?? true;
   const select = (session: Session) => (includeAuthStatus ? session : (session.user as LoggedInUser));
 
-  if (!refreshSessionIfStale()) {
+  const refresh = refreshSessionIfStale();
+  if (!refresh) {
     return Promise.resolve(select((sessionStore.getState() as LoadedSessionStore).session));
   }
 
   return new Promise<Session | LoggedInUser>((resolve) => {
-    const unsubscribe = sessionStore.subscribe((state) => {
+    const resolveIfLoaded = () => {
+      const state = sessionStore.getState();
       if (state.loaded) {
         unsubscribe();
         resolve(select(state.session));
       }
-    });
+    };
+    const unsubscribe = sessionStore.subscribe(resolveIfLoaded);
+    // A failed refresh keeps an already-loaded session without updating the store, so the
+    // subscription alone would never fire.
+    refresh.then(resolveIfLoaded, resolveIfLoaded);
   });
 }
 
@@ -212,7 +221,12 @@ function isSuperUser(user: { roles: Array<Role> }) {
  * the user. All subscribers to the session store will be notified of the
  * new user once the new version of the user object is downloaded.
  *
- * @returns A Promise resolving to the updated session store state.
+ * If the server rejects the request as unauthenticated (401 or 403), the store records a
+ * logged-out session. If the request fails for any other reason, a session that has already
+ * loaded is kept; otherwise the store records the error.
+ *
+ * @returns A Promise resolving to the updated session store state. It rejects with the
+ *   store state if the request fails for a reason other than authentication.
  *
  * @example
  * ```js
@@ -230,6 +244,7 @@ export function refetchCurrentUser(username?: string, password?: string) {
   const refresh = handleSessionResponse(
     openmrsFetch(sessionEndpoint, {
       headers,
+      rejectAuthFailure: true,
     }),
   );
 
@@ -259,10 +274,13 @@ export function refetchCurrentUser(username?: string, password?: string) {
  * ```
  */
 export function clearCurrentUser() {
-  sessionStore.setState({
-    loaded: true,
-    session: { authenticated: false, sessionId: '' },
-  });
+  sessionStore.setState(
+    {
+      loaded: true,
+      session: { authenticated: false, sessionId: '' },
+    },
+    true,
+  );
 }
 
 /**
@@ -375,7 +393,7 @@ export async function getSessionLocation(): Promise<SessionLocation | undefined>
  * await setSessionLocation('location-uuid-here', abortController);
  * ```
  */
-export async function setSessionLocation(locationUuid: string, abortController: AbortController): Promise<any> {
+export async function setSessionLocation(locationUuid: string, abortController?: AbortController): Promise<any> {
   return handleSessionResponse(
     openmrsFetch(sessionEndpoint, {
       method: 'POST',
@@ -383,9 +401,40 @@ export async function setSessionLocation(locationUuid: string, abortController: 
       headers: {
         'Content-Type': 'application/json',
       },
-      signal: abortController.signal,
+      rejectAuthFailure: true,
+      signal: abortController?.signal,
     }),
   );
+}
+
+/**
+ * Sets the locale for the current session only, leaving the user's default locale unchanged.
+ * Use {@link setUserProperties} with a `defaultLocale` property to change the default instead.
+ *
+ * @param locale The locale in Java's `Locale#toString()` form, e.g. `en_GB`.
+ * @param abortController Optional AbortController to allow cancellation of the request.
+ * @returns A Promise that resolves with the updated SessionStore after refetching the current user.
+ *   It rejects with an {@link OpenmrsFetchError} if the server does not accept the locale.
+ *
+ * @example
+ * ```ts
+ * import { setSessionLocale } from '@openmrs/esm-api';
+ * await setSessionLocale('fr');
+ * ```
+ *
+ * @internal
+ */
+export async function setSessionLocale(locale: string, abortController?: AbortController): Promise<SessionStore> {
+  await openmrsFetch(sessionEndpoint, {
+    method: 'POST',
+    body: { locale },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    signal: abortController?.signal,
+  });
+
+  return refetchCurrentUser();
 }
 
 /**
@@ -433,26 +482,126 @@ export async function setUserProperties(
   return refetchCurrentUser();
 }
 
+/**
+ * Submits a TOTP code to complete a two-factor login challenge. When the code is accepted, the
+ * session store is refreshed with the now-authenticated session.
+ *
+ * @param code The code from the user's authenticator app.
+ * @param rememberDevice Whether the server should skip the challenge on this device in future.
+ * @returns A Promise resolving to the session. Its `authenticated` property is `false` if the
+ *   code was not accepted. It rejects with an {@link OpenmrsFetchError} if the server rejects the
+ *   request, in which case `responseBody` may explain why.
+ *
+ * @example
+ * ```ts
+ * import { verifyTotpCode } from '@openmrs/esm-api';
+ * const session = await verifyTotpCode('123456', true);
+ * ```
+ *
+ * @internal
+ */
+export async function verifyTotpCode(code: string, rememberDevice = false): Promise<Session> {
+  const response = await openmrsFetch<Session>(
+    rememberDevice ? `${sessionEndpoint}?rememberMe=true` : sessionEndpoint,
+    {
+      headers: {
+        'X-Totp-Code': code,
+      },
+    },
+  );
+
+  if (response.data?.authenticated) {
+    // `refetchCurrentUser` only resolves once the store holds a session.
+    const store = (await refetchCurrentUser()) as LoadedSessionStore;
+    return store.session;
+  }
+
+  return response.data;
+}
+
+/**
+ * Ends the current session on the server and records a logged-out session in the session store.
+ * A server that has already ended the session (401 or 403) counts as a successful logout.
+ *
+ * Other data cached for the logged-in user, such as SWR caches, is the caller's to clear.
+ *
+ * @returns A Promise that resolves once the session store holds a logged-out session.
+ *
+ * @example
+ * ```ts
+ * import { logout } from '@openmrs/esm-api';
+ * await logout();
+ * ```
+ *
+ * @internal
+ */
+export async function logout(): Promise<void> {
+  try {
+    await openmrsFetch(sessionEndpoint, { method: 'DELETE', rejectAuthFailure: true });
+  } catch (err) {
+    if (!isAuthFailure(err)) {
+      throw err;
+    }
+  }
+
+  clearCurrentUser();
+  // The session just cleared is already correct, so a failed refresh loses nothing.
+  await refetchCurrentUser().catch(() => {});
+}
+
 function handleSessionResponse(result: Promise<FetchResponse<Session>>) {
   return new Promise<SessionStore>((resolve, reject) => {
     result
       .then((res) => {
-        let nextState: SessionStore;
         if (typeof res?.data === 'object') {
-          nextState = { loaded: true, session: res.data };
-          sessionStore.setState(nextState);
+          const nextState: SessionStore = { loaded: true, session: res.data };
+          sessionStore.setState(nextState, true);
           resolve(nextState);
         } else {
-          nextState = { loaded: false, session: null };
-          sessionStore.setState(nextState);
-          reject(nextState);
+          reject(recordSessionFailure(Error('The session endpoint did not respond with a session')));
         }
       })
       .catch((err) => {
+        // An auth failure is the session endpoint's answer for "not logged in", not a failed lookup.
+        if (isAuthFailure(err)) {
+          if (isUnauthenticatedSession(err.responseBody)) {
+            sessionStore.setState({ loaded: true, session: err.responseBody }, true);
+          } else {
+            clearCurrentUser();
+          }
+          resolve(sessionStore.getState());
+          return;
+        }
+
         reportError(`Failed to fetch new session information: ${err}`);
-        const nextState: SessionStore = { loaded: false, session: null };
-        sessionStore.setState(nextState);
-        reject(nextState);
+        reject(recordSessionFailure(err));
       });
   });
+}
+
+function isAuthFailure(err: unknown): err is OpenmrsFetchError {
+  return err instanceof OpenmrsFetchError && (err.response.status === 401 || err.response.status === 403);
+}
+
+function isUnauthenticatedSession(body: unknown): body is Session {
+  return typeof body === 'object' && body !== null && (body as Session).authenticated === false;
+}
+
+/**
+ * A session that has already loaded is kept when a later fetch fails, since it is still the best answer
+ * available. With nothing to fall back on, the error is recorded so the app shell can show an error page.
+ */
+function recordSessionFailure(err: unknown): SessionStore {
+  if (!sessionStore.getState().loaded) {
+    sessionStore.setState(
+      {
+        loaded: false,
+        session: null,
+        error: err instanceof Error ? err : Error(String(err)),
+      },
+      true,
+    );
+  }
+
+  return sessionStore.getState();
 }
