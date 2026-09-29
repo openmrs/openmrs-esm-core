@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { configInternalStore, defineConfigSchema, getConfig, provide } from '@openmrs/esm-config';
+import { clearConfigErrors, configInternalStore, defineConfigSchema, getConfig, provide } from '@openmrs/esm-config';
 import { configSchema } from './config-schema';
 
 const moduleName = '@openmrs/esm-login-app';
@@ -7,6 +7,7 @@ const moduleName = '@openmrs/esm-login-app';
 describe('login config schema', () => {
   beforeEach(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
+    clearConfigErrors();
     configInternalStore.setState((state) => ({ ...state, providedConfigs: [] }));
     defineConfigSchema(moduleName, configSchema);
   });
