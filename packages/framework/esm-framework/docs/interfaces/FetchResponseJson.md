@@ -2,7 +2,7 @@
 
 # Interface: FetchResponseJson
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:286](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L286)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:313](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L313)
 
 ## Indexable
 
