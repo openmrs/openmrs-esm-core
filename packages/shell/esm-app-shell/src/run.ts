@@ -8,6 +8,7 @@ import {
   getConfig,
   getCoreTranslation,
   getCurrentRouteMap,
+  getSessionStore,
   integrateBreakpoints,
   interpolateUrl,
   type OpenmrsRoutes,
@@ -130,6 +131,21 @@ function handleInitFailure(e: Error) {
   renderFatalErrorPage(e);
 }
 
+/**
+ * No app can render without a session, so a session fetch that fails before any session has loaded
+ * gets the same error page as a failed startup.
+ */
+function showErrorPageOnSessionFailure() {
+  const unsubscribe = getSessionStore().subscribe((state) => {
+    if (state.loaded) {
+      unsubscribe();
+    } else if (state.error) {
+      unsubscribe();
+      renderFatalErrorPage(state.error);
+    }
+  });
+}
+
 function renderFatalErrorPage(e?: Error) {
   const template = document.querySelector<HTMLTemplateElement>('#app-error');
 
@@ -250,6 +266,7 @@ export function run(configUrls: Array<string>) {
     subscribeToastShown(showToast);
     subscribeSnackbarShown(showSnackbar);
     setupApiModule();
+    showErrorPageOnSessionFailure();
     setupHistory();
     registerCoreExtensions();
     setupCoreConfig();

@@ -17,5 +17,8 @@ export const clearCurrentUser = jest.fn();
 export const refetchCurrentUser = jest.fn();
 export const setUserLanguage = jest.fn();
 export const setUserProperties = jest.fn();
+export const setSessionLocale = jest.fn(() => Promise.resolve());
+export const verifyTotpCode = jest.fn();
+export const logout = jest.fn(() => Promise.resolve());
 export const userHasAccess = jest.fn();
 export { OpenmrsFetchError } from './src/openmrs-fetch';

@@ -4,7 +4,7 @@
 
 > **userHasAccess**(`requiredPrivilege`, `user`): `boolean`
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:286](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L286)
+Defined in: [packages/framework/esm-api/src/current-user.ts:304](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L304)
 
 Checks whether the given user has access based on the required privilege(s).
 A user has access if they have the required privilege(s) or if they are a

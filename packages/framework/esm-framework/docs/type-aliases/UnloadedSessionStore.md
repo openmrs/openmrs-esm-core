@@ -8,6 +8,16 @@ Defined in: [packages/framework/esm-api/src/current-user.ts:15](https://github.c
 
 ## Properties
 
+### error?
+
+> `optional` **error**: `Error`
+
+Defined in: [packages/framework/esm-api/src/current-user.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L19)
+
+Set when fetching the session failed before any session had loaded.
+
+***
+
 ### loaded
 
 > **loaded**: `false`

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getConfig } from '@openmrs/esm-config';
 import { navigate } from '@openmrs/esm-navigation';
-import { openmrsFetch } from './openmrs-fetch';
+import { OpenmrsFetchError, openmrsFetch } from './openmrs-fetch';
 
 vi.mock('@openmrs/esm-navigation', () => ({
   clearHistory: vi.fn(),
@@ -185,7 +185,7 @@ describe('openmrsFetch', () => {
 
     try {
       await openmrsFetch('/ws/rest/v1/session');
-      fail("Promise shouldn't resolve when server responds with 500");
+      expect.fail("Promise shouldn't resolve when server responds with 500");
     } catch (err) {
       expect(err.message).toMatch(/Server responded with 500 \(Internal Server Error\)/);
       expect(err.message).toMatch(/\/ws\/rest\/v1\/session/);
@@ -209,7 +209,7 @@ describe('openmrsFetch', () => {
 
     try {
       await openmrsFetch('/ws/rest/v1/session');
-      fail("Promise shouldn't resolve when server responds with 400");
+      expect.fail("Promise shouldn't resolve when server responds with 400");
     } catch (err) {
       expect(err.message).toMatch(/Server responded with 400 \(You goofed up\)/);
       expect(err.message).toMatch(/\/ws\/rest\/v1\/session/);
@@ -332,5 +332,24 @@ describe('openmrsFetch', () => {
     expect(mockNavigate.mock.calls[0][0]).toStrictEqual({
       to: '/openmrs/spa/login',
     });
+  });
+
+  it('openmrsFetchRejectingAuthFailures navigates to login and rejects when the server responds with a 401', async () => {
+    // @ts-expect-error
+    window.fetch.mockReturnValue(
+      Promise.resolve({
+        ok: false,
+        status: 401,
+        statusText: 'Unauthorized',
+        headers: new Headers(),
+        clone: () => ({ text: () => Promise.resolve('') }),
+      }),
+    );
+
+    const result = openmrsFetch('/ws/rest/v1/session', { rejectAuthFailure: true });
+
+    await expect(result).rejects.toBeInstanceOf(OpenmrsFetchError);
+    await expect(result).rejects.toMatchObject({ response: { status: 401 } });
+    expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
   });
 });

@@ -1,8 +1,4 @@
-import { getCurrentUser, openmrsFetch, restBaseUrl } from '@openmrs/esm-framework/src/internal';
-
-export function getCurrentSession() {
-  return openmrsFetch(`${restBaseUrl}/session`);
-}
+import { getCurrentUser } from '@openmrs/esm-framework/src/internal';
 
 /**
  * Returns a promise producing the current user.
