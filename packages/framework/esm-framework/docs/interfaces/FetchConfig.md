@@ -168,7 +168,10 @@ A referrer policy to set request's referrerPolicy.
 
 > `optional` **rejectAuthFailure**: `boolean`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:288](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L288)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:292](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L292)
+
+When `true`, a response that triggers the auth-failure redirect still navigates, but the
+returned promise rejects with an `OpenmrsFetchError` instead of staying pending.
 
 ***
 
