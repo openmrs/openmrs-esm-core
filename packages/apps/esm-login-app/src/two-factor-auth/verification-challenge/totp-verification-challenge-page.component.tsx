@@ -4,13 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { Button, Checkbox } from '@carbon/react';
 import {
   useConfig,
-  openmrsFetch,
-  refetchCurrentUser,
   navigate as openmrsNavigate,
   ArrowRightIcon,
   OpenmrsFetchError,
   ArrowLeftIcon,
 } from '@openmrs/esm-framework';
+import { verifyTotpCode } from '@openmrs/esm-framework/src/internal';
 import type { ConfigSchema } from '../../config-schema';
 import VerificationCodeInput from './verification-code-input.component';
 import LoginPageWrapper from '../../login-page-wrapper/login-page-wrapper.component';
@@ -33,20 +32,10 @@ const TotpVerificationChallengePage: React.FC = () => {
       setIsVerifying(true);
       setVerificationError('');
 
-      const sessionUrl = rememberDevice ? '/ws/rest/v1/session?rememberMe=true' : '/ws/rest/v1/session';
+      const session = await verifyTotpCode(code, rememberDevice);
 
-      const response = await openmrsFetch(sessionUrl, {
-        method: 'GET',
-        headers: {
-          'X-Totp-Code': code,
-        },
-      });
-
-      if (response.data && response.data.authenticated) {
-        const sessionStore = await refetchCurrentUser();
-        const session = sessionStore?.session;
-
-        if (session?.sessionLocation) {
+      if (session?.authenticated) {
+        if (session.sessionLocation) {
           let to = loginLinks?.loginSuccess || '/home';
           const referrer = location?.state?.referrer || sessionStorage.getItem('loginReferrer');
 
