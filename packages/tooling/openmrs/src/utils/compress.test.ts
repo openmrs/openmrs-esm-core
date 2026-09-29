@@ -91,7 +91,6 @@ describe('compressAssets', () => {
     const content = compressibleContent();
     const compressible = [
       'main.js',
-      'main.js.map',
       'module.mjs',
       'legacy.cjs',
       'styles.css',
@@ -112,6 +111,32 @@ describe('compressAssets', () => {
       await expect(stat(join(dir, `${name}.gz`))).resolves.toBeDefined();
       await expect(stat(join(dir, `${name}.br`))).resolves.toBeDefined();
     }
+  });
+
+  it('does not precompress source maps', async () => {
+    await writeAsset('main.js', compressibleContent());
+    await writeAsset('main.js.map', compressibleContent());
+
+    const result = await compressAssets(dir, { gzip: true, brotli: true });
+
+    expect(result.gzip.files).toBe(1);
+    expect(result.brotli.files).toBe(1);
+    expect(await listFiles()).not.toContain('main.js.map.gz');
+    expect(await listFiles()).not.toContain('main.js.map.br');
+  });
+
+  it('removes source map siblings an earlier build left behind', async () => {
+    // Builds before source maps were left out wrote these, and a server would keep serving
+    // them in place of the current map.
+    const stale = await gzipAsync(Buffer.from(compressibleContent()));
+    await writeAsset('main.js.map', compressibleContent());
+    await writeAsset('main.js.map.gz', stale);
+    await writeAsset('main.js.map.br', stale);
+
+    const result = await compressAssets(dir, { gzip: true, brotli: true });
+
+    expect(result.removed).toBe(2);
+    expect(await listFiles()).toEqual(['main.js.map']);
   });
 
   it('leaves non-compressible files alone', async () => {
