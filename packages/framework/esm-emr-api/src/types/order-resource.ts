@@ -1,8 +1,16 @@
 import { type Concept, type OpenmrsResource } from '@openmrs/esm-api';
 import { type Drug } from './drug-resource';
 
+// prettier-ignore
 export type FulfillerStatus =
-  'COMPLETED' | 'DECLINED' | 'DISCONTINUED' | 'DRAFT' | 'EXCEPTION' | 'IN_PROGRESS' | 'ON_HOLD' | 'RECEIVED';
+  | 'COMPLETED'
+  | 'DECLINED'
+  | 'DISCONTINUED'
+  | 'DRAFT'
+  | 'EXCEPTION'
+  | 'IN_PROGRESS'
+  | 'ON_HOLD'
+  | 'RECEIVED';
 
 export type OrderAction = 'DISCONTINUE' | 'NEW' | 'RENEW' | 'REVISE';
 

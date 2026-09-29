@@ -4,4 +4,4 @@
 
 > **OrderAction** = `"DISCONTINUE"` \| `"NEW"` \| `"RENEW"` \| `"REVISE"`
 
-Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L7)
+Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L15)
