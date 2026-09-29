@@ -285,6 +285,10 @@ export class OpenmrsFetchError extends Error implements FetchError {
 export interface FetchConfig extends Omit<RequestInit, 'body' | 'headers'> {
   headers?: FetchHeaders;
   body?: FetchBody | string;
+  /**
+   * When `true`, a response that triggers the auth-failure redirect still navigates, but the
+   * returned promise rejects with an `OpenmrsFetchError` instead of staying pending.
+   */
   rejectAuthFailure?: boolean;
 }
 
