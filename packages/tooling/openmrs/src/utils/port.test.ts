@@ -40,7 +40,7 @@ describe('isPortAvailable', () => {
 
     await expect(isPortAvailable(3000)).resolves.toBe(true);
 
-    expect(ipv4Server.listen).toHaveBeenCalledWith(3000, 'localhost');
+    expect(ipv4Server.listen).toHaveBeenCalledWith(3000, '127.0.0.1');
     expect(ipv6Server.listen).toHaveBeenCalledWith(3000, '::1');
   });
 
@@ -50,7 +50,7 @@ describe('isPortAvailable', () => {
 
     await expect(isPortAvailable(3000)).resolves.toBe(false);
 
-    expect(ipv4Server.listen).toHaveBeenCalledWith(3000, 'localhost');
+    expect(ipv4Server.listen).toHaveBeenCalledWith(3000, '127.0.0.1');
   });
 
   it('returns false when the IPv6 bind fails', async () => {

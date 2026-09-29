@@ -13,7 +13,7 @@ function isIpv6Unavailable(err: NodeJS.ErrnoException) {
 
 /**
  * Checks if a port is available for use by attempting to bind to it.
- * Checks both IPv4 (localhost) and IPv6 (::1) to ensure the port is truly available. On hosts
+ * Checks both IPv4 (127.0.0.1) and IPv6 (::1) to ensure the port is truly available. On hosts
  * without IPv6, only the IPv4 check applies.
  * @param port The port number to check
  * @returns A promise that resolves to true if the port is available, false otherwise
@@ -46,7 +46,7 @@ export function isPortAvailable(port: number): Promise<boolean> {
       });
     });
 
-    server.listen(port, 'localhost');
+    server.listen(port, '127.0.0.1');
   });
 }
 
