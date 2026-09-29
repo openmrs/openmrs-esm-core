@@ -2,7 +2,7 @@
 
 # Interface: FetchConfig
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:271](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L271)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:285](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L285)
 
 ## Extends
 
@@ -14,7 +14,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:271](https://github
 
 > `optional` **body**: `string` \| `FetchBody`
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L273)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:287](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L287)
 
 ***
 
@@ -50,7 +50,7 @@ A string indicating whether credentials will be sent with the request always, ne
 
 > `optional` **headers**: [`FetchHeaders`](FetchHeaders.md)
 
-Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:272](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L272)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:286](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L286)
 
 ***
 
@@ -161,6 +161,17 @@ A referrer policy to set request's referrerPolicy.
 #### Inherited from
 
 `Omit.referrerPolicy`
+
+***
+
+### rejectAuthFailure?
+
+> `optional` **rejectAuthFailure**: `boolean`
+
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:292](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L292)
+
+When `true`, a response that triggers the auth-failure redirect still navigates, but the
+returned promise rejects with an `OpenmrsFetchError` instead of staying pending.
 
 ***
 

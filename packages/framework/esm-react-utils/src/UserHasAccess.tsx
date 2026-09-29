@@ -43,7 +43,7 @@ export const UserHasAccess: React.FC<UserHasAccessProps> = ({ privilege, fallbac
   useEffect(() => {
     const store = getSessionStore();
     const unsubscribe = store.subscribe(({ loaded, session }) => {
-      setUser(loaded ? session?.user ?? null : null);
+      setUser(loaded ? (session?.user ?? null) : null);
     });
     const { loaded, session } = store.getState();
     if (loaded) {

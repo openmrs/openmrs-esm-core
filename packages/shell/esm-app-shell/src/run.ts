@@ -8,6 +8,7 @@ import {
   getConfig,
   getCoreTranslation,
   getCurrentRouteMap,
+  getSessionStore,
   integrateBreakpoints,
   interpolateUrl,
   type OpenmrsRoutes,
@@ -36,6 +37,7 @@ import {
   type StyleguideConfigObject,
   tryRegisterExtension,
 } from '@openmrs/esm-framework/src/internal';
+import { setupStyleguide } from '@openmrs/esm-styleguide/src/index';
 import { setupI18n } from './locale';
 // imported so we create the MF shares for these
 import 'swr/mutation';
@@ -130,7 +132,25 @@ function handleInitFailure(e: Error) {
   renderFatalErrorPage(e);
 }
 
-function renderFatalErrorPage(e?: Error) {
+/**
+ * No app can render without a session, so a session fetch that fails before any session has loaded
+ * gets the same error page as a failed startup. Reading the session store retries the fetch, so the
+ * page is taken down again if a later fetch succeeds, e.g. once a backend that was starting up is ready.
+ */
+function showErrorPageOnSessionFailure() {
+  let removeErrorPage: (() => void) | undefined;
+  const unsubscribe = getSessionStore().subscribe((state) => {
+    if (state.loaded) {
+      unsubscribe();
+      removeErrorPage?.();
+    } else if (state.error && !removeErrorPage) {
+      removeErrorPage = renderFatalErrorPage(state.error);
+    }
+  });
+}
+
+/** Renders the fatal error page and returns a function that removes it. */
+function renderFatalErrorPage(e?: Error): (() => void) | undefined {
   const template = document.querySelector<HTMLTemplateElement>('#app-error');
 
   if (template) {
@@ -155,7 +175,9 @@ function renderFatalErrorPage(e?: Error) {
       }
     }
 
+    const nodes = Array.from(fragment.childNodes);
     document.body.appendChild(fragment);
+    return () => nodes.forEach((node) => node.remove());
   }
 }
 
@@ -237,41 +259,41 @@ export function run(configUrls: Array<string>) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
-  return import('@openmrs/esm-styleguide/src/index').then(() => {
-    integrateBreakpoints();
-    showToasts();
-    showModals();
-    showNotifications();
-    showActionableNotifications();
-    showSnackbars();
-    showWorkspacesAndActionMenu();
-    subscribeNotificationShown(showNotification);
-    subscribeActionableNotificationShown(showActionableNotification);
-    subscribeToastShown(showToast);
-    subscribeSnackbarShown(showSnackbar);
-    setupApiModule();
-    setupHistory();
-    registerCoreExtensions();
-    setupCoreConfig();
+  setupStyleguide();
+  integrateBreakpoints();
+  showToasts();
+  showModals();
+  showNotifications();
+  showActionableNotifications();
+  showSnackbars();
+  showWorkspacesAndActionMenu();
+  subscribeNotificationShown(showNotification);
+  subscribeActionableNotificationShown(showActionableNotification);
+  subscribeToastShown(showToast);
+  subscribeSnackbarShown(showSnackbar);
+  setupApiModule();
+  showErrorPageOnSessionFailure();
+  setupHistory();
+  registerCoreExtensions();
+  setupCoreConfig();
 
-    const polyfillReady =
-      typeof Intl !== 'undefined' && 'DurationFormat' in Intl
-        ? Promise.resolve()
-        : import(
-            /* webpackChunkName: "intl-durationformat-polyfill" */
-            '@formatjs/intl-durationformat/lib/polyfill'
-          ).then(() => undefined);
+  const polyfillReady =
+    typeof Intl !== 'undefined' && 'DurationFormat' in Intl
+      ? Promise.resolve()
+      : import(
+          /* webpackChunkName: "intl-durationformat-polyfill" */
+          '@formatjs/intl-durationformat/lib/polyfill'
+        ).then(() => undefined);
 
-    return polyfillReady
-      .then(setupApps)
-      .then(() => Promise.resolve(finishRegisteringAllApps()))
-      .then(provideConfigs)
-      .then(runShell)
-      .catch(handleInitFailure)
-      .then(closeLoading)
-      .then(() => {
-        // intentionally not returned so that processing the "started" event doesn't block
-        fireOpenmrsEvent('started');
-      });
-  });
+  return polyfillReady
+    .then(setupApps)
+    .then(() => Promise.resolve(finishRegisteringAllApps()))
+    .then(provideConfigs)
+    .then(runShell)
+    .catch(handleInitFailure)
+    .then(closeLoading)
+    .then(() => {
+      // intentionally not returned so that processing the "started" event doesn't block
+      fireOpenmrsEvent('started');
+    });
 }

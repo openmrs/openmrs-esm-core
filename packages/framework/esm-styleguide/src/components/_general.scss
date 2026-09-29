@@ -50,6 +50,19 @@ html {
   height: var(--omrs-navbar-height);
 }
 
+body > .omrs-loading-spinner,
+body > .omrs-app-error {
+  grid-area: appRoots;
+  min-width: 0;
+}
+
+// The app shell lays out <body> as a grid. The top nav spans the first row, and the second row
+// holds the left nav, the app roots and the workspace. The side columns are sized to their
+// content, so they take no space when empty.
+//
+// Anything rendered into <body> that stays in the normal flow needs one of these grid areas.
+// Without one, the browser places it in a new row below the fold, in the left nav column, which
+// widens to fit it. Fixed-position containers, like the toasts and modals, aren't affected.
 body {
   display: grid;
   grid-template-areas:
