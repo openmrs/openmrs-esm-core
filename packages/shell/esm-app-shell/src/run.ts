@@ -36,6 +36,7 @@ import {
   type StyleguideConfigObject,
   tryRegisterExtension,
 } from '@openmrs/esm-framework/src/internal';
+import { setupStyleguide } from '@openmrs/esm-styleguide/src/index';
 import { setupI18n } from './locale';
 // imported so we create the MF shares for these
 import 'swr/mutation';
@@ -237,41 +238,40 @@ export function run(configUrls: Array<string>) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
-  return import('@openmrs/esm-styleguide/src/index').then(() => {
-    integrateBreakpoints();
-    showToasts();
-    showModals();
-    showNotifications();
-    showActionableNotifications();
-    showSnackbars();
-    showWorkspacesAndActionMenu();
-    subscribeNotificationShown(showNotification);
-    subscribeActionableNotificationShown(showActionableNotification);
-    subscribeToastShown(showToast);
-    subscribeSnackbarShown(showSnackbar);
-    setupApiModule();
-    setupHistory();
-    registerCoreExtensions();
-    setupCoreConfig();
+  setupStyleguide();
+  integrateBreakpoints();
+  showToasts();
+  showModals();
+  showNotifications();
+  showActionableNotifications();
+  showSnackbars();
+  showWorkspacesAndActionMenu();
+  subscribeNotificationShown(showNotification);
+  subscribeActionableNotificationShown(showActionableNotification);
+  subscribeToastShown(showToast);
+  subscribeSnackbarShown(showSnackbar);
+  setupApiModule();
+  setupHistory();
+  registerCoreExtensions();
+  setupCoreConfig();
 
-    const polyfillReady =
-      typeof Intl !== 'undefined' && 'DurationFormat' in Intl
-        ? Promise.resolve()
-        : import(
-            /* webpackChunkName: "intl-durationformat-polyfill" */
-            '@formatjs/intl-durationformat/lib/polyfill'
-          ).then(() => undefined);
+  const polyfillReady =
+    typeof Intl !== 'undefined' && 'DurationFormat' in Intl
+      ? Promise.resolve()
+      : import(
+          /* webpackChunkName: "intl-durationformat-polyfill" */
+          '@formatjs/intl-durationformat/lib/polyfill'
+        ).then(() => undefined);
 
-    return polyfillReady
-      .then(setupApps)
-      .then(() => Promise.resolve(finishRegisteringAllApps()))
-      .then(provideConfigs)
-      .then(runShell)
-      .catch(handleInitFailure)
-      .then(closeLoading)
-      .then(() => {
-        // intentionally not returned so that processing the "started" event doesn't block
-        fireOpenmrsEvent('started');
-      });
-  });
+  return polyfillReady
+    .then(setupApps)
+    .then(() => Promise.resolve(finishRegisteringAllApps()))
+    .then(provideConfigs)
+    .then(runShell)
+    .catch(handleInitFailure)
+    .then(closeLoading)
+    .then(() => {
+      // intentionally not returned so that processing the "started" event doesn't block
+      fireOpenmrsEvent('started');
+    });
 }

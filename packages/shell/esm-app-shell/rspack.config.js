@@ -16,6 +16,7 @@ const { mkdirSync, readdirSync, statSync, readFileSync, writeFileSync } = requir
 const sass = require('sass-embedded');
 const semver = require('semver');
 const { removeTrailingSlash, getTimestamp } = require('./tools/helpers');
+const { StartupPreloadPlugin } = require('./tools/startup-preload-plugin');
 
 const { name, version, dependencies } = require('./package.json');
 const sharedDependencies = require('./dependencies.json');
@@ -461,6 +462,7 @@ module.exports = (env, argv = []) => {
           openmrsExtraAssets: openmrsJsCssAssets.map((fileName) => 'assets/' + basename(fileName)),
         },
       }),
+      new StartupPreloadPlugin(['run']),
       new WebpackPwaManifest({
         name: openmrsPageTitle,
         short_name: openmrsPageTitle,

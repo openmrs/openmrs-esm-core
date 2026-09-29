@@ -12,7 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="importmap-type" content="systemjs-importmap">
     <link rel="stylesheet" href="<%= openmrsPublicPath %>/<%= openmrsCssFilename %>">
-    <%= htmlWebpackPlugin.tags.headTags %>
 <% if (openmrsExtraAssets && openmrsExtraAssets.length) { %>
 <% openmrsExtraAssets.forEach(function(asset) { %>
 <% if (asset.endsWith('.css')) { %>
@@ -48,6 +47,7 @@
 <% if (openmrsCoreRoutes) { %>
   <script type="openmrs-routes"><%= openmrsCoreRoutes %></script>
 <% } %>
+    <%= htmlWebpackPlugin.tags.headTags %>
   </head>
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>
