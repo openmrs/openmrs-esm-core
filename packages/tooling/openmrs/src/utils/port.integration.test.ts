@@ -4,6 +4,7 @@ import { isPortAvailable } from './port';
 
 describe('isPortAvailable with real sockets', () => {
   it('rejects a port occupied on the IPv4 loopback', async () => {
+    // With the old localhost bind, this test fails only when localhost resolves to ::1.
     const server = createServer();
 
     try {
