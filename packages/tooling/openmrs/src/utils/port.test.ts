@@ -61,6 +61,15 @@ describe('isPortAvailable', () => {
     await expect(isPortAvailable(3000)).resolves.toBe(false);
   });
 
+  it('returns false without trying IPv6 when the IPv4 bind fails for another reason', async () => {
+    const ipv4Server = createMockServer(false, 'EACCES');
+    mockCreateServer.mockReturnValueOnce(ipv4Server);
+
+    await expect(isPortAvailable(3000)).resolves.toBe(false);
+
+    expect(mockCreateServer).toHaveBeenCalledTimes(1);
+  });
+
   it.each(['EAFNOSUPPORT', 'EADDRNOTAVAIL'])(
     'returns true when the IPv4 bind succeeds and the host has no IPv6 loopback (%s)',
     async (errorCode) => {
@@ -71,6 +80,42 @@ describe('isPortAvailable', () => {
       await expect(isPortAvailable(3000)).resolves.toBe(true);
     },
   );
+
+  it.each(['EAFNOSUPPORT', 'EADDRNOTAVAIL'])(
+    'returns true when the host has no IPv4 loopback and the IPv6 bind succeeds (%s)',
+    async (errorCode) => {
+      const ipv4Server = createMockServer(false, errorCode);
+      const ipv6Server = createMockServer(true);
+      mockCreateServer.mockReturnValueOnce(ipv4Server).mockReturnValueOnce(ipv6Server);
+
+      await expect(isPortAvailable(3000)).resolves.toBe(true);
+
+      expect(ipv6Server.listen).toHaveBeenCalledWith(3000, '::1');
+    },
+  );
+
+  it.each(['EAFNOSUPPORT', 'EADDRNOTAVAIL'])(
+    'returns false when the host has no IPv4 loopback and the port is in use on IPv6 (%s)',
+    async (errorCode) => {
+      const ipv4Server = createMockServer(false, errorCode);
+      const ipv6Server = createMockServer(false);
+      mockCreateServer.mockReturnValueOnce(ipv4Server).mockReturnValueOnce(ipv6Server);
+
+      await expect(isPortAvailable(3000)).resolves.toBe(false);
+    },
+  );
+
+  it.each([
+    ['EAFNOSUPPORT', 'EAFNOSUPPORT'],
+    ['EADDRNOTAVAIL', 'EADDRNOTAVAIL'],
+    ['EAFNOSUPPORT', 'EADDRNOTAVAIL'],
+  ])('returns false when neither loopback address can be bound (IPv4 %s, IPv6 %s)', async (ipv4Code, ipv6Code) => {
+    const ipv4Server = createMockServer(false, ipv4Code);
+    const ipv6Server = createMockServer(false, ipv6Code);
+    mockCreateServer.mockReturnValueOnce(ipv4Server).mockReturnValueOnce(ipv6Server);
+
+    await expect(isPortAvailable(3000)).resolves.toBe(false);
+  });
 });
 
 describe('getAvailablePort', () => {
