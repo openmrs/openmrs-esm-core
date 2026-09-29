@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@carbon/react';
 import { Help } from '@carbon/react/icons';
 import { useAssignedExtensions, useSession } from '@openmrs/esm-framework';
@@ -6,6 +7,7 @@ import HelpMenuPopup from './help-popup.component';
 import styles from './help.styles.scss';
 
 export default function HelpMenu() {
+  const { t } = useTranslation();
   const { user } = useSession();
   const [helpMenuOpen, setHelpMenuOpen] = useState(false);
   const helpMenuButtonRef = useRef(null);
@@ -14,6 +16,13 @@ export default function HelpMenu() {
 
   const toggleHelpMenu = () => {
     setHelpMenuOpen((prevState) => !prevState);
+  };
+
+  const closeHelpMenuOnEscape = (event: React.KeyboardEvent) => {
+    if (event.key === 'Escape' && helpMenuOpen) {
+      setHelpMenuOpen(false);
+      helpMenuButtonRef.current?.focus();
+    }
   };
 
   useEffect(() => {
@@ -44,9 +53,13 @@ export default function HelpMenu() {
     <>
       {user && (
         <Button
+          aria-controls="help-menu-popup"
+          aria-expanded={helpMenuOpen}
+          aria-label={t('helpMenu', 'Help menu')}
           className={styles.helpMenuButton}
           kind="ghost"
           onClick={toggleHelpMenu}
+          onKeyDown={closeHelpMenuOnEscape}
           ref={helpMenuButtonRef}
           size="md"
         >
@@ -54,7 +67,7 @@ export default function HelpMenu() {
         </Button>
       )}
       {helpMenuOpen && (
-        <div id="help-menu-popup" ref={popupRef} className={styles.helpMenuPopup}>
+        <div id="help-menu-popup" ref={popupRef} className={styles.helpMenuPopup} onKeyDown={closeHelpMenuOnEscape}>
           <HelpMenuPopup />
         </div>
       )}
