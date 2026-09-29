@@ -2,7 +2,7 @@
 
 The command-line tool for developing and distributing the OpenMRS 3 (O3) frontend.
 
-O3's frontend is made up of an app shell (`@openmrs/esm-app-shell`) and many frontend modules, each published to npm on its own. At runtime, the app shell loads the modules using two files:
+O3's frontend is made up of an app shell (`@openmrs/esm-app-shell`) and many frontend modules, each published independently. At runtime, the app shell loads the modules using two files:
 
 - an import map (`importmap.json`), which says where each module's JavaScript lives
 - a routes registry (`routes.registry.json`), which says which pages and extensions each module provides
@@ -144,7 +144,7 @@ Modules are fetched from the npm registry set in your `.npmrc`, so private regis
 The config file can also have:
 
 - `frontendModuleExcludes`: package names to leave out. With several `--config` files, they're read in order. A later file can add or replace modules, and its excludes remove modules added by earlier files.
-- `publicUrl`: the URL the modules are served from. It can be a full URL, like a CDN, or relative to the import map. It defaults to `.`, which means next to the import map.
+- `publicUrl`: where the modules are served from. `assemble` puts it at the start of each import map entry. It can be a full URL, like a CDN. It defaults to `.`, and the app shell loads entries that start with `./` from under the SPA path. Other relative values are resolved against the current page's URL.
 
 `assemble` writes these to the target directory:
 
@@ -209,16 +209,16 @@ Its settings can come from flags or from a build config file:
 
 A few things to know:
 
-- When a setting is in both the build config and a flag, the build config wins. The exceptions are `importmap`, `routes` and `defaultLocale`, where the flag wins.
+- When a setting is in both the build config and a flag, the build config wins. That's because most flags have a default, and the CLI can't tell a default apart from a value you passed. `importmap`, `routes` and `defaultLocale` are only set when you pass the flag, so for those the flag wins.
 - Set `importmap` and `routes` to absolute paths under `spaPath`, like the example above. The defaults are relative, so the browser resolves them against the current page's URL rather than the SPA path. Files from `--config-path` are loaded by their file name alone, so they're relative in the same way. `configUrls` can use `${openmrsSpaBase}` (for example `${openmrsSpaBase}/config.json`), which the app fills in with the SPA path.
 - `--asset` only works as a flag for now. `assets` in the build config is ignored.
 - Use absolute paths for local files in `configPaths` in the build config, and in `--importmap` or `--routes`. Relative paths there aren't resolved against your current directory yet. Relative paths passed with `--config-path` work.
 
 #### Compressed copies
 
-`build` writes a `.gz` and a `.br` copy next to each text file of at least 1 KiB that gets smaller when compressed, using the maximum compression level. A web server can serve these directly instead of compressing each response. The reference application's [nginx.conf](https://github.com/openmrs/openmrs-distro-referenceapplication/blob/main/frontend/nginx.conf) shows one way to do that.
+`build` writes a `.gz` and a `.br` copy next to each text file of at least 1 KiB that gets smaller when compressed, using the maximum compression level. Source maps are skipped, since browsers only fetch them when developer tools are open. A web server can serve these directly instead of compressing each response. The reference application's [nginx.conf](https://github.com/openmrs/openmrs-distro-referenceapplication/blob/main/frontend/nginx.conf) shows one way to do that.
 
-Copies that no longer match their file, or whose file is gone, are removed on the next build. `--no-compress` skips that cleanup along with the compression.
+Copies that no longer match their file, or whose file is gone, are removed on the next build, along with any source map copies an earlier version wrote. `--no-compress` skips that cleanup along with the compression.
 
 #### Settings that change per deployment
 
