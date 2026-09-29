@@ -4,7 +4,7 @@
 
 > **WorkspaceDefinition** = `object`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L237)
+Defined in: [packages/framework/esm-globals/src/types.ts:211](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L211)
 
 A definition of a workspace as extracted from an app's routes.json
 
@@ -14,7 +14,7 @@ A definition of a workspace as extracted from an app's routes.json
 
 > `optional` **canHide**: `boolean`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:253](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L253)
+Defined in: [packages/framework/esm-globals/src/types.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L227)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:253](https://github.com
 
 > `optional` **canMaximize**: `boolean`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:254](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L254)
+Defined in: [packages/framework/esm-globals/src/types.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L228)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:254](https://github.com
 
 > **component**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:290](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L290)
+Defined in: [packages/framework/esm-globals/src/types.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L264)
 
 The name of the component exported by this frontend module.
 
@@ -40,7 +40,7 @@ The name of the component exported by this frontend module.
 
 > **groups**: `string`[]
 
-Defined in: [packages/framework/esm-globals/src/types.ts:286](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L286)
+Defined in: [packages/framework/esm-globals/src/types.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L260)
 
 Workspaces can open either independently or as part of a "workspace group". A
 "workspace group" groups related workspaces together, so that only one is visible
@@ -68,7 +68,7 @@ name, the entire workspace group will close, and the new workspace will launch i
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L241)
+Defined in: [packages/framework/esm-globals/src/types.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L215)
 
 The name of this workspace. This is used to launch the workspace.
 
@@ -78,7 +78,7 @@ The name of this workspace. This is used to launch the workspace.
 
 > `optional` **preferredWindowSize**: [`WorkspaceWindowState`](WorkspaceWindowState.md)
 
-Defined in: [packages/framework/esm-globals/src/types.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L264)
+Defined in: [packages/framework/esm-globals/src/types.ts:238](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L238)
 
 Launches the workspace in the preferred size, it defaults to the 'narrow' width
 
@@ -88,7 +88,7 @@ Launches the workspace in the preferred size, it defaults to the 'narrow' width
 
 > **title**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L246)
+Defined in: [packages/framework/esm-globals/src/types.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L220)
 
 The title of the workspace. This will be looked up as a key in the translations of the module
 defining the workspace.
@@ -99,7 +99,7 @@ defining the workspace.
 
 > **type**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:252](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L252)
+Defined in: [packages/framework/esm-globals/src/types.ts:226](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L226)
 
 The type of the workspace. Only one of each "type" of workspace is allowed to be open at a
 time. The default is "form". If the right sidebar is in use, then the type determines which
@@ -111,7 +111,7 @@ right sidebar icon corresponds to the workspace.
 
 > `optional` **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L260)
+Defined in: [packages/framework/esm-globals/src/types.ts:234](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L234)
 
 Controls the width of the workspace. The default is "narrow" and this should only be
 changed to "wider" if the workspace itself has internal navigation, like the form editor.

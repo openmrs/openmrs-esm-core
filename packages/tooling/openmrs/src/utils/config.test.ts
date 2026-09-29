@@ -27,16 +27,6 @@ describe('setBundlerEnv', () => {
     expect(process.env.OMRS_ADD_COOKIE).toBe('session=abc');
   });
 
-  it('sets OMRS_OFFLINE to "enable" when supportOffline is true', () => {
-    setBundlerEnv({ supportOffline: true });
-    expect(process.env.OMRS_OFFLINE).toBe('enable');
-  });
-
-  it('sets OMRS_OFFLINE to "disable" when supportOffline is false', () => {
-    setBundlerEnv({ supportOffline: false });
-    expect(process.env.OMRS_OFFLINE).toBe('disable');
-  });
-
   it('sets OMRS_CONFIG_URLS to semicolon-joined string from configUrls', () => {
     setBundlerEnv({ configUrls: ['https://a.com/config.json', 'https://b.com/config.json'] });
     expect(process.env.OMRS_CONFIG_URLS).toBe('https://a.com/config.json;https://b.com/config.json');
