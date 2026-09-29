@@ -232,7 +232,7 @@ describe('openmrsFetch', () => {
     });
   });
 
-  it('openmrsFetchRejectingAuthFailures navigates to login and rejects when the server responds with a 401', async () => {
+  it('navigates to login and rejects on a 401 when rejectAuthFailure is set', async () => {
     mockFetch.mockResolvedValue(new Response('', { status: 401, statusText: 'Unauthorized' }));
 
     const result = openmrsFetch('/ws/rest/v1/session', { rejectAuthFailure: true });
