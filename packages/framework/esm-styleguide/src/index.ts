@@ -10,19 +10,22 @@ import { setupPictograms } from './pictograms/pictogram-registration';
 import { flushSvgs } from './svg-utils';
 import Workspace2ClosePromptModal from './workspaces2/workspace2-close-prompt.modal';
 
-defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
-setupBranding();
-setupLogo();
-setupIcons();
-setupPictograms();
-setupEmptyCard();
-flushSvgs();
+/** Registers the styleguide's config schema, branding, icons, and modals. The app shell calls this once at startup. */
+export function setupStyleguide() {
+  defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
+  setupBranding();
+  setupLogo();
+  setupIcons();
+  setupPictograms();
+  setupEmptyCard();
+  flushSvgs();
 
-registerModal({
-  name: 'workspace2-close-prompt',
-  moduleName: '@openmrs/esm-styleguide',
-  load: getSyncLifecycle(Workspace2ClosePromptModal, {
-    featureName: 'workspace2-close-prompt',
+  registerModal({
+    name: 'workspace2-close-prompt',
     moduleName: '@openmrs/esm-styleguide',
-  }),
-});
+    load: getSyncLifecycle(Workspace2ClosePromptModal, {
+      featureName: 'workspace2-close-prompt',
+      moduleName: '@openmrs/esm-styleguide',
+    }),
+  });
+}

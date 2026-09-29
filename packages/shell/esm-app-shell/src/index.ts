@@ -118,7 +118,7 @@ function initializeSpa(config: SpaConfig) {
 
     const { configUrls = [] } = config;
 
-    const { run } = await import(/* webpackPreload: true */ './run');
+    const { run } = await import(/* webpackChunkName: "run", webpackPreload: true */ './run');
     return run(configUrls);
   });
   return initPromise;
