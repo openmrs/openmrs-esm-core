@@ -10,36 +10,35 @@ vi.mock('@openmrs/esm-navigation', () => ({
 
 const mockGetConfig = vi.mocked(getConfig);
 const mockNavigate = vi.mocked(navigate);
+const mockFetch = vi.fn<typeof fetch>();
+
+beforeEach(() => {
+  mockGetConfig.mockReturnValue(
+    Promise.resolve({
+      redirectAuthFailure: {
+        enabled: true,
+        url: '${openmrsSpaBase}/login',
+        errors: [401],
+        resolvePromise: false,
+      },
+      followRedirects: true,
+    }),
+  );
+  window.openmrsBase = '/openmrs';
+  window.getOpenmrsSpaBase = () => '/openmrs/spa/';
+  vi.stubGlobal('fetch', mockFetch);
+  vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+  // @ts-expect-error Not normally deletable
+  delete window.openmrsBase;
+  // @ts-expect-error Not normally deletable
+  delete window.getOpenmrsSpaBase;
+});
 
 describe('openmrsFetch', () => {
-  beforeEach(() => {
-    mockGetConfig.mockReturnValue(
-      Promise.resolve({
-        redirectAuthFailure: {
-          enabled: true,
-          url: '${openmrsSpaBase}/login',
-          errors: [401],
-          resolvePromise: false,
-        },
-        followRedirects: true,
-      }),
-    );
-    window.openmrsBase = '/openmrs';
-    window.getOpenmrsSpaBase = () => '/openmrs/spa/';
-    window.fetch = vi.fn();
-    Object.defineProperty(window, 'location', {
-      writable: true,
-      value: { assign: vi.fn() },
-    });
-  });
-
-  afterEach(() => {
-    // @ts-expect-error Not normally deletable
-    delete window.openmrsBase;
-    // @ts-expect-error Not normally deletable
-    delete window.getOpenmrsSpaBase;
-  });
-
   it(`throws an error if you don't pass in a url string`, () => {
     // @ts-expect-error
     expect(() => openmrsFetch()).toThrow(/first argument/);
@@ -63,8 +62,7 @@ describe('openmrsFetch', () => {
   });
 
   it('calls window.fetch with the correct arguments for a basic GET request', () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(new Promise(() => {}));
+    mockFetch.mockReturnValue(new Promise(() => {}));
     openmrsFetch('/ws/rest/v1/session');
     expect(window.fetch).toHaveBeenCalledWith('/openmrs/ws/rest/v1/session', {
       headers: {
@@ -75,8 +73,7 @@ describe('openmrsFetch', () => {
   });
 
   it('calls window.fetch correctly for requests that have a request body', () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(new Promise(() => {}));
+    mockFetch.mockReturnValue(new Promise(() => {}));
     const requestBody = { some: 'json' };
     openmrsFetch('/ws/rest/v1/session', {
       method: 'POST',
@@ -93,8 +90,7 @@ describe('openmrsFetch', () => {
   });
 
   it('allows you to specify your own Accept request header', () => {
-    // @ts-expect-error mockReturnValue only exists on the mock, not on the raw type
-    window.fetch.mockReturnValue(new Promise(() => {}));
+    mockFetch.mockReturnValue(new Promise(() => {}));
     openmrsFetch('/ws/rest/v1/session', {
       headers: {
         Accept: 'application/xml',
@@ -109,8 +105,7 @@ describe('openmrsFetch', () => {
   });
 
   it('allows you to specify no Accept request header to be sent', () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(new Promise(() => {}));
+    mockFetch.mockReturnValue(new Promise(() => {}));
     openmrsFetch('/ws/rest/v1/session', {
       headers: {
         // specifically null on purpose
@@ -126,20 +121,7 @@ describe('openmrsFetch', () => {
   });
 
   it('returns a promise that resolves with a json object when the request succeeds', async () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: true,
-        status: 200,
-        headers: {
-          has: () => false,
-          get: () => null,
-        },
-        clone: () => ({
-          text: () => Promise.resolve('{ "value": "hi" }'),
-        }),
-      }),
-    );
+    mockFetch.mockResolvedValue(new Response('{"value":"hi"}'));
 
     const response = await openmrsFetch('/ws/rest/v1/session');
     expect(response.status).toBe(200);
@@ -147,18 +129,7 @@ describe('openmrsFetch', () => {
   });
 
   it('returns a promise that resolves with null when the request succeeds with HTTP 204', async () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: true,
-        status: 204,
-        headers: {
-          has: () => false,
-          get: () => null,
-        },
-        json: () => Promise.reject(Error("No json for HTTP 204's!!")),
-      }),
-    );
+    mockFetch.mockResolvedValue(new Response(null, { status: 204 }));
 
     const response = await openmrsFetch('/ws/rest/v1/session');
     expect(response.status).toBe(204);
@@ -166,56 +137,30 @@ describe('openmrsFetch', () => {
   });
 
   it('gives you an amazing error when the server responds with a 500 that has json', async () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: false,
+    mockFetch.mockResolvedValue(
+      new Response(JSON.stringify({ error: 'The server is dead' }), {
         status: 500,
         statusText: 'Internal Server Error',
-        clone: () => ({
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                error: 'The server is dead',
-              }),
-            ),
-        }),
       }),
     );
 
-    try {
-      await openmrsFetch('/ws/rest/v1/session');
-      expect.fail("Promise shouldn't resolve when server responds with 500");
-    } catch (err) {
-      expect(err.message).toMatch(/Server responded with 500 \(Internal Server Error\)/);
-      expect(err.message).toMatch(/\/ws\/rest\/v1\/session/);
-      expect(err.responseBody).toEqual({ error: 'The server is dead' });
-      expect(err.response.status).toBe(500);
-    }
+    await expect(openmrsFetch('/ws/rest/v1/session')).rejects.toMatchObject({
+      message: expect.stringContaining(
+        'Server responded with 500 (Internal Server Error) for url /openmrs/ws/rest/v1/session',
+      ),
+      responseBody: { error: 'The server is dead' },
+      response: expect.objectContaining({ status: 500 }),
+    });
   });
 
   it("gives you an amazing error when the server responds with a 400 that doesn't have json", async () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: false,
-        status: 400,
-        statusText: 'You goofed up',
-        clone: () => ({
-          text: () => Promise.resolve('a string response body'),
-        }),
-      }),
-    );
+    mockFetch.mockResolvedValue(new Response('a string response body', { status: 400, statusText: 'You goofed up' }));
 
-    try {
-      await openmrsFetch('/ws/rest/v1/session');
-      expect.fail("Promise shouldn't resolve when server responds with 400");
-    } catch (err) {
-      expect(err.message).toMatch(/Server responded with 400 \(You goofed up\)/);
-      expect(err.message).toMatch(/\/ws\/rest\/v1\/session/);
-      expect(err.responseBody).toEqual('a string response body');
-      expect(err.response.status).toBe(400);
-    }
+    await expect(openmrsFetch('/ws/rest/v1/session')).rejects.toMatchObject({
+      message: expect.stringContaining('Server responded with 400 (You goofed up) for url /openmrs/ws/rest/v1/session'),
+      responseBody: 'a string response body',
+      response: expect.objectContaining({ status: 400 }),
+    });
   });
 
   it('redirects to the Location header URL when a 401 response contains a Location header (auth-module challenge)', async () => {
@@ -228,18 +173,8 @@ describe('openmrsFetch', () => {
       },
     });
 
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: false,
-        status: 401,
-        statusText: 'Unauthorized',
-        headers: {
-          has: (name: string) => name.toLowerCase() === 'location',
-          get: (name: string) => (name.toLowerCase() === 'location' ? '/module/authentication/login.form' : null),
-        },
-        text: () => Promise.resolve(''),
-      }),
+    mockFetch.mockResolvedValue(
+      new Response(null, { status: 401, headers: { Location: '/module/authentication/login.form' } }),
     );
 
     await openmrsFetch('/ws/rest/v1/session');
@@ -250,26 +185,9 @@ describe('openmrsFetch', () => {
   });
 
   it('redirects to the Location header URL when session endpoint called and it contains a Location header', async () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: true,
-        status: 200,
-        statusText: 'OK',
-        headers: {
-          has: (name: string) => name.toLowerCase() === 'location',
-          get: (name: string) => (name.toLowerCase() === 'location' ? '/openmrs/spa/login' : null),
-        },
-        clone() {
-          return this;
-        },
-        text: () => Promise.resolve(''),
-      }),
-    );
+    mockFetch.mockResolvedValue(new Response(null, { status: 200, headers: { Location: '/openmrs/spa/login' } }));
 
-    const fetchPromise = openmrsFetch('/ws/rest/v1/session');
-
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await openmrsFetch('/ws/rest/v1/session');
 
     expect(mockNavigate).toHaveBeenCalledWith({
       to: '/openmrs/spa/login',
@@ -286,19 +204,7 @@ describe('openmrsFetch', () => {
       },
     });
 
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: false,
-        status: 401,
-        statusText: 'Unauthorized',
-        headers: {
-          has: (name: string) => false,
-          get: (name: string) => null,
-        },
-        text: () => Promise.resolve(''),
-      }),
-    );
+    mockFetch.mockResolvedValue(new Response(null, { status: 401 }));
 
     await openmrsFetch('/ws/rest/v1/session');
 
@@ -317,15 +223,7 @@ describe('openmrsFetch', () => {
       },
     });
 
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: false,
-        status: 401,
-        statusText: 'You are not authorized',
-        text: () => Promise.resolve('a string response body'),
-      }),
-    );
+    mockFetch.mockResolvedValue(new Response('a string response body', { status: 401 }));
 
     await openmrsFetch('/ws/rest/v1/session');
 
@@ -335,16 +233,7 @@ describe('openmrsFetch', () => {
   });
 
   it('openmrsFetchRejectingAuthFailures navigates to login and rejects when the server responds with a 401', async () => {
-    // @ts-expect-error
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: false,
-        status: 401,
-        statusText: 'Unauthorized',
-        headers: new Headers(),
-        clone: () => ({ text: () => Promise.resolve('') }),
-      }),
-    );
+    mockFetch.mockResolvedValue(new Response('', { status: 401, statusText: 'Unauthorized' }));
 
     const result = openmrsFetch('/ws/rest/v1/session', { rejectAuthFailure: true });
 
