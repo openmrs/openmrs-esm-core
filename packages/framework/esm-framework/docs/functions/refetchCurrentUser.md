@@ -4,7 +4,7 @@
 
 > **refetchCurrentUser**(`username?`, `password?`): `Promise`\<[`SessionStore`](../type-aliases/SessionStore.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L237)
+Defined in: [packages/framework/esm-api/src/current-user.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L251)
 
 The `refetchCurrentUser` function causes a network request to redownload
 the user. All subscribers to the session store will be notified of the
