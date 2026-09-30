@@ -1,10 +1,12 @@
-import { mutate } from 'swr';
+import { type Cache, type ScopedMutator } from 'swr';
 import { logout } from '@openmrs/esm-framework/src/internal';
 
-export async function performLogout() {
+// `cache` and `mutate` must come from `useSWRConfig()`: SWR's global `mutate` targets SWR's default
+// cache, not the shared cache that the component decorator provides to O3 apps.
+export async function performLogout(cache: Cache, mutate: ScopedMutator) {
   await logout();
 
-  // clear the SWR cache on logout, do not revalidate
-  // taken from the SWR docs
-  mutate(() => true, undefined, { revalidate: false });
+  // Clear the SWR cache without revalidating. Keys are cleared by name because a key filter such as
+  // `mutate(() => true)` skips the keys that `useSWRInfinite` and `useSWRSubscription` store.
+  await Promise.all([...cache.keys()].map((key) => mutate(key, undefined, { revalidate: false })));
 }

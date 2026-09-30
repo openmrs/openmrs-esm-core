@@ -1,14 +1,10 @@
 import React from 'react';
-import { mutate } from 'swr';
+import { type Cache, SWRConfig } from 'swr';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, waitFor } from '@testing-library/react';
 import { type Session, navigate, setUserLanguage, useConfig, useSession } from '@openmrs/esm-framework';
 import { logout } from '@openmrs/esm-framework/src/internal';
 import RedirectLogout from './redirect-logout.component';
-
-vi.mock('swr', () => ({
-  mutate: vi.fn(),
-}));
 
 const mockLogout = vi.mocked(logout);
 const mockNavigate = vi.mocked(navigate);
@@ -17,7 +13,18 @@ const mockUseConfig = vi.mocked(useConfig);
 const mockUseSession = vi.mocked(useSession);
 
 describe('RedirectLogout', () => {
+  let swrCache: Cache;
+
+  const renderWithSwrCache = () =>
+    render(<RedirectLogout />, {
+      wrapper: ({ children }) => <SWRConfig value={{ provider: () => swrCache }}>{children}</SWRConfig>,
+    });
+
   beforeEach(() => {
+    swrCache = new Map();
+    swrCache.set('/ws/rest/v1/patient/abc', { data: { uuid: 'abc' } });
+    swrCache.set('$inf$/ws/rest/v1/visit?patient=abc', { data: [{ results: [] }] });
+
     mockLogout.mockResolvedValue(undefined);
 
     mockUseSession.mockReturnValue({
@@ -39,7 +46,7 @@ describe('RedirectLogout', () => {
 
     expect(mockLogout).toHaveBeenCalled();
 
-    await waitFor(() => expect(mutate).toHaveBeenCalled());
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
 
     expect(mockSetUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
@@ -60,7 +67,7 @@ describe('RedirectLogout', () => {
 
     expect(mockLogout).toHaveBeenCalled();
 
-    await waitFor(() => expect(mutate).toHaveBeenCalled());
+    await waitFor(() => expect(mockSetUserLanguage).toHaveBeenCalled());
 
     expect(mockSetUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
@@ -68,6 +75,15 @@ describe('RedirectLogout', () => {
       sessionId: '',
     });
     expect(mockNavigate).toHaveBeenCalledTimes(0);
+  });
+
+  it('should clear every cached SWR entry, including useSWRInfinite entries, upon logout', async () => {
+    renderWithSwrCache();
+
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+
+    expect(swrCache.get('/ws/rest/v1/patient/abc')?.data).toBeUndefined();
+    expect(swrCache.get('$inf$/ws/rest/v1/visit?patient=abc')?.data).toBeUndefined();
   });
 
   it('should redirect to login if the session is already unauthenticated', async () => {
