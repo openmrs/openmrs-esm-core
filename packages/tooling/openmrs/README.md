@@ -162,7 +162,7 @@ The config file can also have:
 | `--config` | `spa-build-config.json` | The config files to read in `config` mode. Can be repeated. |
 | `--target` | `dist` | The output directory. |
 | `--fresh` | | Empty the target directory first. |
-| `--hash-files` | | Add a content hash to the names of the JSON files, so they can be cached. `build` finds the hashed names in the same target directory by itself. |
+| `--hash-files` | | Add a content hash to the names of the JSON files, so they can be cached. `build` finds the hashed import map and routes registry in the same target directory by itself. |
 | `--application-version` | | A version for the whole distribution. It's stored in the routes registry, and the app exposes it as `window.applicationVersion`. |
 | `--no-ensure-entrypoints` | | Warn instead of failing when a module is missing its `routes.json` or its entry file. |
 | `--no-build-routes` | | Don't write `routes.registry.json`. |
@@ -218,7 +218,7 @@ A few things to know:
 
 `build` writes a `.gz` and a `.br` copy next to each text file of at least 1 KiB that gets smaller when compressed, using the maximum compression level. Source maps are skipped, since browsers only fetch them when developer tools are open. A web server can serve these directly instead of compressing each response. The reference application's [nginx.conf](https://github.com/openmrs/openmrs-distro-referenceapplication/blob/main/frontend/nginx.conf) shows one way to do that.
 
-Copies that no longer match their file, or whose file is gone, are removed on the next build, along with any source map copies an earlier version wrote. `--no-compress` skips that cleanup along with the compression.
+Copies that no longer match their file, or whose file is gone, are removed on the next build. `--no-compress` skips that cleanup along with the compression.
 
 #### Settings that change per deployment
 
