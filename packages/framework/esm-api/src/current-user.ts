@@ -18,8 +18,9 @@ export type UnloadedSessionStore = {
   /** Set when fetching the session failed before any session had loaded. */
   error?: Error;
   /**
-   * Set alongside `error`. `true` when the backend redirected the session request to its initial setup
-   * page, meaning it is still starting up rather than broken.
+   * Set alongside `error`. `true` when the backend appears to be still starting up rather than broken:
+   * it redirected the session request to its initial setup page, or its gateway answered with a 502
+   * shortly after the page loaded.
    */
   initializing?: boolean;
 };
@@ -38,6 +39,14 @@ export const sessionStore = createGlobalStore<SessionStore>('session', {
 const sessionMaxAgeMillis = 60 * 1000;
 
 let lastFetchTimeMillis = 0;
+
+/**
+ * How long after the first session fetch a 502 is taken to mean that the backend is still starting up. A
+ * gateway answers with a 502 until the backend has deployed, which can take a few minutes after a restart.
+ */
+const startupGracePeriodMillis = 3 * 60 * 1000;
+
+let firstFetchTimeMillis: number | undefined;
 let inFlightRefresh: Promise<SessionStore> | null = null;
 
 /**
@@ -241,6 +250,7 @@ function isSuperUser(user: { roles: Array<Role> }) {
  */
 export function refetchCurrentUser(username?: string, password?: string) {
   lastFetchTimeMillis = Date.now();
+  firstFetchTimeMillis ??= lastFetchTimeMillis;
   let headers = {};
   if (username && password) {
     headers['Authorization'] = `Basic ${window.btoa(`${username}:${password}`)}`;
@@ -580,6 +590,11 @@ function handleSessionResponse(result: Promise<FetchResponse<Session>>) {
           return;
         }
 
+        if (isGatewayErrorDuringStartup(err)) {
+          reject(recordSessionFailure(err, true));
+          return;
+        }
+
         reportError(`Failed to fetch new session information: ${err}`);
         reject(recordSessionFailure(err));
       });
@@ -604,6 +619,16 @@ function isInitialSetupRedirect(res: FetchResponse | undefined) {
   } catch {
     return false;
   }
+}
+
+function isGatewayErrorDuringStartup(err: unknown) {
+  return (
+    err instanceof OpenmrsFetchError &&
+    err.response.status === 502 &&
+    !sessionStore.getState().loaded &&
+    firstFetchTimeMillis !== undefined &&
+    Date.now() - firstFetchTimeMillis < startupGracePeriodMillis
+  );
 }
 
 function isUnauthenticatedSession(body: unknown): body is Session {

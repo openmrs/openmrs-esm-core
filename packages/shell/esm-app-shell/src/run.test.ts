@@ -80,6 +80,8 @@ vi.mock('@openmrs/esm-framework/src/internal', () => {
 });
 
 vi.mock('single-spa', () => ({ start: () => {} }));
+// Node has no `Intl.DurationFormat`, and fake timers can't flush the dynamic import `run()` loads the polyfill with.
+vi.mock('@formatjs/intl-durationformat/lib/polyfill', () => ({}));
 vi.mock('@openmrs/esm-styleguide/src/index', () => ({ setupStyleguide: () => {} }));
 vi.mock('./locale', () => ({ setupI18n: () => {} }));
 vi.mock('./static-page-translations', () => ({ translateStaticPage: () => {} }));

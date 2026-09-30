@@ -35,7 +35,7 @@ vi.mock('@openmrs/esm-error-handling', () => ({
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
 const mockReportError = vi.mocked(reportError);
 
-function createAuthFailure(status: number, responseBody: unknown = null) {
+function createFetchError(status: number, responseBody: unknown = null) {
   return new OpenmrsFetchError('/openmrs/ws/rest/v1/session', { status } as Response, responseBody as any, Error());
 }
 
@@ -633,9 +633,44 @@ describe('refetchCurrentUser', () => {
     });
   });
 
+  it('should record that the server is starting up when the gateway responds with a 502 soon after the first fetch', async () => {
+    mockReportError.mockClear();
+    mockOpenmrsFetch.mockRejectedValue(createFetchError(502));
+
+    await expect(refetchCurrentUser()).rejects.toMatchObject({ loaded: false, initializing: true });
+    expect(mockReportError).not.toHaveBeenCalled();
+  });
+
+  it('should record an ordinary error when the gateway still responds with a 502 minutes after the first fetch', async () => {
+    vi.useFakeTimers();
+
+    try {
+      mockOpenmrsFetch.mockRejectedValue(createFetchError(502));
+      await refetchCurrentUser().catch(() => {});
+
+      vi.setSystemTime(Date.now() + 3 * 60 * 1000);
+      mockReportError.mockClear();
+
+      await expect(refetchCurrentUser()).rejects.toMatchObject({ loaded: false, initializing: false });
+      expect(mockReportError).toHaveBeenCalled();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('should keep an already-loaded session and report the error when the gateway responds with a 502', async () => {
+    const mockSession: Session = { authenticated: true, sessionId: 'test-session', user: {} as LoggedInUser };
+    sessionStore.setState({ loaded: true, session: mockSession }, true);
+    mockReportError.mockClear();
+    mockOpenmrsFetch.mockRejectedValue(createFetchError(502));
+
+    await expect(refetchCurrentUser()).rejects.toEqual({ loaded: true, session: mockSession });
+    expect(mockReportError).toHaveBeenCalled();
+  });
+
   it('should use the unauthenticated session in the body of a 401 response', async () => {
     const unauthenticated = { authenticated: false, sessionId: 'abc', allowedLocales: ['en', 'fr'] };
-    mockOpenmrsFetch.mockRejectedValue(createAuthFailure(401, unauthenticated));
+    mockOpenmrsFetch.mockRejectedValue(createFetchError(401, unauthenticated));
 
     await expect(refetchCurrentUser()).resolves.toEqual({ loaded: true, session: unauthenticated });
   });
@@ -644,7 +679,7 @@ describe('refetchCurrentUser', () => {
     'should record a logged-out session when the session endpoint responds with %i',
     async (status) => {
       mockReportError.mockClear();
-      mockOpenmrsFetch.mockRejectedValue(createAuthFailure(status));
+      mockOpenmrsFetch.mockRejectedValue(createFetchError(status));
 
       await expect(refetchCurrentUser()).resolves.toEqual({
         loaded: true,
@@ -660,7 +695,7 @@ describe('refetchCurrentUser', () => {
   );
 
   it('should not leave readers waiting on the failed request after an auth failure', async () => {
-    mockOpenmrsFetch.mockRejectedValueOnce(createAuthFailure(401));
+    mockOpenmrsFetch.mockRejectedValueOnce(createFetchError(401));
     await refetchCurrentUser();
 
     await expect(getCurrentUser()).resolves.toEqual({ authenticated: false, sessionId: '' });
@@ -917,7 +952,7 @@ describe('logout', () => {
   });
 
   it('should treat a session the server has already ended as logged out', async () => {
-    mockOpenmrsFetch.mockRejectedValue(createAuthFailure(401));
+    mockOpenmrsFetch.mockRejectedValue(createFetchError(401));
 
     await expect(logout()).resolves.toBeUndefined();
     expect(sessionStore.getState()).toEqual(loggedOut);
