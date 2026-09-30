@@ -15,7 +15,7 @@ const RedirectLogout: React.FC = () => {
     if (!session.authenticated) {
       // `logout()` marks the session as logged out before it resolves, so this branch re-runs and
       // redirects before `performLogout` has cleared the cache.
-      clearSwrCache(cache, mutate);
+      void clearSwrCache(cache, mutate);
       if (config.provider.type === 'custom') {
         navigate({ to: config.provider.loginUrl });
       } else if (config.provider.type === 'oauth2') {
