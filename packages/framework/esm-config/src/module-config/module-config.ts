@@ -6,6 +6,7 @@ import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../val
 import { validator } from '../validators/validator';
 import {
   type ConfigExtensionStore,
+  type ConfigExtensionStoreElement,
   type ConfigInternalStore,
   type ConfigStore,
   type ExtensionSlotsConfigStore,
@@ -104,6 +105,13 @@ let lastDerivation: {
   tempConfigState: TemporaryConfigStore;
   slotConfigs: Record<string, ExtensionSlotConfig>;
 } | null = null;
+
+/**
+ * The mounted extension each extension config entry was derived for. An extension ID can be
+ * mounted under a different module while its slot and ID stay the same, so an entry is only
+ * current if its modules match too.
+ */
+let entryOrigins = new WeakMap<object, ConfigExtensionStoreElement>();
 
 function setupConfigSubscriptions() {
   // Registered here rather than at module load so that `resetConfigSystem` restores it.
@@ -267,7 +275,14 @@ function computeExtensionConfigs(
     const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
     let entry: ConfigStore | { config: ConfigObject; loaded: true };
 
-    if (configInputsUnchanged && previous?.loaded) {
+    const origin = previous && entryOrigins.get(previous);
+
+    if (
+      configInputsUnchanged &&
+      previous?.loaded &&
+      origin?.slotModuleName === extension.slotModuleName &&
+      origin.extensionModuleName === extension.extensionModuleName
+    ) {
       // Derived from these same inputs by the previous run, so it is still current.
       entry = previous;
     } else {
@@ -285,6 +300,8 @@ function computeExtensionConfigs(
       // mounting one extension doesn't hand every other mounted extension a new config object.
       entry = previous?.loaded && isEqual(previous.config, config) ? previous : { config, loaded: true };
     }
+
+    entryOrigins.set(entry, extension);
 
     if (entry !== previous) {
       changed = true;
@@ -1227,6 +1244,7 @@ export function resetConfigSystem() {
   schemaValuesAndSourcesCache.clear();
   implementerToolsModuleCache.clear();
   lastDerivation = null;
+  entryOrigins = new WeakMap();
   setupConfigSubscriptions();
 }
 

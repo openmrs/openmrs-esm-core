@@ -387,6 +387,17 @@ export function detachAll(extensionSlotName: string) {
   });
 }
 
+/** Maps each ID to the index of its first occurrence, matching `Array.prototype.indexOf`. */
+function indexById(ids: Array<string>) {
+  const index = new Map<string, number>();
+  ids.forEach((id, i) => {
+    if (!index.has(id)) {
+      index.set(id, i);
+    }
+  });
+  return index;
+}
+
 /**
  * Get an order index for the extension. This will
  * come from either its configured order, its registered order
@@ -398,19 +409,19 @@ export function detachAll(extensionSlotName: string) {
  */
 function getOrder(
   extensionId: string,
-  configuredOrder: Array<string>,
+  configuredOrder: Map<string, number>,
   registeredOrderIndex: number | undefined,
-  attachedOrder: Array<string>,
+  attachedOrder: Map<string, number>,
 ) {
-  const configuredIndex = configuredOrder.indexOf(extensionId);
-  if (configuredIndex !== -1) {
+  const configuredIndex = configuredOrder.get(extensionId);
+  if (configuredIndex !== undefined) {
     return configuredIndex;
   } else if (registeredOrderIndex !== undefined) {
     // extensions that don't have a configured order should appear after those that do
     return 1000 + registeredOrderIndex;
   } else {
-    const assignedIndex = attachedOrder.indexOf(extensionId);
-    if (assignedIndex !== -1) {
+    const assignedIndex = attachedOrder.get(extensionId);
+    if (assignedIndex !== undefined) {
       // extensions that have neither a configured nor registered order should appear
       // after all others
       return 2000 + assignedIndex;
@@ -568,9 +579,11 @@ function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<st
   const { extensions } = extensionInternalStore.getState();
   const removed = new Set(removedIds);
   const ids = [...attachedIds, ...addedIds].filter((id) => !removed.has(id));
+  const configuredIndex = indexById(idOrder);
+  const attachedIndex = indexById(attachedIds);
   // Computed once per ID: calling `getOrder` from the comparator makes the sort quadratic.
   const order = new Map(
-    ids.map((id) => [id, getOrder(id, idOrder, extensions[getExtensionNameFromId(id)]?.order, attachedIds)]),
+    ids.map((id) => [id, getOrder(id, configuredIndex, extensions[getExtensionNameFromId(id)]?.order, attachedIndex)]),
   );
 
   // Ties keep their input order — `Array.prototype.sort` is stable, and the input is

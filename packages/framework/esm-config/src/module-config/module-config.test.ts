@@ -1333,6 +1333,25 @@ describe('extension config', () => {
     expect(bar('fooExt#b')).toBe('barry');
   });
 
+  it('re-derives the config of an extension mounted again under a different module', () => {
+    Config.defineConfigSchema('other-mod', { bar: { _default: 'other' } });
+    Config.registerModuleLoad('other-mod');
+
+    const mount = (extensionModuleName: string) =>
+      configExtensionStore.setState({
+        mountedExtensions: [
+          { slotModuleName: 'slot-mod', extensionModuleName, slotName: 'barSlot', extensionId: 'fooExt' },
+        ],
+      });
+    const bar = () => getExtensionConfig('barSlot', 'fooExt').getState().config.bar;
+
+    mount('ext-mod');
+    expect(bar()).toBe('barry');
+
+    mount('other-mod');
+    expect(bar()).toBe('other');
+  });
+
   it('returns the module config', async () => {
     const moduleLevelConfig = { 'ext-mod': { bar: 'qux' } };
     updateConfigExtensionStore();
