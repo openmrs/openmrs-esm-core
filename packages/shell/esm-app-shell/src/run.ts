@@ -187,7 +187,7 @@ function showErrorPageOnSessionFailure(booted: Promise<void>) {
 
   const sessionStore = getSessionStore();
   const unsubscribe = sessionStore.subscribe(update);
-  booted.then(() => {
+  void booted.then(() => {
     isBooted = true;
     update(sessionStore.getState());
   });

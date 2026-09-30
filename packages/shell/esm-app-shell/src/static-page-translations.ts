@@ -17,7 +17,7 @@ export function translateStaticPage(root: ParentNode) {
     return;
   }
 
-  loadTranslations().then((loaded) => {
+  void loadTranslations().then((loaded) => {
     for (const element of elements) {
       const translation = loaded[element.dataset.i18n!];
       if (translation) {
