@@ -592,8 +592,8 @@ describe('refetchCurrentUser', () => {
     const error = new Error('Bad gateway');
     mockOpenmrsFetch.mockRejectedValue(error);
 
-    await expect(refetchCurrentUser()).rejects.toEqual({ loaded: false, session: null, error });
-    expect(sessionStore.getState()).toEqual({ loaded: false, session: null, error });
+    await expect(refetchCurrentUser()).rejects.toEqual({ loaded: false, session: null, error, initializing: false });
+    expect(sessionStore.getState()).toEqual({ loaded: false, session: null, error, initializing: false });
   });
 
   it('should keep an already-loaded session when a later fetch fails', async () => {
@@ -614,6 +614,22 @@ describe('refetchCurrentUser', () => {
     expect(sessionStore.getState()).toMatchObject({
       loaded: false,
       error: new Error('The session endpoint did not respond with a session'),
+    });
+    expect(sessionStore.getState()).toMatchObject({ initializing: false });
+  });
+
+  it('should record that the server is starting up when the session request is redirected to initial setup', async () => {
+    mockOpenmrsFetch.mockResolvedValue({
+      ...createMockFetchResponse(undefined),
+      redirected: true,
+      url: 'http://localhost/openmrs/initialsetup',
+    });
+
+    await expect(refetchCurrentUser()).rejects.toMatchObject({ loaded: false, session: null, initializing: true });
+    expect(sessionStore.getState()).toMatchObject({
+      loaded: false,
+      initializing: true,
+      error: new Error('The server is still starting up'),
     });
   });
 
