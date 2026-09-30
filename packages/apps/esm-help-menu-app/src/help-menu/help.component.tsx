@@ -18,13 +18,6 @@ export default function HelpMenu() {
     setHelpMenuOpen((prevState) => !prevState);
   };
 
-  const closeHelpMenuOnEscape = (event: React.KeyboardEvent) => {
-    if (event.key === 'Escape' && helpMenuOpen) {
-      setHelpMenuOpen(false);
-      helpMenuButtonRef.current?.focus();
-    }
-  };
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -59,7 +52,6 @@ export default function HelpMenu() {
           className={styles.helpMenuButton}
           kind="ghost"
           onClick={toggleHelpMenu}
-          onKeyDown={closeHelpMenuOnEscape}
           ref={helpMenuButtonRef}
           size="md"
         >
@@ -67,7 +59,7 @@ export default function HelpMenu() {
         </Button>
       )}
       {helpMenuOpen && (
-        <div id="help-menu-popup" ref={popupRef} className={styles.helpMenuPopup} onKeyDown={closeHelpMenuOnEscape}>
+        <div id="help-menu-popup" ref={popupRef} className={styles.helpMenuPopup}>
           <HelpMenuPopup />
         </div>
       )}

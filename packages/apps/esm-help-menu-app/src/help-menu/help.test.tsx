@@ -35,25 +35,6 @@ describe('HelpMenu', () => {
     expect(screen.queryByRole('group', { name: /help menu/i })).not.toBeInTheDocument();
   });
 
-  it('closes the help menu on Escape and returns focus to the button', async () => {
-    const user = userEvent.setup();
-    render(<HelpMenu />);
-
-    const button = screen.getByRole('button', { name: /help menu/i });
-    await user.click(button);
-    await user.keyboard('{Escape}');
-
-    expect(button).toHaveAttribute('aria-expanded', 'false');
-    expect(screen.queryByRole('group', { name: /help menu/i })).not.toBeInTheDocument();
-
-    await user.click(button);
-    screen.getByRole('group', { name: /help menu/i }).focus();
-    await user.keyboard('{Escape}');
-
-    expect(screen.queryByRole('group', { name: /help menu/i })).not.toBeInTheDocument();
-    expect(button).toHaveFocus();
-  });
-
   it('renders nothing when no help menu items are registered', () => {
     mockUseAssignedExtensions.mockReturnValue([]);
     const { container } = render(<HelpMenu />);
