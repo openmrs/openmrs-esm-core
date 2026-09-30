@@ -2,36 +2,23 @@ import React from 'react';
 import { mutate } from 'swr';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, waitFor } from '@testing-library/react';
-import {
-  type FetchResponse,
-  type Session,
-  clearCurrentUser,
-  navigate,
-  openmrsFetch,
-  restBaseUrl,
-  setUserLanguage,
-  useConfig,
-  useConnectivity,
-  useSession,
-} from '@openmrs/esm-framework';
+import { type Session, navigate, setUserLanguage, useConfig, useSession } from '@openmrs/esm-framework';
+import { logout } from '@openmrs/esm-framework/src/internal';
 import RedirectLogout from './redirect-logout.component';
 
 vi.mock('swr', () => ({
   mutate: vi.fn(),
 }));
 
-const mockClearCurrentUser = vi.mocked(clearCurrentUser);
+const mockLogout = vi.mocked(logout);
 const mockNavigate = vi.mocked(navigate);
-const mockOpenmrsFetch = vi.mocked(openmrsFetch);
 const mockSetUserLanguage = vi.mocked(setUserLanguage);
 const mockUseConfig = vi.mocked(useConfig);
-const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockUseSession = vi.mocked(useSession);
 
 describe('RedirectLogout', () => {
   beforeEach(() => {
-    mockUseConnectivity.mockReturnValue(true);
-    mockOpenmrsFetch.mockResolvedValue({} as FetchResponse<unknown>);
+    mockLogout.mockResolvedValue(undefined);
 
     mockUseSession.mockReturnValue({
       authenticated: true,
@@ -50,13 +37,10 @@ describe('RedirectLogout', () => {
   it('should redirect to login page upon logout', async () => {
     render(<RedirectLogout />);
 
-    expect(mockOpenmrsFetch).toHaveBeenCalledWith(`${restBaseUrl}/session`, {
-      method: 'DELETE',
-    });
+    expect(mockLogout).toHaveBeenCalled();
 
     await waitFor(() => expect(mutate).toHaveBeenCalled());
 
-    expect(mockClearCurrentUser).toHaveBeenCalled();
     expect(mockSetUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
       authenticated: false,
@@ -74,13 +58,10 @@ describe('RedirectLogout', () => {
 
     render(<RedirectLogout />);
 
-    expect(mockOpenmrsFetch).toHaveBeenCalledWith(`${restBaseUrl}/session`, {
-      method: 'DELETE',
-    });
+    expect(mockLogout).toHaveBeenCalled();
 
     await waitFor(() => expect(mutate).toHaveBeenCalled());
 
-    expect(mockClearCurrentUser).toHaveBeenCalled();
     expect(mockSetUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
       authenticated: false,
@@ -99,17 +80,9 @@ describe('RedirectLogout', () => {
     expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
   });
 
-  it('should redirect to login if the application is offline', async () => {
-    mockUseConnectivity.mockReturnValue(false);
-
-    render(<RedirectLogout />);
-
-    expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
-  });
-
   it('should handle logout failure gracefully', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
-    mockOpenmrsFetch.mockRejectedValue(new Error('Logout failed'));
+    mockLogout.mockRejectedValue(new Error('Logout failed'));
 
     render(<RedirectLogout />);
 

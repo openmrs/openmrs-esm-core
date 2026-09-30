@@ -4,7 +4,7 @@
 
 > **detach**(`extensionSlotName`, `extensionId`): `void`
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L347)
+Defined in: [packages/framework/esm-extensions/src/extensions.ts:341](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L341)
 
 Detaches an extension from an extension slot.
 

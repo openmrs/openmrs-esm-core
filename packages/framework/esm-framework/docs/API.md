@@ -1,15 +1,26 @@
 # O3 Framework
 
+## Config Validation
+
+- [validator](functions/validator.md)
+- [inRange](functions/inRange.md)
+- [isUrlWithTemplateParameters](functions/isUrlWithTemplateParameters.md)
+- [oneOf](functions/oneOf.md)
+
+## Context
+
+- [registerContext](functions/registerContext.md)
+- [unregisterContext](functions/unregisterContext.md)
+- [getContext](functions/getContext.md)
+- [updateContext](functions/updateContext.md)
+- [subscribeToContext](functions/subscribeToContext.md)
+- [OpenmrsAppContext](functions/OpenmrsAppContext.md)
+- [OpenmrsAppContextProps](interfaces/OpenmrsAppContextProps.md)
+- [useAppContext](functions/useAppContext.md)
+- [useDefineAppContext](functions/useDefineAppContext.md)
+
 ## API
 
-- [makeUrl](functions/makeUrl.md)
-- [openmrsFetch](functions/openmrsFetch.md)
-- [openmrsObservableFetch](functions/openmrsObservableFetch.md)
-- [OpenmrsFetchError](classes/OpenmrsFetchError.md)
-- [FetchConfig](interfaces/FetchConfig.md)
-- [FetchHeaders](interfaces/FetchHeaders.md)
-- [FetchResponseJson](interfaces/FetchResponseJson.md)
-- [FetchError](interfaces/FetchError.md)
 - [getAttachmentByUuid](functions/getAttachmentByUuid.md)
 - [getAttachments](functions/getAttachments.md)
 - [getAttachmentsUrl](functions/getAttachmentsUrl.md)
@@ -51,26 +62,14 @@
 - [setUserLanguage](functions/setUserLanguage.md)
 - [setUserProperties](functions/setUserProperties.md)
 - [userHasAccess](functions/userHasAccess.md)
+- [makeUrl](functions/makeUrl.md)
+- [openmrsFetch](functions/openmrsFetch.md)
+- [OpenmrsFetchError](classes/OpenmrsFetchError.md)
+- [FetchConfig](interfaces/FetchConfig.md)
+- [FetchError](interfaces/FetchError.md)
+- [FetchHeaders](interfaces/FetchHeaders.md)
+- [FetchResponseJson](interfaces/FetchResponseJson.md)
 - [useSession](functions/useSession.md)
-
-## Config Validation
-
-- [validator](functions/validator.md)
-- [inRange](functions/inRange.md)
-- [isUrlWithTemplateParameters](functions/isUrlWithTemplateParameters.md)
-- [oneOf](functions/oneOf.md)
-
-## Context
-
-- [registerContext](functions/registerContext.md)
-- [unregisterContext](functions/unregisterContext.md)
-- [getContext](functions/getContext.md)
-- [updateContext](functions/updateContext.md)
-- [subscribeToContext](functions/subscribeToContext.md)
-- [OpenmrsAppContext](functions/OpenmrsAppContext.md)
-- [OpenmrsAppContextProps](interfaces/OpenmrsAppContextProps.md)
-- [useAppContext](functions/useAppContext.md)
-- [useDefineAppContext](functions/useDefineAppContext.md)
 
 ## Error Handling
 
@@ -98,52 +97,6 @@
 - [getHistory](functions/getHistory.md)
 - [goBackInHistory](functions/goBackInHistory.md)
 
-## Offline
-
-- [~~getOfflinePatientDataStore~~](functions/getOfflinePatientDataStore.md)
-- [~~registerOfflinePatientHandler~~](functions/registerOfflinePatientHandler.md)
-- [~~syncOfflinePatientData~~](functions/syncOfflinePatientData.md)
-- [~~OfflinePatientDataSyncStore~~](interfaces/OfflinePatientDataSyncStore.md)
-- [~~OfflinePatientDataSyncState~~](interfaces/OfflinePatientDataSyncState.md)
-- [~~OfflinePatientDataSyncHandler~~](interfaces/OfflinePatientDataSyncHandler.md)
-- [~~OfflinePatientArgs~~](interfaces/OfflinePatientArgs.md)
-- [messageOmrsServiceWorker](functions/messageOmrsServiceWorker.md)
-- [OmrsServiceWorkerMessage](interfaces/OmrsServiceWorkerMessage.md)
-- [OnImportMapChangedMessage](interfaces/OnImportMapChangedMessage.md)
-- [ClearDynamicRoutesMessage](interfaces/ClearDynamicRoutesMessage.md)
-- [RegisterDynamicRouteMessage](interfaces/RegisterDynamicRouteMessage.md)
-- [MessageServiceWorkerResult](interfaces/MessageServiceWorkerResult.md)
-- [generateOfflineUuid](functions/generateOfflineUuid.md)
-- [isOfflineUuid](functions/isOfflineUuid.md)
-- [getDynamicOfflineDataHandlers](functions/getDynamicOfflineDataHandlers.md)
-- [setupDynamicOfflineDataHandler](functions/setupDynamicOfflineDataHandler.md)
-- [getDynamicOfflineDataEntries](functions/getDynamicOfflineDataEntries.md)
-- [getDynamicOfflineDataEntriesFor](functions/getDynamicOfflineDataEntriesFor.md)
-- [putDynamicOfflineData](functions/putDynamicOfflineData.md)
-- [putDynamicOfflineDataFor](functions/putDynamicOfflineDataFor.md)
-- [removeDynamicOfflineData](functions/removeDynamicOfflineData.md)
-- [removeDynamicOfflineDataFor](functions/removeDynamicOfflineDataFor.md)
-- [syncAllDynamicOfflineData](functions/syncAllDynamicOfflineData.md)
-- [syncDynamicOfflineData](functions/syncDynamicOfflineData.md)
-- [DynamicOfflineDataHandler](interfaces/DynamicOfflineDataHandler.md)
-- [DynamicOfflineData](interfaces/DynamicOfflineData.md)
-- [DynamicOfflineDataSyncState](interfaces/DynamicOfflineDataSyncState.md)
-- [useConnectivity](functions/useConnectivity.md)
-- [OfflineModeResult](interfaces/OfflineModeResult.md)
-- [getCurrentOfflineMode](functions/getCurrentOfflineMode.md)
-- [QueueItemDescriptor](interfaces/QueueItemDescriptor.md)
-- [SyncItem](interfaces/SyncItem.md)
-- [SyncProcessOptions](interfaces/SyncProcessOptions.md)
-- [queueSynchronizationItem](functions/queueSynchronizationItem.md)
-- [getSynchronizationItem](functions/getSynchronizationItem.md)
-- [getSynchronizationItems](functions/getSynchronizationItems.md)
-- [getFullSynchronizationItems](functions/getFullSynchronizationItems.md)
-- [getFullSynchronizationItemsFor](functions/getFullSynchronizationItemsFor.md)
-- [canBeginEditSynchronizationItemsOfType](functions/canBeginEditSynchronizationItemsOfType.md)
-- [beginEditSynchronizationItem](functions/beginEditSynchronizationItem.md)
-- [deleteSynchronizationItem](functions/deleteSynchronizationItem.md)
-- [setupOfflineSync](functions/setupOfflineSync.md)
-
 ## Extension
 
 - [ExtensionSlot](functions/ExtensionSlot.md)
@@ -151,6 +104,7 @@
 - [ExtensionSlotProps](interfaces/ExtensionSlotProps.md)
 - [~~useAssignedExtensionIds~~](functions/useAssignedExtensionIds.md)
 - [useAssignedExtensions](functions/useAssignedExtensions.md)
+- [useExtensionContext](functions/useExtensionContext.md)
 - [useExtensionSlotMeta](functions/useExtensionSlotMeta.md)
 - [useExtensionSlotStore](functions/useExtensionSlotStore.md)
 - [useRenderableExtensions](functions/useRenderableExtensions.md)

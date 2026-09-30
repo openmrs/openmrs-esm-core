@@ -12,4 +12,3 @@ export function deleteAttachmentPermanently() {}
 export function updateVisit() {}
 export function saveVisit() {}
 export function getVisitsForPatient() {}
-export function getStartedVisit() {}

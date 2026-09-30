@@ -3,6 +3,8 @@ const {
   CopyRspackPlugin,
   DefinePlugin,
   util: { createHash },
+  SwcJsMinimizerRspackPlugin,
+  LightningCssMinimizerRspackPlugin,
 } = require('@rspack/core');
 const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
@@ -14,6 +16,7 @@ const { mkdirSync, readdirSync, statSync, readFileSync, writeFileSync } = requir
 const sass = require('sass-embedded');
 const semver = require('semver');
 const { removeTrailingSlash, getTimestamp } = require('./tools/helpers');
+const { StartupPreloadPlugin } = require('./tools/startup-preload-plugin');
 
 const { name, version, dependencies } = require('./package.json');
 const sharedDependencies = require('./dependencies.json');
@@ -75,7 +78,6 @@ function resolveEnvironment(buildMode) {
   const fallback = process.env.NODE_ENV || buildMode || '';
   return fallback === 'development' ? 'development' : 'production';
 }
-const openmrsOffline = process.env.OMRS_OFFLINE === 'enable';
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsImportmapUrl = process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -392,6 +394,14 @@ module.exports = (env, argv = []) => {
       ],
     },
     optimization: {
+      // `minimizer` replaces rspack's default pair, so the JS minimizer is listed too. Lightning CSS is
+      // given our browserslist; on its own defaults it downlevels every logical property for old browsers.
+      minimizer: [
+        new SwcJsMinimizerRspackPlugin(),
+        new LightningCssMinimizerRspackPlugin({
+          minimizerOptions: { targets: browserTargets },
+        }),
+      ],
       splitChunks: {
         maxAsyncRequests: Infinity,
         maxInitialRequests: 1,
@@ -444,7 +454,6 @@ module.exports = (env, argv = []) => {
           openmrsImportmapUrl,
           openmrsRoutesDef,
           openmrsRoutesUrl,
-          openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,
           openmrsCoreImportmap: appPatterns.length > 0 && JSON.stringify(coreImportmap),
@@ -453,6 +462,7 @@ module.exports = (env, argv = []) => {
           openmrsExtraAssets: openmrsJsCssAssets.map((fileName) => 'assets/' + basename(fileName)),
         },
       }),
+      new StartupPreloadPlugin(['run']),
       new WebpackPwaManifest({
         name: openmrsPageTitle,
         short_name: openmrsPageTitle,
@@ -470,7 +480,7 @@ module.exports = (env, argv = []) => {
       new CopyRspackPlugin({
         patterns: [
           { from: resolve(__dirname, 'src/assets') },
-          { from: resolve(cssTmpDir, openmrsCssFilename), to: openmrsCssFilename },
+          { from: resolve(cssTmpDir, openmrsCssFilename), to: openmrsCssFilename, info: { minimized: true } },
           ...fontPatterns,
           ...appPatterns,
           ...assetsPatterns,
@@ -542,6 +552,5 @@ module.exports = (env, argv = []) => {
         analyzerMode: env?.analyze ? 'static' : 'disabled',
       }),
     ].filter(Boolean),
-    ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };
 };

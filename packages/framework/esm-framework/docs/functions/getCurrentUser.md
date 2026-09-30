@@ -4,56 +4,47 @@
 
 ## Call Signature
 
-> **getCurrentUser**(): `Observable`\<[`Session`](../interfaces/Session.md)\>
+> **getCurrentUser**(): `Promise`\<[`Session`](../interfaces/Session.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L66)
+Defined in: [packages/framework/esm-api/src/current-user.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L91)
 
-The getCurrentUser function returns an observable that produces
-**zero or more values, over time**. It will produce zero values
-by default if the user is not logged in. And it will provide a
-first value when the logged in user is fetched from the server.
-Subsequent values will be produced whenever the user object is
-updated.
+The getCurrentUser function returns a Promise that resolves once with the
+current user's session. If the session hasn't been loaded, was loaded more than
+a minute ago, or is in the middle of being refetched, the Promise waits for the
+fetch in question rather than resolving with data that may be out of date. The
+session it resolves with is therefore never more than a minute old, unless that fetch fails,
+in which case it resolves with the last session that loaded.
 
-The function accepts an optional `opts` object with an `includeAuthStatus`
-boolean property that defaults to `true`. When `includeAuthStatus` is `true`,
-the entire [Session](../interfaces/Session.md) object from the API will be provided. When
-`includeAuthStatus` is `false`, only the [LoggedInUser](../interfaces/LoggedInUser.md) property of the
-response object will be provided.
+The function accepts an optional `opts` object with an `includeAuthStatus` boolean
+property that defaults to `true`. When `true`, the entire [Session](../interfaces/Session.md) object
+from the API is provided. When `false`, only the [LoggedInUser](../interfaces/LoggedInUser.md) property of
+the response is provided.
+
+To react to subsequent session changes (login, logout, user-property updates),
+use [getSessionStore](getSessionStore.md) (`getState()` / `subscribe()`) or the `useSession`
+React hook rather than calling this repeatedly.
 
 ### Returns
 
-`Observable`\<[`Session`](../interfaces/Session.md)\>
+`Promise`\<[`Session`](../interfaces/Session.md)\>
 
-An Observable that produces zero or more values (as described above).
-  The values produced will be a [LoggedInUser](../interfaces/LoggedInUser.md) object (if `includeAuthStatus`
-  is set to `false`) or a [Session](../interfaces/Session.md) object with authentication status
-  (if `includeAuthStatus` is set to `true` or not provided).
+A Promise resolving to a [LoggedInUser](../interfaces/LoggedInUser.md) object (if `includeAuthStatus`
+  is `false`) or a [Session](../interfaces/Session.md) object (if `includeAuthStatus` is `true` or not
+  provided).
 
 ### Example
 
 ```js
 import { getCurrentUser } from '@openmrs/esm-api'
-const subscription = getCurrentUser().subscribe(
-  user => console.log(user)
-)
-subscription.unsubscribe()
-getCurrentUser({includeAuthStatus: true}).subscribe(
-  data => console.log(data.authenticated)
-)
+const session = await getCurrentUser({ includeAuthStatus: true })
+console.log(session.authenticated)
 ```
-
-#### Be sure to unsubscribe when your component unmounts
-
-Otherwise your code will continue getting updates to the user object
-even after the UI component is gone from the screen. This is a memory
-leak and source of bugs.
 
 ## Call Signature
 
-> **getCurrentUser**(`opts`): `Observable`\<[`Session`](../interfaces/Session.md)\>
+> **getCurrentUser**(`opts`): `Promise`\<[`Session`](../interfaces/Session.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L73)
+Defined in: [packages/framework/esm-api/src/current-user.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L98)
 
 ### Parameters
 
@@ -65,20 +56,20 @@ Options for controlling the response format.
 
 `true`
 
-When `true`, returns the full [Session](../interfaces/Session.md) object
+When `true`, resolves with the full [Session](../interfaces/Session.md) object
   including authentication status.
 
 ### Returns
 
-`Observable`\<[`Session`](../interfaces/Session.md)\>
+`Promise`\<[`Session`](../interfaces/Session.md)\>
 
-An Observable that produces [Session](../interfaces/Session.md) objects.
+A Promise resolving to a [Session](../interfaces/Session.md) object.
 
 ## Call Signature
 
-> **getCurrentUser**(`opts`): `Observable`\<[`LoggedInUser`](../interfaces/LoggedInUser.md)\>
+> **getCurrentUser**(`opts`): `Promise`\<[`LoggedInUser`](../interfaces/LoggedInUser.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L80)
+Defined in: [packages/framework/esm-api/src/current-user.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L105)
 
 ### Parameters
 
@@ -90,11 +81,11 @@ Options for controlling the response format.
 
 `false`
 
-When `false`, returns only the [LoggedInUser](../interfaces/LoggedInUser.md) object
+When `false`, resolves with only the [LoggedInUser](../interfaces/LoggedInUser.md) object
   without the surrounding session information.
 
 ### Returns
 
-`Observable`\<[`LoggedInUser`](../interfaces/LoggedInUser.md)\>
+`Promise`\<[`LoggedInUser`](../interfaces/LoggedInUser.md)\>
 
-An Observable that produces [LoggedInUser](../interfaces/LoggedInUser.md) objects.
+A Promise resolving to a [LoggedInUser](../interfaces/LoggedInUser.md) object.

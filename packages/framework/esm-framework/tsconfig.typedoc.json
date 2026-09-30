@@ -23,8 +23,6 @@
       "@openmrs/esm-globals/src/public": ["../esm-globals/src/public.ts"],
       "@openmrs/esm-navigation": ["../esm-navigation/src/index.ts"],
       "@openmrs/esm-navigation/src/public": ["../esm-navigation/src/public.ts"],
-      "@openmrs/esm-offline": ["../esm-offline/src/index.ts"],
-      "@openmrs/esm-offline/src/public": ["../esm-offline/src/public.ts"],
       "@openmrs/esm-react-utils": ["../esm-react-utils/src/index.ts"],
       "@openmrs/esm-react-utils/src/public": ["../esm-react-utils/src/public.ts"],
       "@openmrs/esm-routes": ["../esm-routes/src/index.ts"],

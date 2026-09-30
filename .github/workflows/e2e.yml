@@ -67,7 +67,9 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: '**/node_modules'
+          path: |
+            **/node_modules
+            !e2e_repo/**
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: 📦 Install dependencies
@@ -129,7 +131,9 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: '**/node_modules'
+          path: |
+            **/node_modules
+            !e2e_repo/**
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: 📦 Install dependencies
@@ -160,8 +164,8 @@ jobs:
         id: cache-other-repo-dependencies
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ hashFiles('e2e_repo/**/yarn.lock') }}
+          path: e2e_repo/**/node_modules
+          key: ${{ runner.os }}-${{ matrix.repo }}-${{ hashFiles('e2e_repo/**/yarn.lock') }}
 
       - name: 📦 Install dependencies for ${{ matrix.repo }}
         if: steps.cache-other-repo-dependencies.outputs.cache-hit != 'true'

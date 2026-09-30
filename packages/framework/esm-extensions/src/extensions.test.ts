@@ -40,22 +40,6 @@ vi.mock('@openmrs/esm-api', () => ({
   userHasAccess: vi.fn(() => true),
 }));
 
-vi.mock('@openmrs/esm-utils', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@openmrs/esm-utils')>();
-  return {
-    ...actual,
-    isOnline: vi.fn(() => true),
-  };
-});
-
-vi.mock('@openmrs/esm-globals', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@openmrs/esm-globals')>();
-  return {
-    ...actual,
-    subscribeConnectivityChanged: vi.fn(),
-  };
-});
-
 // Helper to create unique names for test isolation
 let nameCounter = 0;
 function getUniqueName(prefix: string = 'test'): string {

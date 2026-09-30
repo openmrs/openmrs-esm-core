@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceDefinition2
 
-Defined in: [packages/framework/esm-globals/src/types.ts:345](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L345)
+Defined in: [packages/framework/esm-globals/src/types.ts:319](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L319)
 
 ## Properties
 
@@ -10,7 +10,22 @@ Defined in: [packages/framework/esm-globals/src/types.ts:345](https://github.com
 
 > **component**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L347)
+Defined in: [packages/framework/esm-globals/src/types.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L321)
+
+***
+
+### meta?
+
+> `optional` **meta**: `object`
+
+Defined in: [packages/framework/esm-globals/src/types.ts:327](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L327)
+
+Meta describes any properties that are passed down to the workspace when it is loaded. It is
+available to the workspace component via `useWorkspace2Context().workspaceMeta`.
+
+#### Index Signature
+
+\[`k`: `string`\]: `unknown`
 
 ***
 
@@ -18,7 +33,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:347](https://github.com
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:346](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L346)
+Defined in: [packages/framework/esm-globals/src/types.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L320)
 
 ***
 
@@ -26,4 +41,4 @@ Defined in: [packages/framework/esm-globals/src/types.ts:346](https://github.com
 
 > **window**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L348)
+Defined in: [packages/framework/esm-globals/src/types.ts:322](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L322)
