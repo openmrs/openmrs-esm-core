@@ -29,6 +29,24 @@ export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes i
       }
     }
 
+    if (Object.hasOwn(routes, 'workspaces2')) {
+      if (!Boolean(maybeRoutes.workspaces2) || !Array.isArray(maybeRoutes.workspaces2)) {
+        return false;
+      }
+    }
+
+    if (Object.hasOwn(routes, 'workspaceWindows2')) {
+      if (!Boolean(maybeRoutes.workspaceWindows2) || !Array.isArray(maybeRoutes.workspaceWindows2)) {
+        return false;
+      }
+    }
+
+    if (Object.hasOwn(routes, 'workspaceGroups2')) {
+      if (!Boolean(maybeRoutes.workspaceGroups2) || !Array.isArray(maybeRoutes.workspaceGroups2)) {
+        return false;
+      }
+    }
+
     // A completely empty object is a valid OpenmrsAppRoutes object.
     return true;
   }
