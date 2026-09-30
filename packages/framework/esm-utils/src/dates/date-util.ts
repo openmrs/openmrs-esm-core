@@ -26,6 +26,29 @@ export type DateInput = string | number | Date;
 
 const isoFormat = 'YYYY-MM-DDTHH:mm:ss.SSSZZ';
 
+const isoCalendarDate = /^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?$/;
+
+/**
+ * Like any-date-parser's `attempt()`, but parses ISO 8601 calendar dates (`YYYY`, `YYYY-MM`,
+ * `YYYY-MM-DD`) itself, since any-date-parser is expensive to initialise. Out-of-range months and
+ * days still go to `attempt()`, whose reading of them callers may rely on.
+ */
+function parseDateString(dateString: string, locale: string): ReturnType<typeof attempt> {
+  const match = isoCalendarDate.exec(dateString);
+
+  if (match) {
+    const year = Number(match[1]);
+    const month = match[2] === undefined ? undefined : Number(match[2]);
+    const day = match[3] === undefined ? undefined : Number(match[3]);
+
+    if ((month === undefined || (month >= 1 && month <= 12)) && (day === undefined || (day >= 1 && day <= 31))) {
+      return { year, ...(month !== undefined && { month }), ...(day !== undefined && { day }) };
+    }
+  }
+
+  return attempt(dateString, locale);
+}
+
 /**
  * This function checks whether a date string is the OpenMRS ISO format.
  * The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
@@ -240,7 +263,7 @@ const defaultOptions: FormatDateOptions = {
 // TODO: Shouldn't throw on null input
 export function formatPartialDate(dateString: string, options: Partial<FormatDateOptions> = {}) {
   const locale = getLocale();
-  let parsed: ReturnType<typeof attempt> & { date?: number } = attempt(dateString, locale);
+  let parsed: ReturnType<typeof attempt> & { date?: number } = parseDateString(dateString, locale);
 
   if (parsed.invalid) {
     console.warn(`Could not parse invalid date '${dateString}'`);
@@ -459,7 +482,7 @@ export function parseDateInput(dateInput: dayjs.ConfigType, referenceDate: dayjs
 
   if (typeof dateInput === 'string') {
     const locale = getLocale();
-    let parsedDate = attempt(dateInput, locale);
+    let parsedDate = parseDateString(dateInput, locale);
     if (parsedDate.invalid) {
       console.warn(`Could not interpret '${dateInput}' as a date`);
       return null;

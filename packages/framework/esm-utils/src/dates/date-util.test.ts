@@ -1,4 +1,5 @@
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it, vi } from 'vitest';
+import { attempt } from 'any-date-parser';
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
 import type { i18n } from 'i18next';
@@ -15,6 +16,11 @@ import {
   duration,
   formatDurationBetween,
 } from './date-util';
+
+vi.mock('any-date-parser', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('any-date-parser')>();
+  return { ...actual, attempt: vi.fn(actual.attempt) };
+});
 
 window.i18next = { language: 'en' } as i18n;
 
@@ -94,6 +100,23 @@ describe('Openmrs Dates', () => {
     expect(formatPartialDate('2021-04-09')).toEqual('09-Apr-2021');
     expect(formatPartialDate('2021-01-01')).toEqual('01-Jan-2021');
     expect(formatPartialDate('2021-12')).toEqual('Dec 2021');
+  });
+
+  it('reads ISO calendar dates without any-date-parser, and leaves other formats to it', () => {
+    timezoneMock.register('UTC');
+    window.i18next.language = 'en';
+    vi.mocked(attempt).mockClear();
+
+    expect(formatPartialDate('2021')).toEqual('2021');
+    expect(formatPartialDate('2021-04')).toEqual('Apr 2021');
+    expect(formatPartialDate('2021-04-09')).toEqual('09-Apr-2021');
+    expect(duration('2020-06', new Date('2024-07-30T00:00:00Z'))).toEqual({ years: 4 });
+    expect(attempt).not.toHaveBeenCalled();
+
+    expect(formatPartialDate('9 April 2021')).toEqual('09-Apr-2021');
+    // Out of range for ISO, so any-date-parser's own reading of it is kept.
+    formatPartialDate('2021-13-01');
+    expect(attempt).toHaveBeenCalledTimes(2);
   });
 
   it('formats dates with respect to the active calendar', () => {
