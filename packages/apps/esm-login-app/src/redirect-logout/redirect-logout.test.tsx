@@ -86,6 +86,21 @@ describe('RedirectLogout', () => {
     expect(swrCache.get('$inf$/ws/rest/v1/visit?patient=abc')?.data).toBeUndefined();
   });
 
+  it('should clear the SWR cache before redirecting once the session is unauthenticated', async () => {
+    mockUseSession.mockReturnValue({
+      authenticated: false,
+    } as Session);
+    let cachedDataOnRedirect: unknown;
+    mockNavigate.mockImplementation(() => {
+      cachedDataOnRedirect = swrCache.get('$inf$/ws/rest/v1/visit?patient=abc')?.data;
+    });
+
+    renderWithSwrCache();
+
+    expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
+    expect(cachedDataOnRedirect).toBeUndefined();
+  });
+
   it('should redirect to login if the session is already unauthenticated', async () => {
     mockUseSession.mockReturnValue({
       authenticated: false,

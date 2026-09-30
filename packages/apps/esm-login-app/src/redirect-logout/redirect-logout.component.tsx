@@ -3,7 +3,7 @@ import { useSWRConfig } from 'swr';
 import { navigate, setUserLanguage, useConfig, useSession } from '@openmrs/esm-framework';
 import { clearHistory } from '@openmrs/esm-framework/src/internal';
 import { type ConfigSchema } from '../config-schema';
-import { performLogout } from './logout.resource';
+import { clearSwrCache, performLogout } from './logout.resource';
 
 const RedirectLogout: React.FC = () => {
   const config = useConfig<ConfigSchema>();
@@ -13,6 +13,9 @@ const RedirectLogout: React.FC = () => {
   useEffect(() => {
     clearHistory();
     if (!session.authenticated) {
+      // `logout()` marks the session as logged out before it resolves, so this branch re-runs and
+      // redirects before `performLogout` has cleared the cache.
+      clearSwrCache(cache, mutate);
       if (config.provider.type === 'custom') {
         navigate({ to: config.provider.loginUrl });
       } else if (config.provider.type === 'oauth2') {
