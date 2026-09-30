@@ -178,6 +178,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
                 selectedLocationUuid={activeLocation}
                 defaultLocationUuid={userProperties.defaultLocation}
                 locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}
+                locationsPerRequest={chooseLocation.locationsPerRequest}
                 onChange={(locationUuid) => setActiveLocation(locationUuid)}
               />
               <div className={styles.footerContainer}>
