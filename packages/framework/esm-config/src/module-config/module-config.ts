@@ -74,16 +74,36 @@ function recomputeAllConfigs() {
   const tempConfigState = temporaryConfigStore.getState();
   const extensionState = configExtensionStore.getState();
 
+  // Mounting an extension changes only `configExtensionStore`, which only the extension configs
+  // depend on, so the rest of the last derivation is reused.
+  const configInputsUnchanged =
+    lastDerivation?.configState === configState && lastDerivation.tempConfigState === tempConfigState;
+
+  if (configInputsUnchanged) {
+    computeExtensionConfigs(configState, extensionState, tempConfigState, lastDerivation!.slotConfigs, true);
+    return;
+  }
+
   computeModuleConfig(configState, tempConfigState);
 
   const slotConfigs = getExtensionSlotConfigs(configState, tempConfigState);
   computeExtensionSlotConfigs(slotConfigs);
-  computeExtensionConfigs(configState, extensionState, tempConfigState, slotConfigs);
+  computeExtensionConfigs(configState, extensionState, tempConfigState, slotConfigs, false);
+
+  // Recorded only after the outputs above are written, so a failure forces a full derivation next time.
+  lastDerivation = { configState, tempConfigState, slotConfigs };
 
   // Last, because a failure here must not skip the outputs above. Only kept current while the
   // implementer tools are watching it; otherwise derived on read.
   invalidateImplementerToolsConfig();
 }
+
+/** The inputs the outputs were last fully derived from, compared by identity. */
+let lastDerivation: {
+  configState: ConfigInternalStore;
+  tempConfigState: TemporaryConfigStore;
+  slotConfigs: Record<string, ExtensionSlotConfig>;
+} | null = null;
 
 function setupConfigSubscriptions() {
   // Registered here rather than at module load so that `resetConfigSystem` restores it.
@@ -233,6 +253,7 @@ function computeExtensionConfigs(
   extensionState: ConfigExtensionStore,
   tempConfigState: TemporaryConfigStore,
   slotConfigs: Record<string, ExtensionSlotConfig>,
+  configInputsUnchanged: boolean,
 ) {
   const extensionsConfigStore = getExtensionsConfigStore();
   const oldConfigs = extensionsConfigStore.getState().configs;
@@ -243,20 +264,27 @@ function computeExtensionConfigs(
   // We assume that the module schema has already been defined, since the extension
   // it contains is mounted.
   for (let extension of extensionState.mountedExtensions) {
-    const config = computeExtensionConfig(
-      extension.slotModuleName,
-      extension.extensionModuleName,
-      extension.slotName,
-      extension.extensionId,
-      configState,
-      tempConfigState,
-      slotConfigs[extension.slotName],
-    );
-
     const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
-    // Entries keep their identity when the configuration behind them hasn't changed, so that
-    // mounting one extension doesn't hand every other mounted extension a new config object.
-    const entry = previous?.loaded && isEqual(previous.config, config) ? previous : { config, loaded: true };
+    let entry: ConfigStore | { config: ConfigObject; loaded: true };
+
+    if (configInputsUnchanged && previous?.loaded) {
+      // Derived from these same inputs by the previous run, so it is still current.
+      entry = previous;
+    } else {
+      const config = computeExtensionConfig(
+        extension.slotModuleName,
+        extension.extensionModuleName,
+        extension.slotName,
+        extension.extensionId,
+        configState,
+        tempConfigState,
+        slotConfigs[extension.slotName],
+      );
+
+      // Entries keep their identity when the configuration behind them hasn't changed, so that
+      // mounting one extension doesn't hand every other mounted extension a new config object.
+      entry = previous?.loaded && isEqual(previous.config, config) ? previous : { config, loaded: true };
+    }
 
     if (entry !== previous) {
       changed = true;
@@ -1198,6 +1226,7 @@ export function resetConfigSystem() {
   extensionConfigCache.clear();
   schemaValuesAndSourcesCache.clear();
   implementerToolsModuleCache.clear();
+  lastDerivation = null;
   setupConfigSubscriptions();
 }
 

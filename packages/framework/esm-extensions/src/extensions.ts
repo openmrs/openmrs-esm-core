@@ -566,18 +566,17 @@ function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<st
   const removedIds = config.remove || [];
   const idOrder = config.order || [];
   const { extensions } = extensionInternalStore.getState();
+  const removed = new Set(removedIds);
+  const ids = [...attachedIds, ...addedIds].filter((id) => !removed.has(id));
+  // Computed once per ID: calling `getOrder` from the comparator makes the sort quadratic.
+  const order = new Map(
+    ids.map((id) => [id, getOrder(id, idOrder, extensions[getExtensionNameFromId(id)]?.order, attachedIds)]),
+  );
 
-  return [...attachedIds, ...addedIds]
-    .filter((id) => !removedIds.includes(id))
-    .sort((idA, idB) => {
-      const ai = getOrder(idA, idOrder, extensions[getExtensionNameFromId(idA)]?.order, attachedIds);
-      const bi = getOrder(idB, idOrder, extensions[getExtensionNameFromId(idB)]?.order, attachedIds);
-
-      // Ties keep their input order — `Array.prototype.sort` is stable, and the input is
-      // `[...attachedIds, ...addedIds]`, so two extensions the ordering rules can't separate
-      // come out in the order the code and the configuration declared them.
-      return ai - bi;
-    });
+  // Ties keep their input order — `Array.prototype.sort` is stable, and the input is
+  // `[...attachedIds, ...addedIds]`, so two extensions the ordering rules can't separate
+  // come out in the order the code and the configuration declared them.
+  return ids.sort((idA, idB) => order.get(idA)! - order.get(idB)!);
 }
 
 /**
