@@ -7,6 +7,7 @@ import {
   importDynamic,
   registerTranslationNamespace,
 } from '@openmrs/esm-framework/src/internal';
+import { languageDetectionOptions } from './language-detection';
 
 registerTranslationNamespace('core');
 
@@ -102,10 +103,7 @@ export function setupI18n() {
     })
     .use(initReactI18next)
     .init({
-      detection: {
-        order: ['querystring', 'htmlTag', 'localStorage', 'navigator'],
-        lookupQuerystring: 'lang',
-      },
+      detection: languageDetectionOptions,
       fallbackLng: 'en',
       nsSeparator: false,
     });

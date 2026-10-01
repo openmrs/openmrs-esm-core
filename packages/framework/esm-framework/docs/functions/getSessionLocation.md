@@ -4,7 +4,7 @@
 
 > **getSessionLocation**(): `Promise`\<`undefined` \| [`SessionLocation`](../interfaces/SessionLocation.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:374](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L374)
+Defined in: [packages/framework/esm-api/src/current-user.ts:389](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L389)
 
 Returns a Promise that resolves with the current session location, if one is set.
 The session location represents the physical location where the user is currently

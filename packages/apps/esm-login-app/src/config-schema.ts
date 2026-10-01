@@ -73,7 +73,7 @@ export const configSchema = {
       _type: Type.String,
       _default: '',
       _description:
-        'The path or URL to the logo image. If set to an empty string, the default OpenMRS SVG sprite will be used.',
+        'Deprecated: use `logo` in the `@openmrs/esm-styleguide` config instead. If set, this takes precedence over the styleguide logo on the login page.',
       _validators: [validators.isUrl],
     },
     alt: {
