@@ -47,6 +47,22 @@ export interface ActionMenuButtonProps2 {
    *
    */
   onBeforeWorkspaceLaunch?: () => Promise<boolean>;
+
+  /**
+   * An optional callback function to determine whether the action menu button
+   * should be disabled based on the openedWindows state of the workspace group
+   * @param openedWindows
+   * @returns
+   */
+  disabled?: (openedWindows: OpenedWindow[]) => boolean;
+
+  /**
+   * An optional callback function to determine whether the action menu button
+   * shold be hidden based on the openedWindows state of the workspace group
+   * @param openedWindows
+   * @returns
+   */
+  hidden?: (openedWindows: OpenedWindow[]) => boolean;
 }
 
 /**
@@ -69,6 +85,8 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
   tagContent,
   workspaceToLaunch,
   onBeforeWorkspaceLaunch,
+  hidden,
+  disabled,
 }) => {
   const layout = useLayoutType();
   const { openedWindows, restoreWindow, hideWindow, isMostRecentlyOpenedWindowHidden } = useWorkspace2Store();
@@ -99,6 +117,10 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
     }
   };
 
+  if (hidden?.(openedWindows)) {
+    return null;
+  }
+
   if (layout === 'tablet' || layout === 'phone') {
     return (
       <Button
@@ -112,6 +134,7 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
         role="button"
         tabIndex={0}
         size="md"
+        disabled={disabled?.(openedWindows)}
       >
         <span className={styles.elementContainer}>
           <Tags hasUnsavedChanges={hasUnsavedChanges} getIcon={getIcon} tagContent={tagContent} />
@@ -134,6 +157,7 @@ export const ActionMenuButton2: React.FC<ActionMenuButtonProps2> = ({
       label={label}
       onClick={onClick}
       size="md"
+      disabled={disabled?.(openedWindows)}
     >
       <div className={styles.elementContainer}>
         <Tags hasUnsavedChanges={hasUnsavedChanges} getIcon={getIcon} tagContent={tagContent} />
