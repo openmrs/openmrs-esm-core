@@ -99,9 +99,7 @@ describe('isDesktop', () => {
   });
 
   it('identifies non-desktop layouts correctly', () => {
-    const nonDesktopLayouts = LAYOUT_CASES.map(([, layout]) => layout).filter(
-      (layout) => !isDesktop(layout),
-    );
+    const nonDesktopLayouts = LAYOUT_CASES.map(([, layout]) => layout).filter((layout) => !isDesktop(layout));
     expect(nonDesktopLayouts).toEqual(['phone']);
   });
 });
