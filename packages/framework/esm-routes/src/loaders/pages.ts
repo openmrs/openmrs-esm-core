@@ -135,6 +135,11 @@ function registerAppRoutes(appName: string, routes: OpenmrsAppRoutes) {
       }
     });
 
+    if (Object.hasOwn(routes, 'workspaces') || Object.hasOwn(routes, 'workspaceGroups')) {
+      console.warn(
+        `${appName} defines workspaces or workspaceGroups in its routes.json, which are no longer supported and won't be registered. Use workspaces2, workspaceWindows2 and workspaceGroups2 instead.`,
+      );
+    }
     tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
     tryRegisterWorkspaceWindows2(appName, availableWorkspaceWindows2);
     tryRegisterWorkspace2(appName, availableWorkspaces2);
