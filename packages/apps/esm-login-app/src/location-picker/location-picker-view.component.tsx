@@ -9,7 +9,6 @@ import {
   navigate,
   setSessionLocation,
   useConfig,
-  useConnectivity,
   useSession,
   WarningIcon,
 } from '@openmrs/esm-framework';
@@ -45,7 +44,6 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
-  const isLoginEnabled = useConnectivity();
   const [searchParams] = useSearchParams();
   const checkboxId = useId();
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
@@ -107,8 +105,9 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
   );
 
   // Handle cases where the location picker is disabled or there is only one location.
+  // Skipped in the update flow so the "Change location" link always shows the picker.
   useEffect(() => {
-    if (isLoadingLocationCount) return;
+    if (isLoadingLocationCount || isUpdateFlow) return;
 
     if (locationCount === 1 || (!chooseLocation.enabled && locationCount > 0)) {
       if (firstLocation?.resource?.id) {
@@ -117,7 +116,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
         console.error('Expected location data is missing', { firstLocation, locationCount });
       }
     }
-  }, [locationCount, isLoadingLocationCount]);
+  }, [locationCount, isLoadingLocationCount, isUpdateFlow]);
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
@@ -193,7 +192,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
                   className={styles.confirmButton}
                   kind="primary"
                   type="submit"
-                  disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+                  disabled={!activeLocation || isSubmitting}
                 >
                   {isSubmitting ? (
                     <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />

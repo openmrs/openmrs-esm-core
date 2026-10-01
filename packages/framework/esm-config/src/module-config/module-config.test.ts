@@ -1304,6 +1304,54 @@ describe('extension config', () => {
     expect(derivations).toBe(3);
   });
 
+  it('keeps every mounted extension current across config changes interleaved with mounts', () => {
+    const mount = (extensionIds: Array<string>) =>
+      configExtensionStore.setState({
+        mountedExtensions: extensionIds.map((extensionId) => ({
+          slotModuleName: 'slot-mod',
+          extensionModuleName: 'ext-mod',
+          slotName: 'barSlot',
+          extensionId,
+        })),
+      });
+    const bar = (extensionId: string) => getExtensionConfig('barSlot', extensionId).getState().config.bar;
+
+    mount(['fooExt#a']);
+    expect(bar('fooExt#a')).toBe('barry');
+
+    temporaryConfigStore.setState({ config: { 'ext-mod': { bar: 'temporary' } } });
+    expect(bar('fooExt#a')).toBe('temporary');
+
+    // Mounting with the config unchanged must neither revert the extension already mounted nor
+    // hand the new one a config derived from anything but the current inputs.
+    mount(['fooExt#a', 'fooExt#b']);
+    expect(bar('fooExt#a')).toBe('temporary');
+    expect(bar('fooExt#b')).toBe('temporary');
+
+    temporaryConfigStore.setState({ config: {} });
+    expect(bar('fooExt#a')).toBe('barry');
+    expect(bar('fooExt#b')).toBe('barry');
+  });
+
+  it('re-derives the config of an extension mounted again under a different module', () => {
+    Config.defineConfigSchema('other-mod', { bar: { _default: 'other' } });
+    Config.registerModuleLoad('other-mod');
+
+    const mount = (extensionModuleName: string) =>
+      configExtensionStore.setState({
+        mountedExtensions: [
+          { slotModuleName: 'slot-mod', extensionModuleName, slotName: 'barSlot', extensionId: 'fooExt' },
+        ],
+      });
+    const bar = () => getExtensionConfig('barSlot', 'fooExt').getState().config.bar;
+
+    mount('ext-mod');
+    expect(bar()).toBe('barry');
+
+    mount('other-mod');
+    expect(bar()).toBe('other');
+  });
+
   it('returns the module config', async () => {
     const moduleLevelConfig = { 'ext-mod': { bar: 'qux' } };
     updateConfigExtensionStore();
