@@ -4,7 +4,7 @@
 
 > **setUserLanguage**(`data`): `void`
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:181](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L181)
+Defined in: [packages/framework/esm-api/src/current-user.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L195)
 
 Sets the document's language attribute based on the user's locale preference
 from the session data. This affects the HTML `lang` attribute which is used

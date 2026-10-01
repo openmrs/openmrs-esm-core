@@ -17,6 +17,12 @@ export type UnloadedSessionStore = {
   session: null;
   /** Set when fetching the session failed before any session had loaded. */
   error?: Error;
+  /**
+   * Set alongside `error`. `true` when the backend appears to be still starting up rather than broken:
+   * it redirected the session request to its initial setup page, or its gateway answered with a 502
+   * shortly after the page loaded.
+   */
+  initializing?: boolean;
 };
 
 /** @internal */
@@ -33,6 +39,14 @@ export const sessionStore = createGlobalStore<SessionStore>('session', {
 const sessionMaxAgeMillis = 60 * 1000;
 
 let lastFetchTimeMillis = 0;
+
+/**
+ * How long after the first session fetch a 502 is taken to mean that the backend is still starting up. A
+ * gateway answers with a 502 until the backend has deployed, which can take a few minutes after a restart.
+ */
+const startupGracePeriodMillis = 3 * 60 * 1000;
+
+let firstFetchTimeMillis: number | undefined;
 let inFlightRefresh: Promise<SessionStore> | null = null;
 
 /**
@@ -236,6 +250,7 @@ function isSuperUser(user: { roles: Array<Role> }) {
  */
 export function refetchCurrentUser(username?: string, password?: string) {
   lastFetchTimeMillis = Date.now();
+  firstFetchTimeMillis ??= lastFetchTimeMillis;
   let headers = {};
   if (username && password) {
     headers['Authorization'] = `Basic ${window.btoa(`${username}:${password}`)}`;
@@ -557,6 +572,8 @@ function handleSessionResponse(result: Promise<FetchResponse<Session>>) {
           const nextState: SessionStore = { loaded: true, session: res.data };
           sessionStore.setState(nextState, true);
           resolve(nextState);
+        } else if (isInitialSetupRedirect(res)) {
+          reject(recordSessionFailure(Error('The server is still starting up'), true));
         } else {
           reject(recordSessionFailure(Error('The session endpoint did not respond with a session')));
         }
@@ -573,6 +590,11 @@ function handleSessionResponse(result: Promise<FetchResponse<Session>>) {
           return;
         }
 
+        if (isGatewayErrorDuringStartup(err)) {
+          reject(recordSessionFailure(err, true));
+          return;
+        }
+
         reportError(`Failed to fetch new session information: ${err}`);
         reject(recordSessionFailure(err));
       });
@@ -583,6 +605,32 @@ function isAuthFailure(err: unknown): err is OpenmrsFetchError {
   return err instanceof OpenmrsFetchError && (err.response.status === 401 || err.response.status === 403);
 }
 
+/**
+ * Until the backend has finished its initial setup, it answers every request with a redirect to its
+ * setup page, which `fetch()` follows, so the session request resolves with that page's HTML.
+ */
+function isInitialSetupRedirect(res: FetchResponse | undefined) {
+  if (!res?.redirected || !res.url) {
+    return false;
+  }
+
+  try {
+    return new URL(res.url, window.location.href).pathname.replace(/\/+$/, '').endsWith('/initialsetup');
+  } catch {
+    return false;
+  }
+}
+
+function isGatewayErrorDuringStartup(err: unknown) {
+  return (
+    err instanceof OpenmrsFetchError &&
+    err.response.status === 502 &&
+    !sessionStore.getState().loaded &&
+    firstFetchTimeMillis !== undefined &&
+    Date.now() - firstFetchTimeMillis < startupGracePeriodMillis
+  );
+}
+
 function isUnauthenticatedSession(body: unknown): body is Session {
   return typeof body === 'object' && body !== null && (body as Session).authenticated === false;
 }
@@ -591,13 +639,14 @@ function isUnauthenticatedSession(body: unknown): body is Session {
  * A session that has already loaded is kept when a later fetch fails, since it is still the best answer
  * available. With nothing to fall back on, the error is recorded so the app shell can show an error page.
  */
-function recordSessionFailure(err: unknown): SessionStore {
+function recordSessionFailure(err: unknown, initializing = false): SessionStore {
   if (!sessionStore.getState().loaded) {
     sessionStore.setState(
       {
         loaded: false,
         session: null,
         error: err instanceof Error ? err : Error(String(err)),
+        initializing,
       },
       true,
     );

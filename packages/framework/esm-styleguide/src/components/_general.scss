@@ -1,23 +1,93 @@
 @use '@carbon/layout';
+@use '@carbon/type';
 @use '../vars' as *;
 
 html {
   scroll-behavior: smooth;
 }
 
+// Scrolls rather than clips when the error message makes the card taller than the viewport.
 .omrs-app-error {
-  padding: layout.$spacing-11;
-  width: 100%;
-  height: 100%;
-  background: white;
-  border-top: 5px solid $danger;
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: flex;
+  overflow-y: auto;
+  padding: layout.$spacing-07 0;
+  background: $openmrs-background-grey;
+}
+
+.omrs-app-error__card {
+  margin: auto;
+  width: 40rem;
+  max-width: calc(100% - #{layout.$spacing-07});
+  padding: layout.$spacing-07;
+  background: $ui-02;
+  border-top: 4px solid $danger;
+
+  h1 {
+    @include type.type-style('heading-03');
+  }
 
   p {
-    margin: layout.$spacing-06 0;
+    @include type.type-style('body-01');
+    margin: layout.$spacing-05 0;
+    color: $text-02;
   }
 
   .cds--snippet {
     margin-top: layout.$spacing-06;
+  }
+}
+
+// The boot spinner and the page shown while the server starts up both cover the whole viewport, so the
+// switch from one to the other doesn't move the spinner's surroundings.
+body > .omrs-loading-spinner,
+.omrs-server-starting {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $openmrs-background-grey;
+
+  .cds--loading__stroke {
+    stroke: var(--brand-03, #007d79);
+  }
+}
+
+.omrs-server-starting__tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: layout.$spacing-07;
+  width: 25rem;
+  max-width: calc(100% - #{layout.$spacing-07});
+  padding: layout.$spacing-07;
+  background: $ui-02;
+  text-align: center;
+}
+
+.omrs-server-starting__logo {
+  width: 13.75rem;
+  height: 3.25rem;
+  object-fit: contain;
+}
+
+.omrs-server-starting__text {
+  display: flex;
+  flex-direction: column;
+  gap: layout.$spacing-02;
+
+  h1 {
+    @include type.type-style('heading-03');
+  }
+
+  p {
+    @include type.type-style('body-01');
+    color: $text-02;
+    text-wrap: pretty;
   }
 }
 
@@ -48,12 +118,6 @@ html {
 #omrs-top-nav-app-container {
   grid-area: topNav;
   height: var(--omrs-navbar-height);
-}
-
-body > .omrs-loading-spinner,
-body > .omrs-app-error {
-  grid-area: appRoots;
-  min-width: 0;
 }
 
 // The app shell lays out <body> as a grid. The top nav spans the first row, and the second row
