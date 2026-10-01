@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, it, expect, vi } from 'vitest';
 import { dispatchToastShown } from '@openmrs/esm-globals';
 import { reportError } from './index';
 
@@ -9,6 +9,16 @@ vi.mock('@openmrs/esm-globals', () => ({
 vi.useFakeTimers();
 
 const mockDispatchToastShown = vi.mocked(dispatchToastShown);
+
+function errorWithObjectMessage() {
+  const error = new Error('replaced below');
+  (error as unknown as { message: unknown }).message = { nested: 'value' };
+  return error;
+}
+
+beforeEach(() => {
+  vi.spyOn(console, 'error').mockImplementation(() => {});
+});
 
 describe('error handler', () => {
   it('transforms non-Error inputs into valid Error objects', () => {
@@ -34,40 +44,47 @@ describe('error handler', () => {
   });
 });
 
-describe('window.onunhandledrejection', () => {
-  beforeEach(() => {
-    mockDispatchToastShown.mockClear();
-    vi.spyOn(console, 'error').mockImplementation(() => {});
+describe('Global error handler', () => {
+  function triggerOnError(error: unknown) {
+    (window.onerror as (error: unknown) => void)(error);
+  }
+  
+  const fallback = 'Oops! An unexpected error occurred.';
+
+  it.each(errorShapes)('shows a string description for $label', ({ reason, expected }) => {
+    triggerOnError(reason);
+
+    expect(mockDispatchToastShown).toHaveBeenCalledOnce();
+    const { description } = mockDispatchToastShown.mock.calls[0][0];
+    // The regression itself: an object here is unrenderable as a React child, so the toast never appears.
+    expect(typeof description).toBe('string');
+    expect(description).toBe(expected ?? fallback);
   });
+});
 
-  // The handler only reads `event.reason`, so a minimal stand-in avoids
-  // constructing a real (and itself-unhandled) PromiseRejectionEvent.
-  const fireRejection = (reason: unknown) => window.onunhandledrejection?.({ reason } as PromiseRejectionEvent);
+describe('Global rejection handler', () => {
+  function triggerOnUnhandledRejection(reason: unknown) {
+    (window.onunhandledrejection as (event: PromiseRejectionEvent) => void)({ reason } as PromiseRejectionEvent);
+  }
+  
+  const fallback = 'Oops! An unhandled promise rejection occurred.';
 
-  it('shows a toast with the Error message as a string description', () => {
-    fireRejection(new Error('Something broke'));
+  it.each([
+    { label: 'an Error instance', reason: new Error('something exploded'), expected: 'something exploded' },
+    { label: 'an Error with an empty message', reason: new Error(''), expected: null },
+    { label: 'a string', reason: 'something failed', expected: 'something failed' },
+    { label: 'a plain object', reason: { foo: 'bar' }, expected: 'Object thrown as error: {"foo":"bar"}' },
+    { label: 'null', reason: null, expected: "'null' was thrown as an error" },
+    { label: 'undefined', reason: undefined, expected: "'undefined' was thrown as an error" },
+    // `Error#message` is writable, so an Error can reach the handlers carrying a non-string message.
+    // `ensureErrorObject()` passes such an Error through untouched, so the guard has to be downstream.
+    { label: 'an Error whose message is not a string', reason: errorWithObjectMessage(), expected: null },
+  ])('shows a string description for $label', ({ reason, expected }) => {
+    triggerOnUnhandledRejection(reason);
 
-    expect(mockDispatchToastShown).toHaveBeenCalledWith(
-      expect.objectContaining({ description: 'Something broke', kind: 'error', title: 'Error' }),
-    );
-    expect(typeof mockDispatchToastShown.mock.calls[0][0].description).toBe('string');
-  });
-
-  it('shows a string reason directly', () => {
-    fireRejection('plain string reason');
-
-    expect(mockDispatchToastShown).toHaveBeenCalledWith(
-      expect.objectContaining({ description: 'plain string reason' }),
-    );
-  });
-
-  it('falls back to a friendly message for empty/non-string reasons', () => {
-    for (const reason of [undefined, null, new Error(''), { some: 'object' }]) {
-      mockDispatchToastShown.mockClear();
-      fireRejection(reason);
-      expect(mockDispatchToastShown.mock.calls[0][0].description).toBe(
-        'Oops! An unhandled promise rejection occurred.',
-      );
-    }
+    expect(mockDispatchToastShown).toHaveBeenCalledOnce();
+    const { description } = mockDispatchToastShown.mock.calls[0][0];
+    expect(typeof description).toBe('string');
+    expect(description).toBe(expected ?? fallback);
   });
 });
