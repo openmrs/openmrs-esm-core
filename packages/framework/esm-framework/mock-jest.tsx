@@ -115,18 +115,15 @@ export const usePatientPhoto = jest.fn(() => ({
   error: null,
 }));
 
-export const ActionMenuButton = jest.fn(({ handler }) => <button onClick={handler}>Action Menu Button</button>);
 export const ActionMenuButton2 = jest.fn(({ label, tagContent, icon }) => (
   <button>
     {icon} {tagContent} {label}
   </button>
 ));
 export const ActionMenu = jest.fn(() => <div>Action Menu</div>);
-export const closeWorkspace = jest.fn();
 export const launchWorkspace2 = jest.fn();
 export const launchWorkspaceGroup2 = jest.fn();
 export const closeWorkspaceGroup2 = jest.fn();
-export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspace2Context = jest.fn();
 
 export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange, invalid, isInvalid, invalidText }) => (
