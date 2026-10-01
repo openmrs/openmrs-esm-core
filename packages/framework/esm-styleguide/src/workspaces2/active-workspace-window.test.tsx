@@ -15,9 +15,18 @@ vi.mock('@openmrs/esm-routes', () => ({
 // the workspace component would.
 const { parcelProps } = vi.hoisted(() => ({ parcelProps: {} as Record<string, Workspace2DefinitionProps> }));
 vi.mock('single-spa-react/parcel', () => ({
-  default: ({ config, ...props }: { config: { name: string } } & Workspace2DefinitionProps) => {
+  default: ({
+    config,
+    wrapClassName,
+    ...props
+  }: { config: { name: string }; wrapClassName?: string } & Workspace2DefinitionProps) => {
     parcelProps[props.workspaceName] = props;
-    return <div data-testid="parcel">{config.name}</div>;
+    // Surface the wrapper class the real Parcel would apply, so tests can assert stacking/visibility.
+    return (
+      <div data-testid="parcel" className={wrapClassName}>
+        {config.name}
+      </div>
+    );
   },
 }));
 
@@ -196,6 +205,47 @@ describe('ActiveWorkspaceWindow', () => {
     await expect(parcelProps['admit-workspace'].closeWorkspace({ closeWindow: true })).resolves.toBe(true);
     expect(actions.promptForClosingWorkspaces).toHaveBeenLastCalledWith();
     expect(actions.closeWorkspace).toHaveBeenLastCalledWith('form-workspace');
+  });
+
+  it('in bare mode hides every non-leaf workspace so the leaf covers them, but keeps them mounted', async () => {
+    // Bare mode (<ExportedWorkspace>) has no chrome to stack the workspaces, so a launched child
+    // must cover its parent. Regression test for the parent and child rendering side-by-side.
+    mockLoadLifeCycles.mockImplementation((_moduleName, component) =>
+      Promise.resolve({ name: `${component}-lifecycle` } as never),
+    );
+    const actions = makeActions();
+    const openedWindow = makeOpenedWindow([
+      makeOpenedWorkspace('form-workspace', 'uuid-form'),
+      makeOpenedWorkspace('admit-workspace', 'uuid-admit'),
+    ]);
+
+    render(renderWindow(openedWindow, actions, false));
+    await flushLifeCycles();
+
+    // Both stay mounted (the parent keeps its state); the DOM order is parent (non-leaf) then leaf.
+    const parcels = screen.getAllByTestId('parcel');
+    expect(parcels.map((p) => p.textContent)).toEqual(['form-lifecycle', 'admit-lifecycle']);
+    const [parent, leaf] = parcels;
+    expect(parent.className).toMatch(/hiddenExtraWorkspace/);
+    expect(leaf.className).not.toMatch(/hiddenExtraWorkspace/);
+  });
+
+  it('does not hide non-leaf workspaces when rendering chrome, which stacks them itself', async () => {
+    mockLoadLifeCycles.mockImplementation((_moduleName, component) =>
+      Promise.resolve({ name: `${component}-lifecycle` } as never),
+    );
+    const actions = makeActions();
+    const openedWindow = makeOpenedWindow([
+      makeOpenedWorkspace('form-workspace', 'uuid-form'),
+      makeOpenedWorkspace('admit-workspace', 'uuid-admit'),
+    ]);
+
+    render(renderWindow(openedWindow, actions, true));
+    await flushLifeCycles();
+
+    for (const parcel of screen.getAllByTestId('parcel')) {
+      expect(parcel.className).not.toMatch(/hiddenExtraWorkspace/);
+    }
   });
 
   it('does not close the workspace when the user cancels the prompt', async () => {

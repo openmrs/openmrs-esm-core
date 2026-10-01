@@ -190,6 +190,12 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
     [openedWorkspace, openedWindow, groupProps, actions, isRootWorkspace, isLeafWorkspace, showActionMenu],
   );
 
+  // In bare mode (<ExportedWorkspace>) there is no chrome to stack workspaces, so every non-leaf
+  // workspace is hidden (not unmounted, so it keeps its state) and the leaf covers them. In chrome
+  // mode the absolute-positioned WorkspaceChrome containers handle stacking, so this class is not
+  // applied there.
+  const hideBehindLeaf = !renderChrome && !isLeafWorkspace;
+
   const content = useMemo(
     () =>
       lifeCycle ? (
@@ -198,15 +204,22 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
           config={lifeCycle}
           mountParcel={mountParcel}
           wrapWith="div"
-          wrapClassName={styles.workspaceContent}
+          wrapClassName={classNames(styles.workspaceContent, { [styles.hiddenExtraWorkspace]: hideBehindLeaf })}
           {...props}
         />
       ) : null,
-    [lifeCycle, openedWorkspace.workspaceName, props],
+    [lifeCycle, openedWorkspace.workspaceName, props, hideBehindLeaf],
   );
 
   if (!renderChrome) {
-    return content ?? <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading')}`} />;
+    return (
+      content ?? (
+        <InlineLoading
+          className={classNames(styles.loader, { [styles.hiddenExtraWorkspace]: hideBehindLeaf })}
+          description={`${getCoreTranslation('loading')}`}
+        />
+      )
+    );
   }
 
   return (
