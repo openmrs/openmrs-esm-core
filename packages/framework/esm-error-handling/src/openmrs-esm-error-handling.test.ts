@@ -75,7 +75,7 @@ describe('error handler', () => {
   });
 });
 
-describe('window.onerror', () => {
+describe('Global error handler', () => {
   const fallback = 'Oops! An unexpected error occurred.';
 
   it.each(errorShapes)('shows a string description for $label', ({ reason, expected }) => {
@@ -89,7 +89,7 @@ describe('window.onerror', () => {
   });
 });
 
-describe('window.onunhandledrejection', () => {
+describe('Global rejection handler', () => {
   const fallback = 'Oops! An unhandled promise rejection occurred.';
 
   it.each(errorShapes)('shows a string description for $label', ({ reason, expected }) => {

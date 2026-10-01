@@ -77,10 +77,9 @@ export function createErrorHandler() {
 }
 
 /**
- * Reduces anything that reaches a global error handler to a string safe to render as a toast
- * description. `ensureErrorObject()` covers every shape except one: it returns an existing `Error`
- * untouched, and `Error#message` is an ordinary writable property, so it is not guaranteed to hold
- * a string. Anything that is not a usable string falls back to the caller's default text.
+ * Tries to turn whatever reached the global error handler into
+ * a sensible string, returning the caller's fallback if a non-empty
+ * string could not be constructed.
  */
 function toToastDescription(thing: unknown, fallback: string) {
   const { message } = ensureErrorObject(thing);
