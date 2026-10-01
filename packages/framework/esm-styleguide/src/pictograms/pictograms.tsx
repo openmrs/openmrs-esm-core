@@ -23,6 +23,7 @@ export const pictogramIds = [
   'omrs-pict-labs-2',
   'omrs-pict-metadata-export',
   'omrs-pict-obstetrics',
+  'omrs-pict-patient-documents',
   'omrs-pict-patient-search',
   'omrs-pict-patients',
   'omrs-pict-payments-desk',
@@ -150,6 +151,12 @@ export const MetadataExportPictogram = memo(
 export const ObstetricsPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function ObstetricsPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-obstetrics" pictogramProps={props} />;
+  }),
+);
+
+export const PatientDocumentsPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function PatientDocumentsPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-patient-documents" pictogramProps={props} />;
   }),
 );
 
