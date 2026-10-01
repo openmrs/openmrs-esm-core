@@ -444,6 +444,19 @@ describe('LocationPickerView', () => {
         expect(mockLocationPicker.mock.lastCall?.[0]).toMatchObject({ locationsPerRequest: 5 });
       });
     });
+
+    it('falls back to a page size of 1 when locationsPerRequest is zero', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, locationsPerRequest: 0 },
+      });
+
+      renderWithRouter(LocationPickerView, {});
+
+      await waitFor(() => {
+        expect(mockLocationPicker.mock.lastCall?.[0]).toMatchObject({ locationsPerRequest: 1 });
+      });
+    });
   });
 });
 
