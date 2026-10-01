@@ -411,7 +411,7 @@ export function buildCli(y: Argv) {
         '  frontendModuleExcludes  \tPackage names to leave out. Used to remove modules added by an earlier config file ' +
         'when `--config` is given more than once.\n' +
         '  publicUrl  \tThe URL at which the frontend modules will be made available. Can be a full URL, like a CDN. ' +
-        'Defaults to `.` (which means they will be colocated with the import map).\n\n' +
+        'Defaults to `.`, which the app shell loads from under the SPA path.\n\n' +
         'For more information visit https://github.com/openmrs/openmrs-esm-core/tree/main/packages/tooling/openmrs#readme.',
     )
     .help()
