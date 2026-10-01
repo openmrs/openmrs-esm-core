@@ -33,6 +33,31 @@ describe('LoginPageWrapper', () => {
     expect(logo).toHaveAttribute('alt', customLogoConfig.alt);
   });
 
+  it('renders the logo configured in the styleguide when the login app does not configure one', () => {
+    const styleguideLogo = { src: 'https://some-image-host.com/brand.png', alt: 'Brand logo' };
+    mockUseConfig.mockImplementation((options) =>
+      options?.externalModuleName === '@openmrs/esm-styleguide' ? { logo: styleguideLogo } : mockConfig,
+    );
+
+    renderWithRouter(LoginPageWrapper);
+
+    expect(screen.getByAltText(styleguideLogo.alt)).toHaveAttribute('src', styleguideLogo.src);
+  });
+
+  it('prefers the logo configured in the login app over the styleguide logo', () => {
+    const loginLogo = { src: 'https://some-image-host.com/login.png', alt: 'Login logo' };
+    mockUseConfig.mockImplementation((options) =>
+      options?.externalModuleName === '@openmrs/esm-styleguide'
+        ? { logo: { src: 'https://some-image-host.com/brand.png', alt: 'Brand logo' } }
+        : { ...mockConfig, logo: loginLogo },
+    );
+
+    renderWithRouter(LoginPageWrapper);
+
+    expect(screen.getByAltText(loginLogo.alt)).toHaveAttribute('src', loginLogo.src);
+    expect(screen.queryByAltText('Brand logo')).not.toBeInTheDocument();
+  });
+
   it('does not render announcement banners by default', () => {
     renderWithRouter(LoginPageWrapper, { children: <div /> }, { route: '/login' });
     expect(screen.queryByText(/Planned downtime/i)).not.toBeInTheDocument();
