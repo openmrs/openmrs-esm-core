@@ -22,6 +22,7 @@ export type ExcludeOptionalKeys<T, U> = {
   [K in keyof T]: K extends keyof U ? never : K;
 }[keyof T];
 
+// prettier-ignore
 /** @internal */
 export type XOR<T, U> =
   | (T & { [K in ExcludeOptionalKeys<U, T>]?: never })

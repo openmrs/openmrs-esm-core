@@ -7,6 +7,7 @@ import {
   importDynamic,
   registerTranslationNamespace,
 } from '@openmrs/esm-framework/src/internal';
+import { languageDetectionOptions } from './language-detection';
 
 registerTranslationNamespace('core');
 
@@ -70,7 +71,7 @@ export function setupI18n() {
             .then(([jsonResult, overridesResult]) => {
               // If importTranslation rejects (e.g., no translation file for this locale),
               // fall back to empty so config-provided overrides can still be applied.
-              let translations = jsonResult.status === 'fulfilled' ? jsonResult.value ?? {} : {};
+              let translations = jsonResult.status === 'fulfilled' ? (jsonResult.value ?? {}) : {};
               const overrides = overridesResult.status === 'fulfilled' ? overridesResult.value : [];
 
               // if we have a slotName and extensionId, it means that we're only loading the namespace for that extension
@@ -102,10 +103,7 @@ export function setupI18n() {
     })
     .use(initReactI18next)
     .init({
-      detection: {
-        order: ['querystring', 'htmlTag', 'localStorage', 'navigator'],
-        lookupQuerystring: 'lang',
-      },
+      detection: languageDetectionOptions,
       fallbackLng: 'en',
       nsSeparator: false,
     });

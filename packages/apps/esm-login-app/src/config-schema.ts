@@ -20,19 +20,19 @@ export const configSchema = {
       _description: "The URL to use to login. This is only used if the login type is 'oauth2' or 'custom'.",
       _validators: [validators.isUrl],
     },
+    _validators: [
+      validator(
+        (provider: { type: string; loginUrl: string }) => {
+          if (provider.type === 'custom' || provider.type === 'oauth2') {
+            return provider.loginUrl !== '${openmrsSpaBase}/login';
+          }
+          return true;
+        },
+        (provider: { type: string }) =>
+          `Provider type '${provider.type}' requires an explicit loginUrl that is not the default SPA login route.`,
+      ),
+    ],
   },
-  _validators: [
-    validator(
-      (provider: { type: string; loginUrl: string }) => {
-        if (provider.type === 'custom' || provider.type === 'oauth2') {
-          return provider.loginUrl !== '${openmrsSpaBase}/login';
-        }
-        return true;
-      },
-      (provider: { type: string }) =>
-        `Provider type '${provider.type}' requires an explicit loginUrl that is not the default SPA login route.`,
-    ),
-  ],
   chooseLocation: {
     enabled: {
       _type: Type.Boolean,
@@ -73,7 +73,7 @@ export const configSchema = {
       _type: Type.String,
       _default: '',
       _description:
-        'The path or URL to the logo image. If set to an empty string, the default OpenMRS SVG sprite will be used.',
+        'Deprecated: use `logo` in the `@openmrs/esm-styleguide` config instead. If set, this takes precedence over the styleguide logo on the login page.',
       _validators: [validators.isUrl],
     },
     alt: {

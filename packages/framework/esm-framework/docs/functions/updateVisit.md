@@ -4,7 +4,7 @@
 
 > **updateVisit**(`uuid`, `payload`, `abortController`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<[`Visit`](../interfaces/Visit.md)\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:155](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L155)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:154](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L154)
 
 Updates an existing visit by sending a POST request to the OpenMRS REST API.
 

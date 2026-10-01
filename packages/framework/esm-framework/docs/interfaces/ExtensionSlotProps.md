@@ -913,7 +913,7 @@ Defines the human readable text alternative of aria-valuenow for a range widget.
 
 ### autoCapitalize?
 
-> `optional` **autoCapitalize**: `"none"` \| `"on"` \| `"off"` \| `string` & `object` \| `"sentences"` \| `"words"` \| `"characters"`
+> `optional` **autoCapitalize**: `"none"` \| `string` & `object` \| `"off"` \| `"on"` \| `"sentences"` \| `"words"` \| `"characters"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2913
 
@@ -963,7 +963,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 > `optional` **children**: `ReactNode` \| (`extension`, `state?`) => `ReactNode`
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L33)
+Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L32)
 
 ***
 
@@ -3499,7 +3499,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2948
 
 ### unselectable?
 
-> `optional` **unselectable**: `"on"` \| `"off"`
+> `optional` **unselectable**: `"off"` \| `"on"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2962
 

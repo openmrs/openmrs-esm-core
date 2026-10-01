@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import { NEVER } from 'rxjs';
 import { vi } from 'vitest';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils/mock';
@@ -48,7 +47,7 @@ export function setupPaths(config: any) {
 export const importDynamic = vi.fn();
 
 /* esm-error-handling */
-export const createErrorHandler = () => vi.fn().mockReturnValue(NEVER);
+export const createErrorHandler = () => vi.fn();
 
 export const reportError = vi.fn().mockImplementation((error) => {
   throw error;
@@ -66,9 +65,18 @@ export const getHistory = vi.fn(() => ['https://o3.openmrs.org/home']);
 export const clearHistory = vi.fn();
 export const goBackInHistory = vi.fn();
 
-/* esm-offline */
+/* deprecated offline shims; these mirror the no-op implementations in src/deprecated.ts */
 export const useConnectivity = vi.fn().mockReturnValue(true);
-export const subscribeConnectivity = vi.fn();
+export const setupOfflineSync = vi.fn();
+export const setupDynamicOfflineDataHandler = vi.fn();
+export const getDynamicOfflineDataEntries = vi.fn().mockResolvedValue([]);
+export const getSynchronizationItems = vi.fn().mockResolvedValue([]);
+export const subscribePrecacheStaticDependencies = vi.fn(() => () => {});
+export const messageOmrsServiceWorker = vi.fn().mockResolvedValue({
+  success: false,
+  result: undefined,
+  error: 'No service worker has been registered. Offline-related features have been removed from the framework.',
+});
 
 /* esm-styleguide */
 export const showNotification = vi.fn();
@@ -108,22 +116,15 @@ export const usePatientPhoto = vi.fn(() => ({
   error: null,
 }));
 
-export const ActionMenuButton = vi.fn(({ handler }) => <button onClick={handler}>Action Menu Button</button>);
 export const ActionMenuButton2 = vi.fn(({ label, tagContent, icon }) => (
   <button>
     {icon} {tagContent} {label}
   </button>
 ));
 export const ActionMenu = vi.fn(() => <div>Action Menu</div>);
-export const WorkspaceContainer = vi.fn(() => <div>Workspace Container</div>);
-export const closeWorkspace = vi.fn();
-export const launchWorkspace = vi.fn();
 export const launchWorkspace2 = vi.fn();
-export const launchWorkspaceGroup = vi.fn();
 export const launchWorkspaceGroup2 = vi.fn();
 export const closeWorkspaceGroup2 = vi.fn();
-export const navigateAndLaunchWorkspace = vi.fn();
-export const useWorkspaces = vi.fn();
 export const useWorkspace2Context = vi.fn();
 
 export const OpenmrsDatePicker = vi.fn(({ id, labelText, value, onChange, invalid, isInvalid, invalidText }) => (

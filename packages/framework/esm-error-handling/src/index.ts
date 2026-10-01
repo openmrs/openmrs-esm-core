@@ -1,8 +1,11 @@
 /** @module @category Error Handling */
 import { dispatchToastShown } from '@openmrs/esm-globals';
 
-window.onerror = function (error) {
-  console.error('Unexpected error: ', error);
+// Uses the standard `window.onerror` signature: the first argument is the error
+// message (a string) or an Event, and the fifth is the actual Error object (when
+// the browser provides it). We prefer the Error so the toast shows its message.
+window.onerror = function (message, _source, _lineno, _colno, error) {
+  console.error('Unexpected error: ', error ?? message);
   dispatchToastShown({
     description: toToastDescription(error, 'Oops! An unexpected error occurred.'),
     kind: 'error',
@@ -19,6 +22,16 @@ window.onunhandledrejection = function (event: PromiseRejectionEvent) {
     title: 'Error',
   });
 };
+
+/**
+ * Tries to turn whatever reached the global error handler into
+ * a sensible string, returning the caller's fallback if a non-empty
+ * string could not be constructed.
+ */
+function toToastDescription(thing: unknown, fallback: string) {
+  const { message } = ensureErrorObject(thing);
+  return typeof message === 'string' && message ? message : fallback;
+}
 
 /**
  * Reports an error to the global error handler. The error will be displayed
@@ -74,16 +87,6 @@ export function createErrorHandler() {
     finalErr.stack += `\nAsync stacktrace:\n${outgoingErr.stack}`;
     reportError(incomingErr);
   };
-}
-
-/**
- * Tries to turn whatever reached the global error handler into
- * a sensible string, returning the caller's fallback if a non-empty
- * string could not be constructed.
- */
-function toToastDescription(thing: unknown, fallback: string) {
-  const { message } = ensureErrorObject(thing);
-  return typeof message === 'string' && message ? message : fallback;
 }
 
 function ensureErrorObject(thing: any) {

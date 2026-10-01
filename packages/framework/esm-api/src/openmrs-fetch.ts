@@ -1,5 +1,4 @@
 /** @module @category API */
-import { Observable } from 'rxjs';
 import { isPlainObject } from 'lodash-es';
 import { getConfig } from '@openmrs/esm-config';
 import { clearHistory, navigate } from '@openmrs/esm-navigation';
@@ -110,19 +109,17 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     fetchInit.headers = {};
   }
 
-  /* Automatically stringify javascript objects being sent in the
-   * request body.
-   */
+  // Automatically stringify javascript objects being sent in the
+  // request body.
   if (isPlainObject(fetchInit.body)) {
     fetchInit.body = JSON.stringify(fetchInit.body);
   }
 
-  /* Add a request header to tell the server to respond with json,
-   * since frontend code almost always wants json and the OpenMRS
-   * server won't give you json unless you explicitly ask for it.
-   * If a different Accept header is preferred, pass it into the fetchInit.
-   * If no Accept header is desired, pass it in explicitly as null.
-   */
+  // Add a request header to tell the server to respond with json,
+  // since frontend code almost always wants json and the OpenMRS
+  // server won't give you json unless you explicitly ask for it.
+  // If a different Accept header is preferred, pass it into the fetchInit.
+  // If no Accept header is desired, pass it in explicitly as null.
   if (typeof fetchInit.headers.Accept === 'undefined') {
     fetchInit.headers.Accept = 'application/json';
   }
@@ -131,12 +128,38 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     delete fetchInit.headers.Accept;
   }
 
-  /* This tells the OpenMRS REST API not to return a WWW-Authenticate
-   * header. Returning that header is useful when using the API, but
-   * not from a UI.
-   */
-  if (path.startsWith(restBaseUrl) && typeof fetchInit.headers['Disable-WWW-Authenticate'] === 'undefined') {
-    fetchInit.headers['Disable-WWW-Authenticate'] = 'true';
+  // This tells the OpenMRS REST API not to return a WWW-Authenticate
+  // header. Returning that header is useful when using the API, but
+  // not from a UI.
+  let isRestRequest = false;
+  try {
+    const requestUrl = new URL(url, window.location.href);
+    const restUrl = new URL(makeUrl(restBaseUrl), window.location.href);
+    // Compare normalized paths without changing the outgoing URL. Pagination links
+    // may omit the extra slash introduced by an openmrsBase with a trailing slash.
+    const requestPath = requestUrl.pathname.replace(/\/{2,}/g, '/');
+    const restPath = restUrl.pathname.replace(/\/{2,}/g, '/');
+    isRestRequest =
+      requestUrl.origin === restUrl.origin && (requestPath === restPath || requestPath.startsWith(`${restPath}/`));
+  } catch {
+    // Let native fetch reject malformed URLs instead of throwing synchronously here.
+  }
+
+  if (isRestRequest) {
+    let hasAuthHeader = false;
+    for (const [name, value] of Object.entries(fetchInit.headers)) {
+      if (name.toLowerCase() === 'disable-www-authenticate') {
+        if (value === undefined) {
+          // Remove every casing so fetch cannot combine "undefined" with the default.
+          delete fetchInit.headers[name];
+        } else {
+          hasAuthHeader = true;
+        }
+      }
+    }
+    if (!hasAuthHeader) {
+      fetchInit.headers['Disable-WWW-Authenticate'] = 'true';
+    }
   }
 
   if (path.startsWith(fhirBaseUrl)) {
@@ -147,11 +170,10 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     }
   }
 
-  /* We capture the stacktrace before making the request, so that if an error occurs we can
-   * log a full stacktrace that includes the code that made the request and handled the response
-   * Otherwise, we could run into situations where the stacktrace doesn't even show which code
-   * called @openmrs/api.
-   */
+  // We capture the stacktrace before making the request, so that if an error occurs we can
+  // log a full stacktrace that includes the code that made the request and handled the response
+  // Otherwise, we could run into situations where the stacktrace doesn't even show which code
+  // called @openmrs/api.
   const requestStacktrace = Error();
 
   return window.fetch(url, fetchInit as RequestInit).then(async (r) => {
@@ -159,13 +181,11 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     const { redirectAuthFailure, followRedirects } = await getConfig<EsmApiConfigObject>('@openmrs/esm-api');
 
     if (response.ok) {
-      /*
-       * Backend modules can trigger SPA redirects by returning a `Location` header.
-       * This is required because `fetch()` hides HTTP redirects from the application.
-       *
-       * - Session endpoint (2xx): Authentication challenge URLs (e.g. TOTP,2FA).
-       * - HTTP 204: Logout redirect URLs (e.g. Keycloak IdP logout). Refer: OA-41 #1231
-       */
+      // Backend modules can trigger SPA redirects by returning a `Location` header.
+      // This is required because `fetch()` hides HTTP redirects from the application.
+
+      // Session endpoint (2xx): Authentication challenge URLs (e.g. TOTP,2FA).
+      // HTTP 204: Logout redirect URLs (e.g. Keycloak IdP logout). Refer: OA-41 #1231
       const location = response.headers.get('location');
       const shouldRedirect =
         followRedirects && location && (url === makeUrl(sessionEndpoint) || response.status === 204);
@@ -175,10 +195,9 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
       }
 
       if (response.status === 204) {
-        /* HTTP 204 - No Content
-         * We should not try to download the empty response as json. Instead,
-         * we return null since there is no response body.
-         */
+        // HTTP 204 - No Content
+        // We should not try to download the empty response as json. Instead,
+        // we return null since there is no response body.
         response.data = null as unknown as T;
         return response;
       } else {
@@ -198,15 +217,12 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
           });
       }
     } else {
-      /* HTTP response status is not in 200s. Usually this will mean
-       * either HTTP 400s (bad request from browser) or HTTP 500s (server error)
-       * Our goal is to come up with best possible stacktrace and error message
-       * to help developers understand the problem and debug
-       */
+      // HTTP response status is not in 200s. Usually this will mean
+      // either HTTP 400s (bad request from browser) or HTTP 500s (server error)
+      // Our goal is to come up with best possible stacktrace and error message
+      // to help developers understand the problem and debug
 
-      /*
-       * Redirect to given url when redirect on auth failure is enabled
-       */
+      // Redirect to given url when redirect on auth failure is enabled
       if (
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
         (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
@@ -218,102 +234,38 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
         const location = redirectAuthFailure.url || response.headers.get('location') || defaultRedirectAuthFailureUrl;
         navigate({ to: location });
 
-        /* We sometimes don't really want this promise to resolve since there's no response data,
-         * nor do we want it to reject because that would trigger error handling. We instead
-         * want it to remain in pending status while the navigation occurs.
-         */
-        return redirectAuthFailure.resolvePromise
-          ? (Promise.resolve() as unknown as Promise<FetchResponse>)
-          : new Promise<FetchResponse>(() => {});
-      } else {
-        // Attempt to download a response body, if it has one
-        return response
-          .clone()
-          .text()
-          .then(
-            (responseText) => {
-              let responseBody = responseText;
-              try {
-                responseBody = JSON.parse(responseText);
-              } catch (err) {
-                // Server didn't respond with json, so just go with the response text string
-              }
-
-              /* Make the fetch promise go into "rejected" status, with the best
-               * possible stacktrace and error message.
-               */
-              throw new OpenmrsFetchError(url, response, responseBody, requestStacktrace);
-            },
-            (err) => {
-              /* We weren't able to download a response body for this error.
-               * Time to just give the best possible stacktrace and error message.
-               */
-              throw new OpenmrsFetchError(url, response, null, requestStacktrace);
-            },
-          );
+        const rejectAuthFailures = fetchInit.rejectAuthFailure === true;
+        if (!rejectAuthFailures) {
+          return redirectAuthFailure.resolvePromise
+            ? (Promise.resolve() as unknown as Promise<FetchResponse>)
+            : new Promise<FetchResponse>(() => {});
+        }
       }
+
+      // Attempt to download a response body, if it has one
+      return response
+        .clone()
+        .text()
+        .then(
+          (responseText) => {
+            let responseBody = responseText;
+            try {
+              responseBody = JSON.parse(responseText);
+            } catch (err) {
+              // Server didn't respond with json, so just go with the response text string
+            }
+
+            // Make the fetch promise go into "rejected" status, with the best
+            // possible stacktrace and error message.
+            throw new OpenmrsFetchError(url, response, responseBody, requestStacktrace);
+          },
+          () => {
+            // We weren't able to download a response body for this error.
+            // Time to just give the best possible stacktrace and error message.
+            throw new OpenmrsFetchError(url, response, null, requestStacktrace);
+          },
+        );
     }
-  });
-}
-
-/**
- * The openmrsObservableFetch function is a wrapper around openmrsFetch
- * that returns an [Observable](https://rxjs-dev.firebaseapp.com/guide/observable)
- * instead of a promise. It exists in case using an Observable is
- * preferred or more convenient than a promise.
- *
- * @param url See [[openmrsFetch]]
- * @param fetchInit See [[openmrsFetch]]
- * @returns An Observable that produces exactly one Response object.
- * The response object is exactly the same as for [[openmrsFetch]].
- *
- * @example
- *
- * ```js
- * import { openmrsObservableFetch } from '@openmrs/esm-api'
- * const subscription = openmrsObservableFetch(`${restBaseUrl}/session').subscribe(
- *   response => console.log(response.data),
- *   err => {throw err},
- *   () => console.log('finished')
- * )
- * subscription.unsubscribe()
- * ```
- *
- * #### Cancellation
- *
- * To cancel the network request, simply call `subscription.unsubscribe();`
- *
- * @category API
- */
-export function openmrsObservableFetch<T>(url: string, fetchInit: FetchConfig = {}) {
-  if (typeof fetchInit !== 'object') {
-    throw Error('The second argument to openmrsObservableFetch must be either omitted or an object');
-  }
-
-  const abortController = new AbortController();
-
-  fetchInit.signal = abortController.signal;
-
-  return new Observable<FetchResponse<T>>((observer) => {
-    let hasResponse = false;
-
-    openmrsFetch(url, fetchInit).then(
-      (response) => {
-        hasResponse = true;
-        observer.next(response);
-        observer.complete();
-      },
-      (err) => {
-        hasResponse = true;
-        observer.error(err);
-      },
-    );
-
-    return () => {
-      if (!hasResponse) {
-        abortController.abort();
-      }
-    };
   });
 }
 
@@ -333,6 +285,11 @@ export class OpenmrsFetchError extends Error implements FetchError {
 export interface FetchConfig extends Omit<RequestInit, 'body' | 'headers'> {
   headers?: FetchHeaders;
   body?: FetchBody | string;
+  /**
+   * When `true`, a response that triggers the auth-failure redirect still navigates, but the
+   * returned promise rejects with an `OpenmrsFetchError` instead of staying pending.
+   */
+  rejectAuthFailure?: boolean;
 }
 
 type ResponseBody = string | FetchResponseJson;

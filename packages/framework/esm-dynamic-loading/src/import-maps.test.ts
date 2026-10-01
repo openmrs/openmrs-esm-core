@@ -254,9 +254,8 @@ describe('import-maps', () => {
       localStorage.setItem('import-map-override:@openmrs/esm-foo', '/foo.js');
       localStorage.setItem('import-map-overrides-disabled', JSON.stringify(['@openmrs/esm-foo']));
 
-      const { setupImportMapOverrides, enableImportMapOverride, getImportMapDisabledOverrides } = await import(
-        './import-maps'
-      );
+      const { setupImportMapOverrides, enableImportMapOverride, getImportMapDisabledOverrides } =
+        await import('./import-maps');
       setupImportMapOverrides();
 
       enableImportMapOverride('@openmrs/esm-foo');
