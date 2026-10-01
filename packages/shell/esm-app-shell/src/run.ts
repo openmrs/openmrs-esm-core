@@ -8,10 +8,13 @@ import {
   getConfig,
   getCoreTranslation,
   getCurrentRouteMap,
+  getSessionStore,
   integrateBreakpoints,
   interpolateUrl,
   type OpenmrsRoutes,
+  type SessionStore,
   provide,
+  refetchCurrentUser,
   registerApp,
   registerDefaultCalendar,
   renderActionableNotifications,
@@ -36,13 +39,16 @@ import {
   type StyleguideConfigObject,
   tryRegisterExtension,
 } from '@openmrs/esm-framework/src/internal';
+import { setupStyleguide } from '@openmrs/esm-styleguide/src/index';
 import { setupI18n } from './locale';
+import { translateStaticPage } from './static-page-translations';
 // imported so we create the MF shares for these
 import 'swr/mutation';
 import 'swr/subscription';
 import './routing-events';
 import './events';
 import { appName, getCoreExtensions } from './ui';
+import { renderServerStartingPage } from './ui/server-starting.component';
 import { setupCoreConfig } from './core-config';
 
 // @internal
@@ -130,7 +136,65 @@ function handleInitFailure(e: Error) {
   renderFatalErrorPage(e);
 }
 
-function renderFatalErrorPage(e?: Error) {
+const initializingPollIntervalMillis = 5000;
+
+/**
+ * No app can render without a session, so a session fetch that fails before any session has loaded
+ * gets the same error page as a failed startup. Reading the session store retries the fetch, so the
+ * page is taken down again if a later fetch succeeds, e.g. once a backend that was starting up is ready.
+ *
+ * A backend that is still running its initial setup gets a "starting up" page instead, and the session
+ * is refetched periodically until setup finishes or the fetch fails some other way. That page is built
+ * from the framework, so it waits for `booted`; until then, the boot spinner stays up.
+ */
+function showErrorPageOnSessionFailure(booted: Promise<void>) {
+  let removePage: (() => void) | undefined;
+  let shownPage: 'initializing' | 'error' | undefined;
+  let pollTimer: ReturnType<typeof setTimeout> | undefined;
+  let isBooted = false;
+  let isDone = false;
+
+  const show = (page: typeof shownPage, render: () => (() => void) | undefined) => {
+    if (shownPage !== page) {
+      removePage?.();
+      removePage = render();
+      shownPage = page;
+    }
+  };
+
+  const update = (state: SessionStore) => {
+    if (isDone) {
+      return;
+    }
+
+    if (state.loaded) {
+      isDone = true;
+      unsubscribe();
+      clearTimeout(pollTimer);
+      removePage?.();
+    } else if (state.initializing) {
+      if (isBooted) {
+        show('initializing', renderServerStartingPage);
+      }
+      pollTimer ??= setTimeout(() => {
+        pollTimer = undefined;
+        refetchCurrentUser().catch(() => {});
+      }, initializingPollIntervalMillis);
+    } else if (state.error) {
+      show('error', () => renderFatalErrorPage(state.error));
+    }
+  };
+
+  const sessionStore = getSessionStore();
+  const unsubscribe = sessionStore.subscribe(update);
+  void booted.then(() => {
+    isBooted = true;
+    update(sessionStore.getState());
+  });
+}
+
+/** Renders the fatal error page and returns a function that removes it. */
+function renderFatalErrorPage(e?: Error): (() => void) | undefined {
   const template = document.querySelector<HTMLTemplateElement>('#app-error');
 
   if (template) {
@@ -139,6 +203,11 @@ function renderFatalErrorPage(e?: Error) {
 
     if (messageContainer) {
       messageContainer.textContent = e?.message || 'No additional information available.';
+    }
+
+    const copyButton = fragment.querySelector<HTMLButtonElement>('[data-copy-btn]');
+    if (copyButton && messageContainer) {
+      copyButton.onclick = () => copyWithFeedback(messageContainer as HTMLElement, copyButton);
     }
 
     if (
@@ -150,13 +219,29 @@ function renderFatalErrorPage(e?: Error) {
         const clearDevOverridesButton = document.createElement('button');
         clearDevOverridesButton.className = 'cds--btn';
         clearDevOverridesButton.innerHTML = 'Clear dev overrides';
+        clearDevOverridesButton.dataset.i18n = 'clearDevOverrides';
         clearDevOverridesButton.onclick = clearDevOverrides;
         appErrorActionButtons.appendChild(clearDevOverridesButton);
       }
     }
 
+    translateStaticPage(fragment);
+
+    const nodes = Array.from(fragment.childNodes);
     document.body.appendChild(fragment);
+    return () => nodes.forEach((node) => node.remove());
   }
+}
+
+const copyFeedbackMillis = 2000;
+
+/** Copies the text of `source` and briefly shows the "Copied!" tooltip attached to `button`. */
+function copyWithFeedback(source: HTMLElement, button: HTMLElement) {
+  window.copyText(source);
+
+  const tooltip = button.closest('.cds--popover-container');
+  tooltip?.classList.add('cds--popover--open');
+  setTimeout(() => tooltip?.classList.remove('cds--popover--open'), copyFeedbackMillis);
 }
 
 function clearDevOverrides() {
@@ -237,41 +322,44 @@ export function run(configUrls: Array<string>) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
-  return import('@openmrs/esm-styleguide/src/index').then(() => {
-    integrateBreakpoints();
-    showToasts();
-    showModals();
-    showNotifications();
-    showActionableNotifications();
-    showSnackbars();
-    showWorkspacesAndActionMenu();
-    subscribeNotificationShown(showNotification);
-    subscribeActionableNotificationShown(showActionableNotification);
-    subscribeToastShown(showToast);
-    subscribeSnackbarShown(showSnackbar);
-    setupApiModule();
-    setupHistory();
-    registerCoreExtensions();
-    setupCoreConfig();
+  setupStyleguide();
+  integrateBreakpoints();
+  showToasts();
+  showModals();
+  showNotifications();
+  showActionableNotifications();
+  showSnackbars();
+  showWorkspacesAndActionMenu();
+  subscribeNotificationShown(showNotification);
+  subscribeActionableNotificationShown(showActionableNotification);
+  subscribeToastShown(showToast);
+  subscribeSnackbarShown(showSnackbar);
+  setupApiModule();
 
-    const polyfillReady =
-      typeof Intl !== 'undefined' && 'DurationFormat' in Intl
-        ? Promise.resolve()
-        : import(
-            /* webpackChunkName: "intl-durationformat-polyfill" */
-            '@formatjs/intl-durationformat/lib/polyfill'
-          ).then(() => undefined);
+  let markBooted: () => void;
+  showErrorPageOnSessionFailure(new Promise<void>((resolve) => (markBooted = resolve)));
+  setupHistory();
+  registerCoreExtensions();
+  setupCoreConfig();
 
-    return polyfillReady
-      .then(setupApps)
-      .then(() => Promise.resolve(finishRegisteringAllApps()))
-      .then(provideConfigs)
-      .then(runShell)
-      .catch(handleInitFailure)
-      .then(closeLoading)
-      .then(() => {
-        // intentionally not returned so that processing the "started" event doesn't block
-        fireOpenmrsEvent('started');
-      });
-  });
+  const polyfillReady =
+    typeof Intl !== 'undefined' && 'DurationFormat' in Intl
+      ? Promise.resolve()
+      : import(
+          /* webpackChunkName: "intl-durationformat-polyfill" */
+          '@formatjs/intl-durationformat/lib/polyfill'
+        ).then(() => undefined);
+
+  return polyfillReady
+    .then(setupApps)
+    .then(() => Promise.resolve(finishRegisteringAllApps()))
+    .then(provideConfigs)
+    .then(runShell)
+    .then(() => markBooted())
+    .catch(handleInitFailure)
+    .then(closeLoading)
+    .then(() => {
+      // intentionally not returned so that processing the "started" event doesn't block
+      fireOpenmrsEvent('started');
+    });
 }

@@ -10,9 +10,12 @@ import {
   setSessionLocation,
   setUserProperties,
   sessionStore,
+  setSessionLocale,
+  verifyTotpCode,
+  logout,
 } from './current-user';
 import type * as openmrsFetchExport from './openmrs-fetch';
-import { openmrsFetch } from './openmrs-fetch';
+import { OpenmrsFetchError, openmrsFetch } from './openmrs-fetch';
 import { reportError } from '@openmrs/esm-error-handling';
 import type { LoggedInUser, Privilege, Role, Session } from './types';
 
@@ -31,6 +34,10 @@ vi.mock('@openmrs/esm-error-handling', () => ({
 
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
 const mockReportError = vi.mocked(reportError);
+
+function createFetchError(status: number, responseBody: unknown = null) {
+  return new OpenmrsFetchError('/openmrs/ws/rest/v1/session', { status } as Response, responseBody as any, Error());
+}
 
 // Helper to create mock fetch responses
 function createMockFetchResponse<T>(data: T, ok = true): any {
@@ -247,7 +254,7 @@ describe('setUserLanguage', () => {
 describe('getLoggedInUser', () => {
   beforeEach(() => {
     // Reset session store
-    sessionStore.setState({ loaded: false, session: null });
+    sessionStore.setState({ loaded: false, session: null }, true);
   });
 
   it('should return logged in user when session is loaded', async () => {
@@ -314,7 +321,7 @@ describe('getLoggedInUser', () => {
 
 describe('getCurrentUser', () => {
   beforeEach(() => {
-    sessionStore.setState({ loaded: false, session: null });
+    sessionStore.setState({ loaded: false, session: null }, true);
     mockOpenmrsFetch.mockClear();
     mockReportError.mockClear();
     // Mock openmrsFetch to prevent unhandled promise rejections
@@ -446,6 +453,23 @@ describe('getCurrentUser', () => {
     expect(resolvedSession).toEqual(mockSession);
   });
 
+  it('should resolve with the last loaded session when a refresh fails', async () => {
+    vi.useFakeTimers();
+
+    try {
+      const staleSession: Session = { authenticated: true, sessionId: 'stale-session', user: buildMockUser() };
+      mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse(staleSession));
+      await refetchCurrentUser();
+
+      vi.setSystemTime(Date.now() + 61 * 1000);
+      mockOpenmrsFetch.mockRejectedValue(new Error('Bad gateway'));
+
+      await expect(getCurrentUser({ includeAuthStatus: true })).resolves.toEqual(staleSession);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('should not resolve until the session is loaded', async () => {
     // Prevent the automatic refetch from resolving the session so the only way
     // the promise settles is the manual store update below.
@@ -476,7 +500,7 @@ describe('getCurrentUser', () => {
 
 describe('refetchCurrentUser', () => {
   beforeEach(() => {
-    sessionStore.setState({ loaded: false, session: null });
+    sessionStore.setState({ loaded: false, session: null }, true);
     mockOpenmrsFetch.mockClear();
   });
 
@@ -495,6 +519,7 @@ describe('refetchCurrentUser', () => {
       expect.stringContaining('/session'),
       expect.objectContaining({
         headers: {},
+        rejectAuthFailure: true,
       }),
     );
   });
@@ -517,6 +542,7 @@ describe('refetchCurrentUser', () => {
         headers: {
           Authorization: expectedAuth,
         },
+        rejectAuthFailure: true,
       }),
     );
   });
@@ -561,6 +587,120 @@ describe('refetchCurrentUser', () => {
 
     expect(mockReportError).toHaveBeenCalled();
   });
+
+  it('should record the error when the fetch fails before any session has loaded', async () => {
+    const error = new Error('Bad gateway');
+    mockOpenmrsFetch.mockRejectedValue(error);
+
+    await expect(refetchCurrentUser()).rejects.toEqual({ loaded: false, session: null, error, initializing: false });
+    expect(sessionStore.getState()).toEqual({ loaded: false, session: null, error, initializing: false });
+  });
+
+  it('should keep an already-loaded session when a later fetch fails', async () => {
+    const mockSession: Session = { authenticated: true, sessionId: 'test-session', user: {} as LoggedInUser };
+    sessionStore.setState({ loaded: true, session: mockSession }, true);
+    mockReportError.mockClear();
+    mockOpenmrsFetch.mockRejectedValue(new Error('Bad gateway'));
+
+    await expect(refetchCurrentUser()).rejects.toEqual({ loaded: true, session: mockSession });
+    expect(sessionStore.getState()).toEqual({ loaded: true, session: mockSession });
+    expect(mockReportError).toHaveBeenCalled();
+  });
+
+  it('should record an error when the session endpoint does not respond with a session', async () => {
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse('<html>Bad gateway</html>'));
+
+    await expect(refetchCurrentUser()).rejects.toMatchObject({ loaded: false, session: null });
+    expect(sessionStore.getState()).toMatchObject({
+      loaded: false,
+      error: new Error('The session endpoint did not respond with a session'),
+    });
+    expect(sessionStore.getState()).toMatchObject({ initializing: false });
+  });
+
+  it('should record that the server is starting up when the session request is redirected to initial setup', async () => {
+    mockOpenmrsFetch.mockResolvedValue({
+      ...createMockFetchResponse(undefined),
+      redirected: true,
+      url: 'http://localhost/openmrs/initialsetup',
+    });
+
+    await expect(refetchCurrentUser()).rejects.toMatchObject({ loaded: false, session: null, initializing: true });
+    expect(sessionStore.getState()).toMatchObject({
+      loaded: false,
+      initializing: true,
+      error: new Error('The server is still starting up'),
+    });
+  });
+
+  it('should record that the server is starting up when the gateway responds with a 502 soon after the first fetch', async () => {
+    mockReportError.mockClear();
+    mockOpenmrsFetch.mockRejectedValue(createFetchError(502));
+
+    await expect(refetchCurrentUser()).rejects.toMatchObject({ loaded: false, initializing: true });
+    expect(mockReportError).not.toHaveBeenCalled();
+  });
+
+  it('should record an ordinary error when the gateway still responds with a 502 minutes after the first fetch', async () => {
+    vi.useFakeTimers();
+
+    try {
+      mockOpenmrsFetch.mockRejectedValue(createFetchError(502));
+      await refetchCurrentUser().catch(() => {});
+
+      vi.setSystemTime(Date.now() + 3 * 60 * 1000);
+      mockReportError.mockClear();
+
+      await expect(refetchCurrentUser()).rejects.toMatchObject({ loaded: false, initializing: false });
+      expect(mockReportError).toHaveBeenCalled();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('should keep an already-loaded session and report the error when the gateway responds with a 502', async () => {
+    const mockSession: Session = { authenticated: true, sessionId: 'test-session', user: {} as LoggedInUser };
+    sessionStore.setState({ loaded: true, session: mockSession }, true);
+    mockReportError.mockClear();
+    mockOpenmrsFetch.mockRejectedValue(createFetchError(502));
+
+    await expect(refetchCurrentUser()).rejects.toEqual({ loaded: true, session: mockSession });
+    expect(mockReportError).toHaveBeenCalled();
+  });
+
+  it('should use the unauthenticated session in the body of a 401 response', async () => {
+    const unauthenticated = { authenticated: false, sessionId: 'abc', allowedLocales: ['en', 'fr'] };
+    mockOpenmrsFetch.mockRejectedValue(createFetchError(401, unauthenticated));
+
+    await expect(refetchCurrentUser()).resolves.toEqual({ loaded: true, session: unauthenticated });
+  });
+
+  it.each([401, 403])(
+    'should record a logged-out session when the session endpoint responds with %i',
+    async (status) => {
+      mockReportError.mockClear();
+      mockOpenmrsFetch.mockRejectedValue(createFetchError(status));
+
+      await expect(refetchCurrentUser()).resolves.toEqual({
+        loaded: true,
+        session: { authenticated: false, sessionId: '' },
+      });
+
+      expect(sessionStore.getState()).toEqual({
+        loaded: true,
+        session: { authenticated: false, sessionId: '' },
+      });
+      expect(mockReportError).not.toHaveBeenCalled();
+    },
+  );
+
+  it('should not leave readers waiting on the failed request after an auth failure', async () => {
+    mockOpenmrsFetch.mockRejectedValueOnce(createFetchError(401));
+    await refetchCurrentUser();
+
+    await expect(getCurrentUser()).resolves.toEqual({ authenticated: false, sessionId: '' });
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe('setSessionLocation', () => {
@@ -592,6 +732,7 @@ describe('setSessionLocation', () => {
         headers: {
           'Content-Type': 'application/json',
         },
+        rejectAuthFailure: true,
         signal: abortController.signal,
       }),
     );
@@ -632,24 +773,21 @@ describe('setUserProperties', () => {
       favoriteColor: 'blue',
     };
 
-    mockOpenmrsFetch
-      .mockResolvedValueOnce(createMockFetchResponse({})) // First call to update properties
-      .mockResolvedValueOnce(
-        createMockFetchResponse({
-          // Second call to refetch session
-          authenticated: true,
-          sessionId: 'test-session',
-          user: {
-            uuid: userUuid,
-            userProperties,
-          } as unknown as LoggedInUser,
-        }),
-      );
+    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse({}));
+    mockOpenmrsFetch.mockResolvedValueOnce(
+      createMockFetchResponse({
+        authenticated: true,
+        sessionId: 'test-session',
+        user: {
+          uuid: userUuid,
+          userProperties,
+        } as unknown as LoggedInUser,
+      }),
+    );
 
     await setUserProperties(userUuid, userProperties);
 
-    expect(mockOpenmrsFetch).toHaveBeenNthCalledWith(
-      1,
+    expect(mockOpenmrsFetch).toHaveBeenCalledWith(
       expect.stringContaining(`/user/${userUuid}`),
       expect.objectContaining({
         method: 'POST',
@@ -669,7 +807,8 @@ describe('setUserProperties', () => {
     const userProperties = { defaultLocale: 'fr-FR' };
     const abortController = new AbortController();
 
-    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse({})).mockResolvedValueOnce(
+    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse({}));
+    mockOpenmrsFetch.mockResolvedValueOnce(
       createMockFetchResponse({
         authenticated: true,
         sessionId: 'test-session',
@@ -679,8 +818,7 @@ describe('setUserProperties', () => {
 
     await setUserProperties(userUuid, userProperties, abortController);
 
-    expect(mockOpenmrsFetch).toHaveBeenNthCalledWith(
-      1,
+    expect(mockOpenmrsFetch).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({
         signal: abortController.signal,
@@ -692,7 +830,8 @@ describe('setUserProperties', () => {
     const userUuid = 'user-uuid-123';
     const userProperties = { defaultLocale: 'es-ES' };
 
-    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse({})).mockResolvedValueOnce(
+    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse({}));
+    mockOpenmrsFetch.mockResolvedValueOnce(
       createMockFetchResponse({
         authenticated: true,
         sessionId: 'test-session',
@@ -702,12 +841,129 @@ describe('setUserProperties', () => {
 
     await setUserProperties(userUuid, userProperties);
 
-    expect(mockOpenmrsFetch).toHaveBeenNthCalledWith(
-      1,
+    expect(mockOpenmrsFetch).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({
         signal: expect.any(AbortSignal),
       }),
     );
+  });
+});
+
+describe('setSessionLocale', () => {
+  beforeEach(() => {
+    mockOpenmrsFetch.mockClear();
+  });
+
+  it('should set the session locale and refetch the session', async () => {
+    const mockSession: Session = { authenticated: true, sessionId: 'test-session', locale: 'fr' };
+    const abortController = new AbortController();
+    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse(mockSession));
+    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse(mockSession));
+
+    await expect(setSessionLocale('fr', abortController)).resolves.toEqual({ loaded: true, session: mockSession });
+
+    expect(mockOpenmrsFetch).toHaveBeenCalledWith(
+      '/ws/rest/v1/session',
+      expect.objectContaining({
+        method: 'POST',
+        body: { locale: 'fr' },
+        signal: abortController.signal,
+      }),
+    );
+    expect(mockOpenmrsFetch).toHaveBeenLastCalledWith(
+      '/ws/rest/v1/session',
+      expect.objectContaining({ rejectAuthFailure: true }),
+    );
+  });
+
+  it('should reject with the fetch error when the server does not accept the locale', async () => {
+    const error = new OpenmrsFetchError('/openmrs/ws/rest/v1/session', { status: 400 } as Response, null, Error());
+    mockOpenmrsFetch.mockRejectedValueOnce(error);
+
+    await expect(setSessionLocale('xx')).rejects.toBe(error);
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('verifyTotpCode', () => {
+  beforeEach(() => {
+    mockOpenmrsFetch.mockClear();
+  });
+
+  it('should send the code and ask the server to remember the device only when requested', async () => {
+    mockOpenmrsFetch.mockResolvedValue(createMockFetchResponse({ authenticated: false, sessionId: '' }));
+
+    await verifyTotpCode('123456');
+    expect(mockOpenmrsFetch).toHaveBeenLastCalledWith('/ws/rest/v1/session', {
+      headers: { 'X-Totp-Code': '123456' },
+    });
+
+    await verifyTotpCode('123456', true);
+    expect(mockOpenmrsFetch).toHaveBeenLastCalledWith('/ws/rest/v1/session?rememberMe=true', {
+      headers: { 'X-Totp-Code': '123456' },
+    });
+  });
+
+  it('should refetch and resolve with the session when the code is accepted', async () => {
+    const mockSession: Session = { authenticated: true, sessionId: 'test-session', user: {} as LoggedInUser };
+    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse({ authenticated: true, sessionId: 'test-session' }));
+    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse(mockSession));
+
+    await expect(verifyTotpCode('123456')).resolves.toEqual(mockSession);
+    expect(sessionStore.getState()).toEqual({ loaded: true, session: mockSession });
+  });
+
+  it('should resolve with the unauthenticated session without refetching when the code is not accepted', async () => {
+    const unauthenticated = { authenticated: false, sessionId: '' };
+    mockOpenmrsFetch.mockResolvedValueOnce(createMockFetchResponse(unauthenticated));
+
+    await expect(verifyTotpCode('000000')).resolves.toEqual(unauthenticated);
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('logout', () => {
+  const loggedOut = { loaded: true, session: { authenticated: false, sessionId: '' } };
+
+  beforeEach(() => {
+    sessionStore.setState(
+      {
+        loaded: true,
+        session: { authenticated: true, sessionId: 'test-session', user: {} as LoggedInUser },
+      },
+      true,
+    );
+    mockOpenmrsFetch.mockReset();
+  });
+
+  it('should delete the session and record a logged-out session', async () => {
+    mockOpenmrsFetch
+      .mockResolvedValueOnce(createMockFetchResponse(null))
+      .mockResolvedValueOnce(createMockFetchResponse({ authenticated: false, sessionId: '' }));
+
+    await logout();
+
+    expect(mockOpenmrsFetch).toHaveBeenNthCalledWith(1, '/ws/rest/v1/session', {
+      method: 'DELETE',
+      rejectAuthFailure: true,
+    });
+    expect(sessionStore.getState()).toEqual(loggedOut);
+  });
+
+  it('should treat a session the server has already ended as logged out', async () => {
+    mockOpenmrsFetch.mockRejectedValue(createFetchError(401));
+
+    await expect(logout()).resolves.toBeUndefined();
+    expect(sessionStore.getState()).toEqual(loggedOut);
+  });
+
+  it('should reject and keep the session when the server fails to end it', async () => {
+    const before = sessionStore.getState();
+    const error = new OpenmrsFetchError('/openmrs/ws/rest/v1/session', { status: 500 } as Response, null, Error());
+    mockOpenmrsFetch.mockRejectedValueOnce(error);
+
+    await expect(logout()).rejects.toBe(error);
+    expect(sessionStore.getState()).toEqual(before);
   });
 });

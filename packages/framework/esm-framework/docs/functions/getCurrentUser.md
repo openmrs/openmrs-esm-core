@@ -6,13 +6,14 @@
 
 > **getCurrentUser**(): `Promise`\<[`Session`](../interfaces/Session.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L88)
+Defined in: [packages/framework/esm-api/src/current-user.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L105)
 
 The getCurrentUser function returns a Promise that resolves once with the
 current user's session. If the session hasn't been loaded, was loaded more than
 a minute ago, or is in the middle of being refetched, the Promise waits for the
 fetch in question rather than resolving with data that may be out of date. The
-session it resolves with is therefore never more than a minute old.
+session it resolves with is therefore never more than a minute old, unless that fetch fails,
+in which case it resolves with the last session that loaded.
 
 The function accepts an optional `opts` object with an `includeAuthStatus` boolean
 property that defaults to `true`. When `true`, the entire [Session](../interfaces/Session.md) object
@@ -43,7 +44,7 @@ console.log(session.authenticated)
 
 > **getCurrentUser**(`opts`): `Promise`\<[`Session`](../interfaces/Session.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L95)
+Defined in: [packages/framework/esm-api/src/current-user.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L112)
 
 ### Parameters
 
@@ -68,7 +69,7 @@ A Promise resolving to a [Session](../interfaces/Session.md) object.
 
 > **getCurrentUser**(`opts`): `Promise`\<[`LoggedInUser`](../interfaces/LoggedInUser.md)\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L102)
+Defined in: [packages/framework/esm-api/src/current-user.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L119)
 
 ### Parameters
 

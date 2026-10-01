@@ -4,7 +4,7 @@
 
 > **getAssignedExtensions**(`slotName`, `state?`): [`AssignedExtension`](../interfaces/AssignedExtension.md)[]
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:541](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L541)
+Defined in: [packages/framework/esm-extensions/src/extensions.ts:552](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L552)
 
 Gets the extensions a given rendering of a slot should display, in order. This is the supported
 way to ask what belongs in a slot; reading the extension store directly skips display conditions.
