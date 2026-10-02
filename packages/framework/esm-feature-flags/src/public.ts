@@ -1,1 +1,1 @@
-export { registerFeatureFlag, getFeatureFlag } from './feature-flags';
+export { registerFeatureFlag, getFeatureFlag, subscribeToFeatureFlag } from './feature-flags';
