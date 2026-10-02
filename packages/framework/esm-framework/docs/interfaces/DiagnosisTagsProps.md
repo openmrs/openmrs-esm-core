@@ -18,6 +18,8 @@ Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags
 
 > `optional` **showCertainty**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L14)
+Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L18)
 
-Show recorded certainty alongside the name. Missing or unknown certainty is omitted.
+Mark provisional diagnoses with a leading "?". Confirmed diagnoses, and any with missing or
+unknown certainty, show just the name. Off by default because diagnoses saved before
+certainty was captured are stored as provisional.

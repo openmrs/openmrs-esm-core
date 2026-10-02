@@ -4,6 +4,6 @@
 
 > `const` **DiagnosisTags**: `React.FC`\<[`DiagnosisTagsProps`](../interfaces/DiagnosisTagsProps.md)\>
 
-Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L18)
+Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L22)
 
-Displays diagnoses with configured rank colours and optional certainty labels.
+Displays diagnoses with configured rank colours, optionally marking provisional ones.
