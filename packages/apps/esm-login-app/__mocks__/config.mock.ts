@@ -12,7 +12,6 @@ export const mockConfig: ConfigSchema = {
   },
   chooseLocation: {
     enabled: true,
-    numberToShow: 3,
     useLoginLocationTag: true,
     locationsPerRequest: 50,
   },
