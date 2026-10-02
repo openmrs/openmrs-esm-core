@@ -121,6 +121,7 @@ export const ActionMenuButton2 = jest.fn(({ label, tagContent, icon }) => (
   </button>
 ));
 export const ActionMenu = jest.fn(() => <div>Action Menu</div>);
+export const ExportedWorkspace = jest.fn(() => <div>Exported Workspace</div>);
 export const launchWorkspace2 = jest.fn();
 export const launchWorkspaceGroup2 = jest.fn();
 export const closeWorkspaceGroup2 = jest.fn();
