@@ -343,6 +343,43 @@ type PromptReason =
   | { reason: 'CLOSE_WORKSPACE'; explicit: boolean; windowName: string; workspaceName: string }
   | { reason: 'CLOSE_OTHER_WINDOWS'; explicit: false; windowNameToSpare: string };
 
+// if onlyUpToThisWorkspace is provided, we will only loop till we hit that workspace
+function getAffectedWorkspacesInWindow(openedWindow: OpenedWindow, onlyUpToThisWorkspace?: string) {
+  const ret: Array<OpenedWorkspace> = [];
+  for (let i = openedWindow.openedWorkspaces.length - 1; i >= 0; i--) {
+    const openedWorkspace = openedWindow.openedWorkspaces[i];
+
+    if (openedWorkspace.hasUnsavedChanges) {
+      ret.push(openedWorkspace);
+    }
+    if (onlyUpToThisWorkspace && openedWorkspace.workspaceName === onlyUpToThisWorkspace) {
+      break;
+    }
+  }
+  return ret;
+}
+
+function showClosePrompt(affectedWorkspaces: Array<OpenedWorkspace>): Promise<boolean> {
+  if (affectedWorkspaces.length === 0) {
+    return Promise.resolve(true); // no unsaved changes, no need to prompt
+  }
+
+  return new Promise((resolve) => {
+    const dispose = showModal('workspace2-close-prompt', {
+      size: 'sm',
+      onConfirm: () => {
+        dispose();
+        resolve(true);
+      },
+      onCancel: () => {
+        dispose();
+        resolve(false);
+      },
+      affectedWorkspaceTitles: affectedWorkspaces.map((workspace) => workspace.title ?? ''),
+    });
+  });
+}
+
 /**
  * A user can perform actions that explicitly result in closing workspaces
  * (such that clicking the 'X' button for the workspace or workspace group), or
@@ -358,23 +395,7 @@ type PromptReason =
  * @returns a Promise that resolves to true if the user confirmed closing the workspaces; false otherwise.
  */
 export function promptForClosingWorkspaces(promptReason: PromptReason): Promise<boolean> {
-  // if onlyUpToThisWorkspace is provided, we will only loop till we hit that workspace
-  function getAffectedWorkspacesInWindow(openedWindow: OpenedWindow, onlyUpToThisWorkspace?: string) {
-    const ret: Array<OpenedWorkspace> = [];
-    for (let i = openedWindow.openedWorkspaces.length - 1; i >= 0; i--) {
-      const openedWorkspace = openedWindow.openedWorkspaces[i];
-
-      if (openedWorkspace.hasUnsavedChanges) {
-        ret.push(openedWorkspace);
-      }
-      if (onlyUpToThisWorkspace && openedWorkspace.workspaceName === onlyUpToThisWorkspace) {
-        break;
-      }
-    }
-    return ret;
-  }
-
-  const { openedWindows, workspaceTitleByWorkspaceName } = workspace2Store.getState();
+  const { openedWindows } = workspace2Store.getState();
   let affectedWorkspaces: OpenedWorkspace[] = [];
   switch (promptReason.reason) {
     case 'CLOSE_WORKSPACE_GROUP': {
@@ -404,26 +425,142 @@ export function promptForClosingWorkspaces(promptReason: PromptReason): Promise<
     }
   }
 
-  if (affectedWorkspaces.length === 0) {
-    return Promise.resolve(true); // no unsaved changes, no need to prompt
+  return showClosePrompt(affectedWorkspaces);
+}
+
+/**
+ * Prompts for confirmation to close the workspaces with unsaved changes in the given window: the whole
+ * window, or, if `upToWorkspaceName` is given, just that workspace and its children. Unlike
+ * `promptForClosingWorkspaces`, this works on any window, including one held in an
+ * `<ExportedWorkspace>`'s local store.
+ * @returns a Promise that resolves to true if the user confirmed, or there was nothing to confirm.
+ */
+export function promptForClosingWorkspacesInWindow(
+  openedWindow: OpenedWindow,
+  upToWorkspaceName?: string,
+): Promise<boolean> {
+  return showClosePrompt(getAffectedWorkspacesInWindow(openedWindow, upToWorkspaceName));
+}
+
+/**
+ * Closes the named workspace, along with its children, within the given window.
+ * @returns the updated window; `null` if no workspaces are left in it; or `openedWindow` itself if
+ *   the workspace is not in the window.
+ */
+export function closeWorkspaceInWindow(openedWindow: OpenedWindow, workspaceName: string): OpenedWindow | null {
+  const workspaceIndex = openedWindow.openedWorkspaces.findIndex((w) => w.workspaceName === workspaceName);
+  if (workspaceIndex < 0) {
+    return openedWindow;
+  }
+  if (workspaceIndex === 0) {
+    return null;
+  }
+  return {
+    ...openedWindow,
+    openedWorkspaces: openedWindow.openedWorkspaces.slice(0, workspaceIndex),
+  };
+}
+
+/**
+ * Opens a child workspace of the named parent workspace within the given window. Any workspaces
+ * above the parent are closed.
+ * @returns the updated window
+ */
+export function openChildWorkspaceInWindow(
+  openedWindow: OpenedWindow,
+  parentWorkspaceName: string,
+  childWorkspaceName: string,
+  childWorkspaceProps: Record<string, any>,
+): OpenedWindow {
+  const { registeredWorkspacesByName } = workspace2Store.getState();
+  const childWorkspaceDef = registeredWorkspacesByName[childWorkspaceName];
+  if (!childWorkspaceDef) {
+    throw new Error(`No workspace named "${childWorkspaceName}" registered`);
+  }
+  const parentWorkspaceDef = registeredWorkspacesByName[parentWorkspaceName];
+  if (!parentWorkspaceDef) {
+    throw new Error(`No workspace named "${parentWorkspaceName}" registered`);
+  }
+  if (parentWorkspaceDef.window !== childWorkspaceDef.window) {
+    throw new Error(
+      `Child workspace ${childWorkspaceName} does not belong to the same workspace window as parent workspace ${parentWorkspaceName}`,
+    );
+  }
+  if (childWorkspaceDef.window !== openedWindow.windowName) {
+    throw new Error(
+      `Cannot open child workspace ${childWorkspaceName} as window ${childWorkspaceDef.window} is not opened`,
+    );
   }
 
-  return new Promise((resolve) => {
-    const dispose = showModal('workspace2-close-prompt', {
-      size: 'sm',
-      onConfirm: () => {
-        dispose();
-        resolve(true);
-      },
-      onCancel: () => {
-        dispose();
-        resolve(false);
-      },
-      affectedWorkspaceTitles: affectedWorkspaces.map(
-        (workspace) => workspaceTitleByWorkspaceName[workspace.workspaceName],
-      ),
-    });
-  });
+  const { openedWorkspaces } = openedWindow;
+  const parentIndex = openedWorkspaces.findIndex((w) => w.workspaceName === parentWorkspaceName);
+  if (parentIndex === -1) {
+    throw new Error(
+      `Cannot open child workspace ${childWorkspaceName} from parent workspace ${parentWorkspaceName} as the parent is not opened within the workspace window`,
+    );
+  }
+
+  // Close any workspaces above the parent (analogous to closeWorkspace's slice behavior)
+  const trimmedWorkspaces = openedWorkspaces.slice(0, parentIndex + 1);
+
+  return {
+    ...openedWindow,
+    openedWorkspaces: [...trimmedWorkspaces, newOpenedWorkspace(childWorkspaceName, childWorkspaceProps)],
+  };
+}
+
+/**
+ * Updates the title and/or unsaved-changes flag of the workspace instance `uuid` within the given window.
+ * @returns the updated window, or `openedWindow` itself if the workspace is not in the window or
+ *   nothing changed.
+ */
+export function updateOpenedWorkspaceInWindow(
+  openedWindow: OpenedWindow,
+  workspaceUuid: string,
+  patch: Partial<Pick<OpenedWorkspace, 'title' | 'hasUnsavedChanges'>>,
+): OpenedWindow {
+  const workspaceIndex = openedWindow.openedWorkspaces.findIndex((w) => w.uuid === workspaceUuid);
+  if (workspaceIndex < 0) {
+    return openedWindow;
+  }
+  const openedWorkspace = openedWindow.openedWorkspaces[workspaceIndex];
+  const patchedKeys = Object.keys(patch) as Array<keyof typeof patch>;
+  if (patchedKeys.every((key) => openedWorkspace[key] === patch[key])) {
+    return openedWindow;
+  }
+
+  const openedWorkspaces = [...openedWindow.openedWorkspaces];
+  openedWorkspaces[workspaceIndex] = { ...openedWorkspace, ...patch };
+  return {
+    ...openedWindow,
+    openedWorkspaces,
+  };
+}
+
+function updateOpenedWorkspace(
+  state: WorkspaceStoreState2,
+  workspaceUuid: string,
+  patch: Partial<Pick<OpenedWorkspace, 'title' | 'hasUnsavedChanges'>>,
+) {
+  const openedWindowIndex = state.openedWindows.findIndex((window) =>
+    window.openedWorkspaces.some((w) => w.uuid === workspaceUuid),
+  );
+  if (openedWindowIndex < 0) {
+    return state; // no-op if the workspace is not opened
+  }
+
+  const openedWindow = state.openedWindows[openedWindowIndex];
+  const updatedWindow = updateOpenedWorkspaceInWindow(openedWindow, workspaceUuid, patch);
+  if (updatedWindow === openedWindow) {
+    return state; // returning the same state lets zustand skip notifying subscribers
+  }
+
+  const openedWindows = [...state.openedWindows];
+  openedWindows[openedWindowIndex] = updatedWindow;
+  return {
+    ...state,
+    openedWindows,
+  };
 }
 
 export const workspace2StoreActions = {
@@ -456,20 +593,19 @@ export const workspace2StoreActions = {
       isMostRecentlyOpenedWindowHidden: false,
     };
   },
-  closeWorkspace(state, workspaceName: string) {
-    const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
+  closeWorkspace(state: WorkspaceStoreState2, workspaceName: string) {
+    const openedWindowIndex = state.openedWindows.findIndex((window) =>
+      window.openedWorkspaces.some((w) => w.workspaceName === workspaceName),
+    );
     if (openedWindowIndex < 0) {
       return state; // no-op if the window does not exist
     }
 
-    const window = { ...state.openedWindows[openedWindowIndex] };
-    const workspaceIndex = window.openedWorkspaces.findIndex((w) => w.workspaceName === workspaceName);
+    const window = closeWorkspaceInWindow(state.openedWindows[openedWindowIndex], workspaceName);
     const openedWindows = [...state.openedWindows];
-    // close all children of the input workspace as well
-    window.openedWorkspaces = window.openedWorkspaces.slice(0, workspaceIndex);
 
     let hidden = state.isMostRecentlyOpenedWindowHidden;
-    if (window.openedWorkspaces.length === 0) {
+    if (window === null) {
       const wasMostRecentWindow = openedWindowIndex === state.openedWindows.length - 1;
       // if no workspaces left, remove the window
       openedWindows.splice(openedWindowIndex, 1);
@@ -490,7 +626,7 @@ export const workspace2StoreActions = {
     };
   },
   openChildWorkspace(
-    state,
+    state: WorkspaceStoreState2,
     parentWorkspaceName: string,
     childWorkspaceName: string,
     childWorkspaceProps: Record<string, any>,
@@ -498,15 +634,6 @@ export const workspace2StoreActions = {
     const childWorkspaceDef = state.registeredWorkspacesByName[childWorkspaceName];
     if (!childWorkspaceDef) {
       throw new Error(`No workspace named "${childWorkspaceName}" registered`);
-    }
-    const parentWorkspaceDef = state.registeredWorkspacesByName[parentWorkspaceName];
-    if (!parentWorkspaceDef) {
-      throw new Error(`No workspace named "${parentWorkspaceName}" registered`);
-    }
-    if (parentWorkspaceDef.window !== childWorkspaceDef.window) {
-      throw new Error(
-        `Child workspace ${childWorkspaceName} does not belong to the same workspace window as parent workspace ${parentWorkspaceName}`,
-      );
     }
 
     // as the request workspace should be a child workspace, the corresponding window
@@ -517,70 +644,24 @@ export const workspace2StoreActions = {
         `Cannot open child workspace ${childWorkspaceName} as window ${childWorkspaceDef.window} is not opened`,
       );
     }
-    const openedWindow = state.openedWindows[openedWindowIndex];
-    const { openedWorkspaces } = openedWindow;
-    const parentIndex = openedWorkspaces.findIndex((w) => w.workspaceName === parentWorkspaceName);
-    if (parentIndex === -1) {
-      throw new Error(
-        `Cannot open child workspace ${childWorkspaceName} from parent workspace ${parentWorkspaceName} as the parent is not opened within the workspace window`,
-      );
-    }
-
-    // Close any workspaces above the parent (analogous to closeWorkspace's slice behavior)
-    const trimmedWorkspaces = openedWorkspaces.slice(0, parentIndex + 1);
-
-    return {
-      openedWindows: state.openedWindows.map((w, i) => {
-        if (i == openedWindowIndex) {
-          return {
-            ...w,
-            openedWorkspaces: [...trimmedWorkspaces, newOpenedWorkspace(childWorkspaceName, childWorkspaceProps)],
-          };
-        } else {
-          return w;
-        }
-      }),
-    };
-  },
-  setHasUnsavedChanges(state: WorkspaceStoreState2, workspaceName: string, hasUnsavedChanges: boolean) {
-    const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
-    if (openedWindowIndex < 0) {
-      return state; // no-op if the window does not exist
-    }
-
-    const openedWindow = { ...state.openedWindows[openedWindowIndex] };
-    const workspaceIndex = openedWindow.openedWorkspaces.findIndex((w) => w.workspaceName === workspaceName);
-
-    if (workspaceIndex < 0) {
-      return state; // no-op if the workspace is not found
-    }
-
-    openedWindow.openedWorkspaces[workspaceIndex] = {
-      ...openedWindow.openedWorkspaces[workspaceIndex],
-      hasUnsavedChanges,
-    };
 
     const openedWindows = [...state.openedWindows];
-    openedWindows[openedWindowIndex] = openedWindow;
-
+    openedWindows[openedWindowIndex] = openChildWorkspaceInWindow(
+      state.openedWindows[openedWindowIndex],
+      parentWorkspaceName,
+      childWorkspaceName,
+      childWorkspaceProps,
+    );
     return {
       ...state,
       openedWindows,
     };
   },
-  setWorkspaceTitle(state: WorkspaceStoreState2, workspaceName: string, title: string | null) {
-    const newWorkspaceTitleByWorkspaceName = { ...state.workspaceTitleByWorkspaceName };
-
-    if (title === null) {
-      delete newWorkspaceTitleByWorkspaceName[workspaceName];
-    } else {
-      newWorkspaceTitleByWorkspaceName[workspaceName] = title;
-    }
-
-    return {
-      ...state,
-      workspaceTitleByWorkspaceName: newWorkspaceTitleByWorkspaceName,
-    };
+  setHasUnsavedChanges(state: WorkspaceStoreState2, workspaceUuid: string, hasUnsavedChanges: boolean) {
+    return updateOpenedWorkspace(state, workspaceUuid, { hasUnsavedChanges });
+  },
+  setWorkspaceTitle(state: WorkspaceStoreState2, workspaceUuid: string, title: string) {
+    return updateOpenedWorkspace(state, workspaceUuid, { title });
   },
 } satisfies Actions<WorkspaceStoreState2>;
 
@@ -608,5 +689,30 @@ function newOpenedWorkspace(workspaceName: string, workspaceProps: Record<string
     props: workspaceProps ?? {},
     hasUnsavedChanges: false,
     uuid: uuidV4(),
+  };
+}
+
+/**
+ * Builds the window an `<ExportedWorkspace>` starts with: the workspace's real registered window
+ * (so `launchChildWorkspace` keeps working), containing just the requested workspace.
+ *
+ * Returns `null` when `name` is not registered yet; the caller renders nothing and seeds again once
+ * the workspace registers, since registration can happen after the component mounts.
+ */
+export function createExportedWorkspaceWindow(
+  name: string,
+  workspaceProps: Record<string, any> | null,
+  windowProps?: Record<string, any> | null,
+): OpenedWindow | null {
+  const workspaceDef = workspace2Store.getState().registeredWorkspacesByName[name];
+  if (!workspaceDef) {
+    return null;
+  }
+
+  return {
+    windowName: workspaceDef.window,
+    openedWorkspaces: [newOpenedWorkspace(name, workspaceProps)],
+    props: windowProps ?? null,
+    maximized: false,
   };
 }
