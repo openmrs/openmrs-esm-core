@@ -73,4 +73,36 @@ describe('PatientBannerPatientIdentifiers', () => {
     expect(screen.getByText(/openmrs id/i)).toBeInTheDocument();
     expect(screen.queryByText(/national id/i)).not.toBeInTheDocument();
   });
+
+  it('falls back to showing the first identifier when showAllIdentifiers is false but the primary identifier code is unresolved', () => {
+    mockUsePrimaryIdentifierCode.mockReturnValue({
+      primaryIdentifierCode: undefined,
+      isLoading: false,
+      error: undefined,
+    });
+
+    render(
+      <PatientBannerPatientIdentifiers identifiers={mockIdentifiers} showIdentifierLabel showAllIdentifiers={false} />,
+    );
+
+    expect(screen.getByText(/openmrs id/i)).toBeInTheDocument();
+    expect(screen.getByText(/100gej/i)).toBeInTheDocument();
+    expect(screen.queryByText(/national id/i)).not.toBeInTheDocument();
+  });
+
+  it('shows only the primary identifier when showAllIdentifiers is false and the primary identifier code resolves', () => {
+    mockUsePrimaryIdentifierCode.mockReturnValue({
+      primaryIdentifierCode: '4281ec43-388b-4c25-8bb2-deaff0867b2c',
+      isLoading: false,
+      error: undefined,
+    });
+
+    render(
+      <PatientBannerPatientIdentifiers identifiers={mockIdentifiers} showIdentifierLabel showAllIdentifiers={false} />,
+    );
+
+    expect(screen.getByText(/national id/i)).toBeInTheDocument();
+    expect(screen.getByText(/123456789/i)).toBeInTheDocument();
+    expect(screen.queryByText(/openmrs id/i)).not.toBeInTheDocument();
+  });
 });
