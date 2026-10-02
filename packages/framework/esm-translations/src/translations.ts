@@ -100,6 +100,7 @@ export const coreTranslations = {
   printErrorExplainer: 'An error occurred in {{errorLocation}}',
   printIdentifierSticker: 'Print identifier sticker',
   printing: 'Printing',
+  provisional: 'Provisional',
   recordNewEntry: 'Record {{displayText}}',
   relationships: 'Relationships',
   reload: 'Reload',

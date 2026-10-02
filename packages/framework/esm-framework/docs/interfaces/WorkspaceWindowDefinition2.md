@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceWindowDefinition2
 
-Defined in: [packages/framework/esm-globals/src/types.ts:312](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L312)
+Defined in: [packages/framework/esm-globals/src/types.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L237)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:312](https://github.com
 
 > `optional` **canMaximize**: `boolean`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:315](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L315)
+Defined in: [packages/framework/esm-globals/src/types.ts:240](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L240)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:315](https://github.com
 
 > **group**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L316)
+Defined in: [packages/framework/esm-globals/src/types.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L241)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:316](https://github.com
 
 > `optional` **icon**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:314](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L314)
+Defined in: [packages/framework/esm-globals/src/types.ts:239](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L239)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:314](https://github.com
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:313](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L313)
+Defined in: [packages/framework/esm-globals/src/types.ts:238](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L238)
 
 ***
 
@@ -42,12 +42,12 @@ Defined in: [packages/framework/esm-globals/src/types.ts:313](https://github.com
 
 > `optional` **order**: `number`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:317](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L317)
+Defined in: [packages/framework/esm-globals/src/types.ts:242](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L242)
 
 ***
 
 ### width?
 
-> `optional` **width**: [`WorkspaceWindow2Width`](../type-aliases/WorkspaceWindow2Width.md)
+> `optional` **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:318](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L318)
+Defined in: [packages/framework/esm-globals/src/types.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L243)

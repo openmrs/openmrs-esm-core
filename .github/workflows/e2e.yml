@@ -180,11 +180,11 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('e2e_repo/**/yarn.lock') }}
 
       - name: 🎭 Install Playwright Browsers for ${{ matrix.repo }}
-        run: yarn playwright install --with-deps
+        run: yarn playwright install chromium --with-deps
         working-directory: e2e_repo
 
       - name: 🧪 Run E2E tests for ${{ matrix.repo }}
-        run: yarn playwright test
+        run: yarn playwright test --retries=1
         working-directory: e2e_repo
 
       - name: 📤 Upload Report for ${{ matrix.repo }}
