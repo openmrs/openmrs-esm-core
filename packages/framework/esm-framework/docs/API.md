@@ -1,14 +1,26 @@
 # O3 Framework
 
+## Config Validation
+
+- [validator](functions/validator.md)
+- [inRange](functions/inRange.md)
+- [isUrlWithTemplateParameters](functions/isUrlWithTemplateParameters.md)
+- [oneOf](functions/oneOf.md)
+
+## Context
+
+- [registerContext](functions/registerContext.md)
+- [unregisterContext](functions/unregisterContext.md)
+- [getContext](functions/getContext.md)
+- [updateContext](functions/updateContext.md)
+- [subscribeToContext](functions/subscribeToContext.md)
+- [OpenmrsAppContext](functions/OpenmrsAppContext.md)
+- [OpenmrsAppContextProps](interfaces/OpenmrsAppContextProps.md)
+- [useAppContext](functions/useAppContext.md)
+- [useDefineAppContext](functions/useDefineAppContext.md)
+
 ## API
 
-- [makeUrl](functions/makeUrl.md)
-- [openmrsFetch](functions/openmrsFetch.md)
-- [OpenmrsFetchError](classes/OpenmrsFetchError.md)
-- [FetchConfig](interfaces/FetchConfig.md)
-- [FetchHeaders](interfaces/FetchHeaders.md)
-- [FetchResponseJson](interfaces/FetchResponseJson.md)
-- [FetchError](interfaces/FetchError.md)
 - [getAttachmentByUuid](functions/getAttachmentByUuid.md)
 - [getAttachments](functions/getAttachments.md)
 - [getAttachmentsUrl](functions/getAttachmentsUrl.md)
@@ -50,26 +62,14 @@
 - [setUserLanguage](functions/setUserLanguage.md)
 - [setUserProperties](functions/setUserProperties.md)
 - [userHasAccess](functions/userHasAccess.md)
+- [makeUrl](functions/makeUrl.md)
+- [openmrsFetch](functions/openmrsFetch.md)
+- [OpenmrsFetchError](classes/OpenmrsFetchError.md)
+- [FetchConfig](interfaces/FetchConfig.md)
+- [FetchError](interfaces/FetchError.md)
+- [FetchHeaders](interfaces/FetchHeaders.md)
+- [FetchResponseJson](interfaces/FetchResponseJson.md)
 - [useSession](functions/useSession.md)
-
-## Config Validation
-
-- [validator](functions/validator.md)
-- [inRange](functions/inRange.md)
-- [isUrlWithTemplateParameters](functions/isUrlWithTemplateParameters.md)
-- [oneOf](functions/oneOf.md)
-
-## Context
-
-- [registerContext](functions/registerContext.md)
-- [unregisterContext](functions/unregisterContext.md)
-- [getContext](functions/getContext.md)
-- [updateContext](functions/updateContext.md)
-- [subscribeToContext](functions/subscribeToContext.md)
-- [OpenmrsAppContext](functions/OpenmrsAppContext.md)
-- [OpenmrsAppContextProps](interfaces/OpenmrsAppContextProps.md)
-- [useAppContext](functions/useAppContext.md)
-- [useDefineAppContext](functions/useDefineAppContext.md)
 
 ## Error Handling
 
@@ -210,20 +210,6 @@
 - [useFeatureFlag](functions/useFeatureFlag.md)
 - [registerFeatureFlag](functions/registerFeatureFlag.md)
 - [getFeatureFlag](functions/getFeatureFlag.md)
-
-## Workspace
-
-- [ActionMenuButtonProps](interfaces/ActionMenuButtonProps.md)
-- [~~closeWorkspace~~](functions/closeWorkspace.md)
-- [~~launchWorkspace~~](functions/launchWorkspace.md)
-- [~~navigateAndLaunchWorkspace~~](functions/navigateAndLaunchWorkspace.md)
-- [~~useWorkspaces~~](functions/useWorkspaces.md)
-- [~~launchWorkspaceGroup~~](functions/launchWorkspaceGroup.md)
-- [DefaultWorkspaceProps](interfaces/DefaultWorkspaceProps.md)
-- [CloseWorkspaceOptions](interfaces/CloseWorkspaceOptions.md)
-- [OpenWorkspace](interfaces/OpenWorkspace.md)
-- [WorkspacesInfo](interfaces/WorkspacesInfo.md)
-- [Prompt](interfaces/Prompt.md)
 
 ## Date and Time
 

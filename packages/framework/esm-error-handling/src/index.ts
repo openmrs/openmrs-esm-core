@@ -7,7 +7,7 @@ import { dispatchToastShown } from '@openmrs/esm-globals';
 window.onerror = function (message, _source, _lineno, _colno, error) {
   console.error('Unexpected error: ', error ?? message);
   dispatchToastShown({
-    description: getErrorMessage(error ?? message, 'Oops! An unexpected error occurred.'),
+    description: toToastDescription(error, 'Oops! An unexpected error occurred.'),
     kind: 'error',
     title: 'Error',
   });
@@ -17,31 +17,20 @@ window.onerror = function (message, _source, _lineno, _colno, error) {
 window.onunhandledrejection = function (event: PromiseRejectionEvent) {
   console.error('Unhandled rejection: ', event.reason);
   dispatchToastShown({
-    // `event.reason` is whatever the promise rejected with, frequently an Error
-    // object. `showToast` expects `description` to be a renderable, non-empty
-    // value, so resolve it to a string message rather than passing the raw
-    // rejection (which renders as "[object Object]" and fails the non-empty check).
-    description: getErrorMessage(event.reason, 'Oops! An unhandled promise rejection occurred.'),
+    description: toToastDescription(event.reason, 'Oops! An unhandled promise rejection occurred.'),
     kind: 'error',
     title: 'Error',
   });
 };
 
 /**
- * Resolves an arbitrary thrown/rejected value to a user-facing, non-empty
- * message string suitable for use as a toast description, falling back to the
- * provided message when no usable message can be derived.
+ * Tries to turn whatever reached the global error handler into
+ * a sensible string, returning the caller's fallback if a non-empty
+ * string could not be constructed.
  */
-function getErrorMessage(reason: unknown, fallback: string): string {
-  if (reason instanceof Error) {
-    return reason.message || fallback;
-  }
-
-  if (typeof reason === 'string' && reason.trim().length > 0) {
-    return reason;
-  }
-
-  return fallback;
+function toToastDescription(thing: unknown, fallback: string) {
+  const { message } = ensureErrorObject(thing);
+  return typeof message === 'string' && message ? message : fallback;
 }
 
 /**

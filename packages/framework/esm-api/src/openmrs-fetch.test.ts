@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getConfig } from '@openmrs/esm-config';
 import { navigate } from '@openmrs/esm-navigation';
-import { openmrsFetch } from './openmrs-fetch';
+import { OpenmrsFetchError, openmrsFetch } from './openmrs-fetch';
 
 vi.mock('@openmrs/esm-navigation', () => ({
   clearHistory: vi.fn(),
@@ -230,5 +230,15 @@ describe('openmrsFetch', () => {
     expect(mockNavigate.mock.calls[0][0]).toStrictEqual({
       to: '/openmrs/spa/login',
     });
+  });
+
+  it('navigates to login and rejects on a 401 when rejectAuthFailure is set', async () => {
+    mockFetch.mockResolvedValue(new Response('', { status: 401, statusText: 'Unauthorized' }));
+
+    const result = openmrsFetch('/ws/rest/v1/session', { rejectAuthFailure: true });
+
+    await expect(result).rejects.toBeInstanceOf(OpenmrsFetchError);
+    await expect(result).rejects.toMatchObject({ response: { status: 401 } });
+    expect(mockNavigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
   });
 });

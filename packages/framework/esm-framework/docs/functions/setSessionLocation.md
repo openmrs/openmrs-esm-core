@@ -2,9 +2,9 @@
 
 # Function: setSessionLocation()
 
-> **setSessionLocation**(`locationUuid`, `abortController`): `Promise`\<`any`\>
+> **setSessionLocation**(`locationUuid`, `abortController?`): `Promise`\<`any`\>
 
-Defined in: [packages/framework/esm-api/src/current-user.ts:378](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L378)
+Defined in: [packages/framework/esm-api/src/current-user.ts:411](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L411)
 
 Sets the session location for the current user. The session location represents
 the physical location where the user is working (e.g., a clinic or ward).
@@ -19,7 +19,7 @@ session store.
 
 The UUID of the location to set as the session location.
 
-### abortController
+### abortController?
 
 `AbortController`
 

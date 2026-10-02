@@ -109,19 +109,17 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     fetchInit.headers = {};
   }
 
-  /* Automatically stringify javascript objects being sent in the
-   * request body.
-   */
+  // Automatically stringify javascript objects being sent in the
+  // request body.
   if (isPlainObject(fetchInit.body)) {
     fetchInit.body = JSON.stringify(fetchInit.body);
   }
 
-  /* Add a request header to tell the server to respond with json,
-   * since frontend code almost always wants json and the OpenMRS
-   * server won't give you json unless you explicitly ask for it.
-   * If a different Accept header is preferred, pass it into the fetchInit.
-   * If no Accept header is desired, pass it in explicitly as null.
-   */
+  // Add a request header to tell the server to respond with json,
+  // since frontend code almost always wants json and the OpenMRS
+  // server won't give you json unless you explicitly ask for it.
+  // If a different Accept header is preferred, pass it into the fetchInit.
+  // If no Accept header is desired, pass it in explicitly as null.
   if (typeof fetchInit.headers.Accept === 'undefined') {
     fetchInit.headers.Accept = 'application/json';
   }
@@ -130,10 +128,9 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     delete fetchInit.headers.Accept;
   }
 
-  /* This tells the OpenMRS REST API not to return a WWW-Authenticate
-   * header. Returning that header is useful when using the API, but
-   * not from a UI.
-   */
+  // This tells the OpenMRS REST API not to return a WWW-Authenticate
+  // header. Returning that header is useful when using the API, but
+  // not from a UI.
   let isRestRequest = false;
   try {
     const requestUrl = new URL(url, window.location.href);
@@ -173,11 +170,10 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     }
   }
 
-  /* We capture the stacktrace before making the request, so that if an error occurs we can
-   * log a full stacktrace that includes the code that made the request and handled the response
-   * Otherwise, we could run into situations where the stacktrace doesn't even show which code
-   * called @openmrs/api.
-   */
+  // We capture the stacktrace before making the request, so that if an error occurs we can
+  // log a full stacktrace that includes the code that made the request and handled the response
+  // Otherwise, we could run into situations where the stacktrace doesn't even show which code
+  // called @openmrs/api.
   const requestStacktrace = Error();
 
   return window.fetch(url, fetchInit as RequestInit).then(async (r) => {
@@ -185,13 +181,11 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
     const { redirectAuthFailure, followRedirects } = await getConfig<EsmApiConfigObject>('@openmrs/esm-api');
 
     if (response.ok) {
-      /*
-       * Backend modules can trigger SPA redirects by returning a `Location` header.
-       * This is required because `fetch()` hides HTTP redirects from the application.
-       *
-       * - Session endpoint (2xx): Authentication challenge URLs (e.g. TOTP,2FA).
-       * - HTTP 204: Logout redirect URLs (e.g. Keycloak IdP logout). Refer: OA-41 #1231
-       */
+      // Backend modules can trigger SPA redirects by returning a `Location` header.
+      // This is required because `fetch()` hides HTTP redirects from the application.
+
+      // Session endpoint (2xx): Authentication challenge URLs (e.g. TOTP,2FA).
+      // HTTP 204: Logout redirect URLs (e.g. Keycloak IdP logout). Refer: OA-41 #1231
       const location = response.headers.get('location');
       const shouldRedirect =
         followRedirects && location && (url === makeUrl(sessionEndpoint) || response.status === 204);
@@ -201,10 +195,9 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
       }
 
       if (response.status === 204) {
-        /* HTTP 204 - No Content
-         * We should not try to download the empty response as json. Instead,
-         * we return null since there is no response body.
-         */
+        // HTTP 204 - No Content
+        // We should not try to download the empty response as json. Instead,
+        // we return null since there is no response body.
         response.data = null as unknown as T;
         return response;
       } else {
@@ -224,15 +217,12 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
           });
       }
     } else {
-      /* HTTP response status is not in 200s. Usually this will mean
-       * either HTTP 400s (bad request from browser) or HTTP 500s (server error)
-       * Our goal is to come up with best possible stacktrace and error message
-       * to help developers understand the problem and debug
-       */
+      // HTTP response status is not in 200s. Usually this will mean
+      // either HTTP 400s (bad request from browser) or HTTP 500s (server error)
+      // Our goal is to come up with best possible stacktrace and error message
+      // to help developers understand the problem and debug
 
-      /*
-       * Redirect to given url when redirect on auth failure is enabled
-       */
+      // Redirect to given url when redirect on auth failure is enabled
       if (
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
         (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
@@ -244,40 +234,37 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
         const location = redirectAuthFailure.url || response.headers.get('location') || defaultRedirectAuthFailureUrl;
         navigate({ to: location });
 
-        /* We sometimes don't really want this promise to resolve since there's no response data,
-         * nor do we want it to reject because that would trigger error handling. We instead
-         * want it to remain in pending status while the navigation occurs.
-         */
-        return redirectAuthFailure.resolvePromise
-          ? (Promise.resolve() as unknown as Promise<FetchResponse>)
-          : new Promise<FetchResponse>(() => {});
-      } else {
-        // Attempt to download a response body, if it has one
-        return response
-          .clone()
-          .text()
-          .then(
-            (responseText) => {
-              let responseBody = responseText;
-              try {
-                responseBody = JSON.parse(responseText);
-              } catch (err) {
-                // Server didn't respond with json, so just go with the response text string
-              }
-
-              /* Make the fetch promise go into "rejected" status, with the best
-               * possible stacktrace and error message.
-               */
-              throw new OpenmrsFetchError(url, response, responseBody, requestStacktrace);
-            },
-            (err) => {
-              /* We weren't able to download a response body for this error.
-               * Time to just give the best possible stacktrace and error message.
-               */
-              throw new OpenmrsFetchError(url, response, null, requestStacktrace);
-            },
-          );
+        const rejectAuthFailures = fetchInit.rejectAuthFailure === true;
+        if (!rejectAuthFailures) {
+          return redirectAuthFailure.resolvePromise
+            ? (Promise.resolve() as unknown as Promise<FetchResponse>)
+            : new Promise<FetchResponse>(() => {});
+        }
       }
+
+      // Attempt to download a response body, if it has one
+      return response
+        .clone()
+        .text()
+        .then(
+          (responseText) => {
+            let responseBody = responseText;
+            try {
+              responseBody = JSON.parse(responseText);
+            } catch (err) {
+              // Server didn't respond with json, so just go with the response text string
+            }
+
+            // Make the fetch promise go into "rejected" status, with the best
+            // possible stacktrace and error message.
+            throw new OpenmrsFetchError(url, response, responseBody, requestStacktrace);
+          },
+          () => {
+            // We weren't able to download a response body for this error.
+            // Time to just give the best possible stacktrace and error message.
+            throw new OpenmrsFetchError(url, response, null, requestStacktrace);
+          },
+        );
     }
   });
 }
@@ -298,6 +285,11 @@ export class OpenmrsFetchError extends Error implements FetchError {
 export interface FetchConfig extends Omit<RequestInit, 'body' | 'headers'> {
   headers?: FetchHeaders;
   body?: FetchBody | string;
+  /**
+   * When `true`, a response that triggers the auth-failure redirect still navigates, but the
+   * returned promise rejects with an `OpenmrsFetchError` instead of staying pending.
+   */
+  rejectAuthFailure?: boolean;
 }
 
 type ResponseBody = string | FetchResponseJson;

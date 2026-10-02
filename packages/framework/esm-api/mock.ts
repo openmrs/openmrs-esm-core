@@ -18,5 +18,8 @@ export const clearCurrentUser = vi.fn();
 export const refetchCurrentUser = vi.fn();
 export const setUserLanguage = vi.fn();
 export const setUserProperties = vi.fn();
+export const setSessionLocale = vi.fn(() => Promise.resolve());
+export const verifyTotpCode = vi.fn();
+export const logout = vi.fn(() => Promise.resolve());
 export const userHasAccess = vi.fn();
 export { OpenmrsFetchError } from './src/openmrs-fetch';
