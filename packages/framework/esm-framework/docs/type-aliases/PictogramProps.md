@@ -4,7 +4,7 @@
 
 > **PictogramProps** = `object`
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L41)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L46)
 
 ## Properties
 
@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:41]
 
 > `optional` **className**: `Argument`
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L42)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L47)
 
 ***
 
@@ -20,4 +20,4 @@ Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42]
 
 > `optional` **size**: `number`
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L43)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)

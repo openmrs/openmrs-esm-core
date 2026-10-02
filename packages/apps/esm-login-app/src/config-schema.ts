@@ -41,12 +41,6 @@ export const configSchema = {
         "Whether to show a 'Choose Location' screen after login. " +
         "If true, the user will be taken to the URL set in the 'links.loginSuccess' config property after choosing a location.",
     },
-    numberToShow: {
-      _type: Type.Number,
-      _default: 8,
-      _description: 'The number of locations displayed in the location picker.',
-      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
-    },
     locationsPerRequest: {
       _type: Type.Number,
       _default: 50,
@@ -170,7 +164,6 @@ export interface ConfigSchema {
   chooseLocation: {
     enabled: boolean;
     locationsPerRequest: number;
-    numberToShow: number;
     useLoginLocationTag: boolean;
   };
   footer: {

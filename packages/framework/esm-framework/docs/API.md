@@ -211,20 +211,6 @@
 - [registerFeatureFlag](functions/registerFeatureFlag.md)
 - [getFeatureFlag](functions/getFeatureFlag.md)
 
-## Workspace
-
-- [ActionMenuButtonProps](interfaces/ActionMenuButtonProps.md)
-- [~~closeWorkspace~~](functions/closeWorkspace.md)
-- [~~launchWorkspace~~](functions/launchWorkspace.md)
-- [~~navigateAndLaunchWorkspace~~](functions/navigateAndLaunchWorkspace.md)
-- [~~useWorkspaces~~](functions/useWorkspaces.md)
-- [~~launchWorkspaceGroup~~](functions/launchWorkspaceGroup.md)
-- [DefaultWorkspaceProps](interfaces/DefaultWorkspaceProps.md)
-- [CloseWorkspaceOptions](interfaces/CloseWorkspaceOptions.md)
-- [OpenWorkspace](interfaces/OpenWorkspace.md)
-- [WorkspacesInfo](interfaces/WorkspacesInfo.md)
-- [Prompt](interfaces/Prompt.md)
-
 ## Date and Time
 
 - [isOmrsDateStrict](functions/isOmrsDateStrict.md)
