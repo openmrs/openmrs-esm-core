@@ -353,7 +353,7 @@ const WorkspaceChrome: React.FC<WorkspaceChromeProps> = ({
                         aria-label={getCoreTranslation('close')}
                         onClick={() => {
                           if (canCloseGroup) {
-                            closeWorkspaceGroup2();
+                            void closeWorkspaceGroup2();
                           } else {
                             closeWindow();
                           }
