@@ -4,7 +4,7 @@
 
 > `const` **ExportedWorkspace**: `React.FC`\<[`ExportedWorkspaceProps`](../interfaces/ExportedWorkspaceProps.md)\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L60)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L59)
 
 Renders the content of a registered workspace (the `children` of its `<Workspace2>`) within its own
 DOM subtree, independent of the real global workspace window system. It emulates the workspace

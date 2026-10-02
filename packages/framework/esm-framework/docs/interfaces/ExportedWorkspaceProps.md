@@ -2,7 +2,7 @@
 
 # Interface: ExportedWorkspaceProps
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L27)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L26)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspac
 
 > `optional` **groupProps**: `Record`\<`string`, `any`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L41)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L40)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspac
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L33)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L32)
 
 The name of the workspace to open. Changing it (like changing `workspaceProps`, `windowProps` or
 `groupProps`) discards the current workspaces, without prompting for unsaved changes, and opens
@@ -30,7 +30,7 @@ The name of the workspace to open. Changing it (like changing `workspaceProps`, 
 
 > `optional` **windowProps**: `Record`\<`string`, `any`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L40)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L39)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspac
 
 > **workspaceProps**: `Record`\<`string`, `any`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L39)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L38)
 
 The props passed into the workspace. Changing these (compared shallowly), or `windowProps` /
 `groupProps`, discards the current workspaces and opens `name` afresh with the new props.
@@ -49,7 +49,7 @@ The props passed into the workspace. Changing these (compared shallowly), or `wi
 
 > `optional` **onWindowChanged**(`info`): `void`
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L44)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L43)
 
 Callback fired when the emulated window's state changes.
 
