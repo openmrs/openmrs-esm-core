@@ -204,6 +204,7 @@ jobs:
           while IFS= read -r container; do
             if [ -n "$container" ]; then
               if ! docker logs "$container" > "./logs/$container.log" 2>&1; then
+                rm -f "./logs/$container.log"
                 echo "::warning::Could not collect logs for container $container"
               fi
             fi
