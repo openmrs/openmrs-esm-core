@@ -65,7 +65,6 @@ export const coreTranslations = {
   closesActionableNotification: 'Close actionable notification',
   closeSnackbar: 'Close snackbar',
   confirm: 'Confirm',
-  confirmed: 'Confirmed',
   contactAdministratorIfIssuePersists: 'Contact your system administrator if the problem persists.',
   contactDetails: 'Contact details',
   copied: 'Copied!',

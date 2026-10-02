@@ -10,28 +10,27 @@ import styles from './diagnosis-tags.module.scss';
 
 export interface DiagnosisTagsProps {
   diagnoses: Array<Pick<Diagnosis, 'uuid' | 'display' | 'rank' | 'certainty'>>;
-  /** Show recorded certainty alongside the name. Missing or unknown certainty is omitted. */
+  /**
+   * Mark provisional diagnoses with a leading "?". Confirmed diagnoses, and any with missing or
+   * unknown certainty, show just the name. Off by default because diagnoses saved before
+   * certainty was captured are stored as provisional.
+   */
   showCertainty?: boolean;
 }
 
-/** Displays diagnoses with configured rank colours and optional certainty labels. */
+/** Displays diagnoses with configured rank colours, optionally marking provisional ones. */
 export const DiagnosisTags: React.FC<DiagnosisTagsProps> = ({ diagnoses, showCertainty = false }) => {
   const { diagnosisTags } = useConfig<StyleguideConfigObject>({ externalModuleName: '@openmrs/esm-styleguide' });
 
   return (
     <div className={styles.container}>
       {diagnoses.map((diagnosis) => {
-        const certaintyLabel =
-          showCertainty && diagnosis.certainty === 'CONFIRMED'
-            ? getCoreTranslation('confirmed', 'Confirmed')
-            : showCertainty && diagnosis.certainty === 'PROVISIONAL'
-              ? getCoreTranslation('provisional', 'Provisional')
-              : null;
+        const isProvisional = showCertainty && diagnosis.certainty === 'PROVISIONAL';
         const color =
-          diagnosis.rank === 1 ? diagnosisTags?.primaryColor ?? 'red' : diagnosisTags?.secondaryColor ?? 'blue';
+          diagnosis.rank === 1 ? (diagnosisTags?.primaryColor ?? 'red') : (diagnosisTags?.secondaryColor ?? 'blue');
 
         return (
-          <DiagnosisPill key={diagnosis.uuid} certaintyLabel={certaintyLabel} color={color} name={diagnosis.display} />
+          <DiagnosisPill key={diagnosis.uuid} color={color} isProvisional={isProvisional} name={diagnosis.display} />
         );
       })}
     </div>
@@ -39,12 +38,12 @@ export const DiagnosisTags: React.FC<DiagnosisTagsProps> = ({ diagnoses, showCer
 };
 
 interface DiagnosisPillProps {
-  certaintyLabel: string | null;
   color: CarbonTagColor;
+  isProvisional: boolean;
   name?: string;
 }
 
-function DiagnosisPill({ certaintyLabel, color, name }: DiagnosisPillProps) {
+function DiagnosisPill({ color, isProvisional, name }: DiagnosisPillProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -68,7 +67,7 @@ function DiagnosisPill({ certaintyLabel, color, name }: DiagnosisPillProps) {
     const observer = new ResizeObserver(measure);
     observer.observe(label);
     return () => observer.disconnect();
-  }, [name, certaintyLabel, isInteractive]);
+  }, [name, isProvisional, isInteractive]);
 
   const className = classNames(
     'cds--tag',
@@ -79,10 +78,17 @@ function DiagnosisPill({ certaintyLabel, color, name }: DiagnosisPillProps) {
   );
   const content = (
     <>
+      {isProvisional && (
+        <>
+          <span aria-hidden="true" className={styles.provisionalMark}>
+            ?
+          </span>
+          <span className="cds--visually-hidden">{getCoreTranslation('provisional', 'Provisional')} </span>
+        </>
+      )}
       <span ref={labelRef} className="cds--tag__label">
         {name}
       </span>
-      {certaintyLabel && <span className={styles.certaintySuffix}> ({certaintyLabel})</span>}
     </>
   );
 

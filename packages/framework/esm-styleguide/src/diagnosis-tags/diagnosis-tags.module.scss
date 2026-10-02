@@ -24,10 +24,9 @@
   color: colors.$white-0;
 }
 
-.certaintySuffix {
-  @include type.type-style('label-01');
-  margin-inline-start: layout.$spacing-01;
-  white-space: nowrap;
-  // The name truncates; the certainty must stay fully visible inside the tag
+// The name truncates; the "?" marking a provisional diagnosis must stay fully visible inside the tag
+.provisionalMark {
+  margin-inline-end: layout.$spacing-01;
+  font-weight: 600;
   flex-shrink: 0;
 }

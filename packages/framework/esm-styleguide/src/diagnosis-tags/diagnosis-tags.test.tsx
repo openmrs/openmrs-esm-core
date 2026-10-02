@@ -36,18 +36,27 @@ function mockTruncation() {
 
 test('preserves name-only display by default', () => {
   render(<DiagnosisTags diagnoses={diagnoses} />);
-  expect(screen.getByText('Asthma')).toBeInTheDocument();
-  expect(screen.queryByText('(Confirmed)')).not.toBeInTheDocument();
-  expect(screen.queryByText('(Provisional)')).not.toBeInTheDocument();
+  expect(screen.getByText('Malaria')).toBeInTheDocument();
+  expect(screen.queryByText('?')).not.toBeInTheDocument();
+  expect(screen.queryByText(/provisional/i)).not.toBeInTheDocument();
 });
 
-test('shows only known certainty labels when enabled and preserves configured colours', () => {
+test('marks only provisional diagnoses when enabled and preserves configured colours', () => {
   render(<DiagnosisTags diagnoses={diagnoses} showCertainty />);
-  expect(screen.getByText('(Confirmed)')).toBeInTheDocument();
-  expect(screen.getByText('(Provisional)')).toBeInTheDocument();
-  expect(screen.queryByText('(UNKNOWN)')).not.toBeInTheDocument();
-  expect(screen.getAllByTestId('diagnosis-tag')[0]).toHaveClass('cds--tag--purple');
-  expect(screen.getAllByTestId('diagnosis-tag')[1]).toHaveClass('cds--tag--teal');
+  const [asthma, malaria, anemia] = screen.getAllByTestId('diagnosis-tag');
+  expect(malaria).toHaveTextContent(/^\?Provisional Malaria$/);
+  expect(asthma).toHaveTextContent(/^Asthma$/);
+  expect(anemia).toHaveTextContent(/^Anemia$/);
+  expect(screen.getAllByText('?')).toHaveLength(1);
+  expect(asthma).toHaveClass('cds--tag--purple');
+  expect(malaria).toHaveClass('cds--tag--teal');
+});
+
+test('names a truncated provisional diagnosis as provisional for assistive technology', () => {
+  mockTruncation();
+  render(<DiagnosisTags diagnoses={[diagnoses[1]]} showCertainty />);
+  // Browsers read this as "Provisional Malaria"; jsdom's name computation drops the space
+  expect(screen.getByRole('button', { name: /^Provisional\s?Malaria$/ })).toBeInTheDocument();
 });
 
 test('reveals the full name on keyboard focus and dismisses it with Escape', async () => {
@@ -83,7 +92,7 @@ test('opens the full name on activation without requiring certainty', async () =
   render(<DiagnosisTags diagnoses={[diagnoses[0]]} />);
   await user.click(screen.getByRole('button', { name: 'Asthma' }));
   expect(await screen.findByRole('tooltip')).toHaveTextContent('Asthma');
-  expect(screen.queryByText('(Confirmed)')).not.toBeInTheDocument();
+  expect(screen.queryByText('?')).not.toBeInTheDocument();
 });
 
 test('short names have no tab stop or tooltip', async () => {
@@ -110,13 +119,13 @@ test('updates truncation after resizing and changing certainty', () => {
       disconnect = disconnect;
     },
   );
-  const { rerender, unmount } = render(<DiagnosisTags diagnoses={[diagnoses[0]]} showCertainty />);
+  const { rerender, unmount } = render(<DiagnosisTags diagnoses={[diagnoses[1]]} showCertainty />);
   expect(screen.getByRole('button')).toBeInTheDocument();
   width.mockReturnValue(400);
   act(() => resize());
   expect(screen.queryByRole('button')).not.toBeInTheDocument();
   width.mockReturnValue(200);
-  rerender(<DiagnosisTags diagnoses={[diagnoses[0]]} />);
+  rerender(<DiagnosisTags diagnoses={[diagnoses[1]]} />);
   expect(screen.getByRole('button')).toBeInTheDocument();
   unmount();
   expect(disconnect).toHaveBeenCalled();

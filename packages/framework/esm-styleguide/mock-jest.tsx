@@ -203,12 +203,8 @@ export const DiagnosisTags = jest.fn(
     <>
       {diagnoses.map((d) => (
         <span key={d.uuid}>
+          {showCertainty && d.certainty === 'PROVISIONAL' ? '? ' : ''}
           {d.display}
-          {showCertainty && d.certainty === 'CONFIRMED'
-            ? ' (Confirmed)'
-            : showCertainty && d.certainty === 'PROVISIONAL'
-              ? ' (Provisional)'
-              : ''}
         </span>
       ))}
     </>

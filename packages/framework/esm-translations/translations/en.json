@@ -26,7 +26,6 @@
   "closingAllWorkspacesPromptBody": "There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}",
   "closingAllWorkspacesPromptTitle": "You have unsaved changes",
   "confirm": "Confirm",
-  "confirmed": "Confirmed",
   "contactAdministratorIfIssuePersists": "Contact your system administrator if the problem persists.",
   "contactDetails": "Contact Details",
   "copied": "Copied!",
