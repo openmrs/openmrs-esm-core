@@ -145,7 +145,7 @@ describe('<ExportedWorkspace>', () => {
     await waitFor(() =>
       expect(onWindowChanged).toHaveBeenLastCalledWith({
         workspaceName: 'foo-workspace',
-        windowSize: 'normal',
+        windowWidth: 'narrow',
         title: '',
         hasUnsavedChanges: false,
       }),
@@ -159,7 +159,7 @@ describe('<ExportedWorkspace>', () => {
     await waitFor(() =>
       expect(onWindowChanged).toHaveBeenLastCalledWith({
         workspaceName: 'foo-workspace',
-        windowSize: 'normal',
+        windowWidth: 'narrow',
         title: 'Foo title',
         hasUnsavedChanges: true,
       }),
@@ -173,12 +173,48 @@ describe('<ExportedWorkspace>', () => {
     await waitFor(() =>
       expect(onWindowChanged).toHaveBeenLastCalledWith({
         workspaceName: null,
-        windowSize: 'normal',
+        windowWidth: 'narrow',
         title: '',
         hasUnsavedChanges: false,
       }),
     );
     expect(screen.queryByTestId('parcel')).not.toBeInTheDocument();
+  });
+
+  it.each(['narrow', 'wider', 'extra-wide'] as const)(
+    "passes the registered window's %s width to onWindowChanged",
+    async (width) => {
+      registerWorkspaces();
+      workspace2Store.setState({
+        registeredWindowsByName: {
+          'test-window': { ...registrations.registeredWindowsByName['test-window'], width },
+        },
+      } as never);
+      const onWindowChanged = vi.fn<(info: ExportedWorkspaceWindowInfo) => void>();
+      render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} onWindowChanged={onWindowChanged} />);
+
+      await waitFor(() =>
+        expect(onWindowChanged).toHaveBeenLastCalledWith(expect.objectContaining({ windowWidth: width })),
+      );
+    },
+  );
+
+  it('picks up the window width when the window registers after mount', async () => {
+    const onWindowChanged = vi.fn<(info: ExportedWorkspaceWindowInfo) => void>();
+    render(<ExportedWorkspace name="foo-workspace" workspaceProps={{}} onWindowChanged={onWindowChanged} />);
+
+    await act(async () => {
+      workspace2Store.setState({
+        ...registrations,
+        registeredWindowsByName: {
+          'test-window': { ...registrations.registeredWindowsByName['test-window'], width: 'extra-wide' },
+        },
+      } as never);
+    });
+
+    await waitFor(() =>
+      expect(onWindowChanged).toHaveBeenLastCalledWith(expect.objectContaining({ windowWidth: 'extra-wide' })),
+    );
   });
 
   it('prompts before closing a workspace with unsaved changes from within it', async () => {

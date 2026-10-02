@@ -307,13 +307,15 @@ export interface WorkspaceGroupDefinition2 {
   scopePattern?: string;
 }
 
+export type WorkspaceWindow2Width = 'narrow' | 'wider' | 'extra-wide';
+
 export interface WorkspaceWindowDefinition2 {
   name: string;
   icon?: string;
   canMaximize?: boolean;
   group: string;
   order?: number;
-  width?: 'narrow' | 'wider' | 'extra-wide';
+  width?: WorkspaceWindow2Width;
 }
 
 export interface WorkspaceDefinition2 {

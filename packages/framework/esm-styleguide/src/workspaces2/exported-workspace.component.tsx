@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { type StoreApi } from 'zustand/vanilla';
 import { workspace2Store, type WorkspaceStoreState2 } from '@openmrs/esm-extensions';
-import { type WorkspaceWindowState } from '@openmrs/esm-globals';
+import { type WorkspaceWindow2Width } from '@openmrs/esm-globals';
 import { useStore } from '@openmrs/esm-react-utils';
 import { createLocalStore } from '@openmrs/esm-state';
 import { shallowEqual } from '@openmrs/esm-utils';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
-import { createExportedWorkspaceWindow } from './workspace2';
+import { createExportedWorkspaceWindow, useWorkspace2Store } from './workspace2';
 import { createLocalWindowActions, type ExportedWorkspaceState } from './workspace-window-actions';
 import styles from './exported-workspace.module.scss';
 
@@ -14,10 +14,10 @@ export interface ExportedWorkspaceWindowInfo {
   /** The name of the currently-rendered (leaf) workspace, or `null` when all workspaces are closed. */
   workspaceName: string | null;
   /**
-   * The emulated window size. Has no effect on rendering. `<ExportedWorkspace>` renders no
-   * maximize / hide buttons, so this is currently always `'normal'`.
+   * The emulated workspace window's configured width. Note that this is a static property of the
+   * emulated workspace window, and does not change for the duration of the app.
    */
-  windowSize: WorkspaceWindowState;
+  windowWidth: WorkspaceWindow2Width;
   /** The title of the currently-rendered (leaf) workspace, or `''` when all workspaces are closed. */
   title: string;
   /** The `hasUnsavedChanges` of every workspace in the window, OR'd together. */
@@ -66,6 +66,10 @@ export const ExportedWorkspace: React.FC<ExportedWorkspaceProps> = ({
 }) => {
   // Reactive so the seed effect below retries when `name` registers after this component mounts.
   const registeredWorkspacesByName = useStore(workspace2Store, selectRegisteredWorkspacesByName);
+  const windowDef = useStore(workspace2Store, (state) => {
+    const windowName = state.registeredWorkspacesByName[name]?.window;
+    return windowName ? state.registeredWindowsByName[windowName] : undefined;
+  });
 
   const seedInputs: SeedInputs = { name, workspaceProps, windowProps, groupProps };
   const storeRef = useRef<StoreApi<ExportedWorkspaceState>>();
@@ -110,7 +114,7 @@ export const ExportedWorkspace: React.FC<ExportedWorkspaceProps> = ({
   const workspaceName = leaf?.workspaceName ?? null;
   const title = leaf?.title ?? '';
   const hasUnsavedChanges = openedWindow?.openedWorkspaces.some((w) => w.hasUnsavedChanges) ?? false;
-  const windowSize: WorkspaceWindowState = 'normal';
+  const windowWidth: WorkspaceWindow2Width = windowDef?.width ?? 'narrow';
 
   // Hold the callback in a ref so an inline-arrow identity does not retrigger the notify effect.
   const onWindowChangedRef = useRef(onWindowChanged);
@@ -118,8 +122,8 @@ export const ExportedWorkspace: React.FC<ExportedWorkspaceProps> = ({
     onWindowChangedRef.current = onWindowChanged;
   });
   useEffect(() => {
-    onWindowChangedRef.current?.({ workspaceName, windowSize, title, hasUnsavedChanges });
-  }, [workspaceName, windowSize, title, hasUnsavedChanges]);
+    onWindowChangedRef.current?.({ workspaceName, windowWidth, title, hasUnsavedChanges });
+  }, [workspaceName, windowWidth, title, hasUnsavedChanges]);
 
   return (
     <div className={styles.exportedWorkspace}>
