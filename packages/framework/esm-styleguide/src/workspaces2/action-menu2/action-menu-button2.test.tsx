@@ -21,6 +21,8 @@ const mockUseLayoutType = vi.mocked(useLayoutType);
 const mockUseWorkspace2Store = vi.mocked(useWorkspace2Store);
 const mockLaunchWorkspace2 = vi.mocked(launchWorkspace2);
 
+const mockHideWindow = vi.fn();
+
 const openedWindows = [{ windowName: 'test-window', openedWorkspaces: [] }] as unknown as Array<OpenedWindow>;
 
 function renderButton(props: Partial<React.ComponentProps<typeof ActionMenuButton2>> = {}) {
@@ -42,7 +44,7 @@ describe('ActionMenuButton2 hidden and disabled', () => {
     mockUseWorkspace2Store.mockReturnValue({
       openedWindows,
       restoreWindow: vi.fn(),
-      hideWindow: vi.fn(),
+      hideWindow: mockHideWindow,
       isMostRecentlyOpenedWindowHidden: false,
     } as any);
   });
@@ -72,6 +74,7 @@ describe('ActionMenuButton2 hidden and disabled', () => {
     expect(button).toBeDisabled();
     await userEvent.click(button);
     expect(mockLaunchWorkspace2).not.toHaveBeenCalled();
+    expect(mockHideWindow).not.toHaveBeenCalled();
   });
 
   it('keeps the button enabled when disabled returns false', () => {
