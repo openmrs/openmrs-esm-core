@@ -197,18 +197,9 @@ jobs:
 
       - name: 📝 Capture Server Logs
         if: always()
-        shell: bash
-        run: |
-          mkdir -p ./logs
-          containers=$(docker ps --all --format '{{.Names}}')
-          while IFS= read -r container; do
-            if [ -n "$container" ]; then
-              if ! docker logs "$container" > "./logs/$container.log" 2>&1; then
-                rm -f "./logs/$container.log"
-                echo "::warning::Could not collect logs for container $container"
-              fi
-            fi
-          done <<< "$containers"
+        uses: openmrs/openmrs-contrib-gha-workflows/.github/actions/capture-docker-logs@main
+        with:
+          dest: "./logs"
 
       - name: 📤 Upload Logs as Artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
