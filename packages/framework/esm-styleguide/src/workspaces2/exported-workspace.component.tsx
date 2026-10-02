@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { type StoreApi } from 'zustand/vanilla';
 import { workspace2Store, type WorkspaceStoreState2 } from '@openmrs/esm-extensions';
 import { type WorkspaceWindow2Width } from '@openmrs/esm-globals';
 import { useStore } from '@openmrs/esm-react-utils';
-import { createLocalStore } from '@openmrs/esm-state';
+import { createLocalStore, type StoreApi } from '@openmrs/esm-state';
 import { shallowEqual } from '@openmrs/esm-utils';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import { createExportedWorkspaceWindow, useWorkspace2Store } from './workspace2';
