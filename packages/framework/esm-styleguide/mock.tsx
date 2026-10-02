@@ -203,13 +203,18 @@ export const LocationPicker = vi.fn(({ onChange, selectedLocationUuid }) => {
   );
 });
 
-export const DiagnosisTags = vi.fn(({ diagnoses }: { diagnoses: Array<Diagnosis> }) => (
-  <>
-    {diagnoses.map((d) => (
-      <span key={d.uuid}>{d.display}</span>
-    ))}
-  </>
-));
+export const DiagnosisTags = vi.fn(
+  ({ diagnoses, showCertainty = false }: { diagnoses: Array<Diagnosis>; showCertainty?: boolean }) => (
+    <>
+      {diagnoses.map((d) => (
+        <span key={d.uuid}>
+          {showCertainty && d.certainty === 'PROVISIONAL' ? '? ' : ''}
+          {d.display}
+        </span>
+      ))}
+    </>
+  ),
+);
 
 export const Workspace2 = vi.fn(({ title, children }) => (
   <div>
