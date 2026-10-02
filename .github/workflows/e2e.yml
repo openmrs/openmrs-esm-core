@@ -197,11 +197,17 @@ jobs:
 
       - name: 📝 Capture Server Logs
         if: always()
+        shell: bash
         run: |
-          mkdir -p logs
-          docker ps -a --format '{{.Names}}' | while read -r name; do
-            docker logs "$name" > "logs/$name.log" 2>&1 || echo "::warning::Failed to capture logs for $name"
-          done
+          mkdir -p ./logs
+          containers=$(docker ps --all --format '{{.Names}}')
+          while IFS= read -r container; do
+            if [ -n "$container" ]; then
+              if ! docker logs "$container" > "./logs/$container.log" 2>&1; then
+                echo "::warning::Could not collect logs for container $container"
+              fi
+            fi
+          done <<< "$containers"
 
       - name: 📤 Upload Logs as Artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
