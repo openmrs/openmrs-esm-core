@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 import userEvent from '@testing-library/user-event';
 import {
+  LocationPicker,
   navigate,
   openmrsFetch,
   setSessionLocation,
@@ -48,6 +49,7 @@ const mockZeroLocationsResponse = {
   },
 } as FetchResponse<fhir.Bundle>;
 
+const mockLocationPicker = vi.mocked(LocationPicker);
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
 const mockUseConfig = vi.mocked(useConfig);
 const mockUseSession = vi.mocked(useSession);
@@ -426,6 +428,34 @@ describe('LocationPickerView', () => {
       expect(screen.queryByRole('radio')).not.toBeInTheDocument();
       expect(screen.queryByLabelText(/remember my location/i)).not.toBeInTheDocument();
       expect(mockSetSessionLocation).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Location paging', () => {
+    it('passes the configured locationsPerRequest to the location picker', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, locationsPerRequest: 5 },
+      });
+
+      renderWithRouter(LocationPickerView, {});
+
+      await waitFor(() => {
+        expect(mockLocationPicker.mock.lastCall?.[0]).toMatchObject({ locationsPerRequest: 5 });
+      });
+    });
+
+    it('falls back to a page size of 1 when locationsPerRequest is zero', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, locationsPerRequest: 0 },
+      });
+
+      renderWithRouter(LocationPickerView, {});
+
+      await waitFor(() => {
+        expect(mockLocationPicker.mock.lastCall?.[0]).toMatchObject({ locationsPerRequest: 1 });
+      });
     });
   });
 });
