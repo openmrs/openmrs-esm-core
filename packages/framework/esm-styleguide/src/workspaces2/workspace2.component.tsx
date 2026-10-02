@@ -6,7 +6,7 @@ import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { getOpenedWindowIndexByWorkspace } from '@openmrs/esm-extensions';
 import { ArrowRightIcon, CloseIcon } from '../icons';
-import { useWorkspace2Store, useWorkspace2Context, closeWorkspaceGroup2 } from './workspace2';
+import { useWorkspace2Store, useWorkspace2Context, closeWorkspaceGroup2, getOpenedWindowWidth } from './workspace2';
 import styles from './workspace2.module.scss';
 
 interface Workspace2Props {
@@ -118,7 +118,7 @@ export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsa
   const canCloseGroup = group.persistence === 'closable';
   const canHide = !!icon && !canCloseGroup;
   const { maximized } = openedWindow;
-  const width = windowDef?.width ?? 'narrow';
+  const width = getOpenedWindowWidth(openedWindow, registeredWorkspacesByName, registeredWindowsByName);
 
   const isActionMenuOpened = Object.values(registeredWindowsByName).some(
     (window) => window.group === openedGroup.groupName && window.icon !== undefined,

@@ -248,6 +248,11 @@ export interface WorkspaceDefinition2 {
   component: string;
   window: string;
   /**
+   * Overrides the window's `width` while this workspace is the top-most workspace in its window.
+   * The whole window, including any parent workspaces beneath it, renders at this width.
+   */
+  width?: 'narrow' | 'wider' | 'extra-wide';
+  /**
    * Meta describes any properties that are passed down to the workspace when it is loaded. It is
    * available to the workspace component via `useWorkspace2Context().workspaceMeta`.
    */

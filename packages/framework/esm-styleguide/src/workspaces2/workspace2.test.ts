@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { WorkspaceStoreState2 } from '@openmrs/esm-extensions';
-import { workspace2StoreActions } from './workspace2';
+import { getOpenedWindowWidth, workspace2StoreActions } from './workspace2';
 
 function makeState(overrides: Partial<WorkspaceStoreState2> = {}): WorkspaceStoreState2 {
   return {
@@ -201,5 +201,72 @@ describe('openChildWorkspace', () => {
     expect(state.openedWindows[0].openedWorkspaces).toHaveLength(2);
     expect(state.openedWindows[0].openedWorkspaces[0].workspaceName).toBe('parent-workspace');
     expect(state.openedWindows[0].openedWorkspaces[1].workspaceName).toBe('child-workspace');
+  });
+});
+
+describe('getOpenedWindowWidth', () => {
+  const registeredWindowsByName = {
+    'test-window': { name: 'test-window', group: 'test-group', width: 'wider' as const, moduleName: 'test' },
+    'plain-window': { name: 'plain-window', group: 'test-group', moduleName: 'test' },
+  };
+  const registeredWorkspacesByName = {
+    'inherits-width': { name: 'inherits-width', component: 'a', window: 'test-window', moduleName: 'test' },
+    'extra-wide': {
+      name: 'extra-wide',
+      component: 'b',
+      window: 'test-window',
+      width: 'extra-wide' as const,
+      moduleName: 'test',
+    },
+    'narrow-on-plain': { name: 'narrow-on-plain', component: 'c', window: 'plain-window', moduleName: 'test' },
+  };
+
+  function makeWindow(windowName: string, workspaceNames: Array<string>) {
+    return {
+      windowName,
+      openedWorkspaces: workspaceNames.map((n) => makeOpenedWorkspace(n)),
+      props: null,
+      maximized: false,
+    };
+  }
+
+  it("uses the window's width when the leaf workspace declares none", () => {
+    expect(
+      getOpenedWindowWidth(
+        makeWindow('test-window', ['inherits-width']),
+        registeredWorkspacesByName,
+        registeredWindowsByName,
+      ),
+    ).toBe('wider');
+  });
+
+  it("uses the leaf workspace's width over the window's width", () => {
+    expect(
+      getOpenedWindowWidth(
+        makeWindow('test-window', ['inherits-width', 'extra-wide']),
+        registeredWorkspacesByName,
+        registeredWindowsByName,
+      ),
+    ).toBe('extra-wide');
+  });
+
+  it('ignores the width of non-leaf workspaces', () => {
+    expect(
+      getOpenedWindowWidth(
+        makeWindow('test-window', ['extra-wide', 'inherits-width']),
+        registeredWorkspacesByName,
+        registeredWindowsByName,
+      ),
+    ).toBe('wider');
+  });
+
+  it("defaults to 'narrow' when neither the workspace nor the window declares a width", () => {
+    expect(
+      getOpenedWindowWidth(
+        makeWindow('plain-window', ['narrow-on-plain']),
+        registeredWorkspacesByName,
+        registeredWindowsByName,
+      ),
+    ).toBe('narrow');
   });
 });
