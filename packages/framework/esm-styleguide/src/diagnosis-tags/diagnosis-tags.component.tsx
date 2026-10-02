@@ -27,7 +27,7 @@ export const DiagnosisTags: React.FC<DiagnosisTagsProps> = ({ diagnoses, showCer
       {diagnoses.map((diagnosis) => {
         const isProvisional = showCertainty && diagnosis.certainty === 'PROVISIONAL';
         const color =
-          diagnosis.rank === 1 ? (diagnosisTags?.primaryColor ?? 'red') : (diagnosisTags?.secondaryColor ?? 'blue');
+          diagnosis.rank === 1 ? (diagnosisTags?.primaryColor ?? 'blue') : (diagnosisTags?.secondaryColor ?? 'gray');
 
         return (
           <DiagnosisPill key={diagnosis.uuid} color={color} isProvisional={isProvisional} name={diagnosis.display} />

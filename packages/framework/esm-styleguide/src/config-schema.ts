@@ -30,13 +30,13 @@ const diagnosisTagConfigSchema: ConfigSchema = {
   primaryColor: {
     _type: Type.String,
     _description: 'The color for displaying primary diagnoses tags',
-    _default: 'red',
+    _default: 'blue',
     _validators: [validators.oneOf(carbonTagColors)],
   },
   secondaryColor: {
     _type: Type.String,
     _description: 'The color for displaying secondary diagnoses tags',
-    _default: 'blue',
+    _default: 'gray',
     _validators: [validators.oneOf(carbonTagColors)],
   },
 };

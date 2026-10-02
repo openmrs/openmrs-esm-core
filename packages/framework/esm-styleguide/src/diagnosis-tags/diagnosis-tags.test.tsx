@@ -52,6 +52,14 @@ test('marks only provisional diagnoses when enabled and preserves configured col
   expect(malaria).toHaveClass('cds--tag--teal');
 });
 
+test('defaults to blue for primary and gray for secondary diagnoses', () => {
+  vi.mocked(useConfig).mockReturnValue({});
+  render(<DiagnosisTags diagnoses={diagnoses} />);
+  const [asthma, malaria] = screen.getAllByTestId('diagnosis-tag');
+  expect(asthma).toHaveClass('cds--tag--blue');
+  expect(malaria).toHaveClass('cds--tag--gray');
+});
+
 test('names a truncated provisional diagnosis as provisional for assistive technology', () => {
   mockTruncation();
   render(<DiagnosisTags diagnoses={[diagnoses[1]]} showCertainty />);
