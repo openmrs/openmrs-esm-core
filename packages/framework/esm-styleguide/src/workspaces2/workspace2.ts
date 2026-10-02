@@ -10,6 +10,7 @@ import {
   workspace2Store,
   type WorkspaceStoreState2,
 } from '@openmrs/esm-extensions';
+import { type WorkspaceDefinition2 } from '@openmrs/esm-globals';
 import { useStoreWithActions, type Actions } from '@openmrs/esm-react-utils';
 import { shallowEqual } from '@openmrs/esm-utils';
 import { showModal } from '../modals';
@@ -601,6 +602,21 @@ export const useWorkspace2Context = () =>
 export const getRegisteredWorkspace2Names = () => {
   return Object.keys(workspace2Store.getState().registeredWorkspacesByName);
 };
+
+/**
+ * Returns the width an opened window renders at: its leaf workspace's `width`, falling back to the
+ * window's `width`, then `'narrow'`. Every workspace in the window uses this width so that a wider
+ * workspace lower in the stack doesn't show behind a narrower one.
+ */
+export function getOpenedWindowWidth(
+  openedWindow: OpenedWindow,
+  registeredWorkspacesByName: WorkspaceStoreState2['registeredWorkspacesByName'],
+  registeredWindowsByName: WorkspaceStoreState2['registeredWindowsByName'],
+): NonNullable<WorkspaceDefinition2['width']> {
+  const leaf = openedWindow.openedWorkspaces[openedWindow.openedWorkspaces.length - 1];
+  const leafWidth = leaf ? registeredWorkspacesByName[leaf.workspaceName]?.width : undefined;
+  return leafWidth ?? registeredWindowsByName[openedWindow.windowName]?.width ?? 'narrow';
+}
 
 function newOpenedWorkspace(workspaceName: string, workspaceProps: Record<string, any> | null): OpenedWorkspace {
   return {

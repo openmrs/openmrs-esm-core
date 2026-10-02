@@ -6,7 +6,7 @@ import { InlineLoading } from '@carbon/react';
 import { type OpenedWindow, type OpenedWorkspace, createParcelMounter, workspace2Store } from '@openmrs/esm-extensions';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { promptForClosingWorkspaces, useWorkspace2Store } from './workspace2';
+import { getOpenedWindowWidth, promptForClosingWorkspaces, useWorkspace2Store } from './workspace2';
 import { type Workspace2DefinitionProps } from './workspace2.component';
 import styles from './workspace2.module.scss';
 
@@ -160,12 +160,8 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
   );
 
   if (!lifeCycle) {
-    const { registeredWorkspacesByName } = workspace2Store.getState();
-    const workspaceDef = registeredWorkspacesByName[openedWorkspace.workspaceName];
-    const windowName = workspaceDef && workspaceDef.window ? workspaceDef.window : undefined;
-    const { registeredWindowsByName } = workspace2Store.getState();
-    const windowDef = windowName ? registeredWindowsByName[windowName] : undefined;
-    const width = windowDef && windowDef.width ? windowDef.width : 'narrow';
+    const { registeredWorkspacesByName, registeredWindowsByName } = workspace2Store.getState();
+    const width = getOpenedWindowWidth(openedWindow, registeredWorkspacesByName, registeredWindowsByName);
     const isActionMenuOpened = Object.values(registeredWindowsByName).some(
       (window) => window.group === openedGroup?.groupName && window.icon !== undefined,
     );
