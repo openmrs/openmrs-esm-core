@@ -5,7 +5,7 @@ import { useStore } from '@openmrs/esm-react-utils';
 import { createLocalStore, type StoreApi } from '@openmrs/esm-state';
 import { shallowEqual } from '@openmrs/esm-utils';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
-import { createExportedWorkspaceWindow, useWorkspace2Store } from './workspace2';
+import { createExportedWorkspaceWindow } from './workspace2';
 import { createLocalWindowActions, type ExportedWorkspaceState } from './workspace-window-actions';
 import styles from './exported-workspace.module.scss';
 
@@ -14,7 +14,7 @@ export interface ExportedWorkspaceWindowInfo {
   workspaceName: string | null;
   /**
    * The emulated workspace window's configured width. Note that this is a static property of the
-   * emulated workspace window, and does not change for the duration of the app.
+   * emulated workspace window, and only changes when the workspace / window is changed.
    */
   windowWidth: WorkspaceWindow2Width;
   /** The title of the currently-rendered (leaf) workspace, or `''` when all workspaces are closed. */
