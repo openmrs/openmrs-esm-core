@@ -2,7 +2,7 @@
 
 # Interface: WorkspaceDefinition2
 
-Defined in: [packages/framework/esm-globals/src/types.ts:319](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L319)
+Defined in: [packages/framework/esm-globals/src/types.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L321)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:319](https://github.com
 
 > **component**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L321)
+Defined in: [packages/framework/esm-globals/src/types.ts:323](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L323)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:321](https://github.com
 
 > `optional` **meta**: `object`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:327](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L327)
+Defined in: [packages/framework/esm-globals/src/types.ts:329](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L329)
 
 Meta describes any properties that are passed down to the workspace when it is loaded. It is
 available to the workspace component via `useWorkspace2Context().workspaceMeta`.
@@ -33,7 +33,7 @@ available to the workspace component via `useWorkspace2Context().workspaceMeta`.
 
 > **name**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L320)
+Defined in: [packages/framework/esm-globals/src/types.ts:322](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L322)
 
 ***
 
@@ -41,4 +41,4 @@ Defined in: [packages/framework/esm-globals/src/types.ts:320](https://github.com
 
 > **window**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:322](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L322)
+Defined in: [packages/framework/esm-globals/src/types.ts:324](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L324)

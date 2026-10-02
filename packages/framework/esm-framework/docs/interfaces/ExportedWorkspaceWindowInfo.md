@@ -26,14 +26,14 @@ The title of the currently-rendered (leaf) workspace, or `''` when all workspace
 
 ***
 
-### windowSize
+### windowWidth
 
-> **windowSize**: [`WorkspaceWindowState`](../type-aliases/WorkspaceWindowState.md)
+> **windowWidth**: [`WorkspaceWindow2Width`](../type-aliases/WorkspaceWindow2Width.md)
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L20)
 
-The emulated window size. Has no effect on rendering. `<ExportedWorkspace>` renders no
-maximize / hide buttons, so this is currently always `'normal'`.
+The emulated workspace window's configured width. Note that this is a static property of the
+emulated workspace window, and does not change for the duration of the app.
 
 ***
 
