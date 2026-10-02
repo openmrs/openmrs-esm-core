@@ -4,4 +4,4 @@
 
 > `const` **CardiologyPictogram**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`PictogramProps`](../type-aliases/PictogramProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L76)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L80)
