@@ -31,10 +31,3 @@
 .loader {
   margin: layout.$spacing-05;
 }
-
-.emptyResults {
-  @include type.type-style('body-compact-01');
-  background-color: $ui-02;
-  color: $text-02;
-  min-height: layout.$spacing-05;
-}
