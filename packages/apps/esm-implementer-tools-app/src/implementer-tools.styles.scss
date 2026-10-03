@@ -1,6 +1,4 @@
 @use '@carbon/layout';
-@use '@carbon/react/scss/themes';
-@use '@carbon/react/scss/theme';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
 .toolStyles {
@@ -31,13 +29,5 @@
 
   .implementerToolsButton:hover {
     transform: translateY(-3px);
-  }
-}
-
-.darkTheme {
-  @include theme.theme(themes.$g90);
-
-  :global(.cds--content-switcher-btn.cds--content-switcher--selected) {
-    background-color: $ui-01;
   }
 }
