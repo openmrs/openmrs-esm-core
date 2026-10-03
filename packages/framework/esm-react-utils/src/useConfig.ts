@@ -155,13 +155,13 @@ export function useConfig<T = Record<string, any>>(options?: UseConfigOptions) {
 
   const normalConfig = useNormalConfig(moduleName);
   const extensionConfig = useExtensionConfig(extension);
-  const config = useMemo(
-    () =>
-      options?.externalModuleName && moduleName === options.externalModuleName
-        ? { ...normalConfig }
-        : { ...normalConfig, ...extensionConfig },
-    [moduleName, options?.externalModuleName, normalConfig, extensionConfig],
-  );
+
+  const config = useMemo(() => {
+    if (extension && !options?.externalModuleName) {
+      return { ...extensionConfig };
+    }
+    return { ...normalConfig };
+  }, [normalConfig, extensionConfig, extension, options?.externalModuleName]);
 
   return config as T;
 }
