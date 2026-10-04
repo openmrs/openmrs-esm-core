@@ -16,6 +16,7 @@ const { mkdirSync, readdirSync, statSync, readFileSync, writeFileSync } = requir
 const sass = require('sass-embedded');
 const semver = require('semver');
 const { removeTrailingSlash, getTimestamp } = require('./tools/helpers');
+const { StartupPreloadPlugin } = require('./tools/startup-preload-plugin');
 
 const { name, version, dependencies } = require('./package.json');
 const sharedDependencies = require('./dependencies.json');
@@ -77,7 +78,6 @@ function resolveEnvironment(buildMode) {
   const fallback = process.env.NODE_ENV || buildMode || '';
   return fallback === 'development' ? 'development' : 'production';
 }
-const openmrsOffline = process.env.OMRS_OFFLINE === 'enable';
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsImportmapUrl = process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -454,7 +454,6 @@ module.exports = (env, argv = []) => {
           openmrsImportmapUrl,
           openmrsRoutesDef,
           openmrsRoutesUrl,
-          openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,
           openmrsCoreImportmap: appPatterns.length > 0 && JSON.stringify(coreImportmap),
@@ -463,6 +462,7 @@ module.exports = (env, argv = []) => {
           openmrsExtraAssets: openmrsJsCssAssets.map((fileName) => 'assets/' + basename(fileName)),
         },
       }),
+      new StartupPreloadPlugin(['run']),
       new WebpackPwaManifest({
         name: openmrsPageTitle,
         short_name: openmrsPageTitle,
@@ -552,6 +552,5 @@ module.exports = (env, argv = []) => {
         analyzerMode: env?.analyze ? 'static' : 'disabled',
       }),
     ].filter(Boolean),
-    ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };
 };

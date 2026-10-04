@@ -19,23 +19,10 @@ export interface DevelopArgs {
   configUrls: Array<string>;
   configFiles: Array<string>;
   addCookie: string;
-  supportOffline: boolean;
 }
 
 export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
-  const {
-    backend,
-    host,
-    port,
-    open,
-    importmap,
-    routes,
-    watchedRoutesPaths,
-    configUrls,
-    configFiles,
-    addCookie,
-    supportOffline,
-  } = args;
+  const { backend, host, port, open, importmap, routes, watchedRoutesPaths, configUrls, configFiles, addCookie } = args;
   const apiUrl = removeTrailingSlash(args.apiUrl);
   const spaPath = removeTrailingSlash(args.spaPath);
   const app = express();
@@ -54,7 +41,6 @@ export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
         apiUrl: ${JSON.stringify(apiUrl)},
         spaPath: ${JSON.stringify(spaPath)},
         env: "development",
-        offline: ${supportOffline},
         configUrls: ${JSON.stringify([...configUrls, ...localConfigUrls])},
       });
     </script>
@@ -63,13 +49,6 @@ export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
     .replace(/href="\/openmrs\/spa/g, `href="${spaPath}`)
     .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`)
     .replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\/importmap\.json/g, `${spaPath}/importmap.json`);
-
-  const swContent = supportOffline
-    ? readFileSync(resolve(source, 'service-worker.js'), 'utf-8').replace(
-        /https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g,
-        `${spaPath}`,
-      )
-    : '';
 
   const pageUrl = `http://${host}:${port}${spaPath}`;
 
@@ -116,13 +95,6 @@ export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
 
     app.get(`${spaPath}/routes.registry.json`, (_, res) => {
       res.contentType('application/json').send(stringifiedRoutes);
-    });
-  }
-
-  // Route for custom `service-worker.js` before most things
-  if (supportOffline) {
-    app.get(`${spaPath}/service-worker.js`, (_, res) => {
-      res.contentType('js').send(swContent);
     });
   }
 

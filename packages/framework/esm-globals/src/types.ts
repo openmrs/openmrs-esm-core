@@ -24,11 +24,6 @@ declare global {
      */
     initializeSpa(config: SpaConfig): void;
     /**
-     * Indicates whether offline mode is enabled in this install or not.
-     * This is used to determine whether offline functionality is present or not.
-     */
-    offlineEnabled: boolean;
-    /**
      * Gets the API base path, e.g. /openmrs
      */
     openmrsBase: string;
@@ -86,11 +81,6 @@ export interface SpaConfig {
    * URLs of configurations to load in the system.
    */
   configUrls?: Array<string>;
-  /**
-   * Defines if offline should be supported by installing a service worker.
-   * @default true
-   */
-  offline?: boolean;
 }
 
 /** @internal */
@@ -113,14 +103,6 @@ export type PageDefinition = {
    * If supplied, the page will only be rendered when this feature flag is enabled.
    */
   featureFlag?: string;
-  /**
-   * Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
-   */
-  online?: boolean;
-  /**
-   * Determines whether the component renders while the browser is not connected to the internet. If false, this page will never render while offline.
-   */
-  offline?: boolean;
   /**
    * If supplied, the page will be rendered within the DOM element with the specified ID. Defaults to "omrs-apps-container" if not supplied.
    */
@@ -179,14 +161,6 @@ export type ExtensionDefinition = {
    */
   slots?: Array<string>;
   /**
-   * Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
-   */
-  online?: boolean;
-  /**
-   * Determines whether the component renders while the browser is not connected to the internet. If false, this page will never render while offline.
-   */
-  offline?: boolean;
-  /**
    * Determines the order in which this component renders in its default extension slot. Note that this can be overridden by configuration.
    */
   order?: number;
@@ -228,79 +202,6 @@ export type ModalDefinition = {
   component: string;
 };
 
-/* The possible states a workspace window can be opened in. */
-export type WorkspaceWindowState = 'maximized' | 'hidden' | 'normal';
-
-/**
- * A definition of a workspace as extracted from an app's routes.json
- */
-export type WorkspaceDefinition = {
-  /**
-   * The name of this workspace. This is used to launch the workspace.
-   */
-  name: string;
-  /**
-   * The title of the workspace. This will be looked up as a key in the translations of the module
-   * defining the workspace.
-   */
-  title: string;
-  /**
-   * The type of the workspace. Only one of each "type" of workspace is allowed to be open at a
-   * time. The default is "form". If the right sidebar is in use, then the type determines which
-   * right sidebar icon corresponds to the workspace.
-   */
-  type: string;
-  canHide?: boolean;
-  canMaximize?: boolean;
-  /**
-   * Controls the width of the workspace. The default is "narrow" and this should only be
-   * changed to "wider" if the workspace itself has internal navigation, like the form editor.
-   * The width "extra-wide" is for workspaces that contain their own sidebar.
-   */
-  width?: 'narrow' | 'wider' | 'extra-wide';
-  /**
-   * Launches the workspace in the preferred size, it defaults to the 'narrow' width
-   */
-  preferredWindowSize?: WorkspaceWindowState;
-
-  /**
-   * Workspaces can open either independently or as part of a "workspace group". A
-   * "workspace group" groups related workspaces together, so that only one is visible
-   * at a time. For example,
-   *
-   * @example
-   *
-   * {
-   *  name: 'order-basket',
-   *  type: 'order',
-   *  groups: ['ward-patient']
-   * }
-   *
-   * This means that the 'order-basket' workspace can be opened independently, or only
-   * in the 'ward-patient'.
-   * If a workspace group is already open and a new workspace is launched, and the
-   * groups in the newly launched workspace do not include the currently open group’s
-   * name, the entire workspace group will close, and the new workspace will launch independently.
-   *
-   */
-  groups: Array<string>;
-  /**
-   * The name of the component exported by this frontend module.
-   */
-  component: string;
-};
-
-export interface WorkspaceGroupDefinition {
-  /**
-   * Name of the workspace group. This is used to launch the workspace group
-   */
-  name: string;
-  /**
-   * List of workspace names which are part of the workspace group.
-   */
-  members?: Array<string>;
-}
-
 export interface WorkspaceGroupDefinition2 {
   name: string;
   closeable?: boolean;
@@ -333,13 +234,15 @@ export interface WorkspaceGroupDefinition2 {
   scopePattern?: string;
 }
 
+export type WorkspaceWindow2Width = 'narrow' | 'wider' | 'extra-wide';
+
 export interface WorkspaceWindowDefinition2 {
   name: string;
   icon?: string;
   canMaximize?: boolean;
   group: string;
   order?: number;
-  width?: 'narrow' | 'wider' | 'extra-wide';
+  width?: WorkspaceWindow2Width;
 }
 
 export interface WorkspaceDefinition2 {
@@ -393,10 +296,6 @@ export interface OpenmrsAppRoutes {
   featureFlags?: Array<FeatureFlagDefinition>;
   /** An array of all modals supported by this frontend module. Modals can be launched by name. */
   modals?: Array<ModalDefinition>;
-  /** An array of all workspaces supported by this frontend module. Workspaces can be launched by name. */
-  workspaces?: Array<WorkspaceDefinition>;
-  /** An array of all workspace groups supported by this frontend module. */
-  workspaceGroups?: Array<WorkspaceGroupDefinition>;
 
   /** An array of all workspace groups (v2) supported by this frontend module. */
   workspaceGroups2?: Array<WorkspaceGroupDefinition2>;

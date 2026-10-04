@@ -1,6 +1,7 @@
 import { type Concept, type OpenmrsResource } from '@openmrs/esm-api';
 import { type Drug } from './drug-resource';
 
+// prettier-ignore
 export type FulfillerStatus =
   | 'COMPLETED'
   | 'DECLINED'

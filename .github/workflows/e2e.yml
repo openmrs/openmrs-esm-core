@@ -67,7 +67,9 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: '**/node_modules'
+          path: |
+            **/node_modules
+            !e2e_repo/**
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: 📦 Install dependencies
@@ -129,7 +131,9 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: '**/node_modules'
+          path: |
+            **/node_modules
+            !e2e_repo/**
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: 📦 Install dependencies
@@ -160,8 +164,8 @@ jobs:
         id: cache-other-repo-dependencies
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ hashFiles('e2e_repo/**/yarn.lock') }}
+          path: e2e_repo/**/node_modules
+          key: ${{ runner.os }}-${{ matrix.repo }}-${{ hashFiles('e2e_repo/**/yarn.lock') }}
 
       - name: 📦 Install dependencies for ${{ matrix.repo }}
         if: steps.cache-other-repo-dependencies.outputs.cache-hit != 'true'
@@ -176,11 +180,11 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('e2e_repo/**/yarn.lock') }}
 
       - name: 🎭 Install Playwright Browsers for ${{ matrix.repo }}
-        run: yarn playwright install --with-deps
+        run: yarn playwright install chromium --with-deps
         working-directory: e2e_repo
 
       - name: 🧪 Run E2E tests for ${{ matrix.repo }}
-        run: yarn playwright test
+        run: yarn playwright test --retries=1
         working-directory: e2e_repo
 
       - name: 📤 Upload Report for ${{ matrix.repo }}
@@ -193,7 +197,7 @@ jobs:
 
       - name: 📝 Capture Server Logs
         if: always()
-        uses: jwalton/gh-docker-logs@2741064ab9d7af54b0b1ffb6076cf64c16f0220e # v2.2.2
+        uses: openmrs/openmrs-contrib-gha-workflows/.github/actions/capture-docker-logs@main
         with:
           dest: "./logs"
 

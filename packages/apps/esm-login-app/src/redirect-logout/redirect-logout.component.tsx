@@ -1,17 +1,21 @@
 import { useEffect } from 'react';
-import { navigate, setUserLanguage, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import { useSWRConfig } from 'swr';
+import { navigate, setUserLanguage, useConfig, useSession } from '@openmrs/esm-framework';
 import { clearHistory } from '@openmrs/esm-framework/src/internal';
 import { type ConfigSchema } from '../config-schema';
-import { performLogout } from './logout.resource';
+import { clearSwrCache, performLogout } from './logout.resource';
 
 const RedirectLogout: React.FC = () => {
   const config = useConfig<ConfigSchema>();
-  const isLoginEnabled = useConnectivity();
   const session = useSession();
+  const { cache, mutate } = useSWRConfig();
 
   useEffect(() => {
     clearHistory();
-    if (!session.authenticated || !isLoginEnabled) {
+    if (!session.authenticated) {
+      // `logout()` marks the session as logged out before it resolves, so this branch re-runs and
+      // redirects before `performLogout` has cleared the cache.
+      void clearSwrCache(cache, mutate);
       if (config.provider.type === 'custom') {
         navigate({ to: config.provider.loginUrl });
       } else if (config.provider.type === 'oauth2') {
@@ -20,7 +24,7 @@ const RedirectLogout: React.FC = () => {
         navigate({ to: '${openmrsSpaBase}/login' });
       }
     } else {
-      performLogout()
+      performLogout(cache, mutate)
         .then(() => {
           const defaultLanguage = document.documentElement.getAttribute('data-default-lang');
 
@@ -42,7 +46,7 @@ const RedirectLogout: React.FC = () => {
           console.error('Logout failed:', error);
         });
     }
-  }, [config, isLoginEnabled, session]);
+  }, [config, session, cache, mutate]);
 
   return null;
 };

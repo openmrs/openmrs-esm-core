@@ -1,5 +1,6 @@
 import { type ConfigSchema, Type, validators } from '@openmrs/esm-config';
 import { type CarbonTagColor, carbonTagColors } from './utils';
+
 export interface StyleguideConfigObject {
   'Brand color #1': string;
   'Brand color #2': string;
@@ -8,6 +9,10 @@ export interface StyleguideConfigObject {
     uuids: Array<string>;
   };
   implementationName: string;
+  logo: {
+    src: string;
+    alt: string;
+  };
   patientPhotoConceptUuid: string;
   preferredCalendar: {
     [key: string]: string;
@@ -25,13 +30,13 @@ const diagnosisTagConfigSchema: ConfigSchema = {
   primaryColor: {
     _type: Type.String,
     _description: 'The color for displaying primary diagnoses tags',
-    _default: 'red',
+    _default: 'blue',
     _validators: [validators.oneOf(carbonTagColors)],
   },
   secondaryColor: {
     _type: Type.String,
     _description: 'The color for displaying secondary diagnoses tags',
-    _default: 'blue',
+    _default: 'gray',
     _validators: [validators.oneOf(carbonTagColors)],
   },
 };
@@ -63,6 +68,20 @@ export const esmStyleGuideSchema: ConfigSchema = {
     _type: Type.String,
     _description: 'A name of the place (or authority) where all possible locations a user can choose are located.',
     _default: 'Clinic',
+  },
+  logo: {
+    src: {
+      _type: Type.String,
+      _default: '',
+      _description:
+        'The path or URL to the logo shown on the login page and while the server is starting up. If set to an empty string, the default OpenMRS logo is used.',
+      _validators: [validators.isUrl],
+    },
+    alt: {
+      _type: Type.String,
+      _default: 'Logo',
+      _description: 'The alternative text for the logo image, displayed when the image cannot be loaded or on hover.',
+    },
   },
   patientPhotoConceptUuid: {
     _type: Type.ConceptUuid,

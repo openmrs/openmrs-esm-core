@@ -20,19 +20,19 @@ export const configSchema = {
       _description: "The URL to use to login. This is only used if the login type is 'oauth2' or 'custom'.",
       _validators: [validators.isUrl],
     },
+    _validators: [
+      validator(
+        (provider: { type: string; loginUrl: string }) => {
+          if (provider.type === 'custom' || provider.type === 'oauth2') {
+            return provider.loginUrl !== '${openmrsSpaBase}/login';
+          }
+          return true;
+        },
+        (provider: { type: string }) =>
+          `Provider type '${provider.type}' requires an explicit loginUrl that is not the default SPA login route.`,
+      ),
+    ],
   },
-  _validators: [
-    validator(
-      (provider: { type: string; loginUrl: string }) => {
-        if (provider.type === 'custom' || provider.type === 'oauth2') {
-          return provider.loginUrl !== '${openmrsSpaBase}/login';
-        }
-        return true;
-      },
-      (provider: { type: string }) =>
-        `Provider type '${provider.type}' requires an explicit loginUrl that is not the default SPA login route.`,
-    ),
-  ],
   chooseLocation: {
     enabled: {
       _type: Type.Boolean,
@@ -40,12 +40,6 @@ export const configSchema = {
       _description:
         "Whether to show a 'Choose Location' screen after login. " +
         "If true, the user will be taken to the URL set in the 'links.loginSuccess' config property after choosing a location.",
-    },
-    numberToShow: {
-      _type: Type.Number,
-      _default: 8,
-      _description: 'The number of locations displayed in the location picker.',
-      _validators: [validator((v: unknown) => typeof v === 'number' && v > 0, 'Must be greater than zero')],
     },
     locationsPerRequest: {
       _type: Type.Number,
@@ -73,7 +67,7 @@ export const configSchema = {
       _type: Type.String,
       _default: '',
       _description:
-        'The path or URL to the logo image. If set to an empty string, the default OpenMRS SVG sprite will be used.',
+        'Deprecated: use `logo` in the `@openmrs/esm-styleguide` config instead. If set, this takes precedence over the styleguide logo on the login page.',
       _validators: [validators.isUrl],
     },
     alt: {
@@ -170,7 +164,6 @@ export interface ConfigSchema {
   chooseLocation: {
     enabled: boolean;
     locationsPerRequest: number;
-    numberToShow: number;
     useLoginLocationTag: boolean;
   };
   footer: {

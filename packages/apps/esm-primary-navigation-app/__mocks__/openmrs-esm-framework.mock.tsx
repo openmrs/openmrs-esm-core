@@ -1,5 +1,4 @@
 import React from 'react';
-import { of } from 'rxjs';
 
 export const useLayoutType = jest.fn(() => 'tablet');
 
@@ -8,7 +7,7 @@ export function openmrsFetch() {
 }
 
 export function getCurrentUser() {
-  return of({ authenticated: false });
+  return Promise.resolve({ authenticated: false });
 }
 
 export function createErrorHandler() {

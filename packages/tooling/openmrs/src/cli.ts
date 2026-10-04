@@ -117,11 +117,6 @@ export function buildCli(y: Argv) {
             'The routes.registry.json file to use. Can be a path to a valid routes registry to be taken literally, an URL, or a fixed JSON object.',
           type: 'string',
         })
-        .option('support-offline', {
-          default: false,
-          describe: 'Determines if a service worker should be installed for offline support.',
-          type: 'boolean',
-        })
         .option('use-rspack', {
           default: undefined,
           describe:
@@ -204,11 +199,6 @@ export function buildCli(y: Argv) {
         .option('fresh', {
           default: false,
           describe: 'Whether to clear the output directory before running the build.',
-          type: 'boolean',
-        })
-        .option('support-offline', {
-          default: false,
-          describe: 'Determines if a service worker should be installed for offline support.',
           type: 'boolean',
         })
         .option('build-config', {
@@ -407,19 +397,22 @@ export function buildCli(y: Argv) {
 
   return y
     .epilog(
-      'The SPA assemble config JSON is a JSON file, typically `spa-assemble-config.json`, which defines parameters for the `build` and `assemble` ' +
-        'commands. The keys used by `build` are:\n' +
-        '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, `supportOffline`, `compress`, ' +
-        '`compressGzip`, and `compressBrotli`;\n' +
+      '`build --build-config` and `assemble --config` read JSON config files. Distributions usually keep these as ' +
+        '`spa-build-config.json` and `spa-assemble-config.json`. `assemble` reads `spa-build-config.json` by default, so ' +
+        'one file with both sets of keys also works. The keys used by `build` are:\n' +
+        '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `routes`, `pageTitle`, `defaultLocale`, ' +
+        '`env`, `compress`, `compressGzip`, and `compressBrotli`;\n' +
         'each of which is equivalent to the corresponding command line argument (see `openmrs build --help`). ' +
-        'Multiple values provided to `configPaths` and `configUrls` should be comma-separated. `compress`, ' +
-        '`compressGzip` and `compressBrotli` take precedence over the corresponding command line flags.\n' +
+        '`configPaths` and `configUrls` are JSON arrays. Keys in the config file take precedence over the ' +
+        'corresponding command line flags, except for `importmap`, `routes` and `defaultLocale`.\n' +
         'The keys used by `assemble` are:\n' +
         '  frontendModules  \tAn object which specifies which frontend modules to include. It should have package names ' +
         'for keys and versions for values.\n' +
-        '  publicUrl  \tThe URL at which the frontend modules will be made available. Can be relative to the importmap. ' +
-        'Defaults to `.` (which means they will be colocated with the import map).\n\n' +
-        'For more information visit https://github.com/openmrs/openmrs-esm-core.',
+        '  frontendModuleExcludes  \tPackage names to leave out. Used to remove modules added by an earlier config file ' +
+        'when `--config` is given more than once.\n' +
+        '  publicUrl  \tThe URL at which the frontend modules will be made available. Can be a full URL, like a CDN. ' +
+        'Defaults to `.`, which the app shell loads from under the SPA path.\n\n' +
+        'For more information visit https://github.com/openmrs/openmrs-esm-core/tree/main/packages/tooling/openmrs#readme.',
     )
     .help()
     .demandCommand()

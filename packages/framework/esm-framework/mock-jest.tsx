@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils/mock';
 import dayjs from 'dayjs';
@@ -47,7 +46,7 @@ export function setupPaths(config: any) {
 export const importDynamic = jest.fn();
 
 /* esm-error-handling */
-export const createErrorHandler = () => jest.fn().mockReturnValue(NEVER);
+export const createErrorHandler = () => jest.fn();
 
 export const reportError = jest.fn().mockImplementation((error) => {
   throw error;
@@ -65,9 +64,18 @@ export const getHistory = jest.fn(() => ['https://o3.openmrs.org/home']);
 export const clearHistory = jest.fn();
 export const goBackInHistory = jest.fn();
 
-/* esm-offline */
+/* deprecated offline shims; these mirror the no-op implementations in src/deprecated.ts */
 export const useConnectivity = jest.fn().mockReturnValue(true);
-export const subscribeConnectivity = jest.fn();
+export const setupOfflineSync = jest.fn();
+export const setupDynamicOfflineDataHandler = jest.fn();
+export const getDynamicOfflineDataEntries = jest.fn().mockResolvedValue([]);
+export const getSynchronizationItems = jest.fn().mockResolvedValue([]);
+export const subscribePrecacheStaticDependencies = jest.fn(() => () => {});
+export const messageOmrsServiceWorker = jest.fn().mockResolvedValue({
+  success: false,
+  result: undefined,
+  error: 'No service worker has been registered. Offline-related features have been removed from the framework.',
+});
 
 /* esm-styleguide */
 export const showNotification = jest.fn();
@@ -107,22 +115,16 @@ export const usePatientPhoto = jest.fn(() => ({
   error: null,
 }));
 
-export const ActionMenuButton = jest.fn(({ handler }) => <button onClick={handler}>Action Menu Button</button>);
 export const ActionMenuButton2 = jest.fn(({ label, tagContent, icon }) => (
   <button>
     {icon} {tagContent} {label}
   </button>
 ));
 export const ActionMenu = jest.fn(() => <div>Action Menu</div>);
-export const WorkspaceContainer = jest.fn(() => <div>Workspace Container</div>);
-export const closeWorkspace = jest.fn();
-export const launchWorkspace = jest.fn();
+export const ExportedWorkspace = jest.fn(() => <div>Exported Workspace</div>);
 export const launchWorkspace2 = jest.fn();
-export const launchWorkspaceGroup = jest.fn();
 export const launchWorkspaceGroup2 = jest.fn();
 export const closeWorkspaceGroup2 = jest.fn();
-export const navigateAndLaunchWorkspace = jest.fn();
-export const useWorkspaces = jest.fn();
 export const useWorkspace2Context = jest.fn();
 
 export const OpenmrsDatePicker = jest.fn(({ id, labelText, value, onChange, invalid, isInvalid, invalidText }) => (

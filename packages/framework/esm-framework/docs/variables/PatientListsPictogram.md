@@ -4,4 +4,4 @@
 
 > `const` **PatientListsPictogram**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`PictogramProps`](../type-aliases/PictogramProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\> = `PatientsPictogram`
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L227)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L262)

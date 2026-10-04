@@ -11,7 +11,10 @@ export const pictogramIds = [
   'omrs-pict-assessment-2',
   'omrs-pict-blood-bank',
   'omrs-pict-cardiology',
+  'omrs-pict-cohorts',
+  'omrs-pict-concept-dictionary',
   'omrs-pict-ct-scan',
+  'omrs-pict-data-entry',
   'omrs-pict-dentistry',
   'omrs-pict-digital-trust',
   'omrs-pict-emergency-department',
@@ -23,12 +26,14 @@ export const pictogramIds = [
   'omrs-pict-labs-2',
   'omrs-pict-metadata-export',
   'omrs-pict-obstetrics',
+  'omrs-pict-patient-documents',
   'omrs-pict-patient-search',
   'omrs-pict-patients',
   'omrs-pict-payments-desk',
   'omrs-pict-pharmacy',
   'omrs-pict-pharmacy-2',
   'omrs-pict-registration',
+  'omrs-pict-reports',
   'omrs-pict-service-queues',
   'omrs-pict-stock-management',
   'omrs-pict-transfer',
@@ -78,9 +83,27 @@ export const CardiologyPictogram = memo(
   }),
 );
 
+export const CohortsPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function CohortsPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-cohorts" pictogramProps={props} />;
+  }),
+);
+
+export const ConceptDictionaryPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function ConceptDictionaryPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-concept-dictionary" pictogramProps={props} />;
+  }),
+);
+
 export const CtScanPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function CtScanPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-ct-scan" pictogramProps={props} />;
+  }),
+);
+
+export const DataEntryPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function DataEntryPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-data-entry" pictogramProps={props} />;
   }),
 );
 
@@ -153,6 +176,12 @@ export const ObstetricsPictogram = memo(
   }),
 );
 
+export const PatientDocumentsPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function PatientDocumentsPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-patient-documents" pictogramProps={props} />;
+  }),
+);
+
 export const PatientSearchPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function PatientSearchPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-patient-search" pictogramProps={props} />;
@@ -186,6 +215,12 @@ export const Pharmacy2Pictogram = memo(
 export const RegistrationPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function RegistrationPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-registration" pictogramProps={props} />;
+  }),
+);
+
+export const ReportsPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function ReportsPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-reports" pictogramProps={props} />;
   }),
 );
 
