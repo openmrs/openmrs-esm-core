@@ -36,6 +36,7 @@ export const pictogramIds = [
   'omrs-pict-reports',
   'omrs-pict-service-queues',
   'omrs-pict-stock-management',
+  'omrs-pict-system-administration',
   'omrs-pict-transfer',
   'omrs-pict-triage',
   'omrs-pict-x-ray',
@@ -233,6 +234,12 @@ export const ServiceQueuesPictogram = memo(
 export const StockManagementPictogram = memo(
   forwardRef<SVGSVGElement, PictogramProps>(function StockManagementPictogram(props, ref) {
     return <Pictogram ref={ref} pictogram="omrs-pict-stock-management" pictogramProps={props} />;
+  }),
+);
+
+export const SystemAdministrationPictogram = memo(
+  forwardRef<SVGSVGElement, PictogramProps>(function SystemAdministrationPictogram(props, ref) {
+    return <Pictogram ref={ref} pictogram="omrs-pict-system-administration" pictogramProps={props} />;
   }),
 );
 

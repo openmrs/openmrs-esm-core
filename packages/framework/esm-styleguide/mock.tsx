@@ -136,6 +136,7 @@ export const RegistrationPictogram = () => <span>RegistrationPictogram</span>;
 export const ReportsPictogram = () => <span>ReportsPictogram</span>;
 export const ServiceQueuesPictogram = () => <span>ServiceQueuesPictogram</span>;
 export const StockManagementPictogram = () => <span>StockManagementPictogram</span>;
+export const SystemAdministrationPictogram = () => <span>SystemAdministrationPictogram</span>;
 export const TransferPictogram = () => <span>TransferPictogram</span>;
 export const TriagePictogram = () => <span>TriagePictogram</span>;
 export const XrayPictogram = () => <span>XrayPictogram</span>;
