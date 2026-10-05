@@ -4,4 +4,4 @@
 
 > **NameUse** = `"usual"` \| `"official"` \| `"temp"` \| `"nickname"` \| `"anonymous"` \| `"old"` \| `"maiden"`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:328](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L328)
+Defined in: [packages/framework/esm-globals/src/types.ts:333](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L333)

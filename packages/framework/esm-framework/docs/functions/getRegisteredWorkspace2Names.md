@@ -4,7 +4,7 @@
 
 > **getRegisteredWorkspace2Names**(): `string`[]
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:682](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L682)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:683](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L683)
 
 ## Returns
 
