@@ -42,17 +42,22 @@ export interface Workspace2DefinitionProps<
   windowName: string;
   isRootWorkspace: boolean;
   showActionMenu: boolean;
+}
 
-  /**
-   * Records the title of this workspace, for display in the workspace window header.
-   * @internal Called by `<Workspace2>`; use its `title` prop instead.
-   */
+/**
+ * The props the framework actually passes to a workspace: the public `Workspace2DefinitionProps` plus
+ * the setters `<Workspace2>` uses to report its `title` and `hasUnsavedChanges` to the workspace window.
+ * Not part of the public API.
+ */
+export interface Workspace2InternalProps<
+  WorkspaceProps extends object = object,
+  WindowProps extends object = object,
+  GroupProps extends object = object,
+> extends Workspace2DefinitionProps<WorkspaceProps, WindowProps, GroupProps> {
+  /** Records the title of this workspace, for display in the workspace window header. */
   setWorkspaceTitle(title: string): void;
 
-  /**
-   * Records whether this workspace has unsaved changes.
-   * @internal Called by `<Workspace2>`; use its `hasUnsavedChanges` prop instead.
-   */
+  /** Records whether this workspace has unsaved changes. */
   setHasUnsavedChanges(hasUnsavedChanges: boolean): void;
 }
 
@@ -71,7 +76,7 @@ export type Workspace2Definition<
 export const Workspace2: React.FC<Workspace2Props> = ({ title, children, hasUnsavedChanges = false }) => {
   // These are bound to this workspace instance, in whichever store holds it (the global store, or an
   // `<ExportedWorkspace>`'s local store). They skip writes that change nothing.
-  const { setHasUnsavedChanges, setWorkspaceTitle } = useWorkspace2Context();
+  const { setHasUnsavedChanges, setWorkspaceTitle } = useWorkspace2Context() as Workspace2InternalProps;
 
   useEffect(() => {
     setHasUnsavedChanges(hasUnsavedChanges ?? false);

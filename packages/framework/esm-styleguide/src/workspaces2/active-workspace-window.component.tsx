@@ -16,7 +16,7 @@ import { loadLifeCycles } from '@openmrs/esm-routes';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { ArrowRightIcon, CloseIcon } from '../icons';
 import { closeWorkspaceGroup2, getOpenedWindowWidth, useWorkspace2Store } from './workspace2';
-import { type Workspace2DefinitionProps } from './workspace2.component';
+import { type Workspace2InternalProps } from './workspace2.component';
 import { type WorkspaceWindowActions } from './workspace-window-actions';
 import styles from './workspace2.module.scss';
 
@@ -127,7 +127,7 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
   isLeafWorkspace,
   showActionMenu,
 }) => {
-  const props: Workspace2DefinitionProps = useMemo(
+  const props: Workspace2InternalProps = useMemo(
     () =>
       openedWorkspace && {
         closeWorkspace: async (options = {}) => {

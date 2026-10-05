@@ -5,7 +5,7 @@ import { workspace2Store, type OpenedWindow, type OpenedWorkspace } from '@openm
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import styles from './workspace2.module.scss';
-import { type Workspace2DefinitionProps } from './workspace2.component';
+import { type Workspace2InternalProps } from './workspace2.component';
 import { type WorkspaceWindowActions } from './workspace-window-actions';
 
 vi.mock('@openmrs/esm-routes', () => ({
@@ -14,13 +14,13 @@ vi.mock('@openmrs/esm-routes', () => ({
 
 // Records the props each parcel was handed, keyed by workspace name, so tests can call them the way
 // the workspace component would.
-const { parcelProps } = vi.hoisted(() => ({ parcelProps: {} as Record<string, Workspace2DefinitionProps> }));
+const { parcelProps } = vi.hoisted(() => ({ parcelProps: {} as Record<string, Workspace2InternalProps> }));
 vi.mock('single-spa-react/parcel', () => ({
   default: ({
     config,
     wrapClassName,
     ...props
-  }: { config: { name: string }; wrapClassName?: string } & Workspace2DefinitionProps) => {
+  }: { config: { name: string }; wrapClassName?: string } & Workspace2InternalProps) => {
     parcelProps[props.workspaceName] = props;
     // Surface the wrapper class the real Parcel would apply, so tests can assert stacking/visibility.
     return (
