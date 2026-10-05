@@ -33,7 +33,7 @@ The title of the currently-rendered (leaf) workspace, or `''` when all workspace
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L19)
 
 The emulated workspace window's configured width. Note that this is a static property of the
-emulated workspace window, and does not change for the duration of the app.
+emulated workspace window, and only changes when the workspace / window is changed.
 
 ***
 

@@ -4,4 +4,4 @@
 
 > `const` **HomePictogram**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`PictogramProps`](../type-aliases/PictogramProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\> = `FacilityPictogram`
 
-Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L260)
+Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:267](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L267)
