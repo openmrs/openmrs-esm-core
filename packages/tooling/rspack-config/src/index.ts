@@ -58,7 +58,6 @@ import rspack, {
   type RspackOptionsNormalized as RspackConfiguration,
 } from '@rspack/core';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import { StatsWriterPlugin } from 'webpack-stats-plugin';
 
 type OpenmrsRspackConfig = Omit<Partial<RspackConfiguration>, 'module'> & {
   module: ModuleOptions;
@@ -549,13 +548,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           name,
           moduleFederationVersion ? `${moduleFederationVersion.major}.${moduleFederationVersion.minor}` : undefined,
         ),
-      }),
-      new StatsWriterPlugin({
-        filename: `${filename}.buildmanifest.json`,
-        stats: {
-          all: false,
-          chunks: true,
-        },
       }),
     ].filter(Boolean),
     resolve: {
