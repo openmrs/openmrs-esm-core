@@ -16,7 +16,7 @@ import {
   configExtensionStore,
   configInternalStore,
   getConfigStore,
-  getExtensionConfig,
+  getExtensionConfigFromStore,
   getExtensionSlotsConfigStore,
   getExtensionsConfigStore,
   clearConfigDerivationError,
@@ -65,6 +65,11 @@ function mergeDeepReplace<T extends object>(left: T, right: Partial<T>): T {
  */
 // Store unsubscribe functions to allow cleanup (e.g., in tests or hot module reloading)
 const configSubscriptions: Array<() => void> = [];
+
+/**
+ * Track displayed validation messages so they only get displayed once.
+ */
+const displayedValidationMessages = new Set<string>();
 
 /**
  * Recomputes all configuration derived stores based on current state of input stores.
@@ -119,8 +124,9 @@ function setupConfigSubscriptions() {
     computeImplementerToolsConfig(configInternalStore.getState(), temporaryConfigStore.getState()),
   );
 
-  // Initial computation
-  recomputeAllConfigs();
+  // Guarded: a configuration the user saved through the implementer tools must not be able to stop
+  // the framework from loading.
+  recomputeAllConfigsSafely();
 
   // Subscribe to all input stores with a single handler
   // This ensures we only recompute once even if multiple stores change simultaneously
@@ -526,7 +532,9 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
  * @param moduleName The name of the module providing the translation context.
  * @param slotName Optional extension slot name to include slot-specific overrides.
  * @param extensionId Optional extension ID to include extension-specific overrides.
- * @returns A Promise resolving to an array of translation override objects.
+ * @returns A Promise resolving to an array of translation override objects. It always settles: a
+ *   module the config system has not been told about, or an extension that is not mounted,
+ *   contributes no overrides.
  *
  * @internal
  */
@@ -535,22 +543,29 @@ export function getTranslationOverrides(
   slotName?: string,
   extensionId?: string,
 ): Promise<Array<Record<string, Record<string, string>>>> {
+  // A module's store only ever loads its overrides once the module is registered with the config
+  // system, so waiting on one that is not registered would leave the i18next namespace pending.
   const promises = [
-    whenStoreReady(
-      getConfigStore(moduleName),
-      (state) => Boolean(state.translationOverridesLoaded && state.config),
-      (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
-    ),
+    moduleName in configInternalStore.getState().schemas
+      ? whenStoreReady(
+          getConfigStore(moduleName),
+          (state) => Boolean(state.translationOverridesLoaded && state.config),
+          (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
+        )
+      : Promise.resolve({}),
   ];
 
   if (slotName && extensionId) {
-    promises.push(
-      whenStoreReady(
-        getExtensionConfig(slotName, extensionId),
-        (state) => Boolean(state.loaded && state.config),
-        (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
-      ),
-    );
+    // Read once rather than waited for: an extension's config entry exists only while that extension
+    // is registered as mounted, so a wait started in the gap never settles and leaves the i18next
+    // namespace pending.
+    const extensionConfig = getExtensionConfigFromStore(getExtensionsConfigStore().getState(), slotName, extensionId);
+    const overrides =
+      extensionConfig.loaded && extensionConfig.config
+        ? ((extensionConfig.config['Translation overrides'] ?? {}) as Record<string, Record<string, string>>)
+        : {};
+
+    promises.push(Promise.resolve(overrides));
   }
 
   return Promise.all(promises);
@@ -1192,15 +1207,8 @@ function hasObjectSchema(elementsSchema: unknown): elementsSchema is ConfigSchem
 function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
-/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
-let displayedValidationMessages = new Set<string>();
-
 function logError(keyPath: string, message: string) {
   const key = `${keyPath}:::${message}`;
-  // technically, this should not be possible, but because of how things wind-up transpiled, this isn't impossible
-  if (!displayedValidationMessages) {
-    displayedValidationMessages = new Set<string>();
-  }
 
   if (!displayedValidationMessages.has(key)) {
     console.error(message);

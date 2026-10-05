@@ -1,5 +1,4 @@
 import { createGlobalStore, getGlobalStore, registerGlobalStore } from '@openmrs/esm-state';
-import { shallowEqual } from '@openmrs/esm-utils';
 import { type StoreApi } from 'zustand';
 import { createStore } from 'zustand/vanilla';
 import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ProvidedConfig } from '../types';
@@ -176,59 +175,6 @@ export function getExtensionsConfigStore() {
   return getGlobalStore<ExtensionsConfigStore>(`config-extensions`, {
     configs: {},
   });
-}
-
-/**
- * The read-only part of a store's API.
- * @internal
- */
-export type ReadableStore<T> = Pick<StoreApi<T>, 'getInitialState' | 'getState' | 'subscribe'>;
-
-/**
- * A read-only view of one extension instance's config within a slot. Read-only because these
- * configs are derived from the config system's inputs, so a write here would be overwritten by the
- * next recomputation; provide a config or set a temporary one instead.
- *
- * @internal
- */
-export function getExtensionConfig(
-  slotName: string,
-  extensionId: string,
-): ReadableStore<Omit<ConfigStore, 'translationOverridesLoaded'>> {
-  if (
-    typeof slotName !== 'string' ||
-    typeof extensionId !== 'string' ||
-    slotName === '__proto__' ||
-    extensionId === '__proto__' ||
-    slotName === 'constructor' ||
-    extensionId === 'constructor' ||
-    slotName === 'prototype' ||
-    extensionId === 'prototype'
-  ) {
-    throw new Error('Attempted to call `getExtensionConfig()` with invalid argument');
-  }
-
-  const extensionConfigStore = getExtensionsConfigStore();
-  const selector = (configStore: ExtensionsConfigStore) => configStore.configs[slotName]?.[extensionId];
-
-  return {
-    getInitialState() {
-      return selector(extensionConfigStore.getInitialState());
-    },
-    getState() {
-      return selector(extensionConfigStore.getState()) ?? { loaded: false, config: null };
-    },
-    subscribe(listener) {
-      return extensionConfigStore.subscribe((state, prevState) => {
-        const newState = selector(state);
-        const oldState = selector(prevState);
-
-        if (!shallowEqual(newState, oldState)) {
-          listener(newState, oldState);
-        }
-      });
-    },
-  };
 }
 
 /** @internal */

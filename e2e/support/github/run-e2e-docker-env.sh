@@ -16,12 +16,17 @@ set -eu
 #   ./run-e2e-docker-env.sh -- login.spec.ts     # Run specific test file
 #   ./run-e2e-docker-env.sh --keep-on-failure    # Keep containers on test failure
 #   ./run-e2e-docker-env.sh --list               # CLI-friendly output (for AI tools)
+#   CONTAINER_CLI=podman ./run-e2e-docker-env.sh  # Use podman instead of Docker
 
 # ============================================================================
 # Configuration
 # ============================================================================
 
 script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# The container CLI to drive compose with. Anything with a docker-compatible `compose` subcommand works;
+# set CONTAINER_CLI=podman on machines without Docker (`podman compose` delegates to docker-compose).
+container_cli="${CONTAINER_CLI:-docker}"
 repository_root="$script_dir/../../../."
 
 # Parse arguments
@@ -80,14 +85,14 @@ wait_for_gateway() {
   local max_attempts=30
   local attempt=0
   echo "Waiting for gateway container to start..."
-  while ! docker compose -p "$project_name" -f "$compose_file" ps --status running --services 2>/dev/null | grep -q "^gateway$"; do
+  while ! "$container_cli" compose -p "$project_name" -f "$compose_file" ps --status running --services 2>/dev/null | grep -q "^gateway$"; do
     attempt=$((attempt + 1))
     if [[ $attempt -ge $max_attempts ]]; then
       echo "ERROR: Gateway container failed to start within 60 seconds"
       echo "Container status:"
-      docker compose -p "$project_name" -f "$compose_file" ps
+      "$container_cli" compose -p "$project_name" -f "$compose_file" ps
       echo "Gateway logs:"
-      docker compose -p "$project_name" -f "$compose_file" logs gateway
+      "$container_cli" compose -p "$project_name" -f "$compose_file" logs gateway
       exit 1
     fi
     sleep 2
@@ -162,17 +167,17 @@ cleanup() {
     echo "Base URL: $base_url"
     echo ""
     echo "To stop containers manually:"
-    echo "  docker compose -p $project_name -f $compose_file down -v"
+    echo "  "$container_cli" compose -p $project_name -f $compose_file down -v"
     echo ""
     echo "To view logs:"
-    echo "  docker compose -p $project_name -f $compose_file logs -f"
+    echo "  "$container_cli" compose -p $project_name -f $compose_file logs -f"
     echo "========================================"
     return
   fi
 
   echo ""
   echo "Stopping Docker containers..."
-  docker compose -p "$project_name" -f "$compose_file" down -v 2>/dev/null || true
+  "$container_cli" compose -p "$project_name" -f "$compose_file" down -v 2>/dev/null || true
   echo "Cleanup complete."
 }
 
@@ -287,8 +292,8 @@ cd "$working_dir"
 echo ""
 echo "Building and starting Docker containers..."
 # CACHE_BUST to ensure the assemble step is always run
-docker compose -p "$project_name" build --build-arg CACHE_BUST=$(date +%s) frontend
-docker compose -p "$project_name" up -d
+"$container_cli" compose -p "$project_name" build --build-arg CACHE_BUST=$(date +%s) frontend
+"$container_cli" compose -p "$project_name" up -d
 
 # ============================================================================
 # Wait for backend to be ready
