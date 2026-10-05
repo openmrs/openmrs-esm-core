@@ -67,11 +67,7 @@ function mergeDeepReplace<T extends object>(left: T, right: Partial<T>): T {
 const configSubscriptions: Array<() => void> = [];
 
 /**
- * Which validation errors have been displayed; each is only displayed once.
- *
- * Declared up here rather than beside `logError` because `setupConfigSubscriptions()` runs at module
- * load and validates the config restored from local storage, so `logError` can run before that point
- * in the module body and read this in its temporal dead zone, which throws.
+ * Track displayed validation messages so they only get displayed once.
  */
 const displayedValidationMessages = new Set<string>();
 
