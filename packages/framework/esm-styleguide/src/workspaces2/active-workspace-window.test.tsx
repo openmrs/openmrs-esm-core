@@ -4,6 +4,7 @@ import { act, render, screen } from '@testing-library/react';
 import { workspace2Store, type OpenedWindow, type OpenedWorkspace } from '@openmrs/esm-extensions';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
+import styles from './workspace2.module.scss';
 import { type Workspace2DefinitionProps } from './workspace2.component';
 import { type WorkspaceWindowActions } from './workspace-window-actions';
 
@@ -104,6 +105,48 @@ describe('ActiveWorkspaceWindow', () => {
     for (const workspaceName of Object.keys(parcelProps)) {
       delete parcelProps[workspaceName];
     }
+  });
+
+  it('applies the leaf width to loading and mounted chrome, and restores it when the child closes', async () => {
+    const state = workspace2Store.getState();
+    workspace2Store.setState({
+      registeredWorkspacesByName: {
+        ...state.registeredWorkspacesByName,
+        'form-workspace': { ...state.registeredWorkspacesByName['form-workspace'], width: 'extra-wide' },
+        'admit-workspace': { ...state.registeredWorkspacesByName['admit-workspace'], width: 'narrow' },
+      },
+    });
+    const parent = makeOpenedWorkspace('form-workspace', 'parent');
+    const child = makeOpenedWorkspace('admit-workspace', 'child');
+    const actions = makeActions();
+    let resolveChild: (config: { name: string }) => void;
+    mockLoadLifeCycles.mockImplementation((_, component) =>
+      component === 'form'
+        ? Promise.resolve({ name: 'form' } as never)
+        : (new Promise((resolve) => {
+            resolveChild = resolve as never;
+          }) as never),
+    );
+    const { container, rerender } = render(renderWindow(makeOpenedWindow([parent]), actions, true));
+    await flushLifeCycles();
+    // Width classes live on the chrome containers, including the loading state with no title bar.
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelectorAll(`.${styles.extraWideWorkspace}`)).toHaveLength(1);
+    rerender(renderWindow(makeOpenedWindow([parent, child]), actions, true));
+    // Width classes live on the chrome containers, including the loading state with no title bar.
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelectorAll(`.${styles.narrowWorkspace}`)).toHaveLength(2);
+    await act(async () => {
+      resolveChild({ name: 'admit' });
+    });
+    expect(screen.getAllByTestId('parcel')).toHaveLength(2);
+    // Width classes live on the chrome containers, including the loading state with no title bar.
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelectorAll(`.${styles.narrowWorkspace}`)).toHaveLength(2);
+    rerender(renderWindow(makeOpenedWindow([parent]), actions, true));
+    // Width classes live on the chrome containers, including the loading state with no title bar.
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelectorAll(`.${styles.extraWideWorkspace}`)).toHaveLength(1);
   });
 
   it('does not render a replaced workspace with the previous workspace lifecycle at the same stack position', async () => {

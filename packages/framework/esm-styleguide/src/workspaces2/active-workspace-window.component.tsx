@@ -15,7 +15,7 @@ import { isDesktop, useLayoutType, useStore } from '@openmrs/esm-react-utils';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { ArrowRightIcon, CloseIcon } from '../icons';
-import { closeWorkspaceGroup2, useWorkspace2Store } from './workspace2';
+import { closeWorkspaceGroup2, getOpenedWindowWidth, useWorkspace2Store } from './workspace2';
 import { type Workspace2DefinitionProps } from './workspace2.component';
 import { type WorkspaceWindowActions } from './workspace-window-actions';
 import styles from './workspace2.module.scss';
@@ -262,6 +262,7 @@ const WorkspaceChrome: React.FC<WorkspaceChromeProps> = ({
     openedGroup,
     openedWindows,
     registeredWindowsByName,
+    registeredWorkspacesByName,
     registeredGroupsByName,
     isMostRecentlyOpenedWindowHidden,
     setWindowMaximized,
@@ -273,7 +274,7 @@ const WorkspaceChrome: React.FC<WorkspaceChromeProps> = ({
   const title = openedWorkspace.title ?? '';
 
   const windowDef = registeredWindowsByName[windowName];
-  const width = windowDef?.width ?? 'narrow';
+  const width = getOpenedWindowWidth(openedWindow, registeredWorkspacesByName, registeredWindowsByName);
   const icon = windowDef?.icon;
   const canMaximize = windowDef?.canMaximize;
   const canCloseGroup = openedGroup ? registeredGroupsByName[openedGroup.groupName]?.persistence === 'closable' : false;
