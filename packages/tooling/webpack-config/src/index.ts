@@ -63,7 +63,6 @@ import {
 // webpack's own browsers-to-features mapping
 import browserslistTargetHandler from 'webpack/lib/config/browserslistTargetHandler';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
 import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
 
@@ -602,13 +601,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           name,
           moduleFederationVersion ? `${moduleFederationVersion.major}.${moduleFederationVersion.minor}` : undefined,
         ),
-      }),
-      new StatsWriterPlugin({
-        filename: `${filename}.buildmanifest.json`,
-        stats: {
-          all: false,
-          chunks: true,
-        },
       }),
     ].filter(Boolean),
     resolve: {
