@@ -2,10 +2,13 @@ import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import { workspace2Store, type OpenedWindow, type OpenedWorkspace } from '@openmrs/esm-extensions';
+import { reportError } from '@openmrs/esm-error-handling';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import ActiveWorkspaceWindow from './active-workspace-window.component';
 import { type Workspace2DefinitionProps } from './workspace2.component';
 import { type WorkspaceWindowActions } from './workspace-window-actions';
+
+vi.mock('@openmrs/esm-error-handling', () => ({ reportError: vi.fn() }));
 
 vi.mock('@openmrs/esm-routes', () => ({
   loadLifeCycles: vi.fn(),
@@ -74,6 +77,33 @@ async function flushLifeCycles() {
 }
 
 describe('ActiveWorkspaceWindow', () => {
+  it.each([false, true])(
+    'reports failed loading with renderChrome=%s while rendering other workspaces',
+    async (renderChrome) => {
+      const error = new Error('Module failed to load');
+      mockLoadLifeCycles.mockImplementation((_moduleName, component) =>
+        component === 'form' ? Promise.reject(error) : Promise.resolve({ name: 'admit-lifecycle' } as never),
+      );
+      render(
+        renderWindow(
+          makeOpenedWindow([
+            makeOpenedWorkspace('form-workspace', 'uuid-form'),
+            makeOpenedWorkspace('admit-workspace', 'uuid-admit'),
+          ]),
+          makeActions(),
+          renderChrome,
+        ),
+      );
+
+      await flushLifeCycles();
+
+      expect(reportError).toHaveBeenCalledWith(error);
+      expect(screen.getByText('Something went wrong. Please try reloading.')).toBeInTheDocument();
+      expect(screen.getByTestId('parcel')).toHaveTextContent('admit-lifecycle');
+      expect(screen.queryByText('Loading')).not.toBeInTheDocument();
+    },
+  );
+
   beforeEach(() => {
     workspace2Store.setState({
       registeredWorkspacesByName: {

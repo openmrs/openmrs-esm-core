@@ -162,7 +162,7 @@ export { getCurrentUser };
  * ```
  */
 export function getSessionStore() {
-  refreshSessionIfStale();
+  void refreshSessionIfStale();
   return sessionStore;
 }
 

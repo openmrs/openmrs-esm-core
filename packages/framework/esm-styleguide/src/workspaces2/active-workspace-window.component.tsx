@@ -2,7 +2,14 @@ import React, { type ReactNode, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Parcel from 'single-spa-react/parcel';
 import { type ParcelConfig } from 'single-spa';
-import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderName, InlineLoading } from '@carbon/react';
+import {
+  Header,
+  HeaderGlobalAction,
+  HeaderGlobalBar,
+  HeaderName,
+  InlineLoading,
+  InlineNotification,
+} from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import {
   type OpenedWindow,
@@ -12,6 +19,7 @@ import {
   type WorkspaceStoreState2,
 } from '@openmrs/esm-extensions';
 import { isDesktop, useLayoutType, useStore } from '@openmrs/esm-react-utils';
+import { reportError } from '@openmrs/esm-error-handling';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { ArrowRightIcon, CloseIcon } from '../icons';
@@ -55,28 +63,35 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({
   // the previous workspace's component until the reload resolves. The parcel
   // mounts whatever config it first receives, so the wrong component would then
   // render with the new workspace's props.
-  const [lifeCyclesByUuid, setLifeCyclesByUuid] = useState<Record<string, ParcelConfig>>({});
+  const [lifeCyclesByUuid, setLifeCyclesByUuid] = useState<Record<string, ParcelConfig | null>>({});
   // Reactive so the effect retries when a workspace registers after mount.
   const registeredWorkspacesByName = useStore(workspace2Store, selectRegisteredWorkspacesByName);
 
   useEffect(() => {
     let cancelled = false;
     Promise.all(
-      openedWorkspaces.map(async (openedWorkspace): Promise<[string, ParcelConfig] | null> => {
+      openedWorkspaces.map(async (openedWorkspace): Promise<[string, ParcelConfig | null] | null> => {
         const workspaceDef = registeredWorkspacesByName[openedWorkspace.workspaceName];
         if (!workspaceDef) {
           return null;
         }
         const { moduleName, component } = workspaceDef;
-        return [openedWorkspace.uuid, await loadLifeCycles(moduleName, component)];
+        try {
+          return [openedWorkspace.uuid, await loadLifeCycles(moduleName, component)];
+        } catch (error) {
+          if (!cancelled) {
+            reportError(error);
+          }
+          return [openedWorkspace.uuid, null];
+        }
       }),
     ).then((entries) => {
       if (!cancelled) {
         setLifeCyclesByUuid(
-          Object.fromEntries(entries.filter((entry): entry is [string, ParcelConfig] => entry != null)),
+          Object.fromEntries(entries.filter((entry): entry is [string, ParcelConfig | null] => entry != null)),
         );
       }
-    });
+    }, reportError);
     return () => {
       cancelled = true;
     };
@@ -103,7 +118,7 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({
 };
 
 interface ActiveWorkspaceProps {
-  lifeCycle: ParcelConfig | undefined;
+  lifeCycle: ParcelConfig | null | undefined;
   openedWorkspace: OpenedWorkspace;
   openedWindow: OpenedWindow;
   groupProps: Record<string, any> | null;
@@ -206,6 +221,14 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
           wrapWith="div"
           wrapClassName={classNames(styles.workspaceContent, { [styles.hiddenExtraWorkspace]: hideBehindLeaf })}
           {...props}
+        />
+      ) : lifeCycle === null ? (
+        <InlineNotification
+          className={classNames(styles.workspaceContent, { [styles.hiddenExtraWorkspace]: hideBehindLeaf })}
+          kind="error"
+          title={getCoreTranslation('error')}
+          subtitle={getCoreTranslation('somethingWentWrongTryReloading')}
+          hideCloseButton
         />
       ) : null,
     [lifeCycle, openedWorkspace.workspaceName, props, hideBehindLeaf],
