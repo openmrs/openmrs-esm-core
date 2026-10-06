@@ -222,16 +222,21 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
     );
   }
 
+  // The node removed from the workspace grid on close must generate a box. WebKit before Safari 26.2
+  // doesn't relayout the grid when the removed node is the `display: contents` outer container, so the
+  // closed window keeps taking up space. https://bugs.webkit.org/show_bug.cgi?id=299258
   return (
-    <WorkspaceChrome
-      openedWorkspace={openedWorkspace}
-      openedWindow={openedWindow}
-      isRootWorkspace={isRootWorkspace}
-      showActionMenu={showActionMenu}
-      closeWindow={() => props.closeWorkspace({ closeWindow: true })}
-    >
-      {content}
-    </WorkspaceChrome>
+    <div>
+      <WorkspaceChrome
+        openedWorkspace={openedWorkspace}
+        openedWindow={openedWindow}
+        isRootWorkspace={isRootWorkspace}
+        showActionMenu={showActionMenu}
+        closeWindow={() => props.closeWorkspace({ closeWindow: true })}
+      >
+        {content}
+      </WorkspaceChrome>
+    </div>
   );
 };
 
