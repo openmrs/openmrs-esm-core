@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       release_type:
-        description: 'Version bump'
+        description: 'Release version bump'
         type: choice
         options: [patch, minor, major]
         default: patch
