@@ -222,16 +222,21 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
     );
   }
 
+  // The plain <div> gives the chrome's `display: contents` container a parent with a box. Without
+  // it, Safari 26.1 doesn't recompute the min-content width of the workspace column when the
+  // workspace closes, so the column keeps the closed workspace's width.
   return (
-    <WorkspaceChrome
-      openedWorkspace={openedWorkspace}
-      openedWindow={openedWindow}
-      isRootWorkspace={isRootWorkspace}
-      showActionMenu={showActionMenu}
-      closeWindow={() => props.closeWorkspace({ closeWindow: true })}
-    >
-      {content}
-    </WorkspaceChrome>
+    <div>
+      <WorkspaceChrome
+        openedWorkspace={openedWorkspace}
+        openedWindow={openedWindow}
+        isRootWorkspace={isRootWorkspace}
+        showActionMenu={showActionMenu}
+        closeWindow={() => props.closeWorkspace({ closeWindow: true })}
+      >
+        {content}
+      </WorkspaceChrome>
+    </div>
   );
 };
 
