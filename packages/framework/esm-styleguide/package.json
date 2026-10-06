@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "module": "dist/internal.js",

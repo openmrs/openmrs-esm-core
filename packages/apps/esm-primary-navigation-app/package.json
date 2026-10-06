@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-primary-navigation-app",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "license": "MPL-2.0",
   "description": "Main navbar microfrontend for the OpenMRS SPA",
   "browser": "dist/openmrs-esm-primary-navigation-app.js",
@@ -45,7 +45,7 @@
   },
   "peerDependencies": {
     "@carbon/react": "1.x",
-    "@openmrs/esm-framework": "10.x",
+    "@openmrs/esm-framework": "11.x",
     "react": "18.x",
     "react-dom": "18.x",
     "react-i18next": "16.x",
