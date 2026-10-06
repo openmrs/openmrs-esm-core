@@ -1,14 +1,25 @@
 name: OpenMRS CI
 
 on:
-  workflow_dispatch: # temporary, for debugging
   push:
     branches: [main]
   pull_request:
     branches: [main]
-  release:
-    types:
-      - created
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Version bump'
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+      custom_version:
+        description: 'Custom version (e.g. 12.5.0). If set, overrides the version bump above.'
+        required: false
+      publish_only:
+        description: 'Re-Publish only (For recovering from a failed npm publish. Skips the version bump, commit, and tag. Set "Custom version" to the existing release version, e.g. 12.4.0.)'
+        type: boolean
+        default: false
+        required: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
