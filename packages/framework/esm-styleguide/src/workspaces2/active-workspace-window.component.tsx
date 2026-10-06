@@ -1,4 +1,4 @@
-import React, { type ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import Parcel from 'single-spa-react/parcel';
 import { type ParcelConfig } from 'single-spa';
@@ -66,6 +66,9 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({
   const [lifeCyclesByUuid, setLifeCyclesByUuid] = useState<Record<string, ParcelConfig | null>>({});
   // Reactive so the effect retries when a workspace registers after mount.
   const registeredWorkspacesByName = useStore(workspace2Store, selectRegisteredWorkspacesByName);
+  // The effect reloads every workspace whenever any of them changes (for example, its title), so
+  // track which workspaces have already reported a load failure to report each one only once.
+  const reportedFailureUuids = useRef(new Set<string>());
 
   useEffect(() => {
     let cancelled = false;
@@ -79,7 +82,8 @@ const ActiveWorkspaceWindow: React.FC<WorkspaceWindowProps> = ({
         try {
           return [openedWorkspace.uuid, await loadLifeCycles(moduleName, component)];
         } catch (error) {
-          if (!cancelled) {
+          if (!cancelled && !reportedFailureUuids.current.has(openedWorkspace.uuid)) {
+            reportedFailureUuids.current.add(openedWorkspace.uuid);
             reportError(error);
           }
           return [openedWorkspace.uuid, null];
@@ -223,13 +227,14 @@ const ActiveWorkspace: React.FC<ActiveWorkspaceProps> = ({
           {...props}
         />
       ) : lifeCycle === null ? (
-        <InlineNotification
-          className={classNames(styles.workspaceContent, { [styles.hiddenExtraWorkspace]: hideBehindLeaf })}
-          kind="error"
-          title={getCoreTranslation('error')}
-          subtitle={getCoreTranslation('somethingWentWrongTryReloading')}
-          hideCloseButton
-        />
+        <div className={classNames(styles.workspaceContent, { [styles.hiddenExtraWorkspace]: hideBehindLeaf })}>
+          <InlineNotification
+            kind="error"
+            title={getCoreTranslation('error')}
+            subtitle={getCoreTranslation('somethingWentWrongTryReloading')}
+            hideCloseButton
+          />
+        </div>
       ) : null,
     [lifeCycle, openedWorkspace.workspaceName, props, hideBehindLeaf],
   );

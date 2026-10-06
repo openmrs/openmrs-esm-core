@@ -77,33 +77,6 @@ async function flushLifeCycles() {
 }
 
 describe('ActiveWorkspaceWindow', () => {
-  it.each([false, true])(
-    'reports failed loading with renderChrome=%s while rendering other workspaces',
-    async (renderChrome) => {
-      const error = new Error('Module failed to load');
-      mockLoadLifeCycles.mockImplementation((_moduleName, component) =>
-        component === 'form' ? Promise.reject(error) : Promise.resolve({ name: 'admit-lifecycle' } as never),
-      );
-      render(
-        renderWindow(
-          makeOpenedWindow([
-            makeOpenedWorkspace('form-workspace', 'uuid-form'),
-            makeOpenedWorkspace('admit-workspace', 'uuid-admit'),
-          ]),
-          makeActions(),
-          renderChrome,
-        ),
-      );
-
-      await flushLifeCycles();
-
-      expect(reportError).toHaveBeenCalledWith(error);
-      expect(screen.getByText('Something went wrong. Please try reloading.')).toBeInTheDocument();
-      expect(screen.getByTestId('parcel')).toHaveTextContent('admit-lifecycle');
-      expect(screen.queryByText('Loading')).not.toBeInTheDocument();
-    },
-  );
-
   beforeEach(() => {
     workspace2Store.setState({
       registeredWorkspacesByName: {
@@ -171,6 +144,82 @@ describe('ActiveWorkspaceWindow', () => {
       await Promise.resolve();
     });
     expect(screen.getByTestId('parcel')).toHaveTextContent('admit-lifecycle');
+  });
+
+  it.each([false, true])(
+    'reports failed loading with renderChrome=%s while rendering other workspaces',
+    async (renderChrome) => {
+      const error = new Error('Module failed to load');
+      mockLoadLifeCycles.mockImplementation((_moduleName, component) =>
+        component === 'form' ? Promise.reject(error) : Promise.resolve({ name: 'admit-lifecycle' } as never),
+      );
+      render(
+        renderWindow(
+          makeOpenedWindow([
+            makeOpenedWorkspace('form-workspace', 'uuid-form'),
+            makeOpenedWorkspace('admit-workspace', 'uuid-admit'),
+          ]),
+          makeActions(),
+          renderChrome,
+        ),
+      );
+
+      await flushLifeCycles();
+
+      expect(reportError).toHaveBeenCalledWith(error);
+      expect(screen.getByText('Something went wrong. Please try reloading.')).toBeInTheDocument();
+      expect(screen.getByTestId('parcel')).toHaveTextContent('admit-lifecycle');
+      expect(screen.queryByText('Loading')).not.toBeInTheDocument();
+    },
+  );
+
+  it('does not report a failed load for a workspace that has since been replaced', async () => {
+    // The form lifecycle rejects only when we release it, after the admit workspace has replaced it.
+    let rejectForm: (error: Error) => void;
+    mockLoadLifeCycles.mockImplementation((_moduleName, component) => {
+      if (component === 'form') {
+        return new Promise((_resolve, reject) => {
+          rejectForm = reject;
+        }) as never;
+      }
+      return Promise.resolve({ name: 'admit-lifecycle' } as never);
+    });
+
+    const actions = makeActions();
+    const { rerender } = render(
+      renderWindow(makeOpenedWindow([makeOpenedWorkspace('form-workspace', 'uuid-form')]), actions),
+    );
+    rerender(renderWindow(makeOpenedWindow([makeOpenedWorkspace('admit-workspace', 'uuid-admit')]), actions));
+    await flushLifeCycles();
+
+    await act(async () => {
+      rejectForm(new Error('Module failed to load'));
+      await Promise.resolve();
+    });
+
+    expect(reportError).not.toHaveBeenCalled();
+    expect(screen.queryByText('Something went wrong. Please try reloading.')).not.toBeInTheDocument();
+    expect(screen.getByTestId('parcel')).toHaveTextContent('admit-lifecycle');
+  });
+
+  it('reports a failed load only once when the opened workspaces change', async () => {
+    const error = new Error('Module failed to load');
+    mockLoadLifeCycles.mockImplementation((_moduleName, component) =>
+      component === 'form' ? Promise.reject(error) : Promise.resolve({ name: 'admit-lifecycle' } as never),
+    );
+    const actions = makeActions();
+    const formWorkspace = makeOpenedWorkspace('form-workspace', 'uuid-form');
+    const admitWorkspace = makeOpenedWorkspace('admit-workspace', 'uuid-admit');
+
+    const { rerender } = render(renderWindow(makeOpenedWindow([formWorkspace, admitWorkspace]), actions));
+    await flushLifeCycles();
+
+    // A title change creates a new openedWorkspaces array, which reloads every workspace.
+    rerender(renderWindow(makeOpenedWindow([formWorkspace, { ...admitWorkspace, title: 'Admit' }]), actions));
+    await flushLifeCycles();
+
+    expect(mockLoadLifeCycles).toHaveBeenCalledTimes(4);
+    expect(reportError).toHaveBeenCalledTimes(1);
   });
 
   it("passes the workspace's registered meta to the parcel via workspaceMeta", async () => {
