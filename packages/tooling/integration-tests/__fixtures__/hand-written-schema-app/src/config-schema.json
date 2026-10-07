@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.openmrs.org/config-schema.schema.json",
+  "configurationSchema": {
+    "title": {
+      "_type": "String",
+      "_default": "Hand written",
+      "_description": "Written by hand rather than extracted.",
+      "_validators": [{ "type": "nonEmptyString" }, { "type": "custom", "export": "validateTitle" }]
+    }
+  }
+}

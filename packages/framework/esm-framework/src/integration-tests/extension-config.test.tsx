@@ -46,7 +46,7 @@ describe('Interaction between configuration and extension systems', () => {
     // eslint-disable-next-line testing-library/no-render-in-lifecycle -- not a render; the rule matches any callee name containing "render"
     getExtensionRenderingsStore().setState({ renderings: new Map() });
     temporaryConfigStore.setState({ config: {} });
-    configInternalStore.setState({ providedConfigs: [], schemas: {}, moduleLoaded: {} });
+    configInternalStore.setState({ providedConfigs: [], schemas: {}, schemaDefined: {}, schemaSource: {} });
     mockSessionStore.setState({});
     getExtensionSlotsConfigStore().setState({ slots: {} });
     getExtensionsConfigStore().setState({ configs: {} });

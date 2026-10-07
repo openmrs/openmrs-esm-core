@@ -67,6 +67,7 @@ function defaultArgs(overrides: Partial<AssembleArgs> = {}): AssembleArgs {
     buildRoutes: false,
     manifest: false,
     ensureEntrypoints: false,
+    strictSchemas: false,
     ...overrides,
   };
 }
