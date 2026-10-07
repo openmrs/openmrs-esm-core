@@ -4,9 +4,34 @@
 // `.../components/button` would emit Carbon's entire button stylesheet; the tokens module emits none.
 @use '@carbon/styles/scss/components/button/tokens' as button;
 
+.editor {
+  width: 100vw;
+
+  :global(.cm-editor) {
+    height: 100%;
+  }
+}
+
+// Syntax colours for the dark theme the tools use; Carbon has no syntax tokens.
+.property {
+  color: colors.$cyan-30;
+}
+
+.string {
+  color: colors.$green-30;
+}
+
+.literal {
+  color: colors.$purple-30;
+}
+
+.punctuation {
+  color: colors.$gray-30;
+}
+
 .toolbar {
   display: flex;
-  button {
+  > button {
     background-color: button.$button-primary;
     &:hover {
       background-color: button.$button-primary-hover;
@@ -25,4 +50,14 @@
 
 .errorBackground {
   background-color: colors.$red-60;
+}
+
+.warningBackground {
+  background-color: colors.$yellow-30;
+  color: colors.$gray-100;
+  justify-content: space-between;
+
+  :global(.cds--btn--ghost) {
+    color: colors.$gray-100;
+  }
 }
