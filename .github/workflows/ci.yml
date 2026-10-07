@@ -42,7 +42,7 @@ jobs:
       release_publish_command: 'yarn run ci:publish'
       release_type: ${{ inputs.release_type }}
       release_version: ${{ inputs.custom_version }}
-      publish_only: ${{inputs.publish_only}}
+      publish_only: ${{ inputs.publish_only || false }}
       artifact_path: 'packages/**/dist'
     secrets:
       NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
