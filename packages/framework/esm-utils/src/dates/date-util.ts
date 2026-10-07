@@ -237,8 +237,11 @@ const defaultOptions: FormatDateOptions = {
  * @param options Optional formatting options.
  * @returns The formatted date string, or `null` if the input cannot be parsed.
  */
-// TODO: Shouldn't throw on null input
-export function formatPartialDate(dateString: string, options: Partial<FormatDateOptions> = {}) {
+export function formatPartialDate(dateString: string | null | undefined, options: Partial<FormatDateOptions> = {}) {
+  if (!dateString) {
+    return null;
+  }
+
   const locale = getLocale();
   let parsed: ReturnType<typeof attempt> & { date?: number } = attempt(dateString, locale);
 
@@ -300,10 +303,13 @@ export function formatPartialDate(dateString: string, options: Partial<FormatDat
  *
  * @param date The date to format.
  * @param options Optional formatting options.
- * @returns The formatted date string.
+ * @returns The formatted date string, or empty string if the input is null or invalid.
  */
-// TODO: Shouldn't throw on null input
-export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
+export function formatDate(date: Date | null | undefined, options?: Partial<FormatDateOptions>) {
+  if (!date || (date instanceof Date && isNaN(date.getTime()))) {
+    return '';
+  }
+
   let locale = options?.locale ?? getLocale();
   const _locale = new Intl.Locale(locale);
 
@@ -391,9 +397,13 @@ const formatParts = (separator: string) => {
  * 12-hour or 24-hour clock depends on locale.
  *
  * @param date The date whose time portion should be formatted.
- * @returns The formatted time string (e.g., "2:30 PM" or "14:30").
+ * @returns The formatted time string (e.g., "2:30 PM" or "14:30"), or empty string if the input is null or invalid.
  */
-export function formatTime(date: Date) {
+export function formatTime(date: Date | null | undefined) {
+  if (!date || (date instanceof Date && isNaN(date.getTime()))) {
+    return '';
+  }
+
   return date.toLocaleTimeString(getLocale(), {
     hour: '2-digit',
     minute: '2-digit',
@@ -411,9 +421,9 @@ export function formatTime(date: Date) {
  *
  * @param date The date to format.
  * @param options Optional formatting options (same as formatDate, except time is always included).
- * @returns The formatted date and time string.
+ * @returns The formatted date and time string, or empty string if the input is null or invalid.
  */
-export function formatDatetime(date: Date, options?: Partial<Omit<FormatDateOptions, 'time'>>) {
+export function formatDatetime(date: Date | null | undefined, options?: Partial<Omit<FormatDateOptions, 'time'>>) {
   return formatDate(date, { ...options, time: true });
 }
 
