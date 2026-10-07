@@ -170,7 +170,15 @@ export const EmptyCard = ({
   </div>
 );
 
-export { CardHeader, ErrorCard, Pagination, PageHeader, PageHeaderContent } from '@openmrs/esm-styleguide/src/internal';
+export {
+  CardHeader,
+  ErrorCard,
+  Pagination,
+  PageHeader,
+  PageHeaderContent,
+  getCarbonPaginationTranslationProps,
+  type CarbonPaginationTranslationProps,
+} from '@openmrs/esm-styleguide/src/internal';
 
 export const OpenmrsDatePicker = () => <span>OpenmrsDatePicker</span>;
 export const OpenmrsDateRangePicker = () => <span>OpenmrsDateRangePicker</span>;
