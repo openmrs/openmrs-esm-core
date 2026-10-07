@@ -7,7 +7,7 @@ import GlobalImplementerToolsButton from './global-implementer-tools.component';
 describe('Testing the global implementer tools button', () => {
   it('should render global Implementer tools', () => {
     render(<GlobalImplementerToolsButton />);
-    const button = screen.getByTestId('globalImplementerToolsButton');
+    const button = screen.getByRole('button', { name: 'Toggle Implementer Tools' });
     expect(button).toBeInTheDocument();
   });
 });
