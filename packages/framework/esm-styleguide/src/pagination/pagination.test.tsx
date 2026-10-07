@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+import { coreTranslations } from '../../../esm-translations/src/translations';
 import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
@@ -120,6 +122,84 @@ describe('Pagination', () => {
       expect(props.itemRangeText(1, 10, 50)).toBe('1–10 of 50 items');
       expect(props.itemText(1, 1)).toBe('1–1 item');
       expect(props.itemText(1, 10)).toBe('1–10 items');
+    });
+  });
+
+  describe('real i18next integration and placeholder compatibility', () => {
+    it('correctly resolves plural forms and supports both {{totalItems}} and {{count}} placeholder formats', async () => {
+      const i18nInstance = i18next.createInstance();
+      await i18nInstance.init({
+        lng: 'en',
+        resources: {
+          en: {
+            core: {
+              ...coreTranslations,
+              paginationItemsCountWithCountPlaceholder_one: '{{pageItemsCount}} / {{count}} item',
+              paginationItemsCountWithCountPlaceholder_other: '{{pageItemsCount}} / {{count}} items',
+            },
+          },
+        },
+        defaultNS: 'core',
+      });
+
+      // 1. Verify standard core translations with real i18next
+      expect(
+        i18nInstance.t('paginationItemsCount', {
+          count: 1,
+          totalItems: 1,
+          pageItemsCount: 1,
+        }),
+      ).toBe('1 / 1 item');
+
+      expect(
+        i18nInstance.t('paginationItemsCount', {
+          count: 20,
+          totalItems: 20,
+          pageItemsCount: 10,
+        }),
+      ).toBe('10 / 20 items');
+
+      expect(i18nInstance.t('paginationOfPages', { count: 1 })).toBe('of 1 page');
+      expect(i18nInstance.t('paginationOfPages', { count: 4 })).toBe('of 4 pages');
+      expect(i18nInstance.t('paginationPreviousPage')).toBe('Previous page');
+      expect(i18nInstance.t('paginationNextPage')).toBe('Next page');
+
+      // 2. Verify external/migrated catalogs using {{count}} instead of {{totalItems}}
+      expect(
+        i18nInstance.t('paginationItemsCountWithCountPlaceholder', {
+          count: 1,
+          totalItems: 1,
+          pageItemsCount: 1,
+        }),
+      ).toBe('1 / 1 item');
+
+      expect(
+        i18nInstance.t('paginationItemsCountWithCountPlaceholder', {
+          count: 50,
+          totalItems: 50,
+          pageItemsCount: 10,
+        }),
+      ).toBe('10 / 50 items');
+
+      // 3. Verify component rendering with real i18next translation resolution
+      const originalImplementation = vi.mocked(getCoreTranslation).getMockImplementation();
+      vi.mocked(getCoreTranslation).mockImplementation((key, defaultText, options) =>
+        i18nInstance.t(key, { defaultValue: defaultText, ...options }),
+      );
+
+      const { rerender } = render(<Pagination {...defaultProps} currentItems={1} totalItems={1} pageNumber={1} />);
+      expect(screen.getByText('1 / 1 item')).toBeInTheDocument();
+      expect(screen.getByText('of 1 page', { selector: 'span' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /previous page/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /next page/i })).toBeInTheDocument();
+
+      rerender(<Pagination {...defaultProps} currentItems={10} totalItems={20} pageNumber={1} />);
+      expect(screen.getByText('10 / 20 items')).toBeInTheDocument();
+      expect(screen.getByText('of 2 pages', { selector: 'span' })).toBeInTheDocument();
+
+      if (originalImplementation) {
+        vi.mocked(getCoreTranslation).mockImplementation(originalImplementation);
+      }
     });
   });
 });
