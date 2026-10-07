@@ -88,3 +88,4 @@ package-lock.json
 /playwright-report/
 /playwright/.cache/
 e2e/storageState.json
+e2e/storageState.logout.json

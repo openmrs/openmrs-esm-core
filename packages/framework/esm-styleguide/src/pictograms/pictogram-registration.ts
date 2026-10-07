@@ -29,6 +29,7 @@ import pharmacy2 from './svgs/pharmacy-2.svg';
 import patientRegistration from './svgs/registration.svg';
 import reports from './svgs/reports.svg';
 import serviceQueues from './svgs/service-queues.svg';
+import systemAdministration from './svgs/system-administration.svg';
 import transfer from './svgs/transfer.svg';
 import triage from './svgs/triage.svg';
 import xray from './svgs/x-ray.svg';
@@ -65,6 +66,7 @@ export function setupPictograms() {
   addPictogramSvg('omrs-pict-reports', reports);
   addPictogramSvg('omrs-pict-service-queues', serviceQueues);
   addPictogramSvg('omrs-pict-stock-management', stockManagement);
+  addPictogramSvg('omrs-pict-system-administration', systemAdministration);
   addPictogramSvg('omrs-pict-transfer', transfer);
   addPictogramSvg('omrs-pict-triage', triage);
   addPictogramSvg('omrs-pict-x-ray', xray);

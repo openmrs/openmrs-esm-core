@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-login-app",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "license": "MPL-2.0",
   "description": "The login microfrontend for the OpenMRS SPA",
   "browser": "dist/openmrs-esm-login-app.js",
@@ -47,7 +47,7 @@
   },
   "peerDependencies": {
     "@carbon/react": "1.x",
-    "@openmrs/esm-framework": "10.x",
+    "@openmrs/esm-framework": "11.x",
     "react": "18.x",
     "react-dom": "18.x",
     "react-i18next": "16.x",
@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "@carbon/react": "^1.92.1",
+    "@openmrs/esm-framework": "workspace:*",
     "@vitest/coverage-v8": "^4.1.2",
     "cross-env": "^10.1.0",
     "happy-dom": "^20.6.0",

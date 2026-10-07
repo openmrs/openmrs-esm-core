@@ -5,7 +5,7 @@ import { workspace2Store } from '@openmrs/esm-extensions';
 import { loadLifeCycles } from '@openmrs/esm-routes';
 import { showModal } from '../modals';
 import { ExportedWorkspace, type ExportedWorkspaceWindowInfo } from './exported-workspace.component';
-import { type Workspace2DefinitionProps } from './workspace2.component';
+import { type Workspace2InternalProps } from './workspace2.component';
 
 vi.mock('@openmrs/esm-routes', () => ({
   loadLifeCycles: vi.fn(),
@@ -18,9 +18,9 @@ vi.mock('../modals', () => ({
 // The parcel is where the workspace component (and its <Workspace2>) would mount. We stub it out,
 // surface the workspace name it was handed, and record its props (keyed by workspace name) so tests
 // can call them the way the workspace component would.
-const { parcelProps } = vi.hoisted(() => ({ parcelProps: {} as Record<string, Workspace2DefinitionProps> }));
+const { parcelProps } = vi.hoisted(() => ({ parcelProps: {} as Record<string, Workspace2InternalProps> }));
 vi.mock('single-spa-react/parcel', () => ({
-  default: (props: Workspace2DefinitionProps) => {
+  default: (props: Workspace2InternalProps) => {
     parcelProps[props.workspaceName] = props;
     return <div data-testid="parcel">{props.workspaceName}</div>;
   },

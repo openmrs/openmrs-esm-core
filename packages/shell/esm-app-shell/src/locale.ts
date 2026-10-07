@@ -3,6 +3,9 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import { merge } from 'lodash-es';
 import {
+  type ExtensionsConfigStore,
+  getExtensionConfigFromStore,
+  getExtensionsConfigStore,
   getTranslationOverrides,
   importDynamic,
   registerTranslationNamespace,
@@ -10,6 +13,12 @@ import {
 import { languageDetectionOptions } from './language-detection';
 
 registerTranslationNamespace('core');
+
+/**
+ * Extension namespaces that were read while their extension was not mounted, so they are missing its
+ * translation overrides, with the languages that were read. See {@link applyPendingExtensionOverrides}.
+ */
+const pendingExtensionOverrides = new Map<string, { slotName: string; extensionId: string; languages: Set<string> }>();
 
 export function setupI18n() {
   const i18n = i18next.default || i18next;
@@ -31,6 +40,8 @@ export function setupI18n() {
   i18n.on('languageChanged', () => {
     document.documentElement.setAttribute('dir', i18n.dir());
   });
+
+  getExtensionsConfigStore().subscribe(applyPendingExtensionOverrides);
 
   return i18n
     .use(LanguageDetector)
@@ -61,13 +72,22 @@ export function setupI18n() {
             });
         } else {
           const [ns, slotName, extensionId] = namespace.split('___');
+          let extensionMountedAtRead = true;
           importDynamic(ns)
-            .then((module) =>
-              Promise.allSettled([
+            .then((module) => {
+              if (slotName && extensionId) {
+                extensionMountedAtRead = getExtensionConfigFromStore(
+                  getExtensionsConfigStore().getState(),
+                  slotName,
+                  extensionId,
+                ).loaded;
+              }
+
+              return Promise.allSettled([
                 getImportPromise(module, ns, language),
                 getTranslationOverrides(ns, slotName, extensionId),
-              ]),
-            )
+              ]);
+            })
             .then(([jsonResult, overridesResult]) => {
               // If importTranslation rejects (e.g., no translation file for this locale),
               // fall back to empty so config-provided overrides can still be applied.
@@ -94,6 +114,18 @@ export function setupI18n() {
               translations = merge(translations, ...overrides.filter((o) => language in o).map((o) => o[language]));
 
               callback(null, translations);
+
+              if (!extensionMountedAtRead) {
+                const pending = pendingExtensionOverrides.get(namespace);
+                if (pending) {
+                  pending.languages.add(language);
+                } else {
+                  pendingExtensionOverrides.set(namespace, { slotName, extensionId, languages: new Set([language]) });
+                }
+
+                // The extension may have mounted while the namespace was being read.
+                applyPendingExtensionOverrides(getExtensionsConfigStore().getState());
+              }
             })
             .catch((err: Error) => {
               callback(err, null);
@@ -107,6 +139,35 @@ export function setupI18n() {
       fallbackLng: 'en',
       nsSeparator: false,
     });
+}
+
+/**
+ * An extension's translation overrides only exist while it is mounted, but i18next reads a namespace
+ * once per language and never again, e.g. when a language change re-reads the namespace of an
+ * extension that has since unmounted. This merges the overrides into each pending namespace's loaded
+ * bundles once its extension is mounted, which happens before it renders.
+ */
+function applyPendingExtensionOverrides(state: ExtensionsConfigStore) {
+  if (pendingExtensionOverrides.size === 0) {
+    return;
+  }
+
+  for (const [namespace, { slotName, extensionId, languages }] of pendingExtensionOverrides) {
+    const extensionConfig = getExtensionConfigFromStore(state, slotName, extensionId);
+    if (!extensionConfig.loaded || !extensionConfig.config) {
+      continue;
+    }
+
+    const overrides = (extensionConfig.config['Translation overrides'] ?? {}) as Record<string, Record<string, string>>;
+
+    for (const language of languages) {
+      if (language in overrides) {
+        window.i18next.addResourceBundle(language, namespace, overrides[language], true, true);
+      }
+    }
+
+    pendingExtensionOverrides.delete(namespace);
+  }
 }
 
 function getImportPromise(
