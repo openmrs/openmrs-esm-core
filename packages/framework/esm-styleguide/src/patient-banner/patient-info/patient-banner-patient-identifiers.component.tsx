@@ -62,10 +62,8 @@ export function PatientBannerPatientIdentifiers({
   const highlightedIdentifier =
     preferredIdentifiers.length === 1
       ? preferredIdentifiers[0]
-      : preferredIdentifiers.length > 1
-        ? (preferredIdentifiers.find((id) => id.type?.coding?.[0]?.code === primaryIdentifierCode) ??
-          preferredIdentifiers[0])
-        : filteredIdentifiers.find((id) => id.type?.coding?.[0]?.code === primaryIdentifierCode);
+      : (filteredIdentifiers.find((id) => id.type?.coding?.[0]?.code === primaryIdentifierCode) ??
+        preferredIdentifiers[0]);
 
   const displayIdentifiers = highlightedIdentifier
     ? [highlightedIdentifier, ...filteredIdentifiers.filter((id) => id !== highlightedIdentifier)]
