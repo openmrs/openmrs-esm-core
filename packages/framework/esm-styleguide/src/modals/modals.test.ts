@@ -110,6 +110,7 @@ describe('modals', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     registerModals();
+    vi.mocked(reportError).mockClear();
   });
 
   // The modal store is global, so a modal still on the stack belongs to the next test as well —
@@ -125,8 +126,7 @@ describe('modals', () => {
    * mounting, or one single-spa has hard-failed — and nothing is chained to this call, so without a
    * handler the failure is only ever an unhandled rejection.
    */
-  it('logs a modal that fails to unmount', async () => {
-    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+  it('reports a modal that fails to unmount', async () => {
     const unmountError = new Error('parcel not mounted');
     vi.mocked(renderParcel).mockResolvedValue(fakeParcel({ unmountError }));
 
@@ -138,8 +138,7 @@ describe('modals', () => {
     close();
     await flush();
 
-    expect(consoleError).toHaveBeenCalledWith("The modal 'a-modal' failed to unmount", unmountError);
-    consoleError.mockRestore();
+    expect(reportError).toHaveBeenCalledWith(unmountError);
   });
 
   it('tears the modal down even though unmounting failed', async () => {
@@ -287,8 +286,8 @@ describe('modals', () => {
   });
 
   it('does not try to unmount a parcel that never mounted', async () => {
-    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
-    const parcel = fakeParcel({ mountPromise: Promise.reject(new Error('mount blew up')) });
+    const mountError = new Error('mount blew up');
+    const parcel = fakeParcel({ mountPromise: Promise.reject(mountError) });
     vi.mocked(renderParcel).mockResolvedValue(parcel);
 
     setUpModalContainer();
@@ -303,13 +302,14 @@ describe('modals', () => {
     await flush();
 
     expect(parcel.unmount).not.toHaveBeenCalled();
-    expect(consoleError).not.toHaveBeenCalled();
-    consoleError.mockRestore();
+    // Only the mount failure is reported, not a failed unmount on top of it.
+    expect(reportError).toHaveBeenCalledTimes(1);
+    expect(reportError).toHaveBeenCalledWith(mountError);
   });
 
   it('reports one failed unmount once, over both of the promises it rejects', async () => {
-    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
-    vi.mocked(renderParcel).mockResolvedValue(fakeParcel({ unmountError: new Error('parcel not mounted') }));
+    const unmountError = new Error('parcel not mounted');
+    vi.mocked(renderParcel).mockResolvedValue(fakeParcel({ unmountError }));
 
     setUpModalContainer();
 
@@ -319,8 +319,8 @@ describe('modals', () => {
     close();
     await flush();
 
-    expect(consoleError).toHaveBeenCalledTimes(1);
-    consoleError.mockRestore();
+    expect(reportError).toHaveBeenCalledTimes(1);
+    expect(reportError).toHaveBeenCalledWith(unmountError);
   });
 
   it('tears a modal down once even if another opens before it leaves the stack', async () => {
@@ -356,5 +356,101 @@ describe('modals', () => {
     expect(container.childElementCount).toBe(0);
     // An instance left on the stack holds the overlay over a page the user can no longer scroll.
     expect(document.body).not.toHaveStyle({ overflow: 'hidden' });
+  });
+
+  it('tears a modal down once when its disposer is called twice in the same task', async () => {
+    const parcel = fakeParcel();
+    vi.mocked(renderParcel).mockResolvedValue(parcel);
+
+    setUpModalContainer();
+
+    const onClose = vi.fn();
+    const close = open('a-modal', {}, onClose);
+    await flush();
+
+    close();
+    close();
+    await flush();
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(parcel.unmount).toHaveBeenCalledTimes(1);
+  });
+
+  it('ignores a disposer called again after the modal has left the stack', async () => {
+    const parcel = fakeParcel();
+    vi.mocked(renderParcel).mockResolvedValue(parcel);
+
+    setUpModalContainer();
+
+    const onClose = vi.fn();
+    const close = open('a-modal', {}, onClose);
+    await flush();
+
+    close();
+    await flush();
+    close();
+    await flush();
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(parcel.unmount).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([
+    { label: 'the prop then the disposer, in one task', first: 'prop', acrossTasks: false },
+    { label: 'the disposer then the prop, in one task', first: 'disposer', acrossTasks: false },
+    { label: 'the prop then the disposer, across tasks', first: 'prop', acrossTasks: true },
+    { label: 'the disposer then the prop, across tasks', first: 'disposer', acrossTasks: true },
+  ] as const)('tears a modal down once when closed by $label', async ({ first, acrossTasks }) => {
+    const parcel = fakeParcel();
+    vi.mocked(renderParcel).mockResolvedValue(parcel);
+
+    setUpModalContainer();
+
+    const onClose = vi.fn();
+    const disposer = open('a-modal', {}, onClose);
+    await flush();
+
+    // The `close` prop is what the modal component itself receives when it is rendered.
+    const [, props] = vi.mocked(renderParcel).mock.calls.at(-1) as unknown as [unknown, { close: () => void }];
+    const closers = { prop: props.close, disposer };
+    const second = first === 'prop' ? 'disposer' : 'prop';
+
+    closers[first]();
+    if (acrossTasks) {
+      await flush();
+    }
+    closers[second]();
+    await flush();
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(parcel.unmount).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([
+    { label: 'Escape then the disposer', escapeFirst: true },
+    { label: 'the disposer then Escape', escapeFirst: false },
+  ])('tears a modal down once when closed by $label', async ({ escapeFirst }) => {
+    const parcel = fakeParcel();
+    vi.mocked(renderParcel).mockResolvedValue(parcel);
+
+    setUpModalContainer();
+
+    const onClose = vi.fn();
+    const close = open('a-modal', {}, onClose);
+    await flush();
+
+    const pressEscape = () => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+
+    if (escapeFirst) {
+      pressEscape();
+      close();
+    } else {
+      close();
+      pressEscape();
+    }
+    await flush();
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(parcel.unmount).toHaveBeenCalledTimes(1);
   });
 });
