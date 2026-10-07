@@ -73,4 +73,82 @@ describe('PatientBannerPatientIdentifiers', () => {
     expect(screen.getByText(/openmrs id/i)).toBeInTheDocument();
     expect(screen.queryByText(/national id/i)).not.toBeInTheDocument();
   });
+
+  it('highlights the preferred identifier when a preferred identifier is selected that differs from primary identifier type', () => {
+    const identifiersWithPreferred = [
+      {
+        use: 'usual',
+        type: {
+          coding: [{ code: '05a29f94-c0ed-11e2-94be-8c13b969e334' }],
+          text: 'OpenMRS ID',
+        },
+        value: '100GEJ',
+      },
+      {
+        use: 'official',
+        type: {
+          coding: [{ code: '4281ec43-388b-4c25-8bb2-deaff0867b2c' }],
+          text: 'National ID',
+        },
+        value: '123456789',
+      },
+    ];
+
+    render(<PatientBannerPatientIdentifiers identifiers={identifiersWithPreferred} showIdentifierLabel />);
+
+    expect(screen.getByTestId('primary-patient-identifier')).toHaveTextContent('123456789');
+    expect(screen.getByTestId('secondary-patient-identifier')).toHaveTextContent('100GEJ');
+  });
+
+  it('highlights preferred identifier when indicated via preferred: true property', () => {
+    const identifiersWithPreferredProp = [
+      {
+        preferred: true,
+        type: {
+          coding: [{ code: '4281ec43-388b-4c25-8bb2-deaff0867b2c' }],
+          text: 'National ID',
+        },
+        value: '123456789',
+      },
+      {
+        preferred: false,
+        type: {
+          coding: [{ code: '05a29f94-c0ed-11e2-94be-8c13b969e334' }],
+          text: 'OpenMRS ID',
+        },
+        value: '100GEJ',
+      },
+    ];
+
+    render(<PatientBannerPatientIdentifiers identifiers={identifiersWithPreferredProp as any} showIdentifierLabel />);
+
+    expect(screen.getByTestId('primary-patient-identifier')).toHaveTextContent('123456789');
+    expect(screen.getByTestId('secondary-patient-identifier')).toHaveTextContent('100GEJ');
+  });
+
+  it('falls back to primary identifier code when no identifier is marked preferred', () => {
+    const identifiersWithoutPreferred = [
+      {
+        use: 'usual',
+        type: {
+          coding: [{ code: '4281ec43-388b-4c25-8bb2-deaff0867b2c' }],
+          text: 'National ID',
+        },
+        value: '123456789',
+      },
+      {
+        use: 'usual',
+        type: {
+          coding: [{ code: '05a29f94-c0ed-11e2-94be-8c13b969e334' }],
+          text: 'OpenMRS ID',
+        },
+        value: '100GEJ',
+      },
+    ];
+
+    render(<PatientBannerPatientIdentifiers identifiers={identifiersWithoutPreferred} showIdentifierLabel />);
+
+    expect(screen.getByTestId('primary-patient-identifier')).toHaveTextContent('100GEJ');
+    expect(screen.getByTestId('secondary-patient-identifier')).toHaveTextContent('123456789');
+  });
 });
