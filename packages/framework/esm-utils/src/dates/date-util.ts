@@ -306,7 +306,7 @@ export function formatPartialDate(dateString: string | null | undefined, options
  * @returns The formatted date string, or empty string if the input is null or invalid.
  */
 export function formatDate(date: Date | null | undefined, options?: Partial<FormatDateOptions>) {
-  if (!date || (date instanceof Date && isNaN(date.getTime()))) {
+  if (!date || (date instanceof Date && Number.isNaN(date.getTime()))) {
     return '';
   }
 
@@ -400,7 +400,7 @@ const formatParts = (separator: string) => {
  * @returns The formatted time string (e.g., "2:30 PM" or "14:30"), or empty string if the input is null or invalid.
  */
 export function formatTime(date: Date | null | undefined) {
-  if (!date || (date instanceof Date && isNaN(date.getTime()))) {
+  if (!date || (date instanceof Date && Number.isNaN(date.getTime()))) {
     return '';
   }
 
