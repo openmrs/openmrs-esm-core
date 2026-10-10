@@ -39,7 +39,7 @@
     "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
   },
   "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+    "url": "https://openmrs.atlassian.net/jira/software/c/projects/O3/boards/37"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "publishConfig": {
