@@ -50,12 +50,12 @@
     "@carbon/react": "^1.92.1",
     "@openmrs/esm-framework": "workspace:*",
     "cross-env": "^10.1.0",
-    "happy-dom": "^20.6.0",
+    "happy-dom": "^20.14.5",
     "openmrs": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
-    "vitest": "^4.1.2"
+    "vitest": "^5.0.3"
   },
   "dependencies": {
     "fuzzy": "^0.1.3"
