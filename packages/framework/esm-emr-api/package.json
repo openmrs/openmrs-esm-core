@@ -54,7 +54,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@types/fhir": "0.0.31",
+    "@types/fhir": "0.0.44",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
