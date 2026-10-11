@@ -33,6 +33,7 @@
   "dependencies": {
     "@module-federation/enhanced": "2.8.1",
     "@openmrs/carbon-css-guard": "workspace:*",
+    "@openmrs/config-schema-plugin": "workspace:*",
     "@rspack/cli": "1.7.9",
     "@rspack/core": "1.7.9",
     "@swc/core": "1.15.21",
