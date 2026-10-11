@@ -22,6 +22,56 @@ export interface PaginationProps {
   dashboardLinkLabel?: string;
 }
 
+export interface CarbonPaginationTranslationProps {
+  backwardText: string;
+  forwardText: string;
+  itemsPerPageText: string;
+  itemRangeText: (min: number, max: number, total: number) => string;
+  itemText: (min: number, max: number) => string;
+  pageRangeText: (current: number, total: number) => string;
+  pageText: (page: number, pagesUnknown?: boolean) => string;
+}
+
+/**
+ * Returns translated text props for Carbon's Pagination component.
+ */
+export function getCarbonPaginationTranslationProps(): CarbonPaginationTranslationProps {
+  return {
+    backwardText: getCoreTranslation('paginationPreviousPage', 'Previous page'),
+    forwardText: getCoreTranslation('paginationNextPage', 'Next page'),
+    itemsPerPageText: getCoreTranslation('paginationItemsPerPage', 'Items per page:'),
+    itemRangeText: (min: number, max: number, total: number) =>
+      getCoreTranslation(
+        'paginationItemRange',
+        total === 1 ? '{{min}}–{{max}} of {{total}} item' : '{{min}}–{{max}} of {{total}} items',
+        {
+          count: total,
+          min,
+          max,
+          total,
+          totalItems: total,
+        },
+      ),
+    itemText: (min: number, max: number) => {
+      const count = max - min + 1;
+      return getCoreTranslation('paginationItemText', count === 1 ? '{{min}}–{{max}} item' : '{{min}}–{{max}} items', {
+        count,
+        min,
+        max,
+      });
+    },
+    pageRangeText: (_current: number, total: number) =>
+      getCoreTranslation('paginationOfPages', total === 1 ? 'of {{count}} page' : 'of {{count}} pages', {
+        count: total,
+        total,
+      }),
+    pageText: (page: number) =>
+      getCoreTranslation('paginationPageText', 'page {{page}}', {
+        page,
+      }),
+  };
+}
+
 /**
  * Re-usable pagination bar
  */
@@ -36,10 +86,16 @@ export const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const { pageSizes, pageItemsCount } = usePaginationInfo(pageSize, totalItems, pageNumber, currentItems);
   const isTablet = useLayoutType() === 'tablet';
-  const itemsDisplayed = getCoreTranslation('paginationItemsCount', '{{pageItemsCount}} / {{totalItems}} items', {
-    totalItems,
-    pageItemsCount,
-  });
+  const paginationTextProps = getCarbonPaginationTranslationProps();
+  const itemsDisplayed = getCoreTranslation(
+    'paginationItemsCount',
+    totalItems === 1 ? '{{pageItemsCount}} / {{totalItems}} item' : '{{pageItemsCount}} / {{totalItems}} items',
+    {
+      count: totalItems,
+      totalItems,
+      pageItemsCount,
+    },
+  );
 
   return (
     <>
@@ -65,9 +121,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             pageSizes={pageSizes}
             totalItems={totalItems}
             onChange={onPageNumberChange}
-            pageRangeText={(_, total) =>
-              getCoreTranslation('paginationOfPages', 'of {{count}} pages', { count: total })
-            }
+            {...paginationTextProps}
             size={isTablet ? 'lg' : 'sm'}
           />
         </div>
