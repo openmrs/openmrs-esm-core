@@ -27,11 +27,24 @@ export function useLayoutType() {
   const [type, setType] = useState<LayoutType>(getLayout);
 
   useEffect(() => {
-    const handler = () => {
+    const handleLayoutChange = () => {
       setType(getLayout());
     };
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
+
+    // normal resize
+    window.addEventListener('resize', handleLayoutChange);
+
+    // tab moved to new window / focus change
+    window.addEventListener('focus', handleLayoutChange);
+
+    // visibility change (browser context switch)
+    document.addEventListener('visibilitychange', handleLayoutChange);
+
+    return () => {
+      window.removeEventListener('resize', handleLayoutChange);
+      window.removeEventListener('focus', handleLayoutChange);
+      document.removeEventListener('visibilitychange', handleLayoutChange);
+    };
   }, []);
 
   return type;
