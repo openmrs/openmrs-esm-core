@@ -75,6 +75,8 @@ describe('OpenMRS Expression Extractor', () => {
     // the extractor visits a ternary's consequent before its test
     expect(extractVariableNames('x ? 1stVisit : 2ndDose')).toEqual(['1stVisit', 'x', '2ndDose']);
     expect(extractVariableNames('`${3rdDose}`')).toEqual(['3rdDose']);
+    // `1e` only looks like a number when `-2ndDose` follows it
+    expect(extractVariableNames('1e-2ndDose')).toEqual(['1e', '2ndDose']);
   });
 
   it('treats numeric literals as literals, not variables', () => {

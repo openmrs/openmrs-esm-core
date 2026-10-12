@@ -322,6 +322,16 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('`${3rdDose}`', { '3rdDose': 'value' })).toBe('value');
   });
 
+  it('should disambiguate an exponent-looking run from an identifier with an operator', () => {
+    // `1e` is not a number, so `1e-2ndDose` is subtraction of two identifiers, not the literal `1e-2`
+    expect(evaluate('1e-2ndDose', { '1e': 5, '2ndDose': 2 })).toBe(3);
+    expect(evaluate('1e - 2ndDose', { '1e': 5, '2ndDose': 2 })).toBe(3);
+    expect(evaluate('1e+2ndDose', { '1e': 5, '2ndDose': 2 })).toBe(7);
+    // genuine numeric exponents are untouched
+    expect(evaluate('5e-1')).toBe(0.5);
+    expect(evaluate('1.5E+2')).toBe(150);
+  });
+
   it('should parse identifiers that start with a digit via compile()', () => {
     const exp = compile("1stVisit === 'yes'");
     expect(evaluate(exp, { '1stVisit': 'yes' })).toBe(true);
