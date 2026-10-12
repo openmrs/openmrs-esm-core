@@ -307,6 +307,43 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate(exp)).toBe(2);
   });
 
+  it('should support identifiers that start with a digit', () => {
+    expect(evaluate("1stVisit === 'yes'", { '1stVisit': 'yes' })).toBe(true);
+    expect(evaluate('1stVisit === 2ndDose', { '1stVisit': 3, '2ndDose': 3 })).toBe(true);
+    expect(evaluate('-2ndDose', { '2ndDose': 5 })).toBe(-5);
+    expect(evaluate('x ? 1stVisit : 2ndDose', { x: true, '1stVisit': 'a', '2ndDose': 'b' })).toBe('a');
+    expect(evaluate('x ? 1stVisit : 2ndDose', { x: false, '1stVisit': 'a', '2ndDose': 'b' })).toBe('b');
+  });
+
+  it('should support member access and calls on identifiers that start with a digit', () => {
+    expect(evaluate('1stVisit.length', { '1stVisit': 'hello' })).toBe(5);
+    expect(evaluate('1stVisit.toUpperCase()', { '1stVisit': 'hello' })).toBe('HELLO');
+    expect(evaluate('f(1stVisit)', { '1stVisit': 3, f: (n: number) => n + 1 })).toBe(4);
+    expect(evaluate('`${3rdDose}`', { '3rdDose': 'value' })).toBe('value');
+  });
+
+  it('should parse identifiers that start with a digit via compile()', () => {
+    const exp = compile("1stVisit === 'yes'");
+    expect(evaluate(exp, { '1stVisit': 'yes' })).toBe(true);
+  });
+
+  it('should keep parsing every numeric literal form the numbers plugin supports', () => {
+    expect(evaluate('5e-1')).toBe(0.5);
+    expect(evaluate('1.5E+2')).toBe(150);
+    expect(evaluate('0x10')).toBe(16);
+    expect(evaluate('0b11')).toBe(3);
+    expect(evaluate('1_000')).toBe(1000);
+    expect(evaluate('.5')).toBe(0.5);
+    expect(evaluate('08')).toBe(8);
+  });
+
+  it('should leave the contents of string and regex literals unchanged', () => {
+    expect(evaluate("'1st'")).toBe('1st');
+    expect(evaluate('/1st/.test(x)', { x: '1st' })).toBe(true);
+    expect(evaluate('/[0-9a-f]/.test(x)', { x: 'c' })).toBe(true);
+    expect(evaluate('$1stVisit', { $1stVisit: 5 })).toBe(5);
+  });
+
   it('should not support variable assignment', () => {
     expect(() => evaluate('var a = 1; a')).toThrow();
   });

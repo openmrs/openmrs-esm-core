@@ -20,6 +20,84 @@ jsep.plugins.register(jsepTemplate);
 jsep.addBinaryOp('in', 7);
 jsep.addBinaryOp('??', 1);
 
+// jsep copies its static helpers onto the default export at runtime, but its bundled typings do not
+// declare them, so reach for the two we need explicitly.
+const jsepInternal = jsep as unknown as {
+  isIdentifierPart: (code: number) => boolean;
+  isDecimalDigit: (code: number) => boolean;
+};
+
+/**
+ * O3 form field ids are free-form, so an expression may need to refer to a field whose id starts
+ * with a digit, e.g. `1stVisit`. Such a word is not a numeric literal, but jsep's numeric plugin
+ * would otherwise reject it as a malformed number. Because the hook is registered ahead of that
+ * plugin, it gets first refusal on every token: when the token starts with a digit, it reads the
+ * full run of identifier characters and, if that run could not be a number, emits it as an
+ * identifier instead, chaining any member access or calls that follow.
+ *
+ * jsep only invokes the hook at token boundaries, so the contents of string, template and regex
+ * literals are never inspected here.
+ */
+jsep.hooks.add(
+  'gobble-token',
+  function gobbleDigitLeadingIdentifier(env) {
+    if (!jsepInternal.isDecimalDigit(this.code)) {
+      return;
+    }
+
+    const { expr } = this;
+    const start = this.index;
+    let end = start;
+    while (end < expr.length && jsepInternal.isIdentifierPart(expr.charCodeAt(end))) {
+      end++;
+    }
+
+    if (isNumericLiteralRun(expr, start, end)) {
+      return;
+    }
+
+    this.index = end;
+    env.node = this.gobbleTokenProperty({
+      type: 'Identifier',
+      name: expr.slice(start, end),
+    });
+  },
+  true,
+);
+
+const CHARACTER_CODE_UNDERSCORE = '_'.charCodeAt(0);
+
+/**
+ * Whether the identifier run `[start, end)` of `expr` is a numeric literal that the numbers plugin
+ * should handle. The run is everything jsep reads as a single identifier, so for `5e-1` it stops at
+ * the sign; a signed exponent continuing past the run is therefore checked separately. Digit
+ * separators are stripped before testing, since `Number()` does not understand them.
+ */
+function isNumericLiteralRun(expr: string, start: number, end: number) {
+  const word = expr.slice(start, end).replace(/_/g, '');
+
+  if (!Number.isNaN(Number(word))) {
+    return true;
+  }
+
+  // `5e` is not a number on its own, but `5e-1` is; the exponent sign is not an identifier part, so
+  // the run ends before it.
+  const sign = expr.charAt(end);
+  if ((sign === '+' || sign === '-') && /[eE]$/.test(word)) {
+    const mantissa = word.slice(0, -1);
+    const exponentChar = expr.charCodeAt(end + 1);
+    if (
+      mantissa.length > 0 &&
+      !Number.isNaN(Number(mantissa)) &&
+      (jsepInternal.isDecimalDigit(exponentChar) || exponentChar === CHARACTER_CODE_UNDERSCORE)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export { jsep };
 
 /** An object containing the variable to use when evaluating this expression */

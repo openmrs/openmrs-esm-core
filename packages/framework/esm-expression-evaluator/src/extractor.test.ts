@@ -67,6 +67,27 @@ describe('OpenMRS Expression Extractor', () => {
     expect(extractVariableNames('a.map(x => x) + x')).toEqual(['a', 'x']);
   });
 
+  it('extracts identifiers that start with a digit', () => {
+    expect(extractVariableNames("1stVisit === 'yes'")).toEqual(['1stVisit']);
+    expect(extractVariableNames('1stVisit.length')).toEqual(['1stVisit']);
+    expect(extractVariableNames('f(1stVisit)')).toEqual(['f', '1stVisit']);
+    expect(extractVariableNames('-2ndDose')).toEqual(['2ndDose']);
+    // the extractor visits a ternary's consequent before its test
+    expect(extractVariableNames('x ? 1stVisit : 2ndDose')).toEqual(['1stVisit', 'x', '2ndDose']);
+    expect(extractVariableNames('`${3rdDose}`')).toEqual(['3rdDose']);
+  });
+
+  it('treats numeric literals as literals, not variables', () => {
+    expect(extractVariableNames('5e-1 + 1.5E+2 + 0x10 + 0b11 + 1_000 + .5 + 08')).toEqual([]);
+  });
+
+  it('leaves string, template and regex literal contents alone', () => {
+    expect(extractVariableNames("'1st'")).toEqual([]);
+    expect(extractVariableNames('`1st`')).toEqual([]);
+    expect(extractVariableNames('/1st/.test(a)')).toEqual(['a']);
+    expect(extractVariableNames('$1stVisit')).toEqual(['$1stVisit']);
+  });
+
   it('supports real-world use-cases', () => {
     expect(extractVariableNames('!isEmpty(array)')).toEqual(['isEmpty', 'array']);
 
