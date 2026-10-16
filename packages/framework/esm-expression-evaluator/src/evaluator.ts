@@ -120,7 +120,8 @@ export { jsep };
 
 /** An object containing the variable to use when evaluating this expression */
 export type VariablesMap = {
-  [key: string]: string | number | boolean | Function | RegExp | object | null | VariablesMap | Array<VariablesMap>;
+  [key: string]:
+    string | number | boolean | Function | RegExp | object | null | undefined | VariablesMap | Array<VariablesMap>;
 };
 
 /** The valid return types for `evaluate()` and `evaluateAsync()` */
@@ -909,6 +910,7 @@ function isValidVariableType(val: unknown): val is VariablesMap['a'] {
     typeof val === 'boolean' ||
     typeof val === 'function' ||
     val === null ||
+    typeof val === 'undefined' ||
     val instanceof RegExp
   ) {
     return true;
