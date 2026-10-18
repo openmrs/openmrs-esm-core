@@ -275,8 +275,8 @@ function computeExtensionConfigs(
   let changed = false;
   let entryCount = 0;
 
-  // We assume that the module schema has already been defined, since the extension
-  // it contains is mounted.
+  // An extension is mounted before its module loads, so the module schema may still be the
+  // implicit one; `computeExtensionConfig` holds back structural validation until it has loaded.
   for (let extension of extensionState.mountedExtensions) {
     const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
     let entry: ConfigStore | { config: ConfigObject; loaded: true };
@@ -602,6 +602,8 @@ export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject
 interface ExtensionConfigCacheEntry {
   extensionSchema: ConfigSchema | undefined;
   extensionModuleSchema: ConfigSchema | undefined;
+  /** Part of the key: a module without a schema of its own only gets validated once it has loaded. */
+  extensionModuleLoaded: boolean;
   providedConfigs: ConfigInternalStore['providedConfigs'];
   temporaryConfig: Config;
   config: ConfigObject;
@@ -634,6 +636,7 @@ function computeExtensionConfig(
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
+  const extensionModuleLoaded = Boolean(configState.moduleLoaded[extensionModuleName]);
   // JSON string of these elements should be unique-per-extension
   const cacheKey = JSON.stringify([slotName, extensionId, slotModuleName, extensionModuleName]);
   const cached = extensionConfigCache.get(cacheKey);
@@ -642,6 +645,7 @@ function computeExtensionConfig(
     cached &&
     cached.extensionSchema === extensionConfigSchema &&
     cached.extensionModuleSchema === configState.schemas[extensionModuleName] &&
+    cached.extensionModuleLoaded === extensionModuleLoaded &&
     cached.providedConfigs === configState.providedConfigs &&
     cached.temporaryConfig === tempConfigState.config
   ) {
@@ -656,7 +660,14 @@ function computeExtensionConfig(
   const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
   const combinedConfig = mergeConfigs([extensionConfig, sharedOverride, configOverride]);
   const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
-  validateStructure(schema, combinedConfig, nameOfSchemaSource);
+
+  // `renderExtension` registers an extension before its bundle loads, so until the module runs it
+  // has only the implicit schema, against which every key it declares would look unknown. As with
+  // the module config, the structure is left unchecked until the module has loaded.
+  if (extensionConfigSchema || extensionModuleLoaded) {
+    validateStructure(schema, combinedConfig, nameOfSchemaSource);
+  }
+
   const config = setDefaults(schema, combinedConfig);
   runAllValidatorsInConfigTree(schema, config, nameOfSchemaSource);
   delete config.extensionSlots;
@@ -664,6 +675,7 @@ function computeExtensionConfig(
   extensionConfigCache.set(cacheKey, {
     extensionSchema: extensionConfigSchema,
     extensionModuleSchema: configState.schemas[extensionModuleName],
+    extensionModuleLoaded,
     providedConfigs: configState.providedConfigs,
     temporaryConfig: tempConfigState.config,
     config,

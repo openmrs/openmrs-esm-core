@@ -1590,6 +1590,82 @@ describe('extension config', () => {
   });
 });
 
+// `renderExtension` registers an extension before awaiting its bundle, so its config is derived
+// while the module is known to the config system only by the implicit schema.
+describe('extension config of a module that has not loaded yet', () => {
+  beforeEach(() => {
+    console.error = vi.fn();
+  });
+
+  afterEach(resetAll);
+
+  const mount = (extensionModuleName: string, extensionId: string) =>
+    configExtensionStore.setState({
+      mountedExtensions: [{ slotModuleName: 'slot-mod', extensionModuleName, slotName: 'early-slot', extensionId }],
+    });
+
+  it('does not call a key unknown before the module defines its schema', () => {
+    Config.provide({ 'early-mod': { thud: 'provided' } });
+    Config.registerModuleWithConfigSystem('early-mod');
+    mount('early-mod', 'earlyExt');
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    Config.defineConfigSchema('early-mod', { thud: { _default: 'default' } });
+    Config.registerModuleLoad('early-mod');
+
+    expect(console.error).not.toHaveBeenCalled();
+    expect(currentExtensionConfig('early-slot', 'earlyExt').config.thud).toBe('provided');
+  });
+
+  it('still calls a key unknown once the module has defined a schema without it', () => {
+    Config.provide({ 'late-mod': { thud: 'provided', plugh: 'unknown' } });
+    Config.registerModuleWithConfigSystem('late-mod');
+    mount('late-mod', 'lateExt');
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    Config.defineConfigSchema('late-mod', { thud: { _default: 'default' } });
+    Config.registerModuleLoad('late-mod');
+
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/unknown config key 'late-mod.plugh' provided/i));
+  });
+
+  it('still calls a key unknown once a module without a schema has loaded', () => {
+    // Configured through the slot so that only the extension config, not the module config, sees it.
+    Config.provide({
+      'slot-mod': { extensionSlots: { 'early-slot': { configure: { bareExt: { xyzzy: 'unknown' } } } } },
+    });
+    Config.registerModuleWithConfigSystem('bare-mod');
+    mount('bare-mod', 'bareExt');
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    Config.registerModuleLoad('bare-mod');
+
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/unknown config key 'bare-mod.xyzzy' provided/i));
+  });
+
+  it('still reports a value of the wrong type once the module has defined its schema', () => {
+    Config.provide({ 'typed-mod': { thud: 42 } });
+    Config.registerModuleWithConfigSystem('typed-mod');
+    mount('typed-mod', 'typedExt');
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    // `defineConfigSchema` also marks the module loaded, so the type and validator checks both run here.
+    Config.defineConfigSchema('typed-mod', {
+      thud: { _type: Type.String, _default: 'default', _validators: [validator((v) => v !== 42, 'must not be 42')] },
+    });
+    Config.registerModuleLoad('typed-mod');
+
+    expect(console.error).toHaveBeenCalledTimes(2);
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/42 for typed-mod.thud: must be a string/));
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/42 for typed-mod.thud: must not be 42/));
+  });
+});
+
 describe('translation overrides', () => {
   it('allows obtaining translation overrides before schema is registered', async () => {
     console.error = vi.fn();
