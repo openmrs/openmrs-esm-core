@@ -1654,7 +1654,8 @@ describe('extension config of a module that has not loaded yet', () => {
 
     expect(console.error).not.toHaveBeenCalled();
 
-    // `defineConfigSchema` also marks the module loaded, so the type and validator checks both run here.
+    // `defineConfigSchema` marks the module loaded, so the module config reports both errors here. The
+    // extension's own structure check waits for `registerModuleLoad`, and its repeats are deduplicated.
     Config.defineConfigSchema('typed-mod', {
       thud: { _type: Type.String, _default: 'default', _validators: [validator((v) => v !== 42, 'must not be 42')] },
     });
@@ -1666,13 +1667,25 @@ describe('extension config of a module that has not loaded yet', () => {
   });
 
   it('does not call an extension schema key unknown while its module starts up', () => {
-    Config.provide({ 'slot-mod': { extensionSlots: { 'early-slot': { configure: { flagsExt: { quux: 'x' } } } } } });
+    Config.provide({
+      'slot-mod': { extensionSlots: { 'early-slot': { configure: { flagsExt: { quux: 'x', corge: 'unknown' } } } } },
+    });
     Config.registerModuleWithConfigSystem('flags-mod');
     mount('flags-mod', 'flagsExt');
     Config.defineConfigSchema('flags-mod', { thud: { _default: 'd' } });
-    Config.defineExtensionConfigSchema('flagsExt', { quux: { _default: 'd' } });
-    Config.registerModuleLoad('flags-mod');
+
     expect(console.error).not.toHaveBeenCalled();
+
+    // The extension's own schema is checked as soon as it is defined, without waiting for startup.
+    Config.defineExtensionConfigSchema('flagsExt', { quux: { _default: 'd' } });
+
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/unknown config key 'flagsExt.corge' provided/i));
+    expect(currentExtensionConfig('early-slot', 'flagsExt').config.quux).toBe('x');
+
+    Config.registerModuleLoad('flags-mod');
+
+    expect(console.error).toHaveBeenCalledTimes(1);
   });
 });
 
