@@ -1664,6 +1664,16 @@ describe('extension config of a module that has not loaded yet', () => {
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/42 for typed-mod.thud: must be a string/));
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/42 for typed-mod.thud: must not be 42/));
   });
+
+  it('does not call an extension schema key unknown while its module starts up', () => {
+    Config.provide({ 'slot-mod': { extensionSlots: { 'early-slot': { configure: { flagsExt: { quux: 'x' } } } } } });
+    Config.registerModuleWithConfigSystem('flags-mod');
+    mount('flags-mod', 'flagsExt');
+    Config.defineConfigSchema('flags-mod', { thud: { _default: 'd' } });
+    Config.defineExtensionConfigSchema('flagsExt', { quux: { _default: 'd' } });
+    Config.registerModuleLoad('flags-mod');
+    expect(console.error).not.toHaveBeenCalled();
+  });
 });
 
 describe('translation overrides', () => {

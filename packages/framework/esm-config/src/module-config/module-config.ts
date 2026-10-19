@@ -276,7 +276,7 @@ function computeExtensionConfigs(
   let entryCount = 0;
 
   // An extension is mounted before its module loads, so the module schema may still be the
-  // implicit one; `computeExtensionConfig` holds back structural validation until it has loaded.
+  // implicit one; `computeExtensionConfig` holds back structural validation until it has started.
   for (let extension of extensionState.mountedExtensions) {
     const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
     let entry: ConfigStore | { config: ConfigObject; loaded: true };
@@ -406,6 +406,7 @@ export function registerModuleLoad(moduleName: string) {
   configInternalStore.setState((state) => ({
     ...state,
     moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+    moduleStarted: { ...state.moduleStarted, [moduleName]: true },
   }));
 }
 
@@ -602,8 +603,8 @@ export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject
 interface ExtensionConfigCacheEntry {
   extensionSchema: ConfigSchema | undefined;
   extensionModuleSchema: ConfigSchema | undefined;
-  /** Part of the key: a module without a schema of its own only gets validated once it has loaded. */
-  extensionModuleLoaded: boolean;
+  /** Part of the key: an extension without a schema of its own only gets validated once its module has started. */
+  extensionModuleStarted: boolean;
   providedConfigs: ConfigInternalStore['providedConfigs'];
   temporaryConfig: Config;
   config: ConfigObject;
@@ -636,7 +637,9 @@ function computeExtensionConfig(
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
-  const extensionModuleLoaded = Boolean(configState.moduleLoaded[extensionModuleName]);
+  // Not `moduleLoaded`: `defineConfigSchema` sets that while `startupApp` is still running, before it
+  // reaches `defineExtensionConfigSchema`, so the extension would be checked against the module schema.
+  const extensionModuleStarted = Boolean(configState.moduleStarted[extensionModuleName]);
   // JSON string of these elements should be unique-per-extension
   const cacheKey = JSON.stringify([slotName, extensionId, slotModuleName, extensionModuleName]);
   const cached = extensionConfigCache.get(cacheKey);
@@ -645,7 +648,7 @@ function computeExtensionConfig(
     cached &&
     cached.extensionSchema === extensionConfigSchema &&
     cached.extensionModuleSchema === configState.schemas[extensionModuleName] &&
-    cached.extensionModuleLoaded === extensionModuleLoaded &&
+    cached.extensionModuleStarted === extensionModuleStarted &&
     cached.providedConfigs === configState.providedConfigs &&
     cached.temporaryConfig === tempConfigState.config
   ) {
@@ -663,8 +666,8 @@ function computeExtensionConfig(
 
   // `renderExtension` registers an extension before its bundle loads, so until the module runs it
   // has only the implicit schema, against which every key it declares would look unknown. As with
-  // the module config, the structure is left unchecked until the module has loaded.
-  if (extensionConfigSchema || extensionModuleLoaded) {
+  // the module config, the structure is left unchecked until the module has started.
+  if (extensionConfigSchema || extensionModuleStarted) {
     validateStructure(schema, combinedConfig, nameOfSchemaSource);
   }
 
@@ -675,7 +678,7 @@ function computeExtensionConfig(
   extensionConfigCache.set(cacheKey, {
     extensionSchema: extensionConfigSchema,
     extensionModuleSchema: configState.schemas[extensionModuleName],
-    extensionModuleLoaded,
+    extensionModuleStarted,
     providedConfigs: configState.providedConfigs,
     temporaryConfig: tempConfigState.config,
     config,
