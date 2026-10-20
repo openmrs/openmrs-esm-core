@@ -275,7 +275,7 @@ function computeExtensionConfigs(
   let changed = false;
   let entryCount = 0;
 
-  // An extension is mounted before its module loads, so the module schema may still be the
+  // An extension can be mounted before its module loads, so the module schema may still be the
   // implicit one; `computeExtensionConfig` holds back structural validation until it has started.
   for (let extension of extensionState.mountedExtensions) {
     const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
@@ -603,7 +603,6 @@ export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject
 interface ExtensionConfigCacheEntry {
   extensionSchema: ConfigSchema | undefined;
   extensionModuleSchema: ConfigSchema | undefined;
-  /** Part of the key: an extension without a schema of its own only gets validated once its module has started. */
   extensionModuleStarted: boolean;
   providedConfigs: ConfigInternalStore['providedConfigs'];
   temporaryConfig: Config;
