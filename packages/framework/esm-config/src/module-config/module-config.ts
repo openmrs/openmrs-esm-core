@@ -664,9 +664,7 @@ function computeExtensionConfig(
   const combinedConfig = mergeConfigs([extensionConfig, sharedOverride, configOverride]);
   const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
 
-  // `renderExtension` registers an extension before its bundle loads, so until the module runs it
-  // has only the implicit schema, against which every key it declares would look unknown. As with
-  // the module config, the structure is left unchecked until the module has started.
+  // only validate structure once the schema has loaded
   if (extensionConfigSchema || extensionModuleStarted) {
     validateStructure(schema, combinedConfig, nameOfSchemaSource);
   }
