@@ -1,4 +1,4 @@
-/** @module @category UI */
+﻿/** @module @category UI */
 import { type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { getModalRegistration, renderParcel } from '@openmrs/esm-extensions';
@@ -84,7 +84,7 @@ function isClosing(instance: ModalInstance) {
   return instance.state === 'TO_BE_DELETED' || instance.state === 'DELETED';
 }
 
-function unmountModalParcel(modalName: string, parcel: Parcel | null | undefined) {
+function unmountModalParcel(parcel: Parcel | null | undefined) {
   if (!parcel?.unmount) {
     return;
   }
@@ -93,9 +93,7 @@ function unmountModalParcel(modalName: string, parcel: Parcel | null | undefined
   // separate promises, so leaving either without a handler is an unhandled rejection, but one
   // failure is worth reporting only once.
   parcel.unmountPromise?.catch(() => {});
-  parcel.unmount().catch((err) => {
-    console.error(`The modal '${modalName}' failed to unmount`, err);
-  });
+  parcel.unmount().catch(reportError);
 }
 
 /**
@@ -148,7 +146,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
             (parcel) => {
               // Release the parcel if it's been closed while mounting
               if (isClosing(instance)) {
-                unmountModalParcel(instance.modalName, parcel);
+                unmountModalParcel(parcel);
                 return;
               }
 
@@ -201,7 +199,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
         case 'TO_BE_DELETED':
           instance.state = 'DELETED';
           instance.onClose();
-          unmountModalParcel(instance.modalName, instance.parcel);
+          unmountModalParcel(instance.parcel);
           instance.container?.remove();
           setTimeout(() => {
             // Read now rather than closed over: modals opened since this was scheduled are in the
