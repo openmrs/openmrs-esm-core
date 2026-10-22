@@ -3,6 +3,7 @@
 
 import { createStore } from 'zustand/vanilla';
 import { registerGlobalStore } from '@openmrs/esm-state';
+import { shallowEqual } from '@openmrs/esm-utils';
 
 interface OpenmrsAppContext {
   [namespace: string]: NonNullable<object>;
@@ -115,16 +116,20 @@ export function subscribeToContext<T extends NonNullable<object> = NonNullable<o
   namespace: string,
   callback: ContextCallback<T>,
 ) {
-  let previous = getContext<T>(namespace);
+  const initialState = contextStore.getState();
+  let previousValue: Readonly<T> | null = namespace in initialState ? (initialState[namespace] as T) : null;
+  let previousSnapshot = snapshot(previousValue);
 
-  callback(snapshot(previous));
+  callback(previousSnapshot);
 
   return contextStore.subscribe((state) => {
-    const current: Readonly<T> | null = namespace in state ? (state[namespace] as T) : null;
+    const currentValue: Readonly<T> | null = namespace in state ? (state[namespace] as T) : null;
+    const currentSnapshot = snapshot(currentValue);
 
-    if (current !== previous) {
-      previous = current;
-      callback(snapshot(current));
+    if (currentValue !== previousValue || !shallowEqual(currentSnapshot, previousSnapshot)) {
+      previousValue = currentValue;
+      previousSnapshot = currentSnapshot;
+      callback(currentSnapshot);
     }
   });
 }
