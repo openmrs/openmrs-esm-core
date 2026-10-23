@@ -1,0 +1,11 @@
+{
+  "name": "@openmrs/esm-broken-schema-fixture-app",
+  "version": "1.0.0",
+  "private": true,
+  "browser": "dist/openmrs-esm-broken-schema-fixture-app.js",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "react": "18.x"
+  }
+}
