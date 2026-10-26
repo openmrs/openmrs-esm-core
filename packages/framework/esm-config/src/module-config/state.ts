@@ -19,12 +19,19 @@ export interface ConfigInternalStore {
    * whether the schema has actually been defined).
    */
   moduleLoaded: Record<string, boolean>;
+  /**
+   * Whether the app shell has finished starting each module (run its `startupApp`). Unlike
+   * `moduleLoaded`, `defineConfigSchema` does not set this, so it stays false while `startupApp`
+   * is still defining the module's extension schemas.
+   */
+  moduleStarted: Record<string, boolean>;
 }
 
 const configInternalStoreInitialValue = {
   providedConfigs: [],
   schemas: {},
   moduleLoaded: {},
+  moduleStarted: {},
 };
 
 /**

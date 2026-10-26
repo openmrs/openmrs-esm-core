@@ -275,8 +275,8 @@ function computeExtensionConfigs(
   let changed = false;
   let entryCount = 0;
 
-  // We assume that the module schema has already been defined, since the extension
-  // it contains is mounted.
+  // An extension can be mounted before its module loads, so the module schema may still be the
+  // implicit one; `computeExtensionConfig` holds back structural validation until it has started.
   for (let extension of extensionState.mountedExtensions) {
     const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
     let entry: ConfigStore | { config: ConfigObject; loaded: true };
@@ -406,6 +406,7 @@ export function registerModuleLoad(moduleName: string) {
   configInternalStore.setState((state) => ({
     ...state,
     moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+    moduleStarted: { ...state.moduleStarted, [moduleName]: true },
   }));
 }
 
@@ -602,6 +603,7 @@ export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject
 interface ExtensionConfigCacheEntry {
   extensionSchema: ConfigSchema | undefined;
   extensionModuleSchema: ConfigSchema | undefined;
+  extensionModuleStarted: boolean;
   providedConfigs: ConfigInternalStore['providedConfigs'];
   temporaryConfig: Config;
   config: ConfigObject;
@@ -634,6 +636,9 @@ function computeExtensionConfig(
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
+  // Not `moduleLoaded`: `defineConfigSchema` sets that while `startupApp` is still running, before it
+  // reaches `defineExtensionConfigSchema`, so the extension would be checked against the module schema.
+  const extensionModuleStarted = Boolean(configState.moduleStarted[extensionModuleName]);
   // JSON string of these elements should be unique-per-extension
   const cacheKey = JSON.stringify([slotName, extensionId, slotModuleName, extensionModuleName]);
   const cached = extensionConfigCache.get(cacheKey);
@@ -642,6 +647,7 @@ function computeExtensionConfig(
     cached &&
     cached.extensionSchema === extensionConfigSchema &&
     cached.extensionModuleSchema === configState.schemas[extensionModuleName] &&
+    cached.extensionModuleStarted === extensionModuleStarted &&
     cached.providedConfigs === configState.providedConfigs &&
     cached.temporaryConfig === tempConfigState.config
   ) {
@@ -656,7 +662,12 @@ function computeExtensionConfig(
   const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
   const combinedConfig = mergeConfigs([extensionConfig, sharedOverride, configOverride]);
   const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
-  validateStructure(schema, combinedConfig, nameOfSchemaSource);
+
+  // only validate structure once the schema has loaded
+  if (extensionConfigSchema || extensionModuleStarted) {
+    validateStructure(schema, combinedConfig, nameOfSchemaSource);
+  }
+
   const config = setDefaults(schema, combinedConfig);
   runAllValidatorsInConfigTree(schema, config, nameOfSchemaSource);
   delete config.extensionSlots;
@@ -664,6 +675,7 @@ function computeExtensionConfig(
   extensionConfigCache.set(cacheKey, {
     extensionSchema: extensionConfigSchema,
     extensionModuleSchema: configState.schemas[extensionModuleName],
+    extensionModuleStarted,
     providedConfigs: configState.providedConfigs,
     temporaryConfig: tempConfigState.config,
     config,
