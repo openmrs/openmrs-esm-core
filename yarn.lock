@@ -2190,57 +2190,57 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsep-plugin/arrow@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "@jsep-plugin/arrow@npm:1.0.6"
+"@jsep-plugin/arrow@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@jsep-plugin/arrow@npm:1.1.0"
   peerDependencies:
     jsep: ^0.4.0||^1.0.0
-  checksum: 10/5d91af3ab975d70002811e08a7936233a79f127c71972c9615d739a04b1f1c92ab8fc0d261a638a4f62c95562ec3c8156603f20749fb183c2118def20bc522eb
+  checksum: 10/d9aa5e69db4340153f8c2a0bf03e60f9f1615452dcdd592901974e56b6bc7f3759a2ef1bfdf22cf2c66b054ab0887e514af8704d074303dfd714f82ef1f0ee16
   languageName: node
   linkType: hard
 
-"@jsep-plugin/new@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@jsep-plugin/new@npm:1.0.4"
+"@jsep-plugin/new@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@jsep-plugin/new@npm:1.1.0"
   peerDependencies:
     jsep: ^0.4.0||^1.0.0
-  checksum: 10/b34eb429decb49010c067ff7adaa5087688582cae869e767fedf182a5b7ab4466b8625784de891589c012d6ff2745fa248acfbceaeb3a73761508acdaabb724c
+  checksum: 10/49c82f20531e4e87a0def9186562ff15a1d4cd32caf0780b5a3d60706f4a7a120f37498788798444773a1229d1bee0ad5386ce4bdfc7699d8a0ef7ab28212c83
   languageName: node
   linkType: hard
 
-"@jsep-plugin/numbers@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@jsep-plugin/numbers@npm:1.0.2"
+"@jsep-plugin/numbers@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@jsep-plugin/numbers@npm:1.1.0"
   peerDependencies:
     jsep: ^0.4.0||^1.0.0
-  checksum: 10/0be1594a2372d4d5e2bef6a4f5d2a0d96078792240ea786be7e3b0b7c946e162f66193c251c65477b30e49b9879674d50b57506414ed5a56f99fcae9f1b1d123
+  checksum: 10/6e97b273e7f8b94d80576d0f56c8d55e019da16b8abd6e928420e1085b663d9fa695e5ffe287156e3fe8a34c96ba4850022d8d58265f08c970aa4ae7bb6711b6
   languageName: node
   linkType: hard
 
-"@jsep-plugin/regex@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@jsep-plugin/regex@npm:1.0.4"
+"@jsep-plugin/regex@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@jsep-plugin/regex@npm:1.1.0"
   peerDependencies:
     jsep: ^0.4.0||^1.0.0
-  checksum: 10/0ea6ba81f03955972b762fd9fbc8e3fd7e1c1c12e52ce3d4366e23c0a63c8bff8528687b8b3d8f641cf9f626f8bf5a7841efcd31a2489fe967e1900e5738ee3a
+  checksum: 10/cd7cd08360f7c76125583ab4a28026df1f6ccdc3c54ab192eaa3ed59e04f4dfbf2bfeb60df7c5fa56dae4c8c0a326bc862e5d07618f2f2a95f6d6613048d2a97
   languageName: node
   linkType: hard
 
-"@jsep-plugin/template@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@jsep-plugin/template@npm:1.0.5"
+"@jsep-plugin/template@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@jsep-plugin/template@npm:1.1.0"
   peerDependencies:
     jsep: ^0.4.0||^1.0.0
-  checksum: 10/14342aeea5f04c60fdea857651d11bd274766a724dd99122c344f650ac437b024d8955d46a28d732f3f3744d4a4a7873228605ee3ea4281c42470e45e87e1a8b
+  checksum: 10/723df3186ed57ca107986c7029c39036d1eb25df8ea66bf593eec37d7bf7d40bf9a62584aece42d9025f63b1ebae64844eff1d457ee8cb17011eefb48abd4cca
   languageName: node
   linkType: hard
 
-"@jsep-plugin/ternary@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@jsep-plugin/ternary@npm:1.1.4"
+"@jsep-plugin/ternary@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@jsep-plugin/ternary@npm:1.2.0"
   peerDependencies:
     jsep: ^0.4.0||^1.0.0
-  checksum: 10/26e16c463407ae6a0ca4733d8f4969b68bf63e476e8211a95e78b990ca253a6f38f63fc26815d24c4645c613aaad3690aed3fb90a98d036055bc8e5204e3391e
+  checksum: 10/8286cba25b738770fc97b8b949eb87b9a5af771dd5d3f847a6fa5456ed5a9b632a2d775d6a5b60acd413f10667bd7934ff104eaab8a49f88ec5216776d2f12b2
   languageName: node
   linkType: hard
 
@@ -3351,18 +3351,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-expression-evaluator@workspace:packages/framework/esm-expression-evaluator"
   dependencies:
-    "@jsep-plugin/arrow": "npm:^1.0.6"
-    "@jsep-plugin/new": "npm:^1.0.4"
-    "@jsep-plugin/numbers": "npm:^1.0.2"
-    "@jsep-plugin/regex": "npm:^1.0.4"
-    "@jsep-plugin/template": "npm:^1.0.5"
-    "@jsep-plugin/ternary": "npm:^1.1.4"
+    "@jsep-plugin/arrow": "npm:^1.1.0"
+    "@jsep-plugin/new": "npm:^1.1.0"
+    "@jsep-plugin/numbers": "npm:^1.1.0"
+    "@jsep-plugin/regex": "npm:^1.1.0"
+    "@jsep-plugin/template": "npm:^1.1.0"
+    "@jsep-plugin/ternary": "npm:^1.2.0"
     "@swc/cli": "npm:0.8.1"
     "@swc/core": "npm:1.15.21"
     "@vitest/coverage-v8": "npm:^4.1.2"
     concurrently: "npm:^9.2.1"
     cross-env: "npm:^10.1.0"
-    jsep: "npm:^1.4.0"
+    jsep: "npm:^1.6.0"
     rimraf: "npm:^6.1.3"
     vitest: "npm:^4.1.2"
   languageName: unknown
@@ -14455,10 +14455,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsep@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "jsep@npm:1.4.0"
-  checksum: 10/935824fe6ac28fcff3cd13878f508f99f6c13e7f0f53ec9fca0d3db465e6dd15f8af030bcdc75a38b07c78359c656647435923a26aceb91607027021f00c17f2
+"jsep@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "jsep@npm:1.6.0"
+  checksum: 10/1bf776dc802cb388fc418350048659f33f667207858e5b602f3704d178f739c397f478921c0efd78df1d525e636fd745bfca92696869b8a68b12bd1fd4fc37b9
   languageName: node
   linkType: hard
 
