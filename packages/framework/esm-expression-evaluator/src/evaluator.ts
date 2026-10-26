@@ -20,50 +20,94 @@ jsep.plugins.register(jsepTemplate);
 jsep.addBinaryOp('in', 7);
 jsep.addBinaryOp('??', 1);
 
+/** Options that control how an expression is parsed. */
+export interface ExpressionOptions {
+  /**
+   * Allows expressions to refer to identifiers that begin with a decimal digit, such as `1stVisit`.
+   * Such an identifier is not valid JavaScript, so this is disabled by default and only applies to
+   * expression sources whose identifiers follow different rules.
+   */
+  allowDigitLeadingIdentifiers?: boolean;
+}
+
+interface GobbleTokenScope {
+  index: number;
+  readonly expr: string;
+  readonly code: number;
+  gobbleTokenProperty: (node: Expression) => Expression;
+}
+
+type GobbleTokenHook = (this: GobbleTokenScope, env: { node?: Expression }) => void;
+
 // jsep copies its static helpers onto the default export at runtime, but its bundled typings do not
-// declare them, so reach for the two we need explicitly.
+// declare them, so reach for the ones we need explicitly.
 const jsepInternal = jsep as unknown as {
   isIdentifierPart: (code: number) => boolean;
   isDecimalDigit: (code: number) => boolean;
+  hooks: {
+    add: (name: 'gobble-token', callback: GobbleTokenHook, first?: boolean) => void;
+    'gobble-token'?: GobbleTokenHook[];
+  };
 };
 
 /**
- * O3 form field ids are free-form, so an expression may need to refer to a field whose id starts
- * with a digit, e.g. `1stVisit`. Such a word is not a numeric literal, but jsep's numeric plugin
- * would otherwise reject it as a malformed number. Because the hook is registered ahead of that
- * plugin, it gets first refusal on every token: when the token starts with a digit, it reads the
- * full run of identifier characters and, if that run could not be a number, emits it as an
- * identifier instead, chaining any member access or calls that follow.
+ * Recognizes an identifier that begins with a decimal digit (e.g. `1stVisit`). Such a word is not a
+ * numeric literal, but jsep's numeric plugin would otherwise reject it as a malformed number. When
+ * the token starts with a digit, this hook reads the full run of identifier characters and, if that
+ * run could not be a number, emits it as an identifier instead, chaining any member access or calls
+ * that follow.
  *
  * jsep only invokes the hook at token boundaries, so the contents of string, template and regex
  * literals are never inspected here.
  */
-jsep.hooks.add(
-  'gobble-token',
-  function gobbleDigitLeadingIdentifier(env) {
-    if (!jsepInternal.isDecimalDigit(this.code)) {
-      return;
-    }
+const gobbleDigitLeadingIdentifier: GobbleTokenHook = function gobbleDigitLeadingIdentifier(env) {
+  if (!jsepInternal.isDecimalDigit(this.code)) {
+    return;
+  }
 
-    const { expr } = this;
-    const start = this.index;
-    let end = start;
-    while (end < expr.length && jsepInternal.isIdentifierPart(expr.charCodeAt(end))) {
-      end++;
-    }
+  const { expr } = this;
+  const start = this.index;
+  let end = start;
+  while (end < expr.length && jsepInternal.isIdentifierPart(expr.charCodeAt(end))) {
+    end++;
+  }
 
-    if (isNumericLiteralRun(expr, start, end)) {
-      return;
-    }
+  if (isNumericLiteralRun(expr, start, end)) {
+    return;
+  }
 
-    this.index = end;
-    env.node = this.gobbleTokenProperty({
-      type: 'Identifier',
-      name: expr.slice(start, end),
-    });
-  },
-  true,
-);
+  this.index = end;
+  env.node = this.gobbleTokenProperty({
+    type: 'Identifier',
+    name: expr.slice(start, end),
+  });
+};
+
+/**
+ * Parses a string expression with the behaviour requested by `options`. The digit-leading identifier
+ * hook is only installed for the duration of an opted-in parse; jsep's hooks are global, so leaving
+ * it registered would change how every expression is tokenized.
+ */
+export function parseExpression(expression: string, options: ExpressionOptions = {}) {
+  if (!options.allowDigitLeadingIdentifiers) {
+    return jsep(expression);
+  }
+
+  const { hooks } = jsepInternal;
+  hooks.add('gobble-token', gobbleDigitLeadingIdentifier, true);
+
+  try {
+    return jsep(expression);
+  } finally {
+    // jsep has no API for removing a hook, so take it back out of the list it was added to. Parsing
+    // is synchronous, which keeps the hook limited to this call.
+    const gobbleTokenHooks = hooks['gobble-token'];
+    const index = gobbleTokenHooks?.indexOf(gobbleDigitLeadingIdentifier) ?? -1;
+    if (gobbleTokenHooks && index !== -1) {
+      gobbleTokenHooks.splice(index, 1);
+    }
+  }
+}
 
 const CHARACTER_CODE_UNDERSCORE = '_'.charCodeAt(0);
 
@@ -188,10 +232,15 @@ export type DefaultEvaluateReturnType = string | number | boolean | Date | null 
  * @param expression The expression to evaluate, either as a string or pre-parsed expression
  * @param variables Optional object which contains any variables, functions, etc. that will be available to
  *  the expression.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns The result of evaluating the expression
  */
-export function evaluate(expression: string | jsep.Expression, variables: VariablesMap = {}) {
-  return evaluateAsType(expression, variables, defaultTypePredicate);
+export function evaluate(
+  expression: string | jsep.Expression,
+  variables: VariablesMap = {},
+  options: ExpressionOptions = {},
+) {
+  return evaluateAsType(expression, variables, defaultTypePredicate, options);
 }
 
 /**
@@ -258,10 +307,15 @@ export function evaluate(expression: string | jsep.Expression, variables: Variab
  * @param expression The expression to evaluate, either as a string or pre-parsed expression
  * @param variables Optional object which contains any variables, functions, etc. that will be available to
  *  the expression.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns The result of evaluating the expression
  */
-export async function evaluateAsync(expression: string | jsep.Expression, variables: VariablesMap = {}) {
-  return evaluateAsTypeAsync(expression, variables, defaultTypePredicate);
+export async function evaluateAsync(
+  expression: string | jsep.Expression,
+  variables: VariablesMap = {},
+  options: ExpressionOptions = {},
+) {
+  return evaluateAsTypeAsync(expression, variables, defaultTypePredicate, options);
 }
 
 /**
@@ -271,10 +325,15 @@ export async function evaluateAsync(expression: string | jsep.Expression, variab
  * @param expression The expression to evaluate, either as a string or pre-parsed expression
  * @param variables Optional object which contains any variables, functions, etc. that will be available to
  *  the expression.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns The result of evaluating the expression
  */
-export function evaluateAsBoolean(expression: string | jsep.Expression, variables: VariablesMap = {}) {
-  return evaluateAsType(expression, variables, booleanTypePredicate);
+export function evaluateAsBoolean(
+  expression: string | jsep.Expression,
+  variables: VariablesMap = {},
+  options: ExpressionOptions = {},
+) {
+  return evaluateAsType(expression, variables, booleanTypePredicate, options);
 }
 
 /**
@@ -284,10 +343,15 @@ export function evaluateAsBoolean(expression: string | jsep.Expression, variable
  * @param expression The expression to evaluate, either as a string or pre-parsed expression
  * @param variables Optional object which contains any variables, functions, etc. that will be available to
  *  the expression.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns The result of evaluating the expression
  */
-export function evaluateAsBooleanAsync(expression: string | jsep.Expression, variables: VariablesMap = {}) {
-  return evaluateAsTypeAsync(expression, variables, booleanTypePredicate);
+export function evaluateAsBooleanAsync(
+  expression: string | jsep.Expression,
+  variables: VariablesMap = {},
+  options: ExpressionOptions = {},
+) {
+  return evaluateAsTypeAsync(expression, variables, booleanTypePredicate, options);
 }
 
 /**
@@ -297,10 +361,15 @@ export function evaluateAsBooleanAsync(expression: string | jsep.Expression, var
  * @param expression The expression to evaluate, either as a string or pre-parsed expression
  * @param variables Optional object which contains any variables, functions, etc. that will be available to
  *  the expression.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns The result of evaluating the expression
  */
-export function evaluateAsNumber(expression: string | jsep.Expression, variables: VariablesMap = {}) {
-  return evaluateAsType(expression, variables, numberTypePredicate);
+export function evaluateAsNumber(
+  expression: string | jsep.Expression,
+  variables: VariablesMap = {},
+  options: ExpressionOptions = {},
+) {
+  return evaluateAsType(expression, variables, numberTypePredicate, options);
 }
 
 /**
@@ -310,10 +379,15 @@ export function evaluateAsNumber(expression: string | jsep.Expression, variables
  * @param expression The expression to evaluate, either as a string or pre-parsed expression
  * @param variables Optional object which contains any variables, functions, etc. that will be available to
  *  the expression.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns The result of evaluating the expression
  */
-export function evaluateAsNumberAsync(expression: string | jsep.Expression, variables: VariablesMap = {}) {
-  return evaluateAsTypeAsync(expression, variables, numberTypePredicate);
+export function evaluateAsNumberAsync(
+  expression: string | jsep.Expression,
+  variables: VariablesMap = {},
+  options: ExpressionOptions = {},
+) {
+  return evaluateAsTypeAsync(expression, variables, numberTypePredicate, options);
 }
 
 /**
@@ -327,12 +401,14 @@ export function evaluateAsNumberAsync(expression: string | jsep.Expression, vari
  *  the expression.
  * @param typePredicate A [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
  *  which asserts that the result value matches one of the expected results.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns The result of evaluating the expression
  */
 export function evaluateAsType<T>(
   expression: string | jsep.Expression,
   variables: VariablesMap = {},
   typePredicate: (result: unknown) => result is T,
+  options: ExpressionOptions = {},
 ): T {
   if (typeof expression !== 'string' && (typeof expression !== 'object' || !expression || !('type' in expression))) {
     throw `Unknown expression type ${expression}. Expressions must either be a string or pre-compiled string.`;
@@ -350,7 +426,10 @@ export function evaluateAsType<T>(
   }
 
   const context = createSynchronousContext(variables);
-  const result = visitExpression(typeof expression === 'string' ? jsep(expression) : expression, context);
+  const result = visitExpression(
+    typeof expression === 'string' ? parseExpression(expression, options) : expression,
+    context,
+  );
 
   if (typePredicate(result)) {
     return result;
@@ -376,12 +455,14 @@ export function evaluateAsType<T>(
  *  the expression.
  * @param typePredicate A [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
  *  which asserts that the result value matches one of the expected results.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns The result of evaluating the expression
  */
 export async function evaluateAsTypeAsync<T>(
   expression: string | jsep.Expression,
   variables: VariablesMap = {},
   typePredicate: (result: unknown) => result is T,
+  options: ExpressionOptions = {},
 ): Promise<T> {
   if (typeof expression !== 'string' && (typeof expression !== 'object' || !expression || !('type' in expression))) {
     return Promise.reject(
@@ -401,21 +482,21 @@ export async function evaluateAsTypeAsync<T>(
   }
 
   const context = createAsynchronousContext(variables);
-  return Promise.resolve(visitExpression(typeof expression === 'string' ? jsep(expression) : expression, context)).then(
-    (result) => {
-      if (typePredicate(result)) {
-        return result;
-      } else {
-        throw {
-          type: 'Invalid result',
-          message:
-            typeof expression === 'string'
-              ? `The expression ${expression} did not produce a valid result`
-              : 'The expression did not produce a valid result',
-        };
-      }
-    },
-  );
+  return Promise.resolve(
+    visitExpression(typeof expression === 'string' ? parseExpression(expression, options) : expression, context),
+  ).then((result) => {
+    if (typePredicate(result)) {
+      return result;
+    } else {
+      throw {
+        type: 'Invalid result',
+        message:
+          typeof expression === 'string'
+            ? `The expression ${expression} did not produce a valid result`
+            : 'The expression did not produce a valid result',
+      };
+    }
+  });
 }
 
 /**
@@ -429,10 +510,11 @@ export async function evaluateAsTypeAsync<T>(
  * values are known to be constant.
  *
  * @param expression The expression to be parsed
+ * @param options Optional settings that control how the expression is parsed.
  * @returns An executable AST representation of the expression
  */
-export function compile(expression: string): jsep.Expression {
-  return jsep(expression);
+export function compile(expression: string, options: ExpressionOptions = {}): jsep.Expression {
+  return parseExpression(expression, options);
 }
 
 // Pre-defined type guards

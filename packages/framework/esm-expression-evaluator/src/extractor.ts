@@ -2,7 +2,8 @@
 import { type ArrowExpression } from '@jsep-plugin/arrow';
 import { type NewExpression } from '@jsep-plugin/new';
 import { type TemplateElement, type TemplateLiteral } from '@jsep-plugin/template';
-import { jsep } from './evaluator';
+import type jsep from 'jsep';
+import { parseExpression, type ExpressionOptions } from './evaluator';
 import { globalsAsync } from './globals';
 
 /**
@@ -42,15 +43,16 @@ import { globalsAsync } from './globals';
  * on these expressions.
  *
  * @param expression The expression to analyze, either as a string or pre-parsed expression.
+ * @param options Optional settings that control how a string expression is parsed.
  * @returns An array of variable names that are unbound in the expression.
  */
-export function extractVariableNames(expression: string | jsep.Expression) {
+export function extractVariableNames(expression: string | jsep.Expression, options: ExpressionOptions = {}) {
   if (typeof expression !== 'string' && (typeof expression !== 'object' || !expression || !('type' in expression))) {
     throw `Unknown expression type ${expression}. Expressions must either be a string or pre-compiled string.`;
   }
 
   const context = createAsynchronousContext();
-  visitExpression(typeof expression === 'string' ? jsep(expression) : expression, context);
+  visitExpression(typeof expression === 'string' ? parseExpression(expression, options) : expression, context);
 
   return [...context.variables];
 }

@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { extractVariableNames } from './extractor';
 
+const allowDigitLeadingIdentifiers = { allowDigitLeadingIdentifiers: true };
+
 describe('OpenMRS Expression Extractor', () => {
   it('returns an empty list for expression lacking variables', () => {
     expect(extractVariableNames('1 + 1')).toEqual([]);
@@ -67,16 +69,24 @@ describe('OpenMRS Expression Extractor', () => {
     expect(extractVariableNames('a.map(x => x) + x')).toEqual(['a', 'x']);
   });
 
-  it('extracts identifiers that start with a digit', () => {
-    expect(extractVariableNames("1stVisit === 'yes'")).toEqual(['1stVisit']);
-    expect(extractVariableNames('1stVisit.length')).toEqual(['1stVisit']);
-    expect(extractVariableNames('f(1stVisit)')).toEqual(['f', '1stVisit']);
-    expect(extractVariableNames('-2ndDose')).toEqual(['2ndDose']);
+  it('extracts identifiers that start with a digit when enabled', () => {
+    expect(extractVariableNames("1stVisit === 'yes'", allowDigitLeadingIdentifiers)).toEqual(['1stVisit']);
+    expect(extractVariableNames('1stVisit.length', allowDigitLeadingIdentifiers)).toEqual(['1stVisit']);
+    expect(extractVariableNames('f(1stVisit)', allowDigitLeadingIdentifiers)).toEqual(['f', '1stVisit']);
+    expect(extractVariableNames('-2ndDose', allowDigitLeadingIdentifiers)).toEqual(['2ndDose']);
     // the extractor visits a ternary's consequent before its test
-    expect(extractVariableNames('x ? 1stVisit : 2ndDose')).toEqual(['1stVisit', 'x', '2ndDose']);
-    expect(extractVariableNames('`${3rdDose}`')).toEqual(['3rdDose']);
+    expect(extractVariableNames('x ? 1stVisit : 2ndDose', allowDigitLeadingIdentifiers)).toEqual([
+      '1stVisit',
+      'x',
+      '2ndDose',
+    ]);
+    expect(extractVariableNames('`${3rdDose}`', allowDigitLeadingIdentifiers)).toEqual(['3rdDose']);
     // `1e` only looks like a number when `-2ndDose` follows it
-    expect(extractVariableNames('1e-2ndDose')).toEqual(['1e', '2ndDose']);
+    expect(extractVariableNames('1e-2ndDose', allowDigitLeadingIdentifiers)).toEqual(['1e', '2ndDose']);
+  });
+
+  it('rejects identifiers that start with a digit by default', () => {
+    expect(() => extractVariableNames('1stVisit')).toThrow(/Variable names cannot start with a number/);
   });
 
   it('treats numeric literals as literals, not variables', () => {
