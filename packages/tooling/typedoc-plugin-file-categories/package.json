@@ -4,6 +4,13 @@
   "license": "MPL-2.0",
   "type": "module",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://openmrs.atlassian.net/jira/software/c/projects/O3/boards/37"
+  },
   "scripts": {
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",

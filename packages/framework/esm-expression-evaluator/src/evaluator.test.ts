@@ -51,6 +51,15 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('a.includes("v")', { a: 'value' })).toBe(true);
     expect(evaluate('"value".includes("v")')).toBe(true);
     expect(evaluate('(3.14159).toPrecision(3)')).toBe('3.14');
+    expect(evaluate('s.toUpperCase()', { s: 'active' })).toBe('ACTIVE');
+    expect(evaluate('n.toFixed(1)', { n: 3.14159 })).toBe('3.1');
+  });
+
+  it('should read properties of strings from the string itself', () => {
+    expect(evaluate('s.length', { s: 'active' })).toBe(6);
+    expect(evaluate('"active".length')).toBe(6);
+    expect(evaluate('s.length', { s: 'active' })).toBe(evaluate('s["length"]', { s: 'active' }));
+    expect(evaluate('s[0]', { s: 'active' })).toBe('a');
   });
 
   it('should give a useful error message for properties on missing objects', () => {

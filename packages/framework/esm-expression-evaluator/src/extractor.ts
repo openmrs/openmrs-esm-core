@@ -89,42 +89,34 @@ function visitExpression(expression: jsep.Expression, context: EvaluationContext
 }
 
 function visitUnaryExpression(expression: jsep.UnaryExpression, context: EvaluationContext) {
-  return visitExpression(expression.argument, context);
+  visitExpression(expression.argument, context);
 }
 
 function visitBinaryExpression(expression: jsep.BinaryExpression, context: EvaluationContext) {
-  const left = visitExpression(expression.left, context);
-  const right = visitExpression(expression.right, context);
-  return [left, right].filter(Boolean);
+  visitExpression(expression.left, context);
+  visitExpression(expression.right, context);
 }
 
 function visitConditionalExpression(expression: jsep.ConditionalExpression, context: EvaluationContext) {
-  const consequent = visitExpression(expression.consequent, context);
-  const test = visitExpression(expression.test, context);
-  const alternate = visitExpression(expression.alternate, context);
-  return [consequent, test, alternate].filter(Boolean);
+  visitExpression(expression.consequent, context);
+  visitExpression(expression.test, context);
+  visitExpression(expression.alternate, context);
 }
 
 function visitCallExpression(expression: jsep.CallExpression, context: EvaluationContext) {
-  const fn = visitExpression(expression.callee, context);
+  visitExpression(expression.callee, context);
   expression.arguments?.map(handleNullableExpression(context));
-  return fn;
 }
 
 function visitArrowFunctionExpression(expression: ArrowExpression, context: EvaluationContext) {
-  const newContext = { ...context };
-  newContext.isLocalExpression = true;
-
-  const params = expression.params?.map(handleNullableExpression(newContext)) ?? [];
-  const bodyVariables = visitExpression(expression.body, newContext) ?? [];
-
-  if (bodyVariables && Array.isArray(bodyVariables)) {
-    for (const v of bodyVariables) {
-      if (!params.includes(v)) {
-        context.variables.add(v);
-      }
+  const boundNames = new Set(context.boundNames);
+  for (const param of expression.params ?? []) {
+    if (param?.type === 'Identifier') {
+      boundNames.add((param as jsep.Identifier).name);
     }
   }
+
+  visitExpression(expression.body, { ...context, boundNames });
 }
 
 function visitMemberExpression(expression: jsep.MemberExpression, context: EvaluationContext) {
@@ -133,12 +125,7 @@ function visitMemberExpression(expression: jsep.MemberExpression, context: Evalu
   // the `b` of `a[b]` is a variable the caller has to supply, whereas the `b` of `a.b` is a property name
   if (expression.computed) {
     visitExpression(expression.property, context);
-    return;
   }
-
-  const newContext = { ...context };
-  newContext.isLocalExpression = true;
-  visitExpression(expression.property, newContext);
 }
 
 function visitArrayExpression(expression: jsep.ArrayExpression, context: EvaluationContext) {
@@ -161,12 +148,8 @@ function visitTemplateLiteral(expression: TemplateLiteral, context: EvaluationCo
 function visitTemplateElement(expression: TemplateElement, context: EvaluationContext) {}
 
 function visitIdentifier(expression: jsep.Identifier, context: EvaluationContext) {
-  if (!(expression.name in context.globals)) {
-    if (!context.isLocalExpression) {
-      context.variables.add(expression.name);
-    } else {
-      return expression.name;
-    }
+  if (!(expression.name in context.globals) && !context.boundNames.has(expression.name)) {
+    context.variables.add(expression.name);
   }
 }
 
@@ -175,7 +158,8 @@ function visitLiteral(expression: jsep.Literal, context: EvaluationContext) {}
 // Internals
 interface EvaluationContext {
   globals: typeof globalsAsync;
-  isLocalExpression: boolean;
+  /** Parameters of the enclosing arrow functions, which the caller does not supply */
+  boundNames: Set<string>;
   variables: Set<string>;
 }
 
@@ -186,7 +170,7 @@ function createAsynchronousContext(): EvaluationContext {
 function createContextInternal(globals_: typeof globalsAsync) {
   const context = {
     globals: { ...globals_ },
-    isLocalExpression: false,
+    boundNames: new Set<string>(),
     variables: new Set<string>(),
   };
 
