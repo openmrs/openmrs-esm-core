@@ -116,11 +116,17 @@ export const usePatientPhoto = vi.fn(() => ({
   error: null,
 }));
 
-export const ActionMenuButton2 = vi.fn(({ label, tagContent, icon }) => (
-  <button>
-    {icon} {tagContent} {label}
-  </button>
-));
+export const ActionMenuButton2 = vi.fn(({ icon: getIcon, label, tagContent, hidden, disabled }) => {
+  if (hidden?.([])) {
+    return null;
+  }
+
+  return (
+    <button disabled={disabled?.([])}>
+      {getIcon?.({ size: 16 })} {tagContent} {label}
+    </button>
+  );
+});
 export const ActionMenu = vi.fn(() => <div>Action Menu</div>);
 export const ExportedWorkspace = vi.fn(() => <div>Exported Workspace</div>);
 export const launchWorkspace2 = vi.fn();

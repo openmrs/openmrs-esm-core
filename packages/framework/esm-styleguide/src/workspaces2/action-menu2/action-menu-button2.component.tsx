@@ -52,17 +52,17 @@ export interface ActionMenuButtonProps2 {
    * An optional callback function to determine whether the action menu button
    * should be disabled based on the openedWindows state of the workspace group
    * @param openedWindows
-   * @returns
+   * @returns true if the action menu button should be disabled and false if it should be enabled
    */
-  disabled?: (openedWindows: OpenedWindow[]) => boolean;
+  disabled?: (openedWindows: Array<OpenedWindow>) => boolean;
 
   /**
    * An optional callback function to determine whether the action menu button
-   * shold be hidden based on the openedWindows state of the workspace group
+   * should be hidden based on the openedWindows state of the workspace group
    * @param openedWindows
-   * @returns
+   * @returns true if the action menu button should be hidden and false if it should be shown
    */
-  hidden?: (openedWindows: OpenedWindow[]) => boolean;
+  hidden?: (openedWindows: Array<OpenedWindow>) => boolean;
 }
 
 /**

@@ -115,11 +115,17 @@ export const usePatientPhoto = jest.fn(() => ({
   error: null,
 }));
 
-export const ActionMenuButton2 = jest.fn(({ label, tagContent, icon }) => (
-  <button>
-    {icon} {tagContent} {label}
-  </button>
-));
+export const ActionMenuButton2 = jest.fn(({ icon: getIcon, label, tagContent, hidden, disabled }) => {
+  if (hidden?.([])) {
+    return null;
+  }
+
+  return (
+    <button disabled={disabled?.([])}>
+      {getIcon?.({ size: 16 })} {tagContent} {label}
+    </button>
+  );
+});
 export const ActionMenu = jest.fn(() => <div>Action Menu</div>);
 export const ExportedWorkspace = jest.fn(() => <div>Exported Workspace</div>);
 export const launchWorkspace2 = jest.fn();
