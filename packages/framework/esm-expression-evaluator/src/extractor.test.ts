@@ -47,6 +47,26 @@ describe('OpenMRS Expression Extractor', () => {
     expect(extractVariableNames('[1, 2, 3].find(v => v === a)')).toEqual(['a']);
   });
 
+  it('extracts unbound variables from any kind of arrow function body', () => {
+    expect(extractVariableNames('a.map(x => f(b))')).toEqual(['a', 'f', 'b']);
+    expect(extractVariableNames('a.map(x => !b)')).toEqual(['a', 'b']);
+    expect(extractVariableNames('a.map(x => b.c)')).toEqual(['a', 'b']);
+    expect(extractVariableNames('a.map(x => x + b)')).toEqual(['a', 'b']);
+    expect(extractVariableNames('a.map(x => x ? b : c)')).toEqual(['a', 'b', 'c']);
+    expect(extractVariableNames('a.then(v => !isEmpty(b) ? v + 3 : v)')).toEqual(['a', 'isEmpty', 'b']);
+  });
+
+  it('excludes arrow function parameters, including from nested arrow functions', () => {
+    expect(extractVariableNames('a.map(x => x.y)')).toEqual(['a']);
+    expect(extractVariableNames('a.reduce((acc, x) => acc + x, 0)')).toEqual(['a']);
+    expect(extractVariableNames('a.map(x => x.items.filter(y => y === x || y === b))')).toEqual(['a', 'b']);
+    expect(extractVariableNames('a.map(x => f(y => y + x + z))')).toEqual(['a', 'f', 'z']);
+  });
+
+  it('only binds arrow function parameters within the arrow function body', () => {
+    expect(extractVariableNames('a.map(x => x) + x')).toEqual(['a', 'x']);
+  });
+
   it('supports real-world use-cases', () => {
     expect(extractVariableNames('!isEmpty(array)')).toEqual(['isEmpty', 'array']);
 

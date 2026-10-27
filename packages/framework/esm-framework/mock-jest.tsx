@@ -19,6 +19,7 @@ export * from '@openmrs/esm-translations/mock';
 export {
   parseDate,
   formatDate,
+  formatPartialDate,
   formatDatetime,
   formatTime,
   formatDuration,
