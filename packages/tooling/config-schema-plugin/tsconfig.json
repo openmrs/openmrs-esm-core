@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "target": "es2020",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": ["es2022"],
+    "baseUrl": ".",
+    "paths": {
+      // The shim is bundled by the child compilation, which resolves this through the package's
+      // `exports`. `moduleResolution: node` does not, so point type checking at the declarations
+      // rather than at the source, so that nothing outside `src` joins this build.
+      "@openmrs/esm-config/schema": ["../../framework/esm-config/dist/schema.d.ts"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.ts"]
+}

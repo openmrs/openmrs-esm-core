@@ -253,7 +253,7 @@ describe('mergeImportmapAndRoutes', () => {
     const result = await mergeImportmapAndRoutes(original, {
       importMap: { b: '2' },
       routes: {},
-      watchedRoutesPaths: {},
+      watchedApps: {},
     });
 
     const merged = JSON.parse(result.importMap.value);
@@ -269,7 +269,7 @@ describe('mergeImportmapAndRoutes', () => {
     const result = await mergeImportmapAndRoutes(original, {
       importMap: { a: 'new' },
       routes: {},
-      watchedRoutesPaths: {},
+      watchedApps: {},
     });
 
     const merged = JSON.parse(result.importMap.value);
@@ -294,7 +294,7 @@ describe('mergeImportmapAndRoutes', () => {
     const result = await mergeImportmapAndRoutes(original, {
       importMap: { local: 'http://localhost:8080/local.js' },
       routes: {},
-      watchedRoutesPaths: {},
+      watchedApps: {},
     });
 
     expect(result.importMap.type).toBe('inline');
@@ -315,7 +315,7 @@ describe('mergeImportmapAndRoutes', () => {
     const result = await mergeImportmapAndRoutes(original, {
       importMap: {},
       routes: { '@openmrs/b': { pages: ['/new'] } },
-      watchedRoutesPaths: {},
+      watchedApps: {},
     });
 
     const merged = JSON.parse(result.routes.value);
@@ -334,7 +334,7 @@ describe('mergeImportmapAndRoutes', () => {
     const result = await mergeImportmapAndRoutes(original, {
       importMap: {},
       routes: { '@openmrs/b': { pages: ['/new'] } },
-      watchedRoutesPaths: {},
+      watchedApps: {},
     });
 
     const merged = JSON.parse(result.routes.value);
@@ -363,7 +363,7 @@ describe('mergeImportmapAndRoutes', () => {
     const result = await mergeImportmapAndRoutes(original, {
       importMap: {},
       routes: { '@openmrs/local': { pages: ['/local'] } },
-      watchedRoutesPaths: {},
+      watchedApps: {},
     });
 
     expect(result.routes.type).toBe('inline');
@@ -394,7 +394,7 @@ describe('proxyImportmapAndRoutes', () => {
         }),
       },
       routes: { type: 'inline', value: '{}' },
-      watchedRoutesPaths: {},
+      watchedApps: {},
     };
 
     const result = proxyImportmapAndRoutes(input, backend, spaPath);
@@ -415,7 +415,7 @@ describe('proxyImportmapAndRoutes', () => {
         }),
       },
       routes: { type: 'inline', value: '{}' },
-      watchedRoutesPaths: {},
+      watchedApps: {},
     };
 
     const result = proxyImportmapAndRoutes(input, backend, spaPath);
@@ -436,7 +436,7 @@ describe('proxyImportmapAndRoutes', () => {
         }),
       },
       routes: { type: 'inline', value: '{}' },
-      watchedRoutesPaths: {},
+      watchedApps: {},
     };
 
     const result = proxyImportmapAndRoutes(input, backend, spaPath);
@@ -449,7 +449,7 @@ describe('proxyImportmapAndRoutes', () => {
     const input: ImportmapAndRoutesWithWatches = {
       importMap: { type: 'url', value: 'https://example.com/importmap.json' },
       routes: { type: 'inline', value: '{}' },
-      watchedRoutesPaths: {},
+      watchedApps: {},
     };
 
     expect(() => proxyImportmapAndRoutes(input, backend, spaPath)).toThrow(
@@ -461,7 +461,7 @@ describe('proxyImportmapAndRoutes', () => {
     const input: ImportmapAndRoutesWithWatches = {
       importMap: { type: 'inline', value: '{"imports":{}}' },
       routes: { type: 'url', value: 'https://example.com/routes.json' },
-      watchedRoutesPaths: {},
+      watchedApps: {},
     };
 
     expect(() => proxyImportmapAndRoutes(input, backend, spaPath)).toThrow(
