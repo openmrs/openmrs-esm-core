@@ -27,9 +27,25 @@ describe('startDevServer', () => {
       useRspack: true,
     });
 
+    let isSettled = false;
+    ready.then(
+      () => {
+        isSettled = true;
+      },
+      () => {
+        isSettled = true;
+      },
+    );
+
+    // Emit unrelated message to verify ready promise remains pending
+    mockProcess.emit('message', { type: 'unrelated' });
+    await Promise.resolve();
+    expect(isSettled).toBe(false);
+
     // Simulate successful compilation message
     mockProcess.emit('message', { type: 'compilation-complete' });
     await expect(ready).resolves.toBeUndefined();
+    expect(isSettled).toBe(true);
   });
 
   it('rejects ready promise if child process emits an error', async () => {
