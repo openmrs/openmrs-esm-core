@@ -547,9 +547,6 @@ module.exports = (env, argv = []) => {
               import: shareName,
               shareKey: shareName,
               shareScope: 'default',
-              ...(rootDependency !== depName && {
-                version: require(`${rootDependency}/package.json`).version,
-              }),
             };
           }
 

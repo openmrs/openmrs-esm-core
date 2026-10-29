@@ -130,6 +130,7 @@ function buildFederationRuntimeGuard(appName: string, expectedMinor: string | un
 
   return missingRuntime + skew + '})();';
 }
+
 const sharedDependencyRoots: Record<string, string> = {
   'react/jsx-runtime': 'react',
   'react/jsx-dev-runtime': 'react',
@@ -584,10 +585,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
               import: shareName,
               shareKey: shareName,
               shareScope: 'default',
-              ...(rootDependency !== depName && {
-                // eslint-disable-next-line @typescript-eslint/no-require-imports
-                version: require(`${rootDependency}/package.json`).version,
-              }),
             };
           }
 

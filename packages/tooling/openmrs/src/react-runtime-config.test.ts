@@ -43,7 +43,6 @@ describe.each([
         import: subpath,
         shareKey: subpath,
         shareScope: 'default',
-        version: '18.3.1',
       });
     }
   });
