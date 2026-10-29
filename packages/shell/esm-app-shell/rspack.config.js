@@ -22,10 +22,11 @@ const { name, version, dependencies } = require('./package.json');
 const sharedDependencies = require('./dependencies.json');
 const frameworkVersion = require('@openmrs/esm-framework/package.json').version;
 
-const sharedDependencyRoots = {
-  'react/jsx-runtime': 'react',
-  'react/jsx-dev-runtime': 'react',
-  'react-dom/client': 'react-dom',
+// Entry points that frontend modules import by name, shared alongside their package. Kept in step with
+// `sharedSubpaths` in the shared Rspack and Webpack configs.
+const sharedSubpaths = {
+  react: ['react/jsx-runtime'],
+  'react-dom': ['react-dom/client'],
 };
 
 const timestamp = getTimestamp();
@@ -517,9 +518,8 @@ module.exports = (env, argv = []) => {
         manifest: false,
         dts: false,
         shared: sharedDependencies.reduce((obj, depName) => {
-          const rootDependency = sharedDependencyRoots[depName] ?? depName;
           // This just attempts to align the requiredVersion with what we usually have in peerDependencies
-          let version = dependencies[rootDependency];
+          let version = dependencies[depName];
 
           if (version) {
             if (version.startsWith('^')) {
@@ -528,11 +528,11 @@ module.exports = (env, argv = []) => {
               const semVer = semver.parse(version.slice(1));
               version = `${semVer.major}.${semVer.minor}.x`;
             } else if (version === 'workspace:*') {
-              version = `${semver.parse(require(`${rootDependency}/package.json`).version).major}.X`;
+              version = `${semver.parse(require(`${depName}/package.json`).version).major}.X`;
             }
           }
 
-          const shareNames = [depName];
+          const shareNames = [depName, ...(sharedSubpaths[depName] ?? [])];
 
           // Also handle swr/immutable, etc.
           if (depName === 'swr') {

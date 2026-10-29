@@ -103,10 +103,13 @@ function buildFederationRuntimeGuard(appName: string, expectedMinor: string | un
   return missingRuntime + skew + '})();';
 }
 
-const sharedDependencyRoots: Record<string, string> = {
-  'react/jsx-runtime': 'react',
-  'react/jsx-dev-runtime': 'react',
-  'react-dom/client': 'react-dom',
+/**
+ * Entry points of a shared dependency that frontend modules import by name, and so share alongside
+ * it under its peer range. Compiled JSX imports `react/jsx-runtime`.
+ */
+const sharedSubpaths: Record<string, Array<string>> = {
+  react: ['react/jsx-runtime'],
+  'react-dom': ['react-dom/client'],
 };
 
 function getFrameworkVersion() {
@@ -379,9 +382,12 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
                   tsx: true,
                 },
                 transform: {
+                  // The production runtime in every mode, which the loader would otherwise follow:
+                  // `openmrs develop` serves a production app shell, and React's development JSX runtime
+                  // throws on its first warning when paired with production React.
                   react: {
                     runtime: 'automatic',
-                    development: mode !== production,
+                    development: false,
                   },
                 },
               },
@@ -498,15 +504,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         exposes: {
           './start': srcFile,
         },
-        shared: [
-          ...new Set([
-            ...Object.keys(peerDependencies),
-            '@openmrs/esm-framework/src/internal',
-            ...Object.keys(sharedDependencyRoots),
-          ]),
-        ].reduce((obj, depName) => {
-          const rootDependency = sharedDependencyRoots[depName] ?? depName;
-          const shareNames = [depName];
+        shared: [...Object.keys(peerDependencies), '@openmrs/esm-framework/src/internal'].reduce((obj, depName) => {
+          const shareNames = [depName, ...(sharedSubpaths[depName] ?? [])];
 
           // Also handle swr/immutable, etc.
           if (depName === 'swr') {
@@ -515,7 +514,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
 
           for (const shareName of shareNames) {
             obj[shareName] = {
-              requiredVersion: peerDependencies[rootDependency] ?? false,
+              requiredVersion: peerDependencies[depName] ?? false,
               strictVersion: false,
               singleton: true,
               import: shareName,
