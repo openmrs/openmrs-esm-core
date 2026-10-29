@@ -26,6 +26,9 @@ vi.mock('@openmrs/esm-framework/src/internal', () => ({
   getExtensionConfigFromStore: (state: ExtensionsConfigState, slotName: string, extensionId: string) =>
     state.configs[slotName]?.[extensionId] ?? { loaded: false, config: null },
   getTranslationOverrides: (_ns: string, slotName?: string) => Promise.resolve(slotName ? [{}, {}] : [{}]),
+  extensionNamespaceSeparator: '___',
+  isTranslationInspectorRecording: () => false,
+  recordTranslationSighting: () => {},
 }));
 
 const namespace = 'ext-module___barSlot___fooExt';
