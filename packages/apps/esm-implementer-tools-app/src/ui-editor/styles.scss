@@ -11,6 +11,11 @@
 $slot-accent: colors.$blue-60;
 $extension-accent: colors.$green-60;
 
+/** Holds everything the editor draws, without taking part in layout. */
+.editor {
+  display: contents;
+}
+
 .highlight {
   position: fixed;
   z-index: 99998;
