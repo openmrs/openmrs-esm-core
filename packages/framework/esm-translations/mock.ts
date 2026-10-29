@@ -1,6 +1,13 @@
 import { vi } from 'vitest';
 import { coreTranslations } from './src/translations';
 
+export const enableTranslationInspector = vi.fn();
+export const disableTranslationInspector = vi.fn();
+export const isTranslationInspectorRecording = vi.fn(() => false);
+export const recordTranslationSighting = vi.fn();
+export const matchTranslations = vi.fn(() => []);
+export const extensionNamespaceSeparator = '___';
+
 export const getCoreTranslation = vi.fn(
   (key: string, defaultText?: string, options?: Record<string | number | symbol, unknown>) =>
     interpolate(coreTranslations[key] ?? defaultText, options),

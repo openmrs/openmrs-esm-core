@@ -1,6 +1,16 @@
 /** @module @category Translation */
-import { coreTranslations } from './translations';
 import _i18n, { i18n, type TOptions } from 'i18next';
+import { coreTranslations } from './translations';
+
+export {
+  disableTranslationInspector,
+  enableTranslationInspector,
+  extensionNamespaceSeparator,
+  isTranslationInspectorRecording,
+  matchTranslations,
+  recordTranslationSighting,
+  type TranslationSighting,
+} from './inspector';
 
 const i18n: typeof _i18n = (_i18n as unknown as { default: typeof _i18n }).default || _i18n;
 
