@@ -1,87 +1,231 @@
 @use '@carbon/colors';
 @use '@carbon/layout';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme';
+@use '@carbon/type';
 
-.slotOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+/**
+ * Slots are blue and extensions green, as they have always been in the UI editor; both stay
+ * distinguishable from the translation inspector's purple when both are on.
+ */
+$slot-accent: colors.$blue-60;
+$extension-accent: colors.$green-60;
+
+.highlight {
+  position: fixed;
+  z-index: 99998;
   pointer-events: none;
+  border: 2px solid;
+}
 
-  &.blueScheme {
-    border: 1px dashed rgba(colors.$blue-70, 0.6);
-    background-color: rgba(colors.$blue-70, 0.1);
+.slotHighlight {
+  border-color: $slot-accent;
+  background-color: rgba($slot-accent, 0.06);
 
-    &.slotOverlayHover {
-      border-color: rgba(colors.$blue-70, 0.9);
-      background-color: rgba(colors.$blue-70, 0.15);
-    }
-  }
-
-  &.greenScheme {
-    border: 1px dashed rgba(colors.$green-70, 0.6);
-    background-color: rgba(colors.$green-70, 0.1);
-
-    &.slotOverlayHover {
-      border-color: rgba(colors.$green-70, 0.9);
-      background-color: rgba(colors.$green-70, 0.15);
-    }
+  .highlightLabel {
+    background-color: $slot-accent;
   }
 }
 
-.slotName {
-  background-color: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(colors.$blue-70, 0.8);
-  color: #393939;
-  cursor: pointer;
+.extensionHighlight {
+  border-color: $extension-accent;
+  background-color: rgba($extension-accent, 0.08);
+
+  .highlightLabel {
+    background-color: $extension-accent;
+  }
+}
+
+.dashedHighlight {
+  border-style: dashed;
+}
+
+.highlightLabel {
+  @include type.type-style('code-01');
   position: absolute;
-  padding: layout.$spacing-03;
+  bottom: 100%;
+  left: -2px;
+  padding: 0 layout.$spacing-02;
+  line-height: 1.375rem;
+  white-space: nowrap;
+  color: colors.$white;
+  opacity: 0.9;
+}
+
+.highlightLabelInside {
+  top: 0;
+  bottom: auto;
+  left: 0;
+}
+
+.card {
+  position: fixed;
   z-index: 99999;
-  font-size: layout.$spacing-04;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease;
+  width: 23rem;
+  overflow-y: auto;
+  background-color: theme.$background;
+  border: 1px solid theme.$border-strong-01;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  color: theme.$text-primary;
 
-  &:nth-child(even) {
-    border-color: rgba(colors.$green-70, 0.8);
+  // Inherit the type styles set on their containers rather than the application's global ones, with
+  // zero specificity so that classes on the paragraphs still win.
+  :where(p) {
+    margin: 0;
+    font: inherit;
+  }
+
+  // Zero specificity, so that the classes on these buttons override it.
+  :where(button:not(:global(.cds--btn))) {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid theme.$focus;
+      outline-offset: -2px;
+    }
+  }
+
+  /**
+   * The card floats over the application rather than sitting in the tools' own panel, so it
+   * carries the white theme's tokens instead of inheriting the tools' dark theme. The mixin emits
+   * nested rules, so it goes last to keep Sass from warning about declarations following them.
+   */
+  @include theme.theme(themes.$white);
+}
+
+.cardHeader {
+  padding: layout.$spacing-04 layout.$spacing-05 layout.$spacing-03;
+}
+
+.crumbs {
+  @include type.type-style('code-01');
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 layout.$spacing-02;
+  margin-bottom: layout.$spacing-02;
+  color: theme.$text-helper;
+
+  button:hover {
+    color: theme.$text-primary;
+    text-decoration: underline;
   }
 }
 
-.extensionOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: layout.$spacing-03;
+}
+
+.identifier {
+  @include type.type-style('code-02');
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.kind {
+  @include type.type-style('label-01');
+  color: theme.$text-helper;
+}
+
+.meta {
+  @include type.type-style('label-01');
+  margin-top: layout.$spacing-02;
+  color: theme.$text-secondary;
+  overflow-wrap: anywhere;
+}
+
+.listToggle {
+  color: theme.$link-primary;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &[aria-expanded='true'] .chevron {
+    transform: rotate(90deg);
+  }
+}
+
+.chevron {
+  display: inline-block;
+  margin-left: layout.$spacing-02;
+  font-size: 0.5625rem;
+  color: theme.$icon-secondary;
+  transition: transform 120ms;
+}
+
+.list {
+  margin-top: layout.$spacing-02;
+  border-left: 2px solid theme.$border-subtle-01;
+
+  button {
+    @include type.type-style('code-01');
+    width: 100%;
+    padding: layout.$spacing-01 layout.$spacing-03;
+    color: theme.$text-primary;
+
+    &:hover,
+    &:focus-visible {
+      background-color: theme.$layer-hover-01;
+    }
+  }
+
+  small {
+    display: block;
+    color: theme.$text-helper;
+  }
+}
+
+.actions {
+  border-top: 1px solid theme.$border-subtle-01;
+}
+
+.action + .action {
+  border-top: 1px solid theme.$border-subtle-01;
+}
+
+.actionToggle {
+  @include type.type-style('body-compact-01');
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  height: 100%;
-  background: none;
-  border: none;
+  padding: layout.$spacing-03 layout.$spacing-05;
+
+  &:hover {
+    background-color: theme.$layer-hover-01;
+  }
 }
 
-.extensionOverlay:hover {
-  background-color: rgba(43, 43, 185, 0.1);
+.actionOpen .chevron {
+  transform: rotate(90deg);
 }
 
-.extensionOverlay:focus .extensionTooltip,
-.extensionOverlay:hover .extensionTooltip {
-  visibility: visible;
-  opacity: 1;
+.actionDetail {
+  @include type.type-style('label-01');
+  padding: 0 layout.$spacing-05 layout.$spacing-03;
+  color: theme.$text-secondary;
 }
 
-.extensionTooltip {
-  visibility: hidden;
-  width: auto;
-  background-color: rgb(255, 255, 255, 0.85);
-  text-align: center;
-  padding: layout.$spacing-05;
-  border: 1px solid rgba(43, 43, 185, 0.4);
-  position: absolute;
-  top: 0;
-  left: 0;
+.path {
+  @include type.type-style('code-01');
+  margin: layout.$spacing-03 0 layout.$spacing-02;
+  padding: layout.$spacing-02 layout.$spacing-03;
+  background-color: theme.$layer-01;
+  overflow-wrap: anywhere;
 }
 
-.exitButton {
-  position: fixed !important;
-  top: layout.$spacing-10;
-  right: layout.$spacing-05;
-  z-index: 999999;
+.warning {
+  color: theme.$text-error;
+}
+
+.hint {
+  @include type.type-style('helper-text-01');
+  padding: layout.$spacing-02 layout.$spacing-05;
+  border-top: 1px solid theme.$border-subtle-01;
+  background-color: theme.$layer-01;
+  color: theme.$text-helper;
 }
