@@ -7,6 +7,7 @@ import { Configuration } from '../configuration/configuration.component';
 import { FrontendModules } from '../frontend-modules/frontend-modules.component';
 import { BackendDependencies } from '../backend-dependencies/backend-dependencies.component';
 import { FeatureFlags } from '../feature-flags/feature-flags.component';
+import { Translations } from '../translations/translations.component';
 import type { FrontendModule } from '../types';
 import type { ResolvedDependenciesModule } from '../backend-dependencies/openmrs-backend-dependencies';
 import styles from './popup.styles.scss';
@@ -42,6 +43,7 @@ export default function Popup({
   const labels: Record<ImplementerToolsTab, string> = useMemo(
     () => ({
       configuration: t('configuration', 'Configuration'),
+      translations: t('translations', 'Translations'),
       'frontend-modules': t('frontendModules', 'Frontend modules'),
       'backend-modules': t('backendModules', 'Backend modules'),
       'feature-flags': t('featureFlags', 'Feature flags'),
@@ -52,6 +54,7 @@ export default function Popup({
   const panels: Record<ImplementerToolsTab, React.ReactNode> = useMemo(
     () => ({
       configuration: <Configuration />,
+      translations: <Translations />,
       'frontend-modules': <FrontendModules frontendModules={frontendModules} />,
       'backend-modules': <BackendDependencies backendDependencies={backendDependencies} />,
       'feature-flags': <FeatureFlags />,
