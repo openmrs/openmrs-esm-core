@@ -27,6 +27,13 @@ function getPairs(languages: Array<string>, namespaces: Array<string>) {
   return languages.flatMap((language) => namespaces.map((namespace) => ({ language, namespace })));
 }
 
+/** The namespaces i18next is reading for a language right now. */
+export function getNamespacesLoading(language: string): Array<string> {
+  return Object.entries(getConnectorState() ?? {})
+    .filter(([pair, state]) => state === loadingState && pair.startsWith(`${language}|`))
+    .map(([pair]) => pair.slice(language.length + 1));
+}
+
 /**
  * Clears i18next's failed mark from the pairs. Without this it skips them on the next attempt, while
  * still reporting that attempt as a success.
