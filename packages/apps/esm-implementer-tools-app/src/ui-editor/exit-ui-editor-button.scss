@@ -1,0 +1,18 @@
+@use '@carbon/layout';
+
+.exitButton {
+  z-index: 100001;
+
+  &.floating {
+    position: fixed;
+    right: layout.$spacing-05;
+    bottom: layout.$spacing-05;
+  }
+
+  /* The implementer tools' panel is positioned, so this sits on its top edge. */
+  &.docked {
+    position: absolute;
+    right: layout.$spacing-05;
+    bottom: 100%;
+  }
+}
