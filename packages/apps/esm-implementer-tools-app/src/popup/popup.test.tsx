@@ -44,11 +44,12 @@ describe('Popup', () => {
     expect(screen.queryByRole('textbox', { name: /search configuration/i })).not.toBeInTheDocument();
   });
 
-  it('renders the tabs in the order the store declares', () => {
+  it('renders the tabs in the order the store declares, Translations second', () => {
     renderPopup();
 
     expect(screen.getAllByRole('tab').map((tab) => tab.textContent)).toEqual([
       'Configuration',
+      'Translations',
       'Frontend modules',
       'Backend modules',
       'Feature flags',
