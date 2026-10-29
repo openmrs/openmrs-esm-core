@@ -69,11 +69,20 @@ export const Configuration: React.FC = () => {
     toggleIsJsonModeEnabled,
     isConfigToolbarOpen,
     toggleIsToolbarOpen,
+    uiSelectedPath,
   } = useStoreWithActions(implementerToolsStore, actions);
   const { config, derivationError } = useStore(implementerToolsConfigStore);
   const extensionStore = useStore(getExtensionInternalStore());
   const tempConfigStore = useStore(temporaryConfigStore);
   const [filterText, setFilterText] = useState('');
+  // Config the UI editor asks to show is shown even if the search would hide it.
+  const [shownPath, setShownPath] = useState(uiSelectedPath);
+  if (uiSelectedPath !== shownPath) {
+    setShownPath(uiSelectedPath);
+    if (uiSelectedPath) {
+      setFilterText('');
+    }
+  }
   const tempConfig = tempConfigStore.config;
   const tempConfigObjUrl = new Blob([JSON.stringify(tempConfig, undefined, 2)], {
     type: 'application/json',
@@ -128,6 +137,7 @@ export const Configuration: React.FC = () => {
                 <TextInput
                   id="extensionSearch"
                   labelText={t('searchConfiguration', 'Search configuration')}
+                  value={filterText}
                   onChange={(e) => setFilterText(e.target.value)}
                   autoComplete="off"
                 />
