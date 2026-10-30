@@ -8,11 +8,18 @@ import {
   getExtensionsConfigStore,
   getTranslationOverrides,
   importDynamic,
+  extensionNamespaceSeparator,
+  isTranslationInspectorRecording,
+  recordTranslationSighting,
   registerTranslationNamespace,
 } from '@openmrs/esm-framework/src/internal';
+import { importCoreTranslation } from './core-translations';
 import { languageDetectionOptions } from './language-detection';
 
 registerTranslationNamespace('core');
+
+/** The name i18next knows the translation inspector's post-processor by. */
+const translationInspectorPostProcessorName = 'openmrsTranslationInspector';
 
 /**
  * Extension namespaces that were read while their extension was not mounted, so they are missing its
@@ -54,15 +61,28 @@ export function setupI18n() {
         } else if (namespace === undefined || language === undefined) {
           callback(Error(), null);
         } else if (namespace === 'core') {
-          Promise.all([
-            import(/* webpackMode: "lazy" */ `@openmrs/esm-translations/translations/${language}.json`),
+          Promise.allSettled([
+            importCoreTranslation(toTranslationFileLocale(language)),
             getTranslationOverrides(namespace),
           ])
-            .then(([json, [overrides]]) => {
-              let translations = json?.default ?? {};
+            .then(([jsonResult, overridesResult]) => {
+              // A locale with no core translation file still gets its overrides, but a file that failed
+              // to load is a failure: treating it as empty would mark the namespace loaded and leave
+              // every core string in English.
+              if (jsonResult.status === 'rejected' && !isMissingModule(jsonResult.reason)) {
+                console.error(`Failed to load the core translations for ${language}`, jsonResult.reason);
+                callback(jsonResult.reason, null);
+                return;
+              }
+
+              // `merge` mutates its target, and `json.default` is the cached module's own object, so
+              // overrides must be merged into a fresh object or they are written into the shipped
+              // translations for the life of the page and can never be removed.
+              let translations = { ...(jsonResult.status === 'fulfilled' ? (jsonResult.value?.default ?? {}) : {}) };
+              const [overrides] = overridesResult.status === 'fulfilled' ? overridesResult.value : [{}];
 
               if (language in overrides) {
-                translations = merge(translations, overrides[language]);
+                translations = merge({}, translations, overrides[language]);
               }
 
               callback(null, translations);
@@ -71,7 +91,7 @@ export function setupI18n() {
               callback(err, null);
             });
         } else {
-          const [ns, slotName, extensionId] = namespace.split('___');
+          const [ns, slotName, extensionId] = namespace.split(extensionNamespaceSeparator);
           let extensionMountedAtRead = true;
           importDynamic(ns)
             .then((module) => {
@@ -91,7 +111,7 @@ export function setupI18n() {
             .then(([jsonResult, overridesResult]) => {
               // If importTranslation rejects (e.g., no translation file for this locale),
               // fall back to empty so config-provided overrides can still be applied.
-              let translations = jsonResult.status === 'fulfilled' ? (jsonResult.value ?? {}) : {};
+              let translations = { ...(jsonResult.status === 'fulfilled' ? (jsonResult.value ?? {}) : {}) };
               const overrides = overridesResult.status === 'fulfilled' ? overridesResult.value : [];
 
               // if we have a slotName and extensionId, it means that we're only loading the namespace for that extension
@@ -102,7 +122,7 @@ export function setupI18n() {
                   window.i18next.addResourceBundle(
                     language,
                     ns,
-                    merge(translations, overrides[0][language]),
+                    merge({}, translations, overrides[0][language]),
                     true,
                     false,
                   );
@@ -111,7 +131,7 @@ export function setupI18n() {
                 }
               }
 
-              translations = merge(translations, ...overrides.filter((o) => language in o).map((o) => o[language]));
+              translations = merge({}, translations, ...overrides.filter((o) => language in o).map((o) => o[language]));
 
               callback(null, translations);
 
@@ -133,12 +153,80 @@ export function setupI18n() {
         }
       },
     })
+    .use(translationInspector)
     .use(initReactI18next)
     .init({
       detection: languageDetectionOptions,
       fallbackLng: 'en',
       nsSeparator: false,
+      postProcess: [translationInspectorPostProcessorName],
+      // Gives post-processors the key that actually resolved, e.g. `visit_one` for a plural lookup.
+      postProcessPassResolved: true,
     });
+}
+
+/**
+ * Reports every translated string, and the key behind it, to the framework's translation inspector,
+ * which the implementer tools use to tell an implementer which key to override for a given piece of
+ * text on screen.
+ *
+ * i18next applies post-processors last, after interpolation and nesting, so `value` is the finished
+ * string rather than the template — which is what lets text found in the DOM be matched back to a
+ * key.
+ */
+const translationInspector: i18next.PostProcessorModule = {
+  type: 'postProcessor',
+  name: translationInspectorPostProcessorName,
+  process(value, key, options) {
+    if (!isTranslationInspectorRecording() || typeof value !== 'string' || value === '') {
+      return value;
+    }
+
+    const namespace = resolveNamespace(options);
+
+    if (namespace) {
+      recordTranslationSighting({
+        namespace: namespace.split(extensionNamespaceSeparator)[0],
+        extensionNamespace: namespace.includes(extensionNamespaceSeparator) ? namespace : undefined,
+        key: resolveKey(key, options),
+        value,
+        // Mirrors i18next, which applies plural handling to any `count` but a string.
+        hasCount: options?.count !== undefined && typeof options.count !== 'string',
+      });
+    }
+
+    return value;
+  },
+};
+
+/**
+ * The namespace a translation was looked up in. react-i18next binds it through `getFixedT`, and the
+ * framework's `translateFrom` and `getCoreTranslation` pass it explicitly, so only a bare
+ * `i18n.t(key)` arrives without one. Those are left unrecorded rather than guessed at.
+ */
+function resolveNamespace(options: i18next.TOptions) {
+  const ns = options?.ns;
+
+  if (typeof ns === 'string') {
+    return ns;
+  }
+
+  return Array.isArray(ns) && typeof ns[0] === 'string' ? ns[0] : undefined;
+}
+
+/**
+ * The key a translation was read from, which for a plural or context lookup is a suffixed form of the
+ * key `t` was given. A lookup that found nothing, and so rendered its default value, reports the key
+ * it was given, since that is the one an override would supply.
+ */
+function resolveKey(key: string | Array<string>, options: i18next.TOptions): string {
+  const resolved = (options as { i18nResolved?: { res?: unknown; exactUsedKey?: string } })?.i18nResolved;
+
+  if (resolved?.res !== undefined && resolved.exactUsedKey) {
+    return resolved.exactUsedKey;
+  }
+
+  return Array.isArray(key) ? key[0] : key;
 }
 
 /**
@@ -183,11 +271,9 @@ function getImportPromise(
 
   if (!language) {
     return Promise.resolve({});
-  } else if (language.includes('-')) {
-    language = language.replace('-', '_');
   }
 
-  const importPromise = module.importTranslation(`./${language}.json`);
+  const importPromise = module.importTranslation(`./${toTranslationFileLocale(language)}.json`);
 
   if (!(importPromise instanceof Promise)) {
     throw Error(
@@ -196,4 +282,17 @@ function getImportPromise(
   }
 
   return importPromise;
+}
+
+/** Translation files are named with an underscore for the locale's first hyphen: `pt-BR` is read from `pt_BR.json`. */
+function toTranslationFileLocale(language: string) {
+  return language.replace('-', '_');
+}
+
+/**
+ * Whether an import failed because the bundle has no such file, as opposed to failing to fetch one it
+ * does have. The bundler's lazy context reports a missing file with Node's `MODULE_NOT_FOUND` code.
+ */
+function isMissingModule(error: unknown) {
+  return (error as { code?: unknown } | null)?.code === 'MODULE_NOT_FOUND';
 }
