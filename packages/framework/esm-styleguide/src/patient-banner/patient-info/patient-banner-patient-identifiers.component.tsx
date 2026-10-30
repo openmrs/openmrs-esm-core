@@ -18,7 +18,7 @@ interface PatientBannerPatientIdentifiersProps {
 
 function PrimaryIdentifier({ showIdentifierLabel, type, value }: IdentifiersProps) {
   return (
-    <span className={styles.primaryIdentifier}>
+    <span className={styles.primaryIdentifier} data-testid="primary-patient-identifier">
       <Tag className={styles.tag} type="gray">
         {showIdentifierLabel && type?.text && <span className={styles.label}>{type.text}: </span>}
         <span className={styles.value}>{value}</span>
@@ -29,11 +29,19 @@ function PrimaryIdentifier({ showIdentifierLabel, type, value }: IdentifiersProp
 
 function SecondaryIdentifier({ showIdentifierLabel, type, value }: IdentifiersProps) {
   return (
-    <FormLabel className={styles.secondaryIdentifier} id={`patient-banner-identifier-${value}`}>
+    <FormLabel
+      className={styles.secondaryIdentifier}
+      data-testid="secondary-patient-identifier"
+      id={`patient-banner-identifier-${value}`}
+    >
       {showIdentifierLabel && <span className={styles.label}>{type?.text}: </span>}
       <span className={styles.value}>{value}</span>
     </FormLabel>
   );
+}
+
+function isPreferredIdentifier(identifier: fhir.Identifier): boolean {
+  return identifier.use?.toLowerCase() === 'official' || Boolean((identifier as any).preferred);
 }
 
 export function PatientBannerPatientIdentifiers({
@@ -49,21 +57,38 @@ export function PatientBannerPatientIdentifiers({
       return code && !excludePatientIdentifierCodeTypes?.uuids.includes(code);
     }) ?? [];
 
+  const preferredIdentifiers = filteredIdentifiers.filter(isPreferredIdentifier);
+
+  const highlightedIdentifier =
+    preferredIdentifiers.length === 1
+      ? preferredIdentifiers[0]
+      : (filteredIdentifiers.find((id) => id.type?.coding?.[0]?.code === primaryIdentifierCode) ??
+        preferredIdentifiers[0]);
+
+  const displayIdentifiers = highlightedIdentifier
+    ? [highlightedIdentifier, ...filteredIdentifiers.filter((id) => id !== highlightedIdentifier)]
+    : filteredIdentifiers;
+
   return (
     <>
-      {filteredIdentifiers?.length
-        ? filteredIdentifiers.map(({ value, type }, index) => (
-            <React.Fragment key={value}>
-              <span className={styles.identifier}>
-                {type?.coding?.[0]?.code === primaryIdentifierCode ? (
-                  <PrimaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
-                ) : (
-                  <SecondaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
-                )}
-              </span>
-              {index < filteredIdentifiers.length - 1 && <span className={styles.separator}>&middot;</span>}
-            </React.Fragment>
-          ))
+      {displayIdentifiers.length
+        ? displayIdentifiers.map((identifier, index) => {
+            const { value, type } = identifier;
+            const isPrimary = identifier === highlightedIdentifier;
+
+            return (
+              <React.Fragment key={value ?? index}>
+                <span className={styles.identifier}>
+                  {isPrimary ? (
+                    <PrimaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
+                  ) : (
+                    <SecondaryIdentifier showIdentifierLabel={showIdentifierLabel} type={type} value={value} />
+                  )}
+                </span>
+                {index < displayIdentifiers.length - 1 && <span className={styles.separator}>&middot;</span>}
+              </React.Fragment>
+            );
+          })
         : ''}
     </>
   );
