@@ -5,7 +5,13 @@ import { createGlobalStore } from '@openmrs/esm-framework';
  * switcher, the panel and anything navigating to a tab all work from it, so reordering here moves a
  * tab everywhere.
  */
-export const implementerToolsTabs = ['configuration', 'frontend-modules', 'backend-modules', 'feature-flags'] as const;
+export const implementerToolsTabs = [
+  'configuration',
+  'translations',
+  'frontend-modules',
+  'backend-modules',
+  'feature-flags',
+] as const;
 
 export type ImplementerToolsTab = (typeof implementerToolsTabs)[number];
 
@@ -18,7 +24,10 @@ export interface ImplementerToolsStore {
   isConfigToolbarOpen: boolean;
   isUIEditorEnabled: boolean;
   isJsonModeEnabled: boolean;
+  isTranslationInspectorEnabled: boolean;
   uiSelectedPath: null | Array<string>;
+  /** A translation the translation inspector has handed to the Translations tab to show. */
+  selectedTranslation: null | { namespace: string; key: string };
 }
 
 export interface ActiveItemDescription {
@@ -37,7 +46,9 @@ export const implementerToolsStore = createGlobalStore<ImplementerToolsStore>('i
   isConfigToolbarOpen: getIsConfigToolbarOpen(),
   isUIEditorEnabled: getIsUIEditorEnabled(),
   isJsonModeEnabled: getIsJsonModeEnabled(),
+  isTranslationInspectorEnabled: getIsTranslationInspectorEnabled(),
   uiSelectedPath: null,
+  selectedTranslation: null,
 });
 
 export const setHasAlert = (value: boolean) =>
@@ -66,6 +77,7 @@ let lastValueOfIsOpen = getIsImplementerToolsOpen();
 let lastValueOfConfigToolbarOpen = getIsConfigToolbarOpen();
 let lastValueOfIsUiEditorEnabled = getIsUIEditorEnabled();
 let lastValueOfIsJsonModeEnabled = getIsJsonModeEnabled();
+let lastValueOfIsTranslationInspectorEnabled = getIsTranslationInspectorEnabled();
 
 implementerToolsStore.subscribe((state) => {
   if (state.isOpen != lastValueOfIsOpen) {
@@ -83,6 +95,10 @@ implementerToolsStore.subscribe((state) => {
   if (state.isJsonModeEnabled != lastValueOfIsJsonModeEnabled) {
     setIsJsonModeEnabled(state.isJsonModeEnabled);
     lastValueOfIsJsonModeEnabled = state.isJsonModeEnabled;
+  }
+  if (state.isTranslationInspectorEnabled != lastValueOfIsTranslationInspectorEnabled) {
+    setIsTranslationInspectorEnabled(state.isTranslationInspectorEnabled);
+    lastValueOfIsTranslationInspectorEnabled = state.isTranslationInspectorEnabled;
   }
 });
 
@@ -112,6 +128,14 @@ function setIsUIEditorEnabled(enabled: boolean) {
 
 function getIsJsonModeEnabled(): boolean {
   return JSON.parse(localStorage.getItem('openmrs:getIsJsonModeEnabled') || 'false') ?? false;
+}
+
+function getIsTranslationInspectorEnabled(): boolean {
+  return JSON.parse(localStorage.getItem('openmrs:isTranslationInspectorEnabled') || 'false') ?? false;
+}
+
+function setIsTranslationInspectorEnabled(enabled: boolean) {
+  localStorage.setItem('openmrs:isTranslationInspectorEnabled', JSON.stringify(enabled));
 }
 
 function setIsJsonModeEnabled(enabled: boolean) {

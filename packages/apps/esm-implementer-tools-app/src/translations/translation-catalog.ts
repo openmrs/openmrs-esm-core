@@ -189,17 +189,27 @@ export function getLoadedLanguages(): Array<string> {
 }
 
 /**
+ * The namespaces the application has loaded that the language holds no resources for. A language
+ * browsed earlier still lacks whatever the application loaded since.
+ */
+export function getMissingNamespaces(language: string): Array<string> {
+  const loaded = new Set(getLoadedNamespaces(language));
+  const running = new Set((window.i18next.languages ?? []).flatMap((candidate) => getLoadedNamespaces(candidate)));
+
+  return Array.from(running).filter((namespace) => !loaded.has(namespace));
+}
+
+/**
  * Fetches, for a language the application is not running in, the namespaces the application has
- * loaded, which is what lets an implementer browse and override a locale other than their own.
+ * loaded that it lacks, which is what lets an implementer browse and override a locale other than
+ * their own.
  *
  * Not `loadLanguages`: it also requests i18next's default `translation` namespace, which the app
  * shell refuses, so it always reports a failure; and it adds the language to `preload`, so every
  * namespace the application loads afterwards is fetched in that language too.
  */
 export async function loadTranslationLanguage(language: string): Promise<void> {
-  const namespaces = new Set((window.i18next.languages ?? []).flatMap((running) => getLoadedNamespaces(running)));
-
-  await Promise.all(Array.from(namespaces, (namespace) => loadTranslationNamespace(namespace, language)));
+  await Promise.all(getMissingNamespaces(language).map((namespace) => loadTranslationNamespace(namespace, language)));
 }
 
 export function getLoadedNamespaces(language: string): Array<string> {
