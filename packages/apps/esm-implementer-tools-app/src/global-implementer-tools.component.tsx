@@ -10,7 +10,7 @@ const GlobalImplementerToolsButton: React.FC = () => {
 
   return (
     <UserHasAccess privilege="O3 Implementer Tools">
-      <div className={styles.chevronImplementerToolsButton} data-testid="globalImplementerToolsButton">
+      <div className={styles.chevronImplementerToolsButton} data-openmrs-implementer-tools>
         <button
           type="button"
           onClick={togglePopup}
