@@ -382,9 +382,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
                   tsx: true,
                 },
                 transform: {
-                  // The production runtime in every mode, which the loader would otherwise follow:
-                  // `openmrs develop` serves a production app shell, and React's development JSX runtime
-                  // throws on its first warning when paired with production React.
+                  // `openmrs develop` serves a production app shell so we must ensure we match that
                   react: {
                     runtime: 'automatic',
                     development: false,
