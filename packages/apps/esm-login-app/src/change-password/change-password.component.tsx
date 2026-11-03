@@ -6,6 +6,7 @@ import { Controller, FieldError, useForm, type SubmitHandler } from 'react-hook-
 import { Button, Form, PasswordInput, InlineLoading, Tile } from '@carbon/react';
 import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
+import { isNotBlank } from './change-password.utils';
 import Logo from '../logo.component';
 import styles from './change-password.scss';
 
@@ -13,17 +14,23 @@ const ChangePassword: React.FC = () => {
   const { t } = useTranslation();
   const [isChangingPassword, setIsChangingPassword] = useState(false);
 
-  const oldPasswordValidation = z.string({
-    required_error: t('oldPasswordRequired', 'Old password is required'),
-  });
+  const oldPasswordValidation = z
+    .string({
+      required_error: t('oldPasswordRequired', 'Old password is required'),
+    })
+    .refine(isNotBlank, t('oldPasswordRequired', 'Old password is required'));
 
-  const newPasswordValidation = z.string({
-    required_error: t('newPasswordRequired', 'New password is required'),
-  });
+  const newPasswordValidation = z
+    .string({
+      required_error: t('newPasswordRequired', 'New password is required'),
+    })
+    .refine(isNotBlank, t('newPasswordRequired', 'New password is required'));
 
-  const passwordConfirmationValidation = z.string({
-    required_error: t('passwordConfirmationRequired', 'Password confirmation is required'),
-  });
+  const passwordConfirmationValidation = z
+    .string({
+      required_error: t('passwordConfirmationRequired', 'Password confirmation is required'),
+    })
+    .refine(isNotBlank, t('passwordConfirmationRequired', 'Password confirmation is required'));
 
   const changePasswordFormSchema = z
     .object({
