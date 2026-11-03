@@ -1,0 +1,63 @@
+@use '@carbon/colors';
+@use '@carbon/layout';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme';
+@use '@carbon/type';
+
+/**
+ * The purple accent is not a theme token on purpose: it is how the inspector's highlight stays
+ * distinguishable from the UI editor's blue and green slot overlays when both modes are on.
+ */
+$accent: colors.$purple-60;
+
+.highlight {
+  position: fixed;
+  z-index: 99998;
+  pointer-events: none;
+  border: 1px dashed rgba($accent, 0.9);
+  background-color: rgba($accent, 0.1);
+}
+
+.card {
+  position: fixed;
+  z-index: 99999;
+  width: 20rem;
+  max-height: 13rem;
+  overflow-y: auto;
+  padding: layout.$spacing-03 layout.$spacing-04;
+  background-color: theme.$background;
+  border: 1px solid rgba($accent, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  color: theme.$text-primary;
+
+  /**
+   * The card floats over the application rather than sitting in the tools' own panel, so it carries
+   * the white theme's tokens; inheriting the surrounding `.darkTheme` put g90's near-white text on
+   * this light surface. The mixin emits nested rules, so it goes last to keep Sass from warning
+   * about declarations following them.
+   */
+  @include theme.theme(themes.$white);
+}
+
+.sighting + .sighting {
+  margin-top: layout.$spacing-03;
+  border-top: 1px solid theme.$border-subtle-01;
+  padding-top: layout.$spacing-03;
+}
+
+.key {
+  @include type.type-style('code-01');
+  color: theme.$text-primary;
+  word-break: break-all;
+}
+
+.namespace {
+  @include type.type-style('label-01');
+  color: theme.$text-secondary;
+  word-break: break-all;
+}
+
+.note {
+  @include type.type-style('label-01');
+  color: theme.$text-secondary;
+}
