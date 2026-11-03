@@ -4,7 +4,7 @@
 
 > **parseDate**(`dateString`): `Date`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L97)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L123)
 
 Utility function to parse an arbitrary string into a date.
 Uses `dayjs(dateString)`.
