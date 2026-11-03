@@ -38,16 +38,18 @@ function PopupHandler() {
     }
   }, [t, shouldShowNotification]);
 
-  const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(implementerToolsStore);
+  const { isOpen, isUIEditorEnabled, openTab } = useStore(implementerToolsStore);
 
   return (
-    <div className={styles.darkTheme}>
+    // The marker lets tools that inspect the application tell the implementer tools' own UI apart
+    // from the application.
+    <div className={styles.darkTheme} data-openmrs-implementer-tools>
       {isOpen ? (
         <Popup
           close={togglePopup}
           frontendModules={frontendModules}
           backendDependencies={backendDependencies}
-          visibleTabIndex={openTabIndex}
+          visibleTab={openTab}
         />
       ) : null}
       {isUIEditorEnabled ? <UiEditor /> : null}
