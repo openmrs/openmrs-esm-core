@@ -27,26 +27,27 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  // Blank values are rejected with `refine` rather than `.trim()`, which would change the submitted
+  // password. The login form doesn't trim, so a trimmed password wouldn't match what the user typed.
+  const isNotBlank = (value: string) => value.trim().length > 0;
+
   const oldPasswordValidation = z
     .string({
       required_error: t('oldPasswordRequired', 'Old password is required'),
     })
-    .trim()
-    .min(1, t('oldPasswordRequired', 'Old password is required'));
+    .refine(isNotBlank, t('oldPasswordRequired', 'Old password is required'));
 
   const newPasswordValidation = z
     .string({
       required_error: t('newPasswordRequired', 'New password is required'),
     })
-    .trim()
-    .min(1, t('newPasswordRequired', 'New password is required'));
+    .refine(isNotBlank, t('newPasswordRequired', 'New password is required'));
 
   const passwordConfirmationValidation = z
     .string({
       required_error: t('passwordConfirmationRequired', 'Password confirmation is required'),
     })
-    .trim()
-    .min(1, t('passwordConfirmationRequired', 'Password confirmation is required'));
+    .refine(isNotBlank, t('passwordConfirmationRequired', 'Password confirmation is required'));
 
   const changePasswordFormSchema = z
     .object({
