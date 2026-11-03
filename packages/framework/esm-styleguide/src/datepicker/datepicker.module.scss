@@ -2,7 +2,8 @@
 @use '@carbon/layout';
 @use '@carbon/styles/scss/theme';
 @use '@carbon/type';
-@use '@carbon/styles/scss/components/button';
+// `.../components/button` would emit Carbon's entire button stylesheet; the tokens module emits none.
+@use '@carbon/styles/scss/components/button/tokens' as button;
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
 @use '@carbon/styles/scss/utilities/focus-outline' as focus;

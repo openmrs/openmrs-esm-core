@@ -4,15 +4,26 @@ import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig } from '..
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
 import { validator } from '../validators/validator';
-import { type ConfigExtensionStore, type ConfigInternalStore, type ConfigStore } from './state';
+import {
+  type ConfigExtensionStore,
+  type ConfigExtensionStoreElement,
+  type ConfigInternalStore,
+  type ConfigStore,
+  type ExtensionSlotsConfigStore,
+  type ExtensionsConfigStore,
+} from './state';
 import {
   configExtensionStore,
   configInternalStore,
   getConfigStore,
-  getExtensionConfig,
+  getExtensionConfigFromStore,
   getExtensionSlotsConfigStore,
   getExtensionsConfigStore,
+  clearConfigDerivationError,
   implementerToolsConfigStore,
+  invalidateImplementerToolsConfig,
+  recordConfigDerivationError,
+  setImplementerToolsConfigRecomputer,
   temporaryConfigStore,
 } from './state';
 import { type TemporaryConfigStore } from '..';
@@ -22,12 +33,14 @@ import { type TemporaryConfigStore } from '..';
  * Arrays are replaced entirely (not merged by index), matching the
  * behavior of ramda's mergeDeepRight.
  */
+function replaceArrays(_objValue: unknown, srcValue: unknown) {
+  if (Array.isArray(srcValue)) {
+    return srcValue;
+  }
+}
+
 function mergeDeepReplace<T extends object>(left: T, right: Partial<T>): T {
-  return mergeWith({}, left, right, (_objValue: unknown, srcValue: unknown) => {
-    if (Array.isArray(srcValue)) {
-      return srcValue;
-    }
-  }) as T;
+  return mergeWith({}, left, right, replaceArrays) as T;
 }
 
 /**
@@ -54,6 +67,11 @@ function mergeDeepReplace<T extends object>(left: T, right: Partial<T>): T {
 const configSubscriptions: Array<() => void> = [];
 
 /**
+ * Track displayed validation messages so they only get displayed once.
+ */
+const displayedValidationMessages = new Set<string>();
+
+/**
  * Recomputes all configuration derived stores based on current state of input stores.
  * Called whenever any input store (configInternalStore, temporaryConfigStore, configExtensionStore) changes.
  */
@@ -62,25 +80,92 @@ function recomputeAllConfigs() {
   const tempConfigState = temporaryConfigStore.getState();
   const extensionState = configExtensionStore.getState();
 
+  // Mounting an extension changes only `configExtensionStore`, which only the extension configs
+  // depend on, so the rest of the last derivation is reused.
+  const configInputsUnchanged =
+    lastDerivation?.configState === configState && lastDerivation.tempConfigState === tempConfigState;
+
+  if (configInputsUnchanged) {
+    computeExtensionConfigs(configState, extensionState, tempConfigState, lastDerivation!.slotConfigs, true);
+    return;
+  }
+
   computeModuleConfig(configState, tempConfigState);
-  computeImplementerToolsConfig(configState, tempConfigState);
-  computeExtensionSlotConfigs(configState, tempConfigState);
-  computeExtensionConfigs(configState, extensionState, tempConfigState);
+
+  const slotConfigs = getExtensionSlotConfigs(configState, tempConfigState);
+  computeExtensionSlotConfigs(slotConfigs);
+  computeExtensionConfigs(configState, extensionState, tempConfigState, slotConfigs, false);
+
+  // Recorded only after the outputs above are written, so a failure forces a full derivation next time.
+  lastDerivation = { configState, tempConfigState, slotConfigs };
+
+  // Last, because a failure here must not skip the outputs above. Only kept current while the
+  // implementer tools are watching it; otherwise derived on read.
+  invalidateImplementerToolsConfig();
 }
 
+/** The inputs the outputs were last fully derived from, compared by identity. */
+let lastDerivation: {
+  configState: ConfigInternalStore;
+  tempConfigState: TemporaryConfigStore;
+  slotConfigs: Record<string, ExtensionSlotConfig>;
+} | null = null;
+
+/**
+ * The mounted extension each extension config entry was derived for. An extension ID can be
+ * mounted under a different module while its slot and ID stay the same, so an entry is only
+ * current if its modules match too.
+ */
+let entryOrigins = new WeakMap<object, ConfigExtensionStoreElement>();
+
 function setupConfigSubscriptions() {
-  // Initial computation
-  recomputeAllConfigs();
+  // Registered here rather than at module load so that `resetConfigSystem` restores it.
+  setImplementerToolsConfigRecomputer(() =>
+    computeImplementerToolsConfig(configInternalStore.getState(), temporaryConfigStore.getState()),
+  );
+
+  // Guarded: a configuration the user saved through the implementer tools must not be able to stop
+  // the framework from loading.
+  recomputeAllConfigsSafely();
 
   // Subscribe to all input stores with a single handler
   // This ensures we only recompute once even if multiple stores change simultaneously
-  configSubscriptions.push(configInternalStore.subscribe(recomputeAllConfigs));
-  configSubscriptions.push(temporaryConfigStore.subscribe(recomputeAllConfigs));
-  configSubscriptions.push(configExtensionStore.subscribe(recomputeAllConfigs));
+  configSubscriptions.push(
+    configInternalStore.subscribe(recomputeAllConfigsSafely),
+    temporaryConfigStore.subscribe(recomputeAllConfigsSafely),
+    configExtensionStore.subscribe(recomputeAllConfigsSafely),
+  );
+}
+
+/** Ensure that we do not throw during a store subscription */
+function recomputeAllConfigsSafely() {
+  clearConfigDerivationError();
+
+  try {
+    recomputeAllConfigs();
+  } catch (e) {
+    recordConfigDerivationError(e);
+    console.error('Failed to recompute the configuration', e);
+  }
 }
 
 // Set up subscriptions at module load time
 setupConfigSubscriptions();
+
+/**
+ * A module's config is a pure function of its schema, whether it has loaded, and the provided and
+ * temporary configs. Every module is recomputed whenever any input store changes, so without this
+ * cache loading N modules costs N² full derivations.
+ */
+interface ModuleConfigCacheEntry {
+  schema: ConfigSchema;
+  moduleLoaded: boolean;
+  providedConfigs: ConfigInternalStore['providedConfigs'];
+  temporaryConfig: Config;
+  state: ConfigStore;
+}
+
+const moduleConfigCache = new Map<string, ModuleConfigCacheEntry>();
 
 function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
   for (let moduleName of Object.keys(state.schemas)) {
@@ -91,38 +176,78 @@ function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryCon
     // available, which as of this writing blocks the schema definition from occurring
     // for modules loaded based on their extensions.
     const moduleStore = getConfigStore(moduleName);
-    let newState;
-    if (state.moduleLoaded[moduleName]) {
-      const config = getConfigForModule(moduleName, state, tempState);
-      newState = {
-        translationOverridesLoaded: true,
-        loaded: true,
-        config,
-      };
+    const schema = state.schemas[moduleName];
+    const moduleLoaded = Boolean(state.moduleLoaded[moduleName]);
+    const cached = moduleConfigCache.get(moduleName);
+
+    let newState: ConfigStore;
+
+    if (
+      cached &&
+      cached.schema === schema &&
+      cached.moduleLoaded === moduleLoaded &&
+      cached.providedConfigs === state.providedConfigs &&
+      cached.temporaryConfig === tempState.config
+    ) {
+      newState = cached.state;
     } else {
-      const config = getConfigForModuleImplicitSchema(moduleName, state, tempState);
+      const config = moduleLoaded
+        ? getConfigForModule(moduleName, state, tempState)
+        : getConfigForModuleImplicitSchema(moduleName, state, tempState);
+
       newState = {
         translationOverridesLoaded: true,
-        loaded: false,
+        loaded: moduleLoaded,
         config,
       };
+
+      moduleConfigCache.set(moduleName, {
+        schema,
+        moduleLoaded,
+        providedConfigs: state.providedConfigs,
+        temporaryConfig: tempState.config,
+        state: newState,
+      });
     }
 
-    moduleStore.setState(newState);
+    // Writing unconditionally would hand every `useConfig` consumer in the application a new
+    // object — and a re-render — whenever any module or extension anywhere is loaded.
+    const oldState = moduleStore.getState();
+
+    if (
+      oldState.loaded !== newState.loaded ||
+      oldState.translationOverridesLoaded !== newState.translationOverridesLoaded ||
+      !isEqual(oldState.config, newState.config)
+    ) {
+      moduleStore.setState(newState);
+    }
   }
 }
 
-function computeExtensionSlotConfigs(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
-  const slotConfigs = getExtensionSlotConfigs(state, tempState);
-  const newSlotStoreEntries = Object.fromEntries(
-    Object.entries(slotConfigs).map(([slotName, config]) => [slotName, { loaded: true, config }]),
-  );
+function computeExtensionSlotConfigs(slotConfigs: Record<string, ExtensionSlotConfig>) {
   const slotStore = getExtensionSlotsConfigStore();
-  const oldState = slotStore.getState();
-  const newState = { slots: { ...oldState.slots, ...newSlotStoreEntries } };
+  const oldSlots = slotStore.getState().slots;
+  const slots: ExtensionSlotsConfigStore['slots'] = {};
+  let changed = false;
 
-  if (!isEqual(oldState.slots, newState.slots)) {
-    slotStore.setState(newState);
+  for (const [slotName, config] of Object.entries(slotConfigs)) {
+    const previous = oldSlots[slotName];
+
+    // Entries keep their identity when the configuration behind them hasn't changed, so that
+    // changing one slot's configuration doesn't invalidate every other configured slot.
+    if (previous?.loaded && isEqual(previous.config, config)) {
+      slots[slotName] = previous;
+    } else {
+      slots[slotName] = { loaded: true, config };
+      changed = true;
+    }
+  }
+
+  // Built from scratch rather than merged over the previous state: a slot whose configuration
+  // has been removed — clearing the temporary config, say — has to lose its entry, or the old
+  // configuration stays in force until the page is reloaded.
+  if (changed || Object.keys(oldSlots).length !== Object.keys(slots).length) {
+    slotStore.setState({ slots });
   }
 }
 
@@ -141,32 +266,86 @@ function computeExtensionConfigs(
   configState: ConfigInternalStore,
   extensionState: ConfigExtensionStore,
   tempConfigState: TemporaryConfigStore,
+  slotConfigs: Record<string, ExtensionSlotConfig>,
+  configInputsUnchanged: boolean,
 ) {
-  const configs = {};
-  // We assume that the module schema has already been defined, since the extension
-  // it contains is mounted.
+  const extensionsConfigStore = getExtensionsConfigStore();
+  const oldConfigs = extensionsConfigStore.getState().configs;
+  const configs: ExtensionsConfigStore['configs'] = {};
+  let changed = false;
+  let entryCount = 0;
+
+  // An extension can be mounted before its module loads, so the module schema may still be the
+  // implicit one; `computeExtensionConfig` holds back structural validation until it has started.
   for (let extension of extensionState.mountedExtensions) {
-    const config = computeExtensionConfig(
-      extension.slotModuleName,
-      extension.extensionModuleName,
-      extension.slotName,
-      extension.extensionId,
-      configState,
-      tempConfigState,
-    );
+    const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
+    let entry: ConfigStore | { config: ConfigObject; loaded: true };
+
+    const origin = previous && entryOrigins.get(previous);
+
+    if (
+      configInputsUnchanged &&
+      previous?.loaded &&
+      origin?.slotModuleName === extension.slotModuleName &&
+      origin.extensionModuleName === extension.extensionModuleName
+    ) {
+      // Derived from these same inputs by the previous run, so it is still current.
+      entry = previous;
+    } else {
+      const config = computeExtensionConfig(
+        extension.slotModuleName,
+        extension.extensionModuleName,
+        extension.slotName,
+        extension.extensionId,
+        configState,
+        tempConfigState,
+        slotConfigs[extension.slotName],
+      );
+
+      // Entries keep their identity when the configuration behind them hasn't changed, so that
+      // mounting one extension doesn't hand every other mounted extension a new config object.
+      entry = previous?.loaded && isEqual(previous.config, config) ? previous : { config, loaded: true };
+    }
+
+    entryOrigins.set(entry, extension);
+
+    if (entry !== previous) {
+      changed = true;
+    }
 
     if (!configs[extension.slotName]) {
       configs[extension.slotName] = {};
     }
-    configs[extension.slotName][extension.extensionId] = { config, loaded: true };
-  }
-  const extensionsConfigStore = getExtensionsConfigStore();
-  const oldState = extensionsConfigStore.getState();
-  const newState = { configs };
 
-  // Use deep equality to only update if configs actually changed
-  if (!isEqual(oldState.configs, newState.configs)) {
-    extensionsConfigStore.setState(newState);
+    configs[extension.slotName][extension.extensionId] = entry as ConfigStore;
+    entryCount++;
+  }
+
+  // Slots keep their identity too when none of their entries changed. Subscribers compare these
+  // per-slot objects to work out which slots to re-derive, so handing out a fresh one for every
+  // slot on every write would mark every slot with a mounted extension dirty.
+  for (const [slotName, slotConfigs] of Object.entries(configs)) {
+    const previousSlot = oldConfigs[slotName];
+
+    if (
+      previousSlot &&
+      Object.keys(previousSlot).length === Object.keys(slotConfigs).length &&
+      Object.entries(slotConfigs).every(([extensionId, entry]) => previousSlot[extensionId] === entry)
+    ) {
+      configs[slotName] = previousSlot;
+    }
+  }
+
+  if (!changed) {
+    // Nothing was added or altered, but an extension may have unmounted, which only shows up as a
+    // missing entry.
+    changed =
+      Object.keys(oldConfigs).length !== Object.keys(configs).length ||
+      Object.values(oldConfigs).reduce((total, slot) => total + Object.keys(slot).length, 0) !== entryCount;
+  }
+
+  if (changed) {
+    extensionsConfigStore.setState({ configs });
   }
 }
 
@@ -227,6 +406,7 @@ export function registerModuleLoad(moduleName: string) {
   configInternalStore.setState((state) => ({
     ...state,
     moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+    moduleStarted: { ...state.moduleStarted, [moduleName]: true },
   }));
 }
 
@@ -297,6 +477,37 @@ export function provide(config: Config, sourceName = 'provided') {
 }
 
 /**
+ * Resolves with `select(state)` as soon as the store's state satisfies `ready`, leaving no
+ * subscription behind: nothing subscribes at all when the store is already ready. That matters
+ * because `getConfig` runs on every HTTP request, and a subscription that outlives its promise
+ * both retains its closure forever and slows down every later write to that store.
+ */
+function whenStoreReady<S, T>(
+  store: { getState(): S; subscribe(listener: (state: S) => void): () => void },
+  ready: (state: S) => boolean,
+  select: (state: S) => T,
+): Promise<T> {
+  return new Promise<T>((resolve) => {
+    let unsubscribe: (() => void) | undefined;
+    let resolved = false;
+
+    function update(state: S) {
+      if (!resolved && ready(state)) {
+        resolved = true;
+        resolve(select(state));
+        unsubscribe?.();
+      }
+    }
+
+    update(store.getState());
+
+    if (!resolved) {
+      unsubscribe = store.subscribe(update);
+    }
+  });
+}
+
+/**
  * A promise-based way to access the config as soon as it is fully loaded.
  * If it is already loaded, resolves the config in its present state.
  *
@@ -306,21 +517,11 @@ export function provide(config: Config, sourceName = 'provided') {
  * @param moduleName The name of the module for which to look up the config
  */
 export function getConfig<T = Record<string, any>>(moduleName: string): Promise<T> {
-  return new Promise<T>((resolve) => {
-    const store = getConfigStore(moduleName);
-    function update(state: ConfigStore) {
-      if (state.loaded && state.config) {
-        const config = lodashOmit(state.config, ['Display conditions', 'Translation overrides']);
-        resolve(config as T);
-
-        if (unsubscribe) {
-          unsubscribe();
-        }
-      }
-    }
-    update(store.getState());
-    const unsubscribe = store.subscribe(update);
-  });
+  return whenStoreReady(
+    getConfigStore(moduleName),
+    (state: ConfigStore) => Boolean(state.loaded && state.config),
+    (state: ConfigStore) => lodashOmit(state.config!, ['Display conditions', 'Translation overrides']) as T,
+  );
 }
 
 /**
@@ -332,7 +533,9 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
  * @param moduleName The name of the module providing the translation context.
  * @param slotName Optional extension slot name to include slot-specific overrides.
  * @param extensionId Optional extension ID to include extension-specific overrides.
- * @returns A Promise resolving to an array of translation override objects.
+ * @returns A Promise resolving to an array of translation override objects. It always settles: a
+ *   module the config system has not been told about, or an extension that is not mounted,
+ *   contributes no overrides.
  *
  * @internal
  */
@@ -341,42 +544,29 @@ export function getTranslationOverrides(
   slotName?: string,
   extensionId?: string,
 ): Promise<Array<Record<string, Record<string, string>>>> {
+  // A module's store only ever loads its overrides once the module is registered with the config
+  // system, so waiting on one that is not registered would leave the i18next namespace pending.
   const promises = [
-    new Promise<Record<string, Record<string, string>>>((resolve) => {
-      const configStore = getConfigStore(moduleName);
-      function update(state: ReturnType<(typeof configStore)['getState']>) {
-        if (state.translationOverridesLoaded && state.config) {
-          const translationOverrides = state.config['Translation overrides'] ?? {};
-          resolve(translationOverrides);
-
-          if (unsubscribe) {
-            unsubscribe();
-          }
-        }
-      }
-      update(configStore.getState());
-      const unsubscribe = configStore.subscribe(update);
-    }),
+    moduleName in configInternalStore.getState().schemas
+      ? whenStoreReady(
+          getConfigStore(moduleName),
+          (state) => Boolean(state.translationOverridesLoaded && state.config),
+          (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
+        )
+      : Promise.resolve({}),
   ];
 
   if (slotName && extensionId) {
-    promises.push(
-      new Promise<Record<string, Record<string, string>>>((resolve) => {
-        const configStore = getExtensionConfig(slotName, extensionId);
-        function update(state: ReturnType<(typeof configStore)['getState']>) {
-          if (state.loaded && state.config) {
-            const translationOverrides = state.config['Translation overrides'] ?? {};
-            resolve(translationOverrides);
+    // Read once rather than waited for: an extension's config entry exists only while that extension
+    // is registered as mounted, so a wait started in the gap never settles and leaves the i18next
+    // namespace pending.
+    const extensionConfig = getExtensionConfigFromStore(getExtensionsConfigStore().getState(), slotName, extensionId);
+    const overrides =
+      extensionConfig.loaded && extensionConfig.config
+        ? ((extensionConfig.config['Translation overrides'] ?? {}) as Record<string, Record<string, string>>)
+        : {};
 
-            if (unsubscribe) {
-              unsubscribe();
-            }
-          }
-        }
-        update(configStore.getState());
-        const unsubscribe = configStore.subscribe(update);
-      }),
-    );
+    promises.push(Promise.resolve(overrides));
   }
 
   return Promise.all(promises);
@@ -405,6 +595,23 @@ export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject
  */
 
 /**
+ * An extension's config depends only on the two schemas that can define it and on the config
+ * sources, so mounting one extension leaves every other mounted extension's config untouched.
+ * Without this, every mount and unmount re-derives — merge, clone, validate — a config for every
+ * extension currently on screen.
+ */
+interface ExtensionConfigCacheEntry {
+  extensionSchema: ConfigSchema | undefined;
+  extensionModuleSchema: ConfigSchema | undefined;
+  extensionModuleStarted: boolean;
+  providedConfigs: ConfigInternalStore['providedConfigs'];
+  temporaryConfig: Config;
+  config: ConfigObject;
+}
+
+const extensionConfigCache = new Map<string, ExtensionConfigCacheEntry>();
+
+/**
  * Returns the configuration for an extension. This configuration is specific
  * to the slot in which it is mounted, and its ID within that slot.
  *
@@ -416,6 +623,7 @@ export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject
  * @param extensionModuleName The name of the module which defines the extension (and therefore the config schema)
  * @param slotName The name of the extension slot where the extension is mounted
  * @param extensionId The ID of the extension in its slot
+ * @param slotConfig The slot's configuration, gathered from every module that configures it
  */
 function computeExtensionConfig(
   slotModuleName: string,
@@ -424,35 +632,152 @@ function computeExtensionConfig(
   extensionId: string,
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
+  slotConfig: ExtensionSlotConfig | undefined,
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
+  // Not `moduleLoaded`: `defineConfigSchema` sets that while `startupApp` is still running, before it
+  // reaches `defineExtensionConfigSchema`, so the extension would be checked against the module schema.
+  const extensionModuleStarted = Boolean(configState.moduleStarted[extensionModuleName]);
+  // JSON string of these elements should be unique-per-extension
+  const cacheKey = JSON.stringify([slotName, extensionId, slotModuleName, extensionModuleName]);
+  const cached = extensionConfigCache.get(cacheKey);
+
+  if (
+    cached &&
+    cached.extensionSchema === extensionConfigSchema &&
+    cached.extensionModuleSchema === configState.schemas[extensionModuleName] &&
+    cached.extensionModuleStarted === extensionModuleStarted &&
+    cached.providedConfigs === configState.providedConfigs &&
+    cached.temporaryConfig === tempConfigState.config
+  ) {
+    return cached.config;
+  }
+
   const nameOfSchemaSource = extensionConfigSchema ? extensionName : extensionModuleName;
   const providedConfigs = getProvidedConfigs(configState, tempConfigState);
+  const sharedOverride = slotConfig?.configure?.[extensionId] ?? {};
   const slotModuleConfig = mergeConfigsFor(slotModuleName, providedConfigs);
   const configOverride = slotModuleConfig?.extensionSlots?.[slotName]?.configure?.[extensionId] ?? {};
   const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
-  const combinedConfig = mergeConfigs([extensionConfig, configOverride]);
+  const combinedConfig = mergeConfigs([extensionConfig, sharedOverride, configOverride]);
   const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
-  validateStructure(schema, combinedConfig, nameOfSchemaSource);
+
+  // only validate structure once the schema has loaded
+  if (extensionConfigSchema || extensionModuleStarted) {
+    validateStructure(schema, combinedConfig, nameOfSchemaSource);
+  }
+
   const config = setDefaults(schema, combinedConfig);
   runAllValidatorsInConfigTree(schema, config, nameOfSchemaSource);
   delete config.extensionSlots;
+
+  extensionConfigCache.set(cacheKey, {
+    extensionSchema: extensionConfigSchema,
+    extensionModuleSchema: configState.schemas[extensionModuleName],
+    extensionModuleStarted,
+    providedConfigs: configState.providedConfigs,
+    temporaryConfig: tempConfigState.config,
+    config,
+  });
+
   return config;
 }
+
+/**
+ * Merging per module means editing one module's configuration rebuilds only that module, and the
+ * other subtrees keep their identity — which also makes the deep comparison downstream cheap. Adding
+ * a config source is the exception: it lengthens the source list, invalidating every entry.
+ */
+interface ImplementerToolsModuleCacheEntry {
+  annotatedSchema: Config | undefined;
+  configSlices: Array<Config | undefined>;
+  /** Part of the key: the tree records which source each value came from. */
+  sources: Array<string>;
+  result: Config;
+}
+
+const implementerToolsModuleCache = new Map<string, ImplementerToolsModuleCacheEntry>();
 
 function getImplementerToolsConfig(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
 ): Record<string, Config> {
-  let result = getSchemaWithValuesAndSources(cloneDeep(configState.schemas));
+  const annotatedSchemas = getAllSchemasWithValuesAndSources(configState.schemas);
   const configsAndSources = [
     ...configState.providedConfigs.map((c) => [c.config, c.source]),
     [tempConfigState.config, 'temporary config'],
   ] as Array<[Config, string]>;
-  for (let [config, source] of configsAndSources) {
-    result = mergeConfigs([result, createValuesAndSourcesTree(config, source)]);
+
+  // A module can be configured without having declared a schema, so the module list is the union
+  // of both rather than just the schemas.
+  const moduleNames = new Set(Object.keys(annotatedSchemas));
+  for (const [config] of configsAndSources) {
+    for (const moduleName of Object.keys(config)) {
+      moduleNames.add(moduleName);
+    }
   }
+
+  const result: Record<string, Config> = {};
+
+  for (const moduleName of moduleNames) {
+    const annotatedSchema = annotatedSchemas[moduleName];
+    const configSlices = configsAndSources.map(([config]) => config[moduleName]);
+    const sources = configsAndSources.map(([, source]) => source);
+    const cached = implementerToolsModuleCache.get(moduleName);
+
+    if (
+      cached &&
+      cached.annotatedSchema === annotatedSchema &&
+      cached.configSlices.length === configSlices.length &&
+      cached.configSlices.every((slice, i) => slice === configSlices[i]) &&
+      cached.sources.every((source, i) => source === sources[i])
+    ) {
+      result[moduleName] = cached.result;
+      continue;
+    }
+
+    let merged: Config = annotatedSchema ?? {};
+
+    configsAndSources.forEach(([, source], i) => {
+      const slice = configSlices[i];
+
+      if (slice !== undefined) {
+        merged = mergeDeepReplace(merged, createValuesAndSourcesTree(slice, source));
+      }
+    });
+
+    implementerToolsModuleCache.set(moduleName, { annotatedSchema, configSlices, sources, result: merged });
+    result[moduleName] = merged;
+  }
+
+  return result;
+}
+
+/**
+ * Caching per module is what stops the walk being quadratic: defining one module's schema
+ * recomputes every module.
+ *
+ * A module with no configuration of its own is published straight from this cache, so nothing may
+ * mutate a tree it reads out of the implementer tools config — it is the cache entry.
+ */
+const schemaValuesAndSourcesCache = new Map<string, { schema: ConfigSchema; annotated: Config }>();
+
+function getAllSchemasWithValuesAndSources(schemas: Record<string, ConfigSchema>): Record<string, Config> {
+  const result: Record<string, Config> = {};
+
+  for (const [moduleName, schema] of Object.entries(schemas)) {
+    const cached = schemaValuesAndSourcesCache.get(moduleName);
+
+    if (cached && cached.schema === schema) {
+      result[moduleName] = cached.annotated;
+    } else {
+      const annotated = getSchemaWithValuesAndSources(cloneDeep(schema));
+      schemaValuesAndSourcesCache.set(moduleName, { schema, annotated });
+      result[moduleName] = annotated;
+    }
+  }
+
   return result;
 }
 
@@ -495,11 +820,30 @@ function getExtensionSlotConfigs(
     },
     {},
   );
+
   validateAllExtensionSlotConfigs(slotConfigPerModule);
-  const slotConfigs = Object.keys(slotConfigPerModule).reduce((obj, key) => {
-    obj = { ...obj, ...slotConfigPerModule[key] };
-    return obj;
-  }, {});
+
+  const slotConfigs: Record<string, ExtensionSlotConfig> = {};
+  const configureBlocks: Record<string, Array<NonNullable<ExtensionSlotConfig['configure']>>> = {};
+
+  for (const configBySlotName of Object.values(slotConfigPerModule)) {
+    for (const [slotName, config] of Object.entries(configBySlotName)) {
+      slotConfigs[slotName] = config;
+
+      if (config.configure) {
+        (configureBlocks[slotName] ??= []).push(config.configure);
+      }
+    }
+  }
+
+  for (const [slotName, blocks] of Object.entries(configureBlocks)) {
+    const configure = blocks.length === 1 ? blocks[0] : (mergeConfigs(blocks) as ExtensionSlotConfig['configure']);
+
+    if (slotConfigs[slotName].configure !== configure) {
+      slotConfigs[slotName] = { ...slotConfigs[slotName], configure };
+    }
+  }
+
   return slotConfigs;
 }
 
@@ -657,8 +1001,11 @@ function mergeConfigsFor(moduleName: string, allConfigs: Array<Config>): ConfigO
   return mergeConfigs(allConfigsForModule);
 }
 
+/**
+ * Merges a whole list at once, accumulating into one destination.
+ */
 function mergeConfigs(configs: Array<Config>) {
-  return configs.reduce<Config>((acc, config) => mergeDeepReplace(acc, config), {});
+  return configs.reduce<Config>((acc, config) => mergeWith(acc, config, replaceArrays), {});
 }
 
 /**
@@ -767,7 +1114,6 @@ function runAllValidatorsInConfigTree(schema: ConfigSchema, config: ConfigObject
  */
 function checkType(keyPath: string, _type: Type | undefined, value: any) {
   if (_type) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const validator: Record<string, Function> = {
       Array: isArray,
       Boolean: isBoolean,
@@ -788,7 +1134,6 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
  * Runs validators, logging errors.
  * @returns true if all pass, false otherwise.
  */
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function runValidators(keyPath: string, validators: Array<Function> | undefined, value: any) {
   let returnValue = true;
   if (validators) {
@@ -874,15 +1219,8 @@ function hasObjectSchema(elementsSchema: unknown): elementsSchema is ConfigSchem
 function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
-/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
-let displayedValidationMessages = new Set<string>();
-
 function logError(keyPath: string, message: string) {
   const key = `${keyPath}:::${message}`;
-  // technically, this should not be possible, but because of how things wind-up transpiled, this isn't impossible
-  if (!displayedValidationMessages) {
-    displayedValidationMessages = new Set<string>();
-  }
 
   if (!displayedValidationMessages.has(key)) {
     console.error(message);
@@ -919,6 +1257,14 @@ export function clearConfigErrors(keyPath?: string) {
 export function resetConfigSystem() {
   configSubscriptions.forEach((unsubscribe) => unsubscribe());
   configSubscriptions.length = 0;
+  // Cached configs are keyed on input identity, so a test that reuses the same schema or config
+  // objects across cases would otherwise be served the previous case's result.
+  moduleConfigCache.clear();
+  extensionConfigCache.clear();
+  schemaValuesAndSourcesCache.clear();
+  implementerToolsModuleCache.clear();
+  lastDerivation = null;
+  entryOrigins = new WeakMap();
   setupConfigSubscriptions();
 }
 

@@ -34,7 +34,6 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-feature-flags](packages/framework/esm-feature-flags): hide features that are in progress
 - [@openmrs/esm-globals](packages/framework/esm-globals): useful global variables and types
 - [@openmrs/esm-navigation](packages/framework/esm-navigation): navigation utilities, breadcrumbs, and history
-- [@openmrs/esm-offline](packages/framework/esm-offline): provides offline functionality
 - [@openmrs/esm-react-utils](packages/framework/esm-react-utils): utilities for React components
 - [@openmrs/esm-routes](packages/framework/esm-routes): provides helper functions for working with `routes.json` files in O3
 - [@openmrs/esm-state](packages/framework/esm-state): brings in state management
@@ -55,7 +54,6 @@ A set of frontend modules provides the core technical functionality of the appli
 - [@openmrs/esm-implementer-tools-app](packages/apps/esm-implementer-tools-app)
 - [@openmrs/esm-login-app](packages/apps/esm-login-app)
 - [@openmrs/esm-primary-navigation-app](packages/apps/esm-primary-navigation-app)
-- [@openmrs/esm-offline-tools-app](packages/apps/esm-offline-tools-app)
 
 ## Development
 

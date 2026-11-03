@@ -1,16 +1,20 @@
 import {
   cleanupObsoleteFeatureFlags,
-  getCurrentUser,
+  getSessionStore,
   subscribeOpenmrsEvent,
 } from '@openmrs/esm-framework/src/internal';
 import { setupOptionalDependencies } from './optionaldeps';
 
 subscribeOpenmrsEvent('started', () => cleanupObsoleteFeatureFlags());
 subscribeOpenmrsEvent('started', () => {
-  const subscription = getCurrentUser().subscribe((session) => {
-    if (session.authenticated) {
-      subscription?.unsubscribe();
+  const store = getSessionStore();
+  let unsubscribe: (() => void) | undefined;
+  const handle = ({ loaded, session }: ReturnType<typeof store.getState>) => {
+    if (loaded && session?.authenticated) {
+      unsubscribe?.();
       setupOptionalDependencies();
     }
-  });
+  };
+  unsubscribe = store.subscribe(handle);
+  handle(store.getState());
 });

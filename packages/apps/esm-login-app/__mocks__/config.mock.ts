@@ -12,7 +12,6 @@ export const mockConfig: ConfigSchema = {
   },
   chooseLocation: {
     enabled: true,
-    numberToShow: 3,
     useLoginLocationTag: true,
     locationsPerRequest: 50,
   },
@@ -27,4 +26,11 @@ export const mockConfig: ConfigSchema = {
     additionalLogos: [],
   },
   showPasswordOnSeparateScreen: true,
+  twoFactorAuth: {
+    enabled: true,
+    dashboardTitle: {
+      key: 'twoFactorAuth',
+      value: 'Two Factor Authentication',
+    },
+  },
 };

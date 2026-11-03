@@ -2,7 +2,16 @@ import { createRequire } from 'node:module';
 import type rspack from '@rspack/core';
 import { copyFileSync, existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { basename, join, parse, resolve } from 'path';
-import { checkImportmapJson, checkRoutesJson, getImportMap, getRoutes, loadBundlerConfig, logInfo } from '../utils';
+import {
+  checkImportmapJson,
+  checkRoutesJson,
+  compressAssets,
+  getImportMap,
+  getRoutes,
+  loadBundlerConfig,
+  logInfo,
+  resolveCompression,
+} from '../utils';
 
 type RspackExport = typeof rspack;
 
@@ -18,12 +27,14 @@ export interface BuildArgs {
   fresh?: boolean;
   apiUrl: string;
   pageTitle: string;
-  supportOffline?: boolean;
   configUrls: Array<string>;
   configPaths: Array<string>;
   buildConfig?: string;
   env: string;
   assets: Array<string>;
+  compress?: boolean;
+  compressGzip?: boolean;
+  compressBrotli?: boolean;
 }
 
 export type BuildConfig = Partial<{
@@ -32,12 +43,14 @@ export type BuildConfig = Partial<{
   configPaths: Array<string>;
   defaultLocale: string;
   pageTitle: string;
-  supportOffline: boolean;
   importmap: string;
   routes: string;
   spaPath: string;
   env: string;
   assets: Array<string>;
+  compress: boolean;
+  compressGzip: boolean;
+  compressBrotli: boolean;
 }>;
 
 function loadBuildConfig(buildConfigPath?: string): BuildConfig {
@@ -119,7 +132,6 @@ export async function runBuild(args: BuildArgs) {
     configUrls: configUrls,
     defaultLocale: args.defaultLocale || buildConfig.defaultLocale,
     pageTitle: buildConfig.pageTitle || args.pageTitle,
-    supportOffline: buildConfig.supportOffline ?? args.supportOffline,
     spaPath: buildConfig.spaPath || args.spaPath,
     fresh: args.fresh ?? false,
     assets: args.assets || buildConfig.assets || [],
@@ -135,7 +147,7 @@ export async function runBuild(args: BuildArgs) {
     },
   });
 
-  return await new Promise<void>((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err || stats?.hasErrors()) {
         reject(err ?? new Error(stats?.compilation.errors.toString()));
@@ -155,4 +167,11 @@ export async function runBuild(args: BuildArgs) {
       }
     });
   });
+
+  // Compression runs after the bundler so that it covers both what the bundler just wrote
+  // and the output of `assemble`
+  const compression = resolveCompression(args, buildConfig);
+  if (compression) {
+    await compressAssets(args.target, compression);
+  }
 }

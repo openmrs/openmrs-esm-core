@@ -4,4 +4,4 @@
 
 > `const` **CloseFilledIcon**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`IconProps`](../type-aliases/IconProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:295](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L295)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:297](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L297)

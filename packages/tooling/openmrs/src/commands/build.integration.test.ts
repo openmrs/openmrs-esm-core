@@ -1,5 +1,14 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { runBuild, type BuildArgs } from './build';
@@ -40,6 +49,13 @@ function defaultArgs(overrides: Partial<BuildArgs> = {}): BuildArgs {
     configPaths: [],
     env: 'production',
     assets: [],
+    // Precompression is exercised by its own test; leaving it off elsewhere keeps these
+    // already-slow real builds from paying for a compression pass they don't assert on. The
+    // per-encoding flags keep the CLI defaults, so the one test that turns `compress` on
+    // gets both encodings.
+    compress: false,
+    compressGzip: true,
+    compressBrotli: true,
     ...overrides,
   };
 }
@@ -114,6 +130,32 @@ describe('runBuild', () => {
     expect(existsSync(copiedConfig)).toBe(true);
     expect(JSON.parse(readFileSync(copiedConfig, 'utf8'))).toEqual({ setting: 'value' });
   }, 30_000);
+
+  it('emits precompressed siblings for its own output and for pre-existing assembled files', async () => {
+    const dir = createTempDir();
+    const target = join(dir, 'dist');
+    mkdirSync(target, { recursive: true });
+
+    // Stand in for a frontend module that `assemble` placed here before `build` ran, which
+    // is the order a distro image build uses.
+    const assembledAsset = join(target, 'esm-test-app-1.0.0', 'main.js');
+    mkdirSync(join(assembledAsset, '..'), { recursive: true });
+    writeFileSync(assembledAsset, 'export const value = "openmrs";\n'.repeat(200));
+
+    await runBuild(defaultArgs({ target, compress: true }));
+
+    const files = listFiles(target);
+    const bundle = files.find((f) => /^openmrs\.[a-f0-9]+\.js$/.test(f));
+    expect(bundle).toBeDefined();
+
+    for (const file of [`${bundle}`, 'index.html', join('esm-test-app-1.0.0', 'main.js')]) {
+      expect(existsSync(join(target, `${file}.gz`))).toBe(true);
+      expect(existsSync(join(target, `${file}.br`))).toBe(true);
+      const rawSize = statSync(join(target, file)).size;
+      expect(statSync(join(target, `${file}.gz`)).size).toBeLessThan(rawSize);
+      expect(statSync(join(target, `${file}.br`)).size).toBeLessThan(rawSize);
+    }
+  }, 60_000);
 
   it('resolves a hashed importmap filename when the exact file does not exist', async () => {
     const dir = createTempDir();

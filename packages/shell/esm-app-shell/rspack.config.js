@@ -2,9 +2,11 @@ const {
   CssExtractRspackPlugin,
   CopyRspackPlugin,
   DefinePlugin,
-  container,
   util: { createHash },
+  SwcJsMinimizerRspackPlugin,
+  LightningCssMinimizerRspackPlugin,
 } = require('@rspack/core');
+const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -14,6 +16,7 @@ const { mkdirSync, readdirSync, statSync, readFileSync, writeFileSync } = requir
 const sass = require('sass-embedded');
 const semver = require('semver');
 const { removeTrailingSlash, getTimestamp } = require('./tools/helpers');
+const { StartupPreloadPlugin } = require('./tools/startup-preload-plugin');
 
 const { name, version, dependencies } = require('./package.json');
 const sharedDependencies = require('./dependencies.json');
@@ -21,8 +24,19 @@ const frameworkVersion = require('@openmrs/esm-framework/package.json').version;
 
 const timestamp = getTimestamp();
 const production = 'production';
+
+/**
+ * The browserslist queries the app shell is built for, driving both swc and rspack's own runtime. Given
+ * no target at all swc down-levels to ES5, and every supported browser pays for transform helpers it
+ * doesn't need.
+ *
+ * Read straight from `browserslist-config-openmrs`, so frontend RFC 0003 is the single source of truth
+ * here as it is for the modules built by the shared configs. Those resolve a module's own browserslist
+ * config first; the app shell has no reason to differ from the policy, and doesn't declare one.
+ */
+const browserTargets = require('browserslist-config-openmrs');
+
 const allowedSuffixes = ['-app', '-widgets'];
-const { ModuleFederationPlugin } = container;
 
 const openmrsAddCookie = process.env.OMRS_ADD_COOKIE;
 const openmrsApiUrl = removeTrailingSlash(process.env.OMRS_API_URL || '/openmrs');
@@ -64,7 +78,6 @@ function resolveEnvironment(buildMode) {
   const fallback = process.env.NODE_ENV || buildMode || '';
   return fallback === 'development' ? 'development' : 'production';
 }
-const openmrsOffline = process.env.OMRS_OFFLINE === 'enable';
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsImportmapUrl = process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -129,6 +142,20 @@ function checkDirectoryHasContents(dirName) {
 // this function is CC BY-SA 4.0
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** A trailing file extension, which is what separates a request for a file from one of the app's routes. */
+const fileExtension = /\.[a-z0-9]{1,10}$/i;
+
+/**
+ * Whether a request under the SPA path is for a file. Files are proxied as they are; everything else
+ * falls through to `historyApiFallback` and is served the locally built `index.html`.
+ *
+ * @param {string} path
+ * @returns {boolean}
+ */
+function isFileRequest(path) {
+  return fileExtension.test(basename(path.split(/[?#]/)[0]));
 }
 
 /**
@@ -238,7 +265,11 @@ module.exports = (env, argv = []) => {
       publicPath: '',
       hashFunction: 'xxhash64',
     },
-    target: 'web',
+    // Governs the runtime and chunk-loading glue rspack writes itself, which swc never sees. The
+    // queries are inlined because this package declares no browserslist config of its own, and rspack
+    // answers a bare `browserslist` target with browserslist's `defaults` — browsers far older than O3
+    // supports — rather than reporting that it found nothing.
+    target: ['web', `browserslist:${browserTargets.join(', ')}`],
     // Module Federation v1.5 is incompatible with lazy compilation
     lazyCompilation: false,
     devServer: {
@@ -266,11 +297,7 @@ module.exports = (env, argv = []) => {
             }
 
             if (path.startsWith(openmrsPublicPath)) {
-              if (basename(path).indexOf('.') >= 0) {
-                return true;
-              } else {
-                return false;
-              }
+              return isFileRequest(path);
             }
 
             if (path.startsWith(openmrsApiUrl)) {
@@ -298,21 +325,6 @@ module.exports = (env, argv = []) => {
             if (proxyRes.headers) {
               delete proxyRes.headers['content-security-policy'];
             }
-          },
-          /**
-           * @param {string} path
-           * @param {Request} req
-           * @returns {string}
-           */
-          pathRewrite(path) {
-            if (path.startsWith(openmrsPublicPath)) {
-              const matcher = /^.*\/([^\/]*\.(?!html|js)[^.]+)$/i.exec(path);
-              if (matcher) {
-                return `${openmrsPublicPath}/${matcher[1]}`;
-              }
-            }
-
-            return path;
           },
         },
       ],
@@ -370,12 +382,26 @@ module.exports = (env, argv = []) => {
           use: [
             {
               loader: 'builtin:swc-loader',
+              options: {
+                // No `jsc.parser`, so that swc keeps inferring syntax from each file's extension.
+                env: {
+                  targets: browserTargets,
+                },
+              },
             },
           ],
         },
       ],
     },
     optimization: {
+      // `minimizer` replaces rspack's default pair, so the JS minimizer is listed too. Lightning CSS is
+      // given our browserslist; on its own defaults it downlevels every logical property for old browsers.
+      minimizer: [
+        new SwcJsMinimizerRspackPlugin(),
+        new LightningCssMinimizerRspackPlugin({
+          minimizerOptions: { targets: browserTargets },
+        }),
+      ],
       splitChunks: {
         maxAsyncRequests: Infinity,
         maxInitialRequests: 1,
@@ -428,15 +454,15 @@ module.exports = (env, argv = []) => {
           openmrsImportmapUrl,
           openmrsRoutesDef,
           openmrsRoutesUrl,
-          openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,
           openmrsCoreImportmap: appPatterns.length > 0 && JSON.stringify(coreImportmap),
-          openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
+          openmrsCoreRoutes: Object.keys(coreRoutes).length > 0 && JSON.stringify({ routes: coreRoutes }),
           openmrsCssFilename,
           openmrsExtraAssets: openmrsJsCssAssets.map((fileName) => 'assets/' + basename(fileName)),
         },
       }),
+      new StartupPreloadPlugin(['run']),
       new WebpackPwaManifest({
         name: openmrsPageTitle,
         short_name: openmrsPageTitle,
@@ -454,7 +480,7 @@ module.exports = (env, argv = []) => {
       new CopyRspackPlugin({
         patterns: [
           { from: resolve(__dirname, 'src/assets') },
-          { from: resolve(cssTmpDir, openmrsCssFilename), to: openmrsCssFilename },
+          { from: resolve(cssTmpDir, openmrsCssFilename), to: openmrsCssFilename, info: { minimized: true } },
           ...fontPatterns,
           ...appPatterns,
           ...assetsPatterns,
@@ -462,6 +488,20 @@ module.exports = (env, argv = []) => {
       }),
       new ModuleFederationPlugin({
         name,
+        // The app shell is the only build that ships `@module-federation/runtime-core`:
+        // `provideExternalRuntime` publishes it as `_FEDERATION_RUNTIME_CORE` for remotes to read, and
+        // Module Federation only allows it on a build with no `exposes`. `src/federation-runtime.ts`
+        // publishes the runtime's stateless helpers alongside it.
+        experiments: {
+          provideExternalRuntime: true,
+          // Every app shares this build's `runtime-core`, so anything pruned here is pruned for all of
+          // them. `target` is safe on those terms — nothing in a distribution runs the runtime in Node,
+          // and it saves ~5 kB gzipped. `disableSnapshot` is deliberately not set: it would leave every
+          // app's federation instance with an empty plugin array, and it saved 16 gzipped bytes.
+          optimization: { target: 'web' },
+        },
+        manifest: false,
+        dts: false,
         shared: sharedDependencies.reduce((obj, depName) => {
           // This just attempts to align the requiredVersion with what we usually have in peerDependencies
           let version = dependencies[depName];
@@ -477,28 +517,24 @@ module.exports = (env, argv = []) => {
             }
           }
 
+          const shareNames = [depName];
+
+          // Also handle swr/immutable, etc.
           if (depName === 'swr') {
-            // SWR is annoying with Module Federation
-            // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
-            obj['swr/_internal'] = {
-              requiredVersion: version,
-              strictVersion: false,
-              singleton: true,
-              import: 'swr/_internal',
-              shareKey: 'swr/_internal',
-              shareScope: 'default',
-              version: require('swr/package.json').version,
-            };
-          } else {
-            obj[depName] = {
+            shareNames.push('swr/');
+          }
+
+          for (const shareName of shareNames) {
+            obj[shareName] = {
               requiredVersion: version ?? false,
               strictVersion: false,
               singleton: true,
-              import: depName,
-              shareKey: depName,
+              import: shareName,
+              shareKey: shareName,
               shareScope: 'default',
             };
           }
+
           return obj;
         }, {}),
       }),
@@ -516,6 +552,5 @@ module.exports = (env, argv = []) => {
         analyzerMode: env?.analyze ? 'static' : 'disabled',
       }),
     ].filter(Boolean),
-    ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };
 };

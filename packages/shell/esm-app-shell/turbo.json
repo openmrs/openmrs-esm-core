@@ -1,0 +1,33 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "test": {
+      "inputs": [
+        "src/**",
+        "__mocks__/**",
+        "mock.ts",
+        "mock-jest.ts",
+        "mock-jest.tsx",
+        "vitest.config.ts",
+        "setup-tests.ts",
+        "rspack.config.js",
+        "dependencies.json",
+        "tools/**"
+      ]
+    },
+    "coverage": {
+      "inputs": [
+        "src/**",
+        "__mocks__/**",
+        "mock.ts",
+        "mock-jest.ts",
+        "mock-jest.tsx",
+        "vitest.config.ts",
+        "setup-tests.ts",
+        "rspack.config.js",
+        "dependencies.json",
+        "tools/**"
+      ]
+    }
+  }
+}

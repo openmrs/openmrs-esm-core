@@ -1,0 +1,15 @@
+// A well-behaved module stylesheet: everything is anchored to a class of this app's own, so CSS Modules
+// scopes it and nothing here can reach another module's markup.
+
+.panel {
+  // Distinctive enough to search for in emitted output, and an integer value so that minification
+  // can't rewrite it into something the assertions would miss.
+  letter-spacing: 3px;
+  display: flex;
+}
+
+// The supported way to make a visual fix through Carbon's classes: anchored to a local class, so the
+// override applies only inside this app.
+.panel :global(.cds--btn) {
+  min-width: 7rem;
+}

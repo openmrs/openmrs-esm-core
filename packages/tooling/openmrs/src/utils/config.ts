@@ -11,7 +11,6 @@ export interface BuildOptions {
   apiUrl?: string;
   spaPath?: string;
   pageTitle?: string;
-  supportOffline?: boolean;
   configUrls?: Array<string>;
   env?: string;
   coreAppsDir?: string;
@@ -45,10 +44,6 @@ export function setBundlerEnv(options: BuildOptions = {}) {
 
   if (typeof options.addCookie === 'string') {
     variables.OMRS_ADD_COOKIE = options.addCookie;
-  }
-
-  if (typeof options.supportOffline === 'boolean') {
-    variables.OMRS_OFFLINE = options.supportOffline ? 'enable' : 'disable';
   }
 
   if (Array.isArray(options.configUrls)) {

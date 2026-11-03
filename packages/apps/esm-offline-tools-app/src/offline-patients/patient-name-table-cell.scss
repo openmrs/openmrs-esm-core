@@ -1,8 +1,0 @@
-@use '@carbon/layout';
-@use '@openmrs/esm-styleguide/src/vars' as *;
-
-.cellContainer {
-  display: flex;
-  align-items: center;
-  column-gap: layout.$spacing-03;
-}

@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-navigation",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "license": "MPL-2.0",
   "description": "OpenMRS library providing tools for breadcrumbs, navigation, and history.",
   "type": "module",
@@ -22,9 +22,10 @@
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "clean": "git clean -fdX -- dist",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "typescript": "tsc --project tsconfig.build.json",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src"
   },
   "keywords": [
     "openmrs",
@@ -42,7 +43,7 @@
     "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
   },
   "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+    "url": "https://openmrs.atlassian.net/jira/software/c/projects/O3/boards/37"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "publishConfig": {
@@ -52,10 +53,12 @@
     "path-to-regexp": "^8.3.0"
   },
   "peerDependencies": {
-    "@openmrs/esm-state": "workspace:^"
+    "@openmrs/esm-state": "workspace:^",
+    "@openmrs/esm-translations": "workspace:^"
   },
   "devDependencies": {
     "@openmrs/esm-state": "workspace:*",
+    "@openmrs/esm-translations": "workspace:*",
     "@swc/cli": "0.8.1",
     "@swc/core": "1.15.21",
     "@vitest/coverage-v8": "^4.1.2",

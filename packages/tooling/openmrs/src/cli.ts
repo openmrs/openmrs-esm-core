@@ -117,11 +117,6 @@ export function buildCli(y: Argv) {
             'The routes.registry.json file to use. Can be a path to a valid routes registry to be taken literally, an URL, or a fixed JSON object.',
           type: 'string',
         })
-        .option('support-offline', {
-          default: false,
-          describe: 'Determines if a service worker should be installed for offline support.',
-          type: 'boolean',
-        })
         .option('use-rspack', {
           default: undefined,
           describe:
@@ -206,11 +201,6 @@ export function buildCli(y: Argv) {
           describe: 'Whether to clear the output directory before running the build.',
           type: 'boolean',
         })
-        .option('support-offline', {
-          default: false,
-          describe: 'Determines if a service worker should be installed for offline support.',
-          type: 'boolean',
-        })
         .option('build-config', {
           describe: 'Path to the SPA build config JSON',
           type: 'string',
@@ -273,6 +263,22 @@ export function buildCli(y: Argv) {
             "The path to CSS or JS assets to copy into 'assets/' in the build directory, and include as <link> and <script> tags in the generated HTML. Can be used multiple times.",
           type: 'array',
           coerce: (arg: Array<string>) => arg.map((p) => resolve(process.cwd(), p)),
+        })
+        .option('compress', {
+          default: true,
+          describe:
+            'Whether to emit precompressed siblings (e.g. main.js.gz, main.js.br) for compressible assets, so that a web server can serve them without compressing on every request. Turning this off also skips removing precompressed files whose source no longer exists.',
+          type: 'boolean',
+        })
+        .option('compress-gzip', {
+          default: true,
+          describe: 'Whether the precompressed siblings include gzip (.gz) output.',
+          type: 'boolean',
+        })
+        .option('compress-brotli', {
+          default: true,
+          describe: 'Whether the precompressed siblings include brotli (.br) output.',
+          type: 'boolean',
         }),
     async (args) =>
       runCommand('runBuild', {
@@ -336,6 +342,18 @@ export function buildCli(y: Argv) {
           description: 'Whether to compile all module routes.json into a master routes.json',
           type: 'boolean',
         })
+        .option('application-version', {
+          default: undefined,
+          description:
+            'The overall application version to record as the top-level `version` in the routes registry. Exposed at runtime as `window.applicationVersion`. If omitted, the version is not set.',
+          type: 'string',
+        })
+        .option('ensure-entrypoints', {
+          default: true,
+          description:
+            'Whether to fail the assemble run if a frontend module is missing its routes.json or the code entrypoint referenced from the import map. Use --no-ensure-entrypoints to downgrade these to warnings.',
+          type: 'boolean',
+        })
         .option('mode', {
           choices: ['config', 'survey'],
           default: 'survey',
@@ -343,7 +361,12 @@ export function buildCli(y: Argv) {
             'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey.',
           type: 'string',
         }),
-    (args) => runCommand('runAssemble', { ...args, configFiles: args['config-file'] }),
+    (args) =>
+      runCommand('runAssemble', {
+        ...args,
+        configFiles: args['config-file'],
+        applicationVersion: args['application-version'],
+      }),
   );
 
   y.command(
@@ -374,17 +397,22 @@ export function buildCli(y: Argv) {
 
   return y
     .epilog(
-      'The SPA assemble config JSON is a JSON file, typically `spa-assemble-config.json`, which defines parameters for the `build` and `assemble` ' +
-        'commands. The keys used by `build` are:\n' +
-        '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, and `supportOffline`;\n' +
+      '`build --build-config` and `assemble --config` read JSON config files. Distributions usually keep these as ' +
+        '`spa-build-config.json` and `spa-assemble-config.json`. `assemble` reads `spa-build-config.json` by default, so ' +
+        'one file with both sets of keys also works. The keys used by `build` are:\n' +
+        '  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `routes`, `pageTitle`, `defaultLocale`, ' +
+        '`env`, `compress`, `compressGzip`, and `compressBrotli`;\n' +
         'each of which is equivalent to the corresponding command line argument (see `openmrs build --help`). ' +
-        'Multiple values provided to `configPaths` and `configUrls` should be comma-separated.\n' +
+        '`configPaths` and `configUrls` are JSON arrays. Keys in the config file take precedence over the ' +
+        'corresponding command line flags, except for `importmap`, `routes` and `defaultLocale`.\n' +
         'The keys used by `assemble` are:\n' +
         '  frontendModules  \tAn object which specifies which frontend modules to include. It should have package names ' +
         'for keys and versions for values.\n' +
-        '  publicUrl  \tThe URL at which the frontend modules will be made available. Can be relative to the importmap. ' +
-        'Defaults to `.` (which means they will be colocated with the import map).\n\n' +
-        'For more information visit https://github.com/openmrs/openmrs-esm-core.',
+        '  frontendModuleExcludes  \tPackage names to leave out. Used to remove modules added by an earlier config file ' +
+        'when `--config` is given more than once.\n' +
+        '  publicUrl  \tThe URL at which the frontend modules will be made available. Can be a full URL, like a CDN. ' +
+        'Defaults to `.`, which the app shell loads from under the SPA path.\n\n' +
+        'For more information visit https://github.com/openmrs/openmrs-esm-core/tree/main/packages/tooling/openmrs#readme.',
     )
     .help()
     .demandCommand()

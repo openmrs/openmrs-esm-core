@@ -28,13 +28,13 @@ packages/
 e2e/                     # Playwright E2E tests (specs in e2e/specs/)
 tools/                   # Dev utilities (i18next-parser.config.js)
 turbo.json               # Turborepo task definitions
-.eslintrc                # Root ESLint config
+eslint.config.mjs        # Root ESLint flat config (spreads @openmrs/eslint-config)
 prettier.config.js       # Prettier config (120 char width, single quotes, trailing commas)
 playwright.config.ts     # Playwright config (reads from .env)
 example.env              # Template for E2E env vars
 ```
 
-**Key configuration files:** `.eslintrc` (root), `prettier.config.js`, `turbo.json`, `packages/framework/tsconfig.json` (base tsconfig for framework packages).
+**Key configuration files:** `eslint.config.mjs` (root), `prettier.config.js`, `turbo.json`, `packages/framework/tsconfig.json` (base tsconfig for framework packages).
 
 Each app package has: `rspack.config.js` (one-liner importing shared config), `vitest.config.ts`, `package.json` with `build`, `test`, `lint`, `typescript` scripts.
 

@@ -4,4 +4,4 @@
 
 > `const` **PrinterIcon**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`IconProps`](../type-aliases/IconProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\>
 
-Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:595](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L595)
+Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:606](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L606)

@@ -2,7 +2,7 @@
 
 # Interface: SpaConfig
 
-Defined in: [packages/framework/esm-globals/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L68)
+Defined in: [packages/framework/esm-globals/src/types.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L66)
 
 The configuration passed to the app shell initialization function
 
@@ -12,7 +12,7 @@ The configuration passed to the app shell initialization function
 
 > **apiUrl**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L72)
+Defined in: [packages/framework/esm-globals/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L70)
 
 The base path or URL for the OpenMRS API / endpoints.
 
@@ -22,7 +22,7 @@ The base path or URL for the OpenMRS API / endpoints.
 
 > `optional` **configUrls**: `string`[]
 
-Defined in: [packages/framework/esm-globals/src/types.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L85)
+Defined in: [packages/framework/esm-globals/src/types.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L83)
 
 URLs of configurations to load in the system.
 
@@ -32,7 +32,7 @@ URLs of configurations to load in the system.
 
 > `optional` **env**: [`SpaEnvironment`](../type-aliases/SpaEnvironment.md)
 
-Defined in: [packages/framework/esm-globals/src/types.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L81)
+Defined in: [packages/framework/esm-globals/src/types.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L79)
 
 The environment to use.
 
@@ -44,26 +44,10 @@ production
 
 ***
 
-### offline?
-
-> `optional` **offline**: `boolean`
-
-Defined in: [packages/framework/esm-globals/src/types.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L90)
-
-Defines if offline should be supported by installing a service worker.
-
-#### Default
-
-```ts
-true
-```
-
-***
-
 ### spaPath
 
 > **spaPath**: `string`
 
-Defined in: [packages/framework/esm-globals/src/types.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L76)
+Defined in: [packages/framework/esm-globals/src/types.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L74)
 
 The base path for the SPA root path.

@@ -11,7 +11,7 @@ export default function HelpMenuPopup() {
       className={styles.popup}
       onClick={(e) => e.stopPropagation()}
       aria-label={t('helpMenu', 'Help menu')}
-      role="menu"
+      role="group"
       tabIndex={-1}
     >
       <ExtensionSlot className={styles.helpextension} name="help-menu-slot" />

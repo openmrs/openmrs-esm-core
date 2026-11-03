@@ -60,6 +60,7 @@ export const MedicationIcon = () => <span>MedicationIcon</span>;
 export const MaterialOrderIcon = () => <span>MaterialOrderIcon</span>;
 export const MessageQueueIcon = () => <span>MessageQueueIcon</span>;
 export const MicroscopeIcon = () => <span>MicroscopeIcon</span>;
+export const MobileCheckIcon = () => <span>MobileCheckIcon</span>;
 export const MoneyIcon = () => <span>MoneyIcon</span>;
 export const MotherIcon = () => <span>MotherIcon</span>;
 export const MovementIcon = () => <span>MovementIcon</span>;
@@ -91,6 +92,7 @@ export const ToolsIcon = () => <span>ToolsIcon</span>;
 export const TranslateIcon = () => <span>TranslateIcon</span>;
 export const TrashCanIcon = () => <span>TrashCanIcon</span>;
 export const TreeViewAltIcon = () => <span>TreeViewAltIcon</span>;
+export const TwoFactorAuthenticationIcon = () => <span>TwoFactorAuthenticationIcon</span>;
 export const UserAvatarIcon = () => <span>UserAvatarIcon</span>;
 export const UserFollowIcon = () => <span>UserFollowIcon</span>;
 export const UserIcon = () => <span>UserIcon</span>;
@@ -106,8 +108,12 @@ export const Assessment1Pictogram = () => <span>Assessment1Pictogram</span>;
 export const Assessment2Pictogram = () => <span>Assessment2Pictogram</span>;
 export const BloodBankPictogram = () => <span>BloodBankPictogram</span>;
 export const CardiologyPictogram = () => <span>CardiologyPictogram</span>;
+export const CohortsPictogram = () => <span>CohortsPictogram</span>;
+export const ConceptDictionaryPictogram = () => <span>ConceptDictionaryPictogram</span>;
 export const CtScanPictogram = () => <span>CtScanPictogram</span>;
+export const DataEntryPictogram = () => <span>DataEntryPictogram</span>;
 export const DentistryPictogram = () => <span>DentistryPictogram</span>;
+export const DigitalTrustPictogram = () => <span>DigitalTrustPictogram</span>;
 export const EmergencyDepartmentPictogram = () => <span>EmergencyDepartmentPictogram</span>;
 export const FacilityPictogram = () => <span>FacilityPictogram</span>;
 export const GeriatricsPictogram = () => <span>GeriatricsPictogram</span>;
@@ -116,7 +122,9 @@ export const HomePictogram = () => <span>HomePictogram</span>;
 export const InPatientPictogram = () => <span>InPatientPictogram</span>;
 export const LaboratoryPictogram = () => <span>LaboratoryPictogram</span>;
 export const Labs2Pictogram = () => <span>Labs2Pictogram</span>;
+export const MetadataExportPictogram = () => <span>MetadataExportPictogram</span>;
 export const ObstetricsPictogram = () => <span>ObstetricsPictogram</span>;
+export const PatientDocumentsPictogram = () => <span>PatientDocumentsPictogram</span>;
 export const PatientListsPictogram = () => <span>PatientListsPictogram</span>;
 export const PatientSearchPictogram = () => <span>PatientSearchPictogram</span>;
 export const PatientsPictogram = () => <span>PatientsPictogram</span>;
@@ -124,8 +132,10 @@ export const PaymentsDeskPictogram = () => <span>PaymentsDeskPictogram</span>;
 export const PharmacyPictogram = () => <span>PharmacyPictogram</span>;
 export const Pharmacy2Pictogram = () => <span>Pharmacy2Pictogram</span>;
 export const RegistrationPictogram = () => <span>RegistrationPictogram</span>;
+export const ReportsPictogram = () => <span>ReportsPictogram</span>;
 export const ServiceQueuesPictogram = () => <span>ServiceQueuesPictogram</span>;
 export const StockManagementPictogram = () => <span>StockManagementPictogram</span>;
+export const SystemAdministrationPictogram = () => <span>SystemAdministrationPictogram</span>;
 export const TransferPictogram = () => <span>TransferPictogram</span>;
 export const TriagePictogram = () => <span>TriagePictogram</span>;
 export const XrayPictogram = () => <span>XrayPictogram</span>;
@@ -193,13 +203,18 @@ export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   );
 });
 
-export const DiagnosisTags = jest.fn(({ diagnoses }: { diagnoses: Array<Diagnosis> }) => (
-  <>
-    {diagnoses.map((d) => (
-      <span key={d.uuid}>{d.display}</span>
-    ))}
-  </>
-));
+export const DiagnosisTags = jest.fn(
+  ({ diagnoses, showCertainty = false }: { diagnoses: Array<Diagnosis>; showCertainty?: boolean }) => (
+    <>
+      {diagnoses.map((d) => (
+        <span key={d.uuid}>
+          {showCertainty && d.certainty === 'PROVISIONAL' ? '? ' : ''}
+          {d.display}
+        </span>
+      ))}
+    </>
+  ),
+);
 
 export const Workspace2 = jest.fn(({ title, children }) => (
   <div>

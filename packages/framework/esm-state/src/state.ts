@@ -6,12 +6,38 @@ import type { StoreApi } from 'zustand/vanilla';
 import { createStore } from 'zustand/vanilla';
 import { isTestEnvironment } from './utils';
 
+export type { StoreApi } from 'zustand/vanilla';
+
 interface StoreEntity {
   value: StoreApi<unknown>;
   active: boolean;
 }
 
 const availableStores: Record<string, StoreEntity> = {};
+
+/**
+ * Each copy of this module owns a separate `availableStores`, so a page running more than one copy
+ * has stores, config and extension state that cannot see each other. Nothing fails outright, which
+ * is what makes it expensive: the symptoms are missing state and "store already exists" errors far
+ * from the cause. The count lives on a global registry key rather than in module scope, since a
+ * second copy would not share module scope — that is the whole problem being detected.
+ *
+ * A hot reload re-evaluates this module and so also trips this, which is the honest answer: after a
+ * hot reload the page really is running two copies.
+ */
+const instanceCountKey = Symbol.for('openmrs.esm-state.instanceCount');
+const globalCounters = globalThis as unknown as Record<symbol, number | undefined>;
+const instanceCount = (globalCounters[instanceCountKey] ?? 0) + 1;
+globalCounters[instanceCountKey] = instanceCount;
+
+if (instanceCount > 1 && !isTestEnvironment()) {
+  console.error(
+    `Detected ${instanceCount} copies of @openmrs/esm-framework running on this page. Each copy keeps ` +
+      'its own store registry, so stores, configuration and extension state are not shared between ' +
+      'them. This usually means a frontend module loaded its own bundled framework instead of the one ' +
+      'the app shell provides.',
+  );
+}
 
 // spaEnv isn't available immediately. Wait a bit before making stores available
 // on window in development mode.
@@ -56,6 +82,22 @@ export function createGlobalStore<T>(name: string, initialState: T, storageType:
 
     return store;
   }
+}
+
+/**
+ * Creates a Zustand store that is NOT registered in the global store registry.
+ *
+ * Unlike {@link createGlobalStore}, this store has no name and is never added to `availableStores`,
+ * so it does not appear on `window.stores`, cannot collide with another store's name, and is
+ * garbage-collected once no longer referenced. Use this for per-instance/component-local state that
+ * must be isolated from every other instance (for example, one store per rendered component), where
+ * a named global store would either collide across instances or leak.
+ *
+ * @param initialState An object which will be the initial state of the store.
+ * @returns The newly created store.
+ */
+export function createLocalStore<T>(initialState: T): StoreApi<T> {
+  return createStore<T>()(() => initialState);
 }
 
 /**

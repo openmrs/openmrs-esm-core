@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 import merge from 'lodash/merge.js';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
-import { resolve, dirname, basename } from 'node:path';
+import { resolve, dirname, basename, sep } from 'node:path';
 import { Readable } from 'node:stream';
 import { checkbox, input } from '@inquirer/prompts';
 import npmRegistryFetch from 'npm-registry-fetch';
@@ -10,8 +10,6 @@ import pacote from 'pacote';
 import semver from 'semver';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
-
-/* eslint-disable no-console */
 
 export interface AssembleArgs {
   target: string;
@@ -23,6 +21,8 @@ export interface AssembleArgs {
   fresh: boolean;
   buildRoutes: boolean;
   manifest: boolean;
+  applicationVersion?: string;
+  ensureEntrypoints: boolean;
 }
 
 interface NpmSearchResult {
@@ -182,17 +182,61 @@ async function downloadPackage(
     return Buffer.from(await response.arrayBuffer());
   } else {
     const packageName = esmVersion ? `${esmName}@${esmVersion}` : esmName;
-    const tarManifest = await pacote.manifest(packageName, fetchOptions);
+    // shared so that tarball() downloads from the same packument manifest() resolved against
+    const packumentCache = new Map();
+    const tarManifest = await pacote.manifest(packageName, { ...fetchOptions, packumentCache });
 
     if (!Boolean(tarManifest) || !Boolean(tarManifest._resolved) || !Boolean(tarManifest._integrity)) {
       throw new Error(`Failed to load manifest for ${packageName} from registry ${fetchOptions.registry}`);
     }
 
-    return pacote.tarball(tarManifest._resolved, {
+    return pacote.tarball(packageName, {
       ...fetchOptions,
+      packumentCache,
+      resolved: tarManifest._resolved,
       integrity: tarManifest._integrity,
+      ignoreScripts: true,
     });
   }
+}
+
+/**
+ * Resolves a file from inside a package tarball against the directory we extract that package into,
+ * and rejects anything that lands outside it.
+ *
+ * @param outputDir The directory the module is being extracted into
+ * @param fileName The tarball-supplied path of the file, relative to `outputDir`
+ * @returns The absolute path to write the file to
+ */
+function resolveExtractedFile(outputDir: string, fileName: string): string {
+  const root = resolve(outputDir);
+  const targetFile = resolve(root, fileName);
+
+  if (!targetFile.startsWith(root + sep)) {
+    throw new Error(
+      `Refusing to extract "${fileName}" to ${targetFile}, which is outside of ${root}. This package appears to be malicious.`,
+    );
+  }
+
+  return targetFile;
+}
+
+/**
+ * Validates the version a package declares for itself before we build paths out of it.
+ *
+ * @param version The version as declared in the package's package.json
+ * @param packageDir The directory prefix the package is being extracted to, used for the error
+ * @returns The version, safe to use as part of a path
+ */
+function validateVersion(version: unknown, packageDir: string): string {
+  if (semver.valid(version as string) === null) {
+    throw new Error(
+      `The package extracted to ${packageDir} declares the version "${version}", which is not a valid semver version. ` +
+        `Refusing to assemble it. This package appears to be malicious.`,
+    );
+  }
+
+  return version as string;
 }
 
 async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string, string]> {
@@ -200,26 +244,52 @@ async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string,
   const rs = Readable.from(buffer);
   const files = await untar(rs);
   const packageJson = JSON.parse(files[`${packageRoot}/package.json`].toString('utf8'));
-  const version = (packageJson.version as string) ?? '0.0.0';
+  const version = validateVersion(packageJson.version ?? '0.0.0', targetDir);
   const entryModule = packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
   const sourceDir = dirname(entryModule);
-  let outputDir = `${targetDir}-${version}`;
+  const outputDir = `${targetDir}-${version}`;
   await mkdir(outputDir, { recursive: true });
+
+  // When the entry module lives at the package root, dirname() yields '.' (or '' for an
+  // empty entry). In that case the files sit directly under `package/` with no intermediate
+  // directory, so the prefix must be the package root itself rather than `package/.`.
+  const sourcePrefix = sourceDir === '.' || sourceDir === '' ? `${packageRoot}/` : `${packageRoot}/${sourceDir}/`;
 
   await Promise.all(
     Object.keys(files)
-      .filter((m) => m.startsWith(`${packageRoot}/${sourceDir}`))
+      // directory entries carry no content and are created by the mkdir() below, so writing them
+      // out would only ever mean writing an empty file over a directory
+      .filter((m) => m.startsWith(sourcePrefix) && !m.endsWith('/'))
       .map(async (m) => {
         const content = files[m];
-        const fileName = m.replace(`${packageRoot}/${sourceDir}/`, '');
-        const targetFile = resolve(outputDir, fileName);
+        const fileName = m.replace(sourcePrefix, '');
+        const targetFile = resolveExtractedFile(outputDir, fileName);
         await mkdir(dirname(targetFile), { recursive: true });
         await writeFile(targetFile, content);
       }),
   );
 
   return [fileName, version];
+}
+
+/**
+ * Derives the directory name a frontend module is extracted into from the name it is listed under
+ * in the assemble config.
+ *
+ * @param esmName The name the module is listed under in the assemble config
+ * @returns The directory name, relative to the assembly target
+ */
+function toModuleDirName(esmName: string): string {
+  const baseDirName = `${esmName}`.replace(/^@/, '').replace(/\//, '-');
+
+  if (!/^[^/\\]+$/.test(baseDirName) || baseDirName === '.' || baseDirName === '..') {
+    throw new Error(
+      `"${esmName}" cannot be used as a frontend module name because "${baseDirName}" is not a valid directory name.`,
+    );
+  }
+
+  return baseDirName;
 }
 
 export async function runAssemble(args: AssembleArgs) {
@@ -248,25 +318,42 @@ export async function runAssemble(args: AssembleArgs) {
 
   await mkdir(args.target, { recursive: true });
 
+  // When `ensureEntrypoints` is set, a missing routes.json or code entrypoint is a fatal error rather than a
+  // warning. We collect the failures across all modules so the user sees every problem in a single run instead
+  // of having to fix and re-run repeatedly. The actual throw happens once the Promise.all below has settled.
+  const entrypointErrors: Array<string> = [];
+  const reportMissingEntrypoint = (message: string) => {
+    if (args.ensureEntrypoints) {
+      entrypointErrors.push(message);
+    } else {
+      logWarn(message);
+    }
+  };
+
   await Promise.all(
     Object.keys(frontendModules).map(async (esmName) => {
       const esmVersion = frontendModules[esmName];
+      // derived before anything is downloaded so a bad name fails the run without any network I/O
+      const baseDirName = toModuleDirName(esmName);
       const tgzBuffer = await downloadPackage(esmName, esmVersion, process.cwd(), npmConf);
 
-      const baseDirName = `${esmName}`.replace(/^@/, '').replace(/\//, '-');
       const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, baseDirName));
       const dirName = `${baseDirName}-${version}`;
 
+      // The routes are how the framework ensures that it loads the correct module before any pages
+      // or extensions; if it's missing the app won't load in the browser.
       const appRoutes = resolve(args.target, dirName, 'routes.json');
       if (existsSync(appRoutes)) {
         try {
           routes[esmName] = JSON.parse(await readFile(appRoutes, 'utf8'));
           routes[esmName]['version'] = version;
         } catch (e) {
-          logWarn(`Error while processing routes for ${esmName} using ${appRoutes}: ${e}`);
+          reportMissingEntrypoint(
+            `Error while processing routes for ${esmName} using ${appRoutes}: ${e}. Note that this means that no pages or extensions for ${esmName} will be available.`,
+          );
         }
       } else {
-        logWarn(
+        reportMissingEntrypoint(
           `Routes file ${appRoutes} does not exist. We expect that routes file to be defined by ${esmName}. Note that this means that no pages or extensions for ${esmName} will be available.`,
         );
 
@@ -275,10 +362,26 @@ export async function runAssemble(args: AssembleArgs) {
         }
       }
 
+      // The entrypoint named in the import map is the module's executable code; if it's missing the module
+      // simply won't load in the browser, so validate it exists before we commit it to the import map.
+      const entrypoint = resolve(args.target, dirName, fileName);
+      if (!existsSync(entrypoint)) {
+        reportMissingEntrypoint(
+          `Code entrypoint ${entrypoint} for ${esmName} does not exist. This is the file referenced from the import map, so ${esmName} would fail to load.`,
+        );
+      }
+
       importmap.imports[esmName] = `${publicUrl}/${dirName}/${fileName}`;
       versionManifest.frontendModules[esmName] = version;
     }),
   );
+
+  if (entrypointErrors.length > 0) {
+    throw new Error(
+      `Assemble failed because the following entrypoints could not be found or the routes could not be processed. Pass --no-ensure-entrypoints to ` +
+        `downgrade these to warnings.\n\n${entrypointErrors.join('\n\n')}`,
+    );
+  }
 
   await writeFile(
     resolve(args.target, `importmap${args.hashFiles ? '.' + contentHash(importmap) : ''}.json`),
@@ -287,9 +390,16 @@ export async function runAssemble(args: AssembleArgs) {
   );
 
   if (args.buildRoutes) {
+    const applicationVersion = args.applicationVersion;
+    const routesRegistry = {
+      ...(applicationVersion === undefined || applicationVersion === null || applicationVersion.trim().length === 0
+        ? {}
+        : { version: applicationVersion }),
+      routes,
+    };
     await writeFile(
-      resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routes) : ''}.json`),
-      JSON.stringify(routes),
+      resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routesRegistry) : ''}.json`),
+      JSON.stringify(routesRegistry),
       'utf-8',
     );
   }

@@ -1,0 +1,37 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "test": {
+      "dependsOn": ["@openmrs/esm-framework#build", "@openmrs/esm-styleguide#build"],
+      "inputs": [
+        "src/**",
+        "__fixtures__/**",
+        "vitest.config.ts",
+        "$TURBO_ROOT$/packages/tooling/rspack-config/src/**",
+        "$TURBO_ROOT$/packages/tooling/webpack-config/src/**",
+        "$TURBO_ROOT$/packages/tooling/rspack-config/package.json",
+        "$TURBO_ROOT$/packages/tooling/webpack-config/package.json",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/package.json",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/src/**",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/rspack.config.js",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/dependencies.json"
+      ]
+    },
+    "coverage": {
+      "dependsOn": ["@openmrs/esm-framework#build", "@openmrs/esm-styleguide#build"],
+      "inputs": [
+        "src/**",
+        "__fixtures__/**",
+        "vitest.config.ts",
+        "$TURBO_ROOT$/packages/tooling/rspack-config/src/**",
+        "$TURBO_ROOT$/packages/tooling/webpack-config/src/**",
+        "$TURBO_ROOT$/packages/tooling/rspack-config/package.json",
+        "$TURBO_ROOT$/packages/tooling/webpack-config/package.json",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/package.json",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/src/**",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/rspack.config.js",
+        "$TURBO_ROOT$/packages/shell/esm-app-shell/dependencies.json"
+      ]
+    }
+  }
+}

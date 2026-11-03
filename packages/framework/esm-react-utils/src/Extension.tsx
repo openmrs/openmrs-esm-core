@@ -21,72 +21,128 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, ...divPro
   const { extension } = useContext(ComponentContext);
   const parcel = useRef<Parcel | null>(null);
   const updatePromise = useRef<Promise<void>>(Promise.resolve());
+  const isUnmounted = useRef(false);
+  const isRendering = useRef(false);
+  const latestState = useRef(state);
 
-  const ref = useCallback((node: HTMLDivElement) => {
-    if (
-      extension?.extensionSlotName &&
-      extension.extensionSlotModuleName &&
-      extension.extensionSlotModuleName &&
-      !parcel.current
-    ) {
-      renderExtension(
-        node,
-        extension.extensionSlotName,
-        extension.extensionSlotModuleName,
-        extension.extensionId,
-        undefined,
-        state,
-      ).then((newParcel: Parcel) => {
-        parcel.current = newParcel;
-      });
+  // Takes the parcel to tear down rather than reading `parcel.current`, which can be reassigned
+  // between scheduling this and running it.
+  const unmountParcel = useCallback((target: Parcel | null) => {
+    if (!target) {
+      return;
+    }
+
+    const unmountWhenMounted = () => {
+      if (target.getStatus() === 'MOUNTED') {
+        target.unmount();
+      }
+    };
+
+    switch (target.getStatus()) {
+      case 'MOUNTED':
+        target.unmount();
+        break;
+      case 'UPDATING':
+        // The rejection is reported by whoever owns `updatePromise`; here it only matters that a
+        // failed update still runs the teardown, or the parcel is left broken and mounted.
+        updatePromise.current?.then(unmountWhenMounted, unmountWhenMounted);
+        break;
+      default:
+        // Any other status: the parcel either hasn't finished coming up or is already gone.
+        // `mountPromise` has settled or will, and `unmountWhenMounted` re-checks the status.
+        target.mountPromise.then(unmountWhenMounted, () => {});
     }
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (parcel && parcel.current) {
-        const status = parcel.current.getStatus();
-        switch (status) {
-          case 'MOUNTING':
-            parcel.current.mountPromise.then(() => {
-              if (parcel.current?.getStatus() === 'MOUNTED') {
-                parcel.current.unmount();
-              }
-            });
-            break;
-          case 'MOUNTED':
-            parcel.current.unmount();
-            break;
-          case 'UPDATING':
-            if (updatePromise.current) {
-              updatePromise.current.then(() => {
-                if (parcel.current?.getStatus() === 'MOUNTED') {
-                  parcel.current.unmount();
-                }
-              });
-            }
+  const applyUpdate = useCallback((target: Parcel, nextState: ExtensionProps['state']) => {
+    if (!target.update || target.getStatus() === 'UNMOUNTING') {
+      return;
+    }
+
+    // Every later update chains onto this promise, so it has to settle even when an update fails.
+    updatePromise.current = Promise.all([target.mountPromise, updatePromise.current])
+      .then(() => {
+        if (parcel.current?.getStatus() === 'MOUNTED' && parcel.current.update) {
+          return parcel.current.update({ ...nextState });
         }
-      }
+      })
+      .catch((err) => {
+        // A parcel torn down while its update was in flight rejects, and that race is expected.
+        // We use the status to distinguish reject reasons as the message isn't reliable
+        const status = parcel.current?.getStatus();
+
+        if (status !== 'UNMOUNTING' && status !== 'NOT_MOUNTED' && status !== 'UNLOADING') {
+          console.error(`The extension '${extension?.extensionId}' failed to update`, err);
+        }
+      });
+  }, []);
+
+  const ref = useCallback((node: HTMLDivElement | null) => {
+    // React detaches a ref by calling it with null. If we render something in response to this,
+    // React ignores it and we're left tracking a parcel with no visible DOM, so skip conditions
+    // we can't handle.
+    if (
+      !node ||
+      parcel.current ||
+      isRendering.current ||
+      !extension?.extensionSlotName ||
+      !extension.extensionSlotModuleName
+    ) {
+      return;
+    }
+
+    isRendering.current = true;
+
+    renderExtension(
+      node,
+      extension.extensionSlotName,
+      extension.extensionSlotModuleName,
+      extension.extensionId,
+      undefined,
+      state,
+    ).then(
+      (newParcel: Parcel | null) => {
+        isRendering.current = false;
+        parcel.current = newParcel;
+
+        // Loading an extension's bundle can outlast the component that asked for it: the cleanup
+        // effect has already run and saw no parcel, so teardown has to happen here instead, or the
+        // parcel mounts into a detached node and its rendering record outlives the page.
+        if (isUnmounted.current) {
+          unmountParcel(newParcel);
+          return;
+        }
+
+        // Ensure we update the state of the parcel to the latest version we've received
+        if (newParcel && latestState.current !== state) {
+          applyUpdate(newParcel, latestState.current);
+        }
+      },
+      // Cleared so a later reattach can try again; `renderExtension` reports its own failures.
+      () => {
+        isRendering.current = false;
+      },
+    );
+  }, []);
+
+  useEffect(() => {
+    // Reset on every run, not just the first: StrictMode mounts, tears down and mounts again, so
+    // a flag only ever set by the cleanup would still read "unmounted" for the live component.
+    isUnmounted.current = false;
+
+    return () => {
+      isUnmounted.current = true;
+      unmountParcel(parcel.current);
     };
   }, []);
 
   useEffect(() => {
-    if (parcel.current && parcel.current.update && parcel.current.getStatus() !== 'UNMOUNTING') {
-      Promise.all([parcel.current.mountPromise, updatePromise.current]).then(() => {
-        if (parcel?.current?.getStatus() === 'MOUNTED' && parcel.current.update) {
-          updatePromise.current = parcel.current.update({ ...state }).catch((err) => {
-            // if we were trying to update but the component was unmounted
-            // while this was happening, ignore the error
-            if (
-              !(err instanceof Error) ||
-              !err.message.includes('minified message #32') ||
-              parcel.current?.getStatus() === 'MOUNTED'
-            ) {
-              throw err;
-            }
-          });
-        }
-      });
+    // Recorded before the parcel is checked, so that a state that arrives before there is a parcel
+    // to receive it is still the one applied once there is.
+    latestState.current = state;
+
+    if (parcel.current) {
+      applyUpdate(parcel.current, state);
     }
   }, [state]);
 

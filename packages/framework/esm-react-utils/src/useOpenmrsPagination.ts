@@ -1,6 +1,6 @@
 /** @module @category UI */
 import { type FetchResponse, makeUrl, openmrsFetch } from '@openmrs/esm-api';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useSWR, { type SWRConfiguration } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 
@@ -113,13 +113,35 @@ export function useServerPagination<T, R>(
   const { getPaginatedUrl, getTotalCount, getCurrentPageSize, getData } = serverPaginationHandlers;
   const { immutable, swrConfig } = options;
   const fetcher: (key: string) => Promise<FetchResponse<R>> = options.fetcher ?? openmrsFetch;
-  const [currentPage, setCurrentPage] = useState<number>(1); // 1-indexing instead of 0-indexing, to keep consistency with `usePagination`
+  // 1-indexing instead of 0-indexing, to keep consistency with `usePagination`
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   // Cache the totalCount and currentPageSize so we don't lose them
   // as we wait for next page's result to load while navigating to a different page.
   // This can be used to prevent jarring UI changes while loading
   const totalCount = useRef<number>(Number.NaN);
-  const currentPageSize = useRef<number>(Number.NaN); // this value is usually same as pageSize, except when currentPage is last page.
+  // this value is usually same as pageSize, except when currentPage is last page.
+  const currentPageSize = useRef<number>(Number.NaN);
+
+  // tracked as a ref so we don't need to make the current page a dependency of `goTo()`, etc.
+  const currentPageRef = useRef(currentPage);
+
+  // use to differentiate "endpoint doesn't return a total" from "we haven't run a request yet"
+  const hasResponded = useRef(false);
+  const warnedMissingTotal = useRef(false);
+
+  // if the URL we're querying changes, reset to page 1
+  const urlKey = url?.toString() ?? '';
+  const [lastUrlKey, setLastUrlKey] = useState(urlKey);
+  if (urlKey !== lastUrlKey) {
+    setLastUrlKey(urlKey);
+    setCurrentPage(1);
+    currentPageRef.current = 1;
+    totalCount.current = Number.NaN;
+    currentPageSize.current = Number.NaN;
+    hasResponded.current = false;
+    warnedMissingTotal.current = false;
+  }
 
   const limit = pageSize;
   const startIndex = (currentPage - 1) * pageSize;
@@ -134,34 +156,74 @@ export function useServerPagination<T, R>(
   if (data?.data) {
     totalCount.current = getTotalCount(data?.data);
     currentPageSize.current = getCurrentPageSize(data?.data);
+    hasResponded.current = true;
   }
 
   const totalPages = Math.ceil(totalCount.current / pageSize);
 
+  // The bound is read from `totalCount` at call time rather than captured from the creating render,
+  // which is what keeps this callback referentially stable, apart from a change in `pageSize`.
   const goTo = useCallback(
     (page: number) => {
-      if (0 < page && page <= totalPages) {
+      if (!Number.isInteger(page) || page < 1) {
+        console.warn(`useServerPagination: ignoring goTo(${page}); page must be a positive integer.`);
+        return;
+      }
+
+      // page count is not known prior to running any query when `bound` will be `NaN`, so in this
+      // case we assume the requested page is fine; after results return, things will settle properly
+      // clamped
+      const bound = Math.ceil(totalCount.current / pageSize);
+      if (!hasResponded.current || Number.isNaN(bound) || page <= bound) {
+        currentPageRef.current = page;
         setCurrentPage(page);
       } else {
         console.warn('Invalid attempt to go to out of bounds page: ' + page);
       }
     },
-    [url, currentPage, totalPages],
+    [pageSize],
   );
+
+  // A page accepted before the total was known may turn out not to exist, so put the user on the last
+  // real page once the response settles it. Costs an extra request, but only for a page that was out of
+  // range to begin with; without it the hook sits on an empty page with no way back.
+  useEffect(() => {
+    if (!hasResponded.current) {
+      return;
+    }
+
+    if (Number.isNaN(totalCount.current)) {
+      if (!warnedMissingTotal.current) {
+        warnedMissingTotal.current = true;
+        console.warn(
+          `useServerPagination: ${urlKey} returned no total count, so out-of-range pages cannot be detected.`,
+        );
+      }
+      return;
+    }
+
+    const lastPage = Math.max(1, Math.ceil(totalCount.current / pageSize));
+    if (currentPage > lastPage) {
+      console.warn(`Invalid attempt to go to out of bounds page: ${currentPage}; returning to page ${lastPage}.`);
+      currentPageRef.current = lastPage;
+      setCurrentPage(lastPage);
+    }
+  }, [currentPage, pageSize, urlKey, data]);
+
   const goToNext = useCallback(() => {
-    goTo(currentPage + 1);
-  }, [url, currentPage, totalPages]);
+    goTo(currentPageRef.current + 1);
+  }, [goTo]);
 
   const goToPrevious = useCallback(() => {
-    goTo(currentPage - 1);
-  }, [url, currentPage, totalPages]);
+    goTo(currentPageRef.current - 1);
+  }, [goTo]);
 
   return {
     data: getData(data?.data),
     totalPages,
     totalCount: totalCount.current,
     currentPage,
-    currentPageSize,
+    currentPageSize: currentPageSize.current,
     paginated: totalPages > 1,
     showNextButton: currentPage < totalPages,
     showPreviousButton: currentPage > 1,

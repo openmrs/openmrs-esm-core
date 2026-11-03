@@ -10,7 +10,7 @@ COPY . .
 
 ARG CACHE_BUST
 
-RUN yarn install
+RUN yarn install --immutable
 RUN node packages/tooling/openmrs/dist/cli.js assemble --manifest --mode config --config spa-assemble-config.json --target /app/spa
 RUN node packages/tooling/openmrs/dist/cli.js build --target /app/spa
 

@@ -50,7 +50,17 @@ export interface VisitReturnType {
  * @param representation The custom representation of the visit
  */
 export function useVisit(patientUuid: string, representation = defaultVisitCustomRepresentation): VisitReturnType {
-  const { patientUuid: visitStorePatientUuid, manuallySetVisitUuid, setVisitContext } = useVisitContextStore();
+  // The callback we register has to exist before we read the store, but the mutate functions
+  // it calls come from SWR calls that are keyed off what the store holds. Registering a stable
+  // indirection through a ref breaks that cycle, so the store is read once per hook rather than
+  // once to get the key and again to register.
+  const mutateVisitRef = useRef<() => void>(undefined);
+  const registeredMutateVisit = useCallback(() => mutateVisitRef.current?.(), []);
+  const {
+    patientUuid: visitStorePatientUuid,
+    manuallySetVisitUuid,
+    setVisitContext,
+  } = useVisitContextStore(registeredMutateVisit);
   // Ignore the visit store data if it is not for this patient
   const retrospectiveVisitUuid = patientUuid && visitStorePatientUuid == patientUuid ? manuallySetVisitUuid : null;
   const activeVisitUrlSuffix = `?patient=${patientUuid}&v=${representation}&includeInactive=false`;
@@ -111,7 +121,9 @@ export function useVisit(patientUuid: string, representation = defaultVisitCusto
     retroMutate();
   }, [activeMutate, retroMutate]);
 
-  useVisitContextStore(mutateVisit);
+  useEffect(() => {
+    mutateVisitRef.current = mutateVisit;
+  }, [mutateVisit]);
 
   const waitingForData = Boolean(!activeData || (retrospectiveVisitUuid && !retroData));
   const hasRelevantError = Boolean(retrospectiveVisitUuid ? retroError : activeError);

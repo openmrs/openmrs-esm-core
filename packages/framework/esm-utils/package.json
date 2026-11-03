@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-utils",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "license": "MPL-2.0",
   "description": "Helper utilities for OpenMRS",
   "type": "module",
@@ -23,9 +23,10 @@
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
     "build": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
+    "clean": "git clean -fdX -- dist",
     "build:development": "rimraf dist && concurrently \"swc --strip-leading-paths src -d dist\" \"tsc --project tsconfig.build.json\"",
     "typescript": "tsc --project tsconfig.build.json",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src"
   },
   "keywords": [
     "openmrs",
@@ -43,7 +44,7 @@
     "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
   },
   "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+    "url": "https://openmrs.atlassian.net/jira/software/c/projects/O3/boards/37"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "publishConfig": {
@@ -59,8 +60,7 @@
   "peerDependencies": {
     "@openmrs/esm-globals": "workspace:^",
     "dayjs": "1.x",
-    "i18next": "25.x",
-    "rxjs": "6.x"
+    "i18next": "25.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
@@ -74,7 +74,6 @@
     "dayjs": "^1.11.13",
     "happy-dom": "^20.6.0",
     "rimraf": "^6.1.3",
-    "rxjs": "^6.5.3",
     "vitest": "^4.1.2"
   }
 }

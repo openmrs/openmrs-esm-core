@@ -1,32 +1,30 @@
 {
   "name": "@openmrs/esm-app-shell",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
     "start": "yarn run watch",
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
-    "watch": "cross-env OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" OMRS_OFFLINE=\"disable\" rspack serve --mode development",
-    "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"disable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack serve --mode development",
-    "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"production\" rspack --mode production",
-    "build:development": "cross-env OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack --mode development",
+    "watch": "cross-env OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack serve --mode development",
+    "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack serve --mode development",
+    "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/importmap.json\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"production\" rspack --mode production",
+    "build:development": "cross-env OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" rspack --mode development",
     "build": "yarn run build:production && yarn run build:development",
+    "clean": "git clean -fdX -- dist",
     "analyze": "rspack --mode=production --env analyze=true",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src"
   },
   "keywords": [
     "openmrs",
     "microfrontends"
-  ],
-  "browserslist": [
-    "extends browserslist-config-openmrs"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
   },
   "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+    "url": "https://openmrs.atlassian.net/jira/software/c/projects/O3/boards/37"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "publishConfig": {
@@ -35,12 +33,15 @@
   "dependencies": {
     "@carbon/react": "^1.92.1",
     "@internationalized/date": "^3.8.0",
+    "@module-federation/enhanced": "2.8.1",
+    "@module-federation/error-codes": "2.8.1",
+    "@module-federation/sdk": "2.8.1",
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/esm-styleguide": "workspace:*",
     "@rspack/cli": "1.7.9",
     "@rspack/core": "1.7.9",
+    "browserslist-config-openmrs": "^1.0.1",
     "dayjs": "^1.11.13",
-    "dexie": "^3.0.3",
     "html-webpack-plugin": "5.6.6",
     "i18next": "^25.5.3",
     "i18next-browser-languagedetector": "^8.2.0",
@@ -50,14 +51,15 @@
     "react-dom": "^18.3.1",
     "react-i18next": "^16.0.0",
     "react-router-dom": "^6.3.0",
-    "rxjs": "^6.5.3",
     "semver": "^7.7.3",
     "single-spa": "^6.0.3",
     "swc-loader": "0.2.7",
-    "swr": "2.2.5",
+    "swr": "2.5.1",
     "webpack-pwa-manifest": "4.3.0"
   },
   "devDependencies": {
+    "@module-federation/runtime-core": "2.8.1",
+    "browserslist": "4.28.9",
     "cross-env": "^10.1.0",
     "vitest": "^4.1.2"
   }

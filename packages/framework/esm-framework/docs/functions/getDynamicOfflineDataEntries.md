@@ -1,28 +1,29 @@
 [O3 Framework](../API.md) / getDynamicOfflineDataEntries
 
-# Function: getDynamicOfflineDataEntries()
+# Function: ~~getDynamicOfflineDataEntries()~~
 
-> **getDynamicOfflineDataEntries**\<`T`\>(`type?`): `Promise`\<`T`[]\>
+> **getDynamicOfflineDataEntries**\<`T`\>(`_type?`): `Promise`\<`T`[]\>
 
-Defined in: [packages/framework/esm-offline/src/dynamic-offline-data.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L128)
-
-Returns all [DynamicOfflineData](../interfaces/DynamicOfflineData.md) entries which registered for the currently logged in user.
-Optionally returns only entries of a given type.
+Defined in: [packages/framework/esm-framework/src/deprecated.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/src/deprecated.ts#L39)
 
 ## Type Parameters
 
 ### T
 
-`T` *extends* [`DynamicOfflineData`](../interfaces/DynamicOfflineData.md)
+`T` = `unknown`
 
 ## Parameters
 
-### type?
+### \_type?
 
 `string`
-
-The type of the entries to be returned. If `undefined`, returns all types.
 
 ## Returns
 
 `Promise`\<`T`[]\>
+
+## Deprecated
+
+Offline support has been removed from the framework. This is a stub kept only so that
+frontend modules that still read the dynamic offline data registry keep working. It always resolves
+to an empty array, since nothing is registered for offline use any more.

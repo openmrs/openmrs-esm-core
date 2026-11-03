@@ -52,6 +52,7 @@ import maximize from './svgs/maximize.svg';
 import medication from './svgs/medication.svg';
 import messageQueue from './svgs/message-queue.svg';
 import microscope from './svgs/microscope.svg';
+import mobileCheck from './svgs/mobile-check.svg';
 import money from './svgs/money.svg';
 import mother from './svgs/mother.svg';
 import movement from './svgs/movement.svg';
@@ -82,6 +83,7 @@ import tools from './svgs/tools.svg';
 import translate from './svgs/translate.svg';
 import trashCan from './svgs/trash-can.svg';
 import treeViewAlt from './svgs/tree-view--alt.svg';
+import twoFactorAuthentication from './svgs/two-factor-authentication.svg';
 import userAvatar from './svgs/user-avatar.svg';
 import userFollow from './svgs/user-follow.svg';
 import userXray from './svgs/user-xray.svg';
@@ -146,6 +148,7 @@ export function setupIcons() {
   addIconSvg('omrs-icon-medication', medication);
   addIconSvg('omrs-icon-message-queue', messageQueue);
   addIconSvg('omrs-icon-microscope', microscope);
+  addIconSvg('omrs-icon-mobile-check', mobileCheck);
   addIconSvg('omrs-icon-money', money);
   addIconSvg('omrs-icon-mother', mother);
   addIconSvg('omrs-icon-movement', movement);
@@ -176,6 +179,7 @@ export function setupIcons() {
   addIconSvg('omrs-icon-translate', translate);
   addIconSvg('omrs-icon-trash-can', trashCan);
   addIconSvg('omrs-icon-tree-view--alt', treeViewAlt);
+  addIconSvg('omrs-icon-two-factor-authentication', twoFactorAuthentication);
   addIconSvg('omrs-icon-user-avatar', userAvatar);
   addIconSvg('omrs-icon-user-follow', userFollow);
   // userXray is also used for imaging orders

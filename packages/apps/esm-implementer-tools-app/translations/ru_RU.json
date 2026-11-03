@@ -2,7 +2,7 @@
   "activeItemSourceText": "Текущее значение получено из ",
   "arrayValidationMessage": "Значение должно быть массивом",
   "backendModules": "Бэкенд-модули",
-  "booleanValidationMessage": "Значение должно быть логическим (true/false)",
+  "booleanValidationMessage": "Значение должно быть булевым",
   "checkImplementerToolsMessage": "Проверьте вкладку «Бэкенд-модули» в Инструментах разработчика для получения более подробной информации",
   "clearConfig": "Очистить локальную конфигурацию",
   "close": "Закрыть",

@@ -56,6 +56,6 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:5](ht
 
 ### status?
 
-> `optional` **status**: `"uploading"` \| `"complete"`
+> `optional` **status**: `"complete"` \| `"uploading"`
 
 Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L7)

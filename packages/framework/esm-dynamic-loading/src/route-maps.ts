@@ -11,14 +11,34 @@ let devMode = false;
 // getCurrentRouteMap returns the overrides as they were when the page loaded).
 let initialOverrideSnapshot: OpenmrsRoutes | null = null;
 
+// Memoizes the base map so that the routes registry is fetched at most once per page load.
+let baseMapPromise: Promise<OpenmrsRoutes> | null = null;
+
 /**
  * Reads all `<script type="openmrs-routes">` tags from the DOM and merges
  * them into a single {@link OpenmrsRoutes} object. Tags with a `src` attribute
  * are fetched; inline tags have their `textContent` parsed as JSON.
+ *
+ * A read in which no tag threw is cached and reused by all later callers. A read that lost a
+ * tag to an error is returned as-is but not cached, so that a transient network failure doesn't
+ * leave the page with a permanently incomplete map. A tag that loads but fails validation is
+ * dropped without invalidating the cache, since re-reading it would only fail the same way.
  */
 async function readBaseMap(): Promise<OpenmrsRoutes> {
+  baseMapPromise ??= loadBaseMap().then(({ map, complete }) => {
+    if (!complete) {
+      baseMapPromise = null;
+    }
+    return map;
+  });
+
+  return baseMapPromise;
+}
+
+async function loadBaseMap(): Promise<{ map: OpenmrsRoutes; complete: boolean }> {
   const scripts = document.querySelectorAll<HTMLScriptElement>("script[type='openmrs-routes']");
   const maps: OpenmrsRoutes[] = [];
+  let complete = true;
 
   for (let i = 0; i < scripts.length; i++) {
     const script = scripts[i];
@@ -26,6 +46,9 @@ async function readBaseMap(): Promise<OpenmrsRoutes> {
       let parsed: unknown;
       if (script.src) {
         const response = await fetch(script.src);
+        if (!response.ok) {
+          throw new Error(`Request for ${script.src} returned ${response.status} ${response.statusText}`);
+        }
         parsed = await response.json();
       } else if (script.textContent) {
         parsed = JSON.parse(script.textContent);
@@ -35,18 +58,23 @@ async function readBaseMap(): Promise<OpenmrsRoutes> {
         maps.push(parsed);
       }
     } catch (e) {
+      complete = false;
       console.warn(`[route-maps] Failed to parse routes from script tag at index ${i}`, e);
     }
   }
 
-  return mergeRouteMaps(maps);
+  return { map: mergeRouteMaps(maps), complete };
 }
 
 function mergeRouteMaps(maps: OpenmrsRoutes[]): OpenmrsRoutes {
-  const merged: OpenmrsRoutes = {};
+  const merged: OpenmrsRoutes = { routes: {} };
   for (const map of maps) {
-    if (map && typeof map === 'object') {
-      Object.assign(merged, map);
+    if (map && typeof map === 'object' && !Array.isArray(map)) {
+      Object.assign(merged.routes, map.routes);
+
+      if (merged.version === undefined && map.version !== undefined) {
+        merged.version = map.version;
+      }
     }
   }
   return merged;
@@ -57,7 +85,7 @@ function mergeRouteMaps(maps: OpenmrsRoutes[]): OpenmrsRoutes {
  * This is async because URL-valued overrides need to be fetched.
  */
 async function readOverrideMap(): Promise<OpenmrsRoutes> {
-  const result: OpenmrsRoutes = {};
+  const result: OpenmrsRoutes = { version: undefined, routes: {} };
 
   try {
     const entries: Array<{ moduleName: string; raw: string }> = [];
@@ -94,7 +122,7 @@ async function readOverrideMap(): Promise<OpenmrsRoutes> {
 
     for (const entry of settled) {
       if (entry.status === 'fulfilled') {
-        result[entry.value.moduleName] = entry.value.routes;
+        result['routes'][entry.value.moduleName] = entry.value.routes;
       } else {
         console.warn('[route-maps] Failed to load route override', entry.reason);
       }

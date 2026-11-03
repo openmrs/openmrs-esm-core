@@ -1,4 +1,10 @@
+import { publishFederationRuntime } from './federation-runtime';
+import { pinFrameworkToAppShell } from './framework-share';
 import type { SpaConfig } from '@openmrs/esm-framework/src/internal';
+
+// Before anything else: every frontend module reads the Module Federation runtime from the globals
+// this publishes, and modules are only ever loaded from code reached via `initializeSpa` below.
+publishFederationRuntime();
 
 function _createSpaBase(baseUrl: string) {
   return () => baseUrl;
@@ -106,14 +112,13 @@ function initializeSpa(config: SpaConfig) {
       shareScope['@openmrs/esm-framework'] = shareScope['@openmrs/esm-framework/src/internal'];
     }
 
-    const { configUrls = [], offline = false } = config;
-    Object.defineProperty(window, 'offlineEnabled', {
-      value: offline,
-      writable: false,
-      configurable: false,
-    });
+    // Frontend modules also register their own framework into this scope; this keeps them resolving
+    // to the app shell's copy no matter what version they bring.
+    pinFrameworkToAppShell(shareScope);
 
-    const { run } = await import(/* webpackPreload: true */ './run');
+    const { configUrls = [] } = config;
+
+    const { run } = await import(/* webpackChunkName: "run", webpackPreload: true */ './run');
     return run(configUrls);
   });
   return initPromise;

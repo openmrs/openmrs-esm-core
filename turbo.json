@@ -1,7 +1,11 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "ui": "stream",
+  "agentGuidance": false,
   "tasks": {
+    "clean": {
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": [
@@ -46,6 +50,7 @@
       "outputs": ["docs/**/*.md"]
     },
     "test": {
+      "dependsOn": ["^build"],
       "inputs": [
         "src/**",
         "__mocks__/**",
@@ -61,6 +66,7 @@
       "persistent": true
     },
     "coverage": {
+      "dependsOn": ["^build"],
       "inputs": [
         "src/**",
         "__mocks__/**",
@@ -79,12 +85,14 @@
     "watch": {},
     "lint": {
       "inputs": [
-        "src/**/*.{ts,tsx}",
-        "$TURBO_ROOT$/.eslintrc"
+        "src/**/*.{js,cjs,mjs,ts,tsx}",
+        ".storybook/**",
+        "mocks/**",
+        "$TURBO_ROOT$/eslint.config.mjs"
       ]
     },
     "typescript": {
-      "dependsOn": ["^typescript"],
+      "dependsOn": ["^typescript", "^build"],
       "inputs": [
         "src/**",
         "tsconfig.json",

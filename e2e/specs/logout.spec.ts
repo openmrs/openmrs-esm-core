@@ -1,7 +1,11 @@
 import { test } from '../core';
 import { expect } from '@playwright/test';
 import { HomePage } from '../pages';
-import globalSetup from '../core/global-setup';
+import { storageStatePaths } from '../core/global-setup';
+
+// Its own session, because this spec ends the one it uses: sharing the default one would log every
+// other spec out mid-run.
+test.use({ storageState: storageStatePaths.logout });
 
 test('Logout as Admin user', async ({ page }) => {
   const homePage = new HomePage(page);
@@ -45,9 +49,4 @@ test('Logout as Admin user', async ({ page }) => {
 
     await Promise.all(promises);
   });
-});
-
-test.afterEach(async () => {
-  // log in again
-  globalSetup();
 });

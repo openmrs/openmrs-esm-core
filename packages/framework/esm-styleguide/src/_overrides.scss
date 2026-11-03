@@ -278,15 +278,18 @@
 }
 
 /* Buttons */
-.cds--btn--primary,
-.cds--btn--primary:active,
+// Carbon builds the CodeSnippet copy button as a primary button and then repaints it with a
+// layer background, so exclude it here. The zero-specificity :where() keeps these selectors
+// at (0,1,0) so Carbon's disabled button styles still win.
+.cds--btn--primary:not(:where(.cds--copy-btn)),
+.cds--btn--primary:not(:where(.cds--copy-btn)):active,
 .cds--btn--tertiary:hover,
 .cds--btn--tertiary:active,
 .cds--btn--tertiary:focus {
   @include brand-03(background-color);
 }
 
-.cds--btn--primary:hover {
+.cds--btn--primary:not(:where(.cds--copy-btn)):hover {
   @include brand-02(background-color);
 }
 
@@ -295,7 +298,7 @@
 }
 
 .cds--btn--tertiary,
-.cds--btn--primary:focus,
+.cds--btn--primary:not(:where(.cds--copy-btn)):focus,
 .cds--btn--tertiary:focus {
   @include brand-03(border-color);
 }

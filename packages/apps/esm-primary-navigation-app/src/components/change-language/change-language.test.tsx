@@ -16,7 +16,6 @@ const mockUpdateUserProperties = vi.fn((...args) => Promise.resolve());
 const mockUpdateSessionLocale = vi.fn((...args) => Promise.resolve());
 
 vi.mock('@openmrs/esm-framework', async (importOriginal) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('@openmrs/esm-framework')>();
   return {
     ...actual,
@@ -25,8 +24,8 @@ vi.mock('@openmrs/esm-framework', async (importOriginal) => {
 });
 
 vi.mock('./change-language.resource', () => ({
-  updateUserProperties: (...args) => mockUpdateUserProperties(...args),
-  updateSessionLocale: (...args) => mockUpdateSessionLocale(...args),
+  updateUserProperties: (...args: Parameters<typeof mockUpdateUserProperties>) => mockUpdateUserProperties(...args),
+  updateSessionLocale: (...args: Parameters<typeof mockUpdateSessionLocale>) => mockUpdateSessionLocale(...args),
 }));
 
 const mockUseSession = vi.mocked(useSession);
@@ -44,10 +43,10 @@ describe(`Change Language Modal`, () => {
   it('should correctly displays all allowed locales', () => {
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    expect(screen.getByRole('radio', { name: /english/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /français/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /italiano/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /português/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'English' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Français' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Italiano' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Português' })).toBeInTheDocument();
   });
 
   it('should close the modal when the cancel button is clicked', async () => {
@@ -65,9 +64,9 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    expect(screen.getByRole('radio', { name: /français/i })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'Français' })).toBeChecked();
 
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(mockUpdateUserProperties).toHaveBeenCalledWith(mockUser.uuid, { defaultLocale: 'en' }, expect.anything());
@@ -79,7 +78,7 @@ describe(`Change Language Modal`, () => {
 
     render(<ChangeLanguageModal close={vi.fn()} />);
 
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(screen.getByText(/changing language.../i)).toBeInTheDocument();
@@ -102,7 +101,7 @@ describe(`Change Language Modal`, () => {
     await user.click(checkbox);
 
     // Change locale
-    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('radio', { name: 'English' }));
     await user.click(screen.getByRole('button', { name: /change/i }));
 
     expect(mockUpdateSessionLocale).toHaveBeenCalledWith('en', expect.anything());
@@ -114,5 +113,88 @@ describe(`Change Language Modal`, () => {
 
     const submitButton = screen.getByRole('button', { name: /change/i });
     expect(submitButton).toBeDisabled();
+  });
+
+  it('should render regional locales in the underscore form the REST session reports', () => {
+    // uz@Latn deliberately absent here: the modal must not crash rendering it (covered by the
+    // getLocaleDisplayName tests), but the session POST parser (LocaleUtils.toLocale) rejects
+    // both uz@Latn and uz-Latn, so listing it as a selectable option would overstate support.
+    mockUseSession.mockReturnValue({
+      authenticated: true,
+      user: mockUser as unknown as LoggedInUser,
+      allowedLocales: ['en_US', 'sw_KE', 'fr'],
+      locale: 'en_US',
+    } as Session);
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    // Casing inside the name is part of what `getLocaleDisplayName` returns, so match it exactly.
+    expect(screen.getByRole('radio', { name: 'American English' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Kiswahili (Kenya)' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Français' })).toBeInTheDocument();
+  });
+
+  it('should send the underscore form of a selected regional locale to the backend', async () => {
+    const user = userEvent.setup();
+    mockUseSession.mockReturnValue({
+      authenticated: true,
+      user: mockUser as unknown as LoggedInUser,
+      allowedLocales: ['en_US', 'sw_KE'],
+      locale: 'en_US',
+    } as Session);
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    await user.click(screen.getByRole('radio', { name: 'Kiswahili (Kenya)' }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(mockUpdateUserProperties).toHaveBeenCalledWith(mockUser.uuid, { defaultLocale: 'sw_KE' }, expect.anything());
+  });
+
+  it('should surface the backend error and re-enable the submit button when the update fails', async () => {
+    const user = userEvent.setup();
+    // The shape the REST module returns: RestUtil.wrapErrorResponse nests the message
+    // under an `error` key, and openmrsFetch exposes the parsed body as `responseBody`.
+    mockUpdateUserProperties.mockRejectedValueOnce({
+      message: 'Server responded with 500',
+      responseBody: { error: { message: 'User with uuid uuid not found' } },
+    });
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    await user.click(screen.getByRole('radio', { name: 'English' }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(await screen.findByText(/error changing language/i)).toBeInTheDocument();
+    expect(screen.getByText('User with uuid uuid not found')).toBeInTheDocument();
+    expect(screen.queryByText(/changing language\.\.\./i)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^change$/i })).toBeEnabled();
+  });
+
+  it('should clear a failed update from view once the user picks a different locale', async () => {
+    const user = userEvent.setup();
+    mockUpdateUserProperties.mockRejectedValueOnce(new Error('Network request failed'));
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    await user.click(screen.getByRole('radio', { name: 'English' }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+    expect(await screen.findByText('Network request failed')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('radio', { name: 'Italiano' }));
+
+    expect(screen.queryByText('Network request failed')).not.toBeInTheDocument();
+  });
+
+  it('should fall back to the transport error when there is no response body', async () => {
+    const user = userEvent.setup();
+    mockUpdateUserProperties.mockRejectedValueOnce(new Error('Network request failed'));
+
+    render(<ChangeLanguageModal close={vi.fn()} />);
+
+    await user.click(screen.getByRole('radio', { name: 'English' }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(await screen.findByText('Network request failed')).toBeInTheDocument();
   });
 });

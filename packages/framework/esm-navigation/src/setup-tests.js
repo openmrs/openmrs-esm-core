@@ -1,4 +1,3 @@
-/* eslint-env node */
 import { vi } from 'vitest';
 
 global.window.openmrsBase = '/openmrs';

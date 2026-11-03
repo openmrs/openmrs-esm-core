@@ -42,27 +42,51 @@ function readInitialExtensionConfig(store: StoreApi<ExtensionsConfigStore>, exte
   return null;
 }
 
-function createConfigPromise(store: StoreApi<ConfigStore>) {
-  return new Promise<ConfigObject>((resolve) => {
-    const unsubscribe = store.subscribe((state) => {
-      if (state.loaded && state.config) {
-        resolve(state.config);
-        unsubscribe();
-      }
-    });
-  });
-}
+/**
+ * The promise a suspended `useConfig()` throws, so every component waiting on the same config waits on
+ * one promise and a re-render throws the same one rather than starting again.
+ *
+ * The entry is dropped once it settles: an extension's config exists only while that extension is
+ * mounted, so the same id can have to wait a second time and a settled promise cannot describe that.
+ */
+function whenConfigReady<S>(
+  cacheId: string,
+  store: StoreApi<S>,
+  read: (state: S) => ConfigObject | null | undefined,
+): Promise<ConfigObject> {
+  const cached = promises[cacheId];
 
-function createExtensionConfigPromise(store: StoreApi<ExtensionsConfigStore>, extension: ExtensionData) {
-  return new Promise<ConfigObject>((resolve) => {
+  if (cached) {
+    return cached;
+  }
+
+  const promise = new Promise<ConfigObject>((resolve) => {
+    const current = read(store.getState());
+
+    if (current) {
+      resolve(current);
+      return;
+    }
+
     const unsubscribe = store.subscribe((state) => {
-      const extConfig = getExtensionConfigFromStore(state, extension.extensionSlotName, extension.extensionId);
-      if (extConfig.loaded && extConfig.config) {
-        resolve(extConfig.config);
+      const config = read(state);
+
+      if (config) {
         unsubscribe();
+        resolve(config);
       }
     });
   });
+
+  promises[cacheId] = promise;
+  void promise.then(() => {
+    // Guarded so that a later wait under the same id, started after this one settled, is left alone.
+    if (promises[cacheId] === promise) {
+      delete promises[cacheId];
+    }
+  });
+
+  return promise;
 }
 
 function useConfigStore(store: StoreApi<ConfigStore>) {
@@ -101,14 +125,11 @@ function useExtensionConfig(extension: ExtensionData | undefined) {
   const state = useExtensionConfigStore(store, extension);
 
   if (!state && extension) {
-    const cacheId = `${extension.extensionSlotName}-${extension.extensionId}`;
-
-    if (!promises[cacheId] && store) {
-      promises[cacheId] = createExtensionConfigPromise(store, extension);
-    }
-
     // React will prevent the client component from rendering until the promise resolves
-    throw promises[cacheId];
+    throw whenConfigReady(`${extension.extensionSlotName}-${extension.extensionId}`, store, (storeState) => {
+      const extConfig = getExtensionConfigFromStore(storeState, extension.extensionSlotName, extension.extensionId);
+      return extConfig.loaded ? extConfig.config : null;
+    });
   }
 
   return state || {};
@@ -116,16 +137,11 @@ function useExtensionConfig(extension: ExtensionData | undefined) {
 
 function useNormalConfig(moduleName: string) {
   const store = useMemo(() => getConfigStore(moduleName), [moduleName]);
-  const cacheId = moduleName;
   const state = useConfigStore(store);
 
   if (!state) {
-    if (!promises[cacheId]) {
-      promises[cacheId] = createConfigPromise(store);
-    }
-
     // React will prevent the client component from rendering until the promise resolves
-    throw promises[cacheId];
+    throw whenConfigReady(moduleName, store, (storeState) => (storeState.loaded ? storeState.config : null));
   }
 
   return state;

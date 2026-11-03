@@ -1,14 +1,22 @@
 {
   "name": "@openmrs/typedoc-plugin-file-categories",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "license": "MPL-2.0",
   "type": "module",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://openmrs.atlassian.net/jira/software/c/projects/O3/boards/37"
+  },
   "scripts": {
     "test": "cross-env TZ=UTC vitest run --passWithNoTests",
     "test:watch": "cross-env TZ=UTC vitest watch --passWithNoTests",
     "coverage": "cross-env TZ=UTC vitest run --coverage --passWithNoTests",
-    "build": "rimraf dist && swc --strip-leading-paths src -d dist"
+    "build": "rimraf dist && swc --strip-leading-paths src -d dist",
+    "clean": "git clean -fdX -- dist"
   },
   "peerDependencies": {
     "typedoc": ">=0.28.0"

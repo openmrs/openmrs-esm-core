@@ -1,23 +1,25 @@
 [O3 Framework](../API.md) / messageOmrsServiceWorker
 
-# Function: messageOmrsServiceWorker()
+# Function: ~~messageOmrsServiceWorker()~~
 
-> **messageOmrsServiceWorker**(`message`): `Promise`\<[`MessageServiceWorkerResult`](../interfaces/MessageServiceWorkerResult.md)\<`any`\>\>
+> **messageOmrsServiceWorker**(`_message`): `Promise`\<\{ `error`: `string`; `result`: `undefined`; `success`: `false`; \}\>
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L11)
-
-Sends the specified message to the application's service worker.
+Defined in: [packages/framework/esm-framework/src/deprecated.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/src/deprecated.ts#L59)
 
 ## Parameters
 
-### message
+### \_message
 
-[`KnownOmrsServiceWorkerMessages`](../type-aliases/KnownOmrsServiceWorkerMessages.md)
-
-The message to be sent.
+`unknown`
 
 ## Returns
 
-`Promise`\<[`MessageServiceWorkerResult`](../interfaces/MessageServiceWorkerResult.md)\<`any`\>\>
+`Promise`\<\{ `error`: `string`; `result`: `undefined`; `success`: `false`; \}\>
 
-A promise which completes when the message has been successfully processed by the Service Worker.
+## Deprecated
+
+The offline service worker has been removed from the framework.
+This is a no-op kept only so that frontend modules that still call
+`messageOmrsServiceWorker` don't throw. It always resolves to an
+unsuccessful result, mirroring the previous "no service worker registered"
+behavior.

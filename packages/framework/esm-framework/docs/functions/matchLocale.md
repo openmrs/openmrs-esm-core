@@ -4,7 +4,7 @@
 
 > **matchLocale**(`requested`, `available`, `fallback?`): `undefined` \| `string`
 
-Defined in: [packages/framework/esm-utils/src/match-locale.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/match-locale.ts#L53)
+Defined in: [packages/framework/esm-utils/src/match-locale.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/match-locale.ts#L35)
 
 Resolves a requested locale against a list of available locales using the
 BCP 47 lookup algorithm (RFC 4647, §3.4).

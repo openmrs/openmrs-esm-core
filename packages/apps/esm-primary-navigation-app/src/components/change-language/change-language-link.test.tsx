@@ -1,0 +1,43 @@
+import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { type Session, useSession } from '@openmrs/esm-framework';
+import ChangeLanguageLink from './change-language-link.extension';
+
+vi.mock('@openmrs/esm-framework', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@openmrs/esm-framework')>();
+  return {
+    ...actual,
+    useSession: vi.fn(),
+  };
+});
+
+const mockUseSession = vi.mocked(useSession);
+
+describe('ChangeLanguageLink', () => {
+  // Casing is matched exactly throughout. CLDR gives most of these names lowercase, so the leading
+  // capital comes from the component, and only an exact match pins that it is still applied.
+  it.each([
+    ['en', 'English'],
+    ['fr', 'Français'],
+    // The REST session reports Java `Locale#toString()` values, which `Intl` rejects outright.
+    ['en_US', 'American English'],
+    ['sw_KE', 'Kiswahili (Kenya)'],
+    // Loose on purpose: the script name is engine-specific ("lotin" on Node, "Latn" in Chrome).
+    ['uz@Latn', /zbek/i],
+  ])('should display the current language for the %s locale', (locale, expected) => {
+    mockUseSession.mockReturnValue({ authenticated: true, locale } as Session);
+
+    render(<ChangeLanguageLink />);
+
+    expect(screen.getByText(expected)).toBeInTheDocument();
+  });
+
+  it('should fall back to English when the session has no locale', () => {
+    mockUseSession.mockReturnValue({ authenticated: true } as Session);
+
+    render(<ChangeLanguageLink />);
+
+    expect(screen.getByText('English')).toBeInTheDocument();
+  });
+});

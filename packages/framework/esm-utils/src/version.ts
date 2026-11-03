@@ -1,5 +1,7 @@
 /** @module @category Utility */
-import * as semver from 'semver';
+// Deep import so the bundle only pulls `satisfies` (+ its Range/Comparator/SemVer core)
+// rather than the whole semver index, which is CommonJS and can't be tree-shaken.
+import satisfies from 'semver/functions/satisfies.js';
 
 function normalizeOnlyVersion(version: string) {
   const [major, minor, patch] = version.split('.');
@@ -31,7 +33,7 @@ function normalizeFullVersion(version: string) {
 export function isVersionSatisfied(requiredVersion: string, installedVersion: string) {
   const version = normalizeFullVersion(installedVersion);
 
-  return semver.satisfies(version, requiredVersion, {
+  return satisfies(version, requiredVersion, {
     includePrerelease: true,
-  } as semver.Options);
+  });
 }

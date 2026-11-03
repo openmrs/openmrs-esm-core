@@ -23,14 +23,26 @@ export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes i
       }
     }
 
-    if (Object.hasOwn(routes, 'workspaces')) {
-      if (!Boolean(maybeRoutes.workspaces) || !Array.isArray(maybeRoutes.workspaces)) {
+    if (Object.hasOwn(routes, 'modals')) {
+      if (!Boolean(maybeRoutes.modals) || !Array.isArray(maybeRoutes.modals)) {
         return false;
       }
     }
 
-    if (Object.hasOwn(routes, 'modals')) {
-      if (!Boolean(maybeRoutes.modals) || !Array.isArray(maybeRoutes.modals)) {
+    if (Object.hasOwn(routes, 'workspaces2')) {
+      if (!Boolean(maybeRoutes.workspaces2) || !Array.isArray(maybeRoutes.workspaces2)) {
+        return false;
+      }
+    }
+
+    if (Object.hasOwn(routes, 'workspaceWindows2')) {
+      if (!Boolean(maybeRoutes.workspaceWindows2) || !Array.isArray(maybeRoutes.workspaceWindows2)) {
+        return false;
+      }
+    }
+
+    if (Object.hasOwn(routes, 'workspaceGroups2')) {
+      if (!Boolean(maybeRoutes.workspaceGroups2) || !Array.isArray(maybeRoutes.workspaceGroups2)) {
         return false;
       }
     }
@@ -50,10 +62,18 @@ export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes i
  * @returns true if the routes value is an OpenmrsRoutes
  */
 export function isOpenmrsRoutes(routes: OpenmrsRoutes | unknown): routes is OpenmrsRoutes {
-  if (routes && typeof routes === 'object') {
+  if (
+    routes &&
+    typeof routes === 'object' &&
+    'routes' in routes &&
+    routes['routes'] &&
+    typeof routes['routes'] === 'object'
+  ) {
     const maybeRoutes = routes as OpenmrsRoutes;
 
-    return Object.entries(maybeRoutes).every(([key, value]) => typeof key === 'string' && isOpenmrsAppRoutes(value));
+    return Object.entries(maybeRoutes.routes).every(
+      ([key, value]) => typeof key === 'string' && isOpenmrsAppRoutes(value),
+    );
   }
 
   return false;

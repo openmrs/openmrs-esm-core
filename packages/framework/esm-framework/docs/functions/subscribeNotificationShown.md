@@ -4,7 +4,7 @@
 
 > **subscribeNotificationShown**(`cb`): () => `void`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L109)
+Defined in: [packages/framework/esm-globals/src/events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L65)
 
 ## Parameters
 
