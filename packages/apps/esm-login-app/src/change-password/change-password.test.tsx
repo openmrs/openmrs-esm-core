@@ -56,4 +56,47 @@ describe('ChangePasswordModal', () => {
     expect(mockChangeUserPassword).toHaveBeenCalledTimes(1);
     expect(mockChangeUserPassword).toHaveBeenCalledWith('P@ssw0rd123!', 'N3wP@ssw0rd456!');
   });
+
+  it('submits passwords exactly as typed, including surrounding spaces', async () => {
+    const user = userEvent.setup();
+
+    render(<ChangePasswordModal close={mockClose} />);
+
+    await user.type(screen.getByLabelText(/old password/i), ' P@ssw0rd123! ');
+    await user.type(screen.getByLabelText(/^new password$/i), ' N3wP@ssw0rd456! ');
+    await user.type(screen.getByLabelText(/confirm new password/i), ' N3wP@ssw0rd456! ');
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(mockChangeUserPassword).toHaveBeenCalledWith(' P@ssw0rd123! ', ' N3wP@ssw0rd456! ');
+  });
+
+  it('rejects a confirmation that differs from the new password only by surrounding spaces', async () => {
+    const user = userEvent.setup();
+
+    render(<ChangePasswordModal close={mockClose} />);
+
+    await user.type(screen.getByLabelText(/old password/i), 'P@ssw0rd123!');
+    await user.type(screen.getByLabelText(/^new password$/i), 'N3wP@ssw0rd456! ');
+    await user.type(screen.getByLabelText(/confirm new password/i), 'N3wP@ssw0rd456!');
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(screen.getByText(/passwords do not match/i)).toBeInTheDocument();
+    expect(mockChangeUserPassword).not.toHaveBeenCalled();
+  });
+
+  it('rejects passwords that contain only spaces', async () => {
+    const user = userEvent.setup();
+
+    render(<ChangePasswordModal close={mockClose} />);
+
+    await user.type(screen.getByLabelText(/old password/i), '   ');
+    await user.type(screen.getByLabelText(/^new password$/i), '   ');
+    await user.type(screen.getByLabelText(/confirm new password/i), '   ');
+    await user.click(screen.getByRole('button', { name: /change/i }));
+
+    expect(screen.getByText(/old password is required/i)).toBeInTheDocument();
+    expect(screen.getByText(/new password is required/i)).toBeInTheDocument();
+    expect(screen.getByText(/password confirmation is required/i)).toBeInTheDocument();
+    expect(mockChangeUserPassword).not.toHaveBeenCalled();
+  });
 });
