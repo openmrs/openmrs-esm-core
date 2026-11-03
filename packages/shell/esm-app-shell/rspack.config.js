@@ -22,6 +22,13 @@ const { name, version, dependencies } = require('./package.json');
 const sharedDependencies = require('./dependencies.json');
 const frameworkVersion = require('@openmrs/esm-framework/package.json').version;
 
+// Entry points that frontend modules import by name, shared alongside their package. Kept in step with
+// `sharedSubpaths` in the shared Rspack and Webpack configs.
+const sharedSubpaths = {
+  react: ['react/jsx-runtime'],
+  'react-dom': ['react-dom/client'],
+};
+
 const timestamp = getTimestamp();
 const production = 'production';
 
@@ -387,6 +394,14 @@ module.exports = (env, argv = []) => {
                 env: {
                   targets: browserTargets,
                 },
+                jsc: {
+                  transform: {
+                    react: {
+                      runtime: 'automatic',
+                      development: mode !== production,
+                    },
+                  },
+                },
               },
             },
           ],
@@ -517,7 +532,7 @@ module.exports = (env, argv = []) => {
             }
           }
 
-          const shareNames = [depName];
+          const shareNames = [depName, ...(sharedSubpaths[depName] ?? [])];
 
           // Also handle swr/immutable, etc.
           if (depName === 'swr') {
