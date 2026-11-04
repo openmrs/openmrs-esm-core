@@ -8,6 +8,8 @@
   color: $text-02;
   width: 100%;
   border-top: 1px solid $ui-03;
+  container-type: inline-size;
+  container-name: contact-details;
 }
 
 .heading {
@@ -22,6 +24,10 @@
   &:first-child {
     border-bottom: 1px solid $ui-03;
   }
+
+  @container contact-details (max-width: 40rem) {
+    flex-direction: column;
+  }
 }
 
 .row > .col {
@@ -31,6 +37,13 @@
   &:nth-of-type(2n + 1) {
     border-right: 1px solid $ui-03;
   }
+
+  @container contact-details (max-width: 40rem) {
+    &:nth-of-type(2n + 1) {
+      border-right: none;
+      border-bottom: 1px solid $ui-03;
+    }
+  }
 }
 
 .row li {
@@ -39,7 +52,7 @@
 
 .relationship {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
 }
 
 .relationship div {
