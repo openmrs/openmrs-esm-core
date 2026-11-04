@@ -16,6 +16,7 @@ import {
 } from '@carbon/react';
 import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
+import { isNotBlank } from './change-password.utils';
 import styles from './change-password-modal.scss';
 
 interface ChangePasswordModalProps {
@@ -31,22 +32,19 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
     .string({
       required_error: t('oldPasswordRequired', 'Old password is required'),
     })
-    .trim()
-    .min(1, t('oldPasswordRequired', 'Old password is required'));
+    .refine(isNotBlank, t('oldPasswordRequired', 'Old password is required'));
 
   const newPasswordValidation = z
     .string({
       required_error: t('newPasswordRequired', 'New password is required'),
     })
-    .trim()
-    .min(1, t('newPasswordRequired', 'New password is required'));
+    .refine(isNotBlank, t('newPasswordRequired', 'New password is required'));
 
   const passwordConfirmationValidation = z
     .string({
       required_error: t('passwordConfirmationRequired', 'Password confirmation is required'),
     })
-    .trim()
-    .min(1, t('passwordConfirmationRequired', 'Password confirmation is required'));
+    .refine(isNotBlank, t('passwordConfirmationRequired', 'Password confirmation is required'));
 
   const changePasswordFormSchema = z
     .object({

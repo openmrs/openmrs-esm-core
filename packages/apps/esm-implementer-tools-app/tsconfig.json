@@ -4,7 +4,7 @@
     "module": "esnext",
     "target": "es2015",
     "allowSyntheticDefaultImports": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strictNullChecks": true,
     "moduleResolution": "bundler",
     "skipLibCheck": true,
