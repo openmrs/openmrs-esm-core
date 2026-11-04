@@ -1,5 +1,5 @@
 import React from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { type i18n } from 'i18next';
 import { screen, render } from '@testing-library/react';
 import { usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
@@ -56,6 +56,8 @@ const mockPatient = {
 };
 
 describe('PatientBannerPatientInfo', () => {
+  afterEach(() => vi.useRealTimers());
+
   beforeEach(() => {
     mockUsePrimaryIdentifierCode.mockReturnValue({
       primaryIdentifierCode: '05a29f94-c0ed-11e2-94be-8c13b969e334',
@@ -75,6 +77,19 @@ describe('PatientBannerPatientInfo', () => {
     expect(screen.getByText(/100gej/i)).toBeInTheDocument();
     expect(screen.getByText(/national id/i)).toBeInTheDocument();
     expect(screen.getByText(/123456789/i)).toBeInTheDocument();
+  });
+
+  it.each([
+    { birthDate: '2026', expected: '2026' },
+    { birthDate: '2026-11', expected: 'Nov 2026' },
+    { birthDate: '2026-11-02', expected: '02-Nov-2026' },
+  ])('shows birthdate $birthDate without a relative date label', ({ birthDate, expected }) => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-11-02T12:00:00Z'));
+
+    render(<PatientBannerPatientInfo patient={{ ...mockPatient, birthDate }} />);
+
+    expect(screen.getByText(expected)).toBeInTheDocument();
   });
 
   it('renders the correct gender icon based on patient gender', () => {
