@@ -28,12 +28,6 @@ describe('isOpenmrsAppRoutes', () => {
             component: 'customModal',
           },
         ],
-        workspaces: [
-          {
-            name: 'custom workspace',
-            component: 'customWorkspace',
-          },
-        ],
       }),
     ).toBe(true);
   });
@@ -77,17 +71,16 @@ describe('isOpenmrsAppRoutes', () => {
     ).toBe(true);
   });
 
-  it('should accept an object with only workspaces', () => {
-    expect(
-      isOpenmrsAppRoutes({
-        workspaces: [
-          {
-            name: 'custom workspace',
-            component: 'customWorkspace',
-          },
-        ],
-      }),
-    ).toBe(true);
+  it.each([
+    ['workspaces2', { name: 'custom workspace', component: 'customWorkspace', window: 'custom-window' }],
+    ['workspaceWindows2', { name: 'custom-window', group: 'custom-group' }],
+    ['workspaceGroups2', { name: 'custom-group' }],
+  ])('should accept an object with only %s', (key, definition) => {
+    expect(isOpenmrsAppRoutes({ [key]: [definition] })).toBe(true);
+  });
+
+  it.each(['workspaces2', 'workspaceWindows2', 'workspaceGroups2'])('should reject a non-array %s', (key) => {
+    expect(isOpenmrsAppRoutes({ [key]: {} })).toBe(false);
   });
 
   it('should report an empty object as valid', () => {

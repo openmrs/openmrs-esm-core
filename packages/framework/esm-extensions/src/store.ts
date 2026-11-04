@@ -14,8 +14,6 @@ export interface ExtensionRegistration {
   readonly moduleName: string;
   readonly meta: Readonly<ExtensionMeta>;
   readonly order?: number;
-  readonly online?: boolean;
-  readonly offline?: boolean;
   readonly privileges?: string | Array<string>;
   readonly featureFlag?: string;
   readonly displayExpression?: string;
@@ -116,8 +114,6 @@ export interface AssignedExtension {
   readonly meta: Readonly<ExtensionMeta>;
   /** The extension's config. Note that this will be `null` until the slot is mounted. */
   readonly config: Readonly<ConfigObject> | null;
-  readonly online?: boolean | object;
-  readonly offline?: boolean | object;
   readonly featureFlag?: string;
   /** The condition under which this extension should be displayed. */
   readonly displayConditionExpression?: string;

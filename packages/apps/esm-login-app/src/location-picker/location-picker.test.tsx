@@ -6,13 +6,13 @@ import { MemoryRouter } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 import userEvent from '@testing-library/user-event';
 import {
+  LocationPicker,
   navigate,
   openmrsFetch,
   setSessionLocation,
   setUserProperties,
   showSnackbar,
   useConfig,
-  useConnectivity,
   useSession,
   type LoggedInUser,
   type Session,
@@ -49,18 +49,17 @@ const mockZeroLocationsResponse = {
   },
 } as FetchResponse<fhir.Bundle>;
 
+const mockLocationPicker = vi.mocked(LocationPicker);
 const mockOpenmrsFetch = vi.mocked(openmrsFetch);
 const mockUseConfig = vi.mocked(useConfig);
 const mockUseSession = vi.mocked(useSession);
 const mockSetSessionLocation = vi.mocked(setSessionLocation);
 const mockSetUserProperties = vi.mocked(setUserProperties);
-const mockUseConnectivity = vi.mocked(useConnectivity);
 const mockShowSnackbar = vi.mocked(showSnackbar);
 const mockNavigate = vi.mocked(navigate);
 
 describe('LocationPickerView', () => {
   beforeEach(() => {
-    mockUseConnectivity.mockReturnValue(true);
     mockUseConfig.mockReturnValue(mockConfig);
 
     mockUseSession.mockReturnValue({
@@ -237,6 +236,46 @@ describe('LocationPickerView', () => {
       expect(mockSetSessionLocation).not.toHaveBeenCalled();
     });
 
+    it('auto-selects the first location at login when chooseLocation is disabled', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, enabled: false },
+      });
+
+      renderWithRouter(LocationPickerView, {});
+
+      await waitFor(() => {
+        expect(mockSetSessionLocation).toHaveBeenCalledWith(
+          mockLoginLocations.data.entry[0].resource.id,
+          expect.anything(),
+        );
+      });
+    });
+
+    it('does not auto-select a location in the update flow when chooseLocation is disabled', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, enabled: false },
+      });
+
+      // Fresh SWR cache so the location count request is actually made and awaited here.
+      render(
+        <SWRConfig value={{ provider: () => new Map() }}>
+          <MemoryRouter initialEntries={['?update=true']}>
+            <LocationPickerView />
+          </MemoryRouter>
+        </SWRConfig>,
+      );
+
+      await waitFor(() => {
+        expect(mockOpenmrsFetch).toHaveBeenCalledWith(expect.stringContaining('_count=1'));
+      });
+      expect(await screen.findByRole('radio', { name: fistLocation.name })).toBeInTheDocument();
+
+      expect(mockSetSessionLocation).not.toHaveBeenCalled();
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
     it('allows user to remove saved preference by unchecking the checkbox', async () => {
       const user = userEvent.setup();
 
@@ -391,6 +430,34 @@ describe('LocationPickerView', () => {
       expect(mockSetSessionLocation).not.toHaveBeenCalled();
     });
   });
+
+  describe('Location paging', () => {
+    it('passes the configured locationsPerRequest to the location picker', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, locationsPerRequest: 5 },
+      });
+
+      renderWithRouter(LocationPickerView, {});
+
+      await waitFor(() => {
+        expect(mockLocationPicker.mock.lastCall?.[0]).toMatchObject({ locationsPerRequest: 5 });
+      });
+    });
+
+    it('falls back to a page size of 1 when locationsPerRequest is zero', async () => {
+      mockUseConfig.mockReturnValue({
+        ...mockConfig,
+        chooseLocation: { ...mockConfig.chooseLocation, locationsPerRequest: 0 },
+      });
+
+      renderWithRouter(LocationPickerView, {});
+
+      await waitFor(() => {
+        expect(mockLocationPicker.mock.lastCall?.[0]).toMatchObject({ locationsPerRequest: 1 });
+      });
+    });
+  });
 });
 
 describe('isSafeReturnUrl', () => {
@@ -430,7 +497,6 @@ describe('isSafeReturnUrl', () => {
 
 describe('returnToUrl open-redirect protection', () => {
   beforeEach(() => {
-    vi.mocked(useConnectivity).mockReturnValue(true);
     vi.mocked(useConfig).mockReturnValue(mockConfig);
 
     vi.mocked(useSession).mockReturnValue({

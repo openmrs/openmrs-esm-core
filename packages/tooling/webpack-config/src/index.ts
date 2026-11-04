@@ -63,7 +63,6 @@ import {
 // webpack's own browsers-to-features mapping
 import browserslistTargetHandler from 'webpack/lib/config/browserslistTargetHandler';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { ModuleFederationPlugin } from '@module-federation/enhanced/webpack';
 import { CarbonCssGuardPlugin } from '@openmrs/carbon-css-guard';
 
@@ -131,6 +130,15 @@ function buildFederationRuntimeGuard(appName: string, expectedMinor: string | un
 
   return missingRuntime + skew + '})();';
 }
+
+/**
+ * Entry points of a shared dependency that frontend modules import by name, and so share alongside
+ * it under its peer range. Compiled JSX imports `react/jsx-runtime`.
+ */
+const sharedSubpaths: Record<string, Array<string>> = {
+  react: ['react/jsx-runtime'],
+  'react-dom': ['react-dom/client'],
+};
 
 function getFrameworkVersion() {
   try {
@@ -421,6 +429,15 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
                 },
                 // ignore a project .swcrc to match rspack behavior
                 swcrc: false,
+                jsc: {
+                  transform: {
+                    // `openmrs develop` serves a production app shell so we must ensure we match that
+                    react: {
+                      runtime: 'automatic',
+                      development: false,
+                    },
+                  },
+                },
               },
             },
           },
@@ -550,7 +567,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           './start': srcFile,
         },
         shared: [...Object.keys(peerDependencies), '@openmrs/esm-framework/src/internal'].reduce((obj, depName) => {
-          const shareNames = [depName];
+          const shareNames = [depName, ...(sharedSubpaths[depName] ?? [])];
 
           // Also handle swr/immutable, etc.
           if (depName === 'swr') {
@@ -602,13 +619,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           name,
           moduleFederationVersion ? `${moduleFederationVersion.major}.${moduleFederationVersion.minor}` : undefined,
         ),
-      }),
-      new StatsWriterPlugin({
-        filename: `${filename}.buildmanifest.json`,
-        stats: {
-          all: false,
-          chunks: true,
-        },
       }),
     ].filter(Boolean),
     resolve: {

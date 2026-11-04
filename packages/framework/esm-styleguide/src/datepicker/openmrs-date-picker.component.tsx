@@ -18,7 +18,8 @@ import styles from './datepicker.module.scss';
  * Properties for the OpenmrsDatePicker
  */
 export interface OpenmrsDatePickerProps
-  extends Omit<DatePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'>,
+  extends
+    Omit<DatePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'>,
     DatePickerBaseProps {
   /** The default value (uncontrolled) */
   defaultValue?: DateInputValue;

@@ -9,7 +9,7 @@ function readPackageJson(pkgPath: string): PackageJson {
 }
 
 function getWorkspacePatterns(pkg: PackageJson): Array<string> | null {
-  const workspaces = Array.isArray(pkg.workspaces) ? pkg.workspaces : pkg.workspaces?.packages ?? null;
+  const workspaces = Array.isArray(pkg.workspaces) ? pkg.workspaces : (pkg.workspaces?.packages ?? null);
   return workspaces && workspaces.length > 0 ? workspaces : null;
 }
 

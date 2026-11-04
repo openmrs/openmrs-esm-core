@@ -22,6 +22,7 @@ export type ExcludeOptionalKeys<T, U> = {
   [K in keyof T]: K extends keyof U ? never : K;
 }[keyof T];
 
+// prettier-ignore
 /** @internal */
 export type XOR<T, U> =
   | (T & { [K in ExcludeOptionalKeys<U, T>]?: never })
@@ -101,7 +102,7 @@ export const PageHeaderContent: React.FC<PageHeaderContentProps> = ({ title, ill
       {illustration}
       <div className={styles.pageLabels}>
         {config?.implementationName && <p>{getCoreTranslation(config.implementationName as CoreTranslationKey)}</p>}
-        <p className={styles.pageName}>{title}</p>
+        <h1 className={styles.pageName}>{title}</h1>
       </div>
     </div>
   );

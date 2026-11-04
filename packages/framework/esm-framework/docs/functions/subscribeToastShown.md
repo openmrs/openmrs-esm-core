@@ -4,7 +4,7 @@
 
 > **subscribeToastShown**(`cb`): () => `void`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:122](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L122)
+Defined in: [packages/framework/esm-globals/src/events.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L79)
 
 ## Parameters
 

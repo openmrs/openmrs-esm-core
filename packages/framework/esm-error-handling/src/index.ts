@@ -1,10 +1,13 @@
 /** @module @category Error Handling */
 import { dispatchToastShown } from '@openmrs/esm-globals';
 
-window.onerror = function (error) {
-  console.error('Unexpected error: ', error);
+// Uses the standard `window.onerror` signature: the first argument is the error
+// message (a string) or an Event, and the fifth is the actual Error object (when
+// the browser provides it). We prefer the Error so the toast shows its message.
+window.onerror = function (message, _source, _lineno, _colno, error) {
+  console.error('Unexpected error: ', error ?? message);
   dispatchToastShown({
-    description: error ?? 'Oops! An unexpected error occurred.',
+    description: toToastDescription(error, 'Oops! An unexpected error occurred.'),
     kind: 'error',
     title: 'Error',
   });
@@ -14,11 +17,21 @@ window.onerror = function (error) {
 window.onunhandledrejection = function (event: PromiseRejectionEvent) {
   console.error('Unhandled rejection: ', event.reason);
   dispatchToastShown({
-    description: event.reason ?? 'Oops! An unhandled promise rejection occurred.',
+    description: toToastDescription(event.reason, 'Oops! An unhandled promise rejection occurred.'),
     kind: 'error',
     title: 'Error',
   });
 };
+
+/**
+ * Tries to turn whatever reached the global error handler into
+ * a sensible string, returning the caller's fallback if a non-empty
+ * string could not be constructed.
+ */
+function toToastDescription(thing: unknown, fallback: string) {
+  const { message } = ensureErrorObject(thing);
+  return typeof message === 'string' && message ? message : fallback;
+}
 
 /**
  * Reports an error to the global error handler. The error will be displayed

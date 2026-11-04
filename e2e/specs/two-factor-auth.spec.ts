@@ -23,6 +23,8 @@ test('User succesfully navigates to Two-Factor Authentiaction page and sets up a
     await loginPage.goto();
   });
 
+  // Kept deliberately: with twoFactorAuth enabled this is the login flow under that configuration, so
+  // walking it is part of what the spec covers rather than setup for the enrollment page below.
   await test.step('When I enter my valid credentials to login as admin', async () => {
     await page.getByLabel(/username/i).fill(`${process.env.E2E_USER_ADMIN_USERNAME}`);
     await page.getByText(/continue/i).click();

@@ -1,5 +1,4 @@
 import React from 'react';
-import { of } from 'rxjs';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
@@ -16,8 +15,7 @@ import { mockUser } from '../__mocks__/mock-user';
 import { mockSession } from '../__mocks__/mock-session';
 import Root from './root.component';
 
-const mockUserObservable = of(mockUser);
-const mockSessionObservable = of({ data: mockSession });
+const mockUserPromise = Promise.resolve(mockUser);
 
 vi.mock('@openmrs/esm-framework', () => ({
   useConfig: vi.fn(),
@@ -28,8 +26,7 @@ vi.mock('@openmrs/esm-framework', () => ({
 }));
 
 vi.mock('./root.resource', () => ({
-  getSynchronizedCurrentUser: vi.fn(() => mockUserObservable),
-  getCurrentSession: vi.fn(() => mockSessionObservable),
+  getSynchronizedCurrentUser: vi.fn(() => mockUserPromise),
 }));
 
 vi.mock('./utils', () => ({

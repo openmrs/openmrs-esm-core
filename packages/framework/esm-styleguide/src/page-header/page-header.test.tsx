@@ -15,12 +15,12 @@ vi.mock('@openmrs/esm-config', () => ({
 describe('PageHeaderContent', () => {
   const mockIllustration = <svg data-testid="mock-illustration" />;
 
-  it('renders title and illustration', async () => {
+  it('renders the title as a heading and the illustration', async () => {
     mockGetConfig.mockResolvedValue({});
 
     render(<PageHeaderContent title="Test Title" illustration={mockIllustration} />);
 
-    await screen.findByText(/test title/i);
+    await screen.findByRole('heading', { level: 1, name: /test title/i });
     expect(screen.getByTestId('mock-illustration')).toBeInTheDocument();
   });
 

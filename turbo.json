@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "ui": "stream",
+  "agentGuidance": false,
   "tasks": {
     "clean": {
       "cache": false
@@ -49,6 +50,7 @@
       "outputs": ["docs/**/*.md"]
     },
     "test": {
+      "dependsOn": ["^build"],
       "inputs": [
         "src/**",
         "__mocks__/**",
@@ -64,6 +66,7 @@
       "persistent": true
     },
     "coverage": {
+      "dependsOn": ["^build"],
       "inputs": [
         "src/**",
         "__mocks__/**",
@@ -89,7 +92,7 @@
       ]
     },
     "typescript": {
-      "dependsOn": ["^typescript"],
+      "dependsOn": ["^typescript", "^build"],
       "inputs": [
         "src/**",
         "tsconfig.json",

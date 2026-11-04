@@ -315,8 +315,38 @@ describe('runAssemble', () => {
 
       expect(mockPacoteManifest).toHaveBeenCalledWith('@openmrs/esm-test-app@1.0.0', expect.any(Object));
       expect(mockPacoteTarball).toHaveBeenCalledWith(
-        expect.stringContaining('registry.npmjs.org'),
-        expect.objectContaining({ integrity: 'sha512-fake' }),
+        '@openmrs/esm-test-app@1.0.0',
+        expect.objectContaining({
+          resolved: 'https://registry.npmjs.org/@openmrs/esm-test-app/-/@openmrs/esm-test-app-1.0.0.tgz',
+          integrity: 'sha512-fake',
+          ignoreScripts: true,
+        }),
+      );
+    });
+
+    it('downloads the tarball from the same packument the manifest was resolved from', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0');
+
+      await runAssemble(defaultArgs());
+
+      const manifestCache = (mockPacoteManifest.mock.calls[0][1] as { packumentCache?: unknown }).packumentCache;
+      const tarballCache = (mockPacoteTarball.mock.calls[0][1] as { packumentCache?: unknown }).packumentCache;
+      expect(manifestCache).toBeInstanceOf(Map);
+      expect(tarballCache).toBe(manifestCache);
+    });
+
+    it('never passes the registry-supplied tarball location to pacote as a spec', async () => {
+      setupSingleModuleRun('@openmrs/esm-test-app', '1.0.0');
+      mockPacoteManifest.mockResolvedValue({
+        _resolved: 'git+https://attacker.test/x.git',
+        _integrity: 'sha512-fake',
+      } as unknown as Awaited<ReturnType<typeof pacote.manifest>>);
+
+      await runAssemble(defaultArgs());
+
+      expect(mockPacoteTarball).toHaveBeenCalledWith(
+        '@openmrs/esm-test-app@1.0.0',
+        expect.objectContaining({ resolved: 'git+https://attacker.test/x.git' }),
       );
     });
 

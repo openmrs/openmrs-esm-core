@@ -4,7 +4,7 @@
 
 > **ExtensionSlotCustomState** = `Record`\<`string`, `unknown`\> \| `undefined`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L80)
+Defined in: [packages/framework/esm-extensions/src/store.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L78)
 
 The state one rendering of a slot is displaying, which its extensions' display conditions are
 evaluated against. Each key becomes a variable of that name in the expression, so only string

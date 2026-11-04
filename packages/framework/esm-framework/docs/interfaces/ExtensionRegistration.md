@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:11](https://github.c
 
 > `readonly` `optional` **displayExpression**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L21)
+Defined in: [packages/framework/esm-extensions/src/store.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L19)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:21](https://github.c
 
 > `readonly` `optional` **featureFlag**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L20)
+Defined in: [packages/framework/esm-extensions/src/store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L18)
 
 ***
 
@@ -46,22 +46,6 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:12](https://github.c
 
 ***
 
-### offline?
-
-> `readonly` `optional` **offline**: `boolean`
-
-Defined in: [packages/framework/esm-extensions/src/store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L18)
-
-***
-
-### online?
-
-> `readonly` `optional` **online**: `boolean`
-
-Defined in: [packages/framework/esm-extensions/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L17)
-
-***
-
 ### order?
 
 > `readonly` `optional` **order**: `number`
@@ -74,7 +58,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:16](https://github.c
 
 > `readonly` `optional` **privileges**: `string` \| `string`[]
 
-Defined in: [packages/framework/esm-extensions/src/store.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L19)
+Defined in: [packages/framework/esm-extensions/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L17)
 
 ## Methods
 

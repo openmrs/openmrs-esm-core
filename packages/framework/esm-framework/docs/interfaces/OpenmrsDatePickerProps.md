@@ -128,7 +128,7 @@ Whether the overlay is open by default (uncontrolled).
 
 > `optional` **defaultValue**: `DateInputValue`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L24)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L25)
 
 The default value (uncontrolled)
 
@@ -476,7 +476,7 @@ Handler that is called when the element loses focus.
 
 > `optional` **onChange**: (`value`) => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L26)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L27)
 
 Handler that is called when the value changes.
 
@@ -496,7 +496,7 @@ Handler that is called when the value changes.
 
 > `optional` **onChangeRaw**: (`value`) => `void`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L28)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L29)
 
 Handler that is called when the value changes. Note that this provides types from @internationalized/date.
 
@@ -670,7 +670,7 @@ A placeholder date that influences the format of the placeholder shown when no v
 
 > `optional` **short**: `boolean`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L32)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L33)
 
 'true' to use the short version.
 
@@ -715,7 +715,7 @@ By default, this is determined by the user's locale.
 
 > `optional` **size**: `"sm"` \| `"md"` \| `"lg"`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L30)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L31)
 
 Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option
 
@@ -803,6 +803,6 @@ or invalid via ARIA.
 
 > `optional` **value**: `DateInputValue`
 
-Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L34)
+Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-picker.component.tsx#L35)
 
 The value (controlled)

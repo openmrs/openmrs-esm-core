@@ -3,15 +3,8 @@ import { beforeEach, describe, vi, it, expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import {
-  useConfig,
-  useConnectivity,
-  openmrsFetch,
-  type FetchResponse,
-  OpenmrsFetchError,
-  refetchCurrentUser,
-  navigate as openmrsNavigate,
-} from '@openmrs/esm-framework';
+import { useConfig, type Session, navigate as openmrsNavigate } from '@openmrs/esm-framework';
+import { verifyTotpCode } from '@openmrs/esm-framework/src/internal';
 import type { ConfigSchema } from '../../config-schema';
 import TotpVerificationChallengePage from './totp-verification-challenge-page.component';
 
@@ -20,10 +13,8 @@ vi.mock('@openmrs/esm-framework', async () => {
   return {
     ...actual,
     useConfig: vi.fn(),
-    useConnectivity: vi.fn(),
     interpolateUrl: vi.fn(),
-    openmrsFetch: vi.fn(),
-    refetchCurrentUser: vi.fn(),
+    verifyTotpCode: vi.fn(),
     navigate: vi.fn(),
   };
 });
@@ -38,8 +29,6 @@ describe('TotpVerificationChallengePage', () => {
       logo: { src: '', alt: 'Logo' },
       footer: { additionalLogos: [] },
     } as unknown as ConfigSchema);
-
-    vi.mocked(useConnectivity).mockReturnValue(true);
   });
 
   const setup = () => {
@@ -71,10 +60,8 @@ describe('TotpVerificationChallengePage', () => {
     expect(verifyButton).toBeDisabled();
   });
 
-  it('should append rememberMe=true to the request only when the checkbox is checked', async () => {
-    vi.mocked(openmrsFetch).mockResolvedValue({
-      data: { authenticated: true },
-    } as unknown as FetchResponse<unknown>);
+  it('should ask the server to remember the device only when the checkbox is checked', async () => {
+    vi.mocked(verifyTotpCode).mockResolvedValue({ authenticated: true } as Session);
 
     const { user } = setup();
     const inputs = screen.getAllByRole('textbox');
@@ -85,27 +72,21 @@ describe('TotpVerificationChallengePage', () => {
     const verifyButton = screen.getByRole('button', { name: /verify/i });
     const rememberMeCheckbox = screen.getByLabelText(/Remember this device/i);
     await user.click(verifyButton);
-    expect(openmrsFetch).toHaveBeenCalledWith(
-      '/ws/rest/v1/session?rememberMe=true',
-      expect.objectContaining({ method: 'GET' }),
-    );
+    expect(verifyTotpCode).toHaveBeenLastCalledWith('123456', true);
 
     await user.click(rememberMeCheckbox);
     expect(rememberMeCheckbox).not.toBeChecked();
 
     await user.click(verifyButton);
-    expect(openmrsFetch).toHaveBeenCalledWith('/ws/rest/v1/session', expect.objectContaining({ method: 'GET' }));
+    expect(verifyTotpCode).toHaveBeenLastCalledWith('123456', false);
   });
 
   it('should use the original referrer from sessionStorage and clear it after successful verification', async () => {
     sessionStorage.setItem('loginReferrer', '/patient-chart');
-    vi.mocked(openmrsFetch).mockResolvedValue({
-      data: { authenticated: true },
-    } as unknown as FetchResponse<unknown>);
-
-    vi.mocked(refetchCurrentUser).mockResolvedValue({
-      session: { sessionLocation: { uuid: 'location-123', display: 'Pharmacy' } },
-    } as any);
+    vi.mocked(verifyTotpCode).mockResolvedValue({
+      authenticated: true,
+      sessionLocation: { uuid: 'location-123', display: 'Pharmacy' },
+    } as Session);
 
     const { user } = setup();
 
@@ -120,13 +101,10 @@ describe('TotpVerificationChallengePage', () => {
   });
 
   it('should verify successfully and navigate to home if the user has a session location', async () => {
-    vi.mocked(openmrsFetch).mockResolvedValue({
-      data: { authenticated: true },
-    } as unknown as FetchResponse<unknown>);
-
-    vi.mocked(refetchCurrentUser).mockResolvedValue({
-      session: { sessionLocation: { uuid: 'location-123', display: 'Pharmacy' } },
-    } as any);
+    vi.mocked(verifyTotpCode).mockResolvedValue({
+      authenticated: true,
+      sessionLocation: { uuid: 'location-123', display: 'Pharmacy' },
+    } as Session);
 
     const { user } = setup();
 
@@ -136,15 +114,21 @@ describe('TotpVerificationChallengePage', () => {
 
     const verifyButton = screen.getByRole('button', { name: /verify/i });
     await user.click(verifyButton);
-    expect(openmrsFetch).toHaveBeenCalledWith(
-      expect.stringContaining('/ws/rest/v1/session'),
-      expect.objectContaining({
-        method: 'GET',
-        headers: { 'X-Totp-Code': '123456' },
-      }),
-    );
-
-    expect(refetchCurrentUser).toHaveBeenCalled();
+    expect(verifyTotpCode).toHaveBeenCalledWith('123456', true);
     expect(openmrsNavigate).toHaveBeenCalledWith({ to: '/home' });
+  });
+
+  it('should show an error and stay on the page when the code is not accepted', async () => {
+    vi.mocked(verifyTotpCode).mockResolvedValue({ authenticated: false } as Session);
+
+    const { user } = setup();
+
+    const inputs = screen.getAllByRole('textbox');
+    await user.click(inputs[0]);
+    await user.paste('123456');
+    await user.click(screen.getByRole('button', { name: /verify/i }));
+
+    expect(screen.getByText(/We could not verify that code/i)).toBeInTheDocument();
+    expect(openmrsNavigate).not.toHaveBeenCalled();
   });
 });

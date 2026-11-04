@@ -4,13 +4,18 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 /**
- * This configuration is to reuse the signed-in state in the tests
- * by log in only once using the API and then skip the log in step for all the tests.
+ * Where each session's cookies are written. A spec that ends its session needs its own, or it logs
+ * out the session every other spec is using and they fail wherever the run happens to have got to.
  *
  * https://playwright.dev/docs/auth#reuse-signed-in-state
  */
+export const storageStatePaths = {
+  shared: 'e2e/storageState.json',
+  logout: 'e2e/storageState.logout.json',
+};
 
-async function globalSetup() {
+/** Logs in over the API and saves the session, so specs do not each pay for an interactive login. */
+async function createSession(path: string) {
   const requestContext = await request.newContext();
   const token = Buffer.from(`${process.env.E2E_USER_ADMIN_USERNAME}:${process.env.E2E_USER_ADMIN_PASSWORD}`).toString(
     'base64',
@@ -25,8 +30,14 @@ async function globalSetup() {
       Authorization: `Basic ${token}`,
     },
   });
-  await requestContext.storageState({ path: 'e2e/storageState.json' });
+  await requestContext.storageState({ path });
   await requestContext.dispose();
+}
+
+async function globalSetup() {
+  for (const path of Object.values(storageStatePaths)) {
+    await createSession(path);
+  }
 }
 
 export default globalSetup;

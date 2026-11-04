@@ -182,15 +182,20 @@ async function downloadPackage(
     return Buffer.from(await response.arrayBuffer());
   } else {
     const packageName = esmVersion ? `${esmName}@${esmVersion}` : esmName;
-    const tarManifest = await pacote.manifest(packageName, fetchOptions);
+    // shared so that tarball() downloads from the same packument manifest() resolved against
+    const packumentCache = new Map();
+    const tarManifest = await pacote.manifest(packageName, { ...fetchOptions, packumentCache });
 
     if (!Boolean(tarManifest) || !Boolean(tarManifest._resolved) || !Boolean(tarManifest._integrity)) {
       throw new Error(`Failed to load manifest for ${packageName} from registry ${fetchOptions.registry}`);
     }
 
-    return pacote.tarball(tarManifest._resolved, {
+    return pacote.tarball(packageName, {
       ...fetchOptions,
+      packumentCache,
+      resolved: tarManifest._resolved,
       integrity: tarManifest._integrity,
+      ignoreScripts: true,
     });
   }
 }

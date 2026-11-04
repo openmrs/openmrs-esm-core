@@ -13,4 +13,3 @@ export const deleteAttachmentPermanently = jest.fn();
 export const updateVisit = jest.fn();
 export const saveVisit = jest.fn();
 export const getVisitsForPatient = jest.fn();
-export const getStartedVisit = jest.fn();

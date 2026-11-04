@@ -149,10 +149,6 @@ export function getLocale() {
   return 'en';
 }
 
-export function useConnectivity() {
-  return true;
-}
-
 export function useAppContext() {
   return undefined;
 }

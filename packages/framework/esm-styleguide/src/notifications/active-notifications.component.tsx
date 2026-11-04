@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import type { Subject } from 'rxjs';
 import type { InlineNotificationMeta } from './notification.component';
 import { Notification } from './notification.component';
+import type { Emitter } from '../emitter';
 
 interface ActiveNotificationProps {
-  subject: Subject<InlineNotificationMeta>;
+  subject: Emitter<InlineNotificationMeta>;
 }
 
 const ActiveNotifications: React.FC<ActiveNotificationProps> = ({ subject }) => {

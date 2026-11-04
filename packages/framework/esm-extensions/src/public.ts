@@ -19,5 +19,4 @@ export {
   type ExtensionSlotState,
   getExtensionStore,
 } from './store';
-export { type WorkspaceRegistration } from './workspaces';
 export { type ExtensionData, type ComponentConfig } from './types';

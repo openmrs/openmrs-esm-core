@@ -5,7 +5,7 @@
     "target": "es2015",
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strictNullChecks": true,
     "moduleResolution": "node",
     "outDir": "dist",

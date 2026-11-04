@@ -16,7 +16,6 @@ export * from './useAttachments';
 export * from './useBodyScrollLock';
 export * from './useConfig';
 export * from './useConnectedExtensions';
-export * from './useConnectivity';
 export * from './useDebounce';
 export * from './useDefineAppContext';
 export * from './useEmrConfiguration';

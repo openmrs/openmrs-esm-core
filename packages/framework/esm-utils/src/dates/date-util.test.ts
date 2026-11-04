@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import dayjs from 'dayjs';
 import timezoneMock from 'timezone-mock';
 import type { i18n } from 'i18next';
@@ -14,9 +14,100 @@ import {
   formatDuration,
   duration,
   formatDurationBetween,
+  parseDateInput,
 } from './date-util';
 
 window.i18next = { language: 'en' } as i18n;
+
+describe('ISO calendar dates', () => {
+  const referenceDate = dayjs('2024-03-31T12:00:00');
+  let originalLocale: string;
+
+  beforeEach(() => {
+    originalLocale = window.i18next.language;
+    window.i18next.language = 'en';
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(referenceDate.toDate());
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+    window.i18next.language = originalLocale;
+  });
+
+  it.each([
+    { input: '2024', expected: '2024', resolved: '2024-03-31' },
+    { input: '2024-03', expected: 'Mar 2024', resolved: '2024-03-31' },
+    { input: '2024-03-31', expected: '31-Mar-2024', resolved: '2024-03-31' },
+    { input: '2021-02', expected: 'Feb 2021', resolved: '2021-02-28' },
+    { input: '2020-02-29', expected: '29-Feb-2020', resolved: '2020-02-29' },
+    { input: '2000-02-29', expected: '29-Feb-2000', resolved: '2000-02-29' },
+    { input: '0096-02-29', expected: '29-Feb-96', resolved: '0096-02-29' },
+  ])('preserves precision and calendar fields for $input', ({ input, expected, resolved }) => {
+    expect(formatPartialDate(input, { time: false, noToday: true })).toEqual(expected);
+    expect(parseDateInput(input, referenceDate)?.format('YYYY-MM-DDTHH:mm:ss')).toEqual(`${resolved}T12:00:00`);
+  });
+
+  describe.each(['bn', 'ar_SY'])('with locale %s', (locale) => {
+    it.each([
+      { input: '2020', options: { year: 'numeric' } as const, resolved: '2020-03-31' },
+      { input: '2020-03', options: { year: 'numeric', month: 'short' } as const, resolved: '2020-03-31' },
+      {
+        input: '2020-03-22',
+        options: { year: 'numeric', month: 'short', day: '2-digit' } as const,
+        resolved: '2020-03-22',
+      },
+    ])('parses $input independently of the display locale', ({ input, options, resolved }) => {
+      window.i18next.language = locale;
+      const expected = new Intl.DateTimeFormat(locale.replace('_', '-'), options).format(
+        new Date('2020-03-22T12:00:00'),
+      );
+
+      expect(formatPartialDate(input, { time: false, noToday: true })).toEqual(expected);
+      expect(parseDateInput(input, referenceDate)?.format('YYYY-MM-DD')).toEqual(resolved);
+    });
+  });
+
+  it.each([
+    '2021-00',
+    '2021-13',
+    '2021-00-01',
+    '2021-13-01',
+    '2021-01-00',
+    '2021-01-32',
+    '2021-04-31',
+    '2021-02-29',
+    '2020-02-30',
+    '1900-02-29',
+    '0099-02-29',
+  ])('rejects the invalid calendar date %s', (input) => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    expect(formatPartialDate(input, { time: false, noToday: true })).toBeNull();
+    expect(parseDateInput(input, referenceDate)).toBeNull();
+  });
+
+  it('continues to parse non-ISO date strings', () => {
+    expect(formatPartialDate('9 April 2021', { time: false, noToday: true })).toEqual('09-Apr-2021');
+    expect(parseDateInput('9 April 2021', referenceDate)?.format('YYYY-MM-DD')).toEqual('2021-04-09');
+    expect(parseDateInput('2021-04-09T15:30:00Z', referenceDate)?.format('YYYY-MM-DDTHH:mm:ss')).toEqual(
+      '2021-04-09T15:30:00',
+    );
+  });
+
+  it('keeps date-only inputs on the same day behind UTC', () => {
+    vi.useRealTimers();
+    timezoneMock.register('US/Pacific');
+    try {
+      const localReferenceDate = dayjs('2024-03-31T12:00:00');
+      expect(formatPartialDate('2020-03-22', { time: false, noToday: true })).toEqual('22-Mar-2020');
+      expect(parseDateInput('2020-03-22', localReferenceDate)?.format('YYYY-MM-DD')).toEqual('2020-03-22');
+    } finally {
+      timezoneMock.unregister();
+    }
+  });
+});
 
 describe('Openmrs Dates', () => {
   afterAll(() => timezoneMock.unregister());

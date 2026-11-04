@@ -10,7 +10,8 @@ import {
   configExtensionStore,
   configInternalStore,
   getConfigStore,
-  getExtensionConfig,
+  getExtensionConfigFromStore,
+  getExtensionsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from './state';
@@ -1304,11 +1305,59 @@ describe('extension config', () => {
     expect(derivations).toBe(3);
   });
 
+  it('keeps every mounted extension current across config changes interleaved with mounts', () => {
+    const mount = (extensionIds: Array<string>) =>
+      configExtensionStore.setState({
+        mountedExtensions: extensionIds.map((extensionId) => ({
+          slotModuleName: 'slot-mod',
+          extensionModuleName: 'ext-mod',
+          slotName: 'barSlot',
+          extensionId,
+        })),
+      });
+    const bar = (extensionId: string) => currentExtensionConfig('barSlot', extensionId).config.bar;
+
+    mount(['fooExt#a']);
+    expect(bar('fooExt#a')).toBe('barry');
+
+    temporaryConfigStore.setState({ config: { 'ext-mod': { bar: 'temporary' } } });
+    expect(bar('fooExt#a')).toBe('temporary');
+
+    // Mounting with the config unchanged must neither revert the extension already mounted nor
+    // hand the new one a config derived from anything but the current inputs.
+    mount(['fooExt#a', 'fooExt#b']);
+    expect(bar('fooExt#a')).toBe('temporary');
+    expect(bar('fooExt#b')).toBe('temporary');
+
+    temporaryConfigStore.setState({ config: {} });
+    expect(bar('fooExt#a')).toBe('barry');
+    expect(bar('fooExt#b')).toBe('barry');
+  });
+
+  it('re-derives the config of an extension mounted again under a different module', () => {
+    Config.defineConfigSchema('other-mod', { bar: { _default: 'other' } });
+    Config.registerModuleLoad('other-mod');
+
+    const mount = (extensionModuleName: string) =>
+      configExtensionStore.setState({
+        mountedExtensions: [
+          { slotModuleName: 'slot-mod', extensionModuleName, slotName: 'barSlot', extensionId: 'fooExt' },
+        ],
+      });
+    const bar = () => currentExtensionConfig('barSlot', 'fooExt').config.bar;
+
+    mount('ext-mod');
+    expect(bar()).toBe('barry');
+
+    mount('other-mod');
+    expect(bar()).toBe('other');
+  });
+
   it('returns the module config', async () => {
     const moduleLevelConfig = { 'ext-mod': { bar: 'qux' } };
     updateConfigExtensionStore();
     Config.provide(moduleLevelConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
+    const result = currentExtensionConfig('barSlot', 'fooExt').config;
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'bazzy',
@@ -1331,7 +1380,7 @@ describe('extension config', () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt#id0').getState().config;
+    const result = currentExtensionConfig('barSlot', 'fooExt#id0').config;
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'quiz',
@@ -1356,7 +1405,7 @@ describe('extension config', () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt#id6').getState().config;
+    const result = currentExtensionConfig('barSlot', 'fooExt#id6').config;
     expect(result).toStrictEqual({
       bar: 'qux',
       baz: 'quiz',
@@ -1385,7 +1434,7 @@ describe('extension config', () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt#id7').getState().config;
+    const result = currentExtensionConfig('barSlot', 'fooExt#id7').config;
     expect(result).toStrictEqual({
       bar: 'from-other',
       baz: 'from-owner',
@@ -1413,7 +1462,7 @@ describe('extension config', () => {
     // Composing `add` across modules would resurrect entries another module had removed, so the
     // last module to name the slot still supplies it whole.
     expect(getExtensionSlotsConfigStore().getState().slots['barSlot'].config.add).toStrictEqual(['fooExt#id8']);
-    expect(getExtensionConfig('barSlot', 'fooExt#id8').getState().config).toStrictEqual({
+    expect(currentExtensionConfig('barSlot', 'fooExt#id8').config).toStrictEqual({
       bar: 'from-first',
       baz: 'from-last',
       'Display conditions': { expression: undefined, privileges: [] },
@@ -1426,12 +1475,12 @@ describe('extension config', () => {
     temporaryConfigStore.setState({
       config: { 'other-mod': { extensionSlots: { barSlot: { configure: { 'fooExt#id9': { baz: 'temporary' } } } } } },
     });
-    expect(getExtensionConfig('barSlot', 'fooExt#id9').getState().config.baz).toBe('temporary');
+    expect(currentExtensionConfig('barSlot', 'fooExt#id9').config.baz).toBe('temporary');
 
     // The derived slot config is not part of the extension config cache key, so a released override
     // is only picked up because that cache also keys on the temporary config it was derived from.
     temporaryConfigStore.setState({ config: {} });
-    expect(getExtensionConfig('barSlot', 'fooExt#id9').getState().config.baz).toBe('bazzy');
+    expect(currentExtensionConfig('barSlot', 'fooExt#id9').config.baz).toBe('bazzy');
   });
 
   it('validates the extension configure config, with module config schema', () => {
@@ -1458,7 +1507,7 @@ describe('extension config', () => {
     Config.registerModuleLoad('fooExt');
     const extensionAtBaseConfig = { fooExt: { qux: 'quxolotl' } };
     Config.provide(extensionAtBaseConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
+    const result = currentExtensionConfig('barSlot', 'fooExt').config;
     expect(result).toStrictEqual({
       qux: 'quxolotl',
       'Display conditions': { expression: undefined, privileges: [] },
@@ -1483,7 +1532,7 @@ describe('extension config', () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt#id2').getState().config;
+    const result = currentExtensionConfig('barSlot', 'fooExt#id2').config;
     expect(result).toStrictEqual({
       qux: 'quxotic',
       'Display conditions': { expression: undefined, privileges: [] },
@@ -1538,6 +1587,105 @@ describe('extension config', () => {
     };
     Config.provide(badConfigNoExtensionConfigsForModule);
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/unknown config key 'ext-mod.qux' provided.*/i));
+  });
+});
+
+// `renderExtension` registers an extension before awaiting its bundle, so its config is derived
+// while the module is known to the config system only by the implicit schema.
+describe('extension config of a module that has not loaded yet', () => {
+  beforeEach(() => {
+    console.error = vi.fn();
+  });
+
+  afterEach(resetAll);
+
+  const mount = (extensionModuleName: string, extensionId: string) =>
+    configExtensionStore.setState({
+      mountedExtensions: [{ slotModuleName: 'slot-mod', extensionModuleName, slotName: 'early-slot', extensionId }],
+    });
+
+  it('does not call a key unknown before the module defines its schema', () => {
+    Config.provide({ 'early-mod': { thud: 'provided' } });
+    Config.registerModuleWithConfigSystem('early-mod');
+    mount('early-mod', 'earlyExt');
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    Config.defineConfigSchema('early-mod', { thud: { _default: 'default' } });
+    Config.registerModuleLoad('early-mod');
+
+    expect(console.error).not.toHaveBeenCalled();
+    expect(currentExtensionConfig('early-slot', 'earlyExt').config.thud).toBe('provided');
+  });
+
+  it('still calls a key unknown once the module has defined a schema without it', () => {
+    Config.provide({ 'late-mod': { thud: 'provided', plugh: 'unknown' } });
+    Config.registerModuleWithConfigSystem('late-mod');
+    mount('late-mod', 'lateExt');
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    Config.defineConfigSchema('late-mod', { thud: { _default: 'default' } });
+    Config.registerModuleLoad('late-mod');
+
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/unknown config key 'late-mod.plugh' provided/i));
+  });
+
+  it('still calls a key unknown once a module without a schema has loaded', () => {
+    // Configured through the slot so that only the extension config, not the module config, sees it.
+    Config.provide({
+      'slot-mod': { extensionSlots: { 'early-slot': { configure: { bareExt: { xyzzy: 'unknown' } } } } },
+    });
+    Config.registerModuleWithConfigSystem('bare-mod');
+    mount('bare-mod', 'bareExt');
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    Config.registerModuleLoad('bare-mod');
+
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/unknown config key 'bare-mod.xyzzy' provided/i));
+  });
+
+  it('still reports a value of the wrong type once the module has defined its schema', () => {
+    Config.provide({ 'typed-mod': { thud: 42 } });
+    Config.registerModuleWithConfigSystem('typed-mod');
+    mount('typed-mod', 'typedExt');
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    // `defineConfigSchema` marks the module loaded, so the module config reports both errors here. The
+    // extension's own structure check waits for `registerModuleLoad`, and its repeats are deduplicated.
+    Config.defineConfigSchema('typed-mod', {
+      thud: { _type: Type.String, _default: 'default', _validators: [validator((v) => v !== 42, 'must not be 42')] },
+    });
+    Config.registerModuleLoad('typed-mod');
+
+    expect(console.error).toHaveBeenCalledTimes(2);
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/42 for typed-mod.thud: must be a string/));
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/42 for typed-mod.thud: must not be 42/));
+  });
+
+  it('does not call an extension schema key unknown while its module starts up', () => {
+    Config.provide({
+      'slot-mod': { extensionSlots: { 'early-slot': { configure: { flagsExt: { quux: 'x', corge: 'unknown' } } } } },
+    });
+    Config.registerModuleWithConfigSystem('flags-mod');
+    mount('flags-mod', 'flagsExt');
+    Config.defineConfigSchema('flags-mod', { thud: { _default: 'd' } });
+
+    expect(console.error).not.toHaveBeenCalled();
+
+    // The extension's own schema is checked as soon as it is defined, without waiting for startup.
+    Config.defineExtensionConfigSchema('flagsExt', { quux: { _default: 'd' } });
+
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/unknown config key 'flagsExt.corge' provided/i));
+    expect(currentExtensionConfig('early-slot', 'flagsExt').config.quux).toBe('x');
+
+    Config.registerModuleLoad('flags-mod');
+
+    expect(console.error).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -1603,6 +1751,18 @@ describe('promise-based config accessors', () => {
     return counter;
   }
 
+  /**
+   * Rejects if `promise` has not settled within half a second. i18next never retries a namespace
+   * read, so a translation-override wait that never settles leaves every component under that
+   * namespace suspended for good; this turns that hang into a failure.
+   */
+  function settled<T>(promise: Promise<T>) {
+    return Promise.race([
+      promise,
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('never settled')), 500)),
+    ]);
+  }
+
   it('getConfig does not subscribe at all when the config has already loaded', async () => {
     Config.defineConfigSchema('leak-module', { foo: { _default: 'qux' } });
     Config.registerModuleLoad('leak-module');
@@ -1644,7 +1804,45 @@ describe('promise-based config accessors', () => {
 
     expect(subscriptions.live).toBe(0);
   });
+
+  it('getTranslationOverrides settles for an extension that is not mounted', async () => {
+    Config.defineConfigSchema('unmounted-ext-module', { foo: { _default: 'qux' } });
+    Config.registerModuleLoad('unmounted-ext-module');
+
+    const overrides = Config.getTranslationOverrides('unmounted-ext-module', 'absent-slot', 'absent-ext');
+
+    await expect(settled(overrides)).resolves.toStrictEqual([{}, {}]);
+  });
+
+  it('getTranslationOverrides settles for a module the config system has not been told about', async () => {
+    const subscriptions = countSubscriptions('unregistered-module');
+
+    await expect(settled(Config.getTranslationOverrides('unregistered-module'))).resolves.toStrictEqual([{}]);
+    expect(subscriptions.live).toBe(0);
+  });
+
+  it("getTranslationOverrides returns a mounted extension's overrides", async () => {
+    Config.defineConfigSchema('ext-mod', {});
+    Config.registerModuleLoad('ext-mod');
+    Config.provide({
+      'slot-mod': {
+        extensionSlots: {
+          barSlot: { configure: { fooExt: { 'Translation overrides': { fr: { hello: 'Bonjour' } } } } },
+        },
+      },
+    });
+    updateConfigExtensionStore('fooExt');
+
+    await expect(Config.getTranslationOverrides('ext-mod', 'barSlot', 'fooExt')).resolves.toStrictEqual([
+      {},
+      { fr: { hello: 'Bonjour' } },
+    ]);
+  });
 });
+
+function currentExtensionConfig(slotName: string, extensionId: string) {
+  return getExtensionConfigFromStore(getExtensionsConfigStore().getState(), slotName, extensionId);
+}
 
 function updateConfigExtensionStore(extensionId = 'fooExt') {
   configExtensionStore.setState({

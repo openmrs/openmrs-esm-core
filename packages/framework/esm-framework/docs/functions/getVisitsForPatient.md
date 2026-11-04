@@ -4,7 +4,7 @@
 
 > **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<\{ `results`: [`Visit`](../interfaces/Visit.md)[]; \}\>\>
 
-Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:173](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L173)
+Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L172)
 
 ## Parameters
 

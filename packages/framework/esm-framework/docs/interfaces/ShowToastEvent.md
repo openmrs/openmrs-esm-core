@@ -2,7 +2,7 @@
 
 # Interface: ShowToastEvent
 
-Defined in: [packages/framework/esm-globals/src/events.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L63)
+Defined in: [packages/framework/esm-globals/src/events.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L20)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:63](https://github.com
 
 > `optional` **actionButtonLabel**: `any`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L67)
+Defined in: [packages/framework/esm-globals/src/events.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L24)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:67](https://github.com
 
 > **description**: `any`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L64)
+Defined in: [packages/framework/esm-globals/src/events.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L21)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:64](https://github.com
 
 > `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L65)
+Defined in: [packages/framework/esm-globals/src/events.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L22)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:65](https://github.com
 
 > `optional` **onActionButtonClick**: () => `void`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L68)
+Defined in: [packages/framework/esm-globals/src/events.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L25)
 
 #### Returns
 
@@ -46,4 +46,4 @@ Defined in: [packages/framework/esm-globals/src/events.ts:68](https://github.com
 
 > `optional` **title**: `string`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L66)
+Defined in: [packages/framework/esm-globals/src/events.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L23)

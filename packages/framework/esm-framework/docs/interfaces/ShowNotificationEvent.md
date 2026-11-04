@@ -2,7 +2,7 @@
 
 # Interface: ShowNotificationEvent
 
-Defined in: [packages/framework/esm-globals/src/events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L45)
+Defined in: [packages/framework/esm-globals/src/events.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L2)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:45](https://github.com
 
 > `optional` **action**: `any`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L49)
+Defined in: [packages/framework/esm-globals/src/events.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L6)
 
 ***
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:49](https://github.com
 
 > **description**: `any`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L46)
+Defined in: [packages/framework/esm-globals/src/events.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L3)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:46](https://github.com
 
 > `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L47)
+Defined in: [packages/framework/esm-globals/src/events.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L4)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:47](https://github.com
 
 > `optional` **millis**: `number`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L50)
+Defined in: [packages/framework/esm-globals/src/events.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L7)
 
 ***
 
@@ -42,4 +42,4 @@ Defined in: [packages/framework/esm-globals/src/events.ts:50](https://github.com
 
 > `optional` **title**: `string`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L48)
+Defined in: [packages/framework/esm-globals/src/events.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L5)

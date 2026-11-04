@@ -1,7 +1,5 @@
 /** @module @category API */
-import { openmrsObservableFetch, restBaseUrl } from '@openmrs/esm-api';
-import type { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators/index.js';
+import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
 import { type VisitType } from './types';
 
 export function toVisitTypeObject(openmrsRestForm: any): VisitType {
@@ -12,27 +10,23 @@ export function toVisitTypeObject(openmrsRestForm: any): VisitType {
   };
 }
 
+/** The endpoint {@link getVisitTypes} reads from. Use it as the SWR key when caching visit types. */
+export const visitTypesUrl = `${restBaseUrl}/visittype`;
+
 /**
  * Fetches all available visit types from the OpenMRS REST API.
  *
- * @returns An Observable that emits an array of VisitType objects and then completes.
- *   The Observable will emit exactly one value containing all visit types.
+ * @param url The endpoint to read from, defaulting to {@link visitTypesUrl}. This exists so that the
+ *   function can be passed straight to SWR as a fetcher, which calls it with the cache key.
+ * @returns A Promise that resolves with an array of VisitType objects.
  *
  * @example
  * ```ts
  * import { getVisitTypes } from '@openmrs/esm-framework';
- * getVisitTypes().subscribe((visitTypes) => {
- *   console.log('Available visit types:', visitTypes);
- * });
+ * const visitTypes = await getVisitTypes();
+ * console.log('Available visit types:', visitTypes);
  * ```
  */
-export function getVisitTypes(): Observable<Array<VisitType>> {
-  return openmrsObservableFetch<any>(`${restBaseUrl}/visittype`)
-    .pipe(
-      map((results) => {
-        const visitTypes: Array<VisitType> = results.data.results.map(toVisitTypeObject);
-        return visitTypes;
-      }),
-    )
-    .pipe(take(1));
+export function getVisitTypes(url: string = visitTypesUrl): Promise<Array<VisitType>> {
+  return openmrsFetch<{ results: Array<any> }>(url).then((response) => response.data.results.map(toVisitTypeObject));
 }

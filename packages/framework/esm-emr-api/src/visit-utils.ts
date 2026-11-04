@@ -1,7 +1,6 @@
 /** @module @category API */
 import { openmrsFetch, restBaseUrl, type FetchResponse } from '@openmrs/esm-api';
 import { getGlobalStore } from '@openmrs/esm-state';
-import { BehaviorSubject } from 'rxjs';
 import { type NewVisitPayload, type UpdateVisitPayload, type Visit } from './types';
 
 export interface VisitItem {
@@ -185,6 +184,3 @@ export function getVisitsForPatient(
     },
   });
 }
-
-/** @deprecated */
-export const getStartedVisit = new BehaviorSubject<VisitItem | null>(null);

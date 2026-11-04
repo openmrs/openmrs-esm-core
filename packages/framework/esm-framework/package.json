@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-framework",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "license": "MPL-2.0",
   "type": "module",
   "module": "dist/index.js",
@@ -53,7 +53,7 @@
     "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
   },
   "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+    "url": "https://openmrs.atlassian.net/jira/software/c/projects/O3/boards/37"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "publishConfig": {
@@ -71,7 +71,6 @@
     "@openmrs/esm-feature-flags": "workspace:*",
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-navigation": "workspace:*",
-    "@openmrs/esm-offline": "workspace:*",
     "@openmrs/esm-react-utils": "workspace:*",
     "@openmrs/esm-routes": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
@@ -85,7 +84,6 @@
     "react": "18.x",
     "react-dom": "18.x",
     "react-i18next": "16.x",
-    "rxjs": "6.x",
     "single-spa": "6.x",
     "swr": "2.x"
   },

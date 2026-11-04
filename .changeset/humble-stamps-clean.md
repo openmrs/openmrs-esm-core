@@ -1,5 +1,5 @@
 ---
-"@openmrs/esm-implementer-tools": patch
+"@openmrs/esm-implementer-tools-app": patch
 "@openmrs/esm-styleguide": patch
 "@openmrs/esm-framework": patch
 "@openmrs/carbon-css-guard": major

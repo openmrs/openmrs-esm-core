@@ -9,13 +9,24 @@ const gzipAsync = promisify(gzip);
 const brotliCompressAsync = promisify(brotliCompress);
 
 /**
- * Extensions we emit precompressed siblings for.
+ * Extensions we emit precompressed siblings for. Source maps are left out: browsers only fetch
+ * them while developer tools are open, and they are among the largest and slowest files to
+ * compress at maximum brotli quality.
  */
-const compressibleExtensions = new Set(['.js', '.mjs', '.cjs', '.css', '.json', '.svg', '.html', '.map']);
+const compressibleExtensions = new Set(['.js', '.mjs', '.cjs', '.css', '.json', '.svg', '.html']);
 
 /** Whether a file name is one we emit precompressed siblings for. */
 function isCompressible(path: string) {
   return compressibleExtensions.has(extname(path).toLowerCase());
+}
+
+/**
+ * Whether a file name is a source map. Earlier builds wrote siblings for these, so any left
+ * behind are still ours to remove: a server would otherwise keep serving them in place of the
+ * current map.
+ */
+function isSourceMap(path: string) {
+  return extname(path).toLowerCase() === '.map';
 }
 
 /**
@@ -69,8 +80,9 @@ export interface CompressAssetsResult {
   /** Number of assets skipped because they could not be read or compressed. */
   failures: number;
   /**
-   * Number of siblings removed: those whose source has disappeared, and those whose source no
-   * longer compresses smaller or is no longer worth compressing.
+   * Number of siblings removed: those of source maps, those whose source has disappeared,
+   * those in a disabled encoding, and those whose source no longer compresses smaller or is
+   * no longer worth compressing.
    */
   removed: number;
 }
@@ -129,7 +141,7 @@ function sourceOf(path: string) {
     if (lowercased.endsWith(encoding.suffix)) {
       const source = path.slice(0, -encoding.suffix.length);
 
-      if (isCompressible(source)) {
+      if (isCompressible(source) || isSourceMap(source)) {
         return { source, encoding };
       }
     }
@@ -179,7 +191,7 @@ function describeError(e: unknown) {
       return `${code}: ${e}`;
     }
 
-    return e instanceof Error ? e.message : JSON.stringify(e) ?? String(e);
+    return e instanceof Error ? e.message : (JSON.stringify(e) ?? String(e));
   } catch {
     return 'an error that could not be rendered';
   }
@@ -272,9 +284,10 @@ function describe(encoding: Encoding, { files, sourceBytes, compressedBytes }: E
 }
 
 /**
- * Removes siblings this pass does not stand behind: those whose source is gone, and those in a
- * disabled encoding — the pass rewrites the other encodings, so leaving those would serve the
- * old content to whichever clients ask for that encoding.
+ * Removes siblings this pass does not stand behind: those of source maps, which it no longer
+ * writes; those whose source is gone; and those in a disabled encoding — the pass rewrites the
+ * other encodings, so leaving those would serve the old content to whichever clients ask for
+ * that encoding.
  */
 async function removeUnwantedSiblings(dir: string, tree: AssetTree, encodings: Array<Encoding>) {
   const sources = new Set(tree.sources);
@@ -287,7 +300,10 @@ async function removeUnwantedSiblings(dir: string, tree: AssetTree, encodings: A
       continue;
     }
 
-    if (!sources.has(owner.source)) {
+    if (isSourceMap(owner.source)) {
+      logInfo(`Removing ${relative(dir, sibling)} because source maps are no longer precompressed.`);
+      unwanted.push(sibling);
+    } else if (!sources.has(owner.source)) {
       // Warned rather than logged, because this is the one case where the pass deletes a file
       // it never wrote — a module shipping `data.json.gz` with no `data.json` beside it.
       logWarn(`Removing ${relative(dir, sibling)} because ${relative(dir, owner.source)} does not exist.`);

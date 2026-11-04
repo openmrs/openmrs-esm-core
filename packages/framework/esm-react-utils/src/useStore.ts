@@ -8,11 +8,12 @@ type ActionFunctionsRecord<T> = Record<string, ActionFunction<T>>;
 
 export type Actions<T> = ((store: StoreApi<T>) => ActionFunctionsRecord<T>) | ActionFunctionsRecord<T>;
 
-export type BoundActions<T, A extends Actions<T>> = A extends ActionFunctionsRecord<T>
-  ? BindFunctionsIn<A>
-  : A extends (store: StoreApi<T>) => ActionFunctionsRecord<T>
-    ? BindFunctionsIn<ActionFunctionsRecord<T>>
-    : never;
+export type BoundActions<T, A extends Actions<T>> =
+  A extends ActionFunctionsRecord<T>
+    ? BindFunctionsIn<A>
+    : A extends (store: StoreApi<T>) => ActionFunctionsRecord<T>
+      ? BindFunctionsIn<ActionFunctionsRecord<T>>
+      : never;
 
 // Given function type F, returns a new function type
 // with F's first input argument removed and its return type set to void

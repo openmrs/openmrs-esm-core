@@ -6,6 +6,7 @@ import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../val
 import { validator } from '../validators/validator';
 import {
   type ConfigExtensionStore,
+  type ConfigExtensionStoreElement,
   type ConfigInternalStore,
   type ConfigStore,
   type ExtensionSlotsConfigStore,
@@ -15,7 +16,7 @@ import {
   configExtensionStore,
   configInternalStore,
   getConfigStore,
-  getExtensionConfig,
+  getExtensionConfigFromStore,
   getExtensionSlotsConfigStore,
   getExtensionsConfigStore,
   clearConfigDerivationError,
@@ -66,6 +67,11 @@ function mergeDeepReplace<T extends object>(left: T, right: Partial<T>): T {
 const configSubscriptions: Array<() => void> = [];
 
 /**
+ * Track displayed validation messages so they only get displayed once.
+ */
+const displayedValidationMessages = new Set<string>();
+
+/**
  * Recomputes all configuration derived stores based on current state of input stores.
  * Called whenever any input store (configInternalStore, temporaryConfigStore, configExtensionStore) changes.
  */
@@ -74,16 +80,43 @@ function recomputeAllConfigs() {
   const tempConfigState = temporaryConfigStore.getState();
   const extensionState = configExtensionStore.getState();
 
+  // Mounting an extension changes only `configExtensionStore`, which only the extension configs
+  // depend on, so the rest of the last derivation is reused.
+  const configInputsUnchanged =
+    lastDerivation?.configState === configState && lastDerivation.tempConfigState === tempConfigState;
+
+  if (configInputsUnchanged) {
+    computeExtensionConfigs(configState, extensionState, tempConfigState, lastDerivation!.slotConfigs, true);
+    return;
+  }
+
   computeModuleConfig(configState, tempConfigState);
 
   const slotConfigs = getExtensionSlotConfigs(configState, tempConfigState);
   computeExtensionSlotConfigs(slotConfigs);
-  computeExtensionConfigs(configState, extensionState, tempConfigState, slotConfigs);
+  computeExtensionConfigs(configState, extensionState, tempConfigState, slotConfigs, false);
+
+  // Recorded only after the outputs above are written, so a failure forces a full derivation next time.
+  lastDerivation = { configState, tempConfigState, slotConfigs };
 
   // Last, because a failure here must not skip the outputs above. Only kept current while the
   // implementer tools are watching it; otherwise derived on read.
   invalidateImplementerToolsConfig();
 }
+
+/** The inputs the outputs were last fully derived from, compared by identity. */
+let lastDerivation: {
+  configState: ConfigInternalStore;
+  tempConfigState: TemporaryConfigStore;
+  slotConfigs: Record<string, ExtensionSlotConfig>;
+} | null = null;
+
+/**
+ * The mounted extension each extension config entry was derived for. An extension ID can be
+ * mounted under a different module while its slot and ID stay the same, so an entry is only
+ * current if its modules match too.
+ */
+let entryOrigins = new WeakMap<object, ConfigExtensionStoreElement>();
 
 function setupConfigSubscriptions() {
   // Registered here rather than at module load so that `resetConfigSystem` restores it.
@@ -91,8 +124,9 @@ function setupConfigSubscriptions() {
     computeImplementerToolsConfig(configInternalStore.getState(), temporaryConfigStore.getState()),
   );
 
-  // Initial computation
-  recomputeAllConfigs();
+  // Guarded: a configuration the user saved through the implementer tools must not be able to stop
+  // the framework from loading.
+  recomputeAllConfigsSafely();
 
   // Subscribe to all input stores with a single handler
   // This ensures we only recompute once even if multiple stores change simultaneously
@@ -233,6 +267,7 @@ function computeExtensionConfigs(
   extensionState: ConfigExtensionStore,
   tempConfigState: TemporaryConfigStore,
   slotConfigs: Record<string, ExtensionSlotConfig>,
+  configInputsUnchanged: boolean,
 ) {
   const extensionsConfigStore = getExtensionsConfigStore();
   const oldConfigs = extensionsConfigStore.getState().configs;
@@ -240,23 +275,39 @@ function computeExtensionConfigs(
   let changed = false;
   let entryCount = 0;
 
-  // We assume that the module schema has already been defined, since the extension
-  // it contains is mounted.
+  // An extension can be mounted before its module loads, so the module schema may still be the
+  // implicit one; `computeExtensionConfig` holds back structural validation until it has started.
   for (let extension of extensionState.mountedExtensions) {
-    const config = computeExtensionConfig(
-      extension.slotModuleName,
-      extension.extensionModuleName,
-      extension.slotName,
-      extension.extensionId,
-      configState,
-      tempConfigState,
-      slotConfigs[extension.slotName],
-    );
-
     const previous = oldConfigs[extension.slotName]?.[extension.extensionId];
-    // Entries keep their identity when the configuration behind them hasn't changed, so that
-    // mounting one extension doesn't hand every other mounted extension a new config object.
-    const entry = previous?.loaded && isEqual(previous.config, config) ? previous : { config, loaded: true };
+    let entry: ConfigStore | { config: ConfigObject; loaded: true };
+
+    const origin = previous && entryOrigins.get(previous);
+
+    if (
+      configInputsUnchanged &&
+      previous?.loaded &&
+      origin?.slotModuleName === extension.slotModuleName &&
+      origin.extensionModuleName === extension.extensionModuleName
+    ) {
+      // Derived from these same inputs by the previous run, so it is still current.
+      entry = previous;
+    } else {
+      const config = computeExtensionConfig(
+        extension.slotModuleName,
+        extension.extensionModuleName,
+        extension.slotName,
+        extension.extensionId,
+        configState,
+        tempConfigState,
+        slotConfigs[extension.slotName],
+      );
+
+      // Entries keep their identity when the configuration behind them hasn't changed, so that
+      // mounting one extension doesn't hand every other mounted extension a new config object.
+      entry = previous?.loaded && isEqual(previous.config, config) ? previous : { config, loaded: true };
+    }
+
+    entryOrigins.set(entry, extension);
 
     if (entry !== previous) {
       changed = true;
@@ -355,6 +406,7 @@ export function registerModuleLoad(moduleName: string) {
   configInternalStore.setState((state) => ({
     ...state,
     moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+    moduleStarted: { ...state.moduleStarted, [moduleName]: true },
   }));
 }
 
@@ -481,7 +533,9 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
  * @param moduleName The name of the module providing the translation context.
  * @param slotName Optional extension slot name to include slot-specific overrides.
  * @param extensionId Optional extension ID to include extension-specific overrides.
- * @returns A Promise resolving to an array of translation override objects.
+ * @returns A Promise resolving to an array of translation override objects. It always settles: a
+ *   module the config system has not been told about, or an extension that is not mounted,
+ *   contributes no overrides.
  *
  * @internal
  */
@@ -490,22 +544,29 @@ export function getTranslationOverrides(
   slotName?: string,
   extensionId?: string,
 ): Promise<Array<Record<string, Record<string, string>>>> {
+  // A module's store only ever loads its overrides once the module is registered with the config
+  // system, so waiting on one that is not registered would leave the i18next namespace pending.
   const promises = [
-    whenStoreReady(
-      getConfigStore(moduleName),
-      (state) => Boolean(state.translationOverridesLoaded && state.config),
-      (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
-    ),
+    moduleName in configInternalStore.getState().schemas
+      ? whenStoreReady(
+          getConfigStore(moduleName),
+          (state) => Boolean(state.translationOverridesLoaded && state.config),
+          (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
+        )
+      : Promise.resolve({}),
   ];
 
   if (slotName && extensionId) {
-    promises.push(
-      whenStoreReady(
-        getExtensionConfig(slotName, extensionId),
-        (state) => Boolean(state.loaded && state.config),
-        (state) => (state.config!['Translation overrides'] ?? {}) as Record<string, Record<string, string>>,
-      ),
-    );
+    // Read once rather than waited for: an extension's config entry exists only while that extension
+    // is registered as mounted, so a wait started in the gap never settles and leaves the i18next
+    // namespace pending.
+    const extensionConfig = getExtensionConfigFromStore(getExtensionsConfigStore().getState(), slotName, extensionId);
+    const overrides =
+      extensionConfig.loaded && extensionConfig.config
+        ? ((extensionConfig.config['Translation overrides'] ?? {}) as Record<string, Record<string, string>>)
+        : {};
+
+    promises.push(Promise.resolve(overrides));
   }
 
   return Promise.all(promises);
@@ -542,6 +603,7 @@ export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject
 interface ExtensionConfigCacheEntry {
   extensionSchema: ConfigSchema | undefined;
   extensionModuleSchema: ConfigSchema | undefined;
+  extensionModuleStarted: boolean;
   providedConfigs: ConfigInternalStore['providedConfigs'];
   temporaryConfig: Config;
   config: ConfigObject;
@@ -574,6 +636,9 @@ function computeExtensionConfig(
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
+  // Not `moduleLoaded`: `defineConfigSchema` sets that while `startupApp` is still running, before it
+  // reaches `defineExtensionConfigSchema`, so the extension would be checked against the module schema.
+  const extensionModuleStarted = Boolean(configState.moduleStarted[extensionModuleName]);
   // JSON string of these elements should be unique-per-extension
   const cacheKey = JSON.stringify([slotName, extensionId, slotModuleName, extensionModuleName]);
   const cached = extensionConfigCache.get(cacheKey);
@@ -582,6 +647,7 @@ function computeExtensionConfig(
     cached &&
     cached.extensionSchema === extensionConfigSchema &&
     cached.extensionModuleSchema === configState.schemas[extensionModuleName] &&
+    cached.extensionModuleStarted === extensionModuleStarted &&
     cached.providedConfigs === configState.providedConfigs &&
     cached.temporaryConfig === tempConfigState.config
   ) {
@@ -596,7 +662,12 @@ function computeExtensionConfig(
   const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
   const combinedConfig = mergeConfigs([extensionConfig, sharedOverride, configOverride]);
   const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
-  validateStructure(schema, combinedConfig, nameOfSchemaSource);
+
+  // only validate structure once the schema has loaded
+  if (extensionConfigSchema || extensionModuleStarted) {
+    validateStructure(schema, combinedConfig, nameOfSchemaSource);
+  }
+
   const config = setDefaults(schema, combinedConfig);
   runAllValidatorsInConfigTree(schema, config, nameOfSchemaSource);
   delete config.extensionSlots;
@@ -604,6 +675,7 @@ function computeExtensionConfig(
   extensionConfigCache.set(cacheKey, {
     extensionSchema: extensionConfigSchema,
     extensionModuleSchema: configState.schemas[extensionModuleName],
+    extensionModuleStarted,
     providedConfigs: configState.providedConfigs,
     temporaryConfig: tempConfigState.config,
     config,
@@ -1147,15 +1219,8 @@ function hasObjectSchema(elementsSchema: unknown): elementsSchema is ConfigSchem
 function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
-/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
-let displayedValidationMessages = new Set<string>();
-
 function logError(keyPath: string, message: string) {
   const key = `${keyPath}:::${message}`;
-  // technically, this should not be possible, but because of how things wind-up transpiled, this isn't impossible
-  if (!displayedValidationMessages) {
-    displayedValidationMessages = new Set<string>();
-  }
 
   if (!displayedValidationMessages.has(key)) {
     console.error(message);
@@ -1198,6 +1263,8 @@ export function resetConfigSystem() {
   extensionConfigCache.clear();
   schemaValuesAndSourcesCache.clear();
   implementerToolsModuleCache.clear();
+  lastDerivation = null;
+  entryOrigins = new WeakMap();
   setupConfigSubscriptions();
 }
 

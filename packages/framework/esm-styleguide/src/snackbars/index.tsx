@@ -1,14 +1,14 @@
 /** @module @category UI */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Subject } from 'rxjs';
 
 import type { SnackbarDescriptor, SnackbarMeta } from './snackbar.component';
 import ActiveSnackbars from './active-snackbar.component';
+import { Emitter } from '../emitter';
 
 export { type SnackbarDescriptor, type SnackbarType, type SnackbarMeta } from './snackbar.component';
 
-const snackbarsSubject = new Subject<SnackbarMeta>();
+const snackbarsSubject = new Emitter<SnackbarMeta>();
 let snackbarId = 0;
 
 /**

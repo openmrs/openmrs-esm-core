@@ -21,10 +21,7 @@ import {
 } from '@openmrs/esm-config';
 import { evaluateAsBoolean, type VariablesMap } from '@openmrs/esm-expression-evaluator';
 import { type FeatureFlagsStore, featureFlagsStore } from '@openmrs/esm-feature-flags';
-import { subscribeConnectivityChanged } from '@openmrs/esm-globals';
-import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
 import { isEqual, merge } from 'lodash-es';
-import { checkStatusFor } from './helpers';
 import {
   type AssignedExtension,
   type ExtensionInternalStore,
@@ -142,7 +139,6 @@ function updateExtensionOutputStore(
   const slots: Record<string, ExtensionSlotState> = {};
   let changed = false;
 
-  const isOnline = isOnlineFn();
   const enabledFeatureFlags = Object.entries(featureFlagState.flags)
     .filter(([, { enabled }]) => enabled)
     .map(([name]) => name);
@@ -162,7 +158,6 @@ function updateExtensionOutputStore(
       config,
       extensionsConfigState,
       enabledFeatureFlags,
-      isOnline,
       sessionState.session,
     );
 
@@ -231,7 +226,6 @@ function updateOutputStoreToCurrent() {
 }
 
 updateOutputStoreToCurrent();
-subscribeConnectivityChanged(updateOutputStoreToCurrent);
 
 function createNewExtensionSlotInfo(slotName: string, moduleName?: string): ExtensionSlotInfo {
   return {
@@ -393,6 +387,17 @@ export function detachAll(extensionSlotName: string) {
   });
 }
 
+/** Maps each ID to the index of its first occurrence, matching `Array.prototype.indexOf`. */
+function indexById(ids: Array<string>) {
+  const index = new Map<string, number>();
+  ids.forEach((id, i) => {
+    if (!index.has(id)) {
+      index.set(id, i);
+    }
+  });
+  return index;
+}
+
 /**
  * Get an order index for the extension. This will
  * come from either its configured order, its registered order
@@ -404,19 +409,19 @@ export function detachAll(extensionSlotName: string) {
  */
 function getOrder(
   extensionId: string,
-  configuredOrder: Array<string>,
+  configuredOrder: Map<string, number>,
   registeredOrderIndex: number | undefined,
-  attachedOrder: Array<string>,
+  attachedOrder: Map<string, number>,
 ) {
-  const configuredIndex = configuredOrder.indexOf(extensionId);
-  if (configuredIndex !== -1) {
+  const configuredIndex = configuredOrder.get(extensionId);
+  if (configuredIndex !== undefined) {
     return configuredIndex;
   } else if (registeredOrderIndex !== undefined) {
     // extensions that don't have a configured order should appear after those that do
     return 1000 + registeredOrderIndex;
   } else {
-    const assignedIndex = attachedOrder.indexOf(extensionId);
-    if (assignedIndex !== -1) {
+    const assignedIndex = attachedOrder.get(extensionId);
+    if (assignedIndex !== undefined) {
       // extensions that have neither a configured nor registered order should appear
       // after all others
       return 2000 + assignedIndex;
@@ -434,7 +439,6 @@ function getAssignedExtensionsFromSlotData(
   config: ExtensionSlotConfig,
   extensionConfigStoreState: ExtensionsConfigStore,
   enabledFeatureFlags: Array<string>,
-  isOnline: boolean,
   session: Session | null,
 ): Array<AssignedExtension> {
   const attachedIds = internalState.slots[slotName].attachedIds;
@@ -473,10 +477,6 @@ function getAssignedExtensionsFromSlotData(
         continue;
       }
 
-      if (window.offlineEnabled && !checkStatusFor(isOnline, extension.online, extension.offline)) {
-        continue;
-      }
-
       extensions.push({
         id,
         name,
@@ -484,8 +484,6 @@ function getAssignedExtensionsFromSlotData(
         config: extensionConfig,
         featureFlag: extension.featureFlag,
         meta: extension.meta,
-        online: extensionConfig?.['Display conditions']?.online ?? extension.online ?? true,
-        offline: extensionConfig?.['Display conditions']?.offline ?? extension.offline ?? false,
         displayConditionExpression: extensionConfig?.['Display conditions']?.expression || extension.displayExpression,
       });
     }
@@ -579,18 +577,19 @@ function calculateAssignedIds(config: ExtensionSlotConfig, attachedIds: Array<st
   const removedIds = config.remove || [];
   const idOrder = config.order || [];
   const { extensions } = extensionInternalStore.getState();
+  const removed = new Set(removedIds);
+  const ids = [...attachedIds, ...addedIds].filter((id) => !removed.has(id));
+  const configuredIndex = indexById(idOrder);
+  const attachedIndex = indexById(attachedIds);
+  // Computed once per ID: calling `getOrder` from the comparator makes the sort quadratic.
+  const order = new Map(
+    ids.map((id) => [id, getOrder(id, configuredIndex, extensions[getExtensionNameFromId(id)]?.order, attachedIndex)]),
+  );
 
-  return [...attachedIds, ...addedIds]
-    .filter((id) => !removedIds.includes(id))
-    .sort((idA, idB) => {
-      const ai = getOrder(idA, idOrder, extensions[getExtensionNameFromId(idA)]?.order, attachedIds);
-      const bi = getOrder(idB, idOrder, extensions[getExtensionNameFromId(idB)]?.order, attachedIds);
-
-      // Ties keep their input order — `Array.prototype.sort` is stable, and the input is
-      // `[...attachedIds, ...addedIds]`, so two extensions the ordering rules can't separate
-      // come out in the order the code and the configuration declared them.
-      return ai - bi;
-    });
+  // Ties keep their input order — `Array.prototype.sort` is stable, and the input is
+  // `[...attachedIds, ...addedIds]`, so two extensions the ordering rules can't separate
+  // come out in the order the code and the configuration declared them.
+  return ids.sort((idA, idB) => order.get(idA)! - order.get(idB)!);
 }
 
 /**

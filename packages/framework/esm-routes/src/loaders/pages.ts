@@ -2,14 +2,12 @@ import { type ActivityFn, pathToActiveWhen, registerApplication } from 'single-s
 import { registerModuleWithConfigSystem } from '@openmrs/esm-config';
 import { batchExtensionUpdates } from '@openmrs/esm-extensions';
 import {
-  type WorkspaceGroupDefinition,
   type ExtensionDefinition,
   type FeatureFlagDefinition,
   type ModalDefinition,
   type OpenmrsAppRoutes,
   type RegisteredPageDefinition,
   type RouteDefinition,
-  type WorkspaceDefinition,
 } from '@openmrs/esm-globals';
 import { getFeatureFlag } from '@openmrs/esm-feature-flags';
 import { routeRegex } from './helpers';
@@ -17,9 +15,7 @@ import {
   tryRegisterExtension,
   tryRegisterFeatureFlag,
   tryRegisterModal,
-  tryRegisterWorkspace,
   tryRegisterWorkspace2,
-  tryRegisterWorkspaceGroup,
   tryRegisterWorkspaceGroups2,
   tryRegisterWorkspaceWindows2,
 } from './components';
@@ -52,40 +48,24 @@ function getActivityFn(route: RouteDefinition | Array<RouteDefinition>): Activit
 }
 
 /**
- * For pages, we also add support for rendered them based on online and offline mode as well as
- * any feature flags.
- *
- * By default, we assume that all pages should be rendered when online, but only rendered
- * offline if specifically configured to do so.
+ * For pages, we also add support for rendering them based on any feature flags.
  *
  * @param activityFn A standard single-spa activityFn such as that returned by {@link getActivityFn()}
  * @param pageDefinition The RegisteredPageDefinition object for this page
  * @returns An activityFn suitable to use for a single-spa application
  */
-function wrapPageActivityFn(
-  activityFn: ActivityFn,
-  { online, offline, featureFlag }: RegisteredPageDefinition,
-): ActivityFn {
-  if (window.offlineEnabled) {
-    return (location) => {
-      // basically, if the page should only work online and we're offline or if the
-      // page should only work offline and we're online, defaulting to always rendering
-      // the page
-      if (!((navigator.onLine && (online ?? true)) || (!navigator.onLine && (offline ?? false)))) {
-        return false;
-      }
-
-      if (featureFlag) {
-        if (!getFeatureFlag(featureFlag)) {
-          return false;
-        }
-      }
-
-      return activityFn(location);
-    };
-  } else {
+function wrapPageActivityFn(activityFn: ActivityFn, { featureFlag }: RegisteredPageDefinition): ActivityFn {
+  if (!featureFlag) {
     return activityFn;
   }
+
+  return (location) => {
+    if (!getFeatureFlag(featureFlag)) {
+      return false;
+    }
+
+    return activityFn(location);
+  };
 }
 
 /**
@@ -109,8 +89,6 @@ function registerAppRoutes(appName: string, routes: OpenmrsAppRoutes) {
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];
-    const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
-    const availableWorkspaceGroups: Array<WorkspaceGroupDefinition> = routes.workspaceGroups ?? [];
     const availableFeatureFlags: Array<FeatureFlagDefinition> = routes.featureFlags ?? [];
     const availableWorkspaceGroups2 = routes.workspaceGroups2 ?? [];
     const availableWorkspaceWindows2 = routes.workspaceWindows2 ?? [];
@@ -157,32 +135,11 @@ function registerAppRoutes(appName: string, routes: OpenmrsAppRoutes) {
       }
     });
 
-    availableWorkspaces.forEach((workspace) => {
-      if (
-        workspace &&
-        typeof workspace === 'object' &&
-        Object.hasOwn(workspace, 'name') &&
-        Object.hasOwn(workspace, 'component')
-      ) {
-        tryRegisterWorkspace(appName, workspace);
-      } else {
-        console.warn(
-          `A workspace for ${appName} could not be registered as it does not appear to have the required properties`,
-          workspace,
-        );
-      }
-    });
-
-    availableWorkspaceGroups.forEach((workspaceGroup) => {
-      if (workspaceGroup && typeof workspaceGroup === 'object' && Object.hasOwn(workspaceGroup, 'name')) {
-        tryRegisterWorkspaceGroup(appName, workspaceGroup);
-      } else {
-        console.warn(
-          `A workspace group for ${appName} could not be registered as it does not appear to have the required properties`,
-          workspaceGroup,
-        );
-      }
-    });
+    if (Object.hasOwn(routes, 'workspaces') || Object.hasOwn(routes, 'workspaceGroups')) {
+      console.warn(
+        `${appName} defines workspaces or workspaceGroups in its routes.json, which are no longer supported and won't be registered. Use workspaces2, workspaceWindows2 and workspaceGroups2 instead.`,
+      );
+    }
     tryRegisterWorkspaceGroups2(appName, availableWorkspaceGroups2);
     tryRegisterWorkspaceWindows2(appName, availableWorkspaceWindows2);
     tryRegisterWorkspace2(appName, availableWorkspaces2);

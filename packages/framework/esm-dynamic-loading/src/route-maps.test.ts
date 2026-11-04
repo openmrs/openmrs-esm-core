@@ -246,9 +246,8 @@ describe('route-maps', () => {
     it('getRouteMapNextPageMap reflects overrides added after setup', async () => {
       setDomRouteMaps([{ '@openmrs/esm-foo': { pages: [] } }]);
 
-      const { setupRouteMapOverrides, addRouteMapOverride, getCurrentRouteMap, getRouteMapNextPageMap } = await import(
-        './route-maps'
-      );
+      const { setupRouteMapOverrides, addRouteMapOverride, getCurrentRouteMap, getRouteMapNextPageMap } =
+        await import('./route-maps');
       await setupRouteMapOverrides();
 
       addRouteMapOverride('@openmrs/esm-foo', { pages: [{ component: 'new', route: '/new' }] });
