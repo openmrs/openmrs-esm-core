@@ -111,3 +111,111 @@ describe('getAppRoutes', () => {
     expect(result.version).toBeUndefined();
   });
 });
+
+describe('getAppRoutes and configuration schemas', () => {
+  const routesPath = '/src/project/src/routes.json';
+  const handWrittenPath = '/src/project/src/config-schema.json';
+  const extractedPath = '/src/project/node_modules/.cache/openmrs/config-schema.json';
+
+  const artifact = JSON.stringify({
+    configurationSchema: { greeting: { _type: 'String', _default: 'hello' } },
+    extensionConfigurationSchemas: { 'foo-link': { size: { _type: 'String', _default: 'small' } } },
+  });
+
+  /** Serves each of the files that make up an entry, and reports the rest as absent. */
+  function onDisk(files: Record<string, string>) {
+    mockStatSync.mockReturnValue(fakeStats({ isFile: () => true }));
+    mockExistsSync.mockImplementation((path) => Object.hasOwn(files, String(path)));
+    mockReadFileSync.mockImplementation((path) => files[String(path)]);
+  }
+
+  it('merges the schema a module extracted at build time into its entry', () => {
+    onDisk({ [routesPath]: '{"pages":[]}', [extractedPath]: artifact });
+
+    const result = getAppRoutes('/src/project', pkg({ version: '1.0.0' }));
+
+    expect(result.configurationSchema).toEqual({ greeting: { _type: 'String', _default: 'hello' } });
+    expect(result.extensionConfigurationSchemas).toEqual({
+      'foo-link': { size: { _type: 'String', _default: 'small' } },
+    });
+  });
+
+  it('prefers a hand-written schema, which is the one that module never extracts', () => {
+    onDisk({
+      [routesPath]: '{"pages":[]}',
+      [handWrittenPath]: '{"configurationSchema":{"greeting":{"_type":"String","_default":"by hand"}}}',
+      [extractedPath]: artifact,
+    });
+
+    const result = getAppRoutes('/src/project', pkg({ version: '1.0.0' }));
+
+    expect(result.configurationSchema).toEqual({ greeting: { _type: 'String', _default: 'by hand' } });
+  });
+
+  it('leaves the entry alone when the module has no schema', () => {
+    onDisk({ [routesPath]: '{"pages":[]}' });
+
+    const result = getAppRoutes('/src/project', pkg({ version: '1.0.0' }));
+
+    expect(result).not.toHaveProperty('configurationSchema');
+    expect(result).not.toHaveProperty('extensionConfigurationSchemas');
+  });
+
+  it('serves the routes anyway when the schema cannot be parsed', () => {
+    // Worth serving a module configured the old way rather than refusing to serve it at all.
+    onDisk({ [routesPath]: '{"pages":["/home"]}', [extractedPath]: 'not json' });
+
+    const result = getAppRoutes('/src/project', pkg({ version: '1.0.0' }));
+
+    expect(result.pages).toEqual(['/home']);
+    expect(result).not.toHaveProperty('configurationSchema');
+  });
+});
+
+describe('getAppRoutes and a schema the framework would reject', () => {
+  const routesPath = '/src/project/src/routes.json';
+  const handWrittenPath = '/src/project/src/config-schema.json';
+
+  function onDisk(files: Record<string, string>) {
+    mockStatSync.mockReturnValue(fakeStats({ isFile: () => true }));
+    mockExistsSync.mockImplementation((path) => Object.hasOwn(files, String(path)));
+    mockReadFileSync.mockImplementation((path) => files[String(path)]);
+  }
+
+  // The framework validates a registry entry as a whole, and the registry all or nothing, so an
+  // entry it rejects costs every *other* module its pages too. Nothing may go in that it would
+  // refuse. What is left out is per schema, matching what `openmrs assemble` does with the same
+  // file: this is the preview of that, and the two disagreeing is worse than either alone.
+  it('keeps the extension schemas that are objects and leaves out the one that is not', () => {
+    onDisk({
+      [routesPath]: '{"pages":[]}',
+      [handWrittenPath]: JSON.stringify({
+        extensionConfigurationSchemas: { good: { a: { _type: 'String' } }, bad: 'nope' },
+      }),
+    });
+
+    const result = getAppRoutes('/src/project', pkg({ version: '1.0.0' }));
+
+    expect(Object.keys(result.extensionConfigurationSchemas as object)).toEqual(['good']);
+  });
+
+  it('leaves out a configurationSchema that is not an object, keeping the rest of the entry', () => {
+    onDisk({
+      [routesPath]: '{"pages":["/home"]}',
+      [handWrittenPath]: JSON.stringify({ configurationSchema: ['not', 'an', 'object'] }),
+    });
+
+    const result = getAppRoutes('/src/project', pkg({ version: '1.0.0' }));
+
+    expect(result.pages).toEqual(['/home']);
+    expect(result).not.toHaveProperty('configurationSchema');
+  });
+
+  it('serves the module anyway when its routes file is mid-edit', () => {
+    // Re-derived from a file watcher whose callback nothing awaits, so a throw here would take the
+    // dev server down rather than being reported.
+    onDisk({ [routesPath]: '{"pages": [' });
+
+    expect(() => getAppRoutes('/src/project', pkg({ version: '1.0.0' }))).not.toThrow();
+  });
+});

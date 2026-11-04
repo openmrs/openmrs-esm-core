@@ -6,7 +6,7 @@ import { existsSync, readFileSync } from 'fs';
 import { exec } from 'child_process';
 import { logFail, logInfo, logWarn } from './logger';
 import { startDevServer } from './devserver';
-import { getMainBundle, getAppRoutes } from './dependencies';
+import { getAppRoutes, getConfigSchemaPathsForDevelopment, getMainBundle } from './dependencies';
 import { getAvailablePort } from './port';
 import type { PackageJson } from './types';
 
@@ -159,10 +159,27 @@ export interface ImportmapAndRoutes {
   routes: RoutesDeclaration;
 }
 
+/**
+ * A locally served app whose registry entry should be rebuilt when its sources change.
+ *
+ * Carries the source directory rather than just the file that changed, because an entry is
+ * assembled from more than one file: `src/routes.json` and the app's configuration schema, which
+ * `getAppRoutes` already knows how to combine. Re-deriving the whole entry means a change to either
+ * one cannot drop the other.
+ */
+export interface WatchedApp {
+  /** The app's source directory. */
+  sourceDirectory: string;
+  /** The app's `package.json`, which supplies the version stamped onto the entry. */
+  project: PackageJson;
+  /** The files to watch. */
+  paths: Array<string>;
+}
+
 export interface ImportmapAndRoutesWithWatches extends ImportmapAndRoutes {
   importMap: ImportmapDeclaration;
   routes: RoutesDeclaration;
-  watchedRoutesPaths: Record<string, string>;
+  watchedApps: Record<string, WatchedApp>;
 }
 
 export function checkImportmapJson(value: string) {
@@ -227,9 +244,13 @@ function runProjectDevServer(
 
   const { ready } = startDevServer(configPath, port, sourceDirectory, useRspack);
   importMap[project.name] = `${host}/${bundle.name}`;
-  routes[project.name] = getAppRoutes(sourceDirectory, project);
 
-  return ready;
+  // Read once the first compilation has finished rather than immediately: a module's configuration
+  // schema is produced by its build, so reading before it has run would serve a registry with no
+  // schemas in it and leave the very first page load configured the old way.
+  return ready.then(() => {
+    routes[project.name] = getAppRoutes(sourceDirectory, project);
+  });
 }
 
 export async function runProject(
@@ -239,13 +260,13 @@ export async function runProject(
 ): Promise<{
   importMap: Record<string, string>;
   routes: Record<string, unknown>;
-  watchedRoutesPaths: Record<string, string>;
+  watchedApps: Record<string, WatchedApp>;
 }> {
   const baseDir = process.cwd();
   const sourceDirectories = await matchAny(baseDir, sourceDirectoryPatterns);
   const importMap: Record<string, string> = {};
   const routes: Record<string, unknown> = {};
-  const watchedRoutesPaths: Record<string, string> = {};
+  const watchedApps: Record<string, WatchedApp> = {};
   const devServerReadyPromises: Array<Promise<void>> = [];
 
   // Track the starting port, which is one more than the last used port
@@ -275,7 +296,14 @@ export async function runProject(
     const startup = project['openmrs:develop'];
 
     if (existsSync(routesFile)) {
-      watchedRoutesPaths[project.name] = routesFile;
+      watchedApps[project.name] = {
+        sourceDirectory,
+        project,
+        // The schema files are listed whether or not they exist yet: the extracted one appears only
+        // once the module has been built. Which of them exist is settled where the watchers are set
+        // up, after the first build has run.
+        paths: [routesFile, ...getConfigSchemaPathsForDevelopment(sourceDirectory)],
+      };
     }
 
     if (typeof startup === 'object') {
@@ -319,7 +347,7 @@ export async function runProject(
 
   logInfo(`Assembled dynamic import map and routes for packages (${Object.keys(importMap).join(', ')}).`);
 
-  return { importMap, routes, watchedRoutesPaths };
+  return { importMap, routes, watchedApps };
 }
 
 /**
@@ -337,18 +365,14 @@ export async function mergeImportmapAndRoutes(
     | {
         importMap: Record<string, string>;
         routes: Record<string, unknown>;
-        watchedRoutesPaths: Record<string, string>;
+        watchedApps: Record<string, WatchedApp>;
       }
     | false,
   backend?: string,
   spaPath?: string,
 ): Promise<ImportmapAndRoutesWithWatches> {
   const { importMap: importDecl, routes: routesDecl } = importAndRoutes;
-  const {
-    importMap: additionalImports,
-    routes: additionalRoutes,
-    watchedRoutesPaths = {},
-  } = additionalImportsAndRoutes || {};
+  const { importMap: additionalImports, routes: additionalRoutes, watchedApps = {} } = additionalImportsAndRoutes || {};
 
   if (additionalImports && Object.keys(additionalImports).length > 0) {
     if (importDecl.type === 'url') {
@@ -383,7 +407,7 @@ export async function mergeImportmapAndRoutes(
     });
   }
 
-  return { importMap: importDecl, routes: routesDecl, watchedRoutesPaths };
+  return { importMap: importDecl, routes: routesDecl, watchedApps };
 }
 
 export async function getImportmapAndRoutes(
@@ -480,7 +504,7 @@ export function proxyImportmapAndRoutes(
   backend: string,
   spaPath: string,
 ) {
-  const { importMap: importMapDecl, routes: routesDecl, watchedRoutesPaths } = importmapAndRoutes;
+  const { importMap: importMapDecl, routes: routesDecl, watchedApps } = importmapAndRoutes;
   if (importMapDecl.type != 'inline') {
     throw new Error(
       `Could not resolve the import map to serve ("${importMapDecl.value}"). This usually means no local frontend ` +
@@ -511,5 +535,5 @@ export function proxyImportmapAndRoutes(
   });
   importMapDecl.value = JSON.stringify(importmap);
 
-  return { importmap: importMapDecl, routes: routesDecl, watchedRoutesPaths };
+  return { importmap: importMapDecl, routes: routesDecl, watchedApps };
 }
