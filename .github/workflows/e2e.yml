@@ -209,3 +209,15 @@ jobs:
           path: "./logs"
           retention-days: 2
           overwrite: true
+
+  # Single required check for branch protection: passes when E2E tests were skipped as unneeded or all passed.
+  # Uses always() rather than !cancelled() because a skipped job counts as passing for required checks.
+  e2e-status:
+    needs: [changes, run-e2e-on-esm-core, run-e2e-on-other-repos]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ❌ Fail if any E2E job failed or was cancelled
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: exit 1

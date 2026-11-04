@@ -5,7 +5,7 @@
     "module": "ESNext",
     "target": "es2020",
     "allowSyntheticDefaultImports": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strictNullChecks": true,
     "moduleResolution": "bundler",
     "declaration": true,
