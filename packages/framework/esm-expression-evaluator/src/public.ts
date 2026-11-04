@@ -10,5 +10,6 @@ export {
   evaluateAsTypeAsync,
   type VariablesMap,
   type DefaultEvaluateReturnType,
+  type ExpressionOptions,
 } from './evaluator';
 export { extractVariableNames } from './extractor';
