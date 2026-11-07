@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   workspace2Store,
   type OpenedWindow,
@@ -10,8 +10,18 @@ import {
   openChildWorkspaceInWindow,
   updateOpenedWorkspaceInWindow,
   getOpenedWindowWidth,
+  launchWorkspace2,
+  launchWorkspaceGroup2,
   workspace2StoreActions,
 } from './workspace2';
+
+// Auto-confirm the "close workspaces" prompt so launch functions resolve without UI.
+vi.mock('../modals', () => ({
+  showModal: vi.fn((_name: string, props: { onConfirm: () => void }) => {
+    props.onConfirm();
+    return () => {};
+  }),
+}));
 
 const registeredWorkspacesByName = {
   'parent-workspace': { name: 'parent-workspace', component: 'parent', window: 'test-window', moduleName: 'test' },
@@ -334,5 +344,57 @@ describe('getOpenedWindowWidth', () => {
         registeredWindowsByName,
       ),
     ).toBe('narrow');
+  });
+});
+
+describe('launchWorkspaceGroup2', () => {
+  // launchWorkspace2 also needs the window and group registered, so seed them here.
+  beforeEach(() => {
+    workspace2Store.setState({
+      registeredGroupsByName: {
+        'test-group': { name: 'test-group', windows: ['test-window'], persistence: 'persistent', moduleName: 'test' },
+      },
+      registeredWindowsByName: {
+        'test-window': { name: 'test-window', group: 'test-group', moduleName: 'test' },
+      },
+      registeredWorkspacesByName,
+      openedGroup: null,
+      openedWindows: [],
+      isMostRecentlyOpenedWindowHidden: false,
+    } as never);
+  });
+
+  it('adopts group props when the opened group has null props', async () => {
+    await launchWorkspace2('parent-workspace'); // opens 'test-group' with props: null
+    const before = workspace2Store.getState();
+    expect(before.openedGroup?.props).toBeNull();
+
+    const result = await launchWorkspaceGroup2('test-group', { a: 1 });
+
+    const after = workspace2Store.getState();
+    expect(result).toBe(true);
+    expect(after.openedGroup?.props).toEqual({ a: 1 });
+    expect(after.openedWindows).toEqual(before.openedWindows); // workspace stays open
+  });
+
+  it('does not overwrite existing group props when the caller passes null', async () => {
+    await launchWorkspaceGroup2('test-group', { a: 1 });
+
+    const result = await launchWorkspaceGroup2('test-group', null);
+
+    expect(result).toBe(true);
+    expect(workspace2Store.getState().openedGroup?.props).toEqual({ a: 1 });
+  });
+
+  it('replaces the group when both props are non-null and differ', async () => {
+    await launchWorkspaceGroup2('test-group', { a: 1 });
+    await launchWorkspace2('parent-workspace');
+
+    const result = await launchWorkspaceGroup2('test-group', { a: 2 });
+
+    const state = workspace2Store.getState();
+    expect(result).toBe(true);
+    expect(state.openedGroup?.props).toEqual({ a: 2 });
+    expect(state.openedWindows).toEqual([]); // old windows closed
   });
 });
