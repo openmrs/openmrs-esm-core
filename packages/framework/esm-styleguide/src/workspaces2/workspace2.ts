@@ -24,6 +24,8 @@ import { type Workspace2DefinitionProps } from './workspace2.component';
  * the requested group is immediately opened.
  *
  * ** 2 sets of props are compatible if either one is nullish, or if they are shallow equal.
+ *  If the opened group has the same name but null props, and non-null `groupProps` are passed in,
+ * the opened group adopts those props (its opened windows are kept).
  * @param groupName
  * @param groupProps
  * @returns a Promise that resolves to true if the specified workspace group with the specified group props
@@ -45,7 +47,16 @@ export async function launchWorkspaceGroup2<GroupProps extends object>(
       }
       // else, proceed to open the new group with no openedWindows
     } else {
-      // no-op, group with group props is already opened
+      // The group is already opened. If it was opened without props (e.g. by
+      // launchWorkspace2 with no group props) and the caller now supplies real
+      // props, adopt them. openedWindows are kept, so already opened workspaces stay open.
+      if (openedGroup.props == null && groupProps != null) {
+        workspace2Store.setState((state) => ({
+          ...state,
+          openedGroup: state.openedGroup ? { ...state.openedGroup, props: groupProps } : state.openedGroup,
+        }));
+      }
+      // otherwise a no-op: group with compatible group props is already opened
       return true;
     }
   }
