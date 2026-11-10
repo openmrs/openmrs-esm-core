@@ -1,0 +1,11 @@
+{
+  "name": "@openmrs/esm-jsx-fixture-app",
+  "version": "1.0.0",
+  "private": true,
+  "browser": "dist/openmrs-esm-jsx-fixture-app.js",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "peerDependencies": {
+    "react": "18.x"
+  }
+}

@@ -4,7 +4,7 @@
 
 > **duration**(`startDate`, `endDate`, `options?`): `null` \| `DurationInput`
 
-Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:645](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L645)
+Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:671](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L671)
 
 Calculates the duration between two dates as a structured duration object.
 

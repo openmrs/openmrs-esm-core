@@ -26,6 +26,32 @@ export type DateInput = string | number | Date;
 
 const isoFormat = 'YYYY-MM-DDTHH:mm:ss.SSSZZ';
 
+const isoCalendarDate = /^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?$/;
+
+/**
+ * Parses ISO calendar dates independently of the display locale, preserving missing fields.
+ * Invalid ISO dates must not fall back to a parser that may reinterpret or normalize them.
+ */
+function parseDateString(dateString: string, locale: string): ReturnType<typeof attempt> {
+  const match = isoCalendarDate.exec(dateString);
+  if (!match) {
+    return attempt(dateString, locale);
+  }
+
+  const year = Number(match[1]);
+  const month = match[2] === undefined ? undefined : Number(match[2]);
+  const day = match[3] === undefined ? undefined : Number(match[3]);
+
+  // Check for calendar overflow in UTC. setUTCFullYear also preserves years below 100.
+  const date = new Date(0);
+  date.setUTCFullYear(year, (month ?? 1) - 1, day ?? 1);
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== (month ?? 1) - 1 || date.getUTCDate() !== (day ?? 1)) {
+    return { invalid: `Invalid ISO calendar date '${dateString}'` };
+  }
+
+  return { year, ...(month !== undefined && { month }), ...(day !== undefined && { day }) };
+}
+
 /**
  * This function checks whether a date string is the OpenMRS ISO format.
  * The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
@@ -240,7 +266,7 @@ const defaultOptions: FormatDateOptions = {
 // TODO: Shouldn't throw on null input
 export function formatPartialDate(dateString: string, options: Partial<FormatDateOptions> = {}) {
   const locale = getLocale();
-  let parsed: ReturnType<typeof attempt> & { date?: number } = attempt(dateString, locale);
+  let parsed: ReturnType<typeof attempt> & { date?: number } = parseDateString(dateString, locale);
 
   if (parsed.invalid) {
     console.warn(`Could not parse invalid date '${dateString}'`);
@@ -444,8 +470,8 @@ export function formatDuration(duration: Intl.DurationInput, options?: Intl.Dura
 }
 
 /**
- * Parses a date input into a dayjs object. String inputs are interpreted using
- * any-date-parser with corrections for its month/day representation differences
+ * Parses a date input into a dayjs object. ISO calendar dates are parsed independently of locale;
+ * other strings use any-date-parser with corrections for its month/day representation differences
  * with dayjs. Non-string inputs are passed directly to dayjs.
  *
  * @param dateInput The date to parse.
@@ -459,7 +485,7 @@ export function parseDateInput(dateInput: dayjs.ConfigType, referenceDate: dayjs
 
   if (typeof dateInput === 'string') {
     const locale = getLocale();
-    let parsedDate = attempt(dateInput, locale);
+    let parsedDate = parseDateString(dateInput, locale);
     if (parsedDate.invalid) {
       console.warn(`Could not interpret '${dateInput}' as a date`);
       return null;
