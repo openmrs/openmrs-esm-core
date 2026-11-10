@@ -35,7 +35,7 @@ export function useSession(): Session {
   //
   // `stateSession` is React state, which is needed to update components using
   // this hook when the session changes.
-  const unsubscribe = useRef<undefined | (() => void)>();
+  const unsubscribe = useRef<undefined | (() => void)>(undefined);
   const [stateSession, setStateSession] = useState<Session | null>(null);
   let session: Session | null = null;
 

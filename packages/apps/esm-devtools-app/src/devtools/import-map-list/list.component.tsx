@@ -123,7 +123,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
   const { t } = useTranslation();
   const [state, dispatch] = useReducer(reducer, initialImportMapState);
 
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const searchVal = useDebounce(searchQuery);
 

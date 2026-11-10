@@ -23,7 +23,7 @@ import { useEffect, useRef } from 'react';
  * ```
  */
 export function useAbortController() {
-  const abortController = useRef<AbortController>();
+  const abortController = useRef<AbortController | undefined>(undefined);
 
   if (!abortController.current || abortController.current.signal.aborted) {
     abortController.current = new AbortController();

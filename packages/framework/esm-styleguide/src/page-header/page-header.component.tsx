@@ -7,7 +7,7 @@ import styles from './page-header.module.scss';
 import { type CoreTranslationKey, getCoreTranslation } from '@openmrs/esm-translations';
 
 export interface PageHeaderContentProps {
-  title: string | JSX.Element;
+  title: string | React.JSX.Element;
   illustration: React.ReactElement;
   className?: string;
 }
