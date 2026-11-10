@@ -55,17 +55,32 @@ jobs:
           cache: 'yarn'
 
       - name: 📦 Install dependencies with React 19
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false
+        # Each descriptor must match the range core declares. If a dependency update changes a range, update it here;
+        # the next step fails until then.
         run: |
-          npm pkg set "resolutions.react=$REACT_VERSION" "resolutions.react-dom=$REACT_VERSION" \
-            "resolutions.@types/react=$REACT_TYPES_VERSION" "resolutions.@types/react-dom=$REACT_TYPES_VERSION"
-          YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+          yarn set resolution "react@npm:^18.3.1" "npm:$REACT_VERSION"
+          yarn set resolution "react-dom@npm:^18.3.1" "npm:$REACT_VERSION"
+          yarn set resolution "@types/react@npm:^18.3.21" "npm:$REACT_TYPES_VERSION"
+          yarn set resolution "@types/react-dom@npm:^18.3.0" "npm:$REACT_TYPES_VERSION"
 
       - name: ✅ Check that React 19 is the only React
         run: |
           node -e "
-            const versions = ['react', 'react-dom'].map((name) => require(name + '/package.json').version);
-            if (versions.some((version) => version !== process.env.REACT_VERSION)) {
-              console.error('Expected React ' + process.env.REACT_VERSION + ', got ' + versions.join(', '));
+            const expected = {
+              react: process.env.REACT_VERSION,
+              'react-dom': process.env.REACT_VERSION,
+              '@types/react': process.env.REACT_TYPES_VERSION,
+              '@types/react-dom': process.env.REACT_TYPES_VERSION,
+            };
+            const wrong = Object.entries(expected)
+              .map(([name, version]) => [name, version, require(name + '/package.json').version])
+              .filter(([, version, installed]) => installed !== version);
+            for (const [name, version, installed] of wrong) {
+              console.error('Expected ' + name + '@' + version + ', got ' + installed);
+            }
+            if (wrong.length > 0) {
               process.exit(1);
             }
           "
