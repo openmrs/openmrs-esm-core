@@ -32,6 +32,55 @@ jobs:
       enable_turborepo_cache: true
       verify_command: 'yarn verify --concurrency=5'
 
+  # Core supports React 18 and React 19 until every supported distro is on React 19 (O3-5085).
+  # The build job covers React 18 through the lockfile. This job swaps in React 19 for the build, type checks and tests.
+  # When the lockfile moves to React 19, point this job at React 18 instead. Remove it in Phase 6 of the migration
+  # plan, once core's React peers are narrowed to 19.x.
+  react-19:
+    name: React 19 type checks and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      REACT_VERSION: 19.3.1
+      REACT_TYPES_VERSION: 19.3.0
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: 🛠️ Setup node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: 📦 Install dependencies with React 19
+        run: |
+          npm pkg set "resolutions.react=$REACT_VERSION" "resolutions.react-dom=$REACT_VERSION" \
+            "resolutions.@types/react=$REACT_TYPES_VERSION" "resolutions.@types/react-dom=$REACT_TYPES_VERSION"
+          YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+
+      - name: ✅ Check that React 19 is the only React
+        run: |
+          node -e "
+            const versions = ['react', 'react-dom'].map((name) => require(name + '/package.json').version);
+            if (versions.some((version) => version !== process.env.REACT_VERSION)) {
+              console.error('Expected React ' + process.env.REACT_VERSION + ', got ' + versions.join(', '));
+              process.exit(1);
+            }
+          "
+          if [ "$(yarn why react --json | grep -o '"locator":"react@npm:[^"]*"' | sort -u | wc -l)" -ne 1 ]; then
+            yarn why react
+            echo "More than one version of react is installed" >&2
+            exit 1
+          fi
+
+      - name: 🏗️ Run build
+        run: yarn build --continue
+
+      - name: 🔍 Run type checks and tests
+        run: yarn turbo run typescript test --concurrency=5 --continue
+
   release:
     needs: build
     permissions:
