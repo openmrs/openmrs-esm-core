@@ -52,7 +52,8 @@ export interface UseServerPaginationOptions<R> {
  *            which will be overridden and manipulated by the `goTo*` callbacks.
  *            Similar to useSWR, this param can be null to disable fetching.
  * @param pageSize The number of results to return per page / fetch. Note that this value MUST NOT exceed
- *            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000).
+ *            "webservices.rest.maxResultsAbsolute", which is 100 by default. The server rejects a larger `limit`
+ *            with an error.
  * @param options The options object
  * @returns
  */
