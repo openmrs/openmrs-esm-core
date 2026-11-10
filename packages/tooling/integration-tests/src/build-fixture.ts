@@ -175,9 +175,7 @@ export function buildFixtureApp(
   return build;
 }
 
-let appShellBuild:
-  | Promise<{ moduleGraph: Record<string, string[]>; stylesheets: Record<string, string> }>
-  | undefined;
+let appShellBuild: Promise<{ moduleGraph: Record<string, string[]>; stylesheets: Record<string, string> }> | undefined;
 
 /**
  * Builds the app shell with its own federation config, memoized for the process.
