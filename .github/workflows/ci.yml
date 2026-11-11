@@ -57,6 +57,8 @@ jobs:
       - name: 📦 Install dependencies with React 19
         env:
           YARN_ENABLE_IMMUTABLE_INSTALLS: false
+          # The build and tests don't need dependencies' install scripts.
+          YARN_ENABLE_SCRIPTS: false
         # Each descriptor must match the range core declares. If a dependency update changes a range, update it here;
         # the next step fails until then.
         run: |
