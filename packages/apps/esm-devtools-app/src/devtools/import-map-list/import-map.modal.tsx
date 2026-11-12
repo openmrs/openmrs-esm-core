@@ -35,8 +35,8 @@ async function getUrlFromPort(moduleName: string, port: string) {
 const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close }) => {
   const { t } = useTranslation();
   const [moduleName, setModuleName] = useState<string | undefined>(module?.moduleName);
-  const moduleNameRef = useRef<HTMLInputElement>();
-  const inputRef = useRef<HTMLInputElement>();
+  const moduleNameRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = useCallback(
     async (evt: FormEvent<HTMLElement>) => {
