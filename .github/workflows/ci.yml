@@ -32,6 +32,72 @@ jobs:
       enable_turborepo_cache: true
       verify_command: 'yarn verify --concurrency=5'
 
+  # Core supports React 18 and React 19 until every supported distro is on React 19 (O3-5085).
+  # The build job covers React 18 through the lockfile. This job swaps in React 19 for the build, type checks and tests.
+  # When the lockfile moves to React 19, point this job at React 18 instead. Remove it in Phase 6 of the migration
+  # plan, once core's React peers are narrowed to 19.x.
+  react-19:
+    name: React 19 type checks and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      REACT_VERSION: 19.3.1
+      REACT_TYPES_VERSION: 19.3.0
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: 🛠️ Setup node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: 📦 Install dependencies with React 19
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false
+          # The build and tests don't need dependencies' install scripts.
+          YARN_ENABLE_SCRIPTS: false
+        # Each descriptor must match the range core declares. If a dependency update changes a range, update it here;
+        # the next step fails until then.
+        run: |
+          yarn set resolution "react@npm:^18.3.1" "npm:$REACT_VERSION"
+          yarn set resolution "react-dom@npm:^18.3.1" "npm:$REACT_VERSION"
+          yarn set resolution "@types/react@npm:^18.3.21" "npm:$REACT_TYPES_VERSION"
+          yarn set resolution "@types/react-dom@npm:^18.3.0" "npm:$REACT_TYPES_VERSION"
+
+      - name: ✅ Check that React 19 is the only React
+        run: |
+          node -e "
+            const expected = {
+              react: process.env.REACT_VERSION,
+              'react-dom': process.env.REACT_VERSION,
+              '@types/react': process.env.REACT_TYPES_VERSION,
+              '@types/react-dom': process.env.REACT_TYPES_VERSION,
+            };
+            const wrong = Object.entries(expected)
+              .map(([name, version]) => [name, version, require(name + '/package.json').version])
+              .filter(([, version, installed]) => installed !== version);
+            for (const [name, version, installed] of wrong) {
+              console.error('Expected ' + name + '@' + version + ', got ' + installed);
+            }
+            if (wrong.length > 0) {
+              process.exit(1);
+            }
+          "
+          if [ "$(yarn why react --json | grep -o '"locator":"react@npm:[^"]*"' | sort -u | wc -l)" -ne 1 ]; then
+            yarn why react
+            echo "More than one version of react is installed" >&2
+            exit 1
+          fi
+
+      - name: 🏗️ Run build
+        run: yarn build --continue
+
+      - name: 🔍 Run type checks and tests
+        run: yarn turbo run typescript test --concurrency=5 --continue
+
   release:
     needs: build
     permissions:
