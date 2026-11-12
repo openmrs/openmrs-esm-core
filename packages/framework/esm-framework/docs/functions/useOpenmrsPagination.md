@@ -42,8 +42,8 @@ The URL of the paginated rest endpoint. \
 `number`
 
 The number of results to return per page / fetch. Note that this value MUST NOT exceed
-           "webservices.rest.maxResultsAbsolute", which is 100 by default. The server rejects a larger `limit`
-           with an error.
+           "webservices.rest.maxResultsAbsolute", or the server rejects the request with an error. It's 100
+           by default, but implementations can set it higher.
 
 ### options
 
