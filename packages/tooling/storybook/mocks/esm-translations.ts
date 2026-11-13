@@ -15,6 +15,13 @@ function interpolate(template: string, params?: Record<string, unknown>): string
 export type CoreTranslationKey = keyof typeof coreTranslations;
 
 export function getCoreTranslation(key: string, defaultText?: string, options?: Record<string, unknown>): string {
+  if (options && typeof options.count === 'number') {
+    const suffix = options.count === 1 ? '_one' : '_other';
+    const suffixedKey = `${key}${suffix}`;
+    if (suffixedKey in coreTranslations) {
+      return interpolate((coreTranslations as Record<string, string>)[suffixedKey], options);
+    }
+  }
   const template = (coreTranslations as Record<string, string>)[key] ?? defaultText ?? key;
   return interpolate(template, options);
 }
