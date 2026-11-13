@@ -10,8 +10,8 @@ export default function HelpMenu() {
   const { t } = useTranslation();
   const { user } = useSession();
   const [helpMenuOpen, setHelpMenuOpen] = useState(false);
-  const helpMenuButtonRef = useRef(null);
-  const popupRef = useRef(null);
+  const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
   const helpMenuItems = useAssignedExtensions('help-menu-slot');
 
   const toggleHelpMenu = () => {
@@ -19,16 +19,19 @@ export default function HelpMenu() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        helpMenuButtonRef.current &&
-        !helpMenuButtonRef.current.contains(event.target) &&
-        popupRef.current &&
-        !popupRef.current.contains(event.target)
-      ) {
-        setHelpMenuOpen(false);
-      }
-    };
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+    const target = event.target;
+
+    if (
+      target instanceof Node &&
+      helpMenuButtonRef.current &&
+      popupRef.current &&
+      !helpMenuButtonRef.current.contains(target) &&
+      !popupRef.current.contains(target)
+    ) {
+      setHelpMenuOpen(false);
+    }
+  };
 
     window.addEventListener(`mousedown`, handleClickOutside);
     window.addEventListener(`touchstart`, handleClickOutside);
