@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSession } from '@openmrs/esm-framework';
 import {
   extensionNamespaceSeparator,
@@ -70,7 +70,9 @@ function getPluralBase(key: string): string | undefined {
  */
 export function useTranslationNamespaces(language: string): Array<TranslationNamespace> {
   const frontendModules = useFrontendModules();
-  const revision = useI18nextRevision();
+  const revision = useI18nextRevision(
+    (lng, namespace) => lng === language && !namespace.includes(extensionNamespaceSeparator),
+  );
 
   return useMemo(() => {
     const loaded = getLoadedNamespaces(language);
@@ -92,7 +94,9 @@ export function useTranslationNamespaces(language: string): Array<TranslationNam
  */
 export function useTranslationEntries(namespaces: Array<string>, language: string): Array<TranslationEntry> {
   const { config } = useStore(implementerToolsConfigStore);
-  const revision = useI18nextRevision();
+  const revision = useI18nextRevision(
+    (lng, namespace) => namespaces.includes(namespace) && getResolutionHierarchy(language).includes(lng),
+  );
 
   return useMemo(() => {
     const languages = getResolutionHierarchy(language);
@@ -265,9 +269,15 @@ function getResolutionHierarchy(language: string): Array<string> {
  * Bumps a counter whenever i18next's resources change, giving the catalog a dependency it can
  * recompute on. i18next's resource store is not a zustand store, so it can't be read with
  * `useStore`.
+ *
+ * @param isRelevant Limits the bumps to the bundles a caller shows, so that loads elsewhere, such as
+ *   an extension's namespace or another language, don't make it recompute. Reads the latest one
+ *   passed, so it need not be memoised.
  */
-function useI18nextRevision(): number {
+function useI18nextRevision(isRelevant: (language: string, namespace: string) => boolean = () => true): number {
   const [revision, setRevision] = useState(0);
+  const isRelevantRef = useRef(isRelevant);
+  isRelevantRef.current = isRelevant;
 
   useEffect(() => {
     const store = window.i18next?.store;
@@ -275,7 +285,11 @@ function useI18nextRevision(): number {
       return;
     }
 
-    const bump = () => setRevision((current) => current + 1);
+    const bump = (language: string, namespace: string) => {
+      if (isRelevantRef.current(language, namespace)) {
+        setRevision((current) => current + 1);
+      }
+    };
     // Only `added`: nothing in this feature removes a bundle, so `removed` would never fire anyway.
     store.on('added', bump);
 

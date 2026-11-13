@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import i18next from 'i18next';
 import { useSession } from '@openmrs/esm-framework';
 import { implementerToolsConfigStore } from '@openmrs/esm-framework/src/internal';
@@ -212,6 +212,23 @@ describe('useTranslationEntries', () => {
     for (const count of [0, 1, 2, 3, 11, 100]) {
       expect(i18n.t('items', { ns: 'mod', lng: 'ar', count })).toBe('AR');
     }
+  });
+
+  it('recomputes for bundles it lists, but not for other namespaces or languages', async () => {
+    const i18n = await setUpI18next('fr', { en: { mod: { save: 'Save' } }, fr: { mod: {} } });
+
+    const { result } = renderHook(() => useTranslationEntries(['mod'], 'fr'));
+    const initial = result.current;
+
+    act(() => {
+      i18n.addResourceBundle('fr', 'mod___slot___extension', { save: 'Ext' });
+      i18n.addResourceBundle('de', 'mod', { save: 'Speichern' });
+      i18n.addResourceBundle('fr', 'other', { save: 'Autre' });
+    });
+    expect(result.current).toBe(initial);
+
+    act(() => i18n.addResourceBundle('en', 'mod', { cancel: 'Cancel' }, true));
+    expect(result.current.map((entry) => entry.key)).toEqual(['cancel', 'save']);
   });
 
   it('points a base key at the plural forms of the selected language', async () => {
