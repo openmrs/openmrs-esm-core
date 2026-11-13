@@ -175,7 +175,7 @@ export function buildFixtureApp(
   return build;
 }
 
-let appShellBuild: Promise<{ moduleGraph: Record<string, string[]> }> | undefined;
+let appShellBuild: Promise<{ moduleGraph: Record<string, string[]>; stylesheets: Record<string, string> }> | undefined;
 
 /**
  * Builds the app shell with its own federation config, memoized for the process.
@@ -233,7 +233,14 @@ export function buildAppShell() {
       });
       await new Promise<void>((res) => compiler.close(() => res()));
 
-      return { moduleGraph: moduleGraphOf(stats) };
+      // Every stylesheet the shell emits, the styleguide's `openmrs.<hash>.css` included.
+      const stylesheets = Object.fromEntries(
+        readdirSync(outDir)
+          .filter((file) => file.endsWith('.css'))
+          .map((file) => [file, readFileSync(join(outDir, file), 'utf8')]),
+      );
+
+      return { moduleGraph: moduleGraphOf(stats), stylesheets };
     } finally {
       process.chdir(originalCwd);
     }
