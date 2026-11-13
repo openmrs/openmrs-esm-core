@@ -17,26 +17,40 @@ const initialFeatureFlags = { flags: getFeatureFlagsFromLocalStorage() };
 export const featureFlagsStore = getGlobalStore<FeatureFlagsStore>('feature-flags', initialFeatureFlags);
 
 featureFlagsStore.subscribe((state) => {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
   for (const [flagName, flag] of Object.entries(state.flags)) {
-    localStorage.setItem(`openmrs:feature-flag:${flagName}`, flag.enabled.toString());
-    localStorage.setItem(
-      `openmrs:feature-flag-meta:${flagName}`,
-      JSON.stringify({ label: flag.label, description: flag.description }),
-    );
+    try {
+      window.localStorage.setItem(`openmrs:feature-flag:${flagName}`, flag.enabled.toString());
+      window.localStorage.setItem(
+        `openmrs:feature-flag-meta:${flagName}`,
+        JSON.stringify({ label: flag.label, description: flag.description }),
+      );
+    } catch {
+      // Ignore storage errors in restricted contexts
+    }
   }
 });
 
 function getFeatureFlagsFromLocalStorage() {
   const flags: FeatureFlagsStore['flags'] = {};
-  for (const key of Object.keys(localStorage)) {
-    if (key.startsWith('openmrs:feature-flag:')) {
-      const flagName = key.replace('openmrs:feature-flag:', '');
-      const meta = JSON.parse(localStorage.getItem(`openmrs:feature-flag-meta:${flagName}`) || '{}');
-      flags[flagName] = {
-        enabled: localStorage.getItem(key) === 'true',
-        ...meta,
-      };
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return flags;
+  }
+  try {
+    for (const key of Object.keys(window.localStorage)) {
+      if (key.startsWith('openmrs:feature-flag:')) {
+        const flagName = key.replace('openmrs:feature-flag:', '');
+        const meta = JSON.parse(window.localStorage.getItem(`openmrs:feature-flag-meta:${flagName}`) || '{}');
+        flags[flagName] = {
+          enabled: window.localStorage.getItem(key) === 'true',
+          ...meta,
+        };
+      }
     }
+  } catch {
+    // Ignore storage errors in restricted contexts
   }
   return flags;
 }
@@ -68,16 +82,23 @@ export function registerFeatureFlag(flagName: string, label: string, description
  * This function removes feature flags from local storage that no longer exist in the current state.
  */
 export function cleanupObsoleteFeatureFlags() {
-  const flags = featureFlagsStore.getState().flags;
-  Object.keys(localStorage)
-    .filter((key) => key.startsWith('openmrs:feature-flag:'))
-    .forEach((key) => {
-      const flagName = key.replace('openmrs:feature-flag:', '');
-      if (!flags[flagName]) {
-        localStorage.removeItem(key);
-        localStorage.removeItem(`openmrs:feature-flag-meta:${flagName}`);
-      }
-    });
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+  try {
+    const flags = featureFlagsStore.getState().flags;
+    Object.keys(window.localStorage)
+      .filter((key) => key.startsWith('openmrs:feature-flag:'))
+      .forEach((key) => {
+        const flagName = key.replace('openmrs:feature-flag:', '');
+        if (!flags[flagName]) {
+          window.localStorage.removeItem(key);
+          window.localStorage.removeItem(`openmrs:feature-flag-meta:${flagName}`);
+        }
+      });
+  } catch {
+    // Ignore storage errors in restricted contexts
+  }
 }
 
 /**
@@ -89,7 +110,7 @@ export function cleanupObsoleteFeatureFlags() {
  * @returns `true` if the feature flag is enabled, `false` otherwise.
  */
 export function getFeatureFlag(flagName: string) {
-  return featureFlagsStore.getState().flags[flagName].enabled;
+  return featureFlagsStore.getState().flags[flagName]?.enabled ?? false;
 }
 
 /**
@@ -101,11 +122,22 @@ export function getFeatureFlag(flagName: string) {
  *
  * @param flagName The name of the feature flag to subscribe to.
  * @param callback A function that will be called with the current flag value.
+ * @returns A function to unsubscribe from the feature flag updates.
  */
 export function subscribeToFeatureFlag(flagName: string, callback: (value: boolean) => void) {
-  featureFlagsStore.subscribe((state) => {
-    callback(state.flags[flagName].enabled);
+  let previous = getFeatureFlag(flagName);
+
+  const unsubscribe = featureFlagsStore.subscribe((state) => {
+    const current = state.flags[flagName]?.enabled ?? false;
+    if (current !== previous) {
+      previous = current;
+      callback(current);
+    }
   });
+
+  callback(previous);
+
+  return unsubscribe;
 }
 
 /** @internal for Implementer Tools */
@@ -113,7 +145,10 @@ export function setFeatureFlag(flagName: string, value: boolean) {
   featureFlagsStore.setState((state) => ({
     flags: {
       ...state.flags,
-      [flagName]: { ...state.flags[flagName], enabled: value },
+      [flagName]: {
+        ...(state.flags[flagName] ?? { label: flagName, description: '' }),
+        enabled: value,
+      },
     },
   }));
 }
