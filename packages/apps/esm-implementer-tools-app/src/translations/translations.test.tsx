@@ -472,6 +472,28 @@ describe('Translations', () => {
     expect(screen.queryByText('missingKey')).not.toBeInTheDocument();
   });
 
+  it('does not carry a handed-over missing key into another namespace', async () => {
+    const user = userEvent.setup();
+    window.i18next.store.data.en['@openmrs/esm-other-app'] = { save: 'Save' };
+    window.installedModules = [
+      ['@openmrs/esm-login-app', {}],
+      ['@openmrs/esm-other-app', {}],
+    ] as unknown as typeof window.installedModules;
+    implementerToolsStore.setState((state) => ({
+      ...state,
+      selectedTranslation: { namespace: '@openmrs/esm-login-app', key: 'missingKey', value: 'Default text' },
+    }));
+
+    render(<Translations />);
+    expect(screen.getByRole('row', { name: /missingKey/ })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('combobox', { name: /namespace/i }));
+    await user.click(screen.getByRole('option', { name: '@openmrs/esm-other-app' }));
+
+    expect(screen.queryByRole('row', { name: /missingKey/ })).not.toBeInTheDocument();
+    expect(screen.getByText('No translations match your search.')).toBeInTheDocument();
+  });
+
   it('labels a value from a fallback language’s override, without offering to reset it from here', () => {
     window.i18next.language = 'fr';
     window.i18next.store.data = {
@@ -654,6 +676,21 @@ describe('Translations', () => {
 
     expect(within(row).queryByRole('textbox')).not.toBeInTheDocument();
     expect(within(row).getByRole('button', { name: /edit/i })).toHaveFocus();
+    expect(temporaryConfigStore.getState().config).toEqual({});
+  });
+
+  it('leaves Enter and Escape to an input method that is composing', async () => {
+    const user = userEvent.setup();
+    render(<Translations />);
+
+    const row = screen.getByRole('row', { name: /loginButton/ });
+    await user.click(within(row).getByRole('button', { name: /edit/i }));
+
+    const editor = within(row).getByRole('textbox');
+    fireEvent.keyDown(editor, { key: 'Enter', isComposing: true });
+    fireEvent.keyDown(editor, { key: 'Escape', keyCode: 229 });
+
+    expect(within(row).getByRole('textbox')).toBe(editor);
     expect(temporaryConfigStore.getState().config).toEqual({});
   });
 
