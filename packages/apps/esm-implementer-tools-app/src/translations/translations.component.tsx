@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { type KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -50,6 +50,9 @@ const allNamespaces = '*';
 
 const pageSizes = [25, 50, 100];
 
+/** How long a row's copy button reads "Copied" after a copy. */
+const copiedFeedbackMs = 2000;
+
 const actions = {
   toggleIsTranslationInspectorEnabled({ isTranslationInspectorEnabled }: ImplementerToolsStore) {
     return { isTranslationInspectorEnabled: !isTranslationInspectorEnabled };
@@ -65,7 +68,7 @@ export function Translations() {
   const [selectedNamespace, setSelectedNamespace] = useState(allNamespaces);
   const [filterText, setFilterText] = useState('');
   // The exact key the inspector handed over, shown alone until the search text is edited.
-  const [focusedKey, setFocusedKey] = useState<string | null>(null);
+  const [focused, setFocused] = useState<{ key: string; value?: string } | null>(null);
   const [onlyOverridden, setOnlyOverridden] = useState(false);
   const [requestedPage, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(pageSizes[0]);
@@ -100,13 +103,39 @@ export function Translations() {
         return false;
       }
 
-      if (focusedKey) {
-        return entry.key === focusedKey;
+      if (focused) {
+        return entry.key === focused.key;
       }
 
       return !needle || entry.key.toLowerCase().includes(needle) || entry.value.toLowerCase().includes(needle);
     });
-  }, [entries, filterText, focusedKey, onlyOverridden]);
+  }, [entries, filterText, focused, onlyOverridden]);
+
+  // A key the inspector saw rendered that no bundle has, as when a module's translation file lags
+  // behind its code. The application shows its default text, which can still be overridden.
+  const missingEntry = useMemo<TranslationEntry | null>(
+    () =>
+      focused &&
+      filteredEntries.length === 0 &&
+      !onlyOverridden &&
+      selectedNamespace !== allNamespaces &&
+      loadCount === 0 &&
+      !loadFailure
+        ? {
+            namespace: selectedNamespace,
+            key: focused.key,
+            value: focused.value ?? '',
+            sourceLanguage: language,
+            pluralForms: [],
+          }
+        : null,
+    [filteredEntries, focused, language, loadCount, loadFailure, onlyOverridden, selectedNamespace],
+  );
+
+  const visibleEntries = useMemo(
+    () => (missingEntry ? [missingEntry] : filteredEntries),
+    [filteredEntries, missingEntry],
+  );
 
   useEffect(() => {
     setPage(1);
@@ -114,7 +143,7 @@ export function Translations() {
 
   // The list also shrinks for reasons that don't reset the page, and Carbon's Pagination doesn't
   // pull the page back into range, leaving a blank table with no empty state.
-  const page = Math.min(requestedPage, Math.max(1, Math.ceil(filteredEntries.length / pageSize)));
+  const page = Math.min(requestedPage, Math.max(1, Math.ceil(visibleEntries.length / pageSize)));
 
   // Keep the stored page in step with the clamp, so Carbon and this component never disagree about
   // which page is showing.
@@ -125,8 +154,8 @@ export function Translations() {
   }, [page, requestedPage]);
 
   const pagedEntries = useMemo(
-    () => filteredEntries.slice((page - 1) * pageSize, page * pageSize),
-    [filteredEntries, page, pageSize],
+    () => visibleEntries.slice((page - 1) * pageSize, page * pageSize),
+    [visibleEntries, page, pageSize],
   );
 
   // Logging outside the staleness check keeps a superseded failure traceable even when it is not
@@ -174,7 +203,7 @@ export function Translations() {
       setLoadFailure(null);
       setSelectedNamespace(selectedTranslation.namespace);
       setFilterText(selectedTranslation.key);
-      setFocusedKey(selectedTranslation.key);
+      setFocused({ key: selectedTranslation.key, value: selectedTranslation.value });
       setOnlyOverridden(false);
       implementerToolsStore.setState({ selectedTranslation: null });
 
@@ -267,7 +296,7 @@ export function Translations() {
                 labelText={t('searchTranslations', 'Search translations by key or text')}
                 onChange={(event) => {
                   setFilterText(event.target.value);
-                  setFocusedKey(null);
+                  setFocused(null);
                 }}
                 value={filterText}
               />
@@ -281,7 +310,10 @@ export function Translations() {
                     ? t('allLoadedNamespaces', 'All loaded namespaces')
                     : namespaces.find((namespace) => namespace.name === name)?.isLoaded
                       ? name
-                      : `${name} ${t('notLoadedSuffix', '(not loaded)')}`
+                      : t('namespaceNotLoaded', '{{module}} (not loaded)', {
+                          module: name,
+                          interpolation: { escapeValue: false },
+                        })
                 }
                 label={t('allLoadedNamespaces', 'All loaded namespaces')}
                 onChange={handleNamespaceChange}
@@ -349,6 +381,7 @@ export function Translations() {
                 // saved under whichever language is selected next.
                 <TranslationRow
                   entry={entry}
+                  isMissing={entry === missingEntry}
                   key={`${language}|${entry.namespace}|${entry.key}`}
                   language={language}
                   onFailure={reportActionFailure}
@@ -357,7 +390,7 @@ export function Translations() {
               ))}
             </TableBody>
           </Table>
-          {filteredEntries.length === 0 ? (
+          {visibleEntries.length === 0 ? (
             <p className={styles.emptyState}>
               {loadCount > 0
                 ? t('loadingTranslations', 'Loading translations…')
@@ -389,7 +422,7 @@ export function Translations() {
         pageSize={pageSize}
         pageSizes={pageSizes}
         size="sm"
-        totalItems={filteredEntries.length}
+        totalItems={visibleEntries.length}
       />
     </div>
   );
@@ -397,16 +430,38 @@ export function Translations() {
 
 interface TranslationRowProps {
   entry: TranslationEntry;
+  /** Whether no translation file has the key, so that its value is only what the inspector saw. */
+  isMissing?: boolean;
   language: string;
   onFailure(message: string, error: unknown): void;
   onSuccess(): void;
 }
 
-function TranslationRow({ entry, language, onFailure, onSuccess }: TranslationRowProps) {
+function TranslationRow({ entry, isMissing, language, onFailure, onSuccess }: TranslationRowProps) {
   const { t } = useTranslation();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(entry.value);
   const [copied, setCopied] = useState(false);
+  const editButtonRef = useRef<HTMLButtonElement>(null);
+  const wasEditing = useRef(false);
+
+  // The editor replaces the Edit button, so without this, closing it would leave focus nowhere.
+  useEffect(() => {
+    if (wasEditing.current && !editing) {
+      editButtonRef.current?.focus();
+    }
+
+    wasEditing.current = editing;
+  }, [editing]);
+
+  useEffect(() => {
+    if (!copied) {
+      return;
+    }
+
+    const timer = setTimeout(() => setCopied(false), copiedFeedbackMs);
+    return () => clearTimeout(timer);
+  }, [copied]);
 
   const save = useCallback(async () => {
     setTranslationOverride(entry.namespace, language, entry.key, draft);
@@ -440,6 +495,24 @@ function TranslationRow({ entry, language, onFailure, onSuccess }: TranslationRo
     }
   }, [entry.key, entry.namespace, language, onFailure, onSuccess, t]);
 
+  const cancel = useCallback(() => {
+    setDraft(entry.value);
+    setEditing(false);
+  }, [entry.value]);
+
+  const handleEditorKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        save();
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        cancel();
+      }
+    },
+    [cancel, save],
+  );
+
   return (
     <TableRow>
       <TableCell className={styles.namespaceCell}>{entry.namespace}</TableCell>
@@ -458,24 +531,19 @@ function TranslationRow({ entry, language, onFailure, onSuccess }: TranslationRo
         {editing ? (
           <div className={styles.editor}>
             <TextInput
+              autoFocus
               hideLabel
               id={`translationValue-${entry.namespace}-${entry.key}`}
               labelText={t('translationValue', 'Value')}
               onChange={(event) => setDraft(event.target.value)}
+              onKeyDown={handleEditorKeyDown}
               size="sm"
               value={draft}
             />
             <Button kind="ghost" onClick={save} size="sm">
               {getCoreTranslation('save')}
             </Button>
-            <Button
-              kind="ghost"
-              onClick={() => {
-                setDraft(entry.value);
-                setEditing(false);
-              }}
-              size="sm"
-            >
+            <Button kind="ghost" onClick={cancel} size="sm">
               {getCoreTranslation('cancel')}
             </Button>
           </div>
@@ -484,7 +552,10 @@ function TranslationRow({ entry, language, onFailure, onSuccess }: TranslationRo
         )}
       </TableCell>
       <TableCell className={styles.sourceCell}>
-        {entry.overrideSource ?? t('translationFile', 'Translation file')}
+        {entry.overrideSource ??
+          (isMissing
+            ? t('notInTranslationFile', 'Not in the translation file')
+            : t('translationFile', 'Translation file'))}
         {entry.sourceLanguage === language ? null : (
           <p className={styles.hint}>
             {t('valueFromFallbackLanguage', 'Value shown is {{language}}’s', {
@@ -507,6 +578,7 @@ function TranslationRow({ entry, language, onFailure, onSuccess }: TranslationRo
                 setCopied(false);
                 setEditing(true);
               }}
+              ref={editButtonRef}
               renderIcon={(props) => <EditIcon size={16} {...props} />}
               size="sm"
               tooltipPosition="left"

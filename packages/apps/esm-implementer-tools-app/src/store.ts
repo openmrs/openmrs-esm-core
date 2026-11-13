@@ -27,7 +27,12 @@ export interface ImplementerToolsStore {
   isTranslationInspectorEnabled: boolean;
   uiSelectedPath: null | Array<string>;
   /** A translation the translation inspector has handed to the Translations tab to show. */
-  selectedTranslation: null | { namespace: string; key: string };
+  selectedTranslation: null | {
+    namespace: string;
+    key: string;
+    /** The text the inspector saw rendered, shown for a key that no translation file has. */
+    value?: string;
+  };
 }
 
 export interface ActiveItemDescription {

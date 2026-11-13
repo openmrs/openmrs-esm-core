@@ -10,6 +10,16 @@ import { Translations } from './translations.component';
 
 const mockUseSession = vi.mocked(useSession);
 
+// Without an i18next instance, react-i18next's `t` returns the default value uninterpolated, which
+// would leave labels such as "{{module}} (not loaded)" unmatchable.
+const mockT = (key: string, defaultValue?: string, options?: Record<string, unknown>) =>
+  (defaultValue ?? key).replace(/{{\s*(\w+)\s*}}/g, (match, name) => String(options?.[name] ?? match));
+
+vi.mock('react-i18next', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('react-i18next')>()),
+  useTranslation: () => ({ t: mockT }),
+}));
+
 // i18next hands load failures to the callback, never to the returned promise, so these mocks honour
 // the callback contract the production code depends on.
 const mockReloadResources = vi.fn((_lngs: unknown, _ns: unknown, done?: (error?: unknown) => void) => done?.());
@@ -335,10 +345,10 @@ describe('Translations', () => {
 
     render(<Translations />);
 
-    // The app's react-i18next mock does not interpolate, so the hint's presence is what is
-    // assertable here; the forms it lists come from `pluralForms`, covered in the catalog tests.
     const pluralRow = screen.getByRole('row', { name: /itemCount / });
-    expect(within(pluralRow).getByText(/Plural forms to override too/)).toBeInTheDocument();
+    expect(
+      within(pluralRow).getByText('Plural forms to override too: itemCount_one, itemCount_other'),
+    ).toBeInTheDocument();
 
     // Context suffixes are arbitrary application data, so they are deliberately not guessed at.
     const contextRow = screen.getByRole('row', { name: /greeting Hello/ });
@@ -425,6 +435,41 @@ describe('Translations', () => {
 
     expect(mockReloadResources).toHaveBeenCalledWith(['en'], ['@openmrs/esm-login-app'], expect.any(Function));
     mockHasResourceBundle.mockReturnValue(true);
+  });
+
+  it('lists a handed-over key that no translation file has, with the text the inspector saw', async () => {
+    const user = userEvent.setup();
+    implementerToolsStore.setState((state) => ({
+      ...state,
+      selectedTranslation: { namespace: '@openmrs/esm-login-app', key: 'missingKey', value: 'Default text' },
+    }));
+
+    render(<Translations />);
+
+    const row = screen.getByRole('row', { name: /missingKey/ });
+    expect(within(row).getByText('Default text')).toBeInTheDocument();
+    expect(within(row).getByText('Not in the translation file')).toBeInTheDocument();
+    expect(screen.queryByText('No translations match your search.')).not.toBeInTheDocument();
+
+    await user.click(within(row).getByRole('button', { name: /edit/i }));
+    await user.clear(within(row).getByRole('textbox'));
+    await user.type(within(row).getByRole('textbox'), 'Overridden{Enter}');
+
+    expect(temporaryConfigStore.getState().config).toEqual({
+      '@openmrs/esm-login-app': { 'Translation overrides': { en: { missingKey: 'Overridden' } } },
+    });
+  });
+
+  it('does not list a handed-over key that is missing once the search is edited', async () => {
+    implementerToolsStore.setState((state) => ({
+      ...state,
+      selectedTranslation: { namespace: '@openmrs/esm-login-app', key: 'missingKey', value: 'Default text' },
+    }));
+
+    render(<Translations />);
+    await userEvent.setup().type(screen.getByRole('textbox', { name: /search translations/i }), 'x');
+
+    expect(screen.queryByText('missingKey')).not.toBeInTheDocument();
   });
 
   it('labels a value from a fallback language’s override, without offering to reset it from here', () => {
@@ -577,6 +622,62 @@ describe('Translations', () => {
     await user.click(within(row).getByRole('button', { name: /reset to default/i }));
 
     expect(bundle).toEqual({ locationsHeader: 'Locations' });
+  });
+
+  it('focuses the editor, saves on Enter, and hands focus back to the Edit button', async () => {
+    const user = userEvent.setup();
+    render(<Translations />);
+
+    const row = screen.getByRole('row', { name: /loginButton/ });
+    await user.click(within(row).getByRole('button', { name: /edit/i }));
+
+    const editor = within(row).getByRole('textbox');
+    expect(editor).toHaveFocus();
+
+    await user.clear(editor);
+    await user.keyboard('Sign in{Enter}');
+
+    expect(temporaryConfigStore.getState().config).toEqual({
+      '@openmrs/esm-login-app': { 'Translation overrides': { en: { loginButton: 'Sign in' } } },
+    });
+    expect(within(row).queryByRole('textbox')).not.toBeInTheDocument();
+    expect(within(row).getByRole('button', { name: /edit/i })).toHaveFocus();
+  });
+
+  it('cancels an edit on Escape without writing anything', async () => {
+    const user = userEvent.setup();
+    render(<Translations />);
+
+    const row = screen.getByRole('row', { name: /loginButton/ });
+    await user.click(within(row).getByRole('button', { name: /edit/i }));
+    await user.keyboard('changed{Escape}');
+
+    expect(within(row).queryByRole('textbox')).not.toBeInTheDocument();
+    expect(within(row).getByRole('button', { name: /edit/i })).toHaveFocus();
+    expect(temporaryConfigStore.getState().config).toEqual({});
+  });
+
+  it('stops saying a value was copied after a moment', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const writeText = vi.fn(() => Promise.resolve());
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
+
+    try {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+      render(<Translations />);
+
+      const row = screen.getByRole('row', { name: /loginButton/ });
+      await user.click(within(row).getByRole('button', { name: /copy override json/i }));
+
+      expect(within(row).getByRole('button', { name: /copied/i })).toBeInTheDocument();
+
+      act(() => vi.advanceTimersByTime(2000));
+
+      expect(within(row).getByRole('button', { name: /copy override json/i })).toBeInTheDocument();
+    } finally {
+      Reflect.deleteProperty(navigator, 'clipboard');
+      vi.useRealTimers();
+    }
   });
 
   it('closes the editor once a reset applies, so Save cannot write the old override back', async () => {
