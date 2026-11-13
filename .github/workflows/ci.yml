@@ -99,7 +99,7 @@ jobs:
         run: yarn turbo run typescript test --concurrency=5 --continue
 
   release:
-    needs: build
+    needs: [build, react-19]
     permissions:
       contents: write
       id-token: write
