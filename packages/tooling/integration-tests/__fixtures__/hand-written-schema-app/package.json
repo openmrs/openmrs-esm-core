@@ -1,0 +1,12 @@
+{
+  "name": "@openmrs/esm-hand-written-schema-fixture-app",
+  "version": "1.0.0",
+  "private": true,
+  "browser": "dist/openmrs-esm-hand-written-schema-fixture-app.js",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "react": "18.x",
+    "react-dom": "18.x"
+  }
+}

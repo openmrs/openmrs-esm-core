@@ -1,8 +1,10 @@
 import { start } from 'single-spa';
 import { type CalendarIdentifier } from '@internationalized/date';
 import {
+  beginInitialConfigLoad,
   type Config,
   type ExtensionDefinition,
+  finishInitialConfigLoad,
   finishRegisteringAllApps,
   fireOpenmrsEvent,
   getConfig,
@@ -132,6 +134,9 @@ async function runShell() {
 }
 
 function handleInitFailure(e: Error) {
+  // Released on the way out too: the initial configs are finished either way, and leaving the gate
+  // closed would strand every `getConfig()` promise that had already been made.
+  finishInitialConfigLoad();
   console.error(e);
   renderFatalErrorPage(e);
 }
@@ -342,6 +347,17 @@ export function run(configUrls: Array<string>) {
   registerCoreExtensions();
   setupCoreConfig();
 
+  // Registering the apps teaches the config system every module's schema, which happens well before
+  // the configurations that fill those schemas in are provided. Held until `provideConfigs` has run
+  // so that a `getConfig()` during startup waits for the real configuration instead of resolving,
+  // permanently, against defaults.
+  //
+  // Closed here, after everything that can throw synchronously and immediately before the chain
+  // whose `.catch` reopens it. `handleInitFailure` is what releases the gate on the way out, so a
+  // throw it cannot see is a throw that leaves every `getConfig()` waiting forever, with no failure
+  // page to say why. Nothing between `run()` being called and this line asks for a config.
+  beginInitialConfigLoad();
+
   const polyfillReady =
     typeof Intl !== 'undefined' && 'DurationFormat' in Intl
       ? Promise.resolve()
@@ -354,6 +370,7 @@ export function run(configUrls: Array<string>) {
     .then(setupApps)
     .then(() => Promise.resolve(finishRegisteringAllApps()))
     .then(provideConfigs)
+    .then(finishInitialConfigLoad)
     .then(runShell)
     .then(() => markBooted())
     .catch(handleInitFailure)
