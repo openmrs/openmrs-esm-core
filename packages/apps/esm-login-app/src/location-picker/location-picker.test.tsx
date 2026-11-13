@@ -2,7 +2,7 @@ import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { screen, waitFor, render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 import userEvent from '@testing-library/user-event';
 import {
@@ -112,6 +112,22 @@ describe('LocationPickerView', () => {
     await user.click(location);
 
     expect(confirmButton).toBeEnabled();
+  });
+
+  it('redirects to the login page without fetching locations when the session is unauthenticated', () => {
+    mockUseSession.mockReturnValue({ authenticated: false, sessionId: '' } as Session);
+
+    render(
+      <MemoryRouter initialEntries={['/login/location']}>
+        <Routes>
+          <Route path="/login" element={<div>Login page</div>} />
+          <Route path="/login/location" element={<LocationPickerView />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('Login page')).toBeInTheDocument();
+    expect(mockOpenmrsFetch).not.toHaveBeenCalled();
   });
 
   describe('Saving location preference', () => {
