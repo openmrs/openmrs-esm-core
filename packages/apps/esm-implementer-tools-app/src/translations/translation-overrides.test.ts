@@ -1,7 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import i18next, { type BackendModule } from 'i18next';
 import { temporaryConfigStore } from '@openmrs/esm-framework/src/internal';
-import { reloadTranslations, resetTranslationOverride, setTranslationOverride } from './translation-overrides';
+import {
+  findChangedOverrides,
+  reloadTranslations,
+  resetTranslationOverride,
+  setTranslationOverride,
+  watchTranslationOverrides,
+} from './translation-overrides';
 
 const loginApp = '@openmrs/esm-login-app';
 
@@ -278,6 +284,79 @@ describe('reloadTranslations', () => {
   });
 });
 
+describe('findChangedOverrides', () => {
+  const overrides = (byLanguage: Record<string, Record<string, string>>) => ({
+    [loginApp]: { 'Translation overrides': byLanguage },
+  });
+
+  it('reports the languages whose overrides changed, with the keys that were removed', () => {
+    const previous = overrides({ en: { loginButton: 'Sign in', other: 'Kept' }, fr: { loginButton: 'Connexion' } });
+    const next = overrides({ en: { other: 'Kept' }, fr: { loginButton: 'Connexion' } });
+
+    expect(findChangedOverrides(previous, next)).toEqual([
+      { namespace: loginApp, language: 'en', droppedKeys: ['loginButton'] },
+    ]);
+  });
+
+  it('reports every override when the whole config is cleared', () => {
+    expect(findChangedOverrides(overrides({ en: { loginButton: 'Sign in' } }), {})).toEqual([
+      { namespace: loginApp, language: 'en', droppedKeys: ['loginButton'] },
+    ]);
+  });
+
+  it('reports an added or changed override without dropping anything', () => {
+    expect(
+      findChangedOverrides(overrides({ en: { loginButton: 'Sign in' } }), overrides({ en: { loginButton: 'Enter' } })),
+    ).toEqual([{ namespace: loginApp, language: 'en', droppedKeys: [] }]);
+  });
+
+  it('ignores config changes that leave the overrides alone', () => {
+    expect(findChangedOverrides({ [loginApp]: { someSetting: 1 } }, { [loginApp]: { someSetting: 2 } })).toEqual([]);
+  });
+});
+
+describe('watchTranslationOverrides', () => {
+  let stop: () => void;
+
+  beforeEach(() => {
+    stop = watchTranslationOverrides();
+  });
+
+  afterEach(() => {
+    stop();
+  });
+
+  it('reloads a loaded namespace whose override is removed from outside the Translations tab', async () => {
+    const bundle = { loginButton: 'Sign in' };
+    vi.mocked(window.i18next.getResourceBundle).mockReturnValue(bundle);
+    temporaryConfigStore.setState({ config: { [loginApp]: { 'Translation overrides': { en: bundle } } } });
+    mockReloadResources.mockClear();
+
+    temporaryConfigStore.setState({ config: {} });
+    await vi.waitFor(() => expect(mockReloadResources).toHaveBeenCalledWith(['en'], [loginApp], expect.any(Function)));
+
+    expect(bundle).toEqual({});
+  });
+
+  it('leaves the reload to the caller of setTranslationOverride and resetTranslationOverride', async () => {
+    setTranslationOverride(loginApp, 'en', 'loginButton', 'Sign in');
+    resetTranslationOverride(loginApp, 'en', 'loginButton');
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(mockReloadResources).not.toHaveBeenCalled();
+  });
+
+  it('does not load a namespace that is not on screen', async () => {
+    mockHasResourceBundle.mockReturnValueOnce(false);
+    temporaryConfigStore.setState({
+      config: { '@openmrs/esm-other-app': { 'Translation overrides': { en: { title: 'Other' } } } },
+    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(mockReloadResources).not.toHaveBeenCalled();
+  });
+});
+
 describe('reloadTranslations against i18next', () => {
   /** Reads that have started, each settled by calling it. Overrides are collected as a read starts. */
   let pendingReads: Array<(error?: Error) => void>;
@@ -373,6 +452,22 @@ describe('reloadTranslations against i18next', () => {
     await settleReads();
 
     await expect(reset).resolves.toBeUndefined();
+    expect(i18n.getResource('en', loginApp, 'extraKey')).toBeUndefined();
+  });
+
+  it('restores the translation file when local config is cleared', async () => {
+    const stop = watchTranslationOverrides();
+    setTranslationOverride(loginApp, 'en', 'loginButton', 'Sign in');
+    setTranslationOverride(loginApp, 'en', 'extraKey', 'Only an override');
+    const saved = reloadTranslations(loginApp, 'en');
+    await settleReads();
+    await saved;
+
+    temporaryConfigStore.setState({ config: {} });
+    await settleReads();
+    stop();
+
+    await vi.waitFor(() => expect(i18n.getResource('en', loginApp, 'loginButton')).toBe('Log in'));
     expect(i18n.getResource('en', loginApp, 'extraKey')).toBeUndefined();
   });
 });

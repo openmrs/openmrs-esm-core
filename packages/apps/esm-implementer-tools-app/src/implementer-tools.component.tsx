@@ -5,6 +5,7 @@ import { implementerToolsStore, showModuleDiagnostics, togglePopup } from './sto
 import { hasInvalidDependencies } from './backend-dependencies/openmrs-backend-dependencies';
 import { useBackendDependencies } from './backend-dependencies/useBackendDependencies';
 import { useFrontendModules } from './hooks';
+import { watchTranslationOverrides } from './translations/translation-overrides';
 import styles from './implementer-tools.styles.scss';
 
 const Popup = React.lazy(() => import('./popup/popup.component'));
@@ -15,6 +16,8 @@ function PopupHandler() {
   const backendDependencies = useBackendDependencies();
   const [shouldShowNotification, setShouldShowNotification] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => watchTranslationOverrides(), []);
 
   useEffect(() => {
     // displaying actionable notification if backend modules have missing dependencies
