@@ -3280,8 +3280,8 @@ __metadata:
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": 11.x
-    react: 18.x
-    react-dom: 18.x
+    react: 18.x || 19.x
+    react-dom: 18.x || 19.x
     react-i18next: 16.x
   languageName: unknown
   linkType: soft
@@ -3454,8 +3454,8 @@ __metadata:
   peerDependencies:
     dayjs: 1.x
     i18next: 25.x
-    react: 18.x
-    react-dom: 18.x
+    react: 18.x || 19.x
+    react-dom: 18.x || 19.x
     react-i18next: 16.x
     single-spa: 6.x
     swr: 2.x
@@ -3495,8 +3495,8 @@ __metadata:
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": 11.x
-    react: 18.x
-    react-dom: 18.x
+    react: 18.x || 19.x
+    react-dom: 18.x || 19.x
     react-i18next: 16.x
   languageName: unknown
   linkType: soft
@@ -3522,8 +3522,8 @@ __metadata:
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": 11.x
-    react: 18.x
-    react-dom: 18.x
+    react: 18.x || 19.x
+    react-dom: 18.x || 19.x
     react-i18next: 16.x
     swr: 2.x
   languageName: unknown
@@ -3552,8 +3552,8 @@ __metadata:
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": 11.x
-    react: 18.x
-    react-dom: 18.x
+    react: 18.x || 19.x
+    react-dom: 18.x || 19.x
     react-i18next: 16.x
     react-router-dom: 6.x
     swr: 2.x
@@ -3602,8 +3602,8 @@ __metadata:
   peerDependencies:
     "@carbon/react": 1.x
     "@openmrs/esm-framework": 11.x
-    react: 18.x
-    react-dom: 18.x
+    react: 18.x || 19.x
+    react-dom: 18.x || 19.x
     react-i18next: 16.x
     react-router-dom: 6.x
     single-spa: 6.x
@@ -3655,8 +3655,8 @@ __metadata:
     "@openmrs/esm-utils": "workspace:^"
     dayjs: 1.x
     i18next: 25.x
-    react: 18.x
-    react-dom: 18.x
+    react: 18.x || 19.x
+    react-dom: 18.x || 19.x
     react-i18next: 16.x
     swr: 2.x
   languageName: unknown
@@ -3768,8 +3768,8 @@ __metadata:
     "@openmrs/esm-utils": "workspace:^"
     dayjs: 1.x
     i18next: 25.x
-    react: 18.x
-    react-dom: 18.x
+    react: 18.x || 19.x
+    react-dom: 18.x || 19.x
     react-i18next: 16.x
     swr: 2.x
   languageName: unknown
