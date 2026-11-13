@@ -1,0 +1,133 @@
+@use '@carbon/layout';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme';
+@use '@carbon/type';
+
+/** Lays the tab out; its chrome inherits the implementer tools' dark theme like every other tab. */
+.translations {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tools {
+  width: 100%;
+  border-bottom: 1px solid theme.$border-subtle-00;
+  border-top: 1px solid theme.$border-subtle-00;
+  z-index: 2;
+  position: sticky;
+  top: 0;
+}
+
+.toolbar {
+  padding: layout.$spacing-05 layout.$spacing-05 layout.$spacing-03;
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+  margin: 0 (-(layout.$spacing-05));
+
+  :global(.cds--col) {
+    max-width: 100%;
+    flex-basis: 0;
+    flex-grow: 1;
+    width: 100%;
+    padding: 0 layout.$spacing-05;
+  }
+}
+
+.toggleButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.exports {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: layout.$spacing-03;
+  margin-top: layout.$spacing-05;
+}
+
+.exportHint {
+  @include type.type-style('helper-text-01');
+  color: theme.$text-helper;
+}
+
+.toggle {
+  margin-right: layout.$spacing-05;
+}
+
+/**
+ * The table reads as a light surface, so it carries the white theme's tokens rather than the g90
+ * ones the surrounding panel sets; the two together would put near-white text on a white background.
+ * Everything nested here, Carbon's own table styling included, resolves against these.
+ */
+.mainContent {
+  @include theme.theme(themes.$white);
+
+  // Sass warns about declarations following the nested rules the mixin emits; `&` opts in to the
+  // behaviour CSS itself specifies.
+  & {
+    background-color: theme.$background;
+    width: 100%;
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+
+  :global(.cds--data-table-container) {
+    padding-top: 0;
+  }
+
+  // The popup dims every table cell to $text-secondary. Carbon's default is secondary for column
+  // headers and primary for body cells, which is what keeps a long list of values readable.
+  :global(.cds--data-table) tbody td {
+    color: theme.$text-primary;
+  }
+}
+
+.namespaceCell,
+.sourceCell {
+  white-space: nowrap;
+  color: theme.$text-secondary;
+}
+
+.key {
+  @include type.type-style('code-01');
+  color: theme.$text-primary;
+}
+
+.value {
+  color: theme.$text-primary;
+  overflow-wrap: anywhere;
+}
+
+.hint {
+  @include type.type-style('helper-text-01');
+  color: theme.$text-secondary;
+}
+
+.editor {
+  display: flex;
+  align-items: center;
+  gap: layout.$spacing-03;
+}
+
+.rowActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.emptyState {
+  @include type.type-style('body-compact-01');
+  color: theme.$text-secondary;
+  padding: layout.$spacing-05;
+}
+
+.pagination {
+  border-top: 1px solid theme.$border-subtle-00;
+}
