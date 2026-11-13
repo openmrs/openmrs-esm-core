@@ -1,7 +1,7 @@
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { act, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useSession } from '@openmrs/esm-framework';
 import { implementerToolsConfigStore, temporaryConfigStore } from '@openmrs/esm-framework/src/internal';
@@ -658,16 +658,18 @@ describe('Translations', () => {
   });
 
   it('stops saying a value was copied after a moment', async () => {
-    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.useFakeTimers();
     const writeText = vi.fn(() => Promise.resolve());
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
 
     try {
-      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
       render(<Translations />);
 
       const row = screen.getByRole('row', { name: /loginButton/ });
-      await user.click(within(row).getByRole('button', { name: /copy override json/i }));
+      fireEvent.click(within(row).getByRole('button', { name: /copy override json/i }));
+      // Awaiting the write inside `act` lets the copy's callback, and the effect that starts the reset
+      // timer, run before the clock is advanced.
+      await act(() => writeText.mock.results[0].value);
 
       expect(within(row).getByRole('button', { name: /copied/i })).toBeInTheDocument();
 
