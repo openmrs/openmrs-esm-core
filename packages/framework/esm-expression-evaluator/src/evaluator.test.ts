@@ -1,6 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { compile, evaluate, evaluateAsBoolean, evaluateAsNumber, evaluateAsType, evaluateAsync } from './evaluator';
 
+const allowDigitLeadingIdentifiers = { allowDigitLeadingIdentifiers: true };
+
 describe('OpenMRS Expression Evaluator', () => {
   it('should evaluate a simple expression', () => {
     expect(evaluate('1 + 1')).toBe(2);
@@ -305,6 +307,70 @@ describe('OpenMRS Expression Evaluator', () => {
   it('should support a compilation phase', () => {
     const exp = compile('1 + 1');
     expect(evaluate(exp)).toBe(2);
+  });
+
+  it('should support identifiers that start with a digit when enabled', () => {
+    expect(evaluate("1stVisit === 'yes'", { '1stVisit': 'yes' }, allowDigitLeadingIdentifiers)).toBe(true);
+    expect(evaluate('1stVisit === 2ndDose', { '1stVisit': 3, '2ndDose': 3 }, allowDigitLeadingIdentifiers)).toBe(true);
+    expect(evaluate('-2ndDose', { '2ndDose': 5 }, allowDigitLeadingIdentifiers)).toBe(-5);
+    expect(
+      evaluate('x ? 1stVisit : 2ndDose', { x: true, '1stVisit': 'a', '2ndDose': 'b' }, allowDigitLeadingIdentifiers),
+    ).toBe('a');
+    expect(
+      evaluate('x ? 1stVisit : 2ndDose', { x: false, '1stVisit': 'a', '2ndDose': 'b' }, allowDigitLeadingIdentifiers),
+    ).toBe('b');
+  });
+
+  it('should reject identifiers that start with a digit by default', () => {
+    expect(() => evaluate('1stVisit', { '1stVisit': 'yes' })).toThrow(/Variable names cannot start with a number/);
+    expect(() => compile('1stVisit')).toThrow(/Variable names cannot start with a number/);
+    // enabling the option must not change how later parses behave
+    evaluate('1stVisit', { '1stVisit': 'yes' }, allowDigitLeadingIdentifiers);
+    expect(() => compile('1stVisit +', allowDigitLeadingIdentifiers)).toThrow();
+    expect(() => evaluate('1stVisit', { '1stVisit': 'yes' })).toThrow(/Variable names cannot start with a number/);
+  });
+
+  it('should support member access and calls on identifiers that start with a digit', () => {
+    expect(evaluate('1stVisit.length', { '1stVisit': 'hello' }, allowDigitLeadingIdentifiers)).toBe(5);
+    expect(evaluate('1stVisit.toUpperCase()', { '1stVisit': 'hello' }, allowDigitLeadingIdentifiers)).toBe('HELLO');
+    expect(evaluate('f(1stVisit)', { '1stVisit': 3, f: (n: number) => n + 1 }, allowDigitLeadingIdentifiers)).toBe(4);
+    expect(evaluate('`${3rdDose}`', { '3rdDose': 'value' }, allowDigitLeadingIdentifiers)).toBe('value');
+  });
+
+  it('should disambiguate an exponent-looking run from an identifier with an operator', () => {
+    // `1e` is not a number, so `1e-2ndDose` is subtraction of two identifiers, not the literal `1e-2`
+    expect(evaluate('1e-2ndDose', { '1e': 5, '2ndDose': 2 }, allowDigitLeadingIdentifiers)).toBe(3);
+    expect(evaluate('1e - 2ndDose', { '1e': 5, '2ndDose': 2 }, allowDigitLeadingIdentifiers)).toBe(3);
+    expect(evaluate('1e+2ndDose', { '1e': 5, '2ndDose': 2 }, allowDigitLeadingIdentifiers)).toBe(7);
+    // genuine numeric exponents are untouched
+    expect(evaluate('5e-1', {}, allowDigitLeadingIdentifiers)).toBe(0.5);
+    expect(evaluate('1.5E+2', {}, allowDigitLeadingIdentifiers)).toBe(150);
+  });
+
+  it('should parse identifiers that start with a digit via compile()', () => {
+    const exp = compile("1stVisit === 'yes'", allowDigitLeadingIdentifiers);
+    expect(evaluate(exp, { '1stVisit': 'yes' })).toBe(true);
+  });
+
+  it('should apply the parse options in asynchronous evaluation', async () => {
+    await expect(evaluateAsync('1stVisit', { '1stVisit': 'yes' }, allowDigitLeadingIdentifiers)).resolves.toBe('yes');
+  });
+
+  it('should keep parsing every numeric literal form the numbers plugin supports', () => {
+    expect(evaluate('5e-1')).toBe(0.5);
+    expect(evaluate('1.5E+2')).toBe(150);
+    expect(evaluate('0x10')).toBe(16);
+    expect(evaluate('0b11')).toBe(3);
+    expect(evaluate('1_000')).toBe(1000);
+    expect(evaluate('.5')).toBe(0.5);
+    expect(evaluate('08')).toBe(8);
+  });
+
+  it('should leave the contents of string and regex literals unchanged', () => {
+    expect(evaluate("'1st'")).toBe('1st');
+    expect(evaluate('/1st/.test(x)', { x: '1st' })).toBe(true);
+    expect(evaluate('/[0-9a-f]/.test(x)', { x: 'c' })).toBe(true);
+    expect(evaluate('$1stVisit', { $1stVisit: 5 })).toBe(5);
   });
 
   it('should not support variable assignment', () => {
