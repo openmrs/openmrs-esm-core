@@ -1,11 +1,20 @@
 import { createGlobalStore } from '@openmrs/esm-framework';
 
+/**
+ * The popup's tabs, in the order they are shown. This is the only statement of that order: the
+ * switcher, the panel and anything navigating to a tab all work from it, so reordering here moves a
+ * tab everywhere.
+ */
+export const implementerToolsTabs = ['configuration', 'frontend-modules', 'backend-modules', 'feature-flags'] as const;
+
+export type ImplementerToolsTab = (typeof implementerToolsTabs)[number];
+
 export interface ImplementerToolsStore {
   activeItemDescription: null | ActiveItemDescription;
   configPathBeingEdited: null | Array<string>;
   isOpen: boolean;
   hasAlert: boolean;
-  openTabIndex: number;
+  openTab: ImplementerToolsTab;
   isConfigToolbarOpen: boolean;
   isUIEditorEnabled: boolean;
   isJsonModeEnabled: boolean;
@@ -24,7 +33,7 @@ export const implementerToolsStore = createGlobalStore<ImplementerToolsStore>('i
   configPathBeingEdited: null,
   isOpen: getIsImplementerToolsOpen(),
   hasAlert: false,
-  openTabIndex: 0,
+  openTab: 'configuration',
   isConfigToolbarOpen: getIsConfigToolbarOpen(),
   isUIEditorEnabled: getIsUIEditorEnabled(),
   isJsonModeEnabled: getIsJsonModeEnabled(),
@@ -41,14 +50,14 @@ export const togglePopup = () =>
   implementerToolsStore.setState((state) => ({
     ...state,
     isOpen: !state.isOpen,
-    openTabIndex: 0,
+    openTab: 'configuration',
   }));
 
 export const showModuleDiagnostics = () =>
   implementerToolsStore.setState((state) => ({
     ...state,
     isOpen: true,
-    openTabIndex: 2,
+    openTab: 'backend-modules',
   }));
 
 /* Set up localStorage-serialized state elements */
