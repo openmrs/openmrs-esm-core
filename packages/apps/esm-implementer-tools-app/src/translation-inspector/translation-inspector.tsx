@@ -1,18 +1,25 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { throttle } from 'lodash-es';
+import { isEqual, throttle } from 'lodash-es';
 import { Button } from '@carbon/react';
 import {
+  CloseIcon,
   disableTranslationInspector,
   enableTranslationInspector,
   type TranslationSighting,
+  useStoreWithActions,
 } from '@openmrs/esm-framework/src/internal';
-import { implementerToolsStore } from '../store';
+import { type ImplementerToolsStore, implementerToolsStore } from '../store';
 import { findTranslatedText, type InspectionTarget } from './find-translated-text';
 import styles from './translation-inspector.styles.scss';
 
 /** How often the pointer position is turned into a lookup. */
 const inspectionIntervalMs = 100;
+
+interface Inspection extends InspectionTarget {
+  /** Where the element was when inspected. */
+  rect: DOMRect;
+}
 
 /**
  * Lets the user hover any text in the application and see which translation key produced it.
@@ -22,7 +29,7 @@ const inspectionIntervalMs = 100;
  */
 export default function TranslationInspector() {
   const { t } = useTranslation();
-  const [target, setTarget] = useState<InspectionTarget | null>(null);
+  const [target, setTarget] = useState<Inspection | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,7 +48,12 @@ export default function TranslationInspector() {
           return;
         }
 
-        setTarget(findTranslatedText(element));
+        const found = findTranslatedText(element);
+        const next = found && { ...found, rect: found.element.getBoundingClientRect() };
+
+        // Keeps the current target while nothing about it changed, so that resting the pointer on a
+        // label doesn't re-render on every sample.
+        setTarget((current) => (isSameInspection(current, next) ? current : next));
       }, inspectionIntervalMs),
     [],
   );
@@ -65,25 +77,24 @@ export default function TranslationInspector() {
     };
   }, [inspectAt]);
 
-  // Read on render rather than stored alongside the target: the next inspection is what would
-  // invalidate it, and that produces a render anyway.
-  const rect = target?.element.getBoundingClientRect();
-
   const showInTranslationsTab = useCallback((sighting: TranslationSighting) => {
     implementerToolsStore.setState((state) => ({
       ...state,
       isOpen: true,
       openTab: 'translations',
-      selectedTranslation: { namespace: sighting.namespace, key: sighting.key },
+      selectedTranslation: { namespace: sighting.namespace, key: sighting.key, value: sighting.value },
     }));
   }, []);
 
-  if (!target || !rect) {
-    return null;
+  if (!target) {
+    return <ExitButton />;
   }
+
+  const { rect } = target;
 
   return (
     <>
+      <ExitButton />
       <div
         className={styles.highlight}
         style={{ top: rect.top, left: rect.left, width: rect.width, height: rect.height }}
@@ -129,6 +140,47 @@ export default function TranslationInspector() {
         ) : null}
       </div>
     </>
+  );
+}
+
+/** Turns the inspector off, which otherwise stays on across reloads until switched off in the Translations tab. */
+function ExitButton() {
+  const { t } = useTranslation();
+  const { toggleIsTranslationInspectorEnabled } = useStoreWithActions(implementerToolsStore, actions);
+
+  return (
+    <Button
+      className={styles.exitButton}
+      hasIconOnly
+      iconDescription={t('exitTranslationInspector', 'Exit translation inspector')}
+      kind="danger"
+      onClick={toggleIsTranslationInspectorEnabled}
+      renderIcon={(props) => <CloseIcon {...props} size={16} />}
+      size="sm"
+      tooltipPosition="left"
+    />
+  );
+}
+
+const actions = {
+  toggleIsTranslationInspectorEnabled({ isTranslationInspectorEnabled }: ImplementerToolsStore) {
+    return { isTranslationInspectorEnabled: !isTranslationInspectorEnabled };
+  },
+};
+
+function isSameInspection(current: Inspection | null, next: Inspection | null): boolean {
+  if (!current || !next) {
+    return current === next;
+  }
+
+  return (
+    current.element === next.element &&
+    current.attribute === next.attribute &&
+    ['top', 'left', 'width', 'height'].every(
+      (side) => current.rect[side as keyof DOMRect] === next.rect[side as keyof DOMRect],
+    ) &&
+    current.sightings.length === next.sightings.length &&
+    current.sightings.every((sighting, index) => isEqual(sighting, next.sightings[index]))
   );
 }
 

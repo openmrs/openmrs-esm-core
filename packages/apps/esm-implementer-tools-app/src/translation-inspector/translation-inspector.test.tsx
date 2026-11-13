@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
@@ -91,7 +91,7 @@ describe('TranslationInspector', () => {
     expect(implementerToolsStore.getState()).toMatchObject({
       isOpen: true,
       openTab: 'translations',
-      selectedTranslation: { namespace: '@openmrs/esm-login-app', key: 'loginButton' },
+      selectedTranslation: { namespace: '@openmrs/esm-login-app', key: 'loginButton', value: 'Log in' },
     });
     app.remove();
   });
@@ -138,5 +138,60 @@ describe('TranslationInspector', () => {
 
     expect(screen.queryByText('loginButton')).not.toBeInTheDocument();
     scroller.remove();
+  });
+
+  it('offers a way out even when nothing is hovered', () => {
+    implementerToolsStore.setState({ isTranslationInspectorEnabled: true });
+    render(<TranslationInspector />);
+
+    fireEvent.click(screen.getByRole('button', { name: /exit translation inspector/i }));
+
+    expect(implementerToolsStore.getState().isTranslationInspectorEnabled).toBe(false);
+  });
+
+  it('does not re-render while the pointer rests on the same text', () => {
+    const app = document.createElement('button');
+    app.textContent = 'Log in';
+    document.body.appendChild(app);
+    const onRender = vi.fn();
+
+    render(
+      <Profiler id="inspector" onRender={onRender}>
+        <TranslationInspector />
+      </Profiler>,
+    );
+
+    // React may render once more before it starts bailing out of an unchanged state.
+    hover(app);
+    hover(app);
+    const renders = onRender.mock.calls.length;
+
+    for (let sample = 0; sample < 5; sample++) {
+      hover(app);
+    }
+
+    expect(onRender).toHaveBeenCalledTimes(renders);
+    app.remove();
+  });
+
+  it('follows the element when it scrolls but stays under the pointer', () => {
+    const app = document.createElement('button');
+    app.textContent = 'Log in';
+    document.body.appendChild(app);
+    let top = 100;
+    app.getBoundingClientRect = () =>
+      ({ top, bottom: top + 20, left: 0, right: 100, width: 100, height: 20 }) as DOMRect;
+
+    const { container } = render(<TranslationInspector />);
+    hover(app);
+
+    top = 90;
+    act(() => vi.advanceTimersByTime(200));
+    fireEvent.scroll(document);
+
+    // The highlight is decoration, with no role to query it by.
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelector<HTMLElement>('[style*="height"]')?.style.top).toBe('90px');
+    app.remove();
   });
 });

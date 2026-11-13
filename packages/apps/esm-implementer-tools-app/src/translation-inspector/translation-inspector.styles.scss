@@ -39,6 +39,17 @@ $accent: colors.$purple-60;
   @include theme.theme(themes.$white);
 }
 
+/**
+ * Sits below the UI editor's exit button, which is at `layout.$spacing-10`, so that both stay
+ * reachable when both modes are on.
+ */
+.exitButton {
+  position: fixed !important;
+  top: calc(#{layout.$spacing-10} + #{layout.$spacing-08});
+  right: layout.$spacing-05;
+  z-index: 999999;
+}
+
 .sighting + .sighting {
   margin-top: layout.$spacing-03;
   border-top: 1px solid theme.$border-subtle-01;
