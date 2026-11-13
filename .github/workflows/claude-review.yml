@@ -1,0 +1,27 @@
+name: Claude PR Review
+
+on:
+  pull_request_target:
+    types: [opened, ready_for_review, reopened]
+
+jobs:
+  review:
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    uses: openmrs/openmrs-contrib-gha-workflows/.github/workflows/claude-pr-review.yml@main
+    secrets:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    with:
+      extra_instructions: |
+        This is a TypeScript/React OpenMRS frontend repository (part of OpenMRS 3.x microfrontend architecture). Pay particular attention to:
+
+        - i18n: user-facing strings must use the t() function from useTranslation, not hard-coded text. Flag hard-coded English strings in JSX, alerts, and toasts.
+        - Type safety: avoid `any` in new code; prefer specific types or `unknown` with type guards. Flag new uses of `any`.
+        - Data fetching: use SWR/React Query patterns consistent with the rest of the codebase; don't introduce ad-hoc fetch wrappers.
+        - Public exports: flag breaking changes to anything exported from index.ts or package entry points.
+        - Testing: use @testing-library/react idioms; avoid testing implementation details. Flag tests that mock OpenMRS framework primitives instead of using the official testing utilities.
+        - Performance: flag obvious re-render hazards (new object/array literals as hook deps, missing useMemo/useCallback on hot paths) but skip nits.
+
+        This package is the OpenMRS frontend framework runtime. Public API stability is paramount — treat any change to exported types, functions, or runtime behavior as a potential breaking change for every downstream microfrontend.
