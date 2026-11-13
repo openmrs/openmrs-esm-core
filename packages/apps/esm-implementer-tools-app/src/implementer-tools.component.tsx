@@ -10,6 +10,7 @@ import styles from './implementer-tools.styles.scss';
 
 const Popup = React.lazy(() => import('./popup/popup.component'));
 const UiEditor = React.lazy(() => import('./ui-editor/ui-editor'));
+const TranslationInspector = React.lazy(() => import('./translation-inspector/translation-inspector'));
 
 function PopupHandler() {
   const frontendModules = useFrontendModules();
@@ -41,7 +42,7 @@ function PopupHandler() {
     }
   }, [t, shouldShowNotification]);
 
-  const { isOpen, isUIEditorEnabled, openTab } = useStore(implementerToolsStore);
+  const { isOpen, isTranslationInspectorEnabled, isUIEditorEnabled, openTab } = useStore(implementerToolsStore);
 
   return (
     // The marker lets tools that inspect the application tell the implementer tools' own UI apart
@@ -56,6 +57,7 @@ function PopupHandler() {
         />
       ) : null}
       {isUIEditorEnabled ? <UiEditor /> : null}
+      {isTranslationInspectorEnabled ? <TranslationInspector /> : null}
     </div>
   );
 }
