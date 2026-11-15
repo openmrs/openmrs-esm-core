@@ -124,11 +124,11 @@ export const useOpenmrsSWR = vi.fn((key: string | Array<any>) => {
 export const useDebounce = vi.fn((value) => value);
 
 export const useOnClickOutside = vi.fn(function useOnClickOutside() {
-  return React.useRef();
+  return React.useRef(null);
 });
 
 export const useOnVisible = vi.fn(function useOnVisible() {
-  return React.useRef();
+  return React.useRef(null);
 });
 
 export const useBodyScrollLock = vi.fn();

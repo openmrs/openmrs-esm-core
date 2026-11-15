@@ -94,7 +94,9 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ length = 
             value={data}
             labelText={t('digitLabel', 'Digit {{number}}', { number: index + 1 })}
             hideLabel
-            ref={(el: HTMLInputElement | null) => (inputRefs.current[index] = el)}
+            ref={(el: HTMLInputElement | null) => {
+              inputRefs.current[index] = el;
+            }}
             onChange={(event) => handleCodeInputChange(event, index)}
             onKeyDown={(event) => handleKeyDown(event, index)}
             onFocus={(event) => event.target.select()}

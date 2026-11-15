@@ -88,7 +88,7 @@ export function PatientBannerPatientInfo({ patient, renderedFrom }: PatientBanne
           <>
             <span>{age(patient.birthDate)}</span>
             <span className={styles.separator}>&middot;</span>
-            <span>{formatPartialDate(patient.birthDate, { time: false })}</span>
+            <span>{formatPartialDate(patient.birthDate, { time: false, noToday: true })}</span>
             <span className={styles.separator}>&middot;</span>
           </>
         )}

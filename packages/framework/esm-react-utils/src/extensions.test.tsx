@@ -7,6 +7,7 @@ import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 import {
   attach,
+  detach,
   getExtensionRenderingsStore,
   getExtensionNameFromId,
   registerExtension,
@@ -344,6 +345,109 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     render(<App />);
 
     expect(await screen.findByText('Spanish hola')).toBeInTheDocument();
+  });
+
+  it('useRenderableExtensions updates the mounted extension instead of remounting it on re-render', async () => {
+    const user = userEvent.setup();
+    const onMount = vi.fn();
+
+    function FrenchExtension({ suffix }) {
+      React.useEffect(() => onMount(), []);
+      return <div>French{suffix}</div>;
+    }
+
+    registerSimpleExtension('French', 'esm-languages-app', FrenchExtension);
+    attach('Box', 'French');
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-languages-app',
+      featureName: 'Languages',
+      disableTranslations: true,
+    })(() => {
+      const [suffix, toggleSuffix] = useReducer((suffix) => (suffix == '!' ? '?' : '!'), '!');
+      const [Ext] = useRenderableExtensions('Box');
+      return (
+        <div>
+          {Ext && <Ext state={{ suffix }} />}
+          <button onClick={toggleSuffix}>Toggle suffix</button>
+        </div>
+      );
+    });
+
+    render(<App />);
+
+    expect(await screen.findByText('French!')).toBeInTheDocument();
+    const mountsBeforeUpdate = onMount.mock.calls.length;
+    await user.click(screen.getByText('Toggle suffix'));
+    expect(await screen.findByText('French?')).toBeInTheDocument();
+    expect(onMount).toHaveBeenCalledTimes(mountsBeforeUpdate);
+  });
+
+  it('useRenderableExtensions keeps an extension component when other extensions are added or removed', async () => {
+    registerSimpleExtension('Dutch', 'esm-languages-app');
+    registerSimpleExtension('Polish', 'esm-languages-app');
+    attach('Box', 'Dutch');
+
+    const renders: Array<Array<React.FC>> = [];
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-languages-app',
+      featureName: 'Languages',
+      disableTranslations: true,
+    })(() => {
+      const extensions = useRenderableExtensions('Box');
+      renders.push(extensions);
+      return (
+        <div>
+          {extensions.map((Ext, index) => (
+            <Ext key={index} />
+          ))}
+        </div>
+      );
+    });
+
+    render(<App />);
+
+    expect(await screen.findByText('Dutch')).toBeInTheDocument();
+    const [dutch] = renders.at(-1);
+
+    act(() => attach('Box', 'Polish'));
+    expect(await screen.findByText('Polish')).toBeInTheDocument();
+    expect(renders.at(-1)).toHaveLength(2);
+    expect(renders.at(-1)[0]).toBe(dutch);
+
+    act(() => detach('Box', 'Polish'));
+    await waitFor(() => expect(screen.queryByText('Polish')).not.toBeInTheDocument());
+    expect(renders.at(-1)).toEqual([dutch]);
+  });
+
+  it('useRenderableExtensions renders the same extension separately for each consumer', async () => {
+    function ItalianExtension({ suffix }) {
+      return <div>Italian{suffix}</div>;
+    }
+
+    registerSimpleExtension('Italian', 'esm-languages-app', ItalianExtension);
+    attach('Box', 'Italian');
+
+    function Consumer({ suffix }: { suffix: string }) {
+      const [Ext] = useRenderableExtensions('Box');
+      return Ext ? <Ext state={{ suffix }} /> : null;
+    }
+
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-languages-app',
+      featureName: 'Languages',
+      disableTranslations: true,
+    })(() => (
+      <div>
+        <Consumer suffix="!" />
+        <Consumer suffix="?" />
+      </div>
+    ));
+
+    render(<App />);
+
+    expect(await screen.findByText('Italian!')).toBeInTheDocument();
+    expect(await screen.findByText('Italian?')).toBeInTheDocument();
   });
 });
 

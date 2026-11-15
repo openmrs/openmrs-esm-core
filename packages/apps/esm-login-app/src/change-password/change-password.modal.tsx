@@ -16,6 +16,7 @@ import {
 } from '@carbon/react';
 import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
+import { isNotBlank } from './change-password.utils';
 import styles from './change-password-modal.scss';
 
 interface ChangePasswordModalProps {
@@ -26,10 +27,6 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
   const { t } = useTranslation();
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  // Blank values are rejected with `refine` rather than `.trim()`, which would change the submitted
-  // password. The login form doesn't trim, so a trimmed password wouldn't match what the user typed.
-  const isNotBlank = (value: string) => value.trim().length > 0;
 
   const oldPasswordValidation = z
     .string({

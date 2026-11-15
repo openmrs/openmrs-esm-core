@@ -50,7 +50,7 @@ export const ActionableNotificationComponent: React.FC<ActionableNotificationPro
     <ActionableNotification
       kind={(kind as ActionableNotificationType) || 'info'}
       actionButtonLabel={actionText}
-      ariaLabel={getCoreTranslation('closesActionableNotification', 'Closes actionable notification')}
+      aria-label={getCoreTranslation('closesActionableNotification', 'Closes actionable notification')}
       onActionButtonClick={handleActionClick}
       statusIconDescription={getCoreTranslation('actionableNotification', 'Actionable notification')}
       subtitle={subtitle}

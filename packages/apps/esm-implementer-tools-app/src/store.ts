@@ -1,15 +1,38 @@
 import { createGlobalStore } from '@openmrs/esm-framework';
 
+/**
+ * The popup's tabs, in the order they are shown. This is the only statement of that order: the
+ * switcher, the panel and anything navigating to a tab all work from it, so reordering here moves a
+ * tab everywhere.
+ */
+export const implementerToolsTabs = [
+  'configuration',
+  'translations',
+  'frontend-modules',
+  'backend-modules',
+  'feature-flags',
+] as const;
+
+export type ImplementerToolsTab = (typeof implementerToolsTabs)[number];
+
 export interface ImplementerToolsStore {
   activeItemDescription: null | ActiveItemDescription;
   configPathBeingEdited: null | Array<string>;
   isOpen: boolean;
   hasAlert: boolean;
-  openTabIndex: number;
+  openTab: ImplementerToolsTab;
   isConfigToolbarOpen: boolean;
   isUIEditorEnabled: boolean;
   isJsonModeEnabled: boolean;
+  isTranslationInspectorEnabled: boolean;
   uiSelectedPath: null | Array<string>;
+  /** A translation the translation inspector has handed to the Translations tab to show. */
+  selectedTranslation: null | {
+    namespace: string;
+    key: string;
+    /** The text the inspector saw rendered, shown for a key that no translation file has. */
+    value?: string;
+  };
 }
 
 export interface ActiveItemDescription {
@@ -24,11 +47,13 @@ export const implementerToolsStore = createGlobalStore<ImplementerToolsStore>('i
   configPathBeingEdited: null,
   isOpen: getIsImplementerToolsOpen(),
   hasAlert: false,
-  openTabIndex: 0,
+  openTab: 'configuration',
   isConfigToolbarOpen: getIsConfigToolbarOpen(),
   isUIEditorEnabled: getIsUIEditorEnabled(),
   isJsonModeEnabled: getIsJsonModeEnabled(),
+  isTranslationInspectorEnabled: getIsTranslationInspectorEnabled(),
   uiSelectedPath: null,
+  selectedTranslation: null,
 });
 
 export const setHasAlert = (value: boolean) =>
@@ -41,14 +66,14 @@ export const togglePopup = () =>
   implementerToolsStore.setState((state) => ({
     ...state,
     isOpen: !state.isOpen,
-    openTabIndex: 0,
+    openTab: 'configuration',
   }));
 
 export const showModuleDiagnostics = () =>
   implementerToolsStore.setState((state) => ({
     ...state,
     isOpen: true,
-    openTabIndex: 2,
+    openTab: 'backend-modules',
   }));
 
 /* Set up localStorage-serialized state elements */
@@ -57,6 +82,7 @@ let lastValueOfIsOpen = getIsImplementerToolsOpen();
 let lastValueOfConfigToolbarOpen = getIsConfigToolbarOpen();
 let lastValueOfIsUiEditorEnabled = getIsUIEditorEnabled();
 let lastValueOfIsJsonModeEnabled = getIsJsonModeEnabled();
+let lastValueOfIsTranslationInspectorEnabled = getIsTranslationInspectorEnabled();
 
 implementerToolsStore.subscribe((state) => {
   if (state.isOpen != lastValueOfIsOpen) {
@@ -74,6 +100,10 @@ implementerToolsStore.subscribe((state) => {
   if (state.isJsonModeEnabled != lastValueOfIsJsonModeEnabled) {
     setIsJsonModeEnabled(state.isJsonModeEnabled);
     lastValueOfIsJsonModeEnabled = state.isJsonModeEnabled;
+  }
+  if (state.isTranslationInspectorEnabled != lastValueOfIsTranslationInspectorEnabled) {
+    setIsTranslationInspectorEnabled(state.isTranslationInspectorEnabled);
+    lastValueOfIsTranslationInspectorEnabled = state.isTranslationInspectorEnabled;
   }
 });
 
@@ -103,6 +133,14 @@ function setIsUIEditorEnabled(enabled: boolean) {
 
 function getIsJsonModeEnabled(): boolean {
   return JSON.parse(localStorage.getItem('openmrs:getIsJsonModeEnabled') || 'false') ?? false;
+}
+
+function getIsTranslationInspectorEnabled(): boolean {
+  return JSON.parse(localStorage.getItem('openmrs:isTranslationInspectorEnabled') || 'false') ?? false;
+}
+
+function setIsTranslationInspectorEnabled(enabled: boolean) {
+  localStorage.setItem('openmrs:isTranslationInspectorEnabled', JSON.stringify(enabled));
 }
 
 function setIsJsonModeEnabled(enabled: boolean) {

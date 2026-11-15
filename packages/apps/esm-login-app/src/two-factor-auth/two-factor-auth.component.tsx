@@ -14,7 +14,7 @@ import type { ConfigSchema } from '../config-schema';
 import styles from './two-factor-auth.scss';
 
 interface TwoFactorAuthProps {
-  title?: string | JSX.Element;
+  title?: string | React.JSX.Element;
 }
 
 const TwoFactorAuth: React.FC<TwoFactorAuthProps> = ({ title }) => {

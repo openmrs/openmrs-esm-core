@@ -71,7 +71,7 @@ export const ExportedWorkspace: React.FC<ExportedWorkspaceProps> = ({
   });
 
   const seedInputs: SeedInputs = { name, workspaceProps, windowProps, groupProps };
-  const storeRef = useRef<StoreApi<ExportedWorkspaceState>>();
+  const storeRef = useRef<StoreApi<ExportedWorkspaceState> | null>(null);
   // The inputs this instance has already seeded, so we re-seed when the caller changes any of them,
   // but do NOT clobber the user's own navigation/close of the current one.
   const seededInputsRef = useRef<SeedInputs | null>(null);

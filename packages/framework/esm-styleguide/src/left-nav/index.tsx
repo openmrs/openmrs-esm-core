@@ -14,7 +14,7 @@ import styles from './left-nav.module.scss';
 /**
  * Extended props for the LeftNavMenu component
  */
-interface LeftNavMenuProps extends SideNavProps {
+interface LeftNavMenuProps extends Omit<SideNavProps, 'onToggle'> {
   /**
    * Flag indicating if this component is a child of the header component.
    * When true, the component renders the left nav menu.

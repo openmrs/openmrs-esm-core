@@ -1,5 +1,12 @@
 import { coreTranslations } from './src/translations';
 
+export const enableTranslationInspector = jest.fn();
+export const disableTranslationInspector = jest.fn();
+export const isTranslationInspectorRecording = jest.fn(() => false);
+export const recordTranslationSighting = jest.fn();
+export const matchTranslations = jest.fn(() => []);
+export const extensionNamespaceSeparator = '___';
+
 export const getCoreTranslation = jest.fn(
   (key: string, defaultText?: string, options?: Record<string | number | symbol, unknown>) =>
     interpolate(coreTranslations[key] ?? defaultText, options),

@@ -39,6 +39,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "chalk"
         update-types: ["version-update:semver-major"]
+      # Pinned in the openmrs CLI until postcss-modules-scope stops double-escaping CSS module class names
+      - dependency-name: "postcss-selector-parser"
     groups:
       react-ecosystem:
         patterns:

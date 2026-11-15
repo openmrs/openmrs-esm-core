@@ -301,6 +301,33 @@ function fileExistsSync(name: string) {
 }
 
 /**
+ * fork-ts-checker-webpack-plugin 9 passes Chokidar 4 `interval: undefined` and `binaryInterval: undefined`
+ * whenever webpack polls without a numeric `poll`, which is `poll: true` or `CHOKIDAR_USEPOLLING` on its own.
+ * Chokidar 4 spreads those over its defaults, so the watch process crashes with `ERR_INVALID_ARG_TYPE` as soon
+ * as polling starts. Chokidar 3 ignored undefined options; dropping them before they reach the plugin's copy of
+ * Chokidar restores that, along with Chokidar's own intervals.
+ */
+function keepChokidarPollingDefaults() {
+  const pluginDir = dirname(require.resolve('fork-ts-checker-webpack-plugin'));
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const chokidarModule = require(require.resolve('chokidar', { paths: [pluginDir] }));
+  // The plugin calls `chokidar.default.watch`, through TypeScript's `__importDefault`.
+  const chokidar = chokidarModule.__esModule ? chokidarModule.default : chokidarModule;
+  const watch = chokidar?.watch;
+  if (typeof watch !== 'function' || watch.keepsPollingDefaults) {
+    return;
+  }
+
+  chokidar.watch = Object.assign(
+    (paths: unknown, options?: Record<string, unknown>) =>
+      watch(paths, options && Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined))),
+    { keepsPollingDefaults: true },
+  );
+}
+
+keepChokidarPollingDefaults();
+
+/**
  * This object will be merged into the webpack config.
  * Array values will be concatenated with the existing array.
  * Make sure to modify this object and not reassign it.
