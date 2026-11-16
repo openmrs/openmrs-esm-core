@@ -78,7 +78,7 @@
     "node-watch": "0.7.4",
     "npm-registry-fetch": "19.1.1",
     "open": "11.0.4",
-    "pacote": "21.5.0",
+    "pacote": "22.0.1",
     "postcss-selector-parser": "7.1.8",
     "sass-embedded": "1.108.2",
     "sass-loader": "16.0.5",
