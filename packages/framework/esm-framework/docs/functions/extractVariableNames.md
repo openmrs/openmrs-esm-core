@@ -14,9 +14,9 @@ of variables that will need to be supplied in order to correctly process the exp
 
 ### expression
 
-The expression to analyze, either as a string or pre-parsed expression.
+`string` \| `Expression`
 
-`string` | `Expression`
+The expression to analyze, either as a string or pre-parsed expression.
 
 ## Returns
 

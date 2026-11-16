@@ -2,7 +2,7 @@
 
 # Function: toLanguageTag()
 
-> **toLanguageTag**(`locale`): `undefined` \| `string`
+> **toLanguageTag**(`locale`): `string` \| `undefined`
 
 Defined in: [packages/framework/esm-utils/src/language-tag.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/language-tag.ts#L25)
 
@@ -22,15 +22,15 @@ Other POSIX modifiers have no BCP 47 equivalent and parse as whatever their leng
 
 ### locale
 
+`string` \| `null` \| `undefined`
+
 An OpenMRS locale identifier, e.g. `sw_KE`. Locale data reaching this function
   comes from the REST session and from configuration, so anything that is not a string is
   treated as an unresolvable locale rather than an error.
 
-`undefined` | `null` | `string`
-
 ## Returns
 
-`undefined` \| `string`
+`string` \| `undefined`
 
 The canonical language tag, or `undefined` if `locale` is not a structurally valid tag.
 

@@ -6,7 +6,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:14](https://g
 
 ## Indexable
 
-\[`anythingElse`: `string`\]: `any`
+> \[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
@@ -84,43 +84,47 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:17](https://g
 
 ### userProperties
 
-> **userProperties**: `null` \| \{[`key`: `string`]: `undefined` \| `string`; `defaultLocation?`: `string`; `patientsVisited?`: `string`; `starredPatientLists?`: `string`; \}
+> **userProperties**: \{\[`key`: `string`\]: `string` \| `undefined`; `defaultLocation?`: `string`; `patientsVisited?`: `string`; `starredPatientLists?`: `string`; \} \| `null`
 
 Defined in: [packages/framework/esm-api/src/types/user-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L19)
 
-#### Type declaration
+#### Union Members
 
-`null`
+##### Type Literal
 
-\{[`key`: `string`]: `undefined` \| `string`; `defaultLocation?`: `string`; `patientsVisited?`: `string`; `starredPatientLists?`: `string`; \}
+\{\[`key`: `string`\]: `string` \| `undefined`; `defaultLocation?`: `string`; `patientsVisited?`: `string`; `starredPatientLists?`: `string`; \}
 
-#### Index Signature
+##### Index Signature
 
-\[`key`: `string`\]: `undefined` \| `string`
+\[`key`: `string`\]: `string` \| `undefined`
 
-#### defaultLocation?
+##### defaultLocation?
 
-> `optional` **defaultLocation**: `string`
+> `optional` **defaultLocation?**: `string`
 
 The UUID of the location the user has set preference to use for next logins
 
-#### patientsVisited?
+##### patientsVisited?
 
-> `optional` **patientsVisited**: `string`
+> `optional` **patientsVisited?**: `string`
 
 The UUIDs of patients the user has visited
 Separated by commas
 To get the array, do `user.userProperties.patientsVisited.split(',')`
 To store the array, do `patientsVisited: patientsVisited.join(',')`
 
-#### starredPatientLists?
+##### starredPatientLists?
 
-> `optional` **starredPatientLists**: `string`
+> `optional` **starredPatientLists?**: `string`
 
 The UUIDs of patient lists the user has starred
 Separated by commas
 To get the array, do `user.userProperties.starredPatientLists.split(',')`
 To store the array, perform `starredPatientLists: starredPatientLists.join(',')`
+
+***
+
+`null`
 
 ***
 

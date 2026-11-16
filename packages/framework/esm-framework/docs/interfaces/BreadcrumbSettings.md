@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-navigation/src/types.ts:3](https://github.co
 
 ### matcher?
 
-> `optional` **matcher**: `string` \| `RegExp`
+> `optional` **matcher?**: `string` \| `RegExp`
 
 Defined in: [packages/framework/esm-navigation/src/types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L16)
 
@@ -23,7 +23,7 @@ Can be omitted; the value of `path` is used as the default value.
 
 ### parent?
 
-> `optional` **parent**: `string`
+> `optional` **parent?**: `string`
 
 Defined in: [packages/framework/esm-navigation/src/types.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L25)
 
@@ -48,7 +48,7 @@ Gets the path of breadcrumb for navigation purposes.
 
 ### title
 
-> **title**: `string` \| (`params`) => `string` \| (`params`) => `Promise`\<`string`\>
+> **title**: `string` \| ((`params`) => `string`) \| ((`params`) => `Promise`\<`string`\>)
 
 Defined in: [packages/framework/esm-navigation/src/types.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L29)
 

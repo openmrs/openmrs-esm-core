@@ -10,4 +10,4 @@ An object containing the variable to use when evaluating this expression
 
 ## Index Signature
 
-\[`key`: `string`\]: `null` \| `string` \| `number` \| `boolean` \| `object` \| `Function` \| `RegExp` \| `VariablesMap` \| `VariablesMap`[]
+\[`key`: `string`\]: `string` \| `number` \| `boolean` \| `object` \| `Function` \| `RegExp` \| `VariablesMap` \| `VariablesMap`[] \| `null`

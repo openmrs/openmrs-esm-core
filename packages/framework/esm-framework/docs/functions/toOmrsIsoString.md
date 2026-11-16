@@ -2,7 +2,7 @@
 
 # Function: toOmrsIsoString()
 
-> **toOmrsIsoString**(`date`, `toUTC`): `string`
+> **toOmrsIsoString**(`date`, `toUTC?`): `string`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L109)
 
@@ -14,7 +14,7 @@ Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
 [`DateInput`](../type-aliases/DateInput.md)
 
-### toUTC
+### toUTC?
 
 `boolean` = `false`
 

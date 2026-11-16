@@ -2,7 +2,7 @@
 
 # Function: evaluateAsync()
 
-> **evaluateAsync**(`expression`, `variables`): `Promise`\<[`DefaultEvaluateReturnType`](../type-aliases/DefaultEvaluateReturnType.md)\>
+> **evaluateAsync**(`expression`, `variables?`): `Promise`\<[`DefaultEvaluateReturnType`](../type-aliases/DefaultEvaluateReturnType.md)\>
 
 Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L166)
 
@@ -17,11 +17,11 @@ Other values will result in an error.
 
 ### expression
 
+`string` \| `Expression`
+
 The expression to evaluate, either as a string or pre-parsed expression
 
-`string` | `Expression`
-
-### variables
+### variables?
 
 [`VariablesMap`](../type-aliases/VariablesMap.md) = `{}`
 

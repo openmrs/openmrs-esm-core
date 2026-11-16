@@ -32,10 +32,10 @@ Takes the configured value as input. Returns true
 
 ### message
 
+`string` \| ((`value`) => `string`)
+
 A string message that explains why the value is invalid. Can
    also be a function that takes the value as input and returns a string.
-
-`string` | (`value`) => `string`
 
 ## Returns
 

@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:9](https://github
 
 ### componentContext?
 
-> `optional` **componentContext**: [`ComponentConfig`](ComponentConfig.md)
+> `optional` **componentContext?**: [`ComponentConfig`](ComponentConfig.md)
 
 Defined in: [packages/framework/esm-extensions/src/left-nav.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L11)
 
@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:10](https://githu
 
 ### slotName
 
-> **slotName**: `null` \| `string`
+> **slotName**: `string` \| `null`
 
 Defined in: [packages/framework/esm-extensions/src/left-nav.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L8)
 
@@ -40,6 +40,6 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:8](https://github
 
 ### state?
 
-> `optional` **state**: [`ExtensionSlotState`](ExtensionSlotState.md)
+> `optional` **state?**: [`ExtensionSlotState`](ExtensionSlotState.md)
 
 Defined in: [packages/framework/esm-extensions/src/left-nav.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L12)

@@ -2,7 +2,7 @@
 
 # Function: fetchCurrentPatient()
 
-> **fetchCurrentPatient**(`patientUuid`, `fetchInit?`): `Promise`\<`null` \| `Patient`\>
+> **fetchCurrentPatient**(`patientUuid`, `fetchInit?`): `Promise`\<`Patient` \| `null`\>
 
 Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L38)
 
@@ -24,7 +24,7 @@ Optional fetch configuration options to pass to the request.
 
 ## Returns
 
-`Promise`\<`null` \| `Patient`\>
+`Promise`\<`Patient` \| `null`\>
 
 A Promise that resolves with the FHIR Patient object, or `null` if
   the patient UUID is null.

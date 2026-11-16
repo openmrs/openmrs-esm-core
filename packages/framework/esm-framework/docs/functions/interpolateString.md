@@ -27,6 +27,8 @@ With optional params wrapped in `${ }`
 
 ### params
 
+\{\[`key`: `string`\]: `string`; \}
+
 Values to interpolate into the string template
 
 ## Returns

@@ -2,7 +2,7 @@
 
 # Function: evaluateAsNumberAsync()
 
-> **evaluateAsNumberAsync**(`expression`, `variables`): `Promise`\<`number`\>
+> **evaluateAsNumberAsync**(`expression`, `variables?`): `Promise`\<`number`\>
 
 Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:218](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L218)
 
@@ -13,11 +13,11 @@ if valid expression must return numeric values.
 
 ### expression
 
+`string` \| `Expression`
+
 The expression to evaluate, either as a string or pre-parsed expression
 
-`string` | `Expression`
-
-### variables
+### variables?
 
 [`VariablesMap`](../type-aliases/VariablesMap.md) = `{}`
 

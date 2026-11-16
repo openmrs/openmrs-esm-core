@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:110](https://github.
 
 ### config
 
-> `readonly` **config**: `null` \| `Readonly`\<[`ConfigObject`](ConfigObject.md)\>
+> `readonly` **config**: `Readonly`\<[`ConfigObject`](ConfigObject.md)\> \| `null`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L116)
 
@@ -18,7 +18,7 @@ The extension's config. Note that this will be `null` until the slot is mounted.
 
 ### displayConditionExpression?
 
-> `readonly` `optional` **displayConditionExpression**: `string`
+> `readonly` `optional` **displayConditionExpression?**: `string`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L119)
 
@@ -28,7 +28,7 @@ The condition under which this extension should be displayed.
 
 ### featureFlag?
 
-> `readonly` `optional` **featureFlag**: `string`
+> `readonly` `optional` **featureFlag?**: `string`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L117)
 

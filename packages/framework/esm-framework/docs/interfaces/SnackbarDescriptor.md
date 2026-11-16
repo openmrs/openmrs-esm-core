@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 ### actionButtonLabel?
 
-> `optional` **actionButtonLabel**: `string`
+> `optional` **actionButtonLabel?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L15)
 
@@ -20,7 +20,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 ### autoClose?
 
-> `optional` **autoClose**: `boolean`
+> `optional` **autoClose?**: `boolean`
 
 Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L22)
 
@@ -28,7 +28,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 ### isLowContrast?
 
-> `optional` **isLowContrast**: `boolean`
+> `optional` **isLowContrast?**: `boolean`
 
 Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L16)
 
@@ -36,15 +36,15 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 ### kind?
 
-> `optional` **kind**: `string`
+> `optional` **kind?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L17)
 
 ***
 
-### onActionButtonClick()?
+### onActionButtonClick?
 
-> `optional` **onActionButtonClick**: () => `void`
+> `optional` **onActionButtonClick?**: () => `void`
 
 Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L18)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 ### progressActionLabel?
 
-> `optional` **progressActionLabel**: `string`
+> `optional` **progressActionLabel?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L19)
 
@@ -64,7 +64,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 ### subtitle?
 
-> `optional` **subtitle**: `ReactNode`
+> `optional` **subtitle?**: `ReactNode`
 
 Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L20)
 
@@ -72,7 +72,7 @@ Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.
 
 ### timeoutInMs?
 
-> `optional` **timeoutInMs**: `number`
+> `optional` **timeoutInMs?**: `number`
 
 Defined in: [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
 

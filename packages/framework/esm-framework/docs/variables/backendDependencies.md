@@ -10,7 +10,7 @@ Defines the minimum required versions of OpenMRS backend modules that the
 frontend framework depends on. These versions are checked at startup to ensure
 compatibility between the frontend and backend.
 
-## Type declaration
+## Type Declaration
 
 ### fhir2
 
@@ -18,4 +18,4 @@ compatibility between the frontend and backend.
 
 #### webservices.rest
 
-> **rest**: `string` = `'2.24.0'`
+> **webservices.rest**: `string` = `'2.24.0'`

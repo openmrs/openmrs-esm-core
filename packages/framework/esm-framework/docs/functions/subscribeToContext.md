@@ -32,8 +32,4 @@ a function invoked with the current context whenever
 
 A function to unsubscribe from the context
 
-> (): `void`
-
-### Returns
-
-`void`
+() => `void`

@@ -14,13 +14,13 @@ accounted for, use OpenmrsResource instead.
 
 ## Indexable
 
-\[`anythingElse`: `string`\]: `any`
+> \[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
 ### address1?
 
-> `optional` **address1**: `string`
+> `optional` **address1?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L13)
 
@@ -28,7 +28,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:13](h
 
 ### address10?
 
-> `optional` **address10**: `string`
+> `optional` **address10?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L22)
 
@@ -36,7 +36,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:22](h
 
 ### address11?
 
-> `optional` **address11**: `string`
+> `optional` **address11?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L23)
 
@@ -44,7 +44,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:23](h
 
 ### address12?
 
-> `optional` **address12**: `string`
+> `optional` **address12?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L24)
 
@@ -52,7 +52,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:24](h
 
 ### address13?
 
-> `optional` **address13**: `string`
+> `optional` **address13?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L25)
 
@@ -60,7 +60,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:25](h
 
 ### address14?
 
-> `optional` **address14**: `string`
+> `optional` **address14?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L26)
 
@@ -68,7 +68,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:26](h
 
 ### address15?
 
-> `optional` **address15**: `string`
+> `optional` **address15?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L27)
 
@@ -76,7 +76,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:27](h
 
 ### address2?
 
-> `optional` **address2**: `string`
+> `optional` **address2?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L14)
 
@@ -84,7 +84,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:14](h
 
 ### address3?
 
-> `optional` **address3**: `string`
+> `optional` **address3?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L15)
 
@@ -92,7 +92,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:15](h
 
 ### address4?
 
-> `optional` **address4**: `string`
+> `optional` **address4?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L16)
 
@@ -100,7 +100,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:16](h
 
 ### address5?
 
-> `optional` **address5**: `string`
+> `optional` **address5?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L17)
 
@@ -108,7 +108,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:17](h
 
 ### address6?
 
-> `optional` **address6**: `string`
+> `optional` **address6?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L18)
 
@@ -116,7 +116,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:18](h
 
 ### address7?
 
-> `optional` **address7**: `string`
+> `optional` **address7?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L19)
 
@@ -124,7 +124,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:19](h
 
 ### address8?
 
-> `optional` **address8**: `string`
+> `optional` **address8?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L20)
 
@@ -132,7 +132,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:20](h
 
 ### address9?
 
-> `optional` **address9**: `string`
+> `optional` **address9?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L21)
 
@@ -140,7 +140,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:21](h
 
 ### attributes?
 
-> `optional` **attributes**: [`OpenmrsResource`](OpenmrsResource.md)[]
+> `optional` **attributes?**: [`OpenmrsResource`](OpenmrsResource.md)[]
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L29)
 
@@ -148,7 +148,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:29](h
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -160,7 +160,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 ### childLocation?
 
-> `optional` **childLocation**: `Location`
+> `optional` **childLocation?**: `Location`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L31)
 
@@ -168,7 +168,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:31](h
 
 ### cityVillage?
 
-> `optional` **cityVillage**: `string`
+> `optional` **cityVillage?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L6)
 
@@ -176,7 +176,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:6](ht
 
 ### country?
 
-> `optional` **country**: `string`
+> `optional` **country?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L8)
 
@@ -184,7 +184,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:8](ht
 
 ### countyDistrict?
 
-> `optional` **countyDistrict**: `string`
+> `optional` **countyDistrict?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L10)
 
@@ -192,7 +192,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:10](h
 
 ### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L5)
 
@@ -200,7 +200,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:5](ht
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
@@ -212,7 +212,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 ### latitude?
 
-> `optional` **latitude**: `string`
+> `optional` **latitude?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L11)
 
@@ -220,7 +220,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:11](h
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -232,7 +232,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 ### longitude?
 
-> `optional` **longitude**: `string`
+> `optional` **longitude?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L12)
 
@@ -240,7 +240,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:12](h
 
 ### name?
 
-> `optional` **name**: `string`
+> `optional` **name?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L4)
 
@@ -248,7 +248,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:4](ht
 
 ### parentLocation?
 
-> `optional` **parentLocation**: `Location`
+> `optional` **parentLocation?**: `Location`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L30)
 
@@ -256,7 +256,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:30](h
 
 ### postalCode?
 
-> `optional` **postalCode**: `string`
+> `optional` **postalCode?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L9)
 
@@ -264,7 +264,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:9](ht
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -276,7 +276,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https:
 
 ### retired?
 
-> `optional` **retired**: `boolean`
+> `optional` **retired?**: `boolean`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L32)
 
@@ -284,7 +284,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:32](h
 
 ### stateProvince?
 
-> `optional` **stateProvince**: `string`
+> `optional` **stateProvince?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L7)
 
@@ -292,7 +292,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:7](ht
 
 ### tags?
 
-> `optional` **tags**: [`OpenmrsResource`](OpenmrsResource.md)[]
+> `optional` **tags?**: [`OpenmrsResource`](OpenmrsResource.md)[]
 
 Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/location-resource.ts#L28)
 

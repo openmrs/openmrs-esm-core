@@ -2,7 +2,7 @@
 
 # Function: useDebounce()
 
-> **useDebounce**\<`T`\>(`value`, `delay`): `T`
+> **useDebounce**\<`T`\>(`value`, `delay?`): `T`
 
 Defined in: [packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
 
@@ -24,7 +24,7 @@ a request.
 
 The value that will be used to set `debounceValue`
 
-### delay
+### delay?
 
 `number` = `300`
 

@@ -14,13 +14,13 @@ accounted for, use OpenmrsResource instead.
 
 ## Indexable
 
-\[`anythingElse`: `string`\]: `any`
+> \[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
 ### accessionNumber?
 
-> `optional` **accessionNumber**: `string`
+> `optional` **accessionNumber?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L9)
 
@@ -28,7 +28,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:9](https:/
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -40,7 +40,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 ### comment?
 
-> `optional` **comment**: `string`
+> `optional` **comment?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L13)
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:13](https:
 
 ### concept?
 
-> `optional` **concept**: [`Concept`](Concept.md)
+> `optional` **concept?**: [`Concept`](Concept.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L6)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:6](https:/
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
@@ -68,7 +68,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 ### encounter?
 
-> `optional` **encounter**: [`Encounter`](Encounter.md)
+> `optional` **encounter?**: [`Encounter`](Encounter.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L16)
 
@@ -76,7 +76,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:16](https:
 
 ### formFiledNamespace?
 
-> `optional` **formFiledNamespace**: `string`
+> `optional` **formFiledNamespace?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L20)
 
@@ -84,7 +84,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:20](https:
 
 ### formFilePath?
 
-> `optional` **formFilePath**: `string`
+> `optional` **formFilePath?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L19)
 
@@ -92,7 +92,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:19](https:
 
 ### groupMembers?
 
-> `optional` **groupMembers**: `Obs`[]
+> `optional` **groupMembers?**: `Obs`[]
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L12)
 
@@ -100,7 +100,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:12](https:
 
 ### interpretation?
 
-> `optional` **interpretation**: `string`
+> `optional` **interpretation?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L22)
 
@@ -108,7 +108,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:22](https:
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -120,7 +120,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 ### location?
 
-> `optional` **location**: [`Location`](Location.md)
+> `optional` **location?**: [`Location`](Location.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L14)
 
@@ -128,7 +128,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:14](https:
 
 ### obsDatetime?
 
-> `optional` **obsDatetime**: `string`
+> `optional` **obsDatetime?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L8)
 
@@ -136,7 +136,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:8](https:/
 
 ### obsGroup?
 
-> `optional` **obsGroup**: `Obs`
+> `optional` **obsGroup?**: `Obs`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L10)
 
@@ -144,7 +144,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:10](https:
 
 ### order?
 
-> `optional` **order**: [`OpenmrsResource`](OpenmrsResource.md)
+> `optional` **order?**: [`OpenmrsResource`](OpenmrsResource.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L15)
 
@@ -152,7 +152,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:15](https:
 
 ### person?
 
-> `optional` **person**: [`Person`](Person.md)
+> `optional` **person?**: [`Person`](Person.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L7)
 
@@ -160,7 +160,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:7](https:/
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -172,7 +172,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https:
 
 ### status?
 
-> `optional` **status**: `"PRELIMINARY"` \| `"FINAL"` \| `"AMENDED"`
+> `optional` **status?**: `"PRELIMINARY"` \| `"FINAL"` \| `"AMENDED"`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L21)
 
@@ -192,7 +192,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https:
 
 ### value?
 
-> `optional` **value**: `string` \| `number` \| `boolean` \| [`OpenmrsResource`](OpenmrsResource.md)
+> `optional` **value?**: `string` \| `number` \| `boolean` \| [`OpenmrsResource`](OpenmrsResource.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L17)
 
@@ -200,7 +200,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:17](https:
 
 ### valueCodedName?
 
-> `optional` **valueCodedName**: [`OpenmrsResource`](OpenmrsResource.md)
+> `optional` **valueCodedName?**: [`OpenmrsResource`](OpenmrsResource.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L11)
 
@@ -208,6 +208,6 @@ Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:11](https:
 
 ### valueModifier?
 
-> `optional` **valueModifier**: `string`
+> `optional` **valueModifier?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/obs-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/obs-resource.ts#L18)

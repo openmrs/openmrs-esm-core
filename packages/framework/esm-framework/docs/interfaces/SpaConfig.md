@@ -20,7 +20,7 @@ The base path or URL for the OpenMRS API / endpoints.
 
 ### configUrls?
 
-> `optional` **configUrls**: `string`[]
+> `optional` **configUrls?**: `string`[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L83)
 
@@ -30,7 +30,7 @@ URLs of configurations to load in the system.
 
 ### env?
 
-> `optional` **env**: [`SpaEnvironment`](../type-aliases/SpaEnvironment.md)
+> `optional` **env?**: [`SpaEnvironment`](../type-aliases/SpaEnvironment.md)
 
 Defined in: [packages/framework/esm-globals/src/types.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L79)
 

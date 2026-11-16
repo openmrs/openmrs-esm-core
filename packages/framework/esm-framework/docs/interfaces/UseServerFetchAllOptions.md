@@ -16,9 +16,9 @@ Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:14](ht
 
 ## Properties
 
-### fetcher()?
+### fetcher?
 
-> `optional` **fetcher**: (`key`) => `Promise`\<[`FetchResponse`](FetchResponse.md)\<`R`\>\>
+> `optional` **fetcher?**: (`key`) => `Promise`\<[`FetchResponse`](FetchResponse.md)\<`R`\>\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L15)
 
@@ -42,7 +42,7 @@ The fetcher to use. Defaults to openmrsFetch
 
 ### immutable?
 
-> `optional` **immutable**: `boolean`
+> `optional` **immutable?**: `boolean`
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L22)
 
@@ -58,7 +58,7 @@ This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
 
 ### partialData?
 
-> `optional` **partialData**: `boolean`
+> `optional` **partialData?**: `boolean`
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L21)
 
@@ -71,7 +71,7 @@ display all data at once or reduce the number of re-renders (to avoid confusing 
 
 ### swrInfiniteConfig?
 
-> `optional` **swrInfiniteConfig**: `SWRInfiniteConfiguration`\<`any`, `any`, `BareFetcher`\<`any`\>\>
+> `optional` **swrInfiniteConfig?**: `SWRInfiniteConfiguration`\<`any`, `any`, `BareFetcher`\<`any`\>\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L24)
 

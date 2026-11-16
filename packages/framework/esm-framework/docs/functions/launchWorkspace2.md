@@ -2,7 +2,7 @@
 
 # Function: launchWorkspace2()
 
-> **launchWorkspace2**\<`WorkspaceProps`, `WindowProps`, `GroupProp`\>(`workspaceName`, `workspaceProps`, `windowProps`, `groupProps`): `Promise`\<`boolean`\>
+> **launchWorkspace2**\<`WorkspaceProps`, `WindowProps`, `GroupProp`\>(`workspaceName`, `workspaceProps?`, `windowProps?`, `groupProps?`): `Promise`\<`boolean`\>
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L133)
 
@@ -60,17 +60,17 @@ The "patient search" workspace in the queues and ward apps is another example.
 
 `string`
 
-### workspaceProps
+### workspaceProps?
 
-`null` | `WorkspaceProps`
+`WorkspaceProps` \| `null` = `null`
 
-### windowProps
+### windowProps?
 
-`null` | `WindowProps`
+`WindowProps` \| `null` = `null`
 
-### groupProps
+### groupProps?
 
-`null` | `GroupProp`
+`GroupProp` \| `null` = `null`
 
 ## Returns
 

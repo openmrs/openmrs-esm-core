@@ -12,9 +12,9 @@ Get a formatted display string for an FHIR name.
 
 ### name
 
-The name to be formatted.
+`HumanName` \| `undefined`
 
-`undefined` | `HumanName`
+The name to be formatted.
 
 ## Returns
 

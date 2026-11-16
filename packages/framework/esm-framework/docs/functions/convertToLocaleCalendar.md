@@ -12,11 +12,11 @@ Converts a calendar date to the equivalent locale calendar date.
 
 ### date
 
-`CalendarDate` | `CalendarDateTime` | `ZonedDateTime`
+`CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime`
 
 ### locale
 
-`string` | `Locale`
+`string` \| `Locale`
 
 ## Returns
 

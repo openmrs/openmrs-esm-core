@@ -22,7 +22,7 @@ Defined in: [packages/framework/esm-api/src/types/fetch.ts:3](https://github.com
 
 ### body
 
-> `readonly` **body**: `null` \| `ReadableStream`\<`Uint8Array`\<`ArrayBufferLike`\>\>
+> `readonly` **body**: `ReadableStream`\<`Uint8Array`\<`ArrayBufferLike`\>\> \| `null`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:3534
 

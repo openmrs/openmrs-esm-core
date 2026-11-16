@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 ### critical?
 
-> `optional` **critical**: `boolean`
+> `optional` **critical?**: `boolean`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L17)
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 ### kind?
 
-> `optional` **kind**: `string`
+> `optional` **kind?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L16)
 
@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 ### progressActionLabel?
 
-> `optional` **progressActionLabel**: `string`
+> `optional` **progressActionLabel?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L18)
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-noti
 
 ### title?
 
-> `optional` **title**: `string`
+> `optional` **title?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L15)
 

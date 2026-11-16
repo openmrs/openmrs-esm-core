@@ -2,7 +2,7 @@
 
 # Function: age()
 
-> **age**(`birthDate`, `currentDate`): `null` \| `string`
+> **age**(`birthDate`, `currentDate?`): `string` \| `null`
 
 Defined in: [packages/framework/esm-utils/src/age-helpers.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L83)
 
@@ -19,7 +19,7 @@ https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://system
 
 The birthDate. If birthDate is null, returns null.
 
-### currentDate
+### currentDate?
 
 `ConfigType` = `...`
 
@@ -27,7 +27,7 @@ Optional. If provided, calculates the age of the person at the provided currentD
 
 ## Returns
 
-`null` \| `string`
+`string` \| `null`
 
 A human-readable string version of the age.
 

@@ -14,13 +14,13 @@ accounted for, use OpenmrsResource instead.
 
 ## Indexable
 
-\[`anythingElse`: `string`\]: `any`
+> \[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 ### certainty?
 
-> `optional` **certainty**: `string`
+> `optional` **certainty?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L19)
 
@@ -40,29 +40,29 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:19](
 
 ### diagnosis?
 
-> `optional` **diagnosis**: `object`
+> `optional` **diagnosis?**: `object`
 
 Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L7)
 
 #### coded?
 
-> `optional` **coded**: `object`
+> `optional` **coded?**: `object`
 
 ##### coded.conceptClass?
 
-> `optional` **conceptClass**: [`ConceptClass`](ConceptClass.md)
+> `optional` **conceptClass?**: [`ConceptClass`](ConceptClass.md)
 
 ##### coded.datatype?
 
-> `optional` **datatype**: [`OpenmrsResource`](OpenmrsResource.md)
+> `optional` **datatype?**: [`OpenmrsResource`](OpenmrsResource.md)
 
 ##### coded.display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 ##### coded.name?
 
-> `optional` **name**: [`Concept`](Concept.md)
+> `optional` **name?**: [`Concept`](Concept.md)
 
 ##### coded.uuid
 
@@ -70,13 +70,13 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:7](h
 
 #### nonCoded?
 
-> `optional` **nonCoded**: `string`
+> `optional` **nonCoded?**: `string`
 
 ***
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
@@ -88,7 +88,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 ### encounter?
 
-> `optional` **encounter**: [`Encounter`](Encounter.md)
+> `optional` **encounter?**: [`Encounter`](Encounter.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L18)
 
@@ -96,7 +96,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:18](
 
 ### formFieldNamespace?
 
-> `optional` **formFieldNamespace**: `string`
+> `optional` **formFieldNamespace?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L21)
 
@@ -104,7 +104,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:21](
 
 ### formFieldPath?
 
-> `optional` **formFieldPath**: `string`
+> `optional` **formFieldPath?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L22)
 
@@ -112,7 +112,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:22](
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -124,7 +124,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 ### patient?
 
-> `optional` **patient**: [`Patient`](Patient.md)
+> `optional` **patient?**: [`Patient`](Patient.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L17)
 
@@ -132,7 +132,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:17](
 
 ### rank?
 
-> `optional` **rank**: `number`
+> `optional` **rank?**: `number`
 
 Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L20)
 
@@ -140,7 +140,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:20](
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -164,6 +164,6 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https:
 
 ### voided?
 
-> `optional` **voided**: `boolean`
+> `optional` **voided?**: `boolean`
 
 Defined in: [packages/framework/esm-emr-api/src/types/diagnosis-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/diagnosis-resource.ts#L23)

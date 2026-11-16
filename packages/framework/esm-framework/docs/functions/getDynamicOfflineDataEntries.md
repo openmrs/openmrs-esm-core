@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / getDynamicOfflineDataEntries
 
-# Function: ~~getDynamicOfflineDataEntries()~~
+# ~~Function: getDynamicOfflineDataEntries()~~
 
 > **getDynamicOfflineDataEntries**\<`T`\>(`_type?`): `Promise`\<`T`[]\>
 

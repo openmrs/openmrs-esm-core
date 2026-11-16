@@ -2,7 +2,7 @@
 
 # Function: openmrsFetch()
 
-> **openmrsFetch**\<`T`\>(`path`, `fetchInit`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`T`\>\>
+> **openmrsFetch**\<`T`\>(`path`, `fetchInit?`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`T`\>\>
 
 Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L89)
 
@@ -27,7 +27,7 @@ A string url to make the request to. Note that the
   openmrs base url (by default `/openmrs`) will be automatically
   prepended to the URL, so there is no need to include it.
 
-### fetchInit
+### fetchInit?
 
 [`FetchConfig`](../interfaces/FetchConfig.md) = `{}`
 

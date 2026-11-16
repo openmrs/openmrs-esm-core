@@ -16,6 +16,6 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:310](https://github
 
 ### responseBody
 
-> **responseBody**: `null` \| `ResponseBody`
+> **responseBody**: `ResponseBody` \| `null`
 
 Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L311)

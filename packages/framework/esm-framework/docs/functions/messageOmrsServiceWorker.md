@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / messageOmrsServiceWorker
 
-# Function: ~~messageOmrsServiceWorker()~~
+# ~~Function: messageOmrsServiceWorker()~~
 
 > **messageOmrsServiceWorker**(`_message`): `Promise`\<\{ `error`: `string`; `result`: `undefined`; `success`: `false`; \}\>
 

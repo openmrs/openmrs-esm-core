@@ -2,7 +2,7 @@
 
 # Function: useLocations()
 
-> **useLocations**(`tagUuidOrName`, `query`): [`Location`](../interfaces/Location.md)[]
+> **useLocations**(`tagUuidOrName?`, `query?`): [`Location`](../interfaces/Location.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/useLocations.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.tsx#L32)
 
@@ -11,19 +11,19 @@ Locations can be filtered by a tag UUID/name and/or a search query string.
 
 ## Parameters
 
-### tagUuidOrName
+### tagUuidOrName?
+
+`string` \| `null` = `null`
 
 Optional tag UUID or name to filter locations by.
   Pass `null` to not filter by tag.
 
-`null` | `string`
+### query?
 
-### query
+`string` \| `null` = `null`
 
 Optional search query string to filter locations. Pass `null`
   to not filter by query.
-
-`null` | `string`
 
 ## Returns
 

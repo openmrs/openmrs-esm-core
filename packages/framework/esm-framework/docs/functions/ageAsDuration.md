@@ -2,7 +2,7 @@
 
 # Function: ageAsDuration()
 
-> **ageAsDuration**(`birthDate`, `currentDate`): `null` \| `DurationInput`
+> **ageAsDuration**(`birthDate`, `currentDate?`): `DurationInput` \| `null`
 
 Defined in: [packages/framework/esm-utils/src/age-helpers.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L22)
 
@@ -17,7 +17,7 @@ Gets the age of a person as a structured duration object, following NHS Digital 
 
 The birthDate. If null, returns null.
 
-### currentDate
+### currentDate?
 
 `ConfigType` = `...`
 
@@ -25,7 +25,7 @@ Optional. If provided, calculates the age at the provided date instead of now.
 
 ## Returns
 
-`null` \| `DurationInput`
+`DurationInput` \| `null`
 
 A DurationInput object, or null if birthDate is null or unparseable.
 

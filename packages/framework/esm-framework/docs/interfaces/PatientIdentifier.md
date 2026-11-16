@@ -16,7 +16,7 @@ accounted for, use OpenmrsResource instead.
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -28,7 +28,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
@@ -40,7 +40,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 ### identifier?
 
-> `optional` **identifier**: `string`
+> `optional` **identifier?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L22)
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:22](ht
 
 ### identifierType?
 
-> `optional` **identifierType**: [`PatientIdentifierType`](PatientIdentifierType.md)
+> `optional` **identifierType?**: [`PatientIdentifierType`](PatientIdentifierType.md)
 
 Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L23)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:23](ht
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -68,7 +68,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 ### location?
 
-> `optional` **location**: `Location`
+> `optional` **location?**: `Location`
 
 Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L24)
 
@@ -76,7 +76,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:24](ht
 
 ### preferred?
 
-> `optional` **preferred**: `boolean`
+> `optional` **preferred?**: `boolean`
 
 Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L25)
 
@@ -84,7 +84,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:25](ht
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -108,6 +108,6 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https:
 
 ### voided?
 
-> `optional` **voided**: `boolean`
+> `optional` **voided?**: `boolean`
 
 Defined in: [packages/framework/esm-emr-api/src/types/patient-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/patient-resource.ts#L26)

@@ -6,8 +6,8 @@
 
 Defined in: [packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L7)
 
-## Type declaration
+## Type Declaration
 
 ### state?
 
-> `optional` **state**: `Record`\<`string`, `unknown`\>
+> `optional` **state?**: `Record`\<`string`, `unknown`\>

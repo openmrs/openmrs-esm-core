@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / Validator
 
-# Type Alias: Validator()
+# Type Alias: Validator
 
 > **Validator** = (`value`) => `void` \| `string`
 

@@ -2,7 +2,7 @@
 
 # Function: evaluate()
 
-> **evaluate**(`expression`, `variables`): [`DefaultEvaluateReturnType`](../type-aliases/DefaultEvaluateReturnType.md)
+> **evaluate**(`expression`, `variables?`): [`DefaultEvaluateReturnType`](../type-aliases/DefaultEvaluateReturnType.md)
 
 Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L96)
 
@@ -17,11 +17,11 @@ Other values will result in an error.
 
 ### expression
 
+`string` \| `Expression`
+
 The expression to evaluate, either as a string or pre-parsed expression
 
-`string` | `Expression`
-
-### variables
+### variables?
 
 [`VariablesMap`](../type-aliases/VariablesMap.md) = `{}`
 

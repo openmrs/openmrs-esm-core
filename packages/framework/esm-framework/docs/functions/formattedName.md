@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / formattedName
 
-# Function: ~~formattedName()~~
+# ~~Function: formattedName()~~
 
 > **formattedName**(`name`): `string`
 
@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:35](https://git
 
 ### name
 
-`undefined` | `HumanName`
+`HumanName` \| `undefined`
 
 ## Returns
 

@@ -2,7 +2,7 @@
 
 # Function: importDynamic()
 
-> **importDynamic**\<`T`\>(`jsPackage`, `share`, `options?`): `Promise`\<`T`\>
+> **importDynamic**\<`T`\>(`jsPackage`, `share?`, `options?`): `Promise`\<`T`\>
 
 Defined in: [packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L37)
 
@@ -26,7 +26,7 @@ const { someComponent } = importDynamic("@openmrs/esm-template-app")
 
 The package to load the export from.
 
-### share
+### share?
 
 `string` = `'./start'`
 

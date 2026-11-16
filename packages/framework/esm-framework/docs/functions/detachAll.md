@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / detachAll
 
-# Function: ~~detachAll()~~
+# ~~Function: detachAll()~~
 
 > **detachAll**(`extensionSlotName`): `void`
 

@@ -24,7 +24,7 @@ the namespace that this component defines
 
 ### value?
 
-> `optional` **value**: `T`
+> `optional` **value?**: `T`
 
 Defined in: [packages/framework/esm-react-utils/src/OpenmrsContext.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L8)
 

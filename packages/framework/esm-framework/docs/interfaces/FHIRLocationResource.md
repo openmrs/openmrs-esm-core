@@ -18,11 +18,11 @@ Defined in: [packages/framework/esm-emr-api/src/types/location-resource.ts:36](h
 
 #### meta?
 
-> `optional` **meta**: `object`
+> `optional` **meta?**: `object`
 
 ##### meta.tag?
 
-> `optional` **tag**: `object`[]
+> `optional` **tag?**: `object`[]
 
 #### name
 

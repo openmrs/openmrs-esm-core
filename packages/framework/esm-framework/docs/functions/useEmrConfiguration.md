@@ -20,11 +20,11 @@ Object containing:
 
 ### emrConfiguration
 
-> **emrConfiguration**: `undefined` \| [`EmrApiConfigurationResponse`](../interfaces/EmrApiConfigurationResponse.md) = `swrData.data.data`
+> **emrConfiguration**: [`EmrApiConfigurationResponse`](../interfaces/EmrApiConfigurationResponse.md) \| `undefined` = `swrData.data.data`
 
 ### errorFetchingEmrConfiguration
 
-> **errorFetchingEmrConfiguration**: `undefined` \| `Error` = `swrData.error`
+> **errorFetchingEmrConfiguration**: `Error` \| `undefined` = `swrData.error`
 
 ### isLoadingEmrConfiguration
 

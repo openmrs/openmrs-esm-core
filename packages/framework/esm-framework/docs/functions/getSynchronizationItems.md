@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / getSynchronizationItems
 
-# Function: ~~getSynchronizationItems()~~
+# ~~Function: getSynchronizationItems()~~
 
 > **getSynchronizationItems**\<`T`\>(`_type?`): `Promise`\<`T`[]\>
 

@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-conce
 
 ### error?
 
-> `optional` **error**: `Error`
+> `optional` **error?**: `Error`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L8)
 
@@ -24,6 +24,6 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-conce
 
 ### referenceRange
 
-> **referenceRange**: `undefined` \| [`ObsReferenceRanges`](ObsReferenceRanges.md)
+> **referenceRange**: [`ObsReferenceRanges`](ObsReferenceRanges.md) \| `undefined`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/use-concept-reference-range.ts#L7)

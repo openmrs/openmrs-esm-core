@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:250](https://github.com
 
 ### meta?
 
-> `optional` **meta**: `object`
+> `optional` **meta?**: `object`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L261)
 
@@ -39,7 +39,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:249](https://github.com
 
 ### width?
 
-> `optional` **width**: `"narrow"` \| `"wider"` \| `"extra-wide"`
+> `optional` **width?**: `"narrow"` \| `"wider"` \| `"extra-wide"`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:256](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L256)
 

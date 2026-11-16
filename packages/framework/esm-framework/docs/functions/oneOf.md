@@ -12,9 +12,9 @@ Verifies that the value is one of the allowed options.
 
 ### allowedValues
 
-The list of allowable values
+`any`[] \| readonly `any`[]
 
-`any`[] | readonly `any`[]
+The list of allowable values
 
 ## Returns
 

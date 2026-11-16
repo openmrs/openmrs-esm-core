@@ -6,4 +6,4 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:297](https://github
 
 ## Indexable
 
-\[`key`: `string`\]: `null` \| `string`
+> \[`key`: `string`\]: `string` \| `null`

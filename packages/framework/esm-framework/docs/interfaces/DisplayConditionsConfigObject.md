@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:35](https://github.com/o
 
 ### expression?
 
-> `optional` **expression**: `string`
+> `optional` **expression?**: `string`
 
 Defined in: [packages/framework/esm-config/src/types.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L39)
 
@@ -18,7 +18,7 @@ An expression to evaluate whether or not the user should see this extension
 
 ### privileges?
 
-> `optional` **privileges**: `string`[]
+> `optional` **privileges?**: `string`[]
 
 Defined in: [packages/framework/esm-config/src/types.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L37)
 

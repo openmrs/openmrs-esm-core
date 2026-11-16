@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:205](https://github.com
 
 ### closeable?
 
-> `optional` **closeable**: `boolean`
+> `optional` **closeable?**: `boolean`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:207](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L207)
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:206](https://github.com
 
 ### overlay?
 
-> `optional` **overlay**: `boolean`
+> `optional` **overlay?**: `boolean`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:208](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L208)
 
@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-globals/src/types.ts:208](https://github.com
 
 ### persistence?
 
-> `optional` **persistence**: `"app-wide"` \| `"closable"`
+> `optional` **persistence?**: `"app-wide"` \| `"closable"`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:219](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L219)
 
@@ -48,7 +48,7 @@ with any opened windows / workspaces.
 
 ### scopePattern?
 
-> `optional` **scopePattern**: `string`
+> `optional` **scopePattern?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:234](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L234)
 

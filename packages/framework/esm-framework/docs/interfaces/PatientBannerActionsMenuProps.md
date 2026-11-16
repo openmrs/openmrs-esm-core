@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/p
 
 ### additionalActionsSlotState?
 
-> `optional` **additionalActionsSlotState**: `object`
+> `optional` **additionalActionsSlotState?**: `object`
 
 Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L18)
 

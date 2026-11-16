@@ -2,7 +2,7 @@
 
 # Function: useVisit()
 
-> **useVisit**(`patientUuid`, `representation`): [`VisitReturnType`](../interfaces/VisitReturnType.md)
+> **useVisit**(`patientUuid`, `representation?`): [`VisitReturnType`](../interfaces/VisitReturnType.md)
 
 Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L52)
 
@@ -30,7 +30,7 @@ API call is in progress. `mutate` refreshes the data from both API calls.
 
 Unique patient identifier `string`
 
-### representation
+### representation?
 
 `string` = `defaultVisitCustomRepresentation`
 

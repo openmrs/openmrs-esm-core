@@ -18,7 +18,7 @@ An object containing the primary identifier type UUID, loading state, and any er
 
 ### error
 
-> **error**: `undefined` \| `Error`
+> **error**: `Error` \| `undefined`
 
 ### isLoading
 
@@ -26,4 +26,4 @@ An object containing the primary identifier type UUID, loading state, and any er
 
 ### primaryIdentifierCode
 
-> **primaryIdentifierCode**: `undefined` \| `string`
+> **primaryIdentifierCode**: `string` \| `undefined`

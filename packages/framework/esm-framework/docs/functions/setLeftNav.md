@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / setLeftNav
 
-# Function: ~~setLeftNav()~~
+# ~~Function: setLeftNav()~~
 
 > **setLeftNav**(`__namedParameters`): `void`
 

@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:285](https://github
 
 ### body?
 
-> `optional` **body**: `string` \| `FetchBody`
+> `optional` **body?**: `string` \| `FetchBody`
 
 Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:287](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L287)
 
@@ -20,7 +20,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:287](https://github
 
 ### cache?
 
-> `optional` **cache**: `RequestCache`
+> `optional` **cache?**: `RequestCache`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1924
 
@@ -34,7 +34,7 @@ A string indicating how the request will interact with the browser's cache to se
 
 ### credentials?
 
-> `optional` **credentials**: `RequestCredentials`
+> `optional` **credentials?**: `RequestCredentials`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1926
 
@@ -48,7 +48,7 @@ A string indicating whether credentials will be sent with the request always, ne
 
 ### headers?
 
-> `optional` **headers**: [`FetchHeaders`](FetchHeaders.md)
+> `optional` **headers?**: [`FetchHeaders`](FetchHeaders.md)
 
 Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:286](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L286)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:286](https://github
 
 ### integrity?
 
-> `optional` **integrity**: `string`
+> `optional` **integrity?**: `string`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1930
 
@@ -70,7 +70,7 @@ A cryptographic hash of the resource to be fetched by request. Sets request's in
 
 ### keepalive?
 
-> `optional` **keepalive**: `boolean`
+> `optional` **keepalive?**: `boolean`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1932
 
@@ -84,7 +84,7 @@ A boolean to set request's keepalive.
 
 ### method?
 
-> `optional` **method**: `string`
+> `optional` **method?**: `string`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1934
 
@@ -98,7 +98,7 @@ A string to set request's method.
 
 ### mode?
 
-> `optional` **mode**: `RequestMode`
+> `optional` **mode?**: `RequestMode`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1936
 
@@ -112,7 +112,7 @@ A string to indicate whether the request will use CORS, or will be restricted to
 
 ### priority?
 
-> `optional` **priority**: `RequestPriority`
+> `optional` **priority?**: `RequestPriority`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1937
 
@@ -124,7 +124,7 @@ Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1937
 
 ### redirect?
 
-> `optional` **redirect**: `RequestRedirect`
+> `optional` **redirect?**: `RequestRedirect`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1939
 
@@ -138,7 +138,7 @@ A string indicating whether request follows redirects, results in an error upon 
 
 ### referrer?
 
-> `optional` **referrer**: `string`
+> `optional` **referrer?**: `string`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1941
 
@@ -152,7 +152,7 @@ A string whose value is a same-origin URL, "about:client", or the empty string, 
 
 ### referrerPolicy?
 
-> `optional` **referrerPolicy**: `ReferrerPolicy`
+> `optional` **referrerPolicy?**: `ReferrerPolicy`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1943
 
@@ -166,7 +166,7 @@ A referrer policy to set request's referrerPolicy.
 
 ### rejectAuthFailure?
 
-> `optional` **rejectAuthFailure**: `boolean`
+> `optional` **rejectAuthFailure?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:292](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L292)
 
@@ -177,7 +177,7 @@ returned promise rejects with an `OpenmrsFetchError` instead of staying pending.
 
 ### signal?
 
-> `optional` **signal**: `null` \| `AbortSignal`
+> `optional` **signal?**: `AbortSignal` \| `null`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1945
 
@@ -191,7 +191,7 @@ An AbortSignal to set request's signal.
 
 ### window?
 
-> `optional` **window**: `null`
+> `optional` **window?**: `null`
 
 Defined in: node\_modules/typescript/lib/lib.dom.d.ts:1947
 

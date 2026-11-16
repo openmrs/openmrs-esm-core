@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / setupOfflineSync
 
-# Function: ~~setupOfflineSync()~~
+# ~~Function: setupOfflineSync()~~
 
 > **setupOfflineSync**\<`T`\>(`_type`, `_dependsOn`, `_process`, `_options?`): `void`
 

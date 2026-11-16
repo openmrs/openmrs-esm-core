@@ -14,16 +14,4 @@ Defined in: [packages/framework/esm-styleguide/src/dashboard-extension/index.tsx
 
 ## Returns
 
-> (`__namedParameters`): `Element`
-
-### Parameters
-
-#### \_\_namedParameters
-
-##### basePath
-
-`string`
-
-### Returns
-
-`Element`
+(`__namedParameters`) => `Element`

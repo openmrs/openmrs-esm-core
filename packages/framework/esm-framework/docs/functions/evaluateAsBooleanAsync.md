@@ -2,7 +2,7 @@
 
 # Function: evaluateAsBooleanAsync()
 
-> **evaluateAsBooleanAsync**(`expression`, `variables`): `Promise`\<`boolean`\>
+> **evaluateAsBooleanAsync**(`expression`, `variables?`): `Promise`\<`boolean`\>
 
 Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L192)
 
@@ -13,11 +13,11 @@ if valid expression must return boolean values.
 
 ### expression
 
+`string` \| `Expression`
+
 The expression to evaluate, either as a string or pre-parsed expression
 
-`string` | `Expression`
-
-### variables
+### variables?
 
 [`VariablesMap`](../type-aliases/VariablesMap.md) = `{}`
 

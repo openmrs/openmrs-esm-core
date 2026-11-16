@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:534](https://gi
 
 ### formatOptions?
 
-> `optional` **formatOptions**: `Partial`\<`ResolvedDurationFormatOptions`\>
+> `optional` **formatOptions?**: `Partial`\<`ResolvedDurationFormatOptions`\>
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:536](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L536)
 
@@ -22,7 +22,7 @@ Options passed to Intl.DurationFormat. Defaults to { style: 'short', localeMatch
 
 ### largestUnit?
 
-> `optional` **largestUnit**: `"auto"` \| [`DurationUnit`](../type-aliases/DurationUnit.md)
+> `optional` **largestUnit?**: `"auto"` \| [`DurationUnit`](../type-aliases/DurationUnit.md)
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:529](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L529)
 
@@ -38,7 +38,7 @@ Mirrors Temporal.Duration.round() behavior.
 
 ### smallestUnit?
 
-> `optional` **smallestUnit**: [`DurationUnit`](../type-aliases/DurationUnit.md)
+> `optional` **smallestUnit?**: [`DurationUnit`](../type-aliases/DurationUnit.md)
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:531](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L531)
 
@@ -52,7 +52,7 @@ Finest unit to include. Defaults to largestUnit when largestUnit is an explicit 
 
 ### thresholds?
 
-> `optional` **thresholds**: `Partial`\<`Record`\<[`DurationUnit`](../type-aliases/DurationUnit.md), `number`\>\>
+> `optional` **thresholds?**: `Partial`\<`Record`\<[`DurationUnit`](../type-aliases/DurationUnit.md), `number`\>\>
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:523](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L523)
 

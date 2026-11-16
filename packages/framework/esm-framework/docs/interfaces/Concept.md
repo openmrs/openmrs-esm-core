@@ -14,13 +14,13 @@ accounted for, use OpenmrsResource instead.
 
 ## Indexable
 
-\[`anythingElse`: `string`\]: `any`
+> \[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
 ### answers?
 
-> `optional` **answers**: `any`
+> `optional` **answers?**: `any`
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L15)
 
@@ -28,7 +28,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:15](https:
 
 ### attributes?
 
-> `optional` **attributes**: `any`
+> `optional` **attributes?**: `any`
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L17)
 
@@ -36,7 +36,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:17](https:
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 ### conceptClass?
 
-> `optional` **conceptClass**: [`ConceptClass`](ConceptClass.md)
+> `optional` **conceptClass?**: [`ConceptClass`](ConceptClass.md)
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L7)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:7](https:/
 
 ### datatype?
 
-> `optional` **datatype**: [`ConceptDatatype`](ConceptDatatype.md)
+> `optional` **datatype?**: [`ConceptDatatype`](ConceptDatatype.md)
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L6)
 
@@ -64,7 +64,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:6](https:/
 
 ### descriptions?
 
-> `optional` **descriptions**: [`OpenmrsResource`](OpenmrsResource.md)[]
+> `optional` **descriptions?**: [`OpenmrsResource`](OpenmrsResource.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L12)
 
@@ -72,7 +72,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:12](https:
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
@@ -84,7 +84,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -96,7 +96,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 ### mappings?
 
-> `optional` **mappings**: `any`
+> `optional` **mappings?**: `any`
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L14)
 
@@ -104,7 +104,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:14](https:
 
 ### name?
 
-> `optional` **name**: [`ConceptName`](ConceptName.md)
+> `optional` **name?**: [`ConceptName`](ConceptName.md)
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L5)
 
@@ -112,7 +112,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:5](https:/
 
 ### names?
 
-> `optional` **names**: [`ConceptName`](ConceptName.md)[]
+> `optional` **names?**: [`ConceptName`](ConceptName.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L11)
 
@@ -120,7 +120,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:11](https:
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -132,7 +132,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https:
 
 ### retired?
 
-> `optional` **retired**: `boolean`
+> `optional` **retired?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L10)
 
@@ -140,7 +140,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:10](https:
 
 ### set?
 
-> `optional` **set**: `boolean`
+> `optional` **set?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L8)
 
@@ -148,7 +148,7 @@ Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:8](https:/
 
 ### setMembers?
 
-> `optional` **setMembers**: `any`
+> `optional` **setMembers?**: `any`
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L16)
 
@@ -168,6 +168,6 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https:
 
 ### version?
 
-> `optional` **version**: `string`
+> `optional` **version?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/concept-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/concept-resource.ts#L9)

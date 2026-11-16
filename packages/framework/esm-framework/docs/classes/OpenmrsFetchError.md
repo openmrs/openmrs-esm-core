@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:273](https://github
 
 ##### responseBody
 
-`null` | `ResponseBody`
+`ResponseBody` \| `null`
 
 ##### requestStacktrace
 
@@ -50,7 +50,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:273](https://github
 
 ### cause?
 
-> `optional` **cause**: `unknown`
+> `optional` **cause?**: `unknown`
 
 Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
@@ -98,7 +98,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:281](https://github
 
 ### responseBody
 
-> **responseBody**: `null` \| `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md)
+> **responseBody**: `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md) \| `null`
 
 Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:282](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L282)
 
@@ -110,7 +110,7 @@ Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:282](https://github
 
 ### stack?
 
-> `optional` **stack**: `string`
+> `optional` **stack?**: `string`
 
 Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
 

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { mergeProps, useDateSegment, useFocusRing, useHover, useObjectRef } from 'react-aria';
 import { DateFieldStateContext, type DateSegmentProps } from 'react-aria-components';
-import { filterDOMProps } from '@react-aria/utils';
+import { filterDOMProps } from 'react-aria/filterDOMProps';
 import { useRenderProps } from './hooks';
 
 /**

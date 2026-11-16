@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / useConnectedExtensions
 
-# Variable: ~~useConnectedExtensions()~~
+# ~~Variable: useConnectedExtensions~~
 
 > `const` **useConnectedExtensions**: (`slotName`) => [`ConnectedExtension`](../interfaces/ConnectedExtension.md)[]
 

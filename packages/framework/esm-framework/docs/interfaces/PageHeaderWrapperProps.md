@@ -16,6 +16,6 @@ Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.compo
 
 ### className?
 
-> `optional` **className**: `string`
+> `optional` **className?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L17)

@@ -347,7 +347,7 @@ export function run(configUrls: Array<string>) {
       ? Promise.resolve()
       : import(
           /* webpackChunkName: "intl-durationformat-polyfill" */
-          '@formatjs/intl-durationformat/lib/polyfill'
+          '@formatjs/intl-durationformat/polyfill.js'
         ).then(() => undefined);
 
   return polyfillReady

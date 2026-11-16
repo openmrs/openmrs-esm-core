@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:19
 
 ### actionButtonLabel?
 
-> `optional` **actionButtonLabel**: `string`
+> `optional` **actionButtonLabel?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L13)
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:13
 
 ### critical?
 
-> `optional` **critical**: `boolean`
+> `optional` **critical?**: `boolean`
 
 Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L15)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:20
 
 ### kind?
 
-> `optional` **kind**: [`ToastType`](../type-aliases/ToastType.md)
+> `optional` **kind?**: [`ToastType`](../type-aliases/ToastType.md)
 
 Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L14)
 
@@ -66,9 +66,9 @@ Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:14
 
 ***
 
-### onActionButtonClick()?
+### onActionButtonClick?
 
-> `optional` **onActionButtonClick**: () => `void`
+> `optional` **onActionButtonClick?**: () => `void`
 
 Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L12)
 
@@ -84,7 +84,7 @@ Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:12
 
 ### title?
 
-> `optional` **title**: `string`
+> `optional` **title?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L16)
 

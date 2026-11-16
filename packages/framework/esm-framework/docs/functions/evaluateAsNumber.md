@@ -2,7 +2,7 @@
 
 # Function: evaluateAsNumber()
 
-> **evaluateAsNumber**(`expression`, `variables`): `number`
+> **evaluateAsNumber**(`expression`, `variables?`): `number`
 
 Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L205)
 
@@ -13,11 +13,11 @@ if valid expression must return numeric values.
 
 ### expression
 
+`string` \| `Expression`
+
 The expression to evaluate, either as a string or pre-parsed expression
 
-`string` | `Expression`
-
-### variables
+### variables?
 
 [`VariablesMap`](../type-aliases/VariablesMap.md) = `{}`
 

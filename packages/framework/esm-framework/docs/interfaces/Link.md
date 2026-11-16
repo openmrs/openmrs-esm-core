@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:21](https:
 
 ### resourceAlias?
 
-> `optional` **resourceAlias**: `string`
+> `optional` **resourceAlias?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L23)
 

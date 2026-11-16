@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-extensions/src/types.ts:6](https://github.co
 
 ### extensionMeta?
 
-> `optional` **extensionMeta**: `Readonly`\<`Record`\<`string`, `unknown`\>\>
+> `optional` **extensionMeta?**: `Readonly`\<`Record`\<`string`, `unknown`\>\>
 
 Defined in: [packages/framework/esm-extensions/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L7)
 

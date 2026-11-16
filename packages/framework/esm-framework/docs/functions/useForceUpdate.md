@@ -8,8 +8,4 @@ Defined in: [packages/framework/esm-react-utils/src/useForceUpdate.ts:3](https:/
 
 ## Returns
 
-> (): `void`
-
-### Returns
-
-`void`
+() => `void`

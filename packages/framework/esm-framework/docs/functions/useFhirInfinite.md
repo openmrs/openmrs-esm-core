@@ -2,7 +2,7 @@
 
 # Function: useFhirInfinite()
 
-> **useFhirInfinite**\<`T`\>(`url`, `options`): `UseServerInfiniteReturnObject`\<`T`, `Bundle`\>
+> **useFhirInfinite**\<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`\<`T`, `Bundle`\>
 
 Defined in: [packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
 
@@ -22,12 +22,12 @@ This function is the FHIR counterpart of `useOpenmrsInfinite`.
 
 ### url
 
+`string` \| `URL`
+
 The URL of the paginated rest endpoint.
            Similar to useSWRInfinite, this param can be null to disable fetching.
 
-`string` | `URL`
-
-### options
+### options?
 
 [`UseServerInfiniteOptions`](../interfaces/UseServerInfiniteOptions.md)\<`Bundle`\> = `{}`
 

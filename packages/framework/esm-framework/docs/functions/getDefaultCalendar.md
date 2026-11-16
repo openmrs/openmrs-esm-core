@@ -2,7 +2,7 @@
 
 # Function: getDefaultCalendar()
 
-> **getDefaultCalendar**(`locale`): `undefined` \| `CalendarIdentifier`
+> **getDefaultCalendar**(`locale`): `CalendarIdentifier` \| `undefined`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:190](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L190)
 
@@ -12,10 +12,10 @@ Retrieves the default calendar for the specified locale if any.
 
 ### locale
 
-the locale to look-up
+`string` \| `Locale` \| `undefined`
 
-`undefined` | `string` | `Locale`
+the locale to look-up
 
 ## Returns
 
-`undefined` \| `CalendarIdentifier`
+`CalendarIdentifier` \| `undefined`

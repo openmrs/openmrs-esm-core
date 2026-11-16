@@ -12,9 +12,9 @@ Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:13](
 
 ## Properties
 
-### fetcher()?
+### fetcher?
 
-> `optional` **fetcher**: (`key`) => `Promise`\<[`FetchResponse`](FetchResponse.md)\<`R`\>\>
+> `optional` **fetcher?**: (`key`) => `Promise`\<[`FetchResponse`](FetchResponse.md)\<`R`\>\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L22)
 
@@ -34,7 +34,7 @@ The fetcher to use. Defaults to openmrsFetch
 
 ### immutable?
 
-> `optional` **immutable**: `boolean`
+> `optional` **immutable?**: `boolean`
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L17)
 
@@ -44,7 +44,7 @@ Whether to use useSWR or useSWRInfinite to fetch data
 
 ### swrConfig?
 
-> `optional` **swrConfig**: `SWRConfiguration`
+> `optional` **swrConfig?**: `SWRConfiguration`
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L27)
 

@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:12](https://gith
 
 ### activeVisit
 
-> **activeVisit**: `null` \| [`Visit`](Visit.md)
+> **activeVisit**: [`Visit`](Visit.md) \| `null`
 
 Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L16)
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:16](https://gith
 
 ### ~~currentVisit~~
 
-> **currentVisit**: `null` \| [`Visit`](Visit.md)
+> **currentVisit**: [`Visit`](Visit.md) \| `null`
 
 Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L22)
 
@@ -64,7 +64,7 @@ Defined in: [packages/framework/esm-react-utils/src/useVisit.ts:15](https://gith
 
 ***
 
-### mutate()
+### mutate
 
 > **mutate**: () => `void`
 

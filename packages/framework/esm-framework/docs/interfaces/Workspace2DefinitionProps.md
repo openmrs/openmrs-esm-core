@@ -22,7 +22,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ### groupProps
 
-> **groupProps**: `null` \| `GroupProps`
+> **groupProps**: `GroupProps` \| `null`
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L35)
 
@@ -54,7 +54,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ### windowProps
 
-> **windowProps**: `null` \| `WindowProps`
+> **windowProps**: `WindowProps` \| `null`
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L34)
 
@@ -62,7 +62,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ### workspaceMeta?
 
-> `optional` **workspaceMeta**: `Readonly`\<`Record`\<`string`, `unknown`\>\>
+> `optional` **workspaceMeta?**: `Readonly`\<`Record`\<`string`, `unknown`\>\>
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L40)
 
@@ -81,7 +81,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.compon
 
 ### workspaceProps
 
-> **workspaceProps**: `null` \| `WorkspaceProps`
+> **workspaceProps**: `WorkspaceProps` \| `null`
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.component.tsx#L33)
 

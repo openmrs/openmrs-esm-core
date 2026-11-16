@@ -41,6 +41,8 @@ A string to interpolate
 
 ### additionalParams?
 
+\{\[`key`: `string`\]: `string`; \}
+
 Additional values to interpolate into the string template
 
 ## Returns

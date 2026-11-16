@@ -13,7 +13,7 @@ Returns lowercase ObservationInterpretation format
 
 ### value
 
-`undefined` | `string` | `number`
+`string` \| `number` \| `undefined`
 
 ### range?
 

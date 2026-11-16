@@ -2,7 +2,7 @@
 
 # Function: toDateObjectStrict()
 
-> **toDateObjectStrict**(`omrsDateString`): `null` \| `Date`
+> **toDateObjectStrict**(`omrsDateString`): `Date` \| `null`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L98)
 
@@ -17,4 +17,4 @@ Otherwise returns null.
 
 ## Returns
 
-`null` \| `Date`
+`Date` \| `null`

@@ -2,7 +2,7 @@
 
 # Function: useExtensionContext()
 
-> **useExtensionContext**(): `undefined` \| [`ExtensionData`](../interfaces/ExtensionData.md)
+> **useExtensionContext**(): [`ExtensionData`](../interfaces/ExtensionData.md) \| `undefined`
 
 Defined in: [packages/framework/esm-react-utils/src/useExtensionContext.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionContext.ts#L12)
 
@@ -11,7 +11,7 @@ slot module it is rendered in, its extension ID, and its `meta` from the extensi
 
 ## Returns
 
-`undefined` \| [`ExtensionData`](../interfaces/ExtensionData.md)
+[`ExtensionData`](../interfaces/ExtensionData.md) \| `undefined`
 
 The extension context, or `undefined` when the calling component is not being rendered
   as an extension (a page, modal or workspace, say).

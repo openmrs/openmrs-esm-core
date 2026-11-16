@@ -2,7 +2,7 @@
 
 # Function: useOpenmrsFetchAll()
 
-> **useOpenmrsFetchAll**\<`T`\>(`url`, `options`): `UseServerInfiniteReturnObject`\<`T`, `OpenMRSPaginatedResponse`\<`T`\>\>
+> **useOpenmrsFetchAll**\<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`\<`T`, `OpenMRSPaginatedResponse`\<`T`\>\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
 
@@ -20,14 +20,14 @@ as needed.
 
 ### url
 
+`string` \| `URL`
+
 The URL of the paginated OpenMRS REST endpoint. Note that the `limit` GET param can be set to specify
            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined
            server-side.
            Similar to useSWRInfinite, this param can be null to disable fetching.
 
-`string` | `URL`
-
-### options
+### options?
 
 [`UseServerFetchAllOptions`](../interfaces/UseServerFetchAllOptions.md)\<`OpenMRSPaginatedResponse`\<`T`\>\> = `{}`
 

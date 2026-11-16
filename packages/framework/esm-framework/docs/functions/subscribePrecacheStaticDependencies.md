@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / subscribePrecacheStaticDependencies
 
-# Function: ~~subscribePrecacheStaticDependencies()~~
+# ~~Function: subscribePrecacheStaticDependencies()~~
 
 > **subscribePrecacheStaticDependencies**(`_callback`): () => `void`
 
@@ -14,11 +14,7 @@ Defined in: [packages/framework/esm-framework/src/deprecated.ts:75](https://gith
 
 ## Returns
 
-> (): `void`
-
-### Returns
-
-`void`
+() => `void`
 
 ## Deprecated
 

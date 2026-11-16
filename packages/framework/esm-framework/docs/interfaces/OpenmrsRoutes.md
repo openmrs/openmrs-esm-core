@@ -21,7 +21,7 @@ The routes associated with this application keyed by module id
 
 ### version?
 
-> `optional` **version**: `string`
+> `optional` **version?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L321)
 

@@ -14,7 +14,7 @@ accounted for, use OpenmrsResource instead.
 
 ## Indexable
 
-\[`anythingElse`: `string`\]: `any`
+> \[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
@@ -44,7 +44,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:22](http
 
 ### asNeededCondition?
 
-> `optional` **asNeededCondition**: `string`
+> `optional` **asNeededCondition?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L23)
 
@@ -52,7 +52,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:23](http
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -72,7 +72,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:24](http
 
 ### brandName?
 
-> `optional` **brandName**: `string`
+> `optional` **brandName?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L25)
 
@@ -120,7 +120,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:29](http
 
 ### dateStopped?
 
-> `optional` **dateStopped**: `null` \| `string`
+> `optional` **dateStopped?**: `string` \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L30)
 
@@ -164,7 +164,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:33](http
 
 ### dosingInstructions
 
-> **dosingInstructions**: `null` \| `string`
+> **dosingInstructions**: `string` \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L34)
 
@@ -172,7 +172,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:34](http
 
 ### dosingType?
 
-> `optional` **dosingType**: `"org.openmrs.FreeTextDosingInstructions"` \| `"org.openmrs.SimpleDosingInstructions"`
+> `optional` **dosingType?**: `"org.openmrs.FreeTextDosingInstructions"` \| `"org.openmrs.SimpleDosingInstructions"`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L35)
 
@@ -236,7 +236,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:73](http
 
 ### instructions?
 
-> `optional` **instructions**: `null` \| `string`
+> `optional` **instructions?**: `string` \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L41)
 
@@ -252,7 +252,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:76](http
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -312,7 +312,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:43](http
 
 ### orderReason
 
-> **orderReason**: `null` \| [`Concept`](Concept.md)
+> **orderReason**: [`Concept`](Concept.md) \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L44)
 
@@ -320,7 +320,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:44](http
 
 ### orderReasonNonCoded
 
-> **orderReasonNonCoded**: `null` \| `string`
+> **orderReasonNonCoded**: `string` \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L45)
 
@@ -350,7 +350,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:46](http
 
 #### parent
 
-> **parent**: `null` \| `string`
+> **parent**: `string` \| `null`
 
 #### retired
 
@@ -372,7 +372,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:62](http
 
 ### previousOrder
 
-> **previousOrder**: `null` \| \{ `display`: `string`; `type`: `string`; `uuid`: `string`; \}
+> **previousOrder**: \{ `display`: `string`; `type`: `string`; `uuid`: `string`; \} \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L63)
 
@@ -396,7 +396,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:65](http
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -424,7 +424,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:71](http
 
 ### specimenSource
 
-> **specimenSource**: `null` \| [`Concept`](Concept.md)
+> **specimenSource**: [`Concept`](Concept.md) \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/types/order-resource.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/order-resource.ts#L75)
 

@@ -23,44 +23,4 @@ custom hook for a specific store.
 
 ## Returns
 
-> (): `T`
-
-### Returns
-
-`T`
-
-> \<`A`\>(`actions`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
-
-### Type Parameters
-
-#### A
-
-`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`T`\>
-
-### Parameters
-
-#### actions
-
-`A`
-
-### Returns
-
-`T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
-
-> \<`A`\>(`actions?`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
-
-### Type Parameters
-
-#### A
-
-`A` *extends* [`Actions`](../type-aliases/Actions.md)\<`T`\>
-
-### Parameters
-
-#### actions?
-
-`A`
-
-### Returns
-
-`T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>
+\{(): `T`; \<`A`\>(`actions`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>; \<`A`\>(`actions?`): `T` & [`BoundActions`](../type-aliases/BoundActions.md)\<`T`, `A`\>; \}

@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / ValidatorFunction
 
-# Type Alias: ValidatorFunction()
+# Type Alias: ValidatorFunction
 
 > **ValidatorFunction** = (`value`) => `boolean`
 

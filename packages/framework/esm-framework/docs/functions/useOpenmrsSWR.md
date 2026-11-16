@@ -2,7 +2,7 @@
 
 # Function: useOpenmrsSWR()
 
-> **useOpenmrsSWR**\<`DataType`, `ErrorType`\>(`key`, `options`): `SWRResponse`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `BareFetcher`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>\>\>\>
+> **useOpenmrsSWR**\<`DataType`, `ErrorType`\>(`key`, `options?`): `SWRResponse`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `SWRConfiguration`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `BareFetcher`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>\>\> \| `undefined`\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L70)
 
@@ -30,7 +30,7 @@ if the React component unmounts.
 
 The SWR key to use
 
-### options
+### options?
 
 [`UseOpenmrsSWROptions`](../type-aliases/UseOpenmrsSWROptions.md) = `{}`
 
@@ -39,7 +39,7 @@ An object of optional parameters to provide, including a [FetchConfig](../interf
 
 ## Returns
 
-`SWRResponse`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `BareFetcher`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>\>\>\>
+`SWRResponse`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `SWRConfiguration`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>, `ErrorType`, `BareFetcher`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`DataType`\>\>\> \| `undefined`\>
 
 ## Examples
 

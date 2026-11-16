@@ -2,7 +2,7 @@
 
 # Function: parseDateInput()
 
-> **parseDateInput**(`dateInput`, `referenceDate`): `null` \| `Dayjs`
+> **parseDateInput**(`dateInput`, `referenceDate`): `Dayjs` \| `null`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:481](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L481)
 
@@ -26,6 +26,6 @@ Used as the base when resolving partial string dates (e.g., '2000' resolves miss
 
 ## Returns
 
-`null` \| `Dayjs`
+`Dayjs` \| `null`
 
 A dayjs object, or null if the string could not be parsed.

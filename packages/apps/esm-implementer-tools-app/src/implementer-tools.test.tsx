@@ -1,9 +1,12 @@
 import React from 'react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { act, render, screen } from '@testing-library/react';
 import { implementerToolsStore } from './store';
 import Root from './implementer-tools.component';
+
+// Loading the lazy popup's module graph can outlast findBy*'s timeout on a busy CI runner.
+beforeAll(() => import('./popup/popup.component'));
 
 afterEach(() => {
   act(() => implementerToolsStore.setState((state) => ({ ...state, isOpen: false, openTab: 'configuration' })));

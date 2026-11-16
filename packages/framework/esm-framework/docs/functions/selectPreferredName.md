@@ -2,7 +2,7 @@
 
 # Function: selectPreferredName()
 
-> **selectPreferredName**(`patient`, ...`preferredNames`): `undefined` \| `HumanName`
+> **selectPreferredName**(`patient`, ...`preferredNames`): `HumanName` \| `undefined`
 
 Defined in: [packages/framework/esm-utils/src/patient-helpers.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L60)
 
@@ -29,7 +29,7 @@ Optional ordered sequence of preferred name usages; defaults to 'usual' if not s
 
 ## Returns
 
-`undefined` \| `HumanName`
+`HumanName` \| `undefined`
 
 The preferred name for the patient, or undefined if no acceptable name could be found.
 

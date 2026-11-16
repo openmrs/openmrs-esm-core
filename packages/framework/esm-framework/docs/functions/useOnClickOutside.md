@@ -2,7 +2,7 @@
 
 # Function: useOnClickOutside()
 
-> **useOnClickOutside**\<`T`\>(`handler`, `active`): `RefObject`\<`T`\>
+> **useOnClickOutside**\<`T`\>(`handler`, `active?`): `RefObject`\<`T`\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOnClickOutside.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.ts#L31)
 
@@ -27,7 +27,7 @@ The type of HTML element the ref will be attached to.
 A callback function invoked when a click occurs outside the
   referenced element.
 
-### active
+### active?
 
 `boolean` = `true`
 

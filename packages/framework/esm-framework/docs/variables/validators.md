@@ -6,11 +6,17 @@
 
 Defined in: [packages/framework/esm-config/src/validators/validators.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L69)
 
-## Type declaration
+## Type Declaration
 
 ## Navigation
 
-#### isUrlWithTemplateParameters()
+#### isUrl
+
+> **isUrl**: [`Validator`](../type-aliases/Validator.md)
+
+Verifies that a string contains only the default URL template parameters.
+
+#### isUrlWithTemplateParameters
 
 > **isUrlWithTemplateParameters**: (`allowedTemplateParameters`) => [`Validator`](../type-aliases/Validator.md)
 
@@ -21,9 +27,9 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 ###### allowedTemplateParameters
 
-To be added to `openmrsBase` and `openmrsSpaBase`
+`string`[] \| readonly `string`[]
 
-`string`[] | readonly `string`[]
+To be added to `openmrsBase` and `openmrsSpaBase`
 
 ##### Returns
 
@@ -33,7 +39,7 @@ A validator function that checks if a URL contains only allowed template paramet
 
 ## Other
 
-#### inRange()
+#### inRange
 
 > **inRange**: (`min`, `max`) => [`Validator`](../type-aliases/Validator.md)
 
@@ -59,11 +65,7 @@ Maximum acceptable value
 
 A validator function that checks if a value is within the specified range.
 
-#### isUrl
-
-> **isUrl**: [`Validator`](../type-aliases/Validator.md)
-
-#### oneOf()
+#### oneOf
 
 > **oneOf**: (`allowedValues`) => [`Validator`](../type-aliases/Validator.md)
 
@@ -73,9 +75,9 @@ Verifies that the value is one of the allowed options.
 
 ###### allowedValues
 
-The list of allowable values
+`any`[] \| readonly `any`[]
 
-`any`[] | readonly `any`[]
+The list of allowable values
 
 ##### Returns
 

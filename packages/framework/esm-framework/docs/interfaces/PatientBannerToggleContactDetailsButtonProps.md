@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-styleguide/src/patient-banner/contact-detail
 
 ### className?
 
-> `optional` **className**: `string`
+> `optional` **className?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx#L13)
 
@@ -26,7 +26,7 @@ Whether the contact details are currently being displayed
 
 ***
 
-### toggleContactDetails()
+### toggleContactDetails
 
 > **toggleContactDetails**: (`e`) => `void`
 

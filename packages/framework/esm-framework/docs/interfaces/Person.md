@@ -16,7 +16,7 @@ accounted for, use OpenmrsResource instead.
 
 ### addresses?
 
-> `optional` **addresses**: [`PersonAddress`](PersonAddress.md)[]
+> `optional` **addresses?**: [`PersonAddress`](PersonAddress.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L21)
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:21](https:/
 
 ### age?
 
-> `optional` **age**: `number`
+> `optional` **age?**: `number`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L12)
 
@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:12](https:/
 
 ### attributes?
 
-> `optional` **attributes**: [`PersonAttribute`](PersonAttribute.md)[]
+> `optional` **attributes?**: [`PersonAttribute`](PersonAttribute.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L22)
 
@@ -40,7 +40,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:22](https:/
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -52,7 +52,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 ### birthdate?
 
-> `optional` **birthdate**: `string`
+> `optional` **birthdate?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L13)
 
@@ -60,7 +60,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:13](https:/
 
 ### birthdateEstimated?
 
-> `optional` **birthdateEstimated**: `boolean`
+> `optional` **birthdateEstimated?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L14)
 
@@ -68,7 +68,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:14](https:/
 
 ### birthtime?
 
-> `optional` **birthtime**: `null` \| `string`
+> `optional` **birthtime?**: `string` \| `null`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L24)
 
@@ -76,7 +76,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:24](https:/
 
 ### causeOfDeath?
 
-> `optional` **causeOfDeath**: `null` \| [`Concept`](Concept.md)
+> `optional` **causeOfDeath?**: [`Concept`](Concept.md) \| `null`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L17)
 
@@ -84,7 +84,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:17](https:/
 
 ### causeOfDeathNonCoded?
 
-> `optional` **causeOfDeathNonCoded**: `null` \| `string`
+> `optional` **causeOfDeathNonCoded?**: `string` \| `null`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L26)
 
@@ -92,7 +92,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:26](https:/
 
 ### dead?
 
-> `optional` **dead**: `boolean`
+> `optional` **dead?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L15)
 
@@ -100,7 +100,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:15](https:/
 
 ### deathDate?
 
-> `optional` **deathDate**: `null` \| `string`
+> `optional` **deathDate?**: `string` \| `null`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L16)
 
@@ -108,7 +108,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:16](https:/
 
 ### deathdateEstimated?
 
-> `optional` **deathdateEstimated**: `boolean`
+> `optional` **deathdateEstimated?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L25)
 
@@ -116,7 +116,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:25](https:/
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
@@ -128,7 +128,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 ### gender?
 
-> `optional` **gender**: `string`
+> `optional` **gender?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L11)
 
@@ -136,7 +136,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:11](https:/
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -148,7 +148,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 ### names?
 
-> `optional` **names**: [`PersonName`](PersonName.md)[]
+> `optional` **names?**: [`PersonName`](PersonName.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L20)
 
@@ -156,7 +156,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:20](https:/
 
 ### preferredAddress?
 
-> `optional` **preferredAddress**: [`PersonAddress`](PersonAddress.md)
+> `optional` **preferredAddress?**: [`PersonAddress`](PersonAddress.md)
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L19)
 
@@ -164,7 +164,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:19](https:/
 
 ### preferredName?
 
-> `optional` **preferredName**: [`PersonName`](PersonName.md)
+> `optional` **preferredName?**: [`PersonName`](PersonName.md)
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L18)
 
@@ -172,7 +172,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:18](https:/
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -196,6 +196,6 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https:
 
 ### voided?
 
-> `optional` **voided**: `boolean`
+> `optional` **voided?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L23)

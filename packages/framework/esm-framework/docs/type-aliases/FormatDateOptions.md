@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:198](https://gi
 
 ### calendar?
 
-> `optional` **calendar**: `string`
+> `optional` **calendar?**: `string`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L202)
 
@@ -30,7 +30,7 @@ Whether to include the day number
 
 ### locale?
 
-> `optional` **locale**: `string`
+> `optional` **locale?**: `string`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L206)
 
@@ -74,7 +74,7 @@ formatted the same as all other dates.
 
 ### numberingSystem?
 
-> `optional` **numberingSystem**: `string`
+> `optional` **numberingSystem?**: `string`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:224](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L224)
 

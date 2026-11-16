@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / ContextCallback
 
-# Type Alias: ContextCallback()\<T\>
+# Type Alias: ContextCallback\<T\>
 
 > **ContextCallback**\<`T`\> = (`state`) => `void`
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-context/src/context.ts:103](https://github.c
 
 ### state
 
-`Readonly`\<`T`\> | `null` | `undefined`
+`Readonly`\<`T`\> \| `null` \| `undefined`
 
 ## Returns
 

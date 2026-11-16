@@ -1,2 +1,2 @@
-import '@formatjs/intl-durationformat/polyfill';
+import '@formatjs/intl-durationformat/polyfill.js';
 export * from './src/index';

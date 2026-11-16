@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:13](ht
 
 ### templateParams?
 
-> `optional` **templateParams**: [`TemplateParams`](../type-aliases/TemplateParams.md)
+> `optional` **templateParams?**: [`TemplateParams`](../type-aliases/TemplateParams.md)
 
 Defined in: [packages/framework/esm-navigation/src/navigation/navigate.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L15)
 

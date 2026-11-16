@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:6](https:/
 
 ### children?
 
-> `optional` **children**: `ReactNode`
+> `optional` **children?**: `ReactNode`
 
 Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L9)
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:9](https:/
 
 ### fallback?
 
-> `optional` **fallback**: `ReactNode`
+> `optional` **fallback?**: `ReactNode`
 
 Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L8)
 

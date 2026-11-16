@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:150](https://gi
 
 ### externalModuleName?
 
-> `optional` **externalModuleName**: `string`
+> `optional` **externalModuleName?**: `string`
 
 Defined in: [packages/framework/esm-react-utils/src/useConfig.ts:153](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L153)
 
