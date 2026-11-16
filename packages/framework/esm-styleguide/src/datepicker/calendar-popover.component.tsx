@@ -38,40 +38,43 @@ export const CalendarPopover = /*#__PURE__*/ forwardRef<HTMLDivElement, Calendar
   { variant, today_, minDate = undefined, maxDate = undefined },
   ref,
 ) {
-  const isRange = variant === 'range';
-  const CalendarComponent = isRange ? RangeCalendar : Calendar;
+  const calendarContents = (
+    <>
+      <header className={styles.header}>
+        <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
+          <ChevronLeftIcon size={16} />
+        </Button>
+        <MonthYear className={styles.monthYear} />
+        <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
+          <ChevronRightIcon size={16} />
+        </Button>
+      </header>
+      <CalendarGrid className={styles.calendarGrid}>
+        {(date) => (
+          <CalendarCell
+            key={date.toString()}
+            className={classNames('cds--date-picker__day', {
+              [styles.today]: today_.compare(date) === 0,
+            })}
+            date={date}
+          />
+        )}
+      </CalendarGrid>
+    </>
+  );
 
   // RangeCalendar needs explicit min/max values and a className;
   // Calendar inherits these from its parent DatePicker context.
-  const calendarProps = isRange
-    ? { minValue: minDate, maxValue: maxDate, className: 'cds--date-picker__calendar' }
-    : {};
-
   return (
     <Popover ref={ref} className={styles.popover} placement="bottom start" offset={1} isNonModal={true}>
       <AutoCloseDialog>
-        <CalendarComponent {...calendarProps}>
-          <header className={styles.header}>
-            <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
-              <ChevronLeftIcon size={16} />
-            </Button>
-            <MonthYear className={styles.monthYear} />
-            <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
-              <ChevronRightIcon size={16} />
-            </Button>
-          </header>
-          <CalendarGrid className={styles.calendarGrid}>
-            {(date) => (
-              <CalendarCell
-                key={date.toString()}
-                className={classNames('cds--date-picker__day', {
-                  [styles.today]: today_.compare(date) === 0,
-                })}
-                date={date}
-              />
-            )}
-          </CalendarGrid>
-        </CalendarComponent>
+        {variant === 'range' ? (
+          <RangeCalendar minValue={minDate} maxValue={maxDate} className="cds--date-picker__calendar">
+            {calendarContents}
+          </RangeCalendar>
+        ) : (
+          <Calendar>{calendarContents}</Calendar>
+        )}
       </AutoCloseDialog>
     </Popover>
   );
