@@ -109,7 +109,8 @@ jobs:
   run-e2e-on-other-repos:
     needs: changes
     if: ${{ needs.changes.outputs.test-changes == 'true' }}
-    runs-on: ubuntu-latest
+    # These repos pin Playwright versions that can't install Chromium on Ubuntu 26.04.
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         repo:
