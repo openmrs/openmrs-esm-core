@@ -221,6 +221,8 @@ export function Translations() {
       }
 
       setSelectedNamespace(selectedItem);
+      // A key the inspector handed over belongs to the namespace it came from.
+      setFocused(null);
       setLoadFailure(null);
 
       // Superseding any load already running, including when the new selection needs none: its
@@ -502,6 +504,13 @@ function TranslationRow({ entry, isMissing, language, onFailure, onSuccess }: Tr
 
   const handleEditorKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
+      // While an input method is composing, Enter and Escape accept or dismiss its candidates.
+      // Some browsers report the last keydown of a composition with `isComposing` false but
+      // `keyCode` 229.
+      if (event.nativeEvent.isComposing || event.keyCode === 229) {
+        return;
+      }
+
       if (event.key === 'Enter') {
         event.preventDefault();
         save();
