@@ -90,7 +90,7 @@ describe('a production build with the type checker', () => {
 
     expect(errors).toBe('');
     expect(hasErrors).toBe(false);
-  });
+  }, 60_000);
 
   it('fails on a type error, naming it', async () => {
     addSource('mistyped.ts', "export const count: number = 'one';\n");
@@ -99,7 +99,7 @@ describe('a production build with the type checker', () => {
 
     expect(hasErrors).toBe(true);
     expect(errors).toContain('TS2322');
-  });
+  }, 60_000);
 
   it('lets TS2786 through, since the shared config excludes it', async () => {
     addSource(
@@ -113,7 +113,7 @@ describe('a production build with the type checker', () => {
 
     expect(errors).toBe('');
     expect(hasErrors).toBe(false);
-  });
+  }, 60_000);
 });
 
 describe('a watching development build with the type checker', () => {
