@@ -5,16 +5,20 @@ import { implementerToolsStore, showModuleDiagnostics, togglePopup } from './sto
 import { hasInvalidDependencies } from './backend-dependencies/openmrs-backend-dependencies';
 import { useBackendDependencies } from './backend-dependencies/useBackendDependencies';
 import { useFrontendModules } from './hooks';
+import { watchTranslationOverrides } from './translations/translation-overrides';
 import styles from './implementer-tools.styles.scss';
 
 const Popup = React.lazy(() => import('./popup/popup.component'));
 const UiEditor = React.lazy(() => import('./ui-editor/ui-editor'));
+const TranslationInspector = React.lazy(() => import('./translation-inspector/translation-inspector'));
 
 function PopupHandler() {
   const frontendModules = useFrontendModules();
   const backendDependencies = useBackendDependencies();
   const [shouldShowNotification, setShouldShowNotification] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => watchTranslationOverrides(), []);
 
   useEffect(() => {
     // displaying actionable notification if backend modules have missing dependencies
@@ -38,19 +42,22 @@ function PopupHandler() {
     }
   }, [t, shouldShowNotification]);
 
-  const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(implementerToolsStore);
+  const { isOpen, isTranslationInspectorEnabled, isUIEditorEnabled, openTab } = useStore(implementerToolsStore);
 
   return (
-    <div className={styles.darkTheme}>
+    // The marker lets tools that inspect the application tell the implementer tools' own UI apart
+    // from the application.
+    <div className={styles.darkTheme} data-openmrs-implementer-tools>
       {isOpen ? (
         <Popup
           close={togglePopup}
           frontendModules={frontendModules}
           backendDependencies={backendDependencies}
-          visibleTabIndex={openTabIndex}
+          visibleTab={openTab}
         />
       ) : null}
       {isUIEditorEnabled ? <UiEditor /> : null}
+      {isTranslationInspectorEnabled ? <TranslationInspector /> : null}
     </div>
   );
 }
