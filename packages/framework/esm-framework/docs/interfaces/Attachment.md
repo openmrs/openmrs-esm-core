@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:15](h
 
 ### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L18)
 

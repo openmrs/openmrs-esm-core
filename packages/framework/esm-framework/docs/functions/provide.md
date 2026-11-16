@@ -2,7 +2,7 @@
 
 # Function: provide()
 
-> **provide**(`config`, `sourceName`): `void`
+> **provide**(`config`, `sourceName?`): `void`
 
 Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:472](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L472)
 
@@ -18,7 +18,7 @@ way will be merged with configuration from other sources.
 
 A configuration object to merge into the existing configuration.
 
-### sourceName
+### sourceName?
 
 `string` = `'provided'`
 

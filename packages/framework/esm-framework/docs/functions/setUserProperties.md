@@ -21,6 +21,8 @@ The UUID of the user whose properties should be updated.
 
 ### userProperties
 
+\{\[`x`: `string`\]: `string`; \}
+
 An object containing the properties to set or update.
 
 ### abortController?

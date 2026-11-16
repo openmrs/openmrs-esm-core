@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:4](https://gi
 
 ### allowedLocales?
 
-> `optional` **allowedLocales**: `string`[]
+> `optional` **allowedLocales?**: `string`[]
 
 Defined in: [packages/framework/esm-api/src/types/user-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L5)
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:6](https://gi
 
 ### currentProvider?
 
-> `optional` **currentProvider**: `object`
+> `optional` **currentProvider?**: `object`
 
 Defined in: [packages/framework/esm-api/src/types/user-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L10)
 
@@ -40,7 +40,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:10](https://g
 
 ### locale?
 
-> `optional` **locale**: `string`
+> `optional` **locale?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/user-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L7)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:8](https://gi
 
 ### sessionLocation?
 
-> `optional` **sessionLocation**: [`SessionLocation`](SessionLocation.md)
+> `optional` **sessionLocation?**: [`SessionLocation`](SessionLocation.md)
 
 Defined in: [packages/framework/esm-api/src/types/user-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L11)
 
@@ -64,6 +64,6 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:11](https://g
 
 ### user?
 
-> `optional` **user**: [`LoggedInUser`](LoggedInUser.md)
+> `optional` **user?**: [`LoggedInUser`](LoggedInUser.md)
 
 Defined in: [packages/framework/esm-api/src/types/user-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L9)

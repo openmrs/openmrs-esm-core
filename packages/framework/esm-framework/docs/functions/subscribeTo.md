@@ -44,11 +44,7 @@ A callback function that receives the state (or selected state) when it changes.
 
 An unsubscribe function to stop listening for changes.
 
-> (): `void`
-
-#### Returns
-
-`void`
+() => `void`
 
 ## Call Signature
 
@@ -96,8 +92,4 @@ A callback function that receives the state (or selected state) when it changes.
 
 An unsubscribe function to stop listening for changes.
 
-> (): `void`
-
-#### Returns
-
-`void`
+() => `void`

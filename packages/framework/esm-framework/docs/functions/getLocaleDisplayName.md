@@ -18,9 +18,9 @@ turning "American English" into "American english".
 
 ### locale
 
-An OpenMRS locale identifier, e.g. `sw_KE`.
+`string` \| `null` \| `undefined`
 
-`undefined` | `null` | `string`
+An OpenMRS locale identifier, e.g. `sw_KE`.
 
 ## Returns
 

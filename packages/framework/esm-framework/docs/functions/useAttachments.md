@@ -13,10 +13,10 @@ and automatic revalidation.
 
 ### patientUuid
 
+`string` \| `null` \| `undefined`
+
 The UUID of the patient whose attachments should be fetched.
   Nothing is fetched while this is empty, so callers can defer the request.
-
-`undefined` | `null` | `string`
 
 ### includeEncounterless
 

@@ -2,7 +2,7 @@
 
 # Function: useFhirFetchAll()
 
-> **useFhirFetchAll**\<`T`\>(`url`, `options`): `UseServerInfiniteReturnObject`\<`T`, `Bundle`\>
+> **useFhirFetchAll**\<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`\<`T`, `Bundle`\>
 
 Defined in: [packages/framework/esm-react-utils/src/useFhirFetchAll.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L19)
 
@@ -25,7 +25,7 @@ This function is the FHIR counterpart of `useOpenmrsPagination`.
 The URL of the paginated rest endpoint.
            Similar to useSWRInfinite, this param can be null to disable fetching.
 
-### options
+### options?
 
 [`UseServerFetchAllOptions`](../interfaces/UseServerFetchAllOptions.md)\<`Bundle`\> = `{}`
 

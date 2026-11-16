@@ -4,7 +4,7 @@
 
 ## Call Signature
 
-> **useAppContext**\<`T`\>(`namespace`): `undefined` \| `Readonly`\<`T`\>
+> **useAppContext**\<`T`\>(`namespace`): `Readonly`\<`T`\> \| `undefined`
 
 Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L30)
 
@@ -30,7 +30,7 @@ The namespace to load properties from
 
 ### Returns
 
-`undefined` \| `Readonly`\<`T`\>
+`Readonly`\<`T`\> \| `undefined`
 
 The current value registered under `namespace`, or `undefined` when the namespace has not
 yet been registered, was unregistered (e.g. the owning component unmounted), or is a blank string.
@@ -51,7 +51,7 @@ const patientName = useAppContext<PatientContext, string | undefined>('patient',
 
 ## Call Signature
 
-> **useAppContext**\<`T`, `U`\>(`namespace`, `selector`): `undefined` \| `Readonly`\<`U`\>
+> **useAppContext**\<`T`, `U`\>(`namespace`, `selector`): `Readonly`\<`U`\> \| `undefined`
 
 Defined in: [packages/framework/esm-react-utils/src/useAppContext.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L60)
 
@@ -89,7 +89,7 @@ An optional function which extracts the relevant part of the state
 
 ### Returns
 
-`undefined` \| `Readonly`\<`U`\>
+`Readonly`\<`U`\> \| `undefined`
 
 The selected value, or `undefined` when the namespace has not yet been registered, was
 unregistered (e.g. the owning component unmounted), or is a blank string. Consumers should handle

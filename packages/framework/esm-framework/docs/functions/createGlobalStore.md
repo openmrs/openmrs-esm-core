@@ -2,7 +2,7 @@
 
 # Function: createGlobalStore()
 
-> **createGlobalStore**\<`T`\>(`name`, `initialState`, `storageType`): `StoreApi`\<`T`\>
+> **createGlobalStore**\<`T`\>(`name`, `initialState`, `storageType?`): `StoreApi`\<`T`\>
 
 Defined in: [packages/framework/esm-state/src/state.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L61)
 
@@ -29,7 +29,7 @@ A name by which the store can be looked up later.
 
 An object which will be the initial state of the store.
 
-### storageType
+### storageType?
 
 `StorageType` = `'none'`
 

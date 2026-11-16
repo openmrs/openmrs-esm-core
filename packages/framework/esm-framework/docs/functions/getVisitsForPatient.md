@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / getVisitsForPatient
 
-# Function: ~~getVisitsForPatient()~~
+# ~~Function: getVisitsForPatient()~~
 
 > **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<\{ `results`: [`Visit`](../interfaces/Visit.md)[]; \}\>\>
 

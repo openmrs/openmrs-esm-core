@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / useConnectivity
 
-# Function: ~~useConnectivity()~~
+# ~~Function: useConnectivity()~~
 
 > **useConnectivity**(): `boolean`
 

@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:6](https://github
 
 ### anythingElse?
 
-> `optional` **anythingElse**: `any`
+> `optional` **anythingElse?**: `any`
 
 Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L10)
 
@@ -32,6 +32,6 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:9](https://github
 
 ### visitData?
 
-> `optional` **visitData**: [`Visit`](Visit.md)
+> `optional` **visitData?**: [`Visit`](Visit.md)
 
 Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L8)

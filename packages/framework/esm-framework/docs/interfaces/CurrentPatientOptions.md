@@ -13,6 +13,6 @@ Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:6](https://gi
 
 ### includeConfig?
 
-> `optional` **includeConfig**: `boolean`
+> `optional` **includeConfig?**: `boolean`
 
 Defined in: [packages/framework/esm-emr-api/src/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/current-patient.ts#L7)

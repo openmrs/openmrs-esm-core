@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:44](https://github.com/o
 
 ### add?
 
-> `optional` **add**: `string`[]
+> `optional` **add?**: `string`[]
 
 Defined in: [packages/framework/esm-config/src/types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L46)
 
@@ -18,7 +18,7 @@ Additional extension IDs to assign to this slot, in addition to those `attach`ed
 
 ### configure?
 
-> `optional` **configure**: [`ExtensionSlotConfigureValueObject`](ExtensionSlotConfigureValueObject.md)
+> `optional` **configure?**: [`ExtensionSlotConfigureValueObject`](ExtensionSlotConfigureValueObject.md)
 
 Defined in: [packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L51)
 
@@ -26,7 +26,7 @@ Defined in: [packages/framework/esm-config/src/types.ts:51](https://github.com/o
 
 ### order?
 
-> `optional` **order**: `string`[]
+> `optional` **order?**: `string`[]
 
 Defined in: [packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L50)
 
@@ -36,7 +36,7 @@ Overrides the default ordering of extensions.
 
 ### remove?
 
-> `optional` **remove**: `string`[]
+> `optional` **remove?**: `string`[]
 
 Defined in: [packages/framework/esm-config/src/types.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L48)
 

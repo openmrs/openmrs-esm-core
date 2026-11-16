@@ -2,7 +2,7 @@
 
 # Function: duration()
 
-> **duration**(`startDate`, `endDate`, `options?`): `null` \| `DurationInput`
+> **duration**(`startDate`, `endDate?`, `options?`): `DurationInput` \| `null`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:671](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L671)
 
@@ -28,7 +28,7 @@ a multi-unit decomposition via largestUnit/smallestUnit.
 
 The start date. If null, returns null.
 
-### endDate
+### endDate?
 
 `ConfigType` = `...`
 
@@ -36,13 +36,13 @@ Optional. Defaults to now.
 
 ### options?
 
-A unit string for single-unit output, or a DurationOptions object.
+[`DurationUnit`](../type-aliases/DurationUnit.md) \| [`DurationOptions`](../interfaces/DurationOptions.md)
 
-[`DurationUnit`](../type-aliases/DurationUnit.md) | [`DurationOptions`](../interfaces/DurationOptions.md)
+A unit string for single-unit output, or a DurationOptions object.
 
 ## Returns
 
-`null` \| `DurationInput`
+`DurationInput` \| `null`
 
 A DurationInput object, or null if either date is null or unparseable.
 

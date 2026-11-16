@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / getAsyncExtensionLifecycle
 
-# Variable: ~~getAsyncExtensionLifecycle()~~
+# ~~Variable: getAsyncExtensionLifecycle~~
 
 > `const` **getAsyncExtensionLifecycle**: \<`T`\>(`lazy`, `options`) => () => `Promise`\<`ReactAppOrParcel`\<`T`\>\> = `getAsyncLifecycle`
 
@@ -36,11 +36,7 @@ Configuration options for the OpenMRS component decorator.
 
 A function that returns a Promise resolving to a single-spa lifecycle object.
 
-> (): `Promise`\<`ReactAppOrParcel`\<`T`\>\>
-
-### Returns
-
-`Promise`\<`ReactAppOrParcel`\<`T`\>\>
+() => `Promise`\<`ReactAppOrParcel`\<`T`\>\>
 
 ## Example
 

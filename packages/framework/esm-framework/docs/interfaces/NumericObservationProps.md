@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-o
 
 ### conceptUuid?
 
-> `optional` **conceptUuid**: `string`
+> `optional` **conceptUuid?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L27)
 
@@ -18,7 +18,7 @@ Concept UUID to fetch reference range from
 
 ### interpretation?
 
-> `optional` **interpretation**: `"high"` \| `"low"` \| `"normal"` \| `"NORMAL"` \| `"HIGH"` \| `"CRITICALLY_HIGH"` \| `"OFF_SCALE_HIGH"` \| `"LOW"` \| `"CRITICALLY_LOW"` \| `"OFF_SCALE_LOW"` \| `"critically_low"` \| `"critically_high"` \| `"off_scale_low"` \| `"off_scale_high"`
+> `optional` **interpretation?**: `"high"` \| `"low"` \| `"normal"` \| `"NORMAL"` \| `"HIGH"` \| `"CRITICALLY_HIGH"` \| `"OFF_SCALE_HIGH"` \| `"LOW"` \| `"CRITICALLY_LOW"` \| `"OFF_SCALE_LOW"` \| `"critically_low"` \| `"critically_high"` \| `"off_scale_low"` \| `"off_scale_high"`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L23)
 
@@ -28,7 +28,7 @@ Pre-calculated interpretation (either ObservationInterpretation or OBSERVATION_I
 
 ### label?
 
-> `optional` **label**: `string`
+> `optional` **label?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L21)
 
@@ -46,7 +46,7 @@ Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-o
 
 ### referenceRange?
 
-> `optional` **referenceRange**: [`ObsReferenceRanges`](ObsReferenceRanges.md)
+> `optional` **referenceRange?**: [`ObsReferenceRanges`](ObsReferenceRanges.md)
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L25)
 
@@ -56,7 +56,7 @@ Reference range for calculating interpretation
 
 ### unit?
 
-> `optional` **unit**: `string`
+> `optional` **unit?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L19)
 
@@ -76,7 +76,7 @@ The observation value to display
 
 ### variant?
 
-> `optional` **variant**: `"cell"` \| `"card"`
+> `optional` **variant?**: `"cell"` \| `"card"`
 
 Defined in: [packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/numeric-observation/numeric-observation.component.tsx#L33)
 

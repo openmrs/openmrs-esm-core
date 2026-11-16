@@ -6,4 +6,4 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:7](https://github.co
 
 ## Indexable
 
-\[`_`: `string`\]: `any`
+> \[`_`: `string`\]: `any`

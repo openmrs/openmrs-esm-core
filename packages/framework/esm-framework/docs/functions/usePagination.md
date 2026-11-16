@@ -2,7 +2,7 @@
 
 # Function: usePagination()
 
-> **usePagination**\<`T`\>(`data`, `resultsPerPage`): `object`
+> **usePagination**\<`T`\>(`data?`, `resultsPerPage?`): `object`
 
 Defined in: [packages/framework/esm-react-utils/src/usePagination.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L20)
 
@@ -21,11 +21,11 @@ when the data shrinks; a component reacting to `currentPage` should expect that.
 
 ## Parameters
 
-### data
+### data?
 
 `T`[] = `[]`
 
-### resultsPerPage
+### resultsPerPage?
 
 `number` = `defaultResultsPerPage`
 
@@ -37,7 +37,7 @@ when the data shrinks; a component reacting to `currentPage` should expect that.
 
 > **currentPage**: `number` = `page`
 
-### goTo()
+### goTo
 
 > **goTo**: (`page`) => `void`
 
@@ -51,7 +51,7 @@ when the data shrinks; a component reacting to `currentPage` should expect that.
 
 `void`
 
-### goToNext()
+### goToNext
 
 > **goToNext**: () => `void`
 
@@ -59,7 +59,7 @@ when the data shrinks; a component reacting to `currentPage` should expect that.
 
 `void`
 
-### goToPrevious()
+### goToPrevious
 
 > **goToPrevious**: () => `void`
 

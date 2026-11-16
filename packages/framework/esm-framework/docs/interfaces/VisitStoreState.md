@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:24](https://githu
 
 ### manuallySetVisitUuid
 
-> **manuallySetVisitUuid**: `null` \| `string`
+> **manuallySetVisitUuid**: `string` \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L26)
 
@@ -16,6 +16,6 @@ Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:26](https://githu
 
 ### patientUuid
 
-> **patientUuid**: `null` \| `string`
+> **patientUuid**: `string` \| `null`
 
 Defined in: [packages/framework/esm-emr-api/src/visit-utils.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-utils.ts#L25)

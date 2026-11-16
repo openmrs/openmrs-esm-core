@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 ### action?
 
-> `optional` **action**: `string`
+> `optional` **action?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L11)
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 ### critical?
 
-> `optional` **critical**: `boolean`
+> `optional` **critical?**: `boolean`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L13)
 
@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 ### kind?
 
-> `optional` **kind**: [`InlineNotificationType`](../type-aliases/InlineNotificationType.md)
+> `optional` **kind?**: [`InlineNotificationType`](../type-aliases/InlineNotificationType.md)
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L12)
 
@@ -40,15 +40,15 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 ### millis?
 
-> `optional` **millis**: `number`
+> `optional` **millis?**: `number`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L14)
 
 ***
 
-### onAction()?
+### onAction?
 
-> `optional` **onAction**: () => `void`
+> `optional` **onAction?**: () => `void`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L16)
 
@@ -60,6 +60,6 @@ Defined in: [packages/framework/esm-styleguide/src/notifications/notification.co
 
 ### title?
 
-> `optional` **title**: `string`
+> `optional` **title?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/notifications/notification.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L15)

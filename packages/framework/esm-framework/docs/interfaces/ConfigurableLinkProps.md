@@ -10,9 +10,9 @@ Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:35](htt
 
 ## Properties
 
-### onBeforeNavigate()?
+### onBeforeNavigate?
 
-> `optional` **onBeforeNavigate**: (`event`) => `void`
+> `optional` **onBeforeNavigate?**: (`event`) => `void`
 
 Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L41)
 
@@ -32,7 +32,7 @@ A callback to be called just before navigation occurs
 
 ### templateParams?
 
-> `optional` **templateParams**: [`TemplateParams`](../type-aliases/TemplateParams.md)
+> `optional` **templateParams?**: [`TemplateParams`](../type-aliases/TemplateParams.md)
 
 Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L39)
 

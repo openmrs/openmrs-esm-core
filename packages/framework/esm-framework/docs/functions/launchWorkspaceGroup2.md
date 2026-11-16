@@ -28,7 +28,7 @@ the requested group is immediately opened.
 
 ### groupProps
 
-`null` | `GroupProps`
+`GroupProps` \| `null`
 
 ## Returns
 

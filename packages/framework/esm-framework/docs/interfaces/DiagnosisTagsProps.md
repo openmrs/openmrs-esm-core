@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags
 
 ### showCertainty?
 
-> `optional` **showCertainty**: `boolean`
+> `optional` **showCertainty?**: `boolean`
 
 Defined in: [packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/diagnosis-tags/diagnosis-tags.component.tsx#L18)
 

@@ -12,7 +12,7 @@ Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:8](https:/
 
 ### ~~extensionSlotName?~~
 
-> `optional` **extensionSlotName**: `string`
+> `optional` **extensionSlotName?**: `string`
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L15)
 
@@ -34,9 +34,9 @@ The name of the extension slot
 
 ***
 
-### select()?
+### select?
 
-> `optional` **select**: (`extensions`) => [`AssignedExtension`](AssignedExtension.md)[]
+> `optional` **select?**: (`extensions`) => [`AssignedExtension`](AssignedExtension.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
 
@@ -57,7 +57,7 @@ An optional function for filtering or otherwise modifying
 
 ### state?
 
-> `optional` **state**: `Record`\<`string` \| `number` \| `symbol`, `unknown`\>
+> `optional` **state?**: `Record`\<`string` \| `number` \| `symbol`, `unknown`\>
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L27)
 

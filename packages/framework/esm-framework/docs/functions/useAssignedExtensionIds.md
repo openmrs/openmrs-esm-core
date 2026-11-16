@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / useAssignedExtensionIds
 
-# Function: ~~useAssignedExtensionIds()~~
+# ~~Function: useAssignedExtensionIds()~~
 
 > **useAssignedExtensionIds**(`slotName`): `string`[]
 

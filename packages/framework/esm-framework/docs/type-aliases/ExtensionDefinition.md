@@ -22,7 +22,7 @@ The name of the component exported by this frontend module.
 
 ### displayExpression?
 
-> `optional` **displayExpression**: `string`
+> `optional` **displayExpression?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:174](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L174)
 
@@ -32,7 +32,7 @@ The expression that determines whether the extension is displayed.
 
 ### featureFlag?
 
-> `optional` **featureFlag**: `string`
+> `optional` **featureFlag?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L178)
 
@@ -42,7 +42,7 @@ If supplied, the extension will only be rendered when this feature flag is enabl
 
 ### meta?
 
-> `optional` **meta**: `object`
+> `optional` **meta?**: `object`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L182)
 
@@ -66,7 +66,7 @@ The name of this extension. This is used to refer to the extension in configurat
 
 ### order?
 
-> `optional` **order**: `number`
+> `optional` **order?**: `number`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L166)
 
@@ -76,7 +76,7 @@ Determines the order in which this component renders in its default extension sl
 
 ### privileges?
 
-> `optional` **privileges**: `string` \| `string`[]
+> `optional` **privileges?**: `string` \| `string`[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:170](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L170)
 
@@ -86,7 +86,7 @@ The user must have ANY of these privileges to see this extension.
 
 ### slot?
 
-> `optional` **slot**: `string`
+> `optional` **slot?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L158)
 
@@ -96,7 +96,7 @@ If supplied, the slot that this extension is rendered into by default.
 
 ### slots?
 
-> `optional` **slots**: `string`[]
+> `optional` **slots?**: `string`[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L162)
 

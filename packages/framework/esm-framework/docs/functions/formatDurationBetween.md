@@ -2,7 +2,7 @@
 
 # Function: formatDurationBetween()
 
-> **formatDurationBetween**(`startDate`, `endDate`, `options?`): `null` \| `string`
+> **formatDurationBetween**(`startDate`, `endDate?`, `options?`): `string` \| `null`
 
 Defined in: [packages/framework/esm-utils/src/dates/date-util.ts:733](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/dates/date-util.ts#L733)
 
@@ -18,7 +18,7 @@ to [formatDuration](formatDuration.md).
 
 The start date. If null, returns null.
 
-### endDate
+### endDate?
 
 `ConfigType` = `...`
 
@@ -26,14 +26,14 @@ Optional. Defaults to now.
 
 ### options?
 
+[`DurationUnit`](../type-aliases/DurationUnit.md) \| [`DurationOptionsWithFormat`](../interfaces/DurationOptionsWithFormat.md)
+
 A unit string for single-unit output, or a [DurationOptionsWithFormat](../interfaces/DurationOptionsWithFormat.md) object.
   The `formatOptions` field is passed to Intl.DurationFormat (defaults to short style).
 
-[`DurationUnit`](../type-aliases/DurationUnit.md) | [`DurationOptionsWithFormat`](../interfaces/DurationOptionsWithFormat.md)
-
 ## Returns
 
-`null` \| `string`
+`string` \| `null`
 
 A formatted duration string, or null if either date is null or unparseable.
 

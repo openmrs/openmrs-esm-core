@@ -16,13 +16,13 @@ Defined in: [packages/framework/esm-globals/src/events.ts:14](https://github.com
 
 ### kind?
 
-> `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
+> `optional` **kind?**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L12)
 
 ***
 
-### onActionButtonClick()
+### onActionButtonClick
 
 > **onActionButtonClick**: () => `void`
 
@@ -36,7 +36,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:15](https://github.com
 
 ### progressActionLabel?
 
-> `optional` **progressActionLabel**: `string`
+> `optional` **progressActionLabel?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L16)
 
@@ -52,6 +52,6 @@ Defined in: [packages/framework/esm-globals/src/events.ts:11](https://github.com
 
 ### title?
 
-> `optional` **title**: `string`
+> `optional` **title?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L13)

@@ -28,7 +28,7 @@ An object containing the patient data, loading state, current patient UUID, and 
 
 ### error
 
-> **error**: `undefined` \| `null` \| `Error`
+> **error**: `Error` \| `null` \| `undefined`
 
 ### isLoading
 
@@ -36,8 +36,8 @@ An object containing the patient data, loading state, current patient UUID, and 
 
 ### patient
 
-> **patient**: `undefined` \| [`NullablePatient`](../type-aliases/NullablePatient.md)
+> **patient**: [`NullablePatient`](../type-aliases/NullablePatient.md) \| `undefined`
 
 ### patientUuid
 
-> **patientUuid**: `null` \| `string` = `currentPatientUuid`
+> **patientUuid**: `string` \| `null` = `currentPatientUuid`

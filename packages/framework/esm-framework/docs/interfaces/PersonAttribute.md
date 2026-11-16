@@ -16,7 +16,7 @@ accounted for, use OpenmrsResource instead.
 
 ### attributeType?
 
-> `optional` **attributeType**: [`OpenmrsResource`](OpenmrsResource.md)
+> `optional` **attributeType?**: [`OpenmrsResource`](OpenmrsResource.md)
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L5)
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:5](https://
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -36,7 +36,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -60,7 +60,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -84,7 +84,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https:
 
 ### value?
 
-> `optional` **value**: `string`
+> `optional` **value?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L6)
 
@@ -92,6 +92,6 @@ Defined in: [packages/framework/esm-api/src/types/person-resource.ts:6](https://
 
 ### voided?
 
-> `optional` **voided**: `boolean`
+> `optional` **voided?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/types/person-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L7)

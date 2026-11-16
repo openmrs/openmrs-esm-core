@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:11](https://github.c
 
 ### displayExpression?
 
-> `readonly` `optional` **displayExpression**: `string`
+> `readonly` `optional` **displayExpression?**: `string`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L19)
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:19](https://github.c
 
 ### featureFlag?
 
-> `readonly` `optional` **featureFlag**: `string`
+> `readonly` `optional` **featureFlag?**: `string`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L18)
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:12](https://github.c
 
 ### order?
 
-> `readonly` `optional` **order**: `number`
+> `readonly` `optional` **order?**: `number`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L16)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-extensions/src/store.ts:16](https://github.c
 
 ### privileges?
 
-> `readonly` `optional` **privileges**: `string` \| `string`[]
+> `readonly` `optional` **privileges?**: `string` \| `string`[]
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L17)
 

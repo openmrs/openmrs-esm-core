@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:3](ht
 
 ### capturedFromWebcam?
 
-> `optional` **capturedFromWebcam**: `boolean`
+> `optional` **capturedFromWebcam?**: `boolean`
 
 Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L8)
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:8](ht
 
 ### file?
 
-> `optional` **file**: `File`
+> `optional` **file?**: `File`
 
 Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L2)
 
@@ -56,6 +56,6 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:5](ht
 
 ### status?
 
-> `optional` **status**: `"complete"` \| `"uploading"`
+> `optional` **status?**: `"complete"` \| `"uploading"`
 
 Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L7)

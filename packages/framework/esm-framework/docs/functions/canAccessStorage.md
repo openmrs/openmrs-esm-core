@@ -2,7 +2,7 @@
 
 # Function: canAccessStorage()
 
-> **canAccessStorage**(`storage`): `boolean`
+> **canAccessStorage**(`storage?`): `boolean`
 
 Defined in: [packages/framework/esm-utils/src/storage.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/storage.ts#L11)
 
@@ -12,7 +12,7 @@ is actually available. Useful for testing the availability of `localStorage` or
 
 ## Parameters
 
-### storage
+### storage?
 
 `Storage` = `window.localStorage`
 

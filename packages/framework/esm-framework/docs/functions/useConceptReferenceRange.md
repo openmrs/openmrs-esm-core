@@ -12,13 +12,13 @@ Hook to fetch concept reference range from OpenMRS REST API
 
 ### conceptUuid
 
-The UUID of the concept to fetch reference range for
+`string` \| `undefined`
 
-`undefined` | `string`
+The UUID of the concept to fetch reference range for
 
 ### patientUuid
 
-`undefined` | `string`
+`string` \| `undefined`
 
 ## Returns
 

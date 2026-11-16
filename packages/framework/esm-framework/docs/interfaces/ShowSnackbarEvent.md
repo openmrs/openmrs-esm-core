@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:29](https://github.com
 
 ### actionButtonLabel?
 
-> `optional` **actionButtonLabel**: `any`
+> `optional` **actionButtonLabel?**: `any`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L33)
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:33](https://github.com
 
 ### isLowContrast?
 
-> `optional` **isLowContrast**: `boolean`
+> `optional` **isLowContrast?**: `boolean`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L36)
 
@@ -24,15 +24,15 @@ Defined in: [packages/framework/esm-globals/src/events.ts:36](https://github.com
 
 ### kind?
 
-> `optional` **kind**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
+> `optional` **kind?**: `"error"` \| `"info"` \| `"info-square"` \| `"success"` \| `"warning"` \| `"warning-alt"`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L31)
 
 ***
 
-### onActionButtonClick()?
+### onActionButtonClick?
 
-> `optional` **onActionButtonClick**: () => `void`
+> `optional` **onActionButtonClick?**: () => `void`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L34)
 
@@ -44,7 +44,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:34](https://github.com
 
 ### progressActionLabel?
 
-> `optional` **progressActionLabel**: `string`
+> `optional` **progressActionLabel?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L35)
 
@@ -52,7 +52,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:35](https://github.com
 
 ### subtitle?
 
-> `optional` **subtitle**: `any`
+> `optional` **subtitle?**: `any`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L30)
 
@@ -60,7 +60,7 @@ Defined in: [packages/framework/esm-globals/src/events.ts:30](https://github.com
 
 ### timeoutInMs?
 
-> `optional` **timeoutInMs**: `number`
+> `optional` **timeoutInMs?**: `number`
 
 Defined in: [packages/framework/esm-globals/src/events.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L37)
 

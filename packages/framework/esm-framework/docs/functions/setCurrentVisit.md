@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / setCurrentVisit
 
-# Function: ~~setCurrentVisit()~~
+# ~~Function: setCurrentVisit()~~
 
 > **setCurrentVisit**(`patientUuid`, `visitUuid`): `void`
 

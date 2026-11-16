@@ -2,7 +2,7 @@
 
 # Function: useOpenmrsInfinite()
 
-> **useOpenmrsInfinite**\<`T`\>(`url`, `options`): `UseServerInfiniteReturnObject`\<`T`, `OpenMRSPaginatedResponse`\<`T`\>\>
+> **useOpenmrsInfinite**\<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`\<`T`, `OpenMRSPaginatedResponse`\<`T`\>\>
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L99)
 
@@ -28,14 +28,14 @@ is fetched by calling `loadMore`. See: https://swr.vercel.app/docs/pagination#us
 
 ### url
 
+`string` \| `URL`
+
 The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify
            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined
            server-side.
            Similar to useSWRInfinite, this param can be null to disable fetching.
 
-`string` | `URL`
-
-### options
+### options?
 
 [`UseServerInfiniteOptions`](../interfaces/UseServerInfiniteOptions.md)\<`OpenMRSPaginatedResponse`\<`T`\>\> = `{}`
 

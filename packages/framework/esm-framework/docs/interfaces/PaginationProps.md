@@ -18,7 +18,7 @@ The count of current items displayed
 
 ### dashboardLinkLabel?
 
-> `optional` **dashboardLinkLabel**: `string`
+> `optional` **dashboardLinkLabel?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/pagination/pagination.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pagination/pagination.component.tsx#L22)
 
@@ -28,7 +28,7 @@ Optional text to display instead of the default "See all"
 
 ### dashboardLinkUrl?
 
-> `optional` **dashboardLinkUrl**: `string`
+> `optional` **dashboardLinkUrl?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/pagination/pagination.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pagination/pagination.component.tsx#L20)
 
@@ -36,9 +36,9 @@ An optional URL the user should be directed to if they click on the link to see 
 
 ***
 
-### onPageNumberChange()?
+### onPageNumberChange?
 
-> `optional` **onPageNumberChange**: (`data`) => `void`
+> `optional` **onPageNumberChange?**: (`data`) => `void`
 
 Defined in: [packages/framework/esm-styleguide/src/pagination/pagination.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pagination/pagination.component.tsx#L18)
 

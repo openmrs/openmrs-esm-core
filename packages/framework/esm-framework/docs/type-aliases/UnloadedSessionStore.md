@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-api/src/current-user.ts:15](https://github.c
 
 ### error?
 
-> `optional` **error**: `Error`
+> `optional` **error?**: `Error`
 
 Defined in: [packages/framework/esm-api/src/current-user.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L19)
 
@@ -20,7 +20,7 @@ Set when fetching the session failed before any session had loaded.
 
 ### initializing?
 
-> `optional` **initializing**: `boolean`
+> `optional` **initializing?**: `boolean`
 
 Defined in: [packages/framework/esm-api/src/current-user.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L25)
 

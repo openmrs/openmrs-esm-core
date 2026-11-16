@@ -2,7 +2,7 @@
 
 # Function: showModal()
 
-> **showModal**(`modalName`, `props`, `onClose`): () => `void`
+> **showModal**(`modalName`, `props?`, `onClose?`): () => `void`
 
 Defined in: [packages/framework/esm-styleguide/src/modals/index.tsx:293](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L293)
 
@@ -21,13 +21,13 @@ body might not vertical-scroll properly.
 
 The name of the modal to show.
 
-### props
+### props?
 
 `ModalProps` = `{}`
 
 The optional props to provide to the modal.
 
-### onClose
+### onClose?
 
 () => `void`
 
@@ -37,8 +37,4 @@ The optional callback to call when the modal is closed.
 
 The dispose function to force closing the modal dialog.
 
-> (): `void`
-
-### Returns
-
-`void`
+() => `void`

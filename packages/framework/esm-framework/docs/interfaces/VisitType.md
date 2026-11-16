@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:41](http
 
 ### name?
 
-> `optional` **name**: `string`
+> `optional` **name?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L42)
 

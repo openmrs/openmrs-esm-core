@@ -2,7 +2,7 @@
 
 # Function: useOpenmrsPagination()
 
-> **useOpenmrsPagination**\<`T`\>(`url`, `pageSize`, `options`): `object`
+> **useOpenmrsPagination**\<`T`\>(`url`, `pageSize`, `options?`): `object`
 
 Defined in: [packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L59)
 
@@ -30,12 +30,12 @@ of the data set. In that case, all data must be loaded onto client-side first.
 
 ### url
 
+`string` \| `URL`
+
 The URL of the paginated rest endpoint. \
            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,
            which will be overridden and manipulated by the `goTo*` callbacks.
            Similar to useSWR, this param can be null to disable fetching.
-
-`string` | `URL`
 
 ### pageSize
 
@@ -44,7 +44,7 @@ The URL of the paginated rest endpoint. \
 The number of results to return per page / fetch. Note that this value MUST NOT exceed
            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000).
 
-### options
+### options?
 
 [`UseServerPaginationOptions`](../interfaces/UseServerPaginationOptions.md)\<`OpenMRSPaginatedResponse`\<`T`\>\> = `{}`
 
@@ -62,7 +62,7 @@ The options object
 
 ### data
 
-> **data**: `undefined` \| `T`[]
+> **data**: `T`[] \| `undefined`
 
 ### error
 
@@ -72,7 +72,7 @@ The error object thrown by the fetcher function.
 
 `undefined` when there's no error or when a request is in progress.
 
-### goTo()
+### goTo
 
 > **goTo**: (`page`) => `void`
 
@@ -86,7 +86,7 @@ The error object thrown by the fetcher function.
 
 `void`
 
-### goToNext()
+### goToNext
 
 > **goToNext**: () => `void`
 
@@ -94,7 +94,7 @@ The error object thrown by the fetcher function.
 
 `void`
 
-### goToPrevious()
+### goToPrevious
 
 > **goToPrevious**: () => `void`
 

@@ -2,19 +2,19 @@
 
 # Function: getLocations()
 
-> **getLocations**(`tagUuidOrName`, `query`): `Promise`\<[`Location`](../interfaces/Location.md)[]\>
+> **getLocations**(`tagUuidOrName?`, `query?`): `Promise`\<[`Location`](../interfaces/Location.md)[]\>
 
 Defined in: [packages/framework/esm-emr-api/src/location.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/location.ts#L12)
 
 ## Parameters
 
-### tagUuidOrName
+### tagUuidOrName?
 
-`null` | `string`
+`string` \| `null` = `null`
 
-### query
+### query?
 
-`null` | `string`
+`string` \| `null` = `null`
 
 ## Returns
 

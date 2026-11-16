@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / ConnectedExtension
 
-# Interface: ~~ConnectedExtension~~
+# ~~Interface: ConnectedExtension~~
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L123)
 
@@ -12,7 +12,7 @@ replaced with AssignedExtension
 
 ### ~~config~~
 
-> `readonly` **config**: `null` \| `Readonly`\<[`ConfigObject`](ConfigObject.md)\>
+> `readonly` **config**: `Readonly`\<[`ConfigObject`](ConfigObject.md)\> \| `null`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L129)
 

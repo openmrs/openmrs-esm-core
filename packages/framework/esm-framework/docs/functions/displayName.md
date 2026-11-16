@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / displayName
 
-# Function: ~~displayName()~~
+# ~~Function: displayName()~~
 
 > **displayName**(`patient`): `string`
 

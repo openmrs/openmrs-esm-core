@@ -23,9 +23,9 @@ one that changes on every render re-registers on every render.
 
 ### manuallySetVisitUuid
 
-> **manuallySetVisitUuid**: `null` \| `string`
+> **manuallySetVisitUuid**: `string` \| `null`
 
-### mutateVisit()
+### mutateVisit
 
 > **mutateVisit**: () => `void`
 
@@ -40,7 +40,7 @@ disturb the traversal.
 
 ### patientUuid
 
-> **patientUuid**: `null` \| `string`
+> **patientUuid**: `string` \| `null`
 
 ### setVisitContext()
 
@@ -50,7 +50,7 @@ disturb the traversal.
 
 ##### args
 
-...\[`null` \| [`Visit`](../interfaces/Visit.md)\]
+...\[`newSelectedVisit`: [`Visit`](../interfaces/Visit.md) \| `null`\]
 
 #### Returns
 

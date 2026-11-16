@@ -6,4 +6,4 @@ Defined in: [packages/framework/esm-config/src/types.ts:54](https://github.com/o
 
 ## Indexable
 
-\[`key`: `string`\]: `object`
+> \[`key`: `string`\]: `object`

@@ -2,7 +2,7 @@
 
 # Function: matchLocale()
 
-> **matchLocale**(`requested`, `available`, `fallback?`): `undefined` \| `string`
+> **matchLocale**(`requested`, `available`, `fallback?`): `string` \| `undefined`
 
 Defined in: [packages/framework/esm-utils/src/match-locale.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/match-locale.ts#L35)
 
@@ -29,10 +29,10 @@ and never throw.
 
 ### requested
 
+`string` \| `null` \| `undefined`
+
 The locale the caller would like to use, or `null`/`undefined`
   if no preference is known.
-
-`undefined` | `null` | `string`
 
 ### available
 
@@ -49,7 +49,7 @@ The value to return when no match is found. Defaults to
 
 ## Returns
 
-`undefined` \| `string`
+`string` \| `undefined`
 
 The matched locale from `available`, or `fallback` if nothing matches.
 

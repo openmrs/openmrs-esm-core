@@ -38,17 +38,7 @@ The value to associate with this namespace. Updating the value property will upd
 
 A function which can be used to update the state associated with the namespace
 
-> (`update`): `void`
-
-### Parameters
-
-#### update
-
-(`state`) => `T`
-
-### Returns
-
-`void`
+(`update`) => `void`
 
 ## Examples
 

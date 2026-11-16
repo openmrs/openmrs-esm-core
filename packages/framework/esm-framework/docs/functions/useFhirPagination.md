@@ -2,7 +2,7 @@
 
 # Function: useFhirPagination()
 
-> **useFhirPagination**\<`T`\>(`url`, `pageSize`, `options`): `object`
+> **useFhirPagination**\<`T`\>(`url`, `pageSize`, `options?`): `object`
 
 Defined in: [packages/framework/esm-react-utils/src/useFhirPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L27)
 
@@ -22,10 +22,10 @@ This function is the FHIR counterpart of `useOpenmrsPagination`.
 
 ### url
 
+`string` \| `URL`
+
 The URL of the paginated rest endpoint.
            which will be overridden and manipulated by the `goTo*` callbacks
-
-`string` | `URL`
 
 ### pageSize
 
@@ -33,7 +33,7 @@ The URL of the paginated rest endpoint.
 
 The number of results to return per page / fetch.
 
-### options
+### options?
 
 [`UseServerPaginationOptions`](../interfaces/UseServerPaginationOptions.md)\<`Bundle`\> = `{}`
 
@@ -51,7 +51,7 @@ The options object
 
 ### data
 
-> **data**: `undefined` \| `T`[]
+> **data**: `T`[] \| `undefined`
 
 ### error
 
@@ -61,7 +61,7 @@ The error object thrown by the fetcher function.
 
 `undefined` when there's no error or when a request is in progress.
 
-### goTo()
+### goTo
 
 > **goTo**: (`page`) => `void`
 
@@ -75,7 +75,7 @@ The error object thrown by the fetcher function.
 
 `void`
 
-### goToNext()
+### goToNext
 
 > **goToNext**: () => `void`
 
@@ -83,7 +83,7 @@ The error object thrown by the fetcher function.
 
 `void`
 
-### goToPrevious()
+### goToPrevious
 
 > **goToPrevious**: () => `void`
 

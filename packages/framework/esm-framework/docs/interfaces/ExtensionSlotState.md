@@ -19,6 +19,6 @@ this slot should actually display.
 
 ### moduleName?
 
-> `optional` **moduleName**: `string`
+> `optional` **moduleName?**: `string`
 
 Defined in: [packages/framework/esm-extensions/src/store.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L102)

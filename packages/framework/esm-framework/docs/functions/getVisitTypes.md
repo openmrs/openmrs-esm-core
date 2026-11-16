@@ -2,7 +2,7 @@
 
 # Function: getVisitTypes()
 
-> **getVisitTypes**(`url`): `Promise`\<[`VisitType`](../interfaces/VisitType.md)[]\>
+> **getVisitTypes**(`url?`): `Promise`\<[`VisitType`](../interfaces/VisitType.md)[]\>
 
 Defined in: [packages/framework/esm-emr-api/src/visit-type.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/visit-type.ts#L30)
 
@@ -10,7 +10,7 @@ Fetches all available visit types from the OpenMRS REST API.
 
 ## Parameters
 
-### url
+### url?
 
 `string` = `visitTypesUrl`
 

@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / useExtensionStore
 
-# Variable: useExtensionStore()
+# Variable: useExtensionStore
 
 > `const` **useExtensionStore**: \{(): [`ExtensionStore`](../interfaces/ExtensionStore.md); \<`A`\>(`actions`): [`ExtensionStore`](../interfaces/ExtensionStore.md) & [`BoundActions`](../type-aliases/BoundActions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md), `A`\>; \<`A`\>(`actions?`): [`ExtensionStore`](../interfaces/ExtensionStore.md) & [`BoundActions`](../type-aliases/BoundActions.md)\<[`ExtensionStore`](../interfaces/ExtensionStore.md), `A`\>; \}
 

@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / AppointmentsAltPictogram
 
-# Variable: ~~AppointmentsAltPictogram~~
+# ~~Variable: AppointmentsAltPictogram~~
 
 > `const` **AppointmentsAltPictogram**: `MemoExoticComponent`\<`ForwardRefExoticComponent`\<[`PictogramProps`](../type-aliases/PictogramProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>\> = `AppointmentsPictogram`
 

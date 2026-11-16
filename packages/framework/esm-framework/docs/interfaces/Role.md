@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-api/src/types/user-resource.ts:65](https://g
 
 ### links?
 
-> `optional` **links**: `any`[]
+> `optional` **links?**: `any`[]
 
 Defined in: [packages/framework/esm-api/src/types/user-resource.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L66)
 

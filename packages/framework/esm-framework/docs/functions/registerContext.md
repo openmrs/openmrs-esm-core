@@ -2,7 +2,7 @@
 
 # Function: registerContext()
 
-> **registerContext**\<`T`\>(`namespace`, `initialValue`): `void`
+> **registerContext**\<`T`\>(`namespace`, `initialValue?`): `void`
 
 Defined in: [packages/framework/esm-context/src/context.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L29)
 
@@ -23,7 +23,7 @@ an already-registered namespace will display a warning and make no modifications
 
 the namespace to register
 
-### initialValue
+### initialValue?
 
 `T` = `nothing`
 

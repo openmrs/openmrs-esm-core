@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:47]
 
 ### className?
 
-> `optional` **className**: `Argument`
+> `optional` **className?**: `Argument`
 
 Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)
 
@@ -18,6 +18,6 @@ Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48]
 
 ### size?
 
-> `optional` **size**: `number`
+> `optional` **size?**: `number`
 
 Defined in: [packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L49)

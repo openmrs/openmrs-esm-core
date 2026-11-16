@@ -10,7 +10,7 @@ Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:105](https://
 
 ### className?
 
-> `optional` **className**: `Argument`
+> `optional` **className?**: `Argument`
 
 Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L106)
 
@@ -18,7 +18,7 @@ Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:106](https://
 
 ### fill?
 
-> `optional` **fill**: `string`
+> `optional` **fill?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L107)
 
@@ -26,6 +26,6 @@ Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:107](https://
 
 ### size?
 
-> `optional` **size**: `number`
+> `optional` **size?**: `number`
 
 Defined in: [packages/framework/esm-styleguide/src/icons/icons.tsx:108](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L108)

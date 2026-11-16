@@ -2,7 +2,7 @@
 
 # Function: renderExtension()
 
-> **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction`, `additionalProps`): `Promise`\<`null` \| `Parcel`\>
+> **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): `Promise`\<`Parcel` \| `null`\>
 
 Defined in: [packages/framework/esm-extensions/src/render.ts:374](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L374)
 
@@ -28,14 +28,14 @@ that registered an extension component for this slot.
 
 `string`
 
-### renderFunction
+### renderFunction?
 
 (`application`) => `ParcelConfig`
 
-### additionalProps
+### additionalProps?
 
 `Record`\<`string`, `any`\> = `{}`
 
 ## Returns
 
-`Promise`\<`null` \| `Parcel`\>
+`Promise`\<`Parcel` \| `null`\>

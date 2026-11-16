@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / setupDynamicOfflineDataHandler
 
-# Function: ~~setupDynamicOfflineDataHandler()~~
+# ~~Function: setupDynamicOfflineDataHandler()~~
 
 > **setupDynamicOfflineDataHandler**(`_handler`): `void`
 

@@ -18,17 +18,7 @@ callback-based APIs where the original call site would otherwise be lost.
 
 A function that accepts an error and reports it with an enhanced stack trace.
 
-> (`incomingErr`): `void`
-
-### Parameters
-
-#### incomingErr
-
-`unknown`
-
-### Returns
-
-`void`
+(`incomingErr`) => `void`
 
 ## Example
 

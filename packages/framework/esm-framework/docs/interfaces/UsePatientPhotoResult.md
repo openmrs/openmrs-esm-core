@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto
 
 ### data
 
-> **data**: `null` \| \{ `dateTime`: `string`; `imageSrc`: `string`; \}
+> **data**: \{ `dateTime`: `string`; `imageSrc`: `string`; \} \| `null`
 
 Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L8)
 
@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto
 
 ### error?
 
-> `optional` **error**: `Error`
+> `optional` **error?**: `Error`
 
 Defined in: [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L9)
 

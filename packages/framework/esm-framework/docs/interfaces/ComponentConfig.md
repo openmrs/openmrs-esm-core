@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-extensions/src/types.ts:10](https://github.c
 
 ### extension?
 
-> `optional` **extension**: [`ExtensionData`](ExtensionData.md)
+> `optional` **extension?**: [`ExtensionData`](ExtensionData.md)
 
 Defined in: [packages/framework/esm-extensions/src/types.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/types.ts#L13)
 

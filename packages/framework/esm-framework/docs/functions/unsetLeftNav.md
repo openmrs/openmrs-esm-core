@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / unsetLeftNav
 
-# Function: ~~unsetLeftNav()~~
+# ~~Function: unsetLeftNav()~~
 
 > **unsetLeftNav**(`name`): `void`
 

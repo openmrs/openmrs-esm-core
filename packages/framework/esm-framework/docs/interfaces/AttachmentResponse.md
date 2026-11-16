@@ -40,7 +40,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:25](h
 
 ### filename?
 
-> `optional` **filename**: `string`
+> `optional` **filename?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/attachments-types.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/attachments-types.ts#L27)
 

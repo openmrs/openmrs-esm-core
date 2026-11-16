@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:5](https
 
 ### attributes?
 
-> `optional` **attributes**: `object`[]
+> `optional` **attributes?**: `object`[]
 
 Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L12)
 
@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:7](https
 
 ### patient?
 
-> `optional` **patient**: `string`
+> `optional` **patient?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L8)
 
@@ -48,7 +48,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:9](https
 
 ### stopDatetime?
 
-> `optional` **stopDatetime**: `Date`
+> `optional` **stopDatetime?**: `Date`
 
 Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L11)
 
@@ -56,7 +56,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:11](http
 
 ### uuid?
 
-> `optional` **uuid**: `string`
+> `optional` **uuid?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/visit-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/visit-resource.ts#L6)
 

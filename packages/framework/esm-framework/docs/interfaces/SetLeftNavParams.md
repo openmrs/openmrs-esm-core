@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:24](https://githu
 
 ### componentContext?
 
-> `optional` **componentContext**: [`ComponentConfig`](ComponentConfig.md)
+> `optional` **componentContext?**: [`ComponentConfig`](ComponentConfig.md)
 
 Defined in: [packages/framework/esm-extensions/src/left-nav.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L31)
 
@@ -24,7 +24,7 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:31](https://githu
 
 ### mode?
 
-> `optional` **mode**: `LeftNavMode`
+> `optional` **mode?**: `LeftNavMode`
 
 Defined in: [packages/framework/esm-extensions/src/left-nav.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L30)
 
@@ -44,6 +44,6 @@ Defined in: [packages/framework/esm-extensions/src/left-nav.ts:23](https://githu
 
 ### state?
 
-> `optional` **state**: [`ExtensionSlotState`](ExtensionSlotState.md)
+> `optional` **state?**: [`ExtensionSlotState`](ExtensionSlotState.md)
 
 Defined in: [packages/framework/esm-extensions/src/left-nav.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/left-nav.ts#L32)

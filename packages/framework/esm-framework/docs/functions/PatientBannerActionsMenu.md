@@ -2,7 +2,7 @@
 
 # Function: PatientBannerActionsMenu()
 
-> **PatientBannerActionsMenu**(`__namedParameters`): `null` \| `Element`
+> **PatientBannerActionsMenu**(`__namedParameters`): `Element` \| `null`
 
 Defined in: [packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L27)
 
@@ -19,4 +19,4 @@ container level via onKeyDown instead of delegating to Carbon's OverflowMenuItem
 
 ## Returns
 
-`null` \| `Element`
+`Element` \| `null`

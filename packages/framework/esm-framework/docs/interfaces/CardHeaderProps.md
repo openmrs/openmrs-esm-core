@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-styleguide/src/cards/card-header.component.t
 
 ### children?
 
-> `optional` **children**: `ReactNode`
+> `optional` **children?**: `ReactNode`
 
 Defined in: [packages/framework/esm-styleguide/src/cards/card-header.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/cards/card-header.component.tsx#L10)
 

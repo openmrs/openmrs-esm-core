@@ -2,7 +2,7 @@
 
 # Function: evaluateAsTypeAsync()
 
-> **evaluateAsTypeAsync**\<`T`\>(`expression`, `variables`, `typePredicate`): `Promise`\<`T`\>
+> **evaluateAsTypeAsync**\<`T`\>(`expression`, `variables?`, `typePredicate`): `Promise`\<`T`\>
 
 Defined in: [packages/framework/esm-expression-evaluator/src/evaluator.ts:284](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L284)
 
@@ -21,11 +21,11 @@ to ensure that only number or boolean results are returned.
 
 ### expression
 
+`string` \| `Expression`
+
 The expression to evaluate, either as a string or pre-parsed expression
 
-`string` | `Expression`
-
-### variables
+### variables?
 
 [`VariablesMap`](../type-aliases/VariablesMap.md) = `{}`
 

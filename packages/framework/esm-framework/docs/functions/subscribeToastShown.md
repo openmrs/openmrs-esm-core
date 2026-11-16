@@ -14,8 +14,4 @@ Defined in: [packages/framework/esm-globals/src/events.ts:79](https://github.com
 
 ## Returns
 
-> (): `void`
-
-### Returns
-
-`void`
+() => `void`

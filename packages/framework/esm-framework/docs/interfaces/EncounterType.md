@@ -14,13 +14,13 @@ accounted for, use OpenmrsResource instead.
 
 ## Indexable
 
-\[`anythingElse`: `string`\]: `any`
+> \[`anythingElse`: `string`\]: `any`
 
 ## Properties
 
 ### auditInfo?
 
-> `optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
+> `optional` **auditInfo?**: [`AuditInfo`](AuditInfo.md)
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L16)
 
@@ -32,7 +32,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:16](https:
 
 ### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L23)
 
@@ -40,7 +40,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:23](
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
@@ -52,7 +52,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https:
 
 ### links?
 
-> `optional` **links**: [`Link`](Link.md)[]
+> `optional` **links?**: [`Link`](Link.md)[]
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
 
@@ -64,7 +64,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https:
 
 ### name?
 
-> `optional` **name**: `string`
+> `optional` **name?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L22)
 
@@ -72,7 +72,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:22](
 
 ### resourceVersion?
 
-> `optional` **resourceVersion**: `string`
+> `optional` **resourceVersion?**: `string`
 
 Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
 
@@ -84,7 +84,7 @@ Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https:
 
 ### retired?
 
-> `optional` **retired**: `boolean`
+> `optional` **retired?**: `boolean`
 
 Defined in: [packages/framework/esm-emr-api/src/types/encounter-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/encounter-resource.ts#L24)
 

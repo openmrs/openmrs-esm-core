@@ -2,7 +2,7 @@
 
 # Function: getSessionLocation()
 
-> **getSessionLocation**(): `Promise`\<`undefined` \| [`SessionLocation`](../interfaces/SessionLocation.md)\>
+> **getSessionLocation**(): `Promise`\<[`SessionLocation`](../interfaces/SessionLocation.md) \| `undefined`\>
 
 Defined in: [packages/framework/esm-api/src/current-user.ts:389](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/current-user.ts#L389)
 
@@ -12,7 +12,7 @@ working (e.g., a clinic or ward).
 
 ## Returns
 
-`Promise`\<`undefined` \| [`SessionLocation`](../interfaces/SessionLocation.md)\>
+`Promise`\<[`SessionLocation`](../interfaces/SessionLocation.md) \| `undefined`\>
 
 A Promise that resolves with the SessionLocation object, or `undefined`
   if no session location is set.

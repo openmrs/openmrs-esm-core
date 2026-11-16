@@ -1,6 +1,6 @@
 [O3 Framework](../API.md) / ActionFunction
 
-# Type Alias: ActionFunction()\<T\>
+# Type Alias: ActionFunction\<T\>
 
 > **ActionFunction**\<`T`\> = (`state`, ...`args`) => `Partial`\<`T`\>
 

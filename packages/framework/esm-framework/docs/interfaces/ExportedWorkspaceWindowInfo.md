@@ -39,7 +39,7 @@ emulated workspace window, and only changes when the workspace / window is chang
 
 ### workspaceName
 
-> **workspaceName**: `null` \| `string`
+> **workspaceName**: `string` \| `null`
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L14)
 

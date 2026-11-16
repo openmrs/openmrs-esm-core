@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-styleguide/src/patient-photo/patient-photo.c
 
 ### alt?
 
-> `optional` **alt**: `string`
+> `optional` **alt?**: `string`
 
 Defined in: [packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L13)
 

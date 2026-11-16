@@ -6,13 +6,14 @@ Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:30](https:
 
 ## Extends
 
-- [`ExtensionSlotBaseProps`](ExtensionSlotBaseProps.md).`Omit`\<`React.HTMLAttributes`\<`HTMLDivElement`\>, `"children"`\>
+- [`ExtensionSlotBaseProps`](ExtensionSlotBaseProps.md)
+- `Omit`\<`React.HTMLAttributes`\<`HTMLDivElement`\>, `"children"`\>
 
 ## Properties
 
 ### about?
 
-> `optional` **about**: `string`
+> `optional` **about?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2939
 
@@ -24,7 +25,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2939
 
 ### accessKey?
 
-> `optional` **accessKey**: `string`
+> `optional` **accessKey?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2912
 
@@ -36,7 +37,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2912
 
 ### aria-activedescendant?
 
-> `optional` **aria-activedescendant**: `string`
+> `optional` **aria-activedescendant?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2610
 
@@ -50,7 +51,7 @@ Identifies the currently active element when DOM focus is on a composite widget,
 
 ### aria-atomic?
 
-> `optional` **aria-atomic**: `Booleanish`
+> `optional` **aria-atomic?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2612
 
@@ -64,7 +65,7 @@ Indicates whether assistive technologies will present all, or only parts of, the
 
 ### aria-autocomplete?
 
-> `optional` **aria-autocomplete**: `"none"` \| `"list"` \| `"both"` \| `"inline"`
+> `optional` **aria-autocomplete?**: `"none"` \| `"list"` \| `"both"` \| `"inline"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2617
 
@@ -79,7 +80,7 @@ presented if they are made.
 
 ### aria-braillelabel?
 
-> `optional` **aria-braillelabel**: `string`
+> `optional` **aria-braillelabel?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2623
 
@@ -97,7 +98,7 @@ aria-label.
 
 ### aria-brailleroledescription?
 
-> `optional` **aria-brailleroledescription**: `string`
+> `optional` **aria-brailleroledescription?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2628
 
@@ -115,7 +116,7 @@ aria-roledescription.
 
 ### aria-busy?
 
-> `optional` **aria-busy**: `Booleanish`
+> `optional` **aria-busy?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2629
 
@@ -127,7 +128,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2629
 
 ### aria-checked?
 
-> `optional` **aria-checked**: `boolean` \| `"false"` \| `"true"` \| `"mixed"`
+> `optional` **aria-checked?**: `boolean` \| `"false"` \| `"true"` \| `"mixed"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2634
 
@@ -146,7 +147,7 @@ Indicates the current "checked" state of checkboxes, radio buttons, and other wi
 
 ### aria-colcount?
 
-> `optional` **aria-colcount**: `number`
+> `optional` **aria-colcount?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2639
 
@@ -164,7 +165,7 @@ aria-colindex.
 
 ### aria-colindex?
 
-> `optional` **aria-colindex**: `number`
+> `optional` **aria-colindex?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2644
 
@@ -183,7 +184,7 @@ Defines an element's column index or position with respect to the total number o
 
 ### aria-colindextext?
 
-> `optional` **aria-colindextext**: `string`
+> `optional` **aria-colindextext?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2649
 
@@ -201,7 +202,7 @@ aria-rowindextext.
 
 ### aria-colspan?
 
-> `optional` **aria-colspan**: `number`
+> `optional` **aria-colspan?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2654
 
@@ -220,7 +221,7 @@ Defines the number of columns spanned by a cell or gridcell within a table, grid
 
 ### aria-controls?
 
-> `optional` **aria-controls**: `string`
+> `optional` **aria-controls?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2659
 
@@ -238,7 +239,7 @@ aria-owns.
 
 ### aria-current?
 
-> `optional` **aria-current**: `boolean` \| `"false"` \| `"time"` \| `"date"` \| `"true"` \| `"location"` \| `"page"` \| `"step"`
+> `optional` **aria-current?**: `boolean` \| `"false"` \| `"time"` \| `"date"` \| `"true"` \| `"location"` \| `"page"` \| `"step"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2661
 
@@ -252,7 +253,7 @@ Indicates the element that represents the current item within a container or set
 
 ### aria-describedby?
 
-> `optional` **aria-describedby**: `string`
+> `optional` **aria-describedby?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2666
 
@@ -270,7 +271,7 @@ aria-labelledby
 
 ### aria-description?
 
-> `optional` **aria-description**: `string`
+> `optional` **aria-description?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2671
 
@@ -288,7 +289,7 @@ related aria-describedby.
 
 ### aria-details?
 
-> `optional` **aria-details**: `string`
+> `optional` **aria-details?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2676
 
@@ -306,7 +307,7 @@ aria-describedby.
 
 ### aria-disabled?
 
-> `optional` **aria-disabled**: `Booleanish`
+> `optional` **aria-disabled?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2681
 
@@ -325,7 +326,7 @@ Indicates that the element is perceivable but disabled, so it is not editable or
 
 ### ~~aria-dropeffect?~~
 
-> `optional` **aria-dropeffect**: `"copy"` \| `"link"` \| `"none"` \| `"move"` \| `"execute"` \| `"popup"`
+> `optional` **aria-dropeffect?**: `"copy"` \| `"link"` \| `"none"` \| `"move"` \| `"execute"` \| `"popup"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2686
 
@@ -343,7 +344,7 @@ in ARIA 1.1
 
 ### aria-errormessage?
 
-> `optional` **aria-errormessage**: `string`
+> `optional` **aria-errormessage?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2691
 
@@ -362,7 +363,7 @@ Identifies the element that provides an error message for the object.
 
 ### aria-expanded?
 
-> `optional` **aria-expanded**: `Booleanish`
+> `optional` **aria-expanded?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2693
 
@@ -376,7 +377,7 @@ Indicates whether the element, or another grouping element it controls, is curre
 
 ### aria-flowto?
 
-> `optional` **aria-flowto**: `string`
+> `optional` **aria-flowto?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2698
 
@@ -391,7 +392,7 @@ allows assistive technology to override the general default of reading in docume
 
 ### ~~aria-grabbed?~~
 
-> `optional` **aria-grabbed**: `Booleanish`
+> `optional` **aria-grabbed?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2703
 
@@ -409,7 +410,7 @@ in ARIA 1.1
 
 ### aria-haspopup?
 
-> `optional` **aria-haspopup**: `boolean` \| `"false"` \| `"true"` \| `"dialog"` \| `"menu"` \| `"grid"` \| `"listbox"` \| `"tree"`
+> `optional` **aria-haspopup?**: `boolean` \| `"false"` \| `"true"` \| `"dialog"` \| `"menu"` \| `"grid"` \| `"listbox"` \| `"tree"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2705
 
@@ -423,7 +424,7 @@ Indicates the availability and type of interactive popup element, such as menu o
 
 ### aria-hidden?
 
-> `optional` **aria-hidden**: `Booleanish`
+> `optional` **aria-hidden?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2710
 
@@ -441,7 +442,7 @@ aria-disabled.
 
 ### aria-invalid?
 
-> `optional` **aria-invalid**: `boolean` \| `"false"` \| `"true"` \| `"grammar"` \| `"spelling"`
+> `optional` **aria-invalid?**: `boolean` \| `"false"` \| `"true"` \| `"grammar"` \| `"spelling"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2715
 
@@ -459,7 +460,7 @@ aria-errormessage.
 
 ### aria-keyshortcuts?
 
-> `optional` **aria-keyshortcuts**: `string`
+> `optional` **aria-keyshortcuts?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2717
 
@@ -473,7 +474,7 @@ Indicates keyboard shortcuts that an author has implemented to activate or give 
 
 ### aria-label?
 
-> `optional` **aria-label**: `string`
+> `optional` **aria-label?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2722
 
@@ -491,7 +492,7 @@ aria-labelledby.
 
 ### aria-labelledby?
 
-> `optional` **aria-labelledby**: `string`
+> `optional` **aria-labelledby?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2727
 
@@ -509,7 +510,7 @@ aria-describedby.
 
 ### aria-level?
 
-> `optional` **aria-level**: `number`
+> `optional` **aria-level?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2729
 
@@ -523,7 +524,7 @@ Defines the hierarchical level of an element within a structure.
 
 ### aria-live?
 
-> `optional` **aria-live**: `"off"` \| `"assertive"` \| `"polite"`
+> `optional` **aria-live?**: `"off"` \| `"assertive"` \| `"polite"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2731
 
@@ -537,7 +538,7 @@ Indicates that an element will be updated, and describes the types of updates th
 
 ### aria-modal?
 
-> `optional` **aria-modal**: `Booleanish`
+> `optional` **aria-modal?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2733
 
@@ -551,7 +552,7 @@ Indicates whether an element is modal when displayed.
 
 ### aria-multiline?
 
-> `optional` **aria-multiline**: `Booleanish`
+> `optional` **aria-multiline?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2735
 
@@ -565,7 +566,7 @@ Indicates whether a text box accepts multiple lines of input or only a single li
 
 ### aria-multiselectable?
 
-> `optional` **aria-multiselectable**: `Booleanish`
+> `optional` **aria-multiselectable?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2737
 
@@ -579,7 +580,7 @@ Indicates that the user may select more than one item from the current selectabl
 
 ### aria-orientation?
 
-> `optional` **aria-orientation**: `"horizontal"` \| `"vertical"`
+> `optional` **aria-orientation?**: `"horizontal"` \| `"vertical"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2739
 
@@ -593,7 +594,7 @@ Indicates whether the element's orientation is horizontal, vertical, or unknown/
 
 ### aria-owns?
 
-> `optional` **aria-owns**: `string`
+> `optional` **aria-owns?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2745
 
@@ -612,7 +613,7 @@ aria-controls.
 
 ### aria-placeholder?
 
-> `optional` **aria-placeholder**: `string`
+> `optional` **aria-placeholder?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2750
 
@@ -627,7 +628,7 @@ A hint could be a sample value or a brief description of the expected format.
 
 ### aria-posinset?
 
-> `optional` **aria-posinset**: `number`
+> `optional` **aria-posinset?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2755
 
@@ -645,7 +646,7 @@ aria-setsize.
 
 ### aria-pressed?
 
-> `optional` **aria-pressed**: `boolean` \| `"false"` \| `"true"` \| `"mixed"`
+> `optional` **aria-pressed?**: `boolean` \| `"false"` \| `"true"` \| `"mixed"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2760
 
@@ -664,7 +665,7 @@ Indicates the current "pressed" state of toggle buttons.
 
 ### aria-readonly?
 
-> `optional` **aria-readonly**: `Booleanish`
+> `optional` **aria-readonly?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2765
 
@@ -682,7 +683,7 @@ aria-disabled.
 
 ### aria-relevant?
 
-> `optional` **aria-relevant**: `"text"` \| `"all"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
+> `optional` **aria-relevant?**: `"text"` \| `"all"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2770
 
@@ -700,7 +701,7 @@ aria-atomic.
 
 ### aria-required?
 
-> `optional` **aria-required**: `Booleanish`
+> `optional` **aria-required?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2783
 
@@ -714,7 +715,7 @@ Indicates that user input is required on the element before a form may be submit
 
 ### aria-roledescription?
 
-> `optional` **aria-roledescription**: `string`
+> `optional` **aria-roledescription?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2785
 
@@ -728,7 +729,7 @@ Defines a human-readable, author-localized description for the role of an elemen
 
 ### aria-rowcount?
 
-> `optional` **aria-rowcount**: `number`
+> `optional` **aria-rowcount?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2790
 
@@ -746,7 +747,7 @@ aria-rowindex.
 
 ### aria-rowindex?
 
-> `optional` **aria-rowindex**: `number`
+> `optional` **aria-rowindex?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2795
 
@@ -765,7 +766,7 @@ Defines an element's row index or position with respect to the total number of r
 
 ### aria-rowindextext?
 
-> `optional` **aria-rowindextext**: `string`
+> `optional` **aria-rowindextext?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2800
 
@@ -783,7 +784,7 @@ aria-colindextext.
 
 ### aria-rowspan?
 
-> `optional` **aria-rowspan**: `number`
+> `optional` **aria-rowspan?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2805
 
@@ -802,7 +803,7 @@ Defines the number of rows spanned by a cell or gridcell within a table, grid, o
 
 ### aria-selected?
 
-> `optional` **aria-selected**: `Booleanish`
+> `optional` **aria-selected?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2810
 
@@ -821,7 +822,7 @@ Indicates the current "selected" state of various widgets.
 
 ### aria-setsize?
 
-> `optional` **aria-setsize**: `number`
+> `optional` **aria-setsize?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2815
 
@@ -839,7 +840,7 @@ aria-posinset.
 
 ### aria-sort?
 
-> `optional` **aria-sort**: `"none"` \| `"other"` \| `"ascending"` \| `"descending"`
+> `optional` **aria-sort?**: `"none"` \| `"other"` \| `"ascending"` \| `"descending"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2817
 
@@ -853,7 +854,7 @@ Indicates if items in a table or grid are sorted in ascending or descending orde
 
 ### aria-valuemax?
 
-> `optional` **aria-valuemax**: `number`
+> `optional` **aria-valuemax?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2819
 
@@ -867,7 +868,7 @@ Defines the maximum allowed value for a range widget.
 
 ### aria-valuemin?
 
-> `optional` **aria-valuemin**: `number`
+> `optional` **aria-valuemin?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2821
 
@@ -881,7 +882,7 @@ Defines the minimum allowed value for a range widget.
 
 ### aria-valuenow?
 
-> `optional` **aria-valuenow**: `number`
+> `optional` **aria-valuenow?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2826
 
@@ -899,7 +900,7 @@ aria-valuetext.
 
 ### aria-valuetext?
 
-> `optional` **aria-valuetext**: `string`
+> `optional` **aria-valuetext?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2828
 
@@ -913,7 +914,7 @@ Defines the human readable text alternative of aria-valuenow for a range widget.
 
 ### autoCapitalize?
 
-> `optional` **autoCapitalize**: `"none"` \| `string` & `object` \| `"off"` \| `"on"` \| `"sentences"` \| `"words"` \| `"characters"`
+> `optional` **autoCapitalize?**: `"none"` \| `string` & `object` \| `"off"` \| `"on"` \| `"sentences"` \| `"words"` \| `"characters"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2913
 
@@ -925,7 +926,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2913
 
 ### autoCorrect?
 
-> `optional` **autoCorrect**: `string`
+> `optional` **autoCorrect?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2952
 
@@ -937,7 +938,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2952
 
 ### autoFocus?
 
-> `optional` **autoFocus**: `boolean`
+> `optional` **autoFocus?**: `boolean`
 
 Defined in: node\_modules/@types/react/index.d.ts:2914
 
@@ -949,7 +950,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2914
 
 ### autoSave?
 
-> `optional` **autoSave**: `string`
+> `optional` **autoSave?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2953
 
@@ -961,7 +962,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 ### children?
 
-> `optional` **children**: `ReactNode` \| (`extension`, `state?`) => `ReactNode`
+> `optional` **children?**: `ReactNode` \| ((`extension`, `state?`) => `ReactNode`)
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L32)
 
@@ -969,7 +970,7 @@ Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:32](https:
 
 ### className?
 
-> `optional` **className**: `string`
+> `optional` **className?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2915
 
@@ -981,7 +982,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2915
 
 ### color?
 
-> `optional` **color**: `string`
+> `optional` **color?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2954
 
@@ -993,7 +994,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2954
 
 ### content?
 
-> `optional` **content**: `string`
+> `optional` **content?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2940
 
@@ -1005,7 +1006,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2940
 
 ### contentEditable?
 
-> `optional` **contentEditable**: `Booleanish` \| `"inherit"` \| `"plaintext-only"`
+> `optional` **contentEditable?**: `Booleanish` \| `"inherit"` \| `"plaintext-only"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2916
 
@@ -1017,7 +1018,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2916
 
 ### contextMenu?
 
-> `optional` **contextMenu**: `string`
+> `optional` **contextMenu?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2917
 
@@ -1029,7 +1030,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2917
 
 ### dangerouslySetInnerHTML?
 
-> `optional` **dangerouslySetInnerHTML**: `object`
+> `optional` **dangerouslySetInnerHTML?**: `object`
 
 Defined in: node\_modules/@types/react/index.d.ts:2399
 
@@ -1045,7 +1046,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2399
 
 ### datatype?
 
-> `optional` **datatype**: `string`
+> `optional` **datatype?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2941
 
@@ -1057,7 +1058,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2941
 
 ### defaultChecked?
 
-> `optional` **defaultChecked**: `boolean`
+> `optional` **defaultChecked?**: `boolean`
 
 Defined in: node\_modules/@types/react/index.d.ts:2906
 
@@ -1069,7 +1070,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2906
 
 ### defaultValue?
 
-> `optional` **defaultValue**: `string` \| `number` \| readonly `string`[]
+> `optional` **defaultValue?**: `string` \| `number` \| readonly `string`[]
 
 Defined in: node\_modules/@types/react/index.d.ts:2907
 
@@ -1081,7 +1082,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2907
 
 ### dir?
 
-> `optional` **dir**: `string`
+> `optional` **dir?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2918
 
@@ -1093,7 +1094,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2918
 
 ### draggable?
 
-> `optional` **draggable**: `Booleanish`
+> `optional` **draggable?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2919
 
@@ -1105,7 +1106,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2919
 
 ### enterKeyHint?
 
-> `optional` **enterKeyHint**: `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
+> `optional` **enterKeyHint?**: `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2920
 
@@ -1117,7 +1118,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2920
 
 ### exportparts?
 
-> `optional` **exportparts**: `string`
+> `optional` **exportparts?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2978
 
@@ -1133,7 +1134,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2978
 
 ### ~~extensionSlotName?~~
 
-> `optional` **extensionSlotName**: `string`
+> `optional` **extensionSlotName?**: `string`
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L15)
 
@@ -1151,7 +1152,7 @@ Use `name`
 
 ### hidden?
 
-> `optional` **hidden**: `boolean`
+> `optional` **hidden?**: `boolean`
 
 Defined in: node\_modules/@types/react/index.d.ts:2921
 
@@ -1163,7 +1164,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2921
 
 ### id?
 
-> `optional` **id**: `string`
+> `optional` **id?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2922
 
@@ -1175,7 +1176,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2922
 
 ### inlist?
 
-> `optional` **inlist**: `any`
+> `optional` **inlist?**: `any`
 
 Defined in: node\_modules/@types/react/index.d.ts:2942
 
@@ -1187,7 +1188,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2942
 
 ### inputMode?
 
-> `optional` **inputMode**: `"numeric"` \| `"search"` \| `"text"` \| `"none"` \| `"url"` \| `"tel"` \| `"email"` \| `"decimal"`
+> `optional` **inputMode?**: `"numeric"` \| `"search"` \| `"text"` \| `"none"` \| `"url"` \| `"tel"` \| `"email"` \| `"decimal"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2969
 
@@ -1205,7 +1206,7 @@ Hints at the type of data that might be entered by the user while editing the el
 
 ### is?
 
-> `optional` **is**: `string`
+> `optional` **is?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2974
 
@@ -1223,7 +1224,7 @@ Specify that a standard HTML element should behave like a defined custom built-i
 
 ### itemID?
 
-> `optional` **itemID**: `string`
+> `optional` **itemID?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2958
 
@@ -1235,7 +1236,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2958
 
 ### itemProp?
 
-> `optional` **itemProp**: `string`
+> `optional` **itemProp?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2955
 
@@ -1247,7 +1248,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2955
 
 ### itemRef?
 
-> `optional` **itemRef**: `string`
+> `optional` **itemRef?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2959
 
@@ -1259,7 +1260,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2959
 
 ### itemScope?
 
-> `optional` **itemScope**: `boolean`
+> `optional` **itemScope?**: `boolean`
 
 Defined in: node\_modules/@types/react/index.d.ts:2956
 
@@ -1271,7 +1272,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2956
 
 ### itemType?
 
-> `optional` **itemType**: `string`
+> `optional` **itemType?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2957
 
@@ -1283,7 +1284,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2957
 
 ### lang?
 
-> `optional` **lang**: `string`
+> `optional` **lang?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2923
 
@@ -1309,7 +1310,7 @@ The name of the extension slot
 
 ### nonce?
 
-> `optional` **nonce**: `string`
+> `optional` **nonce?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2924
 
@@ -1321,7 +1322,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2924
 
 ### onAbort?
 
-> `optional` **onAbort**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAbort?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2458
 
@@ -1333,7 +1334,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2458
 
 ### onAbortCapture?
 
-> `optional` **onAbortCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAbortCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2459
 
@@ -1345,7 +1346,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2459
 
 ### onAnimationEnd?
 
-> `optional` **onAnimationEnd**: `AnimationEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAnimationEnd?**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2586
 
@@ -1357,7 +1358,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2586
 
 ### onAnimationEndCapture?
 
-> `optional` **onAnimationEndCapture**: `AnimationEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAnimationEndCapture?**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2587
 
@@ -1369,7 +1370,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2587
 
 ### onAnimationIteration?
 
-> `optional` **onAnimationIteration**: `AnimationEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAnimationIteration?**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2588
 
@@ -1381,7 +1382,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2588
 
 ### onAnimationIterationCapture?
 
-> `optional` **onAnimationIterationCapture**: `AnimationEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAnimationIterationCapture?**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2589
 
@@ -1393,7 +1394,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2589
 
 ### onAnimationStart?
 
-> `optional` **onAnimationStart**: `AnimationEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAnimationStart?**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2584
 
@@ -1405,7 +1406,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2584
 
 ### onAnimationStartCapture?
 
-> `optional` **onAnimationStartCapture**: `AnimationEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAnimationStartCapture?**: `AnimationEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2585
 
@@ -1417,7 +1418,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2585
 
 ### onAuxClick?
 
-> `optional` **onAuxClick**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAuxClick?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2504
 
@@ -1429,7 +1430,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2504
 
 ### onAuxClickCapture?
 
-> `optional` **onAuxClickCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onAuxClickCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2505
 
@@ -1441,7 +1442,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2505
 
 ### onBeforeInput?
 
-> `optional` **onBeforeInput**: `InputEventHandler`\<`HTMLDivElement`\>
+> `optional` **onBeforeInput?**: `InputEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2430
 
@@ -1453,7 +1454,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2430
 
 ### onBeforeInputCapture?
 
-> `optional` **onBeforeInputCapture**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onBeforeInputCapture?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2431
 
@@ -1465,7 +1466,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2431
 
 ### onBlur?
 
-> `optional` **onBlur**: `FocusEventHandler`\<`HTMLDivElement`\>
+> `optional` **onBlur?**: `FocusEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2424
 
@@ -1477,7 +1478,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2424
 
 ### onBlurCapture?
 
-> `optional` **onBlurCapture**: `FocusEventHandler`\<`HTMLDivElement`\>
+> `optional` **onBlurCapture?**: `FocusEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2425
 
@@ -1489,7 +1490,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2425
 
 ### onCanPlay?
 
-> `optional` **onCanPlay**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCanPlay?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2460
 
@@ -1501,7 +1502,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2460
 
 ### onCanPlayCapture?
 
-> `optional` **onCanPlayCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCanPlayCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2461
 
@@ -1513,7 +1514,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2461
 
 ### onCanPlayThrough?
 
-> `optional` **onCanPlayThrough**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCanPlayThrough?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2462
 
@@ -1525,7 +1526,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2462
 
 ### onCanPlayThroughCapture?
 
-> `optional` **onCanPlayThroughCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCanPlayThroughCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2463
 
@@ -1537,7 +1538,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2463
 
 ### onChange?
 
-> `optional` **onChange**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onChange?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2428
 
@@ -1549,7 +1550,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2428
 
 ### onChangeCapture?
 
-> `optional` **onChangeCapture**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onChangeCapture?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2429
 
@@ -1561,7 +1562,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2429
 
 ### onClick?
 
-> `optional` **onClick**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onClick?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2506
 
@@ -1573,7 +1574,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2506
 
 ### onClickCapture?
 
-> `optional` **onClickCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onClickCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2507
 
@@ -1585,7 +1586,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2507
 
 ### onCompositionEnd?
 
-> `optional` **onCompositionEnd**: `CompositionEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCompositionEnd?**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2414
 
@@ -1597,7 +1598,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2414
 
 ### onCompositionEndCapture?
 
-> `optional` **onCompositionEndCapture**: `CompositionEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCompositionEndCapture?**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2415
 
@@ -1609,7 +1610,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2415
 
 ### onCompositionStart?
 
-> `optional` **onCompositionStart**: `CompositionEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCompositionStart?**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2416
 
@@ -1621,7 +1622,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2416
 
 ### onCompositionStartCapture?
 
-> `optional` **onCompositionStartCapture**: `CompositionEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCompositionStartCapture?**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2417
 
@@ -1633,7 +1634,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2417
 
 ### onCompositionUpdate?
 
-> `optional` **onCompositionUpdate**: `CompositionEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCompositionUpdate?**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2418
 
@@ -1645,7 +1646,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2418
 
 ### onCompositionUpdateCapture?
 
-> `optional` **onCompositionUpdateCapture**: `CompositionEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCompositionUpdateCapture?**: `CompositionEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2419
 
@@ -1657,7 +1658,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2419
 
 ### onContextMenu?
 
-> `optional` **onContextMenu**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onContextMenu?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2508
 
@@ -1669,7 +1670,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2508
 
 ### onContextMenuCapture?
 
-> `optional` **onContextMenuCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onContextMenuCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2509
 
@@ -1681,7 +1682,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2509
 
 ### onCopy?
 
-> `optional` **onCopy**: `ClipboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCopy?**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2406
 
@@ -1693,7 +1694,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2406
 
 ### onCopyCapture?
 
-> `optional` **onCopyCapture**: `ClipboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCopyCapture?**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2407
 
@@ -1705,7 +1706,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2407
 
 ### onCut?
 
-> `optional` **onCut**: `ClipboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCut?**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2408
 
@@ -1717,7 +1718,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2408
 
 ### onCutCapture?
 
-> `optional` **onCutCapture**: `ClipboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onCutCapture?**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2409
 
@@ -1729,7 +1730,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2409
 
 ### onDoubleClick?
 
-> `optional` **onDoubleClick**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDoubleClick?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2510
 
@@ -1741,7 +1742,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2510
 
 ### onDoubleClickCapture?
 
-> `optional` **onDoubleClickCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDoubleClickCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2511
 
@@ -1753,7 +1754,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2511
 
 ### onDrag?
 
-> `optional` **onDrag**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDrag?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2512
 
@@ -1765,7 +1766,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2512
 
 ### onDragCapture?
 
-> `optional` **onDragCapture**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragCapture?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2513
 
@@ -1777,7 +1778,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2513
 
 ### onDragEnd?
 
-> `optional` **onDragEnd**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragEnd?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2514
 
@@ -1789,7 +1790,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2514
 
 ### onDragEndCapture?
 
-> `optional` **onDragEndCapture**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragEndCapture?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2515
 
@@ -1801,7 +1802,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2515
 
 ### onDragEnter?
 
-> `optional` **onDragEnter**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragEnter?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2516
 
@@ -1813,7 +1814,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2516
 
 ### onDragEnterCapture?
 
-> `optional` **onDragEnterCapture**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragEnterCapture?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2517
 
@@ -1825,7 +1826,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2517
 
 ### onDragExit?
 
-> `optional` **onDragExit**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragExit?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2518
 
@@ -1837,7 +1838,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2518
 
 ### onDragExitCapture?
 
-> `optional` **onDragExitCapture**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragExitCapture?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2519
 
@@ -1849,7 +1850,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2519
 
 ### onDragLeave?
 
-> `optional` **onDragLeave**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragLeave?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2520
 
@@ -1861,7 +1862,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2520
 
 ### onDragLeaveCapture?
 
-> `optional` **onDragLeaveCapture**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragLeaveCapture?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2521
 
@@ -1873,7 +1874,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2521
 
 ### onDragOver?
 
-> `optional` **onDragOver**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragOver?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2522
 
@@ -1885,7 +1886,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2522
 
 ### onDragOverCapture?
 
-> `optional` **onDragOverCapture**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragOverCapture?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2523
 
@@ -1897,7 +1898,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2523
 
 ### onDragStart?
 
-> `optional` **onDragStart**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragStart?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2524
 
@@ -1909,7 +1910,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2524
 
 ### onDragStartCapture?
 
-> `optional` **onDragStartCapture**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDragStartCapture?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2525
 
@@ -1921,7 +1922,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2525
 
 ### onDrop?
 
-> `optional` **onDrop**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDrop?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2526
 
@@ -1933,7 +1934,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2526
 
 ### onDropCapture?
 
-> `optional` **onDropCapture**: `DragEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDropCapture?**: `DragEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2527
 
@@ -1945,7 +1946,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2527
 
 ### onDurationChange?
 
-> `optional` **onDurationChange**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDurationChange?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2464
 
@@ -1957,7 +1958,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2464
 
 ### onDurationChangeCapture?
 
-> `optional` **onDurationChangeCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onDurationChangeCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2465
 
@@ -1969,7 +1970,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2465
 
 ### onEmptied?
 
-> `optional` **onEmptied**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onEmptied?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2466
 
@@ -1981,7 +1982,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2466
 
 ### onEmptiedCapture?
 
-> `optional` **onEmptiedCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onEmptiedCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2467
 
@@ -1993,7 +1994,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2467
 
 ### onEncrypted?
 
-> `optional` **onEncrypted**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onEncrypted?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2468
 
@@ -2005,7 +2006,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2468
 
 ### onEncryptedCapture?
 
-> `optional` **onEncryptedCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onEncryptedCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2469
 
@@ -2017,7 +2018,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2469
 
 ### onEnded?
 
-> `optional` **onEnded**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onEnded?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2470
 
@@ -2029,7 +2030,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2470
 
 ### onEndedCapture?
 
-> `optional` **onEndedCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onEndedCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2471
 
@@ -2041,7 +2042,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2471
 
 ### onError?
 
-> `optional` **onError**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onError?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2444
 
@@ -2053,7 +2054,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2444
 
 ### onErrorCapture?
 
-> `optional` **onErrorCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onErrorCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2445
 
@@ -2065,7 +2066,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2445
 
 ### onFocus?
 
-> `optional` **onFocus**: `FocusEventHandler`\<`HTMLDivElement`\>
+> `optional` **onFocus?**: `FocusEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2422
 
@@ -2077,7 +2078,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2422
 
 ### onFocusCapture?
 
-> `optional` **onFocusCapture**: `FocusEventHandler`\<`HTMLDivElement`\>
+> `optional` **onFocusCapture?**: `FocusEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2423
 
@@ -2089,7 +2090,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2423
 
 ### onGotPointerCapture?
 
-> `optional` **onGotPointerCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onGotPointerCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2570
 
@@ -2101,7 +2102,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2570
 
 ### onGotPointerCaptureCapture?
 
-> `optional` **onGotPointerCaptureCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onGotPointerCaptureCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2571
 
@@ -2113,7 +2114,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2571
 
 ### onInput?
 
-> `optional` **onInput**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onInput?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2432
 
@@ -2125,7 +2126,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2432
 
 ### onInputCapture?
 
-> `optional` **onInputCapture**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onInputCapture?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2433
 
@@ -2137,7 +2138,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2433
 
 ### onInvalid?
 
-> `optional` **onInvalid**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onInvalid?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2438
 
@@ -2149,7 +2150,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2438
 
 ### onInvalidCapture?
 
-> `optional` **onInvalidCapture**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onInvalidCapture?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2439
 
@@ -2161,7 +2162,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2439
 
 ### onKeyDown?
 
-> `optional` **onKeyDown**: `KeyboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onKeyDown?**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2448
 
@@ -2173,7 +2174,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2448
 
 ### onKeyDownCapture?
 
-> `optional` **onKeyDownCapture**: `KeyboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onKeyDownCapture?**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2449
 
@@ -2185,7 +2186,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2449
 
 ### ~~onKeyPress?~~
 
-> `optional` **onKeyPress**: `KeyboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onKeyPress?**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2451
 
@@ -2201,7 +2202,7 @@ Use `onKeyUp` or `onKeyDown` instead
 
 ### ~~onKeyPressCapture?~~
 
-> `optional` **onKeyPressCapture**: `KeyboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onKeyPressCapture?**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2453
 
@@ -2217,7 +2218,7 @@ Use `onKeyUpCapture` or `onKeyDownCapture` instead
 
 ### onKeyUp?
 
-> `optional` **onKeyUp**: `KeyboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onKeyUp?**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2454
 
@@ -2229,7 +2230,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2454
 
 ### onKeyUpCapture?
 
-> `optional` **onKeyUpCapture**: `KeyboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onKeyUpCapture?**: `KeyboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2455
 
@@ -2241,7 +2242,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2455
 
 ### onLoad?
 
-> `optional` **onLoad**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLoad?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2442
 
@@ -2253,7 +2254,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2442
 
 ### onLoadCapture?
 
-> `optional` **onLoadCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLoadCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2443
 
@@ -2265,7 +2266,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2443
 
 ### onLoadedData?
 
-> `optional` **onLoadedData**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLoadedData?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2472
 
@@ -2277,7 +2278,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2472
 
 ### onLoadedDataCapture?
 
-> `optional` **onLoadedDataCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLoadedDataCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2473
 
@@ -2289,7 +2290,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2473
 
 ### onLoadedMetadata?
 
-> `optional` **onLoadedMetadata**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLoadedMetadata?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2474
 
@@ -2301,7 +2302,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2474
 
 ### onLoadedMetadataCapture?
 
-> `optional` **onLoadedMetadataCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLoadedMetadataCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2475
 
@@ -2313,7 +2314,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2475
 
 ### onLoadStart?
 
-> `optional` **onLoadStart**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLoadStart?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2476
 
@@ -2325,7 +2326,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2476
 
 ### onLoadStartCapture?
 
-> `optional` **onLoadStartCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLoadStartCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2477
 
@@ -2337,7 +2338,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2477
 
 ### onLostPointerCapture?
 
-> `optional` **onLostPointerCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLostPointerCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2572
 
@@ -2349,7 +2350,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2572
 
 ### onLostPointerCaptureCapture?
 
-> `optional` **onLostPointerCaptureCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onLostPointerCaptureCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2573
 
@@ -2361,7 +2362,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2573
 
 ### onMouseDown?
 
-> `optional` **onMouseDown**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseDown?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2528
 
@@ -2373,7 +2374,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2528
 
 ### onMouseDownCapture?
 
-> `optional` **onMouseDownCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseDownCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2529
 
@@ -2385,7 +2386,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2529
 
 ### onMouseEnter?
 
-> `optional` **onMouseEnter**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseEnter?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2530
 
@@ -2397,7 +2398,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2530
 
 ### onMouseLeave?
 
-> `optional` **onMouseLeave**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseLeave?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2531
 
@@ -2409,7 +2410,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2531
 
 ### onMouseMove?
 
-> `optional` **onMouseMove**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseMove?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2532
 
@@ -2421,7 +2422,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2532
 
 ### onMouseMoveCapture?
 
-> `optional` **onMouseMoveCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseMoveCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2533
 
@@ -2433,7 +2434,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2533
 
 ### onMouseOut?
 
-> `optional` **onMouseOut**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseOut?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2534
 
@@ -2445,7 +2446,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2534
 
 ### onMouseOutCapture?
 
-> `optional` **onMouseOutCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseOutCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2535
 
@@ -2457,7 +2458,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2535
 
 ### onMouseOver?
 
-> `optional` **onMouseOver**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseOver?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2536
 
@@ -2469,7 +2470,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2536
 
 ### onMouseOverCapture?
 
-> `optional` **onMouseOverCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseOverCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2537
 
@@ -2481,7 +2482,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2537
 
 ### onMouseUp?
 
-> `optional` **onMouseUp**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseUp?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2538
 
@@ -2493,7 +2494,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2538
 
 ### onMouseUpCapture?
 
-> `optional` **onMouseUpCapture**: `MouseEventHandler`\<`HTMLDivElement`\>
+> `optional` **onMouseUpCapture?**: `MouseEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2539
 
@@ -2505,7 +2506,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2539
 
 ### onPaste?
 
-> `optional` **onPaste**: `ClipboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPaste?**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2410
 
@@ -2517,7 +2518,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2410
 
 ### onPasteCapture?
 
-> `optional` **onPasteCapture**: `ClipboardEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPasteCapture?**: `ClipboardEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2411
 
@@ -2529,7 +2530,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2411
 
 ### onPause?
 
-> `optional` **onPause**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPause?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2478
 
@@ -2541,7 +2542,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2478
 
 ### onPauseCapture?
 
-> `optional` **onPauseCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPauseCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2479
 
@@ -2553,7 +2554,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2479
 
 ### onPlay?
 
-> `optional` **onPlay**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPlay?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2480
 
@@ -2565,7 +2566,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2480
 
 ### onPlayCapture?
 
-> `optional` **onPlayCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPlayCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2481
 
@@ -2577,7 +2578,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2481
 
 ### onPlaying?
 
-> `optional` **onPlaying**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPlaying?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2482
 
@@ -2589,7 +2590,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2482
 
 ### onPlayingCapture?
 
-> `optional` **onPlayingCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPlayingCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2483
 
@@ -2601,7 +2602,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2483
 
 ### onPointerCancel?
 
-> `optional` **onPointerCancel**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerCancel?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2562
 
@@ -2613,7 +2614,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2562
 
 ### onPointerCancelCapture?
 
-> `optional` **onPointerCancelCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerCancelCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2563
 
@@ -2625,7 +2626,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2563
 
 ### onPointerDown?
 
-> `optional` **onPointerDown**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerDown?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2556
 
@@ -2637,7 +2638,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2556
 
 ### onPointerDownCapture?
 
-> `optional` **onPointerDownCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerDownCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2557
 
@@ -2649,7 +2650,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2557
 
 ### onPointerEnter?
 
-> `optional` **onPointerEnter**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerEnter?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2564
 
@@ -2661,7 +2662,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2564
 
 ### onPointerLeave?
 
-> `optional` **onPointerLeave**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerLeave?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2565
 
@@ -2673,7 +2674,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2565
 
 ### onPointerMove?
 
-> `optional` **onPointerMove**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerMove?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2558
 
@@ -2685,7 +2686,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2558
 
 ### onPointerMoveCapture?
 
-> `optional` **onPointerMoveCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerMoveCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2559
 
@@ -2697,7 +2698,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2559
 
 ### onPointerOut?
 
-> `optional` **onPointerOut**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerOut?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2568
 
@@ -2709,7 +2710,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2568
 
 ### onPointerOutCapture?
 
-> `optional` **onPointerOutCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerOutCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2569
 
@@ -2721,7 +2722,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2569
 
 ### onPointerOver?
 
-> `optional` **onPointerOver**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerOver?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2566
 
@@ -2733,7 +2734,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2566
 
 ### onPointerOverCapture?
 
-> `optional` **onPointerOverCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerOverCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2567
 
@@ -2745,7 +2746,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2567
 
 ### onPointerUp?
 
-> `optional` **onPointerUp**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerUp?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2560
 
@@ -2757,7 +2758,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2560
 
 ### onPointerUpCapture?
 
-> `optional` **onPointerUpCapture**: `PointerEventHandler`\<`HTMLDivElement`\>
+> `optional` **onPointerUpCapture?**: `PointerEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2561
 
@@ -2769,7 +2770,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2561
 
 ### onProgress?
 
-> `optional` **onProgress**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onProgress?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2484
 
@@ -2781,7 +2782,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2484
 
 ### onProgressCapture?
 
-> `optional` **onProgressCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onProgressCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2485
 
@@ -2793,7 +2794,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2485
 
 ### onRateChange?
 
-> `optional` **onRateChange**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onRateChange?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2486
 
@@ -2805,7 +2806,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2486
 
 ### onRateChangeCapture?
 
-> `optional` **onRateChangeCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onRateChangeCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2487
 
@@ -2817,7 +2818,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2487
 
 ### onReset?
 
-> `optional` **onReset**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onReset?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2434
 
@@ -2829,7 +2830,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2434
 
 ### onResetCapture?
 
-> `optional` **onResetCapture**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onResetCapture?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2435
 
@@ -2841,7 +2842,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2435
 
 ### onScroll?
 
-> `optional` **onScroll**: `UIEventHandler`\<`HTMLDivElement`\>
+> `optional` **onScroll?**: `UIEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2576
 
@@ -2853,7 +2854,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2576
 
 ### onScrollCapture?
 
-> `optional` **onScrollCapture**: `UIEventHandler`\<`HTMLDivElement`\>
+> `optional` **onScrollCapture?**: `UIEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2577
 
@@ -2865,7 +2866,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2577
 
 ### onSeeked?
 
-> `optional` **onSeeked**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSeeked?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2488
 
@@ -2877,7 +2878,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2488
 
 ### onSeekedCapture?
 
-> `optional` **onSeekedCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSeekedCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2489
 
@@ -2889,7 +2890,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2489
 
 ### onSeeking?
 
-> `optional` **onSeeking**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSeeking?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2490
 
@@ -2901,7 +2902,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2490
 
 ### onSeekingCapture?
 
-> `optional` **onSeekingCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSeekingCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2491
 
@@ -2913,7 +2914,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2491
 
 ### onSelect?
 
-> `optional` **onSelect**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSelect?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2542
 
@@ -2925,7 +2926,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2542
 
 ### onSelectCapture?
 
-> `optional` **onSelectCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSelectCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2543
 
@@ -2937,7 +2938,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2543
 
 ### onStalled?
 
-> `optional` **onStalled**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onStalled?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2492
 
@@ -2949,7 +2950,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2492
 
 ### onStalledCapture?
 
-> `optional` **onStalledCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onStalledCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2493
 
@@ -2961,7 +2962,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2493
 
 ### onSubmit?
 
-> `optional` **onSubmit**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSubmit?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2436
 
@@ -2973,7 +2974,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2436
 
 ### onSubmitCapture?
 
-> `optional` **onSubmitCapture**: `FormEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSubmitCapture?**: `FormEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2437
 
@@ -2985,7 +2986,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2437
 
 ### onSuspend?
 
-> `optional` **onSuspend**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSuspend?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2494
 
@@ -2997,7 +2998,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2494
 
 ### onSuspendCapture?
 
-> `optional` **onSuspendCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onSuspendCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2495
 
@@ -3009,7 +3010,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2495
 
 ### onTimeUpdate?
 
-> `optional` **onTimeUpdate**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTimeUpdate?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2496
 
@@ -3021,7 +3022,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2496
 
 ### onTimeUpdateCapture?
 
-> `optional` **onTimeUpdateCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTimeUpdateCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2497
 
@@ -3033,7 +3034,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2497
 
 ### onTouchCancel?
 
-> `optional` **onTouchCancel**: `TouchEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTouchCancel?**: `TouchEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2546
 
@@ -3045,7 +3046,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2546
 
 ### onTouchCancelCapture?
 
-> `optional` **onTouchCancelCapture**: `TouchEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTouchCancelCapture?**: `TouchEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2547
 
@@ -3057,7 +3058,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2547
 
 ### onTouchEnd?
 
-> `optional` **onTouchEnd**: `TouchEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTouchEnd?**: `TouchEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2548
 
@@ -3069,7 +3070,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2548
 
 ### onTouchEndCapture?
 
-> `optional` **onTouchEndCapture**: `TouchEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTouchEndCapture?**: `TouchEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2549
 
@@ -3081,7 +3082,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2549
 
 ### onTouchMove?
 
-> `optional` **onTouchMove**: `TouchEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTouchMove?**: `TouchEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2550
 
@@ -3093,7 +3094,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2550
 
 ### onTouchMoveCapture?
 
-> `optional` **onTouchMoveCapture**: `TouchEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTouchMoveCapture?**: `TouchEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2551
 
@@ -3105,7 +3106,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2551
 
 ### onTouchStart?
 
-> `optional` **onTouchStart**: `TouchEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTouchStart?**: `TouchEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2552
 
@@ -3117,7 +3118,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2552
 
 ### onTouchStartCapture?
 
-> `optional` **onTouchStartCapture**: `TouchEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTouchStartCapture?**: `TouchEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2553
 
@@ -3129,7 +3130,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2553
 
 ### onTransitionEnd?
 
-> `optional` **onTransitionEnd**: `TransitionEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTransitionEnd?**: `TransitionEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2592
 
@@ -3141,7 +3142,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2592
 
 ### onTransitionEndCapture?
 
-> `optional` **onTransitionEndCapture**: `TransitionEventHandler`\<`HTMLDivElement`\>
+> `optional` **onTransitionEndCapture?**: `TransitionEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2593
 
@@ -3153,7 +3154,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2593
 
 ### onVolumeChange?
 
-> `optional` **onVolumeChange**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onVolumeChange?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2498
 
@@ -3165,7 +3166,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2498
 
 ### onVolumeChangeCapture?
 
-> `optional` **onVolumeChangeCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onVolumeChangeCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2499
 
@@ -3177,7 +3178,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2499
 
 ### onWaiting?
 
-> `optional` **onWaiting**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onWaiting?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2500
 
@@ -3189,7 +3190,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2500
 
 ### onWaitingCapture?
 
-> `optional` **onWaitingCapture**: `ReactEventHandler`\<`HTMLDivElement`\>
+> `optional` **onWaitingCapture?**: `ReactEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2501
 
@@ -3201,7 +3202,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2501
 
 ### onWheel?
 
-> `optional` **onWheel**: `WheelEventHandler`\<`HTMLDivElement`\>
+> `optional` **onWheel?**: `WheelEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2580
 
@@ -3213,7 +3214,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2580
 
 ### onWheelCapture?
 
-> `optional` **onWheelCapture**: `WheelEventHandler`\<`HTMLDivElement`\>
+> `optional` **onWheelCapture?**: `WheelEventHandler`\<`HTMLDivElement`\>
 
 Defined in: node\_modules/@types/react/index.d.ts:2581
 
@@ -3225,7 +3226,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2581
 
 ### part?
 
-> `optional` **part**: `string`
+> `optional` **part?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2982
 
@@ -3241,7 +3242,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2982
 
 ### prefix?
 
-> `optional` **prefix**: `string`
+> `optional` **prefix?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2943
 
@@ -3253,7 +3254,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2943
 
 ### property?
 
-> `optional` **property**: `string`
+> `optional` **property?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2944
 
@@ -3265,7 +3266,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2944
 
 ### radioGroup?
 
-> `optional` **radioGroup**: `string`
+> `optional` **radioGroup?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2933
 
@@ -3277,7 +3278,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2933
 
 ### rel?
 
-> `optional` **rel**: `string`
+> `optional` **rel?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2945
 
@@ -3289,7 +3290,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2945
 
 ### resource?
 
-> `optional` **resource**: `string`
+> `optional` **resource?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2946
 
@@ -3301,7 +3302,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2946
 
 ### results?
 
-> `optional` **results**: `number`
+> `optional` **results?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2960
 
@@ -3313,7 +3314,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2960
 
 ### rev?
 
-> `optional` **rev**: `string`
+> `optional` **rev?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2947
 
@@ -3325,7 +3326,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2947
 
 ### role?
 
-> `optional` **role**: `AriaRole`
+> `optional` **role?**: `AriaRole`
 
 Defined in: node\_modules/@types/react/index.d.ts:2936
 
@@ -3337,7 +3338,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2936
 
 ### security?
 
-> `optional` **security**: `string`
+> `optional` **security?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2961
 
@@ -3347,9 +3348,9 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 ***
 
-### select()?
+### select?
 
-> `optional` **select**: (`extensions`) => [`AssignedExtension`](AssignedExtension.md)[]
+> `optional` **select?**: (`extensions`) => [`AssignedExtension`](AssignedExtension.md)[]
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
 
@@ -3374,7 +3375,7 @@ An optional function for filtering or otherwise modifying
 
 ### slot?
 
-> `optional` **slot**: `string`
+> `optional` **slot?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2925
 
@@ -3386,7 +3387,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2925
 
 ### spellCheck?
 
-> `optional` **spellCheck**: `Booleanish`
+> `optional` **spellCheck?**: `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:2926
 
@@ -3398,7 +3399,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2926
 
 ### state?
 
-> `optional` **state**: `Record`\<`string` \| `number` \| `symbol`, `unknown`\>
+> `optional` **state?**: `Record`\<`string` \| `number` \| `symbol`, `unknown`\>
 
 Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L27)
 
@@ -3415,7 +3416,7 @@ Only works if no children are provided*. Passes data
 
 ### style?
 
-> `optional` **style**: `CSSProperties`
+> `optional` **style?**: `CSSProperties`
 
 Defined in: node\_modules/@types/react/index.d.ts:2927
 
@@ -3427,7 +3428,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2927
 
 ### suppressContentEditableWarning?
 
-> `optional` **suppressContentEditableWarning**: `boolean`
+> `optional` **suppressContentEditableWarning?**: `boolean`
 
 Defined in: node\_modules/@types/react/index.d.ts:2908
 
@@ -3439,7 +3440,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2908
 
 ### suppressHydrationWarning?
 
-> `optional` **suppressHydrationWarning**: `boolean`
+> `optional` **suppressHydrationWarning?**: `boolean`
 
 Defined in: node\_modules/@types/react/index.d.ts:2909
 
@@ -3451,7 +3452,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2909
 
 ### tabIndex?
 
-> `optional` **tabIndex**: `number`
+> `optional` **tabIndex?**: `number`
 
 Defined in: node\_modules/@types/react/index.d.ts:2928
 
@@ -3463,7 +3464,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2928
 
 ### title?
 
-> `optional` **title**: `string`
+> `optional` **title?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2929
 
@@ -3475,7 +3476,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2929
 
 ### translate?
 
-> `optional` **translate**: `"yes"` \| `"no"`
+> `optional` **translate?**: `"yes"` \| `"no"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2930
 
@@ -3487,7 +3488,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2930
 
 ### typeof?
 
-> `optional` **typeof**: `string`
+> `optional` **typeof?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2948
 
@@ -3499,7 +3500,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2948
 
 ### unselectable?
 
-> `optional` **unselectable**: `"off"` \| `"on"`
+> `optional` **unselectable?**: `"off"` \| `"on"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2962
 
@@ -3511,7 +3512,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2962
 
 ### vocab?
 
-> `optional` **vocab**: `string`
+> `optional` **vocab?**: `string`
 
 Defined in: node\_modules/@types/react/index.d.ts:2949
 

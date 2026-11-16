@@ -10,7 +10,7 @@ This interface describes the format of the routes provided by an app
 
 ### backendDependencies?
 
-> `optional` **backendDependencies**: `Record`\<`string`, `string`\>
+> `optional` **backendDependencies?**: `Record`\<`string`, `string`\>
 
 Defined in: [packages/framework/esm-globals/src/types.ts:283](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L283)
 
@@ -20,7 +20,7 @@ A list of backend modules necessary for this frontend module and the correspondi
 
 ### extensions?
 
-> `optional` **extensions**: [`ExtensionDefinition`](../type-aliases/ExtensionDefinition.md)[]
+> `optional` **extensions?**: [`ExtensionDefinition`](../type-aliases/ExtensionDefinition.md)[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:299](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L299)
 
@@ -30,7 +30,7 @@ An array of all extensions supported by this frontend module. Extensions can be 
 
 ### featureFlags?
 
-> `optional` **featureFlags**: [`FeatureFlagDefinition`](FeatureFlagDefinition.md)[]
+> `optional` **featureFlags?**: [`FeatureFlagDefinition`](FeatureFlagDefinition.md)[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:301](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L301)
 
@@ -40,7 +40,7 @@ An array of all feature flags for any beta-stage features this module provides.
 
 ### modals?
 
-> `optional` **modals**: [`ModalDefinition`](../type-aliases/ModalDefinition.md)[]
+> `optional` **modals?**: [`ModalDefinition`](../type-aliases/ModalDefinition.md)[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:303](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L303)
 
@@ -50,7 +50,7 @@ An array of all modals supported by this frontend module. Modals can be launched
 
 ### optionalBackendDependencies?
 
-> `optional` **optionalBackendDependencies**: `object`
+> `optional` **optionalBackendDependencies?**: `object`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:285](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L285)
 
@@ -66,7 +66,7 @@ The name of the backend dependency and either the required version or an object 
 
 ### pages?
 
-> `optional` **pages**: [`PageDefinition`](../type-aliases/PageDefinition.md)[]
+> `optional` **pages?**: [`PageDefinition`](../type-aliases/PageDefinition.md)[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:297](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L297)
 
@@ -76,7 +76,7 @@ An array of all pages supported by this frontend module. Pages are automatically
 
 ### version?
 
-> `optional` **version**: `string`
+> `optional` **version?**: `string`
 
 Defined in: [packages/framework/esm-globals/src/types.ts:281](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L281)
 
@@ -86,7 +86,7 @@ The version of this frontend module.
 
 ### workspaceGroups2?
 
-> `optional` **workspaceGroups2**: [`WorkspaceGroupDefinition2`](WorkspaceGroupDefinition2.md)[]
+> `optional` **workspaceGroups2?**: [`WorkspaceGroupDefinition2`](WorkspaceGroupDefinition2.md)[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:306](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L306)
 
@@ -96,7 +96,7 @@ An array of all workspace groups (v2) supported by this frontend module.
 
 ### workspaces2?
 
-> `optional` **workspaces2**: [`WorkspaceDefinition2`](WorkspaceDefinition2.md)[]
+> `optional` **workspaces2?**: [`WorkspaceDefinition2`](WorkspaceDefinition2.md)[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:312](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L312)
 
@@ -106,7 +106,7 @@ An array of all workspaces (v2) supported by this frontend module.
 
 ### workspaceWindows2?
 
-> `optional` **workspaceWindows2**: [`WorkspaceWindowDefinition2`](WorkspaceWindowDefinition2.md)[]
+> `optional` **workspaceWindows2?**: [`WorkspaceWindowDefinition2`](WorkspaceWindowDefinition2.md)[]
 
 Defined in: [packages/framework/esm-globals/src/types.ts:309](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L309)
 

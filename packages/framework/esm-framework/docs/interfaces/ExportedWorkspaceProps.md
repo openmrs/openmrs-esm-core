@@ -8,7 +8,7 @@ Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspac
 
 ### groupProps?
 
-> `optional` **groupProps**: `Record`\<`string`, `any`\>
+> `optional` **groupProps?**: `Record`\<`string`, `any`\>
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L40)
 
@@ -28,7 +28,7 @@ The name of the workspace to open. Changing it (like changing `workspaceProps`, 
 
 ### windowProps?
 
-> `optional` **windowProps**: `Record`\<`string`, `any`\>
+> `optional` **windowProps?**: `Record`\<`string`, `any`\>
 
 Defined in: [packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/exported-workspace.component.tsx#L39)
 

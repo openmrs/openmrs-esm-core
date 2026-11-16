@@ -16,7 +16,7 @@ Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:29](https
 
 ### display?
 
-> `optional` **display**: `string`
+> `optional` **display?**: `string`
 
 Defined in: [packages/framework/esm-emr-api/src/types/fhir-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/types/fhir-resource.ts#L31)
 

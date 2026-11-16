@@ -36,11 +36,7 @@ Configuration options for the OpenMRS component decorator.
 
 A function that returns a Promise resolving to a single-spa lifecycle object.
 
-> (): `Promise`\<`ReactAppOrParcel`\<`T`\>\>
-
-### Returns
-
-`Promise`\<`ReactAppOrParcel`\<`T`\>\>
+() => `Promise`\<`ReactAppOrParcel`\<`T`\>\>
 
 ## Example
 

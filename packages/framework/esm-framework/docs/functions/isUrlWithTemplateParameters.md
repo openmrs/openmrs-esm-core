@@ -13,9 +13,9 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 ### allowedTemplateParameters
 
-To be added to `openmrsBase` and `openmrsSpaBase`
+`string`[] \| readonly `string`[]
 
-`string`[] | readonly `string`[]
+To be added to `openmrsBase` and `openmrsSpaBase`
 
 ## Returns
 

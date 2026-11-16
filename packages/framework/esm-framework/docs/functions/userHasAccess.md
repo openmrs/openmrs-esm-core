@@ -14,10 +14,10 @@ A user has access if they have the required privilege(s) or if they are a
 
 ### requiredPrivilege
 
+`string` \| `string`[]
+
 A single privilege string or an array of privilege strings
   that the user must have. If an array is provided, the user must have ALL privileges.
-
-`string` | `string`[]
 
 ### user
 
