@@ -1,5 +1,5 @@
 /** @module @category UI */
-import { type FetchResponse, makeUrl, openmrsFetch } from '@openmrs/esm-api';
+import { type FetchResponse, makeUrl, openmrsFetch, toPageOrigin } from '@openmrs/esm-api';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useSWR, { type SWRConfiguration } from 'swr';
 import useSWRImmutable from 'swr/immutable';
@@ -65,6 +65,7 @@ export function useOpenmrsPagination<T>(
 }
 
 type OpenmrsServerPaginationHandlers<T> = ServerPaginationHandlers<T, OpenMRSPaginatedResponse<T>>;
+
 export const openmrsServerPaginationHandlers: OpenmrsServerPaginationHandlers<any> = {
   getPaginatedUrl: (url: string | URL, limit: number, startIndex: number) => {
     if (url) {
@@ -79,22 +80,22 @@ export const openmrsServerPaginationHandlers: OpenmrsServerPaginationHandlers<an
   },
   getNextUrl: (response) => {
     const uri = response?.links?.find((link) => link.rel == 'next')?.uri;
-    if (uri) {
-      const url = new URL(uri);
-
-      // allows frontend proxies to work
-      url.host = window.location.host;
-      url.protocol = window.location.protocol;
-
-      return url.toString();
-    } else {
-      return null;
-    }
+    return uri ? toPageOrigin(uri) : null;
   },
   getTotalCount: (response) => response?.totalCount ?? Number.NaN,
   getCurrentPageSize: (response) => response?.results?.length ?? Number.NaN,
   getData: (response) => response?.results,
 };
+
+/**
+ * Returns the handlers `useOpenmrsPagination`, `useOpenmrsInfinite` and `useOpenmrsFetchAll` use to page through an
+ * OpenMRS REST response. `getNextUrl` returns the next page's link on this page's origin.
+ *
+ * @see getFhirServerPaginationHandlers
+ */
+export function getOpenmrsServerPaginationHandlers<T>(): OpenmrsServerPaginationHandlers<T> {
+  return { ...openmrsServerPaginationHandlers };
+}
 
 export interface ServerPaginationHandlers<T, R> {
   getPaginatedUrl: (url: string | URL, limit: number, startIndex: number) => string | null;

@@ -38,6 +38,18 @@ export function makeUrl(path: string) {
 }
 
 /**
+ * Moves a link the server returned onto this page's origin, so the request goes through the frontend proxy.
+ */
+export function toPageOrigin(uri: string): string {
+  const url = new URL(uri);
+  url.protocol = window.location.protocol;
+  url.host = window.location.host;
+  // Setting a host without a port keeps the old port, so the page's port (or none) is set as well.
+  url.port = window.location.port;
+  return url.toString();
+}
+
+/**
  * The openmrsFetch function is a wrapper around the
  * [browser's built-in fetch function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch),
  * with extra handling for OpenMRS-specific API behaviors, such as
