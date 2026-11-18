@@ -4017,7 +4017,7 @@ __metadata:
     "@openmrs/esm-translations": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     "@rsbuild/core": "npm:^1.5.0"
-    "@rsbuild/plugin-sass": "npm:^1.3.2"
+    "@rsbuild/plugin-sass": "npm:^2.0.1"
     "@storybook/addon-links": "npm:^10.6.7"
     classnames: "npm:^2.3.2"
     dayjs: "npm:^1.11.23"
@@ -4872,21 +4872,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rsbuild/plugin-sass@npm:^1.3.2":
-  version: 1.5.1
-  resolution: "@rsbuild/plugin-sass@npm:1.5.1"
+"@rsbuild/plugin-sass@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@rsbuild/plugin-sass@npm:2.0.1"
   dependencies:
     deepmerge: "npm:^4.3.1"
     loader-utils: "npm:^2.0.4"
-    postcss: "npm:^8.5.8"
-    reduce-configs: "npm:^1.1.1"
-    sass-embedded: "npm:^1.97.3"
+    postcss: "npm:^8.5.15"
+    reduce-configs: "npm:^2.0.1"
+    sass-embedded: "npm:^1.100.0"
   peerDependencies:
-    "@rsbuild/core": ^1.3.0 || ^2.0.0-0
+    "@rsbuild/core": ^2.0.0
   peerDependenciesMeta:
     "@rsbuild/core":
       optional: true
-  checksum: 10/534ac1c67f90a0a9f0e2415848c28217d1161bc0909b5c66ff381ac83b873faf59a29c809669e42fec78488796813ceb8915cf27d01614af5297f52fc237776e
+  checksum: 10/ab0c0579b2ef805e199d8c3723a3d70eb35ba4c970205210dd0ae77f13005a1a40a350a62104dd67e0cae8017b69bae9e27c7bcbb1423fdf105678cb189411bf
   languageName: node
   linkType: hard
 
@@ -14240,6 +14240,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanoid@npm:^3.3.20":
+  version: 3.3.20
+  resolution: "nanoid@npm:3.3.20"
+  bin:
+    nanoid: bin/nanoid.cjs
+  checksum: 10/b19641487fc25325189175226a4b9fcc8da39989c6a39fd35921802158d6b1725d59d8454a4e30643d2bb4837382cac11ee129417282678a67f8394b31c228d9
+  languageName: node
+  linkType: hard
+
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -15886,6 +15895,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.5.15":
+  version: 8.5.32
+  resolution: "postcss@npm:8.5.32"
+  dependencies:
+    nanoid: "npm:^3.3.20"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.2"
+  checksum: 10/c86fd279d9f29d34bbec6482e01f54effe00eaf8f4dadbe17f8345d11eac68439da45d642b04bfb5d704886f665d2c31f9a0904f2a3f1b9f8098ee0894f76cea
+  languageName: node
+  linkType: hard
+
 "powershell-utils@npm:^0.2.0, powershell-utils@npm:^0.2.1":
   version: 0.2.1
   resolution: "powershell-utils@npm:0.2.1"
@@ -16419,10 +16439,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reduce-configs@npm:^1.1.1, reduce-configs@npm:^1.1.2":
+"reduce-configs@npm:^1.1.2":
   version: 1.1.2
   resolution: "reduce-configs@npm:1.1.2"
   checksum: 10/68dbd2350cefc71dfbc0b4d028a51876391313c580d4330801290ccd36aff42980b2e8a0045aa7796901f9c5bfe82b86b1b41de8386299c13ac0df89b45e6d77
+  languageName: node
+  linkType: hard
+
+"reduce-configs@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "reduce-configs@npm:2.0.1"
+  checksum: 10/56565edf46489c1b8fa3a1e13389cfbb6470176933a6253ab06e19976a30621452cba6334e110180b26469c6d351ac9e348247bf3e6220b1a5432f4b1fa4f5f0
   languageName: node
   linkType: hard
 
@@ -16991,7 +17018,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-embedded@npm:1.108.2, sass-embedded@npm:^1.97.3":
+"sass-embedded@npm:1.108.2, sass-embedded@npm:^1.100.0":
   version: 1.108.2
   resolution: "sass-embedded@npm:1.108.2"
   dependencies:
@@ -17617,6 +17644,13 @@ __metadata:
   version: 1.2.1
   resolution: "source-map-js@npm:1.2.1"
   checksum: 10/ff9d8c8bf096d534a5b7707e0382ef827b4dd360a577d3f34d2b9f48e12c9d230b5747974ee7c607f0df65113732711bb701fe9ece3c7edbd43cb2294d707df3
+  languageName: node
+  linkType: hard
+
+"source-map-js@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "source-map-js@npm:1.2.2"
+  checksum: 10/4807c894bb6280c8b84886159b96080e3996f42c6e8015e647881edfd4f955f6024ceebb8bb40d33ce8b106e24b2e29c133575e1c60c01c8aae57a05fdf17761
   languageName: node
   linkType: hard
 
