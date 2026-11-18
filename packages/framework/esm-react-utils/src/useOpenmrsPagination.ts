@@ -65,6 +65,25 @@ export function useOpenmrsPagination<T>(
 }
 
 type OpenmrsServerPaginationHandlers<T> = ServerPaginationHandlers<T, OpenMRSPaginatedResponse<T>>;
+
+/**
+ * Moves a link the server returned onto this page's origin, so the request goes through the frontend proxy.
+ */
+export function onPageOrigin(uri: string): string {
+  const url = new URL(uri);
+  url.protocol = window.location.protocol;
+  url.host = window.location.host;
+  // Setting a host without a port keeps the old port, so the page's port (or none) is set as well.
+  url.port = window.location.port;
+  return url.toString();
+}
+
+/**
+ * Handlers used by `useOpenmrsPagination`, `useOpenmrsInfinite` and `useOpenmrsFetchAll` to page through an OpenMRS
+ * REST response. `getNextUrl` returns the next page's link on this page's origin.
+ *
+ * @see getFhirServerPaginationHandlers
+ */
 export const openmrsServerPaginationHandlers: OpenmrsServerPaginationHandlers<any> = {
   getPaginatedUrl: (url: string | URL, limit: number, startIndex: number) => {
     if (url) {
@@ -79,17 +98,7 @@ export const openmrsServerPaginationHandlers: OpenmrsServerPaginationHandlers<an
   },
   getNextUrl: (response) => {
     const uri = response?.links?.find((link) => link.rel == 'next')?.uri;
-    if (uri) {
-      const url = new URL(uri);
-
-      // allows frontend proxies to work
-      url.host = window.location.host;
-      url.protocol = window.location.protocol;
-
-      return url.toString();
-    } else {
-      return null;
-    }
+    return uri ? onPageOrigin(uri) : null;
   },
   getTotalCount: (response) => response?.totalCount ?? Number.NaN,
   getCurrentPageSize: (response) => response?.results?.length ?? Number.NaN,

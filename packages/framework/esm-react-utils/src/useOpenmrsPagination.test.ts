@@ -1,6 +1,10 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
-import { useOpenmrsPagination, type OpenMRSPaginatedResponse } from './useOpenmrsPagination';
+import {
+  openmrsServerPaginationHandlers,
+  useOpenmrsPagination,
+  type OpenMRSPaginatedResponse,
+} from './useOpenmrsPagination';
 
 // returns an sequentially increasing int array of specified length starting at the specified start integer.
 export function getIntArray(start: number, length: number) {
@@ -429,5 +433,45 @@ describe('useOpenmrsPagination', () => {
 
       warn.mockRestore();
     });
+  });
+});
+
+describe('openmrsServerPaginationHandlers.getNextUrl', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  const nextUrl = (uri: string) =>
+    openmrsServerPaginationHandlers.getNextUrl({
+      results: [],
+      links: [{ rel: 'next', uri }],
+    } as OpenMRSPaginatedResponse<unknown>);
+
+  it('moves a next link from a backend port onto a page origin with no port', () => {
+    vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
+
+    expect(nextUrl('http://backend.example:8080/openmrs/ws/rest/v1/patient?limit=1&startIndex=1')).toBe(
+      'https://frontend.example/openmrs/ws/rest/v1/patient?limit=1&startIndex=1',
+    );
+  });
+
+  it("keeps the page's own port", () => {
+    vi.stubGlobal('location', new URL('http://localhost:8080/openmrs/spa/'));
+
+    expect(nextUrl('https://backend.example/openmrs/ws/rest/v1/patient?startIndex=1')).toBe(
+      'http://localhost:8080/openmrs/ws/rest/v1/patient?startIndex=1',
+    );
+  });
+
+  it('keeps a path that starts with two slashes on the page host', () => {
+    vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
+
+    expect(nextUrl('http://backend.example:8080//openmrs/ws/rest/v1/patient?startIndex=1')).toBe(
+      'https://frontend.example//openmrs/ws/rest/v1/patient?startIndex=1',
+    );
+  });
+
+  it('returns null without a next link', () => {
+    expect(
+      openmrsServerPaginationHandlers.getNextUrl({ results: [], links: [] } as OpenMRSPaginatedResponse<unknown>),
+    ).toBeNull();
   });
 });
