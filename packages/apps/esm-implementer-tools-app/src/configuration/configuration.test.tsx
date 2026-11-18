@@ -2,9 +2,11 @@
 import React from 'react';
 import { describe, expect, it, afterEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen, within } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { implementerToolsConfigStore, temporaryConfigStore, Type } from '@openmrs/esm-framework/src/internal';
+import { implementerToolsStore } from '../store';
+import { showInConfiguration } from '../ui-editor/config-paths';
 import { Configuration } from './configuration.component';
 import { useConceptLookup, useGetConceptByUuid } from './interactive-editor/value-editors/concept-search.resource';
 
@@ -96,6 +98,7 @@ describe('Configuration', () => {
     // `setState` merges, so a test that recorded a derivation failure would leave it for the next.
     implementerToolsConfigStore.setState({ config: {}, derivationError: undefined });
     temporaryConfigStore.setState({ config: {} });
+    implementerToolsStore.setState({ uiSelectedPath: null });
   });
 
   function renderConfiguration() {
@@ -414,5 +417,17 @@ describe('Configuration', () => {
     // Both elements should still be in the document (no crash occurred)
     expect(hasHatElement).toBeInTheDocument();
     expect(weaponsElement).toBeInTheDocument();
+  });
+
+  it('shows the config the UI editor opens even when the search filter would hide it', async () => {
+    const user = userEvent.setup();
+    implementerToolsConfigStore.setState({ config: mockImplToolsConfig });
+    renderConfiguration();
+
+    await user.type(await screen.findByRole('textbox', { name: /search configuration/i }), 'luigi');
+    expect(screen.queryByRole('button', { name: '@openmrs/mario' })).not.toBeInTheDocument();
+    act(() => showInConfiguration(['@openmrs/mario']));
+
+    expect(screen.getByRole('button', { name: '@openmrs/mario' })).toBeInTheDocument();
   });
 });
