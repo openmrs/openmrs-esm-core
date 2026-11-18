@@ -2,9 +2,16 @@ import { createRequire } from 'node:module';
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { basename, resolve } from 'node:path';
-import { readFileSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
-import { type ImportmapDeclaration, type RoutesDeclaration, logInfo, logWarn, removeTrailingSlash } from '../utils';
+import { existsSync, readFileSync } from 'node:fs';
+import {
+  type ImportmapDeclaration,
+  type RoutesDeclaration,
+  type WatchedApp,
+  logInfo,
+  logWarn,
+  removeTrailingSlash,
+} from '../utils';
+import { getAppRoutes } from '../utils/dependencies';
 
 export interface DevelopArgs {
   port: number;
@@ -13,7 +20,7 @@ export interface DevelopArgs {
   open: boolean;
   importmap: ImportmapDeclaration;
   routes: RoutesDeclaration;
-  watchedRoutesPaths: Record<string, string>;
+  watchedApps: Record<string, WatchedApp>;
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
@@ -22,7 +29,7 @@ export interface DevelopArgs {
 }
 
 export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
-  const { backend, host, port, open, importmap, routes, watchedRoutesPaths, configUrls, configFiles, addCookie } = args;
+  const { backend, host, port, open, importmap, routes, watchedApps, configUrls, configFiles, addCookie } = args;
   const apiUrl = removeTrailingSlash(args.apiUrl);
   const spaPath = removeTrailingSlash(args.spaPath);
   const app = express();
@@ -69,23 +76,30 @@ export async function runDevelop(args: DevelopArgs, signal?: AbortSignal) {
 
   if (routes.type === 'inline') {
     let stringifiedRoutes = routes.value;
-    if (watchedRoutesPaths && !!Object.keys(watchedRoutesPaths).length) {
-      // watchedRoutesPath is keyed from package to path, but here we need to go from
-      // path to package.
-      const watchedRoutesByPath = Object.fromEntries(Object.entries(watchedRoutesPaths).map(([k, v]) => [v, k]));
+    if (watchedApps && !!Object.keys(watchedApps).length) {
+      // Inverted because the watcher reports paths. Only existing paths can be watched, and a
+      // schema exists only after the first build, so the set is settled here.
+      const appsByWatchedPath: Record<string, string> = {};
 
-      logInfo(`Watching routes.json for ${Object.keys(watchedRoutesPaths).join(', ')}`);
-      // setup watchers for all the discovered routes.json files which update the in-memory map
-      (await import('node-watch')).default(Object.keys(watchedRoutesByPath), { delay: 0 }, async (event, name) => {
+      for (const [appName, app] of Object.entries(watchedApps)) {
+        for (const path of app.paths) {
+          if (existsSync(path)) {
+            appsByWatchedPath[path] = appName;
+          }
+        }
+      }
+
+      logInfo(`Watching routes and configuration schemas for ${Object.keys(watchedApps).join(', ')}`);
+
+      (await import('node-watch')).default(Object.keys(appsByWatchedPath), { delay: 0 }, async (event, name) => {
         if (event === 'update') {
-          const updatedApp = watchedRoutesByPath[name];
-          if (updatedApp) {
+          const updatedApp = appsByWatchedPath[name];
+          const app = updatedApp ? watchedApps[updatedApp] : undefined;
+
+          if (app) {
+            // Rebuilt from both files, since reading back only the changed one would drop the other.
             const jsonRoutes = JSON.parse(stringifiedRoutes);
-            const version = jsonRoutes.routes[updatedApp]?.version;
-            jsonRoutes.routes[updatedApp] = {
-              ...JSON.parse(await readFile(name, 'utf8')),
-              version,
-            };
+            jsonRoutes.routes[updatedApp] = getAppRoutes(app.sourceDirectory, app.project);
             stringifiedRoutes = JSON.stringify(jsonRoutes);
             logInfo(`Updated routes for ${updatedApp}`);
           }

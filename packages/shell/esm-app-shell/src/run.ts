@@ -1,8 +1,10 @@
 import { start } from 'single-spa';
 import { type CalendarIdentifier } from '@internationalized/date';
 import {
+  beginInitialConfigLoad,
   type Config,
   type ExtensionDefinition,
+  finishInitialConfigLoad,
   finishRegisteringAllApps,
   fireOpenmrsEvent,
   getConfig,
@@ -132,6 +134,8 @@ async function runShell() {
 }
 
 function handleInitFailure(e: Error) {
+  // Released on failure too, or every pending `getConfig()` would wait forever.
+  finishInitialConfigLoad();
   console.error(e);
   renderFatalErrorPage(e);
 }
@@ -342,6 +346,15 @@ export function run(configUrls: Array<string>) {
   registerCoreExtensions();
   setupCoreConfig();
 
+  // Registering the apps installs every module's schema well before `provideConfigs` supplies their
+  // configs. Held until then so a `getConfig()` during startup waits for the real configuration
+  // instead of resolving, permanently, to defaults.
+  //
+  // Closed as late as possible: only `handleInitFailure` reopens it on error, so a synchronous throw
+  // before the chain below would leave every `getConfig()` waiting forever. Nothing before this line
+  // asks for a config.
+  beginInitialConfigLoad();
+
   const polyfillReady =
     typeof Intl !== 'undefined' && 'DurationFormat' in Intl
       ? Promise.resolve()
@@ -354,6 +367,7 @@ export function run(configUrls: Array<string>) {
     .then(setupApps)
     .then(() => Promise.resolve(finishRegisteringAllApps()))
     .then(provideConfigs)
+    .then(finishInitialConfigLoad)
     .then(runShell)
     .then(() => markBooted())
     .catch(handleInitFailure)

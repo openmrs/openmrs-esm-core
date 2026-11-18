@@ -136,6 +136,67 @@ function checkFileExists(filename) {
   return false;
 }
 
+/**
+ * Reads the configuration schema an app ships next to its routes, for merging into its registry entry.
+ *
+ * Keep in step with `openmrs assemble` and `openmrs develop`, the other two places a registry is
+ * assembled: an app whose schema is missing from the registry is configured with nothing but `undefined`.
+ *
+ * @param {string} distDir The app's build output
+ * @param {string} name The app's package name, for the warning
+ * @returns {{ configurationSchema?: object, extensionConfigurationSchemas?: object }}
+ */
+function readConfigSchema(distDir, name) {
+  const schemaFile = resolve(distDir, 'config-schema.json');
+
+  if (!checkFileExists(schemaFile)) {
+    return {};
+  }
+
+  // `isOpenmrsRoutes` rejects the whole registry if any entry is malformed, so each schema is checked
+  // to the depth the framework checks and dropped individually, as `openmrs assemble` does. A
+  // hand-written `src/config-schema.json` is copied here unchanged, so the input is not always generated.
+  const isSchemaObject = (value) => Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+
+  try {
+    const { configurationSchema, extensionConfigurationSchemas } = JSON.parse(readFileSync(schemaFile));
+    const entry = {};
+
+    if (configurationSchema !== undefined) {
+      if (isSchemaObject(configurationSchema)) {
+        entry.configurationSchema = configurationSchema;
+      } else {
+        console.warn(`Not serving ${name}'s configuration schema: it is not an object.`);
+      }
+    }
+
+    if (extensionConfigurationSchemas !== undefined) {
+      if (isSchemaObject(extensionConfigurationSchemas)) {
+        const accepted = {};
+
+        for (const [extensionName, schema] of Object.entries(extensionConfigurationSchemas)) {
+          if (isSchemaObject(schema)) {
+            accepted[extensionName] = schema;
+          } else {
+            console.warn(`Not serving ${name}'s configuration schema for extension '${extensionName}': not an object.`);
+          }
+        }
+
+        if (Object.keys(accepted).length > 0) {
+          entry.extensionConfigurationSchemas = accepted;
+        }
+      } else {
+        console.warn(`Not serving ${name}'s extension configuration schemas: they are not an object.`);
+      }
+    }
+
+    return entry;
+  } catch (e) {
+    console.warn(`Not serving a configuration schema for ${name}: its config-schema.json could not be read. ${e}`);
+    return {};
+  }
+}
+
 function checkDirectoryHasContents(dirName) {
   if (checkDirectoryExists(dirName)) {
     const contents = readdirSync(dirName);
@@ -200,7 +261,10 @@ module.exports = (env, argv = []) => {
 
             const routesFile = resolve(distDir, 'routes.json');
             if (checkFileExists(routesFile)) {
-              coreRoutes[name] = JSON.parse(readFileSync(routesFile));
+              coreRoutes[name] = {
+                ...JSON.parse(readFileSync(routesFile)),
+                ...readConfigSchema(distDir, name),
+              };
             }
           } else {
             console.warn(`Not serving ${name} because couldn't find ${distDir}`);

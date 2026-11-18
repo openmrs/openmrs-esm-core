@@ -38,3 +38,32 @@ describe('login config schema', () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 });
+
+/**
+ * The provider validator checks `loginUrl` against `type`, so it must be declared on `provider`.
+ * Declared at the schema root it would receive the whole module config, where neither field exists,
+ * and silently pass everything.
+ */
+const [validateProvider] = configSchema.provider._validators;
+
+describe('the login provider configuration', () => {
+  it.each(['custom', 'oauth2'])('rejects the default loginUrl when the provider is %s', (type) => {
+    expect(validateProvider({ type, loginUrl: '${openmrsSpaBase}/login' })).toEqual(
+      expect.stringContaining('requires an explicit loginUrl'),
+    );
+  });
+
+  it.each(['custom', 'oauth2'])('accepts an explicit loginUrl when the provider is %s', (type) => {
+    expect(validateProvider({ type, loginUrl: 'https://id.example.org/login' })).toBeUndefined();
+  });
+
+  it('does not care about loginUrl for the basic provider, which does not use it', () => {
+    expect(validateProvider({ type: 'basic', loginUrl: '${openmrsSpaBase}/login' })).toBeUndefined();
+  });
+
+  it('names the offending provider type in its message', () => {
+    expect(validateProvider({ type: 'oauth2', loginUrl: '${openmrsSpaBase}/login' })).toEqual(
+      expect.stringContaining("'oauth2'"),
+    );
+  });
+});
