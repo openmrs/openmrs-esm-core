@@ -26,6 +26,9 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@types/react-dom"
         update-types: ["version-update:semver-major"]
+      # React Router 7 is a separate migration
+      - dependency-name: "react-router-dom"
+        update-types: ["version-update:semver-major"]
       # single-spa is the core microfrontend framework
       - dependency-name: "single-spa"
         update-types: ["version-update:semver-major"]
