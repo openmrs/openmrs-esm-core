@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import {
+  getOpenmrsServerPaginationHandlers,
   openmrsServerPaginationHandlers,
   useOpenmrsPagination,
   type OpenMRSPaginatedResponse,
@@ -436,14 +437,12 @@ describe('useOpenmrsPagination', () => {
   });
 });
 
-describe('openmrsServerPaginationHandlers.getNextUrl', () => {
+describe('getOpenmrsServerPaginationHandlers', () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  const nextUrl = (uri: string) =>
-    openmrsServerPaginationHandlers.getNextUrl({
-      results: [],
-      links: [{ rel: 'next', uri }],
-    } as OpenMRSPaginatedResponse<unknown>);
+  const response = (uri: string) =>
+    ({ results: [], links: [{ rel: 'next', uri }] }) as OpenMRSPaginatedResponse<unknown>;
+  const nextUrl = (uri: string) => getOpenmrsServerPaginationHandlers().getNextUrl(response(uri));
 
   it('moves a next link from a backend port onto a page origin with no port', () => {
     vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
@@ -471,7 +470,17 @@ describe('openmrsServerPaginationHandlers.getNextUrl', () => {
 
   it('returns null without a next link', () => {
     expect(
-      openmrsServerPaginationHandlers.getNextUrl({ results: [], links: [] } as OpenMRSPaginatedResponse<unknown>),
+      getOpenmrsServerPaginationHandlers().getNextUrl({ results: [], links: [] } as OpenMRSPaginatedResponse<unknown>),
     ).toBeNull();
+  });
+
+  it("leaves the hooks' handlers alone when a caller replaces one of its own", () => {
+    vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
+    const handlers = getOpenmrsServerPaginationHandlers();
+    handlers.getNextUrl = () => 'replaced';
+
+    expect(openmrsServerPaginationHandlers.getNextUrl(response('https://frontend.example/next'))).toBe(
+      'https://frontend.example/next',
+    );
   });
 });

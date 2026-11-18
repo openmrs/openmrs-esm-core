@@ -1,10 +1,9 @@
 /** @module @category UI */
-import { type FetchResponse, makeUrl, openmrsFetch } from '@openmrs/esm-api';
+import { type FetchResponse, makeUrl, openmrsFetch, toPageOrigin } from '@openmrs/esm-api';
 import {
   type ServerPaginationHandlers,
   useServerPagination,
   type UseServerPaginationOptions,
-  onPageOrigin,
 } from './useOpenmrsPagination';
 
 /**
@@ -48,7 +47,7 @@ export function getFhirServerPaginationHandlers<T>(): FhirServerPaginationHandle
     },
     getNextUrl: (response) => {
       const uri = response?.link?.find((link) => link.relation == 'next')?.url;
-      return uri ? onPageOrigin(uri) : null;
+      return uri ? toPageOrigin(uri) : null;
     },
     getTotalCount: (response) => response?.total ?? Number.NaN,
     getCurrentPageSize: (response) => response?.entry?.length ?? Number.NaN,

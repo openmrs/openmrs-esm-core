@@ -34,7 +34,7 @@ export { useOpenmrsFetchAll, type UseServerFetchAllOptions } from './useOpenmrsF
 export { useOpenmrsInfinite, type UseServerInfiniteOptions } from './useOpenmrsInfinite';
 export {
   useOpenmrsPagination,
-  openmrsServerPaginationHandlers,
+  getOpenmrsServerPaginationHandlers,
   type OpenMRSPaginatedResponse,
   type UseServerPaginationOptions,
 } from './useOpenmrsPagination';
