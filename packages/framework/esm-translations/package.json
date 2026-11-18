@@ -58,7 +58,7 @@
     "access": "public"
   },
   "dependencies": {
-    "i18next": "^25.5.3"
+    "i18next": "^27.1.2"
   },
   "peerDependencies": {
     "i18next": "25.x"
@@ -70,7 +70,7 @@
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "happy-dom": "^20.6.0",
-    "i18next-parser": "^9.3.0",
+    "i18next-parser": "^9.4.0",
     "rimraf": "^6.1.4",
     "vitest": "^4.1.2"
   }
