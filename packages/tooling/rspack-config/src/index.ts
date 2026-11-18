@@ -443,7 +443,13 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     },
     watchOptions: merge(
       {
-        ignored: ['.git', 'test-results'],
+        // Setting `ignored` replaces Rspack's default of `.git` and `node_modules`, so both are repeated here.
+        // A RegExp rather than directory names because ts-checker-rspack-plugin applies this to its own
+        // Chokidar watchers, where a string is a glob matched against the absolute path, so a bare name
+        // matches nothing. Those watchers cover every directory the tsconfig includes, which is the whole
+        // app when it has no `include`, and Chokidar 4 opens a handle per file. Unless `node_modules` is
+        // ignored here, the dev server of such an app dies with EMFILE on macOS.
+        ignored: /[\\/](?:\.git|node_modules)(?:[\\/]|$)/,
       },
       watchConfig,
     ),

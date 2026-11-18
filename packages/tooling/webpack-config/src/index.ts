@@ -37,7 +37,7 @@
  * from `/d/e/`, then it *might* in *some cases* try to import `/d/e/c`.
  */
 import { existsSync, statSync } from 'fs';
-import { basename, dirname, resolve } from 'path';
+import { basename, dirname, resolve, sep } from 'path';
 import browserslist from 'browserslist';
 import { loadQueries } from 'browserslist/node';
 import defaultBrowserslistQueries from 'browserslist-config-openmrs';
@@ -300,32 +300,53 @@ function fileExistsSync(name: string) {
   return existsSync(name) && statSync(name).isFile();
 }
 
+/** Where the builds configured in this process write their output. */
+const outputDirs = new Set<string>();
+
+/** True for anything in `node_modules` or in a build's output, where the type checker has no source files to find. */
+function isOutsideSources(path: string) {
+  return (
+    /[\\/]node_modules(?:[\\/]|$)/.test(path) ||
+    [...outputDirs].some((outputDir) => path === outputDir || path.startsWith(outputDir + sep))
+  );
+}
+
 /**
- * fork-ts-checker-webpack-plugin 9 passes Chokidar 4 `interval: undefined` and `binaryInterval: undefined`
- * whenever webpack polls without a numeric `poll`, which is `poll: true` or `CHOKIDAR_USEPOLLING` on its own.
- * Chokidar 4 spreads those over its defaults, so the watch process crashes with `ERR_INVALID_ARG_TYPE` as soon
- * as polling starts. Chokidar 3 ignored undefined options; dropping them before they reach the plugin's copy of
- * Chokidar restores that, along with Chokidar's own intervals.
+ * fork-ts-checker-webpack-plugin 9 watches for new source files with its own copy of Chokidar 4, which crashes
+ * a watching build in two ways that Chokidar 3 didn't. `watch` on that copy is wrapped to avoid both:
+ *
+ * - The plugin passes `interval: undefined` and `binaryInterval: undefined` whenever webpack polls without a
+ *   numeric `poll`, which is `poll: true` or `CHOKIDAR_USEPOLLING` on its own. Chokidar 4 spreads those over
+ *   its defaults, so the watch process crashes with `ERR_INVALID_ARG_TYPE` as soon as polling starts. Chokidar 3
+ *   ignored undefined options; dropping them restores that, along with Chokidar's own intervals.
+ * - Chokidar 4 has no FSEvents backend and opens a handle per file. The plugin watches every directory the
+ *   tsconfig includes, which is the whole app when it has no `include`, and on macOS the dev server then dies
+ *   with EMFILE on reaching `node_modules`. So `node_modules` is left out, and so is the build's output: the
+ *   dev server writes it to disk, and the plugin takes every file emitted there for a new source file and
+ *   rebuilds, without end.
  */
-function keepChokidarPollingDefaults() {
+function adaptTypeCheckerChokidar() {
   const pluginDir = dirname(require.resolve('fork-ts-checker-webpack-plugin'));
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const chokidarModule = require(require.resolve('chokidar', { paths: [pluginDir] }));
   // The plugin calls `chokidar.default.watch`, through TypeScript's `__importDefault`.
   const chokidar = chokidarModule.__esModule ? chokidarModule.default : chokidarModule;
   const watch = chokidar?.watch;
-  if (typeof watch !== 'function' || watch.keepsPollingDefaults) {
+  if (typeof watch !== 'function' || watch.adaptedForTypeChecker) {
     return;
   }
 
   chokidar.watch = Object.assign(
-    (paths: unknown, options?: Record<string, unknown>) =>
-      watch(paths, options && Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined))),
-    { keepsPollingDefaults: true },
+    (paths: unknown, options: Record<string, unknown> = {}) =>
+      watch(paths, {
+        ...Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined)),
+        ignored: [options.ignored, isOutsideSources].filter(Boolean),
+      }),
+    { adaptedForTypeChecker: true },
   );
 }
 
-keepChokidarPollingDefaults();
+adaptTypeCheckerChokidar();
 
 /**
  * This object will be merged into the webpack config.
@@ -661,6 +682,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     ...overrides,
   };
   const config = mergeWith(baseConfig, additionalConfig, mergeFunction);
+  // Read from the merged config, since `overrides` and `additionalConfig` can both move the output.
+  outputDirs.add(resolve(root, config.output?.path ?? outDir));
 
   // Appended after the merge rather than listed above. `overrides` is spread over the config object, so
   // an app setting `overrides.plugins` replaces the whole array — not a lodash merge, which would keep
