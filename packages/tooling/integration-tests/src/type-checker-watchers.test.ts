@@ -18,8 +18,8 @@ type ChokidarWatcher = {
 
 const root = fixtureRootOf('no-include-app');
 const installedPackage = join(root, 'node_modules', 'installed-package');
-// Where the fixture's `package.json` says it builds to, which is what the configs go by.
-const outputDir = join(root, 'dist');
+// Somewhere other than the `dist` the fixture's `package.json` names, set through `additionalConfig`.
+const outputDir = join(root, 'custom-output');
 const tempDirs: string[] = [];
 const requireFromHere = createRequire(__filename);
 let originalCwd: string;
@@ -71,18 +71,24 @@ function recordWatchers(bundler: Bundler) {
   };
 }
 
-async function createCompiler(bundler: Bundler) {
+async function createCompiler(bundler: Bundler, { customOutputDir }: { customOutputDir?: string } = {}) {
   // From source, not `dist`, so this can't pass against a stale build.
   const configModule =
     bundler === 'rspack'
       ? await import('@openmrs/rspack-config/src/index')
       : await import('@openmrs/webpack-config/src/index');
+  if (customOutputDir) {
+    configModule.additionalConfig.output = { path: customOutputDir };
+  }
   const config = configModule.default({}, { mode: 'development' }) as Record<string, any>;
+  delete configModule.additionalConfig.output;
 
-  // The build itself goes elsewhere, so that the fixture's own output directory only holds what `beforeAll` put there.
-  const outDir = mkdtempSync(join(tmpdir(), 'openmrs-type-checker-watchers-'));
-  tempDirs.push(outDir);
-  config.output.path = outDir;
+  if (!customOutputDir) {
+    // Out of the fixture, so that the build leaves nothing behind there.
+    const outDir = mkdtempSync(join(tmpdir(), 'openmrs-type-checker-watchers-'));
+    tempDirs.push(outDir);
+    config.output.path = outDir;
+  }
 
   const { default: bundlerModule } = bundler === 'rspack' ? await import('@rspack/core') : await import('webpack');
   // The two bundlers' call signatures don't unify, hence the cast.
@@ -90,8 +96,8 @@ async function createCompiler(bundler: Bundler) {
 }
 
 /** Every file and directory the type checker's watchers hold once a watching build has settled. */
-async function pathsWatchedByTypeChecker(bundler: Bundler) {
-  const compiler = await createCompiler(bundler);
+async function pathsWatchedByTypeChecker(bundler: Bundler, options?: { customOutputDir?: string }) {
+  const compiler = await createCompiler(bundler, options);
   // After the config is loaded, since `@openmrs/webpack-config` wraps Chokidar's `watch` itself on import.
   const { watchers, restore } = recordWatchers(bundler);
   let watching: { close: (callback: () => void) => void } | undefined;
@@ -132,8 +138,8 @@ describe('the type checker of a watching build, for a tsconfig with no `include`
 
   // The webpack dev server writes its output to disk, and the checker takes a file emitted into a directory
   // it watches for a new source file, which starts another build.
-  it('stays out of the output directory with webpack', async () => {
-    const watched = await pathsWatchedByTypeChecker('webpack');
+  it('stays out of the output directory with webpack, wherever the app puts it', async () => {
+    const watched = await pathsWatchedByTypeChecker('webpack', { customOutputDir: outputDir });
 
     expect(watched).toContain(join(root, 'src', 'index.ts'));
     expect(watched.filter((path) => path === outputDir || path.startsWith(outputDir + sep))).toEqual([]);

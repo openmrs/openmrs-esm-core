@@ -417,7 +417,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   const isProd = mode === production;
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
-  outputDirs.add(resolve(root, outDir));
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
   const { queries: browserTargets, warnings: browserslistWarnings } = browserslistQueries(root);
@@ -683,6 +682,8 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
     ...overrides,
   };
   const config = mergeWith(baseConfig, additionalConfig, mergeFunction);
+  // Read from the merged config, since `overrides` and `additionalConfig` can both move the output.
+  outputDirs.add(resolve(root, config.output?.path ?? outDir));
 
   // Appended after the merge rather than listed above. `overrides` is spread over the config object, so
   // an app setting `overrides.plugins` replaces the whole array — not a lodash merge, which would keep
