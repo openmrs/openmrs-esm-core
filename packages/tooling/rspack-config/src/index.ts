@@ -449,7 +449,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         // matches nothing. Those watchers cover every directory the tsconfig includes, which is the whole
         // app when it has no `include`, and Chokidar 4 opens a handle per file. Unless `node_modules` is
         // ignored here, the dev server of such an app dies with EMFILE on macOS.
-        ignored: /[\\/](?:\.git|node_modules|test-results)(?:[\\/]|$)/,
+        ignored: /[\\/](?:\.git|node_modules)(?:[\\/]|$)/,
       },
       watchConfig,
     ),
