@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import { ContentSwitcher, IconButton, Switch, Theme } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
-import { CloseIcon } from '@openmrs/esm-framework';
+import { CloseIcon, useStore } from '@openmrs/esm-framework';
 import { type ImplementerToolsTab, implementerToolsStore, implementerToolsTabs } from '../store';
 import { Configuration } from '../configuration/configuration.component';
 import { FrontendModules } from '../frontend-modules/frontend-modules.component';
 import { BackendDependencies } from '../backend-dependencies/backend-dependencies.component';
 import { FeatureFlags } from '../feature-flags/feature-flags.component';
 import { Translations } from '../translations/translations.component';
+import { ExitUiEditorButton } from '../ui-editor/exit-ui-editor-button';
 import type { FrontendModule } from '../types';
 import type { ResolvedDependenciesModule } from '../backend-dependencies/openmrs-backend-dependencies';
 import styles from './popup.styles.scss';
@@ -32,6 +33,7 @@ export default function Popup({
   visibleTab = 'configuration',
 }: DevToolsPopupProps) {
   const { t } = useTranslation();
+  const { isUIEditorEnabled } = useStore(implementerToolsStore);
 
   // The visible tab lives in the store so something outside the popup can select a tab while the
   // popup is open.
@@ -63,7 +65,9 @@ export default function Popup({
   );
 
   return (
-    <div className={styles.popup}>
+    // The UI editor keeps its card above the panel, which it finds by this attribute.
+    <div className={styles.popup} data-openmrs-implementer-tools-panel>
+      {isUIEditorEnabled ? <ExitUiEditorButton isDocked /> : null}
       <Theme theme="g90">
         <div className={styles.topBar}>
           <div className={styles.tabs}>
