@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { Button, Checkbox, InlineLoading } from '@carbon/react';
-import { useLocation, type Location, useSearchParams } from 'react-router-dom';
+import { Navigate, useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   getCoreTranslation,
@@ -40,7 +40,18 @@ interface LocationPickerProps {
   currentLocationUuid?: string;
 }
 
-const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, currentLocationUuid }) => {
+const LocationPickerView: React.FC<LocationPickerProps> = (props) => {
+  const { user } = useSession();
+
+  // Checked ahead of the form so that an unauthenticated visit doesn't request any locations.
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <LocationPickerForm {...props} />;
+};
+
+const LocationPickerForm: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, currentLocationUuid }) => {
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
