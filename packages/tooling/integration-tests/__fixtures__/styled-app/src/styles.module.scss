@@ -13,3 +13,13 @@
 .panel :global(.cds--btn) {
   min-width: 7rem;
 }
+
+// Scoped class names end in a five-character base64 hash, and `+` and `/` can appear in it. Those have to
+// be escaped in a selector, which is where a stylesheet can be escaped twice. One class rarely draws such a
+// character, so this makes enough of them that the escaping is always exercised. Each rule has its own
+// value, so minification can't merge them away.
+@for $i from 1 through 60 {
+  .generated-#{$i} {
+    margin-left: #{$i}px;
+  }
+}
