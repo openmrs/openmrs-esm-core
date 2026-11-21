@@ -10,6 +10,7 @@ import {
   openChildWorkspaceInWindow,
   updateOpenedWorkspaceInWindow,
   getOpenedWindowWidth,
+  launchWorkspace2,
   workspace2StoreActions,
 } from './workspace2';
 
@@ -334,5 +335,45 @@ describe('getOpenedWindowWidth', () => {
         registeredWindowsByName,
       ),
     ).toBe('narrow');
+  });
+});
+
+describe('launchWorkspace2', () => {
+  const groups = {
+    'test-group': { name: 'test-group', persistence: 'persistent', moduleName: 'test' },
+  };
+  const windows = {
+    'test-window': { name: 'test-window', group: 'test-group', moduleName: 'test' },
+    'other-window': { name: 'other-window', group: 'test-group', moduleName: 'test' },
+  };
+
+  beforeEach(() => {
+    workspace2Store.setState({
+      registeredGroupsByName: groups,
+      registeredWindowsByName: windows,
+      registeredWorkspacesByName,
+      openedGroup: { groupName: 'test-group', props: null },
+      openedWindows: [makeOpenedWindow(['parent-workspace'])],
+      isMostRecentlyOpenedWindowHidden: false,
+    } as never);
+  });
+
+  it('replaces the workspaces of an open window instead of adding a duplicate window when the workspace is not in it', async () => {
+    // 'child-workspace' belongs to 'test-window', which is open, but only with 'parent-workspace'
+    const launched = await launchWorkspace2('child-workspace', {});
+
+    expect(launched).toBe(true);
+    const { openedWindows } = workspace2Store.getState();
+    expect(openedWindows).toHaveLength(1);
+    expect(openedWindows[0].windowName).toBe('test-window');
+    expect(openedWindows[0].openedWorkspaces.map((w) => w.workspaceName)).toEqual(['child-workspace']);
+  });
+
+  it('opens a new window when the workspace window is not open', async () => {
+    const launched = await launchWorkspace2('other-window-workspace', {});
+
+    expect(launched).toBe(true);
+    const { openedWindows } = workspace2Store.getState();
+    expect(openedWindows.map((w) => w.windowName)).toEqual(['test-window', 'other-window']);
   });
 });

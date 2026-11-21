@@ -3,7 +3,7 @@ import { SingleSpaContext } from 'single-spa-react';
 import { v4 as uuidV4 } from 'uuid';
 import {
   getGroupByWindowName,
-  getOpenedWindowIndexByWorkspace,
+  getOpenedWindowIndexByWindowName,
   getWindowByWorkspaceName,
   type OpenedWindow,
   type OpenedWorkspace,
@@ -112,6 +112,10 @@ export async function closeWorkspaceGroup2(discardUnsavedChanges?: boolean) {
  * On user confirm, the existing opened group is closed and the new workspace, along with its window and its group,
  * is opened.
  *
+ * The window is looked up by name, so launching a workspace into an already opened window never creates a second
+ * window, even if the requested workspace is not currently opened in that window: the window's opened workspaces
+ * are replaced with the requested workspace instead.
+ *
  * If the window is already opened, but with incompatible window props, we prompt the user to close
  * the window (and all its opened workspaces), and reopen the window with (only) the newly requested workspace.
  *
@@ -159,7 +163,7 @@ export async function launchWorkspace2<
     );
   }
 
-  const openedWindowIndex = getOpenedWindowIndexByWorkspace(workspaceName);
+  const openedWindowIndex = getOpenedWindowIndexByWindowName(windowName);
   const isWindowAlreadyOpened = openedWindowIndex >= 0;
 
   // if current opened group is not the same as the requested group, or if the group props are different, then prompt for unsaved changes
