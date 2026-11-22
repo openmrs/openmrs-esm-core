@@ -258,9 +258,10 @@ describe('OpenmrsDateRangePicker', () => {
 
       const endDateSegments = within(screen.getByLabelText('datepicker')).getAllByRole('spinbutton').slice(3);
       for (const segment of endDateSegments) {
-        while (segment.getAttribute('aria-valuetext') !== 'Empty') {
+        for (let i = 0; i < 4 && segment.getAttribute('aria-valuetext') !== 'Empty'; i++) {
           fireEvent.keyDown(segment, { key: 'Backspace' });
         }
+        expect(segment).toHaveAttribute('aria-valuetext', 'Empty');
       }
 
       expect(onChange).toHaveBeenLastCalledWith([undefined, undefined]);
