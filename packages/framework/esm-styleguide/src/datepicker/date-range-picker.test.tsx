@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { i18n } from 'i18next';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -265,6 +265,45 @@ describe('OpenmrsDateRangePicker', () => {
       }
 
       expect(onChange).toHaveBeenLastCalledWith([undefined, undefined]);
+    });
+
+    it('should let the user type a new end date after the end date is cleared', () => {
+      const onChange = vi.fn();
+      function ControlledDateRangePicker() {
+        const [range, setRange] = useState<[Date | null, Date | null]>([new Date(2025, 5, 10), new Date(2025, 5, 15)]);
+        return (
+          <OpenmrsDateRangePicker
+            aria-label="datepicker"
+            value={range}
+            onChange={(dates) => {
+              onChange(dates);
+              setRange([dates[0] ?? null, dates[1] ?? null]);
+            }}
+          />
+        );
+      }
+      render(<ControlledDateRangePicker />);
+
+      const getEndDateSegments = () => within(screen.getByLabelText('datepicker')).getAllByRole('spinbutton').slice(3);
+      for (const segment of getEndDateSegments()) {
+        for (let i = 0; i < 4 && segment.getAttribute('aria-valuetext') !== 'Empty'; i++) {
+          fireEvent.keyDown(segment, { key: 'Backspace' });
+        }
+      }
+      expect(onChange).toHaveBeenLastCalledWith([undefined, undefined]);
+
+      const [day, month, year] = getEndDateSegments();
+      const typeInto = (segment: HTMLElement, digits: string) =>
+        digits
+          .split('')
+          .forEach((digit) =>
+            fireEvent(segment, new InputEvent('beforeinput', { data: digit, inputType: 'insertText', bubbles: true })),
+          );
+      typeInto(day, '20');
+      typeInto(month, '06');
+      typeInto(year, '2025');
+
+      expect(onChange).toHaveBeenLastCalledWith([new Date(2025, 5, 10), new Date(2025, 5, 20)]);
     });
   });
 });

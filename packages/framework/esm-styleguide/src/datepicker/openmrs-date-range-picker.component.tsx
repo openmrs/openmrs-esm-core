@@ -80,10 +80,9 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
 
     const value = useMemo(() => {
       if (rawValue) {
-        return {
-          start: dateToInternationalizedDate(rawValue[0], calendar, false)!,
-          end: dateToInternationalizedDate(rawValue[1], calendar, false)!,
-        };
+        const start = dateToInternationalizedDate(rawValue[0], calendar, false);
+        const end = dateToInternationalizedDate(rawValue[1], calendar, false);
+        return start && end ? { start, end } : null;
       }
       return undefined;
     }, [rawValue, calendar]);
