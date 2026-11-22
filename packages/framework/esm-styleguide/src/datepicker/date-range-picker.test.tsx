@@ -2,7 +2,7 @@ import React from 'react';
 import type { i18n } from 'i18next';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useConfig } from '@openmrs/esm-react-utils/mock';
 import { OpenmrsDateRangePicker } from './index';
@@ -244,6 +244,26 @@ describe('OpenmrsDateRangePicker', () => {
       await waitFor(() => {
         expect(onChange).toHaveBeenCalledWith([new Date(2025, 5, 10), new Date(2025, 5, 15)]);
       });
+    });
+
+    it('should call onChange with undefined dates when the end date is cleared', () => {
+      const onChange = vi.fn();
+      render(
+        <OpenmrsDateRangePicker
+          aria-label="datepicker"
+          defaultValue={[new Date(2025, 5, 10), new Date(2025, 5, 15)]}
+          onChange={onChange}
+        />,
+      );
+
+      const endDateSegments = within(screen.getByLabelText('datepicker')).getAllByRole('spinbutton').slice(3);
+      for (const segment of endDateSegments) {
+        while (segment.getAttribute('aria-valuetext') !== 'Empty') {
+          fireEvent.keyDown(segment, { key: 'Backspace' });
+        }
+      }
+
+      expect(onChange).toHaveBeenLastCalledWith([undefined, undefined]);
     });
   });
 });
