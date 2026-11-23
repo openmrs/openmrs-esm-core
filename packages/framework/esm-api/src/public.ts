@@ -28,3 +28,4 @@ export {
   type FetchResponseJson,
 } from './openmrs-fetch';
 export * from './openmrs-backend-dependencies';
+export { openmrsFetchAll } from './openmrs-fetch-all';
