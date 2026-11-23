@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
 type ExtensionsConfigState = { configs: Record<string, Record<string, { loaded: boolean; config: any }>> };
 
@@ -44,6 +44,8 @@ describe('setupI18n', () => {
     const { setupI18n } = await import('./locale');
     await setupI18n();
   });
+
+  afterEach(() => window.i18next.changeLanguage('fr'));
 
   it('applies an extension’s overrides when it mounts after its namespace was read', async () => {
     await window.i18next.loadNamespaces(namespace);
