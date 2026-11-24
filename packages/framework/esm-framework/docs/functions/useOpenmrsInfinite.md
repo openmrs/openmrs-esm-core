@@ -4,7 +4,7 @@
 
 > **useOpenmrsInfinite**\<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`\<`T`, `OpenMRSPaginatedResponse`\<`T`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L99)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L100)
 
 Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
 The server limits the max number of results being returned, and multiple requests are needed to get the full data set
@@ -28,7 +28,7 @@ is fetched by calling `loadMore`. See: https://swr.vercel.app/docs/pagination#us
 
 ### url
 
-`string` \| `URL`
+`string` \| `URL` \| `null`
 
 The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify
            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined
