@@ -665,7 +665,7 @@ Handler that is called when the element loses focus.
 
 Defined in: [packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs-date-range-picker.component.tsx#L33)
 
-Handler that is called when the value changes.
+Handler that is called when the value changes. Both dates are `undefined` when either date is cleared.
 
 #### Parameters
 
