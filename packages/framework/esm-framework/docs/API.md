@@ -69,6 +69,7 @@
 - [FetchError](interfaces/FetchError.md)
 - [FetchHeaders](interfaces/FetchHeaders.md)
 - [FetchResponseJson](interfaces/FetchResponseJson.md)
+- [openmrsFetchAll](functions/openmrsFetchAll.md)
 - [useSession](functions/useSession.md)
 
 ## Error Handling

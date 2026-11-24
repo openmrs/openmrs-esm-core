@@ -2,7 +2,7 @@
 
 # Interface: UseServerFetchAllOptions\<R\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L14)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L20)
 
 ## Extends
 
@@ -60,7 +60,7 @@ This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
 
 > `optional` **partialData?**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L21)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L27)
 
 If true, the data of any page is returned as soon as they are fetched.
 This is useful when you want to display data as soon as possible, even if not all pages are fetched.
@@ -73,7 +73,9 @@ display all data at once or reduce the number of re-renders (to avoid confusing 
 
 > `optional` **swrInfiniteConfig?**: `SWRInfiniteConfiguration`\<`any`, `any`, `BareFetcher`\<`any`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L24)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L25)
+
+Pages depend on the preceding response's next link, so parallel mode is always disabled.
 
 #### Inherited from
 

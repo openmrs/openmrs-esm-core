@@ -1,9 +1,14 @@
 import { vi } from 'vitest';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
 import { type SessionStore } from './src/current-user';
+import { openmrsFetchAll as realOpenmrsFetchAll } from './src/openmrs-fetch-all';
+import { type openmrsFetch as Fetcher } from './src/openmrs-fetch';
 
 export const setSessionLocation = vi.fn(() => Promise.resolve());
 export const openmrsFetch = vi.fn((_url?: string) => new Promise(() => {}));
+export const openmrsFetchAll = vi.fn((url: string, fetcher = openmrsFetch as typeof Fetcher) =>
+  realOpenmrsFetchAll(url, fetcher),
+);
 export function getCurrentUser() {
   return Promise.resolve({ authenticated: false });
 }

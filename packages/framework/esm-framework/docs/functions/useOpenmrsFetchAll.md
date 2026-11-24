@@ -4,11 +4,14 @@
 
 > **useOpenmrsFetchAll**\<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`\<`T`, `OpenMRSPaginatedResponse`\<`T`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L49)
 
 Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
 This hook handles fetching results from *all* pages of a paginated OpenMRS REST endpoint, making multiple requests
 as needed.
+Global URL-prefix mutation refreshes mounted collections. Clearing matching cache data while unmounted
+refreshes all pages on the next mount, unless mount revalidation is explicitly disabled.
+The returned bound mutate retains SWR Infinite's page-array and per-page revalidation contract.
 
 ## Type Parameters
 
@@ -20,7 +23,7 @@ as needed.
 
 ### url
 
-`string` \| `URL`
+`string` \| `URL` \| `null`
 
 The URL of the paginated OpenMRS REST endpoint. Note that the `limit` GET param can be set to specify
            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined

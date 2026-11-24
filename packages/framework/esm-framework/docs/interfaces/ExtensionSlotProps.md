@@ -1106,7 +1106,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2919
 
 ### enterKeyHint?
 
-> `optional` **enterKeyHint?**: `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
+> `optional` **enterKeyHint?**: `"search"` \| `"next"` \| `"enter"` \| `"done"` \| `"go"` \| `"previous"` \| `"send"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2920
 
