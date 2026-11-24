@@ -1278,6 +1278,23 @@ function getExtensionNameFromId(extensionId: string) {
 }
 
 /**
+ * Whether `key` is a language code that i18next can look translation overrides up by. i18next converts
+ * a code with a region or script to its canonical BCP 47 form (`sw-ke` is looked up as `sw-KE`) and
+ * uses a bare language code as it is given, so a key in any other form never matches.
+ */
+function isLanguageCodeKey(key: string) {
+  if (!key.includes('-')) {
+    return /^[a-z]{2,3}$/.test(key);
+  }
+
+  try {
+    return Intl.getCanonicalLocales(key)[0] === key;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * The translation overrides schema is used in the implicit schema given to every module;
  * plus any additional translation namespaces (at time of writing, this is just 'core').
  */
@@ -1289,10 +1306,10 @@ const translationOverridesSchema: ConfigSchema = {
     _default: {},
     _validators: [
       validator(
-        (o) => Object.keys(o).every((k) => /^[a-z]{2,3}(-[A-Z]{2,3})?$/.test(k)),
+        (o) => Object.keys(o).every(isLanguageCodeKey),
         (o) => {
-          const badKeys = Object.keys(o).filter((k) => !/^[a-z]{2,3}(-[A-Z]{2,3})?$/.test(k));
-          return `The 'Translation overrides' object should have language codes for keys. Language codes must be in the form of a two-to-three letter language code optionally followed by a hyphen and a two-to-three letter country code. The following keys do not conform: ${badKeys.join(
+          const badKeys = Object.keys(o).filter((k) => !isLanguageCodeKey(k));
+          return `The 'Translation overrides' object should have language codes for keys. Language codes must be BCP 47 language tags in canonical form, such as 'fr', 'pt-BR', 'es-419' or 'zh-Hant'. The following keys do not conform: ${badKeys.join(
             ', ',
           )}.`;
         },
