@@ -29,7 +29,7 @@ export interface OpenmrsDateRangePickerProps
     DatePickerBaseProps {
   /** The default value (uncontrolled) */
   defaultValue?: [DateInputValue, DateInputValue];
-  /** Handler that is called when the value changes. */
+  /** Handler that is called when the value changes. Both dates are `undefined` when either date is cleared. */
   onChange?: (value: [Date | null | undefined, Date | null | undefined]) => void;
   /** Handler that is called when the value changes. Note that this provides types from @internationalized/date. */
   onChangeRaw?: (value: DateRange | null) => void;
@@ -80,10 +80,9 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
 
     const value = useMemo(() => {
       if (rawValue) {
-        return {
-          start: dateToInternationalizedDate(rawValue[0], calendar, false)!,
-          end: dateToInternationalizedDate(rawValue[1], calendar, false)!,
-        };
+        const start = dateToInternationalizedDate(rawValue[0], calendar, false);
+        const end = dateToInternationalizedDate(rawValue[1], calendar, false);
+        return start && end ? { start, end } : null;
       }
       return undefined;
     }, [rawValue, calendar]);
@@ -114,8 +113,8 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
 
       return (
         onChangeRaw ??
-        ((range: DateRange) =>
-          onChange?.([internationalizedDateToDate(range.start), internationalizedDateToDate(range.end)]))
+        ((range: DateRange | null) =>
+          onChange?.([internationalizedDateToDate(range?.start), internationalizedDateToDate(range?.end)]))
       );
     }, [onChangeRaw, onChange]);
 

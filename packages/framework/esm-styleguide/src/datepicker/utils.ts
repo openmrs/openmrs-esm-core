@@ -53,7 +53,7 @@ export function dateToInternationalizedDate(
 /**
  * Function to convert a `DateValue` (from React Aria) into a standard JS `Date`.
  */
-export function internationalizedDateToDate(date: DateValue): Date | undefined {
+export function internationalizedDateToDate(date: DateValue | null | undefined): Date | undefined {
   if (!date) {
     return undefined;
   }
