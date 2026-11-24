@@ -1,5 +1,5 @@
 /** @module @category API */
-import { openmrsFetch } from './openmrs-fetch';
+import { makeUrl, openmrsFetch } from './openmrs-fetch';
 import { type FetchResponse } from './types';
 
 interface PaginatedResults<T> {
@@ -25,6 +25,9 @@ export async function openmrsFetchAll<T>(
   const results = [...firstResponse.data.results];
   const visited = new Set<string>();
   let page = firstResponse.data;
+  // Request later pages from the first page's origin. The backend's next links can name
+  // an origin the browser cannot reach, such as the backend port behind a frontend proxy.
+  const { origin } = new URL(makeUrl(url), window.location.href);
 
   while (true) {
     const next = page.links?.find((link) => link.rel === 'next')?.uri;
@@ -32,9 +35,8 @@ export async function openmrsFetchAll<T>(
       break;
     }
 
-    // Keep frontend proxies working without retaining the backend's port.
     const { pathname, search } = new URL(next);
-    const nextUrl = `${window.location.origin}${pathname}${search}`;
+    const nextUrl = `${origin}${pathname}${search}`;
     if (visited.has(nextUrl)) {
       throw new Error('Cannot fetch the complete collection: pagination returned a repeated next link.');
     }

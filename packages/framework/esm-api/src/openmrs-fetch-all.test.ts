@@ -27,6 +27,24 @@ describe('openmrsFetchAll', () => {
     ]);
   });
 
+  it('requests later pages from a remote API origin rather than the frontend origin', async () => {
+    vi.stubGlobal('openmrsBase', 'https://api.example.test/openmrs');
+    try {
+      const fetcher = vi
+        .fn()
+        .mockResolvedValueOnce(page([1], 'http://backend:8080/openmrs/ws/rest/v1/example?startIndex=1'))
+        .mockResolvedValueOnce(page([2]));
+      const result = await openmrsFetchAll<number>('/ws/rest/v1/example', fetcher);
+      expect(result.data.results).toEqual([1, 2]);
+      expect(fetcher.mock.calls.map(([url]) => url)).toEqual([
+        '/ws/rest/v1/example',
+        'https://api.example.test/openmrs/ws/rest/v1/example?startIndex=1',
+      ]);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it('does not make another request without a next link', async () => {
     const fetcher = vi.fn().mockResolvedValue(Object.assign(new Response(), { data: { results: [] } }));
     expect((await openmrsFetchAll<number>('/ws/rest/v1/example', fetcher)).data.results).toEqual([]);
