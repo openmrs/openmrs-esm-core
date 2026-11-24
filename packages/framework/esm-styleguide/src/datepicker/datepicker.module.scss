@@ -2,8 +2,6 @@
 @use '@carbon/layout';
 @use '@carbon/styles/scss/theme';
 @use '@carbon/type';
-// `.../components/button` would emit Carbon's entire button stylesheet; the tokens module emits none.
-@use '@carbon/styles/scss/components/button/tokens' as button;
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
 @use '@carbon/styles/scss/utilities/focus-outline' as focus;
@@ -365,14 +363,10 @@
         inset-block-start: 33%;
       }
 
-      &:hover::after {
-        border-block-end-color: button.$button-primary;
-        border-block-start-color: button.$button-primary;
-      }
-
+      &:hover::after,
       &:active::after {
-        border-block-end-color: theme.$border-interactive;
-        border-block-start-color: theme.$border-interactive;
+        border-block-end-color: var(--brand-03);
+        border-block-start-color: var(--brand-03);
       }
 
       &[slot='increment'] {
@@ -422,7 +416,7 @@
     }
 
     &:has([data-selected]) {
-      background-color: $color-blue-60-2;
+      background-color: var(--brand-03);
       color: $ui-background;
     }
 
@@ -435,7 +429,7 @@
 
 .today:not([data-selected]) {
   position: relative;
-  color: $color-blue-60-2;
+  color: var(--brand-03);
   font-weight: 600;
   font-size: var(--cds-body-compact-01-font-size, 0.875rem);
   line-height: var(--cds-body-compact-01-line-height, 1.28572);
@@ -464,7 +458,7 @@
   }
 
   &:not([data-disabled])::after {
-    background-color: var(--cds-link-primary, theme.$link-primary);
+    background-color: var(--brand-03);
   }
 }
 
