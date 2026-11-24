@@ -1,5 +1,5 @@
 /** @module @category UI */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useSWR, { useSWRConfig, type Cache } from 'swr';
 import { type SWRInfiniteConfiguration } from 'swr/infinite';
 import {
@@ -92,12 +92,20 @@ export function useServerFetchAll<T, R>(
       onDiscarded: () => {},
     },
   );
-  const wasInvalidated = !initializeMarker && refreshMarker === undefined;
+  const wasInvalidated = !!refreshKey && !initializeMarker && refreshMarker === undefined;
   useEffect(() => {
     if (initializeMarker) {
       void markRefreshed(null, { revalidate: false });
     }
   }, [initializeMarker, markRefreshed]);
+
+  // SWR skips mount revalidation while the infinite key's last request is still
+  // deduped, and the filtered global mutate cannot clear that dedupe entry. So a
+  // collection invalidated while unmounted refreshes once through its bound mutator.
+  // SWR's initial mount is the first render with a URL, so the check waits for one.
+  const mountRevalidation = options.swrInfiniteConfig?.revalidateOnMount ?? config.revalidateOnMount;
+  const awaitingKeyedMount = useRef(true);
+  const refreshOnMount = awaitingKeyedMount.current && wasInvalidated && mountRevalidation !== false;
 
   const { response, loadMoreAsync, pages } = useServerInfiniteInternal<T, R>(url, serverPaginationHandlers, {
     ...options,
@@ -112,8 +120,7 @@ export function useServerFetchAll<T, R>(
       revalidateAll:
         wasInvalidated ||
         (options.swrInfiniteConfig?.revalidateAll ?? (config as SWRInfiniteConfiguration).revalidateAll),
-      revalidateOnMount:
-        options.swrInfiniteConfig?.revalidateOnMount ?? config.revalidateOnMount ?? (wasInvalidated ? true : undefined),
+      revalidateOnMount: refreshOnMount ? false : mountRevalidation,
       onSuccess: (data, key, swrConfig) => {
         // During an explicit refresh the bridge writes its own marker on success.
         // Mark ordinary loads here, after the fetch completes, including delayed remounts.
@@ -124,7 +131,16 @@ export function useServerFetchAll<T, R>(
       },
     },
   });
-  const { hasMore, data, isLoading, isValidating, nextUri } = response;
+  const { hasMore, data, isLoading, isValidating, nextUri, mutate } = response;
+
+  useEffect(() => {
+    if (urlKey && awaitingKeyedMount.current) {
+      awaitingKeyedMount.current = false;
+      if (refreshOnMount) {
+        void mutate();
+      }
+    }
+  }, [urlKey, refreshOnMount, mutate]);
   const repeatedNextLink =
     !!nextUri && !!pages?.slice(0, -1).some((page) => serverPaginationHandlers.getNextUrl(page.data) === nextUri);
   const paginationError = useMemo(

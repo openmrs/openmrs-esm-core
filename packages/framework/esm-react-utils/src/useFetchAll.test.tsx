@@ -669,6 +669,44 @@ describe.each(['rest', 'fhir'] as const)('%s fetch-all', (kind) => {
     },
   );
 
+  it.each([false, true])(
+    'refreshes every page on a remount inside the dedupe window after URL invalidation while unmounted (remount starts with a null URL: %s)',
+    async (startsNull) => {
+      const backend = server(kind);
+      const snapshot = { current: undefined as ReturnType<typeof useFetchAll> | undefined };
+      let mutate: ReturnType<typeof useSWRConfig>['mutate'];
+      function Collection({ collectionKey }: { collectionKey: string | null }) {
+        snapshot.current = useFetchAll({ fetcher: backend.fetcher }, collectionKey);
+        return null;
+      }
+      function App({ visible, collectionKey = url }: { visible: boolean; collectionKey?: string | null }) {
+        mutate = useSWRConfig().mutate;
+        return visible ? <Collection collectionKey={collectionKey} /> : null;
+      }
+      // The component decorator keeps SWR's default two-second dedupe window.
+      const dedupeWrapper = ({ children }: { children: React.ReactNode }) => (
+        <SWRConfig value={{ provider: () => new Map(), dedupingInterval: 2000, revalidateOnFocus: false }}>
+          {children}
+        </SWRConfig>
+      );
+      const { rerender } = render(<App visible />, { wrapper: dedupeWrapper });
+      await waitFor(() => expect(snapshot.current?.data).toHaveLength(5));
+      rerender(<App visible={false} />);
+      backend.update();
+      backend.fetcher.mockClear();
+      await act(async () => {
+        await mutate((key) => typeof key === 'string' && key.startsWith(url), undefined, { revalidate: true });
+      });
+      if (startsNull) {
+        rerender(<App visible collectionKey={null} />);
+        expect(backend.fetcher).not.toHaveBeenCalled();
+      }
+      rerender(<App visible />);
+      await waitFor(() => expect(snapshot.current?.data?.every((row) => row.revision === 2)).toBe(true));
+      expect(backend.fetcher).toHaveBeenCalledTimes(3);
+    },
+  );
+
   it('expands partial fallback data even when mount revalidation is disabled', async () => {
     const backend = server(kind);
     const first = await backend.fetcher(url);
