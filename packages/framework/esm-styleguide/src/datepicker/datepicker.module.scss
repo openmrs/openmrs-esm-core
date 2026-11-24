@@ -363,12 +363,6 @@
         inset-block-start: 33%;
       }
 
-      &:hover::after,
-      &:active::after {
-        border-block-end-color: var(--brand-03);
-        border-block-start-color: var(--brand-03);
-      }
-
       &[slot='increment'] {
         top: 0;
         left: 0;
