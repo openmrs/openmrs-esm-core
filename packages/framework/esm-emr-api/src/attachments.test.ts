@@ -29,24 +29,43 @@ describe('getAttachmentsUrl', () => {
 describe('getAttachments', () => {
   beforeEach(() => {
     mockOpenmrsFetch.mockReset();
+    mockOpenmrsFetch.mockResolvedValue({ data: { results: [] } } as never);
   });
 
-  it('requests the patient attachments', () => {
+  it('requests the patient attachments', async () => {
     const abortController = new AbortController();
-    getAttachments('patient-uuid', true, abortController);
+    await getAttachments('patient-uuid', true, abortController);
 
     expect(mockOpenmrsFetch).toHaveBeenCalledWith(`${attachmentUrl}?patient=patient-uuid&includeEncounterless=true`, {
       signal: abortController.signal,
     });
   });
 
-  it('requests only the attachments on an encounter when one is given', () => {
+  it('requests only the attachments on an encounter when one is given', async () => {
     const abortController = new AbortController();
-    getAttachments('patient-uuid', true, abortController, 'encounter-uuid');
+    await getAttachments('patient-uuid', true, abortController, 'encounter-uuid');
 
     expect(mockOpenmrsFetch).toHaveBeenCalledWith(`${attachmentUrl}?patient=patient-uuid&encounter=encounter-uuid`, {
       signal: abortController.signal,
     });
+  });
+
+  it('returns attachments from every page and passes the abort signal to each request', async () => {
+    const abortController = new AbortController();
+    mockOpenmrsFetch
+      .mockResolvedValueOnce({
+        data: {
+          results: [{ uuid: 'first' }],
+          links: [{ rel: 'next', uri: `http://backend/openmrs${attachmentUrl}?patient=patient-uuid&startIndex=1` }],
+        },
+      } as never)
+      .mockResolvedValueOnce({ data: { results: [{ uuid: 'second' }] } } as never);
+
+    const response = await getAttachments('patient-uuid', true, abortController);
+
+    expect(response.data.results.map(({ uuid }) => uuid)).toEqual(['first', 'second']);
+    expect(mockOpenmrsFetch).toHaveBeenCalledTimes(2);
+    expect(mockOpenmrsFetch.mock.calls.every(([, init]) => init?.signal === abortController.signal)).toBe(true);
   });
 });
 

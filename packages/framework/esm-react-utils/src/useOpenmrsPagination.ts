@@ -83,8 +83,9 @@ export const openmrsServerPaginationHandlers: OpenmrsServerPaginationHandlers<an
       const url = new URL(uri);
 
       // allows frontend proxies to work
-      url.host = window.location.host;
       url.protocol = window.location.protocol;
+      url.host = window.location.host;
+      url.port = window.location.port;
 
       return url.toString();
     } else {

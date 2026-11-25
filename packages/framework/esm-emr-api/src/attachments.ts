@@ -1,6 +1,6 @@
 /** @module @category API */
-import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
-import type { UploadedFile } from './types';
+import { openmrsFetch, openmrsFetchAll, restBaseUrl, type FetchResponse } from '@openmrs/esm-api';
+import type { AttachmentResponse, UploadedFile } from './types';
 
 /** Base URL for the attachment REST API endpoint. */
 export const attachmentUrl = `${restBaseUrl}/attachment`;
@@ -38,7 +38,7 @@ export function getAttachmentByUuid(attachmentUuid: string, abortController: Abo
  *   ignores the encounter filter whenever `includeEncounterless` is present. Pass a UUID
  *   the server can resolve: an unknown encounter UUID makes the server fall back to every
  *   attachment of the patient, encounterless ones included.
- * @returns A Promise that resolves with the FetchResponse containing an array of attachments.
+ * @returns A Promise that resolves with the FetchResponse containing the attachments from every page.
  *
  * @example
  * ```ts
@@ -55,10 +55,11 @@ export function getAttachments(
   includeEncounterless: boolean,
   abortController: AbortController,
   encounterUuid?: string,
-) {
-  return openmrsFetch(getAttachmentsUrl(patientUuid, includeEncounterless, encounterUuid), {
-    signal: abortController.signal,
-  });
+): Promise<FetchResponse<{ results: Array<AttachmentResponse> }>> {
+  return openmrsFetchAll<AttachmentResponse>(
+    getAttachmentsUrl(patientUuid, includeEncounterless, encounterUuid),
+    (url) => openmrsFetch(url, { signal: abortController.signal }),
+  );
 }
 
 /**
