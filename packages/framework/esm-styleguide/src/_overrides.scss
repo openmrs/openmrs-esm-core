@@ -43,6 +43,17 @@
   z-index: 0;
 }
 
+a.cds--side-nav__link[aria-current='page']::before,
+a.cds--side-nav__link--current::before,
+.cds--side-nav__item--active .cds--side-nav__submenu[aria-expanded='false']::before {
+  background-color: var(--brand-01);
+}
+
+a.cds--side-nav__link:focus,
+.cds--side-nav__submenu:focus {
+  outline-color: var(--brand-03);
+}
+
 /* Tooltip */
 .cds--tooltip--definition .cds--tooltip__trigger {
   border-bottom: none;
