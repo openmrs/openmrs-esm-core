@@ -2,7 +2,7 @@
 
 # Function: getAttachments()
 
-> **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`, `encounterUuid?`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
+> **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`, `encounterUuid?`): `Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<\{ `results`: [`AttachmentResponse`](../interfaces/AttachmentResponse.md)[]; \}\>\>
 
 Defined in: [packages/framework/esm-emr-api/src/attachments.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-emr-api/src/attachments.ts#L53)
 
@@ -41,9 +41,9 @@ When set, only attachments recorded on this encounter are returned.
 
 ## Returns
 
-`Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<`any`\>\>
+`Promise`\<[`FetchResponse`](../interfaces/FetchResponse.md)\<\{ `results`: [`AttachmentResponse`](../interfaces/AttachmentResponse.md)[]; \}\>\>
 
-A Promise that resolves with the FetchResponse containing an array of attachments.
+A Promise that resolves with the FetchResponse containing the attachments from every page.
 
 ## Example
 
