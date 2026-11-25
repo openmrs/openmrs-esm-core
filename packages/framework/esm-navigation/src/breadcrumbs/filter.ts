@@ -39,7 +39,7 @@ export function filterBreadcrumbs(list: Array<BreadcrumbRegistration>, path: str
       const links = [current];
       let previous = getNext(list, current.settings.parent);
 
-      while (previous !== undefined) {
+      while (previous !== undefined && !links.includes(previous)) {
         links.push(previous);
         previous = getNext(list, previous.settings.parent);
       }
