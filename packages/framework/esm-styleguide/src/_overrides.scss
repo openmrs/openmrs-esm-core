@@ -28,6 +28,19 @@
   fill: white;
 }
 
+// The header actions and panels sit on the dark brand colours, so their focus rings are white, as in Carbon's dark themes.
+// The patient search field and results also render inside the header, on light backgrounds, so they keep the default.
+.cds--header__action,
+.cds--header-panel {
+  --cds-focus: white;
+}
+
+// Header actions are icon buttons, so the tooltip button styles add a 2px outline outside the button.
+// Draw it inside instead, so the viewport edge and neighbouring actions don't clip it.
+.cds--header__action:focus {
+  outline-offset: -2px;
+}
+
 .cds--header-panel--expanded {
   border-left: none;
   border-right: none;
