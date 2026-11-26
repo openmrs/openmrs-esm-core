@@ -92,11 +92,12 @@ export function getGroupByWindowName(windowName: string) {
   }
 }
 
-export function getOpenedWindowIndexByWorkspace(workspaceName: string) {
+/**
+ * Given a window name, return the index of that window in the opened windows, or -1 if it is not opened.
+ */
+export function getOpenedWindowIndexByWindowName(windowName: string) {
   const { openedWindows } = workspace2Store.getState();
-  return openedWindows.findIndex((a) =>
-    a.openedWorkspaces.find((openedWorkspace) => openedWorkspace.workspaceName === workspaceName),
-  );
+  return openedWindows.findIndex((a) => a.windowName === windowName);
 }
 
 export function registerWorkspaceGroups2(appName: string, workspaceGroupDefs: Array<WorkspaceGroupDefinition2>) {

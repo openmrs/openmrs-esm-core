@@ -4,7 +4,7 @@
 
 > **launchWorkspace2**\<`WorkspaceProps`, `WindowProps`, `GroupProp`\>(`workspaceName`, `workspaceProps?`, `windowProps?`, `groupProps?`): `Promise`\<`boolean`\>
 
-Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L133)
+Defined in: [packages/framework/esm-styleguide/src/workspaces2/workspace2.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces2/workspace2.ts#L137)
 
 Attempts to launch the specified workspace with the given workspace props. This also implicitly opens
 the workspace window to which the workspace belongs (if it's not opened already),
@@ -21,6 +21,10 @@ If there is already an opened workspace group, and it's not the group the worksp
 or has incompatible[^2] group props, then we prompt the user to close the group (and its windows and their workspaces).
 On user confirm, the existing opened group is closed and the new workspace, along with its window and its group,
 is opened.
+
+The window is looked up by name, so launching a workspace into an already opened window never creates a second
+window, even if the requested workspace is not currently opened in that window: the window's opened workspaces
+are replaced with the requested workspace instead.
 
 If the window is already opened, but with incompatible window props, we prompt the user to close
 the window (and all its opened workspaces), and reopen the window with (only) the newly requested workspace.
