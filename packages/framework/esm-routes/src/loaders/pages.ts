@@ -1,5 +1,11 @@
 import { type ActivityFn, pathToActiveWhen, registerApplication } from 'single-spa';
-import { registerModuleWithConfigSystem } from '@openmrs/esm-config';
+import {
+  defineStaticConfigSchema,
+  defineStaticExtensionConfigSchema,
+  registerCustomValidatorLoader,
+  registerModuleWithConfigSystem,
+} from '@openmrs/esm-config';
+import { importDynamic } from '@openmrs/esm-dynamic-loading';
 import { batchExtensionUpdates } from '@openmrs/esm-extensions';
 import {
   type ExtensionDefinition,
@@ -83,9 +89,41 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
   batchExtensionUpdates(() => registerAppRoutes(appName, routes));
 }
 
+/**
+ * Installs the configuration schemas in an app's registry entry. Both kinds are attributed to
+ * `appName`, whose `./config-validators` exports any validators they refer to; for an extension
+ * schema that is the app that declared the extension, not whichever app renders it.
+ */
+function registerConfigSchemas(appName: string, routes: OpenmrsAppRoutes) {
+  // A bad schema must not cost the app the rest of its entry: this runs before its pages,
+  // extensions, modals and workspaces are registered, and nothing awaits the failure, so the app
+  // would silently not appear.
+  try {
+    if (routes.configurationSchema) {
+      defineStaticConfigSchema(appName, routes.configurationSchema, appName);
+    }
+
+    for (const [extensionName, schema] of Object.entries(routes.extensionConfigurationSchemas ?? {})) {
+      defineStaticExtensionConfigSchema(extensionName, schema, appName);
+    }
+  } catch (e) {
+    console.error(
+      `The configuration schema in ${appName}'s registry entry could not be installed. Its configuration ` +
+        `will be empty until it loads.`,
+      e,
+    );
+  }
+}
+
+// `@openmrs/esm-config` sits below the module loader and must not depend on it, so the loader is
+// handed in here. Not `loadLifeCycles`, which would run the module's `startupApp()`: the separate
+// `./config-validators` entry point exists so reaching a validator costs a small chunk, not the module.
+registerCustomValidatorLoader((appName) => importDynamic<Record<string, unknown>>(appName, './config-validators'));
+
 function registerAppRoutes(appName: string, routes: OpenmrsAppRoutes) {
   if (appName && routes && typeof routes === 'object') {
     registerModuleWithConfigSystem(appName);
+    registerConfigSchemas(appName, routes);
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];

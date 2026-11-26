@@ -9,6 +9,7 @@ import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
 import semver from 'semver';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
+import { hasSchemaKey, isSchemaObject } from '../utils/dependencies';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 
 export interface AssembleArgs {
@@ -23,6 +24,7 @@ export interface AssembleArgs {
   manifest: boolean;
   applicationVersion?: string;
   ensureEntrypoints: boolean;
+  strictSchemas: boolean;
 }
 
 interface NpmSearchResult {
@@ -308,6 +310,10 @@ export async function runAssemble(args: AssembleArgs) {
 
   const routes = {};
 
+  // Keyed by names that come out of a downloaded package, like the two maps further down.
+  const configSchemas: Record<string, { configurationSchema?: unknown; extensionConfigurationSchemas?: unknown }> =
+    Object.create(null);
+
   logInfo(`Assembling dependencies and building import map and routes registry...`);
 
   const { frontendModules = {}, publicUrl = '.' } = config;
@@ -325,6 +331,15 @@ export async function runAssemble(args: AssembleArgs) {
   const reportMissingEntrypoint = (message: string) => {
     if (args.ensureEntrypoints) {
       entrypointErrors.push(message);
+    } else {
+      logWarn(message);
+    }
+  };
+
+  const schemaErrors: Array<string> = [];
+  const reportSchemaProblem = (message: string) => {
+    if (args.strictSchemas) {
+      schemaErrors.push(message);
     } else {
       logWarn(message);
     }
@@ -362,6 +377,39 @@ export async function runAssemble(args: AssembleArgs) {
         }
       }
 
+      // A shipped schema lets the framework configure the module without loading its code.
+      const appConfigSchema = resolve(args.target, dirName, 'config-schema.json');
+      if (existsSync(appConfigSchema)) {
+        try {
+          const parsed = JSON.parse(await readFile(appConfigSchema, 'utf8'));
+
+          if (isSchemaObject(parsed)) {
+            configSchemas[esmName] = parsed;
+
+            // Most likely a schema written without its `configurationSchema` wrapper, which nothing
+            // downstream can tell apart from no configuration. Unlike `openmrs develop`, a
+            // `$schema`-only file is not exempt: the build never ships one, so this was hand-written.
+            if (!hasSchemaKey(parsed)) {
+              reportSchemaProblem(
+                `The configuration schema for ${esmName} at ${appConfigSchema} has neither a ` +
+                  `'configurationSchema' nor an 'extensionConfigurationSchemas' key, so nothing from it was ` +
+                  `added to the routes registry. A schema goes under 'configurationSchema'.`,
+              );
+            }
+          } else {
+            reportSchemaProblem(
+              `The configuration schema for ${esmName} at ${appConfigSchema} is not an object, so it was ignored. ` +
+                `${esmName}'s configuration will not be known until it loads.`,
+            );
+          }
+        } catch (e) {
+          reportSchemaProblem(
+            `Error while processing the configuration schema for ${esmName} using ${appConfigSchema}: ${e}. ` +
+              `${esmName}'s configuration will not be known until it loads.`,
+          );
+        }
+      }
+
       // The entrypoint named in the import map is the module's executable code; if it's missing the module
       // simply won't load in the browser, so validate it exists before we commit it to the import map.
       const entrypoint = resolve(args.target, dirName, fileName);
@@ -376,11 +424,84 @@ export async function runAssemble(args: AssembleArgs) {
     }),
   );
 
-  if (entrypointErrors.length > 0) {
-    throw new Error(
-      `Assemble failed because the following entrypoints could not be found or the routes could not be processed. Pass --no-ensure-entrypoints to ` +
-        `downgrade these to warnings.\n\n${entrypointErrors.join('\n\n')}`,
-    );
+  // Extension names are one global namespace. The first owner in configuration order wins, so adding
+  // a module never changes how an existing one is configured. Not the order of `routes`, which is
+  // filled in by a `Promise.all` and varies between runs.
+  const extensionSchemaOwners: Record<string, string> = Object.create(null);
+
+  for (const esmName of Object.keys(frontendModules)) {
+    const schema = configSchemas[esmName];
+
+    if (!schema || !routes.hasOwnProperty(esmName)) {
+      continue;
+    }
+
+    if (schema.configurationSchema !== undefined) {
+      if (isSchemaObject(schema.configurationSchema)) {
+        routes[esmName]['configurationSchema'] = schema.configurationSchema;
+      } else {
+        // The framework rejects a malformed entry whole, which would also cost the module its pages
+        // and extensions.
+        reportSchemaProblem(
+          `The configuration schema shipped by ${esmName} is not an object, so it was left out of the routes ` +
+            `registry. ${esmName}'s configuration will not be known until it loads.`,
+        );
+      }
+    }
+
+    if (schema.extensionConfigurationSchemas !== undefined && !isSchemaObject(schema.extensionConfigurationSchemas)) {
+      reportSchemaProblem(
+        `The extension configuration schemas shipped by ${esmName} are not an object, so none of them were ` +
+          `added to the routes registry. Those extensions will not be configured until ${esmName} loads.`,
+      );
+    }
+
+    const extensionSchemas = isSchemaObject(schema.extensionConfigurationSchemas)
+      ? schema.extensionConfigurationSchemas
+      : {};
+    const accepted: Record<string, unknown> = Object.create(null);
+
+    for (const extensionName of Object.keys(extensionSchemas)) {
+      const owner = extensionSchemaOwners[extensionName];
+
+      if (owner) {
+        reportSchemaProblem(
+          `The configuration schema ${esmName} defines for extension '${extensionName}' was ignored, because ` +
+            `${owner} already defines one for that name. If two frontend modules define extensions with the same ` +
+            `name, one of them will be configured with the other's schema.`,
+        );
+        continue;
+      }
+
+      if (!isSchemaObject(extensionSchemas[extensionName])) {
+        reportSchemaProblem(
+          `The configuration schema ${esmName} defines for extension '${extensionName}' is not an object, so it ` +
+            `was left out of the routes registry.`,
+        );
+        continue;
+      }
+
+      extensionSchemaOwners[extensionName] = esmName;
+      accepted[extensionName] = extensionSchemas[extensionName];
+    }
+
+    if (Object.keys(accepted).length > 0) {
+      routes[esmName]['extensionConfigurationSchemas'] = accepted;
+    }
+  }
+
+  // Reported together so that one run names everything that has to be fixed.
+  if (entrypointErrors.length > 0 || schemaErrors.length > 0) {
+    const reasons = [
+      entrypointErrors.length > 0 &&
+        `The following entrypoints could not be found or their routes could not be processed. Pass ` +
+          `--no-ensure-entrypoints to downgrade these to warnings.\n\n${entrypointErrors.join('\n\n')}`,
+      schemaErrors.length > 0 &&
+        `The following configuration schemas could not be processed. Pass --no-strict-schemas to ` +
+          `downgrade these to warnings.\n\n${schemaErrors.join('\n\n')}`,
+    ].filter(Boolean);
+
+    throw new Error(`Assemble failed.\n\n${reasons.join('\n\n')}`);
   }
 
   await writeFile(

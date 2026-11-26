@@ -42,18 +42,18 @@ beforeEach(() => {
   vi.mocked(mergeImportmapAndRoutes).mockResolvedValue({
     importMap: { type: 'inline', value: '{"imports":{}}' },
     routes: { type: 'inline', value: '{}' },
-    watchedRoutesPaths: {},
+    watchedApps: {},
   });
   vi.mocked(proxyImportmapAndRoutes).mockReturnValue({
     importmap: { type: 'inline', value: '{"imports":{}}' },
     routes: { type: 'inline', value: '{}' },
-    watchedRoutesPaths: {},
+    watchedApps: {},
   });
   vi.mocked(resolvePackages).mockResolvedValue([]);
   vi.mocked(runProject).mockResolvedValue({
     importMap: {},
     routes: {},
-    watchedRoutesPaths: {},
+    watchedApps: {},
   });
   vi.mocked(trimEnd).mockImplementation((str: string, char: string) => {
     while (str.endsWith(char)) {
