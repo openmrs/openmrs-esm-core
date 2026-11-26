@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { extractVariableNames } from './extractor';
 
+const allowDigitLeadingIdentifiers = { allowDigitLeadingIdentifiers: true };
+
 describe('OpenMRS Expression Extractor', () => {
   it('returns an empty list for expression lacking variables', () => {
     expect(extractVariableNames('1 + 1')).toEqual([]);
@@ -65,6 +67,37 @@ describe('OpenMRS Expression Extractor', () => {
 
   it('only binds arrow function parameters within the arrow function body', () => {
     expect(extractVariableNames('a.map(x => x) + x')).toEqual(['a', 'x']);
+  });
+
+  it('extracts identifiers that start with a digit when enabled', () => {
+    expect(extractVariableNames("1stVisit === 'yes'", allowDigitLeadingIdentifiers)).toEqual(['1stVisit']);
+    expect(extractVariableNames('1stVisit.length', allowDigitLeadingIdentifiers)).toEqual(['1stVisit']);
+    expect(extractVariableNames('f(1stVisit)', allowDigitLeadingIdentifiers)).toEqual(['f', '1stVisit']);
+    expect(extractVariableNames('-2ndDose', allowDigitLeadingIdentifiers)).toEqual(['2ndDose']);
+    // the extractor visits a ternary's consequent before its test
+    expect(extractVariableNames('x ? 1stVisit : 2ndDose', allowDigitLeadingIdentifiers)).toEqual([
+      '1stVisit',
+      'x',
+      '2ndDose',
+    ]);
+    expect(extractVariableNames('`${3rdDose}`', allowDigitLeadingIdentifiers)).toEqual(['3rdDose']);
+    // `1e` only looks like a number when `-2ndDose` follows it
+    expect(extractVariableNames('1e-2ndDose', allowDigitLeadingIdentifiers)).toEqual(['1e', '2ndDose']);
+  });
+
+  it('rejects identifiers that start with a digit by default', () => {
+    expect(() => extractVariableNames('1stVisit')).toThrow(/Variable names cannot start with a number/);
+  });
+
+  it('treats numeric literals as literals, not variables', () => {
+    expect(extractVariableNames('5e-1 + 1.5E+2 + 0x10 + 0b11 + 1_000 + .5 + 08')).toEqual([]);
+  });
+
+  it('leaves string, template and regex literal contents alone', () => {
+    expect(extractVariableNames("'1st'")).toEqual([]);
+    expect(extractVariableNames('`1st`')).toEqual([]);
+    expect(extractVariableNames('/1st/.test(a)')).toEqual(['a']);
+    expect(extractVariableNames('$1stVisit')).toEqual(['$1stVisit']);
   });
 
   it('supports real-world use-cases', () => {
