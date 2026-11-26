@@ -1,9 +1,10 @@
-import React, { forwardRef, useId, useMemo } from 'react';
+import React, { forwardRef, useContext, useEffect, useId, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import {
   Button,
   DateInput,
   DateRangePicker,
+  DateRangePickerStateContext,
   type DateRangePickerProps,
   FieldError,
   Label,
@@ -104,6 +105,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar, true), [rawMaxDate, calendar]);
     const isInvalid = useMemo(() => invalid || isInvalidRaw, [invalid, isInvalidRaw]);
 
+    const lastUserValue = useRef<DateRange | null | undefined>(value);
     const innerOnChange = useMemo(() => {
       if (onChangeRaw && onChange) {
         console.error(
@@ -111,11 +113,14 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
         );
       }
 
-      return (
+      const handleChange =
         onChangeRaw ??
         ((range: DateRange | null) =>
-          onChange?.([internationalizedDateToDate(range?.start), internationalizedDateToDate(range?.end)]))
-      );
+          onChange?.([internationalizedDateToDate(range?.start), internationalizedDateToDate(range?.end)]));
+      return (range: DateRange | null) => {
+        lastUserValue.current = range;
+        handleChange(range);
+      };
     }, [onChangeRaw, onChange]);
 
     return (
@@ -139,6 +144,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
               {...dateRangePickerProps}
               onChange={innerOnChange}
             >
+              <ValidateOutsideValueChange value={value} lastUserValue={lastUserValue} />
               <div className="cds--date-picker-container">
                 {hasVisibleLabel && (
                   <Label className={classNames('cds--label', { 'cds--label--disabled': isDisabled })} htmlFor={id}>
@@ -200,3 +206,34 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
     );
   },
 );
+
+/**
+ * React Aria updates the validation message only when the user edits the date range. When the `value` prop changes
+ * to a range the user did not enter here, validate it again so the message does not describe the previous range.
+ */
+function ValidateOutsideValueChange({
+  value,
+  lastUserValue,
+}: {
+  value: DateRange | null | undefined;
+  lastUserValue: React.RefObject<DateRange | null | undefined>;
+}) {
+  const state = useContext(DateRangePickerStateContext);
+  const previousValue = useRef(value);
+
+  useEffect(() => {
+    if (isSameRange(value, previousValue.current)) {
+      return;
+    }
+    previousValue.current = value;
+    if (!isSameRange(value, lastUserValue.current)) {
+      state?.commitValidation();
+    }
+  }, [state, value, lastUserValue]);
+
+  return null;
+}
+
+function isSameRange(a: DateRange | null | undefined, b: DateRange | null | undefined) {
+  return a?.start?.toString() === b?.start?.toString() && a?.end?.toString() === b?.end?.toString();
+}
