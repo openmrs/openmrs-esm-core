@@ -49,11 +49,6 @@ a.cds--side-nav__link--current::before,
   background-color: var(--brand-01);
 }
 
-a.cds--side-nav__link:focus,
-.cds--side-nav__submenu:focus {
-  outline-color: var(--brand-03);
-}
-
 /* Tooltip */
 .cds--tooltip--definition .cds--tooltip__trigger {
   border-bottom: none;
@@ -217,11 +212,6 @@ a.cds--side-nav__link:focus,
   box-shadow: inset 3px 0 0 0 var(--brand-03);
 }
 
-.cds--tabs .cds--tabs__nav-link:focus,
-.cds--tabs .cds--tabs__nav-link:active {
-  outline-color: var(--brand-03);
-}
-
 /* DataTables */
 .cds--data-table {
   td,
@@ -306,11 +296,6 @@ a.cds--side-nav__link:focus,
 
 .cds--btn--tertiary {
   @include brand-03(color);
-}
-
-.cds--btn--tertiary,
-.cds--btn--primary:not(:where(.cds--copy-btn)):focus,
-.cds--btn--tertiary:focus {
   @include brand-03(border-color);
 }
 
