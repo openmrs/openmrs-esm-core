@@ -8,15 +8,20 @@
  */
 const svgContainer = document.createElement('div');
 const appendContainer = () => {
-  document.body.appendChild(svgContainer);
+  if (!svgContainer.isConnected) {
+    document.body.appendChild(svgContainer);
+  }
 };
 svgContainer.id = 'omrs-svgs-container';
 svgContainer.style.display = 'none';
 
-if (document.readyState === 'complete') {
+// Attach the container as soon as there is a body to attach it to. Waiting for the
+// window `load` event leaves components that mount earlier (e.g. on a hard reload)
+// unable to find any icon, since `<use href>` and `getElementById` only see the document.
+if (document.body) {
   appendContainer();
 } else {
-  window.addEventListener('load', appendContainer);
+  document.addEventListener('DOMContentLoaded', appendContainer);
 }
 
 const queue: Array<{ id: string; svg: string }> = [];

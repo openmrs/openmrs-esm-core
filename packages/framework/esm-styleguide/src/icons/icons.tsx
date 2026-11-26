@@ -1,5 +1,5 @@
 /** @category Icons */
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import classNames, { type Argument } from 'classnames';
 import { RenderIfValueIsTruthy } from '@openmrs/esm-react-utils';
 import style from './icons.module.scss';
@@ -882,6 +882,12 @@ export const RadiologyIcon = ImageMedicalIcon;
  */
 export const ShoppingCartAddItemIcon = ShoppingCartArrowDownIcon;
 
+const svgContainerId = 'omrs-svgs-container';
+
+function isIconAvailable(icon: string | undefined) {
+  return Boolean(icon && document.getElementById(icon));
+}
+
 /**
  * This is a utility component that takes an `icon` and renders it if the sprite for the icon
  * is available. The goal is to make it easier to conditionally render configuration-specified icons.
@@ -896,28 +902,39 @@ export const MaybeIcon = memo(
     { icon, fallback, ...iconProps },
     ref,
   ) {
-    const iconRef = useRef(icon ? document.getElementById(icon) : undefined);
+    const [iconAvailable, setIconAvailable] = useState(() => isIconAvailable(icon));
 
     useEffect(() => {
-      const container = document.getElementById('omrs-svgs-container');
-      const callback: MutationCallback = (mutationList) => {
-        for (const mutation of mutationList) {
-          if (mutation.type === 'childList') {
-            iconRef.current = icon ? document.getElementById(icon) : undefined;
-          }
+      const update = () => setIconAvailable(isIconAvailable(icon));
+      update();
+
+      // The sprite container may not be in the document yet, and the icon may be added to it
+      // after this component mounts. Watch the body until the container appears, then watch
+      // the container, re-rendering whenever the icon's availability changes.
+      let containerObserved = false;
+      const observer = new MutationObserver(() => {
+        update();
+        observeContainer();
+      });
+      const observeContainer = () => {
+        const container = document.getElementById(svgContainerId);
+        if (container && !containerObserved) {
+          containerObserved = true;
+          observer.disconnect();
+          observer.observe(container, { childList: true });
         }
       };
 
-      const observer = new MutationObserver(callback);
-      if (container) {
-        observer.observe(container, { childList: true });
+      observeContainer();
+      if (!containerObserved && document.body) {
+        observer.observe(document.body, { childList: true });
       }
 
       return () => observer.disconnect();
     }, [icon]);
 
     return (
-      <RenderIfValueIsTruthy value={iconRef.current} fallback={fallback}>
+      <RenderIfValueIsTruthy value={iconAvailable} fallback={fallback}>
         <Icon ref={ref} icon={icon as IconId} iconProps={iconProps} />
       </RenderIfValueIsTruthy>
     );
