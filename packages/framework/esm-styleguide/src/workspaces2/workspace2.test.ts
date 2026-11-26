@@ -340,7 +340,7 @@ describe('getOpenedWindowWidth', () => {
 
 describe('launchWorkspace2', () => {
   const groups = {
-    'test-group': { name: 'test-group', persistence: 'persistent', moduleName: 'test' },
+    'test-group': { name: 'test-group', moduleName: 'test' },
   };
   const windows = {
     'test-window': { name: 'test-window', group: 'test-group', moduleName: 'test' },
@@ -348,14 +348,14 @@ describe('launchWorkspace2', () => {
   };
 
   beforeEach(() => {
-    workspace2Store.setState({
-      registeredGroupsByName: groups,
-      registeredWindowsByName: windows,
-      registeredWorkspacesByName,
-      openedGroup: { groupName: 'test-group', props: null },
-      openedWindows: [makeOpenedWindow(['parent-workspace'])],
-      isMostRecentlyOpenedWindowHidden: false,
-    } as never);
+    workspace2Store.setState(
+      makeState({
+        registeredGroupsByName: groups,
+        registeredWindowsByName: windows,
+        openedGroup: { groupName: 'test-group', props: null },
+        openedWindows: [makeOpenedWindow(['parent-workspace'])],
+      }),
+    );
   });
 
   it('replaces the workspaces of an open window instead of adding a duplicate window when the workspace is not in it', async () => {
@@ -364,6 +364,19 @@ describe('launchWorkspace2', () => {
 
     expect(launched).toBe(true);
     const { openedWindows } = workspace2Store.getState();
+    expect(openedWindows).toHaveLength(1);
+    expect(openedWindows[0].windowName).toBe('test-window');
+    expect(openedWindows[0].openedWorkspaces.map((w) => w.workspaceName)).toEqual(['child-workspace']);
+  });
+
+  it("preserves the caller's group props when replacing a workspace in a group with null props", async () => {
+    const groupProps = { visitUuid: 'test-visit' };
+
+    const launched = await launchWorkspace2('child-workspace', {}, null, groupProps);
+
+    expect(launched).toBe(true);
+    const { openedGroup, openedWindows } = workspace2Store.getState();
+    expect(openedGroup).toEqual({ groupName: 'test-group', props: groupProps });
     expect(openedWindows).toHaveLength(1);
     expect(openedWindows[0].windowName).toBe('test-window');
     expect(openedWindows[0].openedWorkspaces.map((w) => w.workspaceName)).toEqual(['child-workspace']);

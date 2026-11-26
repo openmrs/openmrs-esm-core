@@ -194,7 +194,6 @@ export async function launchWorkspace2<
     }
   } else if (isWindowAlreadyOpened) {
     const openedWindow = storeState.openedWindows[openedWindowIndex];
-    const groupProps = storeState.openedGroup?.props ?? {};
     const isMostRecentlyOpenedWindowHidden = storeState.isMostRecentlyOpenedWindowHidden;
     const { openedWorkspaces } = openedWindow;
 
@@ -255,7 +254,7 @@ export async function launchWorkspace2<
           ...storeState,
           openedGroup: {
             groupName: groupDef.name,
-            props: groupProps ?? storeState?.openedGroup?.props,
+            props: groupProps ?? storeState?.openedGroup?.props ?? null,
           },
           openedWindows: [
             ...storeState.openedWindows.filter((_, i) => i !== openedWindowIndex),
