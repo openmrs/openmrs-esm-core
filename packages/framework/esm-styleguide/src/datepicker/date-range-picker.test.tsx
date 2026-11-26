@@ -336,6 +336,7 @@ describe('OpenmrsDateRangePicker', () => {
         .forEach((digit) =>
           fireEvent(endDay, new InputEvent('beforeinput', { data: digit, inputType: 'insertText', bubbles: true })),
         );
+      expect(screen.queryByText(/start date must be before end date/i)).not.toBeInTheDocument();
       act(() => setRangeButton.focus());
       expect(screen.getByLabelText('datepicker')).toHaveTextContent('10/06/2025–02/06/2025');
       expect(await screen.findByText(/start date must be before end date/i)).toBeInTheDocument();
