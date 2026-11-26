@@ -105,7 +105,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar, true), [rawMaxDate, calendar]);
     const isInvalid = useMemo(() => invalid || isInvalidRaw, [invalid, isInvalidRaw]);
 
-    const lastUserValue = useRef<DateRange | null | undefined>(value);
+    const lastUserValue = useRef<{ value: DateRange | null } | null>(null);
     const innerOnChange = useMemo(() => {
       if (onChangeRaw && onChange) {
         console.error(
@@ -118,7 +118,7 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
         ((range: DateRange | null) =>
           onChange?.([internationalizedDateToDate(range?.start), internationalizedDateToDate(range?.end)]));
       return (range: DateRange | null) => {
-        lastUserValue.current = range;
+        lastUserValue.current = { value: range };
         handleChange(range);
       };
     }, [onChangeRaw, onChange]);
@@ -210,13 +210,14 @@ export const OpenmrsDateRangePicker = /*#__PURE__*/ forwardRef<HTMLDivElement, O
 /**
  * React Aria updates the validation message only when the user edits the date range. When the `value` prop changes
  * to a range the user did not enter here, validate it again so the message does not describe the previous range.
+ * The range the user last entered only matches the next change, which is the parent passing it back as `value`.
  */
 function ValidateOutsideValueChange({
   value,
   lastUserValue,
 }: {
   value: DateRange | null | undefined;
-  lastUserValue: React.RefObject<DateRange | null | undefined>;
+  lastUserValue: React.MutableRefObject<{ value: DateRange | null } | null>;
 }) {
   const state = useContext(DateRangePickerStateContext);
   const previousValue = useRef(value);
@@ -226,7 +227,9 @@ function ValidateOutsideValueChange({
       return;
     }
     previousValue.current = value;
-    if (!isSameRange(value, lastUserValue.current)) {
+    const userValue = lastUserValue.current;
+    lastUserValue.current = null;
+    if (!userValue || !isSameRange(value, userValue.value)) {
       state?.commitValidation();
     }
   }, [state, value, lastUserValue]);

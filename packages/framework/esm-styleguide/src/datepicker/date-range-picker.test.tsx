@@ -345,5 +345,36 @@ describe('OpenmrsDateRangePicker', () => {
       expect(screen.getByLabelText('datepicker')).toHaveTextContent('10/06/2025–20/06/2025');
       expect(screen.queryByText(/start date must be before end date/i)).not.toBeInTheDocument();
     });
+
+    it('should clear the validation message when the starting range is restored from outside', async () => {
+      function ControlledDateRangePicker() {
+        const [range, setRange] = useState<[Date | null, Date | null]>([new Date(2025, 5, 10), new Date(2025, 5, 15)]);
+        return (
+          <>
+            <OpenmrsDateRangePicker
+              aria-label="datepicker"
+              startName="start"
+              endName="end"
+              maxDate={new Date(2025, 11, 31)}
+              value={range}
+              onChange={(dates) => setRange([dates[0] ?? null, dates[1] ?? null])}
+            />
+            <button onClick={() => setRange([new Date(2025, 5, 10), new Date(2025, 5, 2)])}>Set invalid range</button>
+            <button onClick={() => setRange([new Date(2025, 5, 10), new Date(2025, 5, 15)])}>Restore range</button>
+          </>
+        );
+      }
+      render(<ControlledDateRangePicker />);
+
+      fireEvent.click(screen.getByRole('button', { name: 'Set invalid range' }));
+
+      expect(screen.getByLabelText('datepicker')).toHaveTextContent('10/06/2025–02/06/2025');
+      expect(await screen.findByText(/start date must be before end date/i)).toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Restore range' }));
+
+      expect(screen.getByLabelText('datepicker')).toHaveTextContent('10/06/2025–15/06/2025');
+      expect(screen.queryByText(/start date must be before end date/i)).not.toBeInTheDocument();
+    });
   });
 });
