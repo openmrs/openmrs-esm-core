@@ -57,7 +57,7 @@ const HeaderItems: React.FC = () => {
             isActive={isActivePanel('sideMenu')}
           />
         )}
-        <ConfigurableLink to={config.logo.link}>
+        <ConfigurableLink className={styles.logoLink} to={config.logo.link}>
           <div className={classNames({ [styles.spacedLogo]: !showHamburger })}>
             <Logo />
           </div>

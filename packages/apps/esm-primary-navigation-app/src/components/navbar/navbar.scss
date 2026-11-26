@@ -37,6 +37,12 @@
   margin-inline-start: layout.$spacing-05;
 }
 
+// Match the focus ring on the header actions.
+.logoLink:focus {
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
+
 .versionText {
   @include type.type-style(label-02);
   color: themes.$text-on-color;
