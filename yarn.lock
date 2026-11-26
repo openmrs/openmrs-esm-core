@@ -9874,12 +9874,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ejs@npm:5.0.1":
-  version: 5.0.1
-  resolution: "ejs@npm:5.0.1"
+"ejs@npm:7.0.2":
+  version: 7.0.2
+  resolution: "ejs@npm:7.0.2"
   bin:
     ejs: bin/cli.js
-  checksum: 10/72b0476020930ba11446f24b5f5ecb282b2419b2fbefc5be03b8b29e4618a0d4bfbf1a9daf2f58eb5319d7e51b6c914d74c7a44bf3a121ed093ada99b231407a
+  checksum: 10/98db48445b0e6dc2a779f6dad9572fcce6e82901432635b4b436c4f1d23445c0b265959b379669b2d1909cf0c89a0bbd541ccb8e5f048202e2e960613e11b166
   languageName: node
   linkType: hard
 
@@ -14756,7 +14756,7 @@ __metadata:
     cross-env: "npm:^10.1.0"
     css-loader: "npm:5.2.7"
     css-minimizer-webpack-plugin: "npm:7.0.2"
-    ejs: "npm:5.0.1"
+    ejs: "npm:7.0.2"
     glob: "npm:13.0.6"
     html-webpack-plugin: "npm:5.6.6"
     html-webpack-tags-plugin: "npm:3.0.2"
