@@ -1718,6 +1718,48 @@ describe('translation overrides', () => {
     expect(config).resolves.toStrictEqual({ corges: true });
     expect(console.error).not.toHaveBeenCalled();
   });
+
+  it('accepts language codes in the form i18next looks them up by', async () => {
+    console.error = vi.fn();
+    Config.defineConfigSchema('grault-module', {});
+    Config.registerModuleLoad('grault-module');
+    Config.provide({
+      'grault-module': {
+        'Translation overrides': {
+          fr: { save: 'Enregistrer' },
+          'pt-BR': { save: 'Salvar' },
+          'es-419': { save: 'Guardar' },
+          'zh-Hant': { save: '儲存' },
+          // i18next uses a bare language code as it is given, even a deprecated one
+          iw: { save: 'שמור' },
+        },
+      },
+    });
+    await Config.getConfig('grault-module');
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('logs an error for language codes that i18next never looks up', async () => {
+    console.error = vi.fn();
+    Config.defineConfigSchema('garply-module', {});
+    Config.registerModuleLoad('garply-module');
+    Config.provide({
+      'garply-module': {
+        'Translation overrides': {
+          fr: { save: 'Enregistrer' },
+          es_419: { save: 'Guardar' },
+          'sw-ke': { save: 'Hifadhi' },
+          EN: { save: 'Save' },
+          // i18next looks this up as he-IL
+          'iw-IL': { save: 'שמור' },
+        },
+      },
+    });
+    await Config.getConfig('garply-module');
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/Translation overrides.*do not conform: es_419, sw-ke, EN, iw-IL\.$/),
+    );
+  });
 });
 
 describe('promise-based config accessors', () => {

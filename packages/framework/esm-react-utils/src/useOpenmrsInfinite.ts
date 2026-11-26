@@ -21,6 +21,7 @@ export interface UseServerInfiniteOptions<R> {
    */
   immutable?: boolean;
 
+  /** Pages depend on the preceding response's next link, so parallel mode is always disabled. */
   swrInfiniteConfig?: SWRInfiniteConfiguration;
 }
 
@@ -97,17 +98,26 @@ export interface UseServerInfiniteReturnObject<T, R> {
  * @returns a UseServerInfiniteReturnObject object
  */
 export function useOpenmrsInfinite<T>(
-  url: string | URL,
+  url: string | URL | null,
   options: UseServerInfiniteOptions<OpenMRSPaginatedResponse<T>> = {},
 ): UseServerInfiniteReturnObject<T, OpenMRSPaginatedResponse<T>> {
   return useServerInfinite<T, OpenMRSPaginatedResponse<T>>(url, openmrsServerPaginationHandlers, options);
 }
 
 export function useServerInfinite<T, R>(
-  url: string | URL,
+  url: string | URL | null,
   serverPaginationHandlers: ServerPaginationHandlers<T, R>,
   options: UseServerInfiniteOptions<R> = {},
 ): UseServerInfiniteReturnObject<T, R> {
+  return useServerInfiniteInternal(url, serverPaginationHandlers, options).response;
+}
+
+/** @internal Provides an awaitable page load for coordinating fetch-all consumers. */
+export function useServerInfiniteInternal<T, R>(
+  url: string | URL | null,
+  serverPaginationHandlers: ServerPaginationHandlers<T, R>,
+  options: UseServerInfiniteOptions<R> = {},
+) {
   const { swrInfiniteConfig, immutable } = options;
   const { getNextUrl, getTotalCount, getData } = serverPaginationHandlers;
   const fetcher: (key: string) => Promise<FetchResponse<R>> = options.fetcher ?? openmrsFetch;
@@ -119,11 +129,14 @@ export function useServerInfinite<T, R>(
         return serverPaginationHandlers.getNextUrl(previousPageData.data);
       }
     },
-    [url],
+    [url, serverPaginationHandlers],
   );
 
   const { data, size, setSize, ...rest } = useSWRInfinite<FetchResponse<R>>(getKey, fetcher, {
     ...swrInfiniteConfig,
+    // These endpoints supply the next URL in the preceding response. SWR's
+    // parallel mode passes null as previousPageData and cannot follow that chain.
+    parallel: false,
     // `useSWR` has a useSWRImmutable counterpart, but `useSWRInfinite` does not seem to.
     // Setting the revalidate params manually if immutable is true, see: https://swr.vercel.app/docs/revalidation
     ...(immutable
@@ -134,20 +147,27 @@ export function useServerInfinite<T, R>(
         }
       : {}),
   });
-  const nextUri = getNextUrl(data?.[data.length - 1].data);
+  const nextUri = getNextUrl(data?.[data.length - 1]?.data);
 
   const hasMore = nextUri != null;
-  const loadMore = () => {
-    setSize((data?.length ?? 0) + 1);
-  };
+  const loadMoreAsync = useCallback(() => {
+    return setSize((data?.length ?? 0) + 1);
+  }, [data?.length, setSize]);
+  const loadMore = useCallback(() => {
+    void loadMoreAsync();
+  }, [loadMoreAsync]);
   const totalCount = getTotalCount(data?.[0]?.data);
 
   return {
-    data: data?.flatMap((d) => getData(d.data) as T[]),
-    totalCount,
-    hasMore,
-    loadMore,
-    nextUri,
-    ...rest,
+    response: {
+      data: data?.flatMap((d) => getData(d.data) ?? []),
+      totalCount,
+      hasMore,
+      loadMore,
+      nextUri,
+      ...rest,
+    },
+    loadMoreAsync,
+    pages: data,
   };
 }
