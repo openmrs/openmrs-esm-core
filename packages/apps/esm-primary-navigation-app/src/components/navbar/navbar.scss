@@ -33,14 +33,30 @@
   margin-inline-end: layout.$spacing-02;
 }
 
+// With the link's own padding, this keeps the logo 16px from the edge of the header.
 .spacedLogo {
-  margin-inline-start: layout.$spacing-05;
+  margin-inline-start: layout.$spacing-03;
 }
 
-// Match the focus ring on the header actions.
-.logoLink:focus {
-  outline: 2px solid white;
-  outline-offset: -2px;
+// Fill the header height and centre the logo, so the focus ring matches the header actions.
+// The padding keeps the ring clear of logos that run edge to edge, such as an image or a name.
+.logoLink {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-inline: layout.$spacing-03;
+  color: themes.$text-on-color;
+  text-decoration: none;
+
+  // An inline SVG leaves a gap below it for the text baseline, which would push the logo off centre.
+  svg {
+    display: block;
+  }
+
+  &:focus {
+    outline: 2px solid white;
+    outline-offset: -2px;
+  }
 }
 
 .versionText {
