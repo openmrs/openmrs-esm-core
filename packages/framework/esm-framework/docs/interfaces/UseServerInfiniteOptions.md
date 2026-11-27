@@ -52,4 +52,6 @@ This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
 
 > `optional` **swrInfiniteConfig?**: `SWRInfiniteConfiguration`\<`any`, `any`, `BareFetcher`\<`any`\>\>
 
-Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L24)
+Defined in: [packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L25)
+
+Pages depend on the preceding response's next link, so parallel mode is always disabled.

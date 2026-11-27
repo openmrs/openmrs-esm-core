@@ -18206,11 +18206,11 @@ __metadata:
   linkType: hard
 
 "sync-child-process@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "sync-child-process@npm:1.0.2"
+  version: 1.1.1
+  resolution: "sync-child-process@npm:1.1.1"
   dependencies:
     sync-message-port: "npm:^1.0.0"
-  checksum: 10/6fbdbb7b6f5730a1966d6a77cdbfe7f5cb8d1a582dab955c62c32b56dc6c432ccdbfc68027265486f8f4b1a998cc4d7ee21856e8125748bef70b8874aaedb21c
+  checksum: 10/568497817907375d780dddda045e72448f56283b89c42eb8cf6f17f94b8c02992ae44f22cc6cc1111970475b8faddcaf7dfa40e620152e63891404c5ecba3247
   languageName: node
   linkType: hard
 

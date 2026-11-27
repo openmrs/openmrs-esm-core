@@ -1,5 +1,5 @@
 /** @module @category API */
-import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
+import { openmrsFetch, openmrsFetchAll, restBaseUrl } from '@openmrs/esm-api';
 import { type VisitType } from './types';
 
 export function toVisitTypeObject(openmrsRestForm: any): VisitType {
@@ -28,5 +28,5 @@ export const visitTypesUrl = `${restBaseUrl}/visittype`;
  * ```
  */
 export function getVisitTypes(url: string = visitTypesUrl): Promise<Array<VisitType>> {
-  return openmrsFetch<{ results: Array<any> }>(url).then((response) => response.data.results.map(toVisitTypeObject));
+  return openmrsFetchAll(url, openmrsFetch).then((response) => response.data.results.map(toVisitTypeObject));
 }
