@@ -1,5 +1,6 @@
 @use '@carbon/colors';
 @use '@carbon/layout';
+@use '@carbon/styles/scss/theme';
 @use 'vars' as *;
 
 /* UI Shell Header */
@@ -135,6 +136,16 @@ a.cds--side-nav__link:focus,
     &::after {
       background-color: colors.$blue-10;
       box-shadow: none !important;
+    }
+
+    // Arrow keys move the selection, so keyboard focus is always on the selected button.
+    // The border and an inset shadow draw the ring, so it follows the button's corners.
+    // The container class outweighs the first and last child box-shadow resets below.
+    .cds--content-switcher &:focus {
+      border-color: theme.$focus !important;
+      box-shadow:
+        inset 0 0 0 1px theme.$focus,
+        inset 0 0 0 2px theme.$focus-inset !important;
     }
 
     &::before {
