@@ -49,6 +49,16 @@ describe('openmrsFetchAll', () => {
     }
   });
 
+  it('keeps later pages on the host an absolute first URL names', async () => {
+    const fetcher = vi
+      .fn()
+      .mockResolvedValueOnce(page([1], 'http://backend:8080/openmrs/ws/rest/v1/example?startIndex=1'))
+      .mockResolvedValueOnce(page([2]));
+    const result = await openmrsFetchAll<number>('https://proxy.example.test/openmrs/ws/rest/v1/example', fetcher);
+    expect(result.data.results).toEqual([1, 2]);
+    expect(fetcher).toHaveBeenNthCalledWith(2, 'https://proxy.example.test/openmrs/ws/rest/v1/example?startIndex=1');
+  });
+
   it('follows a next link outside the OpenMRS web services path as the server gave it', async () => {
     const fetcher = vi
       .fn()

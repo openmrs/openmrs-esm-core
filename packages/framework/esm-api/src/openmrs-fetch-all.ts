@@ -25,7 +25,7 @@ export async function openmrsFetchAll<T>(
   const results = [...firstResponse.data.results];
   const visited = new Set<string>();
   let page = firstResponse.data;
-  // Request later pages from the first page's origin.
+  // An absolute first URL can name a host other than openmrsBase; keep later pages on it.
   const { origin } = new URL(makeUrl(url), window.location.href);
 
   while (true) {
