@@ -23,7 +23,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 function server(kind: 'rest' | 'fhir', total = 5, pageSize = 2) {
   let revision = 1;
   const fetcher = vi.fn(async (url: string) => {
-    const parsed = new URL(url, window.location.href);
+    const parsed = new URL(url.startsWith('http') ? url : window.openmrsBase + url, window.location.href);
     const offset = Number(parsed.searchParams.get(kind === 'rest' ? 'startIndex' : '_getpagesoffset') ?? 0);
     // Deliberately return fewer results than the requested size: the next link,
     // not the requested size or total, must determine where to continue.

@@ -1,5 +1,5 @@
 /** @module @category UI */
-import { type FetchResponse, makeUrl, openmrsFetch } from '@openmrs/esm-api';
+import { type FetchResponse, makeUrl, openmrsFetch, toApiOrigin } from '@openmrs/esm-api';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useSWR, { type SWRConfiguration } from 'swr';
 import useSWRImmutable from 'swr/immutable';
@@ -79,18 +79,7 @@ export const openmrsServerPaginationHandlers: OpenmrsServerPaginationHandlers<an
   },
   getNextUrl: (response) => {
     const uri = response?.links?.find((link) => link.rel == 'next')?.uri;
-    if (uri) {
-      const url = new URL(uri);
-
-      // allows frontend proxies to work
-      url.protocol = window.location.protocol;
-      url.host = window.location.host;
-      url.port = window.location.port;
-
-      return url.toString();
-    } else {
-      return null;
-    }
+    return uri ? toApiOrigin(uri) : null;
   },
   getTotalCount: (response) => response?.totalCount ?? Number.NaN,
   getCurrentPageSize: (response) => response?.results?.length ?? Number.NaN,

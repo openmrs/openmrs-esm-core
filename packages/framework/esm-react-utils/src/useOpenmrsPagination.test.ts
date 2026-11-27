@@ -1,6 +1,10 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
-import { useOpenmrsPagination, type OpenMRSPaginatedResponse } from './useOpenmrsPagination';
+import {
+  openmrsServerPaginationHandlers,
+  useOpenmrsPagination,
+  type OpenMRSPaginatedResponse,
+} from './useOpenmrsPagination';
 
 // returns an sequentially increasing int array of specified length starting at the specified start integer.
 export function getIntArray(start: number, length: number) {
@@ -429,5 +433,54 @@ describe('useOpenmrsPagination', () => {
 
       warn.mockRestore();
     });
+  });
+});
+
+describe('openmrsServerPaginationHandlers.getNextUrl', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  const response = (uri: string): OpenMRSPaginatedResponse<unknown> => ({
+    results: [],
+    links: [{ rel: 'next', uri }],
+    totalCount: 0,
+  });
+  const nextUrl = (uri: string) => openmrsServerPaginationHandlers.getNextUrl(response(uri));
+
+  it('moves a next link from a backend port onto a page origin with no port', () => {
+    vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
+
+    expect(nextUrl('http://backend.example:8080/openmrs/ws/rest/v1/patient?limit=1&startIndex=1')).toBe(
+      'https://frontend.example/openmrs/ws/rest/v1/patient?limit=1&startIndex=1',
+    );
+  });
+
+  it("keeps the page's own port", () => {
+    vi.stubGlobal('location', new URL('http://localhost:8080/openmrs/spa/'));
+
+    expect(nextUrl('https://backend.example/openmrs/ws/rest/v1/patient?startIndex=1')).toBe(
+      'http://localhost:8080/openmrs/ws/rest/v1/patient?startIndex=1',
+    );
+  });
+
+  it('moves a next link onto a remote API origin', () => {
+    vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
+    vi.stubGlobal('openmrsBase', 'https://api.example/openmrs');
+
+    expect(nextUrl('http://backend.example:8080/openmrs/ws/rest/v1/patient?startIndex=1')).toBe(
+      'https://api.example/openmrs/ws/rest/v1/patient?startIndex=1',
+    );
+  });
+
+  it('leaves a link outside the OpenMRS web services path unchanged', () => {
+    vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
+
+    expect(nextUrl('https://other.example:8443/search?page=2')).toBe('https://other.example:8443/search?page=2');
+    expect(nextUrl('http://backend.example:8080//openmrs/ws/rest/v1/patient?startIndex=1')).toBe(
+      'http://backend.example:8080//openmrs/ws/rest/v1/patient?startIndex=1',
+    );
+  });
+
+  it('returns null without a next link', () => {
+    expect(openmrsServerPaginationHandlers.getNextUrl({ results: [], links: [], totalCount: 0 })).toBeNull();
   });
 });

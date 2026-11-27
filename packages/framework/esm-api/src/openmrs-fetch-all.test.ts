@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { openmrsFetchAll } from './openmrs-fetch-all';
 
 function page(results: number[], next?: string) {
@@ -8,6 +8,10 @@ function page(results: number[], next?: string) {
 }
 
 describe('openmrsFetchAll', () => {
+  beforeEach(() => {
+    window.openmrsBase = '/openmrs';
+  });
+
   it('follows server links through short and empty pages without requiring a total', async () => {
     const first = page([1], 'http://backend:8080/openmrs/ws/rest/v1/example?limit=100&startIndex=1');
     const fetcher = vi
@@ -43,6 +47,38 @@ describe('openmrsFetchAll', () => {
     } finally {
       vi.unstubAllGlobals();
     }
+  });
+
+  it('keeps later pages on the host an absolute first URL names', async () => {
+    const fetcher = vi
+      .fn()
+      .mockResolvedValueOnce(page([1], 'http://backend:8080/openmrs/ws/rest/v1/example?startIndex=1'))
+      .mockResolvedValueOnce(page([2]));
+    const result = await openmrsFetchAll<number>('https://proxy.example.test/openmrs/ws/rest/v1/example', fetcher);
+    expect(result.data.results).toEqual([1, 2]);
+    expect(fetcher).toHaveBeenNthCalledWith(2, 'https://proxy.example.test/openmrs/ws/rest/v1/example?startIndex=1');
+  });
+
+  it('moves a next link under /openmrs/ws/ onto the frontend origin when openmrsBase is unset', async () => {
+    // @ts-expect-error Not normally deletable
+    delete window.openmrsBase;
+    const fetcher = vi
+      .fn()
+      .mockResolvedValueOnce(page([1], 'http://backend:8080/openmrs/ws/rest/v1/example?startIndex=1'))
+      .mockResolvedValueOnce(page([2]));
+    const result = await openmrsFetchAll<number>('/ws/rest/v1/example', fetcher);
+    expect(result.data.results).toEqual([1, 2]);
+    expect(fetcher).toHaveBeenNthCalledWith(2, `${window.location.origin}/openmrs/ws/rest/v1/example?startIndex=1`);
+  });
+
+  it('follows a next link outside the OpenMRS web services path as the server gave it', async () => {
+    const fetcher = vi
+      .fn()
+      .mockResolvedValueOnce(page([1], 'https://other.example:8443/search?page=2'))
+      .mockResolvedValueOnce(page([2]));
+    const result = await openmrsFetchAll<number>('/ws/rest/v1/example', fetcher);
+    expect(result.data.results).toEqual([1, 2]);
+    expect(fetcher).toHaveBeenNthCalledWith(2, 'https://other.example:8443/search?page=2');
   });
 
   it('does not make another request without a next link', async () => {

@@ -1,5 +1,5 @@
 /** @module @category UI */
-import { type FetchResponse, makeUrl, openmrsFetch } from '@openmrs/esm-api';
+import { type FetchResponse, makeUrl, openmrsFetch, toApiOrigin } from '@openmrs/esm-api';
 import {
   type ServerPaginationHandlers,
   useServerPagination,
@@ -47,18 +47,7 @@ export function getFhirServerPaginationHandlers<T>(): FhirServerPaginationHandle
     },
     getNextUrl: (response) => {
       const uri = response?.link?.find((link) => link.relation == 'next')?.url;
-      if (uri) {
-        const url = new URL(uri);
-
-        // allows frontend proxies to work
-        url.protocol = window.location.protocol;
-        url.host = window.location.host;
-        url.port = window.location.port;
-
-        return url.toString();
-      } else {
-        return null;
-      }
+      return uri ? toApiOrigin(uri) : null;
     },
     getTotalCount: (response) => response?.total ?? Number.NaN,
     getCurrentPageSize: (response) => response?.entry?.length ?? Number.NaN,
