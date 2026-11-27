@@ -369,11 +369,6 @@ a.cds--side-nav__link--current::before,
   }
 }
 
-.cds--pagination-nav__page .cds--pagination-nav__page--active,
-.cds--pagination-nav__page:focus {
-  outline: 2px solid var(--brand-03);
-}
-
 /* Data table overflow menu */
 .cds--data-table--xs .cds--overflow-menu {
   height: layout.$spacing-07;
