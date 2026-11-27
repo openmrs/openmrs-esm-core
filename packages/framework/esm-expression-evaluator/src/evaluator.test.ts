@@ -252,6 +252,12 @@ describe('OpenMRS Expression Evaluator', () => {
 
   it('should support string templates', () => {
     expect(evaluate('`${a.b}`', { a: { b: 'string' } })).toBe('string');
+    expect(evaluate('`plain text`')).toBe('plain text');
+    expect(evaluate('`Hello ${first} ${last}!`', { first: 'Jane', last: 'Doe' })).toBe('Hello Jane Doe!');
+    expect(evaluate('`${a}-${b}-${c}`', { a: 1, b: 2, c: 3 })).toBe('1-2-3');
+    expect(evaluate('`count=${n}, ok=${ok}, none=${empty}`', { n: 0, ok: false, empty: null })).toBe(
+      'count=0, ok=false, none=null',
+    );
   });
 
   it('should support new Date()', () => {
