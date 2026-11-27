@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { openmrsFetch } from '@openmrs/esm-api';
 import { getVisitTypes, visitTypesUrl } from './visit-type';
 
@@ -8,7 +8,11 @@ vi.mock('@openmrs/esm-api', async (importOriginal) => ({
 }));
 
 const fetcher = vi.mocked(openmrsFetch);
-beforeEach(() => fetcher.mockReset());
+beforeEach(() => {
+  fetcher.mockReset();
+  vi.stubGlobal('openmrsBase', '/openmrs');
+});
+afterEach(() => vi.unstubAllGlobals());
 
 describe('getVisitTypes', () => {
   it('returns every visit type while preserving the public mapped shape', async () => {
