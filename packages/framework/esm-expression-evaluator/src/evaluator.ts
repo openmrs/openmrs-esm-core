@@ -628,21 +628,11 @@ function visitTemplateLiteral(expression: TemplateLiteral, context: EvaluationCo
   const expressions: Array<unknown> = expression.expressions?.map(handleNullableExpression(context)) ?? [];
   const quasis: Array<{ tail: boolean; value: unknown }> =
     expression.quasis?.map(handleNullableExpression(context)) ?? [];
-  return (
-    quasis
-      .filter((q) => !q.tail)
-      .map((q) => q.value)
-      .join('') +
-    expressions.join('') +
-    quasis
-      .filter((q) => q.tail)
-      .map((q) => q.value)
-      .join('')
-  );
+  return quasis.map((q, idx) => `${q.value}${idx < expressions.length ? expressions[idx] : ''}`).join('');
 }
 
 function visitTemplateElement(expression: TemplateElement, context: EvaluationContext) {
-  return { value: expression.cooked, tail: expression.tail };
+  return { value: expression.value.cooked, tail: expression.tail };
 }
 
 function visitIdentifier(expression: jsep.Identifier, context: EvaluationContext) {
