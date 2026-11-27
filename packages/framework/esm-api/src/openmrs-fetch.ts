@@ -41,14 +41,15 @@ export function makeUrl(path: string) {
  * Moves a link the server returned, such as a next-page link, onto the origin OpenMRS is reached at (by
  * default that of `window.openmrsBase`). The backend can name an origin the browser cannot reach, such as
  * its own port behind a frontend proxy. A link whose path is not under the OpenMRS web services path is
- * returned unchanged, since it does not point at OpenMRS.
+ * returned unchanged, since it does not point at OpenMRS. When `window.openmrsBase` is unset, as in a test
+ * environment, the app shell's default base `/openmrs` is used.
  *
  * @param uri The absolute link from the server's response.
  * @param origin The origin to move the link onto. Defaults to the origin of `window.openmrsBase`.
  * @returns The link on `origin`, or `uri` unchanged when its path is not under `<openmrsBase>/ws/`.
  */
 export function toApiOrigin(uri: string, origin?: string): string {
-  const base = new URL(window.openmrsBase, window.location.href);
+  const base = new URL(window.openmrsBase ?? '/openmrs', window.location.href);
   const url = new URL(uri);
   if (!url.pathname.startsWith(`${base.pathname.replace(/\/+$/, '')}/ws/`)) {
     return uri;

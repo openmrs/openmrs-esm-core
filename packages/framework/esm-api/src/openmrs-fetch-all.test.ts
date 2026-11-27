@@ -59,6 +59,18 @@ describe('openmrsFetchAll', () => {
     expect(fetcher).toHaveBeenNthCalledWith(2, 'https://proxy.example.test/openmrs/ws/rest/v1/example?startIndex=1');
   });
 
+  it('moves a next link under /openmrs/ws/ onto the frontend origin when openmrsBase is unset', async () => {
+    // @ts-expect-error Not normally deletable
+    delete window.openmrsBase;
+    const fetcher = vi
+      .fn()
+      .mockResolvedValueOnce(page([1], 'http://backend:8080/openmrs/ws/rest/v1/example?startIndex=1'))
+      .mockResolvedValueOnce(page([2]));
+    const result = await openmrsFetchAll<number>('/ws/rest/v1/example', fetcher);
+    expect(result.data.results).toEqual([1, 2]);
+    expect(fetcher).toHaveBeenNthCalledWith(2, `${window.location.origin}/openmrs/ws/rest/v1/example?startIndex=1`);
+  });
+
   it('follows a next link outside the OpenMRS web services path as the server gave it', async () => {
     const fetcher = vi
       .fn()
