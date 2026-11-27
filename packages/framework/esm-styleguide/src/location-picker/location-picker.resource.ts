@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import useSwrImmutable from 'swr/immutable';
 import useSwrInfinite from 'swr/infinite';
-import { type FetchResponse, fhirBaseUrl, openmrsFetch, toPageOrigin } from '@openmrs/esm-api';
+import { type FetchResponse, fhirBaseUrl, openmrsFetch, toApiOrigin } from '@openmrs/esm-api';
 import { type FHIRLocationResource } from '@openmrs/esm-emr-api';
 import { useDebounce } from '@openmrs/esm-react-utils';
 
@@ -78,7 +78,7 @@ export function useLocations(locationTag?: string, count: number = 0, searchQuer
     if (prevPageData) {
       const nextLink = prevPageData.data?.link?.find((link) => link.relation === 'next');
 
-      return nextLink ? toPageOrigin(nextLink.url) : null;
+      return nextLink ? toApiOrigin(nextLink.url) : null;
     }
 
     let url = `${fhirBaseUrl}/Location?`;

@@ -16,7 +16,6 @@ import { useVisitContextStore as realUseVisitContextStore } from './src/useVisit
 import { usePagination as realUsePagination } from './src/usePagination';
 import { usePaginationInfo as realUsePaginationInfo } from './src/usePaginationInfo';
 export { ConfigurableLink } from './src/ConfigurableLink';
-export { getOpenmrsServerPaginationHandlers } from './src/useOpenmrsPagination';
 export { RenderIfValueIsTruthy } from './src/RenderIfValueIsTruthy';
 export { useStore, useStoreWithActions, createUseStore } from './src/useStore';
 import * as utils from '@openmrs/esm-utils';

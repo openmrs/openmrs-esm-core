@@ -1,7 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import {
-  getOpenmrsServerPaginationHandlers,
   openmrsServerPaginationHandlers,
   useOpenmrsPagination,
   type OpenMRSPaginatedResponse,
@@ -437,12 +436,15 @@ describe('useOpenmrsPagination', () => {
   });
 });
 
-describe('getOpenmrsServerPaginationHandlers', () => {
+describe('openmrsServerPaginationHandlers.getNextUrl', () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  const response = (uri: string) =>
-    ({ results: [], links: [{ rel: 'next', uri }] }) as OpenMRSPaginatedResponse<unknown>;
-  const nextUrl = (uri: string) => getOpenmrsServerPaginationHandlers().getNextUrl(response(uri));
+  const response = (uri: string): OpenMRSPaginatedResponse<unknown> => ({
+    results: [],
+    links: [{ rel: 'next', uri }],
+    totalCount: 0,
+  });
+  const nextUrl = (uri: string) => openmrsServerPaginationHandlers.getNextUrl(response(uri));
 
   it('moves a next link from a backend port onto a page origin with no port', () => {
     vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
@@ -460,27 +462,25 @@ describe('getOpenmrsServerPaginationHandlers', () => {
     );
   });
 
-  it('keeps a path that starts with two slashes on the page host', () => {
+  it('moves a next link onto a remote API origin', () => {
+    vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
+    vi.stubGlobal('openmrsBase', 'https://api.example/openmrs');
+
+    expect(nextUrl('http://backend.example:8080/openmrs/ws/rest/v1/patient?startIndex=1')).toBe(
+      'https://api.example/openmrs/ws/rest/v1/patient?startIndex=1',
+    );
+  });
+
+  it('leaves a link outside the OpenMRS web services path unchanged', () => {
     vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
 
+    expect(nextUrl('https://other.example:8443/search?page=2')).toBe('https://other.example:8443/search?page=2');
     expect(nextUrl('http://backend.example:8080//openmrs/ws/rest/v1/patient?startIndex=1')).toBe(
-      'https://frontend.example//openmrs/ws/rest/v1/patient?startIndex=1',
+      'http://backend.example:8080//openmrs/ws/rest/v1/patient?startIndex=1',
     );
   });
 
   it('returns null without a next link', () => {
-    expect(
-      getOpenmrsServerPaginationHandlers().getNextUrl({ results: [], links: [] } as OpenMRSPaginatedResponse<unknown>),
-    ).toBeNull();
-  });
-
-  it("leaves the hooks' handlers alone when a caller replaces one of its own", () => {
-    vi.stubGlobal('location', new URL('https://frontend.example/openmrs/spa/'));
-    const handlers = getOpenmrsServerPaginationHandlers();
-    handlers.getNextUrl = () => 'replaced';
-
-    expect(openmrsServerPaginationHandlers.getNextUrl(response('https://frontend.example/next'))).toBe(
-      'https://frontend.example/next',
-    );
+    expect(openmrsServerPaginationHandlers.getNextUrl({ results: [], links: [], totalCount: 0 })).toBeNull();
   });
 });

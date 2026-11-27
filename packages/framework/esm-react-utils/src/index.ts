@@ -38,12 +38,7 @@ export * from './useOnClickOutside';
 export * from './useOnVisible';
 export { useOpenmrsFetchAll, type UseServerFetchAllOptions } from './useOpenmrsFetchAll';
 export { useOpenmrsInfinite, type UseServerInfiniteOptions } from './useOpenmrsInfinite';
-export {
-  useOpenmrsPagination,
-  getOpenmrsServerPaginationHandlers,
-  type OpenMRSPaginatedResponse,
-  type UseServerPaginationOptions,
-} from './useOpenmrsPagination';
+export { useOpenmrsPagination, type UseServerPaginationOptions } from './useOpenmrsPagination';
 export * from './useOpenmrsSWR';
 export * from './usePagination';
 export * from './usePaginationInfo';

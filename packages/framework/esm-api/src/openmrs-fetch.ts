@@ -38,15 +38,21 @@ export function makeUrl(path: string) {
 }
 
 /**
- * Moves a link the server returned onto this page's origin, so the request goes through the frontend proxy.
+ * Moves a link the server returned, such as a next-page link, onto the origin OpenMRS is reached at, so the
+ * request goes through the same proxy as the first one. The backend can name an origin the browser cannot
+ * reach, such as its own port behind a frontend proxy. A link whose path is not under the OpenMRS web
+ * services path is returned unchanged, since it does not point at OpenMRS.
+ *
+ * @param uri The absolute link from the server's response.
+ * @param origin The origin to move the link onto. Defaults to the origin of `window.openmrsBase`.
  */
-export function toPageOrigin(uri: string): string {
+export function toApiOrigin(uri: string, origin?: string): string {
+  const base = new URL(window.openmrsBase, window.location.href);
   const url = new URL(uri);
-  url.protocol = window.location.protocol;
-  url.host = window.location.host;
-  // Setting a host without a port keeps the old port, so the page's port (or none) is set as well.
-  url.port = window.location.port;
-  return url.toString();
+  if (!url.pathname.startsWith(`${base.pathname.replace(/\/+$/, '')}/ws/`)) {
+    return uri;
+  }
+  return `${origin ?? base.origin}${url.pathname}${url.search}${url.hash}`;
 }
 
 /**
