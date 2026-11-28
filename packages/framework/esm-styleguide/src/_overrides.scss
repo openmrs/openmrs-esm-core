@@ -71,10 +71,6 @@ a.cds--side-nav__link--current::before,
 }
 
 /* Tooltip */
-.cds--tooltip--definition .cds--tooltip__trigger {
-  border-bottom: none;
-}
-
 /* Tooltips presently have a higher stacking context than modals, which leads to tooltip buttons rendering above modal content */
 .cds--body--with-modal-open .cds--tooltip {
   z-index: 0;
@@ -150,7 +146,6 @@ a.cds--side-nav__link--current::before,
 
     &::after {
       background-color: colors.$blue-10;
-      box-shadow: none !important;
     }
 
     &::before {
@@ -247,11 +242,6 @@ a.cds--side-nav__link--current::before,
   position: relative;
 }
 
-.cds--table-toolbar {
-  position: absolute;
-  top: 2px;
-}
-
 .cds--data-table-header {
   padding: layout.$spacing-04;
   text-align: start;
@@ -274,40 +264,49 @@ a.cds--side-nav__link--current::before,
 }
 
 /* Alternate background and border colors for zebra styled table rows */
+// Hovered and selected rows are left to Carbon, which paints them on the row (or, for
+// expandable rows, on the cells). Opaque cell backgrounds here would hide that feedback.
 
 // Datatables without expansion
-.cds--data-table--zebra tbody tr:not(.cds--parent-row):nth-child(odd) td {
+.cds--data-table--zebra tbody tr:not(.cds--parent-row, :hover, .cds--data-table--selected):nth-child(odd) td {
   background-color: $ui-02;
   border-bottom: 1px solid $ui-03;
 }
 
-.cds--data-table--zebra tbody tr:not(.cds--parent-row):nth-child(2n) td {
+.cds--data-table--zebra tbody tr:not(.cds--parent-row, :hover, .cds--data-table--selected):nth-child(2n) td {
   background-color: $ui-01;
   border-bottom: 1px solid $ui-03;
   border-top: 1px solid $ui-03;
 }
 
 // Datatables with expansion
-.cds--data-table--zebra tbody tr[data-parent-row]:nth-child(4n + 1) td {
+.cds--data-table--zebra
+  tbody
+  tr[data-parent-row]:not(:hover, .cds--data-table--selected, .cds--expandable-row--hover):nth-child(4n + 1)
+  td {
   background-color: $ui-02;
   border-bottom: 1px solid $ui-03;
   border-top: 1px solid $ui-03;
 }
 
-.cds--data-table--zebra tbody tr[data-parent-row]:nth-child(4n + 3) td {
+.cds--data-table--zebra
+  tbody
+  tr[data-parent-row]:not(:hover, .cds--data-table--selected, .cds--expandable-row--hover):nth-child(4n + 3)
+  td {
   background-color: $ui-01;
   border-bottom: 1px solid $ui-03;
 }
 
 /* Buttons */
 // Carbon builds the CodeSnippet copy button as a primary button and then repaints it with a
-// layer background, so exclude it here. The zero-specificity :where() keeps these selectors
-// at (0,1,0) so Carbon's disabled button styles still win.
+// layer background, so exclude it here. Carbon also styles the tertiary action button in
+// actionable notifications in blue, so exclude that too. The zero-specificity :where() keeps
+// these selectors at (0,1,0) so Carbon's disabled button styles still win.
 .cds--btn--primary:not(:where(.cds--copy-btn)),
 .cds--btn--primary:not(:where(.cds--copy-btn)):active,
-.cds--btn--tertiary:hover,
-.cds--btn--tertiary:active,
-.cds--btn--tertiary:focus {
+.cds--btn--tertiary:not(:where(.cds--actionable-notification__action-button)):hover,
+.cds--btn--tertiary:not(:where(.cds--actionable-notification__action-button)):active,
+.cds--btn--tertiary:not(:where(.cds--actionable-notification__action-button)):focus {
   @include brand-03(background-color);
 }
 
@@ -315,14 +314,14 @@ a.cds--side-nav__link--current::before,
   @include brand-02(background-color);
 }
 
-.cds--btn--tertiary {
+.cds--btn--tertiary:not(:where(.cds--actionable-notification__action-button)) {
   @include brand-03(color);
   @include brand-03(border-color);
 }
 
-.cds--btn--tertiary:hover,
-.cds--btn--tertiary:active,
-.cds--btn--tertiary:focus {
+.cds--btn--tertiary:not(:where(.cds--actionable-notification__action-button)):hover,
+.cds--btn--tertiary:not(:where(.cds--actionable-notification__action-button)):active,
+.cds--btn--tertiary:not(:where(.cds--actionable-notification__action-button)):focus {
   color: $ui-02;
 }
 
@@ -335,9 +334,7 @@ a.cds--side-nav__link--current::before,
 .cds--overflow-menu--flip {
   &.cds--overflow-menu-options {
     background-color: $openmrs-background-grey;
-    left: -6.025rem;
     min-width: 12.5rem;
-    top: layout.$spacing-09;
   }
 }
 
@@ -458,8 +455,6 @@ html[dir='rtl'] {
   }
 
   .cds--btn--tertiary {
-    padding: calc(0.875rem - 3px) 15px calc(0.875rem - 3px) 63px;
-
     svg {
       left: layout.$spacing-05;
       right: unset;
@@ -493,8 +488,6 @@ html[dir='rtl'] {
   }
 
   .cds--btn--primary {
-    padding: calc(0.875rem - 3px) 15px calc(0.875rem - 3px) 63px;
-
     svg {
       left: layout.$spacing-05;
       right: unset;
@@ -502,17 +495,9 @@ html[dir='rtl'] {
     }
   }
 
-  .cds--btn--primary.cds--btn--icon-only {
-    padding: unset;
-  }
-
   .cds--accordion__heading {
     & > svg {
       margin: 2px 0 0 layout.$spacing-05;
-    }
-
-    p {
-      text-align: right;
     }
   }
 
@@ -693,21 +678,6 @@ html[dir='rtl'] {
     border-left: unset !important;
   }
 
-  .omrs-breakpoint-gt-tablet {
-    main {
-      & > section {
-        margin-left: unset;
-        margin-right: var(--omrs-sidenav-width);
-
-        nav {
-          left: calc(100vw - var(--omrs-sidenav-width));
-          border-left: 1px solid #e0e0e0;
-          border-right: unset;
-        }
-      }
-    }
-  }
-
   .omrs-breakpoint-lt-desktop {
     .cds--side-nav {
       left: unset !important;
@@ -761,13 +731,6 @@ html[dir='rtl'] {
       min-width: unset;
     }
   }
-}
-
-// This is to override the green border and background color which we apply to tertiary buttons. Since this in the Notification carbon uses blue.
-.cds--actionable-notification__action-button.cds--btn--tertiary {
-  background-color: transparent;
-  border: 1px solid #0f62fe;
-  color: #0f62fe;
 }
 
 .omrs-icon {
