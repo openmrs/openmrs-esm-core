@@ -113,6 +113,8 @@ $extraWideWorkspaceWidth: 48.25rem;
 
   .headerButtons {
     button {
+      // These are header actions, which get a white focus ring for the dark navbar. They're white here, so use the brand colour.
+      --cds-focus: var(--brand-03);
       background-color: $ui-02;
       border-right: 1px solid colors.$gray-20;
 
