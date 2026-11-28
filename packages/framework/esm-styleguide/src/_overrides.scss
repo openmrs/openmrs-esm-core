@@ -448,15 +448,6 @@ a.cds--side-nav__link--current::before,
 
 /* RTL overrides */
 html[dir='rtl'] {
-  .cds--header {
-    & > a:first-child {
-      & > div {
-        margin-left: 0;
-        margin-right: layout.$spacing-05;
-      }
-    }
-  }
-
   .cds--header__name {
     padding-inline: layout.$spacing-05 layout.$spacing-07;
   }
