@@ -28,6 +28,27 @@
   fill: white;
 }
 
+// The header actions and panels sit on the dark brand colours, so their focus rings are white, as in Carbon's dark themes.
+// The patient search field and results also render inside the header, on light backgrounds, so they keep the default.
+.cds--header__action,
+.cds--header-panel {
+  --cds-focus: white;
+}
+
+// Carbon's light theme wrappers and charts set the focus token back to Carbon's blue, so set it again for them.
+.cds--white,
+.cds--g10,
+.cds--chart-holder,
+.cds--chart-holder[data-carbon-theme='g10'] {
+  --cds-focus: var(--brand-03);
+}
+
+// Header actions are icon buttons, so the tooltip button styles add a 2px outline outside the button.
+// Draw it inside instead, so the viewport edge and neighbouring actions don't clip it.
+.cds--header__action:focus {
+  outline-offset: -2px;
+}
+
 .cds--header-panel--expanded {
   border-left: none;
   border-right: none;
@@ -47,11 +68,6 @@ a.cds--side-nav__link[aria-current='page']::before,
 a.cds--side-nav__link--current::before,
 .cds--side-nav__item--active .cds--side-nav__submenu[aria-expanded='false']::before {
   background-color: var(--brand-01);
-}
-
-a.cds--side-nav__link:focus,
-.cds--side-nav__submenu:focus {
-  outline-color: var(--brand-03);
 }
 
 /* Tooltip */
@@ -217,11 +233,6 @@ a.cds--side-nav__link:focus,
   box-shadow: inset 3px 0 0 0 var(--brand-03);
 }
 
-.cds--tabs .cds--tabs__nav-link:focus,
-.cds--tabs .cds--tabs__nav-link:active {
-  outline-color: var(--brand-03);
-}
-
 /* DataTables */
 .cds--data-table {
   td,
@@ -306,11 +317,6 @@ a.cds--side-nav__link:focus,
 
 .cds--btn--tertiary {
   @include brand-03(color);
-}
-
-.cds--btn--tertiary,
-.cds--btn--primary:not(:where(.cds--copy-btn)):focus,
-.cds--btn--tertiary:focus {
   @include brand-03(border-color);
 }
 
@@ -361,11 +367,6 @@ a.cds--side-nav__link:focus,
   &::after {
     @include brand-03(background-color);
   }
-}
-
-.cds--pagination-nav__page .cds--pagination-nav__page--active,
-.cds--pagination-nav__page:focus {
-  outline: 2px solid var(--brand-03);
 }
 
 /* Data table overflow menu */
@@ -447,15 +448,6 @@ a.cds--side-nav__link:focus,
 
 /* RTL overrides */
 html[dir='rtl'] {
-  .cds--header {
-    & > a:first-child {
-      & > div {
-        margin-left: 0;
-        margin-right: layout.$spacing-05;
-      }
-    }
-  }
-
   .cds--header__name {
     padding-inline: layout.$spacing-05 layout.$spacing-07;
   }
