@@ -58,11 +58,15 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   const { uiSelectedPath } = useStore(implementerToolsStore);
 
   const itemRef = useRef<HTMLLIElement>(null);
+  const configureRef = useRef<HTMLSpanElement>(null);
 
+  // A path into this slot's `configure` object, such as one extension's entry, is shown at the
+  // `configure` row, which edits that object as a whole.
   useEffect(() => {
-    const shouldFocus = isEqual(uiSelectedPath, path);
-    if (shouldFocus) {
+    if (isEqual(uiSelectedPath, path)) {
       itemRef.current?.scrollIntoView();
+    } else if (isEqual(uiSelectedPath?.slice(0, path.length + 1), [...path, 'configure'])) {
+      configureRef.current?.scrollIntoView();
     }
   }, [uiSelectedPath]);
 
@@ -115,6 +119,7 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
           label={key}
           key={path.join('.') + key}
           leaf={true}
+          ref={key === 'configure' ? configureRef : undefined}
           onMouseEnter={() => setActiveItemDescriptionOnMouseEnter(moduleName, slotName, key, config?.[key])}
           onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave([moduleName, slotName, key])}
         >
