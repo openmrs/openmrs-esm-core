@@ -32,7 +32,7 @@ export interface UseServerPaginationOptions<R> {
  * The server limits the max number of results being returned, and multiple requests are needed to get the full data set
  * if its size exceeds this limit.
  * The max number of results per request is configurable server-side
- * with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
+ * with the key "webservices.rest.maxResultsAbsolute". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
  *
  * For any UI that displays a paginated view of the full data set, we MUST handle the server-side pagination properly,
  * or else the UI does not correctly display the full data set.
@@ -52,7 +52,8 @@ export interface UseServerPaginationOptions<R> {
  *            which will be overridden and manipulated by the `goTo*` callbacks.
  *            Similar to useSWR, this param can be null to disable fetching.
  * @param pageSize The number of results to return per page / fetch. Note that this value MUST NOT exceed
- *            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000).
+ *            "webservices.rest.maxResultsAbsolute", or the server rejects the request with an error. It's 100
+ *            by default, but implementations can set it higher.
  * @param options The options object
  * @returns
  */
